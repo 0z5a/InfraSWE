@@ -1,10 +1,10 @@
 # InfraSWE 当前成果与新对话交接
 
-更新时间：2026-09-02 12:47 +08:00  
+更新时间：2026-09-02 19:27 +08:00
 本地工程：`/Users/0z5a/Documents/infra/infraswe`  
-状态：R7、极化政策与 v0.5.1/v0.5.2 system-path 首个可执行纵切面已完成。
+状态：v0.1 已发布；历史 PR 盲测已推进到 R12 通信类双卡实测。
 
-## 0. 12:47 当前状态（覆盖本文后续旧快照）
+## 0. 19:27 当前状态（覆盖本文后续旧快照）
 
 本文件第 7–9 节保留的是旧历史快照，其中“r5 尚未锁 verdict、#53038 未跑、从第 8
 节继续”等描述已经失效，不得继续执行。当前权威增量报告与实现状态：
@@ -24,15 +24,22 @@
   set 为 `sha256:c0422e6de0fd157036a738bd2c5ff6e5cddbd94af4857476901429314339ca50`；
 - R7 锁后按 prospective 极化 oracle 只读重标注为 2 `accept`、4 `reject`、0 `revise`，
   没有改写原锁；
-- prospective mergeability 已冻结：official ProjectFit `>=85` 才可 accept；`revise` 仅限
+- R8 极化 30-PR 队列作为负面对照保留；R9、R10、R11 分别完成 5、10、20 个新增 PR；
+- 新决策统一使用 `check`，历史哈希冻结 artifact 中的 `revise` 拼写不回写；
+- R11 repairability triage 在同队列把 exact 从 25% 提高到 50%，但 binary 仍为 55%；
+- R12 完成 12 个通信类 PR，exact 从同队列旧路数 25% 提高到 58.3%，binary 均为
+  66.7%，机器 reject precision 为 80%；改善只成立于 check/reject 分离；
+- R12 已在 `38.49.42.120:54270` 的 `2×A100-SXM4-40GB` 上完成 12 个探针、双 rank
+  NCCL 与精确 TorchTitan DDP graph 测试，结果均已同步回本地；Intel XPU/XCCL 仍不在该
+  NVIDIA 双卡主机的可执行范围；
+- prospective mergeability 已冻结：official ProjectFit `>=85` 才可 accept；`check` 仅限
   30 天内且 14 天内明确在审的新 PR；长期 reviewed-open PR 按 reject；
 - precedent retrieval 已具备 footprint、SQLite/FTS/graph、泄漏、冲突、trust、rule、
   PrecedentSet/RetrievalBundle digest 与完整 CLI；
 - communication 与 memory-tiering Draft、InfraCert hard gate、单一 C、O=C、cell-local card、
   10+1+5 system profile catalog 已实现；
-- 最新全仓回归：Ruff 通过，Pytest `228 passed in 4.12s`，52 schemas fresh；
-- 新 A100 实例 `38.49.42.120:54270` 为 2×A100-SXM4 40GB，当前正准备 current LoRA
-  candidate 的 SM80 7 fresh-process 多 Draft 实测；`/workspace` 非持久卷，结果必须立即回传。
+- 最新核心代码回归：`src tests benchmarks` Ruff 通过，Pytest `280 passed in 5.55s`，
+  102 schemas fresh；全仓 Ruff 仍会扫描作为证据保留的上游 LoRA 源码快照并报告其原始 lint。
 
 ## 1. 新对话必须继续遵守的约束
 
@@ -287,5 +294,12 @@ vastai show instances --raw | select(id == 49539878) -> []
 - r3：`results/historical-pr-blind-20260901/supplemental-r3`
 - r4：`results/historical-pr-blind-20260901/supplemental-r4`
 - r5：`results/historical-pr-blind-20260901/supplemental-r5`
+- r6：`results/historical-pr-blind-20260901/supplemental-r6`
+- r7：`results/historical-pr-blind-20260901/supplemental-r7`
+- r8：`results/historical-pr-blind-20260901/supplemental-r8`
+- r9：`results/historical-pr-blind-20260901/supplemental-r9`
+- r10：`results/historical-pr-blind-20260901/supplemental-r10`
+- r11：`results/historical-pr-blind-20260901/supplemental-r11`
+- r12：`results/historical-pr-blind-20260901/supplemental-r12`
 
-新对话应先读取第 0 节和 R6 增量报告；第 7–9 节只作历史记录，不再从旧第 8 节继续。
+新对话应先读取第 0 节和 R12 报告；第 7–9 节只作历史记录，不再从旧第 8 节继续。

@@ -1,0 +1,65 @@
+{
+  "base_sha": "fbceec07e35cc2dd69c55df7d580f19381421a12",
+  "case_id": "torchtitan-pr-3821",
+  "environment": {
+    "gpu_count": 2,
+    "gpu_names": [
+      "NVIDIA A100-SXM4-40GB",
+      "NVIDIA A100-SXM4-40GB"
+    ],
+    "platform": "Linux-6.8.0-138-generic-x86_64-with-glibc2.39",
+    "python": "3.12.14 | packaged by conda-forge | (main, Aug 21 2026, 22:48:28) [GCC 14.4.0]",
+    "torch": "2.11.0+cu128",
+    "torch_cuda_available": true
+  },
+  "environment_sha256": "sha256:35ce10fa020d509d7110e8d6cd7c03a54d34d16652781d0cc087781b42424120",
+  "evidence_sha256": "sha256:d39752cc880efa4837ace28d6d8ca4ced95bb04b08e87cd9c38154e1ac42de3e",
+  "facts": {
+    "direct_test_checks_graph_lint": true,
+    "direct_test_checks_numeric_equivalence": false,
+    "direct_test_distinguishes_call_counts": true,
+    "direct_test_has_ddp_two_gpu_case": true,
+    "direct_test_has_hsdp_four_gpu_case": true,
+    "distributed_tests_executed_by_evaluator": false,
+    "head_recognizes_all_reduce_start_and_wait": true,
+    "scheduler_node_type_matrix": [
+      {
+        "base_recognizes": true,
+        "head_recognizes": true,
+        "node_type": "bucketed_reduce_scatter"
+      },
+      {
+        "base_recognizes": false,
+        "head_recognizes": true,
+        "node_type": "bucketed_all_reduce"
+      },
+      {
+        "base_recognizes": true,
+        "head_recognizes": true,
+        "node_type": "bucketed_reduce_scatter_wait"
+      },
+      {
+        "base_recognizes": false,
+        "head_recognizes": true,
+        "node_type": "bucketed_all_reduce_wait"
+      }
+    ],
+    "source_change_is_scheduler_type_extension_only": true
+  },
+  "failure_codes": [],
+  "finished_at": "2026-09-02T09:58:53.944116+00:00",
+  "head_sha": "63a758ccc3af6023337a73331473eed24e990bff",
+  "probe_status": "pass",
+  "protocol_id": "historical-pr-blind-communication-v0.1-r12-12",
+  "schema_version": "0.1",
+  "selection_lock_sha256": "sha256:7ddbd98c43d1952e5b3ae3abcb25e1f58e5a1e3adb8c648fa1399475194baa53",
+  "source_bundle_sha256": "sha256:c25d5a59d67fe0979b1ea6210ab39aa109c3bf167830afbb2c619bcb1e0a92a6",
+  "source_digests": {
+    "base:torchtitan/experiments/graph_trainer/fsdp_passes.py": "sha256:25dac500000738bc032885c7f59c296b68aa9666b29c255e8141c485ca407d2f",
+    "base:torchtitan/experiments/graph_trainer/tests/test_passes.py": "sha256:8ac53cfbbce370dbbf80e9b39bfc955d92dde781e89424e3306ba654a6968204",
+    "head:torchtitan/experiments/graph_trainer/fsdp_passes.py": "sha256:63985bf4478aeaee35f975737d091cbccc8354ed7deb0aadbbca7d1acaca1f32",
+    "head:torchtitan/experiments/graph_trainer/tests/test_passes.py": "sha256:aae27c37b6dece7f69a2e2031da6351166ed04b54f2764f38b222b6f5a34c2ad"
+  },
+  "started_at": "2026-09-02T09:58:53.900642+00:00",
+  "test_plan_sha256": "sha256:57f93d99b828a2f71b393ca579a337f3308688336b2bc10240479ffbd782cce7"
+}

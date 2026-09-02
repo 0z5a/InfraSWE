@@ -1,0 +1,159 @@
+{
+  "base_sha": "a06d4e757d264067dfb56c1cb4defb64907de02b",
+  "case_id": "torchtitan-pr-3827",
+  "environment": {
+    "gpu_count": 2,
+    "gpu_names": [
+      "NVIDIA A100-SXM4-40GB",
+      "NVIDIA A100-SXM4-40GB"
+    ],
+    "platform": "Linux-6.8.0-138-generic-x86_64-with-glibc2.39",
+    "python": "3.12.14 | packaged by conda-forge | (main, Aug 21 2026, 22:48:28) [GCC 14.4.0]",
+    "torch": "2.11.0+cu128",
+    "torch_cuda_available": true
+  },
+  "environment_sha256": "sha256:35ce10fa020d509d7110e8d6cd7c03a54d34d16652781d0cc087781b42424120",
+  "evidence_sha256": "sha256:ba160b9dbbc8eb1fd8fb5ddc4fe0ad60dc1935c9e0ccebe36f6172aa57592bf9",
+  "facts": {
+    "base_logprob_overcounts": true,
+    "changed_direct_test": false,
+    "fused_swiglu_split_layouts_added": true,
+    "head_logprob_gradient_matches_oracle": true,
+    "head_uses_identity_placement": true,
+    "logprob_gradient_matrix": [
+      {
+        "base_replicate_backward_scale": 2,
+        "head_identity_backward_scale": 1,
+        "oracle_scale": 1,
+        "tp_degree": 2
+      },
+      {
+        "base_replicate_backward_scale": 4,
+        "head_identity_backward_scale": 1,
+        "oracle_scale": 1,
+        "tp_degree": 4
+      },
+      {
+        "base_replicate_backward_scale": 8,
+        "head_identity_backward_scale": 1,
+        "oracle_scale": 1,
+        "tp_degree": 8
+      }
+    ],
+    "non_tp_groups_misrouted_to_tp": true,
+    "redistribute_routing_matrix": [
+      {
+        "dst": "R",
+        "grad_enabled": false,
+        "group": "tp",
+        "head_routes_to_global_tp": true,
+        "should_route_to_global_tp": true
+      },
+      {
+        "dst": "I",
+        "grad_enabled": false,
+        "group": "tp",
+        "head_routes_to_global_tp": true,
+        "should_route_to_global_tp": true
+      },
+      {
+        "dst": "S",
+        "grad_enabled": false,
+        "group": "tp",
+        "head_routes_to_global_tp": false,
+        "should_route_to_global_tp": false
+      },
+      {
+        "dst": "R",
+        "grad_enabled": true,
+        "group": "tp",
+        "head_routes_to_global_tp": false,
+        "should_route_to_global_tp": false
+      },
+      {
+        "dst": "I",
+        "grad_enabled": true,
+        "group": "tp",
+        "head_routes_to_global_tp": false,
+        "should_route_to_global_tp": false
+      },
+      {
+        "dst": "S",
+        "grad_enabled": true,
+        "group": "tp",
+        "head_routes_to_global_tp": false,
+        "should_route_to_global_tp": false
+      },
+      {
+        "dst": "R",
+        "grad_enabled": false,
+        "group": "other",
+        "head_routes_to_global_tp": true,
+        "should_route_to_global_tp": false
+      },
+      {
+        "dst": "I",
+        "grad_enabled": false,
+        "group": "other",
+        "head_routes_to_global_tp": true,
+        "should_route_to_global_tp": false
+      },
+      {
+        "dst": "S",
+        "grad_enabled": false,
+        "group": "other",
+        "head_routes_to_global_tp": false,
+        "should_route_to_global_tp": false
+      },
+      {
+        "dst": "R",
+        "grad_enabled": true,
+        "group": "other",
+        "head_routes_to_global_tp": false,
+        "should_route_to_global_tp": false
+      },
+      {
+        "dst": "I",
+        "grad_enabled": true,
+        "group": "other",
+        "head_routes_to_global_tp": false,
+        "should_route_to_global_tp": false
+      },
+      {
+        "dst": "S",
+        "grad_enabled": true,
+        "group": "other",
+        "head_routes_to_global_tp": false,
+        "should_route_to_global_tp": false
+      }
+    ],
+    "residual_failure_families": [
+      "wrong-process-group interception",
+      "root FusedSwiGLU layout key"
+    ],
+    "root_module_keys_have_leading_dot": true,
+    "root_module_layout_keys": [
+      ".w1.weight",
+      ".w3.weight"
+    ],
+    "wrapper_ignores_supplied_group_when_intercepting": true
+  },
+  "failure_codes": [],
+  "finished_at": "2026-09-02T09:58:53.895485+00:00",
+  "head_sha": "cc2d82af86efaec12a460240bde2a697583e6e4d",
+  "probe_status": "pass",
+  "protocol_id": "historical-pr-blind-communication-v0.1-r12-12",
+  "schema_version": "0.1",
+  "selection_lock_sha256": "sha256:7ddbd98c43d1952e5b3ae3abcb25e1f58e5a1e3adb8c648fa1399475194baa53",
+  "source_bundle_sha256": "sha256:c25d5a59d67fe0979b1ea6210ab39aa109c3bf167830afbb2c619bcb1e0a92a6",
+  "source_digests": {
+    "base:torchtitan/components/loss.py": "sha256:558b4cd26df678d1bff94212d578679400e5432bf6b67b96dafe7b334c1878d1",
+    "base:torchtitan/experiments/rl/actors/generator.py": "sha256:4e05ad670a9618d806fea7171ab5410c153e74607a59b4a092b7dc920deca855",
+    "base:torchtitan/experiments/rl/models/vllm_wrapper.py": "sha256:137eafbbb97a277a15c44c9e882c4440368f91acc1e014b46c646278cdd99bc1",
+    "head:torchtitan/components/loss.py": "sha256:c122832effa2cdd1bb4962b52cb62e30f3f1bc5813dcda563a3c5b9e90e318b4",
+    "head:torchtitan/experiments/rl/actors/generator.py": "sha256:7f8b908e42af20abf02407c05c1a95e3963c0fc0c53c3e49f97ebf00d96c99f7",
+    "head:torchtitan/experiments/rl/models/vllm_wrapper.py": "sha256:5d985eaed118f45f5da761a2667ecf251a2adf350069cbca074988e74face8ec"
+  },
+  "started_at": "2026-09-02T09:58:53.852800+00:00",
+  "test_plan_sha256": "sha256:57f93d99b828a2f71b393ca579a337f3308688336b2bc10240479ffbd782cce7"
+}

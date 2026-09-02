@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Reveal R11 outcomes and review text after custom repairability locks are frozen."""
+"""Reveal outcomes and review text after custom repairability locks are frozen."""
 
 from __future__ import annotations
 
@@ -86,34 +86,38 @@ def _is_substantive_feedback(item: dict[str, Any]) -> bool:
     return len(body) >= 10 and not body.startswith("/")
 
 
-def _validate_lock_payload(payload: dict[str, Any]) -> dict[str, dict[str, Any]]:
+def _validate_lock_payload(
+    payload: dict[str, Any], *, round_label: str
+) -> dict[str, dict[str, Any]]:
     material = {key: value for key, value in payload.items() if key != "lock_set_sha256"}
     if payload["lock_set_sha256"] != canonical_sha256(material):
-        raise SystemExit("R11 machine lock-set digest mismatch")
+        raise SystemExit(f"{round_label} machine lock-set digest mismatch")
     hidden = (
         payload["review_text_visible_during_machine_judgment"],
         payload["merge_outcomes_visible_during_machine_judgment"],
         payload["ci_fields_visible_during_machine_judgment"],
     )
     if any(value is not False for value in hidden):
-        raise SystemExit("R11 machine lock does not preserve the blind boundary")
+        raise SystemExit(f"{round_label} machine lock does not preserve the blind boundary")
     if payload["weighted_score_used"] is not False:
-        raise SystemExit("R11 unexpectedly enables weighted scoring")
+        raise SystemExit(f"{round_label} unexpectedly enables weighted scoring")
     if payload["forced_polarization_used"] is not False:
-        raise SystemExit("R11 unexpectedly enables forced polarization")
+        raise SystemExit(f"{round_label} unexpectedly enables forced polarization")
     locks: dict[str, dict[str, Any]] = {}
     for lock in payload["locks"]:
         lock_material = lock["material"]
         if lock["lock_sha256"] != canonical_sha256(lock_material):
-            raise SystemExit(f"R11 judgment digest mismatch for {lock_material['case_id']}")
+            raise SystemExit(
+                f"{round_label} judgment digest mismatch for {lock_material['case_id']}"
+            )
         case_id = lock_material["case_id"]
         if case_id in locks:
-            raise SystemExit(f"R11 duplicate judgment for {case_id}")
+            raise SystemExit(f"{round_label} duplicate judgment for {case_id}")
         locks[case_id] = lock
     return locks
 
 
-def main() -> int:
+def main(*, round_label: str = "R11") -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--judgment-locks", type=Path, required=True)
     parser.add_argument("--selection-lock", type=Path, required=True)
@@ -122,17 +126,17 @@ def main() -> int:
     args = parser.parse_args()
 
     lock_payload = _read(args.judgment_locks)
-    locks = _validate_lock_payload(lock_payload)
+    locks = _validate_lock_payload(lock_payload, round_label=round_label)
     selection = _read(args.selection_lock)
     plan = _read(args.test_plan)
     if lock_payload["selection_lock_sha256"] != selection["selection_lock_sha256"]:
-        raise SystemExit("R11 machine lock is not bound to selection")
+        raise SystemExit(f"{round_label} machine lock is not bound to selection")
     if lock_payload["test_plan_sha256"] != plan["test_plan_sha256"]:
-        raise SystemExit("R11 machine lock is not bound to test plan")
+        raise SystemExit(f"{round_label} machine lock is not bound to test plan")
     selected = {item["case_id"]: item for item in selection["selection_material"]["cases"]}
     planned = {item["case_id"]: item for item in plan["cases"]}
     if locks.keys() != selected.keys() or locks.keys() != planned.keys():
-        raise SystemExit("R11 selection, plan, and judgment case sets differ")
+        raise SystemExit(f"{round_label} selection, plan, and judgment case sets differ")
 
     cases: list[dict[str, Any]] = []
     for case_id in sorted(locks):

@@ -1,0 +1,54 @@
+{
+  "schema_version": "0.1",
+  "protocol_id": "historical-pr-blind-communication-v0.1-r12-12",
+  "frozen_at": "2026-09-02T09:40:00+00:00",
+  "case_count": 12,
+  "project_count": 7,
+  "source_discovery_lock_sha256": "sha256:dd6e6596bbf73578255bbe49a20b69d55f68f2ad2f1f2c1be2bc02770c0cf3ef",
+  "prior_selection_lock_sha256": [
+    "sha256:e3e4ce43bba9f8e8552a82c670e81b3a20f2c4af7f9c855960da61297cb982eb",
+    "sha256:de17daef35221ddc7f893f39132ead5173eb8d32f056de541a5e9d506cd3334f",
+    "sha256:90a16796bc3816ac1283c400f3c0d02a796b936dd2a138e5a73f9648e3d92750"
+  ],
+  "merge_outcomes_visible_to_machine_judge": false,
+  "review_text_visible_to_machine_judge": false,
+  "ci_fields_visible_to_machine_judge": false,
+  "diff_content_visible_during_policy_freeze": false,
+  "selection_basis": [
+    "outcome-free title",
+    "changed repository-relative paths",
+    "additions, deletions, and changed-file count",
+    "exact base and head SHA metadata"
+  ],
+  "selection_rules": [
+    "select exactly twelve eligible, previously unused communication cases from the frozen R8 discovery pool",
+    "cover reduction kernels, uneven collectives, rank mapping, collective scheduling, graph/resource lifecycle, buffer ABI, and redundant-communication performance",
+    "include native CUDA communication code and framework integration code",
+    "treat the title-scoped primary claim as blocking and broader hardening ideas as non-blocking",
+    "do not infer disposition from title sentiment, author identity, PR age, review, CI, state, or merge outcome"
+  ],
+  "machine_policy": {
+    "policy_id": "communication-case-contract-v0.1",
+    "accept_rule": "the title-scoped communication claim and every applicable correctness, ordering, shape, lifetime, and regression invariant pass with complete required evidence",
+    "check_rule": "the primary direction is demonstrated, no known corruption, deadlock, use-after-free, or baseline regression remains, remediation or missing evidence is bounded, and an executable closure test exists",
+    "reject_rule": "the primary claim is false, a collective can diverge by rank/order/shape, data or resource integrity is unsafe, baseline regresses, performance evidence contradicts the claim, remediation is design-level, closure testing is absent, or multiple residual failure families remain",
+    "unresolved_rule": "required communication hardware or source evidence could not be obtained for infrastructure reasons",
+    "weighted_score": false,
+    "forced_polarization": false,
+    "hardening_outside_claim_is_blocking": false
+  },
+  "selected_case_ids": [
+    "cutlass-pr-3294",
+    "flashinfer-pr-3939",
+    "flashinfer-pr-3931",
+    "flashinfer-pr-3880",
+    "flashinfer-pr-3879",
+    "megatron-pr-5720",
+    "sglang-pr-31311",
+    "sglang-pr-31290",
+    "torchtitan-pr-3827",
+    "torchtitan-pr-3821",
+    "verl-pr-6958",
+    "vllm-pr-48763"
+  ]
+}

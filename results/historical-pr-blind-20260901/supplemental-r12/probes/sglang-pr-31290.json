@@ -1,0 +1,494 @@
+{
+  "base_sha": "ee1736f39ab62b15fcb276d3ff9090ff13c60fc6",
+  "case_id": "sglang-pr-31290",
+  "environment": {
+    "gpu_count": 2,
+    "gpu_names": [
+      "NVIDIA A100-SXM4-40GB",
+      "NVIDIA A100-SXM4-40GB"
+    ],
+    "platform": "Linux-6.8.0-138-generic-x86_64-with-glibc2.39",
+    "python": "3.12.14 | packaged by conda-forge | (main, Aug 21 2026, 22:48:28) [GCC 14.4.0]",
+    "torch": "2.11.0+cu128",
+    "torch_cuda_available": true
+  },
+  "environment_sha256": "sha256:35ce10fa020d509d7110e8d6cd7c03a54d34d16652781d0cc087781b42424120",
+  "evidence_sha256": "sha256:6cb7a30119bd06e9f04754507215fcaaa76668ef17e479f0ff25aac1d9144e2b",
+  "facts": {
+    "all_gatherv_uses_ordered_broadcasts": true,
+    "all_modeled_ranks_use_identical_order": true,
+    "coordinator_validates_shape_and_sizes": true,
+    "direct_test_checks_input_immutability": true,
+    "direct_test_checks_preallocated_buffers": true,
+    "direct_test_checks_uneven_values": true,
+    "direct_test_has_zero_size_rank": false,
+    "direct_test_world_sizes": [
+      2
+    ],
+    "equal_sizes_collapse_to_native_collective": true,
+    "list_input_fails_loud_on_xpu": true,
+    "reduce_scatterv_uses_ordered_reduces": true,
+    "required_xpu_runtime_available": false,
+    "required_xpu_runtime_executed": false,
+    "variable_collective_matrices": [
+      {
+        "all_ranks_same_collective_order": true,
+        "offsets": [
+          {
+            "rank": 0,
+            "start": 0,
+            "stop": 3
+          },
+          {
+            "rank": 1,
+            "start": 3,
+            "stop": 8
+          }
+        ],
+        "schedules": {
+          "0": {
+            "all_gatherv": [
+              [
+                "broadcast",
+                0,
+                3
+              ],
+              [
+                "broadcast",
+                1,
+                5
+              ]
+            ],
+            "local_output_rows": 3,
+            "reduce_scatterv": [
+              [
+                "reduce",
+                0,
+                3
+              ],
+              [
+                "reduce",
+                1,
+                5
+              ]
+            ]
+          },
+          "1": {
+            "all_gatherv": [
+              [
+                "broadcast",
+                0,
+                3
+              ],
+              [
+                "broadcast",
+                1,
+                5
+              ]
+            ],
+            "local_output_rows": 5,
+            "reduce_scatterv": [
+              [
+                "reduce",
+                0,
+                3
+              ],
+              [
+                "reduce",
+                1,
+                5
+              ]
+            ]
+          }
+        },
+        "sizes": [
+          3,
+          5
+        ],
+        "total": 8,
+        "world_size": 2
+      },
+      {
+        "all_ranks_same_collective_order": true,
+        "offsets": [
+          {
+            "rank": 0,
+            "start": 0,
+            "stop": 4
+          },
+          {
+            "rank": 1,
+            "start": 4,
+            "stop": 6
+          },
+          {
+            "rank": 2,
+            "start": 6,
+            "stop": 7
+          }
+        ],
+        "schedules": {
+          "0": {
+            "all_gatherv": [
+              [
+                "broadcast",
+                0,
+                4
+              ],
+              [
+                "broadcast",
+                1,
+                2
+              ],
+              [
+                "broadcast",
+                2,
+                1
+              ]
+            ],
+            "local_output_rows": 4,
+            "reduce_scatterv": [
+              [
+                "reduce",
+                0,
+                4
+              ],
+              [
+                "reduce",
+                1,
+                2
+              ],
+              [
+                "reduce",
+                2,
+                1
+              ]
+            ]
+          },
+          "1": {
+            "all_gatherv": [
+              [
+                "broadcast",
+                0,
+                4
+              ],
+              [
+                "broadcast",
+                1,
+                2
+              ],
+              [
+                "broadcast",
+                2,
+                1
+              ]
+            ],
+            "local_output_rows": 2,
+            "reduce_scatterv": [
+              [
+                "reduce",
+                0,
+                4
+              ],
+              [
+                "reduce",
+                1,
+                2
+              ],
+              [
+                "reduce",
+                2,
+                1
+              ]
+            ]
+          },
+          "2": {
+            "all_gatherv": [
+              [
+                "broadcast",
+                0,
+                4
+              ],
+              [
+                "broadcast",
+                1,
+                2
+              ],
+              [
+                "broadcast",
+                2,
+                1
+              ]
+            ],
+            "local_output_rows": 1,
+            "reduce_scatterv": [
+              [
+                "reduce",
+                0,
+                4
+              ],
+              [
+                "reduce",
+                1,
+                2
+              ],
+              [
+                "reduce",
+                2,
+                1
+              ]
+            ]
+          }
+        },
+        "sizes": [
+          4,
+          2,
+          1
+        ],
+        "total": 7,
+        "world_size": 3
+      },
+      {
+        "all_ranks_same_collective_order": true,
+        "offsets": [
+          {
+            "rank": 0,
+            "start": 0,
+            "stop": 5
+          },
+          {
+            "rank": 1,
+            "start": 5,
+            "stop": 8
+          },
+          {
+            "rank": 2,
+            "start": 8,
+            "stop": 9
+          },
+          {
+            "rank": 3,
+            "start": 9,
+            "stop": 9
+          }
+        ],
+        "schedules": {
+          "0": {
+            "all_gatherv": [
+              [
+                "broadcast",
+                0,
+                5
+              ],
+              [
+                "broadcast",
+                1,
+                3
+              ],
+              [
+                "broadcast",
+                2,
+                1
+              ],
+              [
+                "broadcast",
+                3,
+                0
+              ]
+            ],
+            "local_output_rows": 5,
+            "reduce_scatterv": [
+              [
+                "reduce",
+                0,
+                5
+              ],
+              [
+                "reduce",
+                1,
+                3
+              ],
+              [
+                "reduce",
+                2,
+                1
+              ],
+              [
+                "reduce",
+                3,
+                0
+              ]
+            ]
+          },
+          "1": {
+            "all_gatherv": [
+              [
+                "broadcast",
+                0,
+                5
+              ],
+              [
+                "broadcast",
+                1,
+                3
+              ],
+              [
+                "broadcast",
+                2,
+                1
+              ],
+              [
+                "broadcast",
+                3,
+                0
+              ]
+            ],
+            "local_output_rows": 3,
+            "reduce_scatterv": [
+              [
+                "reduce",
+                0,
+                5
+              ],
+              [
+                "reduce",
+                1,
+                3
+              ],
+              [
+                "reduce",
+                2,
+                1
+              ],
+              [
+                "reduce",
+                3,
+                0
+              ]
+            ]
+          },
+          "2": {
+            "all_gatherv": [
+              [
+                "broadcast",
+                0,
+                5
+              ],
+              [
+                "broadcast",
+                1,
+                3
+              ],
+              [
+                "broadcast",
+                2,
+                1
+              ],
+              [
+                "broadcast",
+                3,
+                0
+              ]
+            ],
+            "local_output_rows": 1,
+            "reduce_scatterv": [
+              [
+                "reduce",
+                0,
+                5
+              ],
+              [
+                "reduce",
+                1,
+                3
+              ],
+              [
+                "reduce",
+                2,
+                1
+              ],
+              [
+                "reduce",
+                3,
+                0
+              ]
+            ]
+          },
+          "3": {
+            "all_gatherv": [
+              [
+                "broadcast",
+                0,
+                5
+              ],
+              [
+                "broadcast",
+                1,
+                3
+              ],
+              [
+                "broadcast",
+                2,
+                1
+              ],
+              [
+                "broadcast",
+                3,
+                0
+              ]
+            ],
+            "local_output_rows": 0,
+            "reduce_scatterv": [
+              [
+                "reduce",
+                0,
+                5
+              ],
+              [
+                "reduce",
+                1,
+                3
+              ],
+              [
+                "reduce",
+                2,
+                1
+              ],
+              [
+                "reduce",
+                3,
+                0
+              ]
+            ]
+          }
+        },
+        "sizes": [
+          5,
+          3,
+          1,
+          0
+        ],
+        "total": 9,
+        "world_size": 4
+      }
+    ],
+    "xpu_implementation_uses_global_rank": true
+  },
+  "failure_codes": [],
+  "finished_at": "2026-09-02T09:58:53.849889+00:00",
+  "head_sha": "e291c362e506a94305c58de3df2352f31211c362",
+  "probe_status": "pass",
+  "protocol_id": "historical-pr-blind-communication-v0.1-r12-12",
+  "schema_version": "0.1",
+  "selection_lock_sha256": "sha256:7ddbd98c43d1952e5b3ae3abcb25e1f58e5a1e3adb8c648fa1399475194baa53",
+  "source_bundle_sha256": "sha256:c25d5a59d67fe0979b1ea6210ab39aa109c3bf167830afbb2c619bcb1e0a92a6",
+  "source_digests": {
+    "base:python/sglang/srt/distributed/device_communicators/xpu_communicator.py": "sha256:a198fc91b6ca9cfaef808bc03144c24c9caf499d2e7402d4cba3fd1cffad2bfd",
+    "base:python/sglang/srt/distributed/parallel_state.py": "sha256:f688d507a905133036450762996861252f7063d4ccff76fec6bf390c68e9e832",
+    "head:python/sglang/srt/distributed/device_communicators/xpu_communicator.py": "sha256:64652f6388de76042267635098e38a09b57c9d64c7d26bbd82280dc90ecda2c1",
+    "head:python/sglang/srt/distributed/parallel_state.py": "sha256:00c6963fd80f5ce1a117c1ae9bf6eb75db5599e576309cbe01dfb62162c4d3b9",
+    "head:test/registered/xpu/test_xpu_gatherv_scatterv.py": "sha256:b10fc02066b049d360755a0c39c82e2c49db0cdc7e61a2283d1bb7ccb66278d4"
+  },
+  "started_at": "2026-09-02T09:58:53.807046+00:00",
+  "test_plan_sha256": "sha256:57f93d99b828a2f71b393ca579a337f3308688336b2bc10240479ffbd782cce7"
+}

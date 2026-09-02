@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Audit frozen R11 judgments against the disposition oracle and same-cohort baseline."""
+"""Audit frozen judgments against the disposition oracle and same-cohort baseline."""
 
 from __future__ import annotations
 
@@ -58,7 +58,7 @@ def _ratio(numerator: int, denominator: int) -> float | None:
     return numerator / denominator if denominator else None
 
 
-def main() -> int:
+def main(*, round_label: str = "R11") -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--result-root", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
@@ -70,16 +70,16 @@ def main() -> int:
     reveal = _load(args.result_root / "revealed-outcomes-reviews.json")
     lock_material = {key: value for key, value in locks.items() if key != "lock_set_sha256"}
     if locks["lock_set_sha256"] != canonical_sha256(lock_material):
-        raise SystemExit("R11 machine lock-set digest mismatch")
+        raise SystemExit(f"{round_label} machine lock-set digest mismatch")
     reveal_material = {key: value for key, value in reveal.items() if key != "reveal_sha256"}
     if reveal["reveal_sha256"] != canonical_sha256(reveal_material):
-        raise SystemExit("R11 reveal digest mismatch")
+        raise SystemExit(f"{round_label} reveal digest mismatch")
     if locks["merge_outcomes_visible_during_machine_judgment"] is not False:
-        raise SystemExit("R11 machine lock does not assert hidden outcomes")
+        raise SystemExit(f"{round_label} machine lock does not assert hidden outcomes")
     if locks["review_text_visible_during_machine_judgment"] is not False:
-        raise SystemExit("R11 machine lock does not assert hidden reviews")
+        raise SystemExit(f"{round_label} machine lock does not assert hidden reviews")
     if reveal["judgment_lock_set_sha256"] != locks["lock_set_sha256"]:
-        raise SystemExit("R11 reveal is not bound to machine locks")
+        raise SystemExit(f"{round_label} reveal is not bound to machine locks")
 
     selected = {item["case_id"]: item for item in selection["selection_material"]["cases"]}
     locked = {item["material"]["case_id"]: item for item in locks["locks"]}
@@ -165,7 +165,7 @@ def main() -> int:
                 "review_idle_days": review_idle_days,
                 "merged_score_floor_100": MERGE_ACCEPT_SCORE_FLOOR_100,
                 "merged_score_floor_status": (
-                    "not-applicable-r11-is-explicitly-nonweighted"
+                    f"not-applicable-{round_label.lower()}-is-explicitly-nonweighted"
                     if outcome["merged"]
                     else "not-applicable"
                 ),
@@ -266,7 +266,7 @@ def main() -> int:
             by_id[case_id]["frozen_machine_decision"] == "accept" for case_id in merged_ids
         ),
         "merged_score_floor_auditable": False,
-        "merged_score_floor_exclusion": "R11 explicitly used no weighted score",
+        "merged_score_floor_exclusion": f"{round_label} explicitly used no weighted score",
     }
     material = {
         "schema_version": "0.1",

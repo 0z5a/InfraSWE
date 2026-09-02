@@ -1,0 +1,93 @@
+{
+  "base_sha": "5e2b1da45307407869f3a0cb28b69423ece82b9f",
+  "case_id": "megatron-pr-5720",
+  "environment": {
+    "gpu_count": 2,
+    "gpu_names": [
+      "NVIDIA A100-SXM4-40GB",
+      "NVIDIA A100-SXM4-40GB"
+    ],
+    "platform": "Linux-6.8.0-138-generic-x86_64-with-glibc2.39",
+    "python": "3.12.14 | packaged by conda-forge | (main, Aug 21 2026, 22:48:28) [GCC 14.4.0]",
+    "torch": "2.11.0+cu128",
+    "torch_cuda_available": true
+  },
+  "environment_sha256": "sha256:35ce10fa020d509d7110e8d6cd7c03a54d34d16652781d0cc087781b42424120",
+  "evidence_sha256": "sha256:9bd602fa9bdcb81d88304d39603e0b67e1f07472315e3080378ebe04b6760e6d",
+  "facts": {
+    "base_supports_destination_cp": false,
+    "both_backward_entrypoints_reduce_before_send": true,
+    "destination_cp_matrix": [
+      {
+        "contiguous_calls": 0,
+        "dest_cp_size": 1,
+        "group": null,
+        "reduce_calls": [],
+        "same_tensor": true
+      },
+      {
+        "contiguous_calls": 0,
+        "dest_cp_size": 2,
+        "group": null,
+        "reduce_calls": [],
+        "same_tensor": true
+      },
+      {
+        "contiguous_calls": 1,
+        "dest_cp_size": 2,
+        "group": "dest-cp",
+        "reduce_calls": [
+          {
+            "dst": 7,
+            "group": "dest-cp",
+            "op": "SUM",
+            "same_tensor": true
+          }
+        ],
+        "same_tensor": true
+      },
+      {
+        "contiguous_calls": 1,
+        "dest_cp_size": 4,
+        "group": "dest-cp",
+        "reduce_calls": [
+          {
+            "dst": 7,
+            "group": "dest-cp",
+            "op": "SUM",
+            "same_tensor": true
+          }
+        ],
+        "same_tensor": true
+      }
+    ],
+    "direct_cp2_vs_cp1_numeric_test": true,
+    "direct_test_covers_steady_and_cooldown": true,
+    "direct_test_requires_eight_gpus": true,
+    "no_reduce_without_destination_group": true,
+    "one_sum_to_destination_leader_with_group": true,
+    "source_cp_remains_explicitly_unsupported": true,
+    "title_scope_is_destination_cp_only": true
+  },
+  "failure_codes": [],
+  "finished_at": "2026-09-02T09:58:53.759676+00:00",
+  "head_sha": "2309e6f79abe79f72974e5e70a98d33fa5472226",
+  "probe_status": "pass",
+  "protocol_id": "historical-pr-blind-communication-v0.1-r12-12",
+  "schema_version": "0.1",
+  "selection_lock_sha256": "sha256:7ddbd98c43d1952e5b3ae3abcb25e1f58e5a1e3adb8c648fa1399475194baa53",
+  "source_bundle_sha256": "sha256:c25d5a59d67fe0979b1ea6210ab39aa109c3bf167830afbb2c619bcb1e0a92a6",
+  "source_digests": {
+    "base:megatron/core/pipeline_parallel/bridge_communicator.py": "sha256:ce1cdeb36693a362c928e916cbb885d68f28ce049afe3b5df4a9bd03b01b1429",
+    "base:tests/unit_tests/models/mimo/test_mimo_1f1b_schedule.py": "sha256:9c4c8ccb2a50e3bffdda1f6f6b592d79e4788b14d8b4988d6dd2e72e27a8edf1",
+    "base:tests/unit_tests/models/mimo/test_mimo_colocated_correctness.py": "sha256:19f5dbb838ad853034a9d3404834e5d56ab349842fbe5701c11f971585bdbcb8",
+    "base:tests/unit_tests/pipeline_parallel/test_bridge_communicator.py": "sha256:e1ead4bdc2410f70b86f46b393d4be6a23b3bbbf8c2d90eba2a950306c942deb",
+    "head:megatron/core/pipeline_parallel/bridge_communicator.py": "sha256:869f54966548677030713eb581384d04fafa1cead2f87bf10b1b1f8a3309dcbd",
+    "head:tests/unit_tests/models/mimo/test_mimo_1f1b_schedule.py": "sha256:96681066724decb680d9e687f3d8a3d3dc6f1ee0fd7c7a47013272101068e5e9",
+    "head:tests/unit_tests/models/mimo/test_mimo_colocated_correctness.py": "sha256:0c3618c338239c851fc4b9e5b228581748c4a0d5cc0092aba77d0f7db4ad3f10",
+    "head:tests/unit_tests/models/mimo/test_mimo_noncolocated_cp_correctness.py": "sha256:e73b8e5acc334c666461dd5eec7860baddb74974dc50e39f5e01f9b9f0c10082",
+    "head:tests/unit_tests/pipeline_parallel/test_bridge_communicator.py": "sha256:a41d2c859ed1e491d2812b2e0c12d3336aa515501d3049eac85d623998eeeda9"
+  },
+  "started_at": "2026-09-02T09:58:53.703608+00:00",
+  "test_plan_sha256": "sha256:57f93d99b828a2f71b393ca579a337f3308688336b2bc10240479ffbd782cce7"
+}

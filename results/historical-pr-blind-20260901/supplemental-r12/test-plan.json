@@ -1,0 +1,328 @@
+{
+  "cases": [
+    {
+      "base_sha": "423904d7172ce00329c9f24f38b46f9569999409",
+      "case_id": "cutlass-pr-3294",
+      "changed_paths": [
+        "examples/python/CuTeDSL/cute/blackwell/kernel/distributed/all_reduce_one_shot_lamport.py",
+        "examples/python/CuTeDSL/cute/blackwell/kernel/distributed/all_reduce_simple.py",
+        "examples/python/CuTeDSL/cute/blackwell/kernel/distributed/all_reduce_tma.py",
+        "examples/python/CuTeDSL/cute/blackwell/kernel/distributed/all_reduce_two_shot_multimem.py",
+        "examples/python/CuTeDSL/cute/blackwell/kernel/distributed/distributed_all_gather_gemm_blackwell.py",
+        "examples/python/CuTeDSL/cute/blackwell/kernel/distributed/distributed_gemm_all_reduce_blackwell.py",
+        "examples/python/CuTeDSL/cute/blackwell/kernel/distributed/distributed_gemm_reduce_scatter_blackwell.py"
+      ],
+      "claim": "Every changed distributed CuTeDSL example imports CUDA Device from a supported module and can reach argument setup without a Device NameError.",
+      "communication_risk": "distributed example launch portability",
+      "decision_rule": "Accept if all affected examples resolve Device and the patch is import-only. One missed local example with a runnable closure probe is check; an invalid replacement module or a collective semantic change is reject.",
+      "execution_tier": "exact base/head Python import, syntax, and launch-prefix isolation",
+      "head_sha": "4b57af49aaf32550a49bb6b9c8f706c554ec601a",
+      "project": "cutlass-cute",
+      "pull_number": 3294,
+      "questions": [
+        "Do all seven changed distributed examples resolve the same supported Device symbol?",
+        "Does Python compilation and an import-isolated launch prefix succeed for every example?",
+        "Are collective algorithms and launch arguments otherwise unchanged?",
+        "Is there a direct smoke path that distinguishes the broken import from head?"
+      ],
+      "repository": "NVIDIA/cutlass",
+      "required_hardware": "none for the title-scoped import claim; Blackwell execution is non-blocking hardening"
+    },
+    {
+      "base_sha": "e179800192f303da602713ec11052cae09fec025",
+      "case_id": "flashinfer-pr-3939",
+      "changed_paths": [
+        "docs/api/comm.rst",
+        "flashinfer/comm/allreduce.py",
+        "flashinfer/comm/mnnvl.py",
+        "flashinfer/comm/trtllm_ar.py",
+        "flashinfer/comm/trtllm_mnnvl_ar.py",
+        "tests/comm/test_trtllm_allreduce_checkpoint.py",
+        "tests/comm/test_trtllm_mnnvl_allreduce.py"
+      ],
+      "claim": "Reverting graph-VA preservation restores safe all-reduce checkpoint recovery without stale mappings, double release, or replay corruption.",
+      "communication_risk": "CUDA graph virtual-address and communicator resource lifecycle",
+      "decision_rule": "Accept only if the named checkpoint sequence is safe and numerically correct. A single bounded backend gap with an executable closure test is check; stale VA reuse, double release, wrong reduction, or a cross-backend lifecycle redesign is reject. Missing required hardware is unresolved.",
+      "execution_tier": "exact ownership/state model plus CUDA-graph checkpoint/replay matrix",
+      "head_sha": "372243aea5e217633eeb89f1b1ac987c1b872458",
+      "project": "flashinfer",
+      "pull_number": 3939,
+      "questions": [
+        "After restore, are graph buffers and IPC mappings reconstructed from one live owner rather than stale preserved VAs?",
+        "Do capture, replay, restore, recapture, and repeated close avoid use-after-free and double-unmap states?",
+        "Do eager and non-checkpoint all-reduce paths retain their prior lifecycle?",
+        "Do changed tests exercise the failure-producing restore sequence and repeated cleanup?"
+      ],
+      "repository": "flashinfer-ai/flashinfer",
+      "required_hardware": "two CUDA GPUs; MNNVL-only coverage may be reported separately when unavailable"
+    },
+    {
+      "base_sha": "1aca0f887b65f2ba2bc5e9e9d35ff0bd078da76d",
+      "case_id": "flashinfer-pr-3931",
+      "changed_paths": [
+        "csrc/fused_moe/cutlass_backend/cutlass_fused_moe_kernels.cuh",
+        "csrc/fused_moe/cutlass_backend/flashinfer_cutlass_fused_moe_binding.cu",
+        "csrc/nv_internal/tensorrt_llm/kernels/cutlass_kernels/include/moe_kernels.h",
+        "flashinfer/fused_moe/core.py",
+        "tests/moe/test_cutlass_fused_moe_do_finalize.py"
+      ],
+      "claim": "The SM90 CUTLASS fused-MoE runner exposes the exact pre-reduce buffer when finalization is deferred, while preserving finalized output compatibility.",
+      "communication_risk": "fused-compute/collective buffer ABI and ownership",
+      "decision_rule": "Accept if both deferred and compatibility paths satisfy the buffer ABI and output oracle. One local metadata/lifetime omission with a closure test is check; a wrong buffer, dangling alias, double finalization, or numeric regression is reject. Missing SM90 execution is unresolved.",
+      "execution_tier": "exact C++/Python data-flow contract plus SM90 output-equivalence probe",
+      "head_sha": "42391ff774980282f656d10c48126845913c379f",
+      "project": "flashinfer",
+      "pull_number": 3931,
+      "questions": [
+        "When do_finalize is false, is the returned tensor the buffer immediately before reduction/finalization?",
+        "Are shape, dtype, stride, device, aliasing, and lifetime suitable for the fused all-reduce consumer?",
+        "When do_finalize is true, are legacy return type and numeric output unchanged?",
+        "Does a direct test distinguish pre-reduce from finalized output and prevent double finalization?"
+      ],
+      "repository": "flashinfer-ai/flashinfer",
+      "required_hardware": "SM90 CUDA GPU for full execution; source-level ABI checks remain diagnostic"
+    },
+    {
+      "base_sha": "a25af45eca5a5a7e40848d69e60609edb6f3b4ec",
+      "case_id": "flashinfer-pr-3880",
+      "changed_paths": [
+        "include/flashinfer/comm/trtllm_allreduce_fusion.cuh",
+        "tests/comm/test_trtllm_allreduce_reduction.py"
+      ],
+      "claim": "TRT-LLM block reductions are correct and synchronization-safe when blockDim.x is not a multiple of the warp size.",
+      "communication_risk": "partial-warp active-mask and shared reduction semantics",
+      "decision_rule": "Accept if every frozen size is correct and the direct regression distinguishes base. One bounded uncovered type with the same safe primitive is check; invalid-lane reads, divergence, hangs, or wrong sums are reject. Missing CUDA is unresolved.",
+      "execution_tier": "exact CUDA compile/run matrix against an independent reduction oracle",
+      "head_sha": "cfc8161288d9c8962f35f179128540c5c3b62f09",
+      "project": "flashinfer",
+      "pull_number": 3880,
+      "questions": [
+        "Do block sizes 1, 7, 31, 32, 33, 47, 63, 64, 96, 127, and 128 match the oracle?",
+        "Does every warp use a valid active mask and does the final warp-aggregate read only initialized lanes?",
+        "Are scalar/vector and neighboring full-warp cases unchanged?",
+        "Does the changed direct test contain at least one base-distinguishing partial-warp case?"
+      ],
+      "repository": "flashinfer-ai/flashinfer",
+      "required_hardware": "CUDA GPU"
+    },
+    {
+      "base_sha": "a25af45eca5a5a7e40848d69e60609edb6f3b4ec",
+      "case_id": "flashinfer-pr-3879",
+      "changed_paths": [
+        "include/flashinfer/comm/trtllm_allreduce_fusion.cuh"
+      ],
+      "claim": "blockReduceSumV2 returns the correct sum for non-warp-multiple block dimensions.",
+      "communication_risk": "partial-warp reduction correctness",
+      "decision_rule": "Accept if the full matrix passes and the change is retained by direct coverage. A correct implementation missing only one local regression is check; any wrong sum, invalid access, or synchronization hazard is reject. Missing CUDA is unresolved.",
+      "execution_tier": "the same exact CUDA reduction matrix used for the neighboring follow-up",
+      "head_sha": "dd143b20989ba1a2877474dbd4634604a72420bc",
+      "project": "flashinfer",
+      "pull_number": 3879,
+      "questions": [
+        "Do all frozen partial- and full-warp block sizes match the independent oracle?",
+        "Are inactive lanes excluded without reading uninitialized shared values?",
+        "Does the fix remain correct for more than one warp and for a one-lane tail?",
+        "Is a candidate-owned direct regression present for the base-distinguishing case?"
+      ],
+      "repository": "flashinfer-ai/flashinfer",
+      "required_hardware": "CUDA GPU"
+    },
+    {
+      "base_sha": "5e2b1da45307407869f3a0cb28b69423ece82b9f",
+      "case_id": "megatron-pr-5720",
+      "changed_paths": [
+        "megatron/core/pipeline_parallel/bridge_communicator.py",
+        "tests/unit_tests/models/mimo/test_mimo_1f1b_schedule.py",
+        "tests/unit_tests/models/mimo/test_mimo_colocated_correctness.py",
+        "tests/unit_tests/models/mimo/test_mimo_noncolocated_cp_correctness.py",
+        "tests/unit_tests/pipeline_parallel/test_bridge_communicator.py"
+      ],
+      "claim": "A non-colocated bridge communicator maps and transfers tensors correctly when the destination context-parallel degree differs from the source.",
+      "communication_risk": "cross-mesh rank mapping, split shape, and matched send/receive order",
+      "decision_rule": "Accept if all supported topology matrices are bijective, shape-safe, and order-matched. One explicitly unsupported bounded topology with a direct guard is check; an unmatched peer/order, silent truncation, or deadlock-capable mapping is reject.",
+      "execution_tier": "exact topology/rank state-machine matrix with mocked process groups",
+      "head_sha": "2309e6f79abe79f72974e5e70a98d33fa5472226",
+      "project": "megatron-core",
+      "pull_number": 5720,
+      "questions": [
+        "Are source and destination CP ranks mapped bijectively for 1x1, 1x2, 2x1, 2x2, and 2x4 matrices?",
+        "Do every sender and receiver agree on peer, tensor shape, tag, and operation order?",
+        "Are sequence/context splits lossless for uneven and neighboring even shapes?",
+        "Do colocated and equal-CP paths remain unchanged with direct tests?"
+      ],
+      "repository": "NVIDIA/Megatron-LM",
+      "required_hardware": "none for deterministic rank-map proof; distributed execution is corroborating"
+    },
+    {
+      "base_sha": "f2c875d1c8d1a35392992a9611d4bf5dd84d8e5c",
+      "case_id": "sglang-pr-31311",
+      "changed_paths": [
+        "python/sglang/srt/models/longcat_flash.py"
+      ],
+      "claim": "LongCat-2.0 real expert parallelism issues the intended all-reduce exactly once and avoids the named ScMoE RoPE crash.",
+      "communication_risk": "configuration-dependent collective cardinality and tensor-shape compatibility",
+      "decision_rule": "Accept if the named real-EP path fixes both collective cardinality and RoPE shape while preserving neighbors. One remaining local configuration with a direct closure test is check; double/missing reduction, wrong shape, or a crash in the named path is reject.",
+      "execution_tier": "exact configuration truth table with collective call tracing and RoPE shape controls",
+      "head_sha": "8407ae7c89b5e404616040c03ca6998dd5452f23",
+      "project": "sglang",
+      "pull_number": 31311,
+      "questions": [
+        "Across real-EP, DeepEP, shared-expert, and fallback combinations, is each required all-reduce issued exactly once?",
+        "Are configurations requiring no model-level reduction left at zero calls?",
+        "Do ScMoE RoPE inputs use compatible dimensions without masking unrelated shape errors?",
+        "Do neighboring non-real-EP LongCat paths retain output and call-count behavior?"
+      ],
+      "repository": "sgl-project/sglang",
+      "required_hardware": "none for isolated call/shape contract; multi-GPU DeepEP execution is corroborating"
+    },
+    {
+      "base_sha": "ee1736f39ab62b15fcb276d3ff9090ff13c60fc6",
+      "case_id": "sglang-pr-31290",
+      "changed_paths": [
+        "python/sglang/srt/distributed/device_communicators/xpu_communicator.py",
+        "python/sglang/srt/distributed/parallel_state.py",
+        "test/registered/xpu/test_xpu_gatherv_scatterv.py"
+      ],
+      "claim": "XPU DP-attention reduce_scatterv and all_gatherv use correct rank-local shapes and splits for uneven workloads.",
+      "communication_risk": "variable-count collective shape agreement and XCCL API semantics",
+      "decision_rule": "Accept if call-shape proof and available XPU execution cover the title-scoped uneven layouts. One bounded zero-size or async gap with a closure test is check; rank-disagreeing counts, silent truncation, or hang-capable calls are reject. Missing XPU numeric execution alone is unresolved.",
+      "execution_tier": "exact fake-XCCL call capture plus uneven world/rank shape matrix",
+      "head_sha": "e291c362e506a94305c58de3df2352f31211c362",
+      "project": "sglang",
+      "pull_number": 31290,
+      "questions": [
+        "For world sizes 2, 3, and 4, do uneven and zero-tail split vectors agree on every rank?",
+        "Are input/output sizes, dim selection, dtype, device, and synchronous/async return semantics correct?",
+        "Does all_gatherv invert the supported reduce_scatterv layouts without loss or duplication?",
+        "Do direct tests include an actually uneven split that distinguishes base from head?"
+      ],
+      "repository": "sgl-project/sglang",
+      "required_hardware": "XPU for full numeric execution; call-shape proof is required locally"
+    },
+    {
+      "base_sha": "a06d4e757d264067dfb56c1cb4defb64907de02b",
+      "case_id": "torchtitan-pr-3827",
+      "changed_paths": [
+        "torchtitan/components/loss.py",
+        "torchtitan/experiments/rl/actors/generator.py",
+        "torchtitan/experiments/rl/models/vllm_wrapper.py"
+      ],
+      "claim": "The three named RL fixes preserve trainer logprob gradients, route generator TP all-reduce correctly, and synchronize FusedSwiGLU weights.",
+      "communication_risk": "DTensor placement, autograd, and weight-replica consistency",
+      "decision_rule": "Accept only if all three explicitly named fixes satisfy their independent oracle. Exactly one bounded local residual with a runnable closure test is check; wrong gradients, replica divergence, duplicate/missing collectives, or multiple residual families are reject.",
+      "execution_tier": "exact three-claim graph/placement matrix with independent math oracles",
+      "head_sha": "cc2d82af86efaec12a460240bde2a697583e6e4d",
+      "project": "torchtitan",
+      "pull_number": 3827,
+      "questions": [
+        "Does trainer logprob retain the expected gradient path and scale?",
+        "Does generator TP perform exactly one reduction on the correct mesh/group with correct placement?",
+        "Are both FusedSwiGLU weight components synchronized without duplicate or missing collectives?",
+        "Are non-TP and non-fused neighboring configurations unchanged?"
+      ],
+      "repository": "pytorch/torchtitan",
+      "required_hardware": "none for DTensor graph isolation; multi-rank execution is corroborating"
+    },
+    {
+      "base_sha": "fbceec07e35cc2dd69c55df7d580f19381421a12",
+      "case_id": "torchtitan-pr-3821",
+      "changed_paths": [
+        "torchtitan/experiments/graph_trainer/fsdp_passes.py",
+        "torchtitan/experiments/graph_trainer/tests/test_passes.py"
+      ],
+      "claim": "GraphTrainer buckets replicated all-reduce operations under HSDP/DDP without changing graph dependencies or numerical reduction semantics.",
+      "communication_risk": "collective bucketing, process-group identity, and graph ordering",
+      "decision_rule": "Accept if bucketing preserves exact graph and reduction semantics for every frozen control. One bounded unsupported grouping with a guard and closure test is check; cross-group coalescing, dependency reordering, or omitted/duplicate reduction is reject.",
+      "execution_tier": "exact FX graph rewrite over mixed replicate/shard and dependency controls",
+      "head_sha": "63a758ccc3af6023337a73331473eed24e990bff",
+      "project": "torchtitan",
+      "pull_number": 3821,
+      "questions": [
+        "Are only compatible replicate all-reduces placed in the same bucket?",
+        "Are group, dtype, shape, reduction op, and dependency boundaries respected?",
+        "Does the rewritten graph contain neither duplicate nor omitted reductions and preserve consumers?",
+        "Do direct tests distinguish HSDP/DDP replicate cases from sharded and mixed controls?"
+      ],
+      "repository": "pytorch/torchtitan",
+      "required_hardware": "none for graph rewrite proof; distributed timing is corroborating"
+    },
+    {
+      "base_sha": "e52747a403f55044578d9435069825f949b549bf",
+      "case_id": "verl-pr-6958",
+      "changed_paths": [
+        "verl/workers/rollout/vllm_rollout/bucketed_weight_transfer.py"
+      ],
+      "claim": "The rollout path safely reuses one persistent CUDA-IPC weight-transfer bucket across compatible synchronizations.",
+      "communication_risk": "IPC allocation ownership, synchronization, resizing, and teardown",
+      "decision_rule": "Accept if reuse is compatibility-gated, synchronized, and exactly owned through teardown. One bounded lifecycle branch with a deterministic closure test is check; use-after-free, unsynchronized overwrite, wrong-size reuse, leak, or design-level ownership ambiguity is reject.",
+      "execution_tier": "exact lifecycle state machine with mocked CUDA events and bucket identities",
+      "head_sha": "431d6f10b18acd3c1105e44e923767b5d7ffcf26",
+      "project": "verl",
+      "pull_number": 6958,
+      "questions": [
+        "Do compatible repeated syncs reuse exactly one allocation after prior work is complete?",
+        "Do size, dtype, device, or peer changes safely reallocate or fail before transfer?",
+        "Do cancellation, exception, sleep/wake, and close release the bucket exactly once?",
+        "Can any producer overwrite or free storage while a consumer still owns the IPC view?"
+      ],
+      "repository": "verl-project/verl",
+      "required_hardware": "none for ownership proof; CUDA IPC execution is corroborating"
+    },
+    {
+      "base_sha": "43cd340247f442cfccaa8bef24c0867493af8e7b",
+      "case_id": "vllm-pr-48763",
+      "changed_paths": [
+        "vllm/model_executor/models/deepseek_mtp.py",
+        "vllm/models/deepseek_v32/nvidia/mtp.py"
+      ],
+      "claim": "Removing the additional MoE reduce_scatter preserves DeepSeek-MTP outputs and recovers the claimed communication/performance regression.",
+      "communication_risk": "redundant collective elimination and tensor-parallel mathematical equivalence",
+      "decision_rule": "Accept if correctness, communication count, and paired performance evidence support the scoped claim. Correct elimination with only bounded missing/noisy performance evidence is check; rank-divergent output, missing required synchronization, or a measured regression is reject. Missing required hardware is unresolved.",
+      "execution_tier": "exact call-count/data-flow proof plus paired multi-GPU performance comparison",
+      "head_sha": "6a15d1a27e94f047868d601f54ff1514bd5148ad",
+      "project": "vllm",
+      "pull_number": 48763,
+      "questions": [
+        "Is the removed reduce_scatter mathematically redundant for every changed model path?",
+        "Do TP ranks retain identical logical outputs, placements, and shapes without the call?",
+        "Does the communication trace remove exactly the redundant collective and no required synchronization?",
+        "Does a paired benchmark reproduce a positive throughput effect with spread and configuration disclosed?"
+      ],
+      "repository": "vllm-project/vllm",
+      "required_hardware": "two CUDA GPUs for the performance claim; correctness call graph is required locally"
+    }
+  ],
+  "claim_scope_policy": {
+    "compound_title_claims_are_all_blocking": true,
+    "title_scoped_acceptance_is_blocking": true,
+    "unclaimed_hardening_is_blocking": false
+  },
+  "cross_case_controls": [
+    "FlashInfer 3879 and 3880 use the same partial-warp matrix, so a follow-up cannot receive an easier oracle.",
+    "A collective call-count improvement cannot compensate for wrong rank, shape, order, ownership, or numeric semantics.",
+    "Static source evidence cannot be promoted to runtime evidence when the frozen contract requires communication hardware."
+  ],
+  "frozen_at": "2026-09-02T09:42:41.831082+00:00",
+  "frozen_before_source_diff_content_inspection": true,
+  "machine_policy_id": "communication-case-contract-v0.1",
+  "merge_outcomes_visible_to_machine_judge": false,
+  "protocol_id": "historical-pr-blind-communication-v0.1-r12-12",
+  "review_text_requested": false,
+  "review_text_visible_to_machine_judge": false,
+  "schema_version": "0.1",
+  "scoring_policy": {
+    "check_is_bounded_repairability_or_bounded_claim-evidence_gap": true,
+    "decisions": [
+      "accept_with_scope",
+      "check",
+      "reject",
+      "unresolved"
+    ],
+    "forced_polarization_used": false,
+    "kind": "ordered exact communication-contract judgment with repairability triage",
+    "missing_required_environment_evidence": "unresolved, never candidate fail",
+    "weighted_score_used": false
+  },
+  "selection_lock_sha256": "sha256:7ddbd98c43d1952e5b3ae3abcb25e1f58e5a1e3adb8c648fa1399475194baa53",
+  "test_plan_sha256": "sha256:57f93d99b828a2f71b393ca579a337f3308688336b2bc10240479ffbd782cce7"
+}

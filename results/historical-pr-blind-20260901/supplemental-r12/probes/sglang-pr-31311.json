@@ -1,0 +1,130 @@
+{
+  "base_sha": "f2c875d1c8d1a35392992a9611d4bf5dd84d8e5c",
+  "case_id": "sglang-pr-31311",
+  "environment": {
+    "gpu_count": 2,
+    "gpu_names": [
+      "NVIDIA A100-SXM4-40GB",
+      "NVIDIA A100-SXM4-40GB"
+    ],
+    "platform": "Linux-6.8.0-138-generic-x86_64-with-glibc2.39",
+    "python": "3.12.14 | packaged by conda-forge | (main, Aug 21 2026, 22:48:28) [GCC 14.4.0]",
+    "torch": "2.11.0+cu128",
+    "torch_cuda_available": true
+  },
+  "environment_sha256": "sha256:35ce10fa020d509d7110e8d6cd7c03a54d34d16652781d0cc087781b42424120",
+  "evidence_sha256": "sha256:c890b10d25f5ff9307f0693c8a76a6365edd684de62c544071e2155090b8fc15",
+  "facts": {
+    "base_double_reduces_real_a2a": true,
+    "base_has_alignment_helper": false,
+    "candidate_owned_closure_test": false,
+    "changed_direct_test": false,
+    "collective_call_truth_table": [
+      {
+        "base_calls": 0,
+        "expected_calls": 0,
+        "head_calls": 0,
+        "real_a2a": false,
+        "tp_size": 1
+      },
+      {
+        "base_calls": 0,
+        "expected_calls": 0,
+        "head_calls": 0,
+        "real_a2a": true,
+        "tp_size": 1
+      },
+      {
+        "base_calls": 1,
+        "expected_calls": 1,
+        "head_calls": 1,
+        "real_a2a": false,
+        "tp_size": 2
+      },
+      {
+        "base_calls": 1,
+        "expected_calls": 0,
+        "head_calls": 0,
+        "real_a2a": true,
+        "tp_size": 2
+      },
+      {
+        "base_calls": 1,
+        "expected_calls": 1,
+        "head_calls": 1,
+        "real_a2a": false,
+        "tp_size": 4
+      },
+      {
+        "base_calls": 1,
+        "expected_calls": 0,
+        "head_calls": 0,
+        "real_a2a": true,
+        "tp_size": 4
+      }
+    ],
+    "forward_mlp_guards_gather_with_exact_multiplicity": true,
+    "head_named_allreduce_cardinality_matches": true,
+    "helper_silently_short_slices_non_divisible_geometry": true,
+    "post_moe_merge_calls_alignment_unconditionally": true,
+    "row_alignment_matrix": [
+      {
+        "current": 2,
+        "matches_target": true,
+        "rank": 0,
+        "result_rows": 4,
+        "target": 4
+      },
+      {
+        "current": 2,
+        "matches_target": true,
+        "rank": 1,
+        "result_rows": 4,
+        "target": 4
+      },
+      {
+        "current": 4,
+        "matches_target": true,
+        "rank": 0,
+        "result_rows": 2,
+        "target": 2
+      },
+      {
+        "current": 4,
+        "matches_target": true,
+        "rank": 1,
+        "result_rows": 2,
+        "target": 2
+      },
+      {
+        "current": 5,
+        "matches_target": true,
+        "rank": 0,
+        "result_rows": 3,
+        "target": 3
+      },
+      {
+        "current": 5,
+        "matches_target": false,
+        "rank": 1,
+        "result_rows": 2,
+        "target": 3
+      }
+    ],
+    "valid_named_geometry_aligns": true
+  },
+  "failure_codes": [],
+  "finished_at": "2026-09-02T09:58:53.804349+00:00",
+  "head_sha": "8407ae7c89b5e404616040c03ca6998dd5452f23",
+  "probe_status": "pass",
+  "protocol_id": "historical-pr-blind-communication-v0.1-r12-12",
+  "schema_version": "0.1",
+  "selection_lock_sha256": "sha256:7ddbd98c43d1952e5b3ae3abcb25e1f58e5a1e3adb8c648fa1399475194baa53",
+  "source_bundle_sha256": "sha256:c25d5a59d67fe0979b1ea6210ab39aa109c3bf167830afbb2c619bcb1e0a92a6",
+  "source_digests": {
+    "base:python/sglang/srt/models/longcat_flash.py": "sha256:356d8d5ed9e42d14fa1f5e64ab02463b1f5f9b42e9937e91aa3a4f815a82776b",
+    "head:python/sglang/srt/models/longcat_flash.py": "sha256:37cb03d1b096fdfc29465b17799991c8de21445a3d86b46f58af942ec2306874"
+  },
+  "started_at": "2026-09-02T09:58:53.761071+00:00",
+  "test_plan_sha256": "sha256:57f93d99b828a2f71b393ca579a337f3308688336b2bc10240479ffbd782cce7"
+}

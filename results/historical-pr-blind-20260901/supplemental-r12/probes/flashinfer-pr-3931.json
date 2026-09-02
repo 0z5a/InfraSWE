@@ -1,0 +1,59 @@
+{
+  "base_sha": "1aca0f887b65f2ba2bc5e9e9d35ff0bd078da76d",
+  "case_id": "flashinfer-pr-3931",
+  "environment": {
+    "gpu_count": 2,
+    "gpu_names": [
+      "NVIDIA A100-SXM4-40GB",
+      "NVIDIA A100-SXM4-40GB"
+    ],
+    "platform": "Linux-6.8.0-138-generic-x86_64-with-glibc2.39",
+    "python": "3.12.14 | packaged by conda-forge | (main, Aug 21 2026, 22:48:28) [GCC 14.4.0]",
+    "torch": "2.11.0+cu128",
+    "torch_cuda_available": true
+  },
+  "environment_sha256": "sha256:35ce10fa020d509d7110e8d6cd7c03a54d34d16652781d0cc087781b42424120",
+  "evidence_sha256": "sha256:78192a19fdd7541459979448d80653d23f4821019952f71bbeb6059e1972d790",
+  "facts": {
+    "all_binding_kernel_calls_forward_do_finalize": false,
+    "binding_kernel_call_count": 2,
+    "binding_kernel_calls_forward_do_finalize": [
+      false,
+      false
+    ],
+    "decisive_source_fact": "both binding-to-kernel calls omit do_finalize, so their C++ default true prevents the new early return",
+    "deferred_buffers_are_copied_out": true,
+    "direct_test_checks_manual_finalize": true,
+    "direct_test_checks_shapes_and_determinism": true,
+    "direct_test_detects_finalize_was_skipped": false,
+    "direct_test_matrix_size": 48,
+    "effective_skip_reached_from_python_false": false,
+    "fake_and_real_deferred_shapes_present": true,
+    "kernel_default_for_omitted_do_finalize_is_true": true,
+    "kernel_has_early_skip": true,
+    "python_forwards_do_finalize_to_binding": true,
+    "sm90_runtime_executed": false,
+    "unsupported_modes_fail_loud": true
+  },
+  "failure_codes": [],
+  "finished_at": "2026-09-02T09:57:54.801771+00:00",
+  "head_sha": "42391ff774980282f656d10c48126845913c379f",
+  "probe_status": "pass",
+  "protocol_id": "historical-pr-blind-communication-v0.1-r12-12",
+  "schema_version": "0.1",
+  "selection_lock_sha256": "sha256:7ddbd98c43d1952e5b3ae3abcb25e1f58e5a1e3adb8c648fa1399475194baa53",
+  "source_bundle_sha256": "sha256:c25d5a59d67fe0979b1ea6210ab39aa109c3bf167830afbb2c619bcb1e0a92a6",
+  "source_digests": {
+    "base:csrc/fused_moe/cutlass_backend/cutlass_fused_moe_kernels.cuh": "sha256:9670eeeda139f882b131d4bd7401f1c180b937e5fd8eb1f818507ce3c792683d",
+    "base:csrc/fused_moe/cutlass_backend/flashinfer_cutlass_fused_moe_binding.cu": "sha256:9b0196ae19f66493c222222ef6588e89bce8f3d518a5a71c9f87a690a7980453",
+    "base:csrc/nv_internal/tensorrt_llm/kernels/cutlass_kernels/include/moe_kernels.h": "sha256:790b2eba47e14cf58c1e34e78146c26c721d63a2c950f0b3dd6d8d507a693149",
+    "base:flashinfer/fused_moe/core.py": "sha256:0f22a1d4f58e234bf2db2b4fd17ea622c735271752c5e38e7074b47a046e47d9",
+    "head:csrc/fused_moe/cutlass_backend/cutlass_fused_moe_kernels.cuh": "sha256:bbc52128cfa99f34f8686d97f5abd303b3736c4dd2af6a192eeafaf69d5dd99f",
+    "head:csrc/fused_moe/cutlass_backend/flashinfer_cutlass_fused_moe_binding.cu": "sha256:2928a969f7647f1effc69899c50b9c4ccb16c267b22f39f3489f11e8a172e975",
+    "head:csrc/nv_internal/tensorrt_llm/kernels/cutlass_kernels/include/moe_kernels.h": "sha256:28d1c7a2f86eca054af42ca666a2d26475a7635ec80a2032a165911e334859a9",
+    "head:flashinfer/fused_moe/core.py": "sha256:f247d153f30e1fad05ca804a815510c649bb54cbe37e356c0195424ff3581503",
+    "head:tests/moe/test_cutlass_fused_moe_do_finalize.py": "sha256:8e4a2dbd495352041dc2a35cacd1c463cade5f47c291588ba94ba767a09cb5e9"
+  },
+  "started_at": "2026-09-02T09:57:54.758995+00:00",
+  "test_plan_sha256": "sha256:57f93d99b828a2f71b393ca579a337f3308688336b2bc10240479ffbd782cce7"
+}

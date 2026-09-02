@@ -1,0 +1,65 @@
+{
+  "base_sha": "e179800192f303da602713ec11052cae09fec025",
+  "case_id": "flashinfer-pr-3939",
+  "environment": {
+    "gpu_count": 2,
+    "gpu_names": [
+      "NVIDIA A100-SXM4-40GB",
+      "NVIDIA A100-SXM4-40GB"
+    ],
+    "platform": "Linux-6.8.0-138-generic-x86_64-with-glibc2.39",
+    "python": "3.12.14 | packaged by conda-forge | (main, Aug 21 2026, 22:48:28) [GCC 14.4.0]",
+    "torch": "2.11.0+cu128",
+    "torch_cuda_available": true
+  },
+  "environment_sha256": "sha256:35ce10fa020d509d7110e8d6cd7c03a54d34d16652781d0cc087781b42424120",
+  "evidence_sha256": "sha256:5594003af6eb9a0232d101d28643f7d34bbb7156f183e5e9732f3dd1fabbd0b3",
+  "facts": {
+    "changed_direct_test": true,
+    "checkpoint_api_count": {
+      "base": 4,
+      "head": 0
+    },
+    "checkpoint_documentation_section_removed": true,
+    "checkpoint_test_removed": true,
+    "decisive_source_fact": "the revert removes the frozen checkpoint/restore API and its direct test rather than repairing that sequence",
+    "eager_allreduce_entrypoint_retained": true,
+    "head_blocks_unmapped_workspace_use": false,
+    "head_fail_closes_checkpoint_calls_by_absent_api": true,
+    "head_named_checkpoint_recovery_supported": false,
+    "head_reverts_to_torch_symmetric_allocation": true,
+    "mnnvl_allreduce_entrypoint_retained": true,
+    "required_two_gpu_checkpoint_runtime_executed": false,
+    "stable_va_state_removed": {
+      "detach_primitive": false,
+      "mapped_property": false,
+      "protocol_reinitializer": true,
+      "reattach_primitive": false
+    }
+  },
+  "failure_codes": [],
+  "finished_at": "2026-09-02T09:57:54.750340+00:00",
+  "head_sha": "372243aea5e217633eeb89f1b1ac987c1b872458",
+  "probe_status": "pass",
+  "protocol_id": "historical-pr-blind-communication-v0.1-r12-12",
+  "schema_version": "0.1",
+  "selection_lock_sha256": "sha256:7ddbd98c43d1952e5b3ae3abcb25e1f58e5a1e3adb8c648fa1399475194baa53",
+  "source_bundle_sha256": "sha256:c25d5a59d67fe0979b1ea6210ab39aa109c3bf167830afbb2c619bcb1e0a92a6",
+  "source_digests": {
+    "base:docs/api/comm.rst": "sha256:11b143125f53c43b326fccb4644725d62ffb16d72dc91696d5f2f84266074461",
+    "base:flashinfer/comm/allreduce.py": "sha256:1880948a26ab6e0436473a9e39b2f6d4fbef1a4f6720dd3f5c5c30e97c0769ea",
+    "base:flashinfer/comm/mnnvl.py": "sha256:955b285067c55c4e0bab68334ab3ab922981264db7bd3b10c719a44cb62ca949",
+    "base:flashinfer/comm/trtllm_ar.py": "sha256:7efc60d7a98a2b1cf695b111616aa70966f88a6f201281c092225bf9c90dcbd9",
+    "base:flashinfer/comm/trtllm_mnnvl_ar.py": "sha256:610ffe0266f94052ed59b901acacba475cac9cbe71343e53824446f427d2a9fc",
+    "base:tests/comm/test_trtllm_allreduce_checkpoint.py": "sha256:7d59ef2fead44dbd6953d5fe27a7e8b43ae3fc36b61efda5466b48f01b6aa4ee",
+    "base:tests/comm/test_trtllm_mnnvl_allreduce.py": "sha256:b0430b6af4c4ca24178fbe5ad622f1b7b1b42c048f23c0016dc2e38fdc8a3967",
+    "head:docs/api/comm.rst": "sha256:9393d1cb8c30ed8c97ddc9a1b76fe3c902b29820d90d90764ea89defba755696",
+    "head:flashinfer/comm/allreduce.py": "sha256:28d1778ac85df98d6afc734add77e58a88979961d43865bce3df1e91f38e3c60",
+    "head:flashinfer/comm/mnnvl.py": "sha256:e7f4f3ed9192ed04588d5120c3badeecc671ec6d3326b8ff14f7efcf17bd63eb",
+    "head:flashinfer/comm/trtllm_ar.py": "sha256:62ddd47e84f39983fcf01a0316a1b1e65a126fb85f0dd82af6336b5cf6af8d3c",
+    "head:flashinfer/comm/trtllm_mnnvl_ar.py": "sha256:bcf886c70f7208cfe33e422c564acfdbc174ed47e358636b774de5d042ed5478",
+    "head:tests/comm/test_trtllm_mnnvl_allreduce.py": "sha256:c7b3e7d6f995e1470a8dce51c247aacfc4bf1ab3e61c6d1d6cb49f286a397f58"
+  },
+  "started_at": "2026-09-02T09:57:54.694567+00:00",
+  "test_plan_sha256": "sha256:57f93d99b828a2f71b393ca579a337f3308688336b2bc10240479ffbd782cce7"
+}

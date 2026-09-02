@@ -1,0 +1,266 @@
+{
+  "blindness": {
+    "allowed_selection_fields": [
+      "number",
+      "title",
+      "createdAt",
+      "baseRefName",
+      "baseRefOid",
+      "headRefOid",
+      "changedFiles",
+      "additions",
+      "deletions",
+      "files.path",
+      "commits.first.commit.oid",
+      "commits.first.commit.parents.first.oid"
+    ],
+    "candidate_body_visible": false,
+    "ci_or_label_visible": false,
+    "diff_content_visible": false,
+    "review_or_comment_visible": false,
+    "state_or_merge_visible": false
+  },
+  "case_count": 30,
+  "created_at_window": {
+    "excluded_resolution_gray_zone": [
+      "2026-06-05T00:00:00Z",
+      "2026-08-26T23:59:59Z"
+    ],
+    "mature_end": "2026-06-04T23:59:59Z",
+    "observation_cutoff": "2026-09-02T23:59:59Z",
+    "per_project_recent_target": 1,
+    "recent_shortfall_fallback": "fill from mature ranking",
+    "recent_start": "2026-08-27T00:00:00Z",
+    "start": "2025-01-01T00:00:00Z"
+  },
+  "domain_allocation": {
+    "inference": 30
+  },
+  "domain_anchor": {
+    "inference": {
+      "direct_terms": [
+        "inference",
+        "serving",
+        "serve",
+        "scheduler",
+        "kv cache",
+        "kv-cache",
+        "prefix cache",
+        "decode",
+        "prefill",
+        "speculative",
+        "draft",
+        "cuda graph",
+        "cudagraph",
+        "attention",
+        "quantization",
+        "lora",
+        "adapter",
+        "batching",
+        "request",
+        "engine",
+        "executor",
+        "model runner",
+        "model_runner",
+        "sampling"
+      ],
+      "source_path_terms": [
+        "/scheduler",
+        "/engine",
+        "/executor",
+        "/worker",
+        "model_runner",
+        "kv_cache",
+        "/attention",
+        "spec_decode",
+        "speculative",
+        "/sampling",
+        "/lora",
+        "/adapter",
+        "/quant",
+        "/serve",
+        "/runtime",
+        "/batch",
+        "cache_manager"
+      ]
+    },
+    "title_docs_prefix_is_excluded": true
+  },
+  "domain_signals": {
+    "inference": {
+      "path_terms": [
+        "scheduler",
+        "engine",
+        "executor",
+        "worker",
+        "model_runner",
+        "kv_cache",
+        "attention",
+        "spec_decode",
+        "speculative",
+        "sampling",
+        "lora",
+        "adapter",
+        "quant",
+        "serve",
+        "runtime",
+        "batch",
+        "kernel",
+        "cache_manager"
+      ],
+      "risk_families": [
+        "scheduler-progress",
+        "cache-state-layout",
+        "attention-numerics",
+        "model-runtime-integration",
+        "memory-performance"
+      ],
+      "secondary_title_terms": [
+        "latency",
+        "throughput",
+        "memory",
+        "cache",
+        "sampling",
+        "token",
+        "model runner",
+        "worker",
+        "backend",
+        "flashinfer",
+        "trtllm"
+      ],
+      "strong_title_terms": [
+        "inference",
+        "serving",
+        "scheduler",
+        "kv cache",
+        "kv-cache",
+        "prefix cache",
+        "decode",
+        "prefill",
+        "speculative",
+        "draft",
+        "cuda graph",
+        "cudagraph",
+        "attention",
+        "quantization",
+        "lora",
+        "adapter",
+        "batching",
+        "request",
+        "engine",
+        "executor",
+        "kernel"
+      ]
+    },
+    "weights": {
+      "candidate_test_path": 1,
+      "domain_path": 4,
+      "secondary_title": 3,
+      "strong_title": 5
+    }
+  },
+  "domains_in_order": [
+    "inference"
+  ],
+  "eligibility": {
+    "changed_files_max": 12,
+    "changed_files_min": 1,
+    "changed_lines_max": 1200,
+    "domain_score_min": 4,
+    "exclude_all_previously_scored_pr_identities": true,
+    "exclude_dependency_or_generated_only": true,
+    "exclude_docs_only": true,
+    "exclude_tests_only": true,
+    "require_complete_path_list": true,
+    "require_first_commit_parent": true,
+    "require_runtime_source_path": true
+  },
+  "frozen_at": "2026-09-02T19:46:52.197993+00:00",
+  "grouping_policy": {
+    "finish_reveal_audit_and_iterate_before_next_round": true,
+    "future_rounds_are_not_preselected": true,
+    "round_size": 30
+  },
+  "machine_policy": {
+    "candidate_test_path_can_close_by_target_skip": true,
+    "forced_polarization_used": false,
+    "outcome_free_readiness_proxy_required_for_check": true,
+    "policy_id": "inference-contract-disposition-split-v0.1-r18",
+    "recent_bounded_failure_can_be_check": true,
+    "target_gap_alone_is_not_reject": true,
+    "technical_contract_and_disposition_are_separate": true,
+    "weighted_score_used": false
+  },
+  "policy_sha256": "sha256:23d6d5a5cee5d5b4fbb4e5c56e5e69a353f1f50b658b348bbb19a9883334db42",
+  "projects": {
+    "inference": {
+      "flashinfer": {
+        "count": 7,
+        "repository": "flashinfer-ai/flashinfer",
+        "source_prefixes": [
+          "flashinfer/",
+          "python/flashinfer/",
+          "include/",
+          "csrc/"
+        ]
+      },
+      "sglang": {
+        "count": 8,
+        "repository": "sgl-project/sglang",
+        "source_prefixes": [
+          "python/sglang/",
+          "sgl-kernel/"
+        ]
+      },
+      "tensorrt_llm": {
+        "count": 7,
+        "repository": "NVIDIA/TensorRT-LLM",
+        "source_prefixes": [
+          "tensorrt_llm/",
+          "cpp/"
+        ]
+      },
+      "vllm": {
+        "count": 8,
+        "repository": "vllm-project/vllm",
+        "source_prefixes": [
+          "vllm/",
+          "csrc/"
+        ]
+      }
+    }
+  },
+  "protocol_id": "inference-iterative-contract-v0.1-r18-30",
+  "r17_policy_iteration_sha256": "sha256:913fa960ae9a21287e22a5ca8d9663b5cec3069984e0b25dbee892f10b04930a",
+  "r17_policy_sha256": "sha256:3bcd37c708d67618dd42ac767653eef715303a59bc38f641a8ad9299b9186a11",
+  "r18_disposition_rules": [
+    "R18-RECENT-BOUNDED-FAILURE-CHECK",
+    "R18-RECENT-READINESS-PROXY",
+    "R18-RECENT-STRONG-PROOF-NOT-AUTO-ACCEPT",
+    "R18-TARGET-GAP-NOT-A-REJECT-VETO",
+    "R18-MATURE-TESTED-ROUTE-EXCEPTION",
+    "R18-STACK-MARKER-IS-WEAK",
+    "R18-EXACT-INTEGRITY-FIRST",
+    "R18-DUAL-OUTPUT"
+  ],
+  "round": "R18",
+  "schema_version": "0.1",
+  "selection_algorithm": {
+    "family_diversity": "greedy family coverage within each project slice",
+    "fill": "deterministic rank among remaining mature eligible cases",
+    "rank_key": [
+      "candidate-owned-test-first",
+      "domain-score-descending",
+      "created-at-descending-within-band",
+      "changed-files-ascending",
+      "changed-lines-ascending",
+      "pull-number-ascending"
+    ],
+    "recent_first": "one best eligible <=7-day case per project when available",
+    "stacked_series_diversity": {
+      "max_per_overlap_cluster_per_project": 2,
+      "non_test_path_jaccard_min": 0.5,
+      "normalized_title_prefix_token_count": 3
+    }
+  }
+}

@@ -69,25 +69,29 @@ def read(path: Path) -> dict[str, Any]:
     return payload
 
 
-def main() -> int:
+def main(
+    round_label: str = "R17",
+    iteration_option: str = "--r16-iteration",
+    iteration_binding_field: str = "r16_policy_iteration_sha256",
+) -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--selection-lock", type=Path, required=True)
-    parser.add_argument("--r16-iteration", type=Path, required=True)
+    parser.add_argument(iteration_option, dest="iteration", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
 
     selection = read(args.selection_lock)
     selection_material = selection["selection_material"]
     if selection["selection_lock_sha256"] != canonical_sha256(selection_material):
-        raise SystemExit("R17 selection lock digest mismatch")
-    iteration = read(args.r16_iteration)
+        raise SystemExit(f"{round_label} selection lock digest mismatch")
+    iteration = read(args.iteration)
     iteration_material = {
         key: value for key, value in iteration.items() if key != "iteration_sha256"
     }
     if iteration["iteration_sha256"] != canonical_sha256(iteration_material):
-        raise SystemExit("R16 iteration digest mismatch")
-    if selection_material["r16_policy_iteration_sha256"] != iteration["iteration_sha256"]:
-        raise SystemExit("R17 selection/R16 iteration binding mismatch")
+        raise SystemExit(f"{round_label} prior iteration digest mismatch")
+    if selection_material[iteration_binding_field] != iteration["iteration_sha256"]:
+        raise SystemExit(f"{round_label} selection/iteration binding mismatch")
     hidden = (
         selection_material["review_or_comment_visible"],
         selection_material["merge_outcomes_visible"],
@@ -97,16 +101,19 @@ def main() -> int:
         selection_material["excluded_resolution_gray_zone_used"],
     )
     if any(value is not False for value in hidden):
-        raise SystemExit("R17 selection exposes hidden evidence")
+        raise SystemExit(f"{round_label} selection exposes hidden evidence")
     cases = selection_material["cases"]
-    if len(cases) != 30:
-        raise SystemExit("R17 test plan requires 30 cases")
+    expected_count = int(selection_material["domain_allocation"].get("training", 0)) + int(
+        selection_material["domain_allocation"].get("inference", 0)
+    )
+    if len(cases) != expected_count:
+        raise SystemExit(f"{round_label} test plan requires {expected_count} cases")
 
     plan_material = {
         "schema_version": "0.1",
         "protocol_id": selection_material["protocol_id"],
         "selection_lock_sha256": selection["selection_lock_sha256"],
-        "r16_policy_iteration_sha256": iteration["iteration_sha256"],
+        iteration_binding_field: iteration["iteration_sha256"],
         "machine_policy_id": selection_material["machine_policy_id"],
         "domain_allocation": selection_material["domain_allocation"],
         "frozen_at": datetime.now(UTC).isoformat(),

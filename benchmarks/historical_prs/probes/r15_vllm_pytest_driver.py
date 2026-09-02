@@ -26,6 +26,9 @@ def _install_tests_utils_boundary() -> None:
                 yield
 
     module.ensure_current_vllm_config = ensure_current_vllm_config
+    # Focused source-only tests do not consume the unrelated assets warmed by
+    # broad multimodal conftests.  Keep that optional network boundary inert.
+    module.prewarm_hf_cache = lambda _assets: None
     sys.modules[module.__name__] = module
 
 

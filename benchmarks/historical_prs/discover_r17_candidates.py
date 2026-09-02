@@ -15,7 +15,7 @@ from infraswe.history.blind import canonical_sha256
 from infraswe.io import atomic_write_json
 
 
-def main() -> int:
+def main(round_label: str = "R17") -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--policy", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
@@ -24,7 +24,7 @@ def main() -> int:
     policy = json.loads(args.policy.read_text(encoding="utf-8"))
     material = {key: value for key, value in policy.items() if key != "policy_sha256"}
     if policy["policy_sha256"] != canonical_sha256(material):
-        raise SystemExit("R17 policy digest mismatch")
+        raise SystemExit(f"{round_label} policy digest mismatch")
     if any(
         policy["blindness"][key] is not False
         for key in (
@@ -35,7 +35,7 @@ def main() -> int:
             "ci_or_label_visible",
         )
     ):
-        raise SystemExit("R17 policy exposes forbidden evidence")
+        raise SystemExit(f"{round_label} policy exposes forbidden evidence")
 
     window = policy["created_at_window"]
     discoveries: dict[str, Any] = {

@@ -1,0 +1,471 @@
+{
+  "evidence_sha256": "sha256:342d9680d20457b4fcd85be724c8fa0b0f818b1396d03c39d995ac39e5cc9601",
+  "finished_at": "2026-09-02T20:08:12.688390+00:00",
+  "noconftest_projects": [
+    "tensorrt-llm",
+    "vllm"
+  ],
+  "outcome_review_ci_fields_requested": false,
+  "protocol_id": "r18-exact-candidate-upstream-tests-v0.1",
+  "records": [
+    {
+      "case_id": "flashinfer-pr-3485",
+      "duration_seconds": 81.13119541690685,
+      "head_sha": "2d1259b042b5f3c6f69336f0cad7b01ed3abc428",
+      "output_sha256": "sha256:55bb70e6a374257a3da253ef9d0b705d6f65529ef85e5e89074cf4b4f90e4351",
+      "output_tail": "........................................................................ [ 37%]\n........................................................................ [ 75%]\n................................................                         [100%]\n192 passed, 16897 deselected in 71.42s (0:01:11)\nWelcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nPrevious HEAD position was 9542ab05 chore: address headDim512 GQA review comments\nHEAD is now at 2d1259b0 Merge branch 'main' into fa2_fp8_kv_optimization\n",
+      "ref": "refs/r18/pr-3485",
+      "remote_command": "cd /workspace/r14-run-flashinfer && git switch --detach refs/r18/pr-3485 >/dev/null && test \"$(git rev-parse HEAD)\" = 2d1259b042b5f3c6f69336f0cad7b01ed3abc428 && timeout 420s env PYTHONDONTWRITEBYTECODE=1 CUDA_VISIBLE_DEVICES=0 PYTHONPATH=. /venv/main/bin/python -m pytest -q -rs --tb=short --maxfail=1 tests/attention/test_batch_prefill_kernels.py tests/attention/test_fp8_prefill.py -k test_batch_prefill_with_ragged_kv_cache_fp8",
+      "returncode": 0,
+      "status": "completed",
+      "summary_lines": [
+        "192 passed, 16897 deselected in 71.42s (0:01:11)"
+      ],
+      "test_names": [
+        "test_batch_prefill_with_ragged_kv_cache_fp8"
+      ],
+      "test_paths": [
+        "tests/attention/test_batch_prefill_kernels.py",
+        "tests/attention/test_fp8_prefill.py"
+      ]
+    },
+    {
+      "case_id": "flashinfer-pr-3393",
+      "duration_seconds": 221.90138208307326,
+      "head_sha": "9542ab05b882f52330e3f83b873d11321b61cc92",
+      "output_sha256": "sha256:de7c53a9a2ee54cdbe03e3d6c1dd0410457bb1ebfb1154e7622cfb6d4b5f1e50",
+      "output_tail": "sssssssssssssssssssss [ 89%]\nssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [ 89%]\nssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [ 89%]\nssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [ 89%]\nssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [ 90%]\nssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [ 90%]\nssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [ 90%]\nssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [ 90%]\nssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [ 90%]\nssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [ 90%]\nssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [ 90%]\nssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [ 90%]\nssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [ 90%]\nssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [ 90%]\nssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [ 90%]\nssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [ 90%]\nssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [ 90%]\nssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [ 90%]\nssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [ 91%]\nssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [ 91%]\nssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [ 91%]\nssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [ 91%]\nssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [ 91%]\nssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [ 91%]\nssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [ 91%]\nssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [ 91%]\nssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [ 91%]\nssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [ 91%]\nssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [ 91%]\nssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [ 91%]\nssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [ 91%]\nssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [ 92%]\nssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [ 92%]\nssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [ 92%]\nssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [ 92%]\nssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [ 92%]\nssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [ 92%]\nssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [ 92%]\nssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [ 92%]\nssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [ 92%]\nssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [ 92%]\nssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [ 92%]\nssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [ 92%]\nssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [ 92%]\nssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [ 92%]\nssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [ 93%]\nssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [ 93%]\nssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [ 93%]\nssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [ 93%]\nssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [ 93%]\nssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [ 93%]\nssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [ 93%]\nssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [ 93%]\nssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [ 93%]\nssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [ 93%]\nssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [ 93%]\nssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [ 93%]\nssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [ 93%]\nssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [ 94%]\nssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [ 94%]\nssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [ 94%]\nssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [ 94%]\nssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [ 94%]\nssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [ 94%]\nssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [ 94%]\nssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [ 94%]\nssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [ 94%]\nssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [ 94%]\nssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [ 94%]\nssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [ 94%]\nssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [ 94%]\nssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [ 94%]\nssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [ 95%]\nssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [ 95%]\nssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [ 95%]\nssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [ 95%]\nssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [ 95%]\nssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [ 95%]\nssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [ 95%]\nssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [ 95%]\nssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [ 95%]\nssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [ 95%]\nssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [ 95%]\nssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [ 95%]\nssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [ 95%]\nssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [ 96%]\nssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [ 96%]\nssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [ 96%]\nssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [ 96%]\nssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [ 96%]\nssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [ 96%]\nssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [ 96%]\nssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [ 96%]\nssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [ 96%]\nssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [ 96%]\nssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [ 96%]\nssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [ 96%]\nssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [ 96%]\nssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [ 96%]\nssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [ 97%]\nssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [ 97%]\nssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [ 97%]\nssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [ 97%]\nssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [ 97%]\nssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [ 97%]\nssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [ 97%]\nssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [ 97%]\nssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [ 97%]\nssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [ 97%]\nssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [ 97%]\nssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [ 97%]\nssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [ 97%]\nssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [ 98%]\nssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [ 98%]\nssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [ 98%]\nssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [ 98%]\nssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [ 98%]\nssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [ 98%]\nssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [ 98%]\nssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [ 98%]\nssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [ 98%]\nssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [ 98%]\nssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [ 98%]\nssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [ 98%]\nssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [ 98%]\nssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [ 98%]\nssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [ 99%]\nssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [ 99%]\nssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [ 99%]\nssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [ 99%]\nssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [ 99%]\nssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [ 99%]\nssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [ 99%]\nssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [ 99%]\nssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [ 99%]\nssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [ 99%]\nssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [ 99%]\nssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [ 99%]\nssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [ 99%]\nssssssssssssssssssssssssssssssssssssssssssss                             [100%]\n=========================== short test summary info ============================\nSKIPPED [97140] tests/attention/test_trtllm_gen_attention_decode.py:656: trtllm-gen backend requires SM100 and SM103 GPUs.\nSKIPPED [32] tests/attention/test_trtllm_gen_attention_decode.py:73: Dynamic tokensPerPage tests require SM100 or SM103 Blackwell GPUs.\n97172 skipped in 204.19s (0:03:24)\nWelcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nPrevious HEAD position was 2d1259b0 Merge branch 'main' into fa2_fp8_kv_optimization\nHEAD is now at 9542ab05 chore: address headDim512 GQA review comments\n",
+      "ref": "refs/r18/pr-3393",
+      "remote_command": "cd /workspace/r14-run-flashinfer && git switch --detach refs/r18/pr-3393 >/dev/null && test \"$(git rev-parse HEAD)\" = 9542ab05b882f52330e3f83b873d11321b61cc92 && timeout 420s env PYTHONDONTWRITEBYTECODE=1 CUDA_VISIBLE_DEVICES=0 PYTHONPATH=. /venv/main/bin/python -m pytest -q -rs --tb=short --maxfail=1 tests/attention/test_trtllm_gen_attention_decode.py",
+      "returncode": 0,
+      "status": "completed",
+      "summary_lines": [
+        "SKIPPED [97140] tests/attention/test_trtllm_gen_attention_decode.py:656: trtllm-gen backend requires SM100 and SM103 GPUs.",
+        "SKIPPED [32] tests/attention/test_trtllm_gen_attention_decode.py:73: Dynamic tokensPerPage tests require SM100 or SM103 Blackwell GPUs.",
+        "97172 skipped in 204.19s (0:03:24)"
+      ],
+      "test_names": [],
+      "test_paths": [
+        "tests/attention/test_trtllm_gen_attention_decode.py"
+      ]
+    },
+    {
+      "case_id": "sglang-pr-27181",
+      "duration_seconds": 23.66609499999322,
+      "head_sha": "41a291fba1505233f765fde7b8b19e9f24e552b4",
+      "output_sha256": "sha256:4ecf258c168e6a42478e5aa45739d46b9c98e4d9b73f49bce197668eaa4ded7f",
+      "output_tail": "eption:\n/venv/main/lib/python3.12/site-packages/transformers/utils/hub.py:437: in cached_files\n    hf_hub_download(\n/venv/main/lib/python3.12/site-packages/huggingface_hub/utils/_validators.py:88: in _inner_fn\n    return fn(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^\n/venv/main/lib/python3.12/site-packages/huggingface_hub/file_download.py:1027: in hf_hub_download\n    return _hf_hub_download_to_cache_dir(\n/venv/main/lib/python3.12/site-packages/huggingface_hub/file_download.py:1174: in _hf_hub_download_to_cache_dir\n    _raise_on_head_call_error(head_call_error, force_download, local_files_only)\n/venv/main/lib/python3.12/site-packages/huggingface_hub/file_download.py:1913: in _raise_on_head_call_error\n    raise head_call_error\nE   huggingface_hub.errors.GatedRepoError: 401 Client Error. (Request ID: Root=1-6a9880d0-5d97a62f1d4f118d46cd585b;54769d0c-7e50-470b-9963-dc3b0bc2d6ab)\nE   \nE   Cannot access gated repo for url https://huggingface.co/meta-llama/Llama-3.1-8B-Instruct/resolve/main/config.json.\nE   Access to model meta-llama/Llama-3.1-8B-Instruct is restricted. You must have access to it and be authenticated to access it. Please log in.\n\nThe above exception was the direct cause of the following exception:\ntest/registered/lora/test_lora_overlap_loading.py:53: in test_single_request_single_lora\n    run_lora_test_one_by_one(\npython/sglang/test/lora_utils.py:422: in run_lora_test_one_by_one\n    with SRTRunner(\npython/sglang/test/runners.py:611: in __init__\n    self.engine = Engine(\npython/sglang/srt/entrypoints/engine.py:243: in __init__\n    server_args = self.server_args_class(**kwargs)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n<string>:462: in __init__\n    ???\npython/sglang/srt/server_args.py:3509: in __post_init__\n    self._apply_inkling_prefill_cuda_graph_default()\npython/sglang/srt/server_args.py:4231: in _apply_inkling_prefill_cuda_graph_default\n    arch = self.get_model_config().hf_config.architectures[0]\n           ^^^^^^^^^^^^^^^^^^^^^^^\npython/sglang/srt/server_args.py:8575: in get_model_config\n    self.model_config = ModelConfig.from_server_args(self)\n                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\npython/sglang/srt/configs/model_config.py:551: in from_server_args\n    return ModelConfig(\npython/sglang/srt/configs/model_config.py:300: in __init__\n    get_config(\npython/sglang/srt/utils/common.py:4017: in wrapper\n    result = func(*args, **kwargs)\n             ^^^^^^^^^^^^^^^^^^^^^\npython/sglang/srt/utils/hf_transformers/config.py:252: in get_config\n    config = parser.parse(\npython/sglang/srt/utils/hf_transformers/config.py:84: in parse\n    config = _try_load_longcat_config(model, revision, **kwargs)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\npython/sglang/srt/utils/hf_transformers/config.py:63: in _try_load_longcat_config\n    config_dict, _ = PretrainedConfig.get_config_dict(\n/venv/main/lib/python3.12/site-packages/transformers/configuration_utils.py:687: in get_config_dict\n    config_dict, kwargs = cls._get_config_dict(pretrained_model_name_or_path, **kwargs)\n                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n/venv/main/lib/python3.12/site-packages/transformers/configuration_utils.py:742: in _get_config_dict\n    resolved_config_file = cached_file(\n/venv/main/lib/python3.12/site-packages/transformers/utils/hub.py:293: in cached_file\n    file = cached_files(path_or_repo_id=path_or_repo_id, filenames=[filename], **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n/venv/main/lib/python3.12/site-packages/transformers/utils/hub.py:503: in cached_files\n    raise OSError(\nE   OSError: You are trying to access a gated repo.\nE   Make sure to have access to it at https://huggingface.co/meta-llama/Llama-3.1-8B-Instruct.\nE   401 Client Error. (Request ID: Root=1-6a9880d0-5d97a62f1d4f118d46cd585b;54769d0c-7e50-470b-9963-dc3b0bc2d6ab)\nE   \nE   Cannot access gated repo for url https://huggingface.co/meta-llama/Llama-3.1-8B-Instruct/resolve/main/config.json.\nE   Access to model meta-llama/Llama-3.1-8B-Instruct is restricted. You must have access to it and be authenticated to access it. Please log in.\n\nDuring handling of the above exception, another exception occurred:\npython/sglang/test/test_utils.py:2384: in _callTestMethod\n    retry(\npython/sglang/srt/utils/common.py:3258: in retry\n    raise Exception(f\"retry() exceed maximum number of retries.\")\nE   Exception: retry() exceed maximum number of retries.\n----------------------------- Captured stdout call -----------------------------\n[CI Test Method] TestLoRAOverlapLoadingSingleRequest.test_single_request_single_lora\n\n========== Testing overlap_single_request_single_lora on base 'meta-llama/Llama-3.1-8B-Instruct' with backend=csgmv, dtype=torch.float16 --- Using prompts ['AI is a field of computer science focused on'] with adaptors: ['algoprog/fact-generation-llama-3.1-8b-instruct-lora'] ---\n----------------------------- Captured stderr call -----------------------------\nhttpx.HTTPStatusError: Client error '401 Unauthorized' for url 'https://huggingface.co/meta-llama/Llama-3.1-8B-Instruct/resolve/main/config.json'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/401\n\nThe above exception was the direct cause of the following exception:\n\nTraceback (most recent call last):\n  File \"/venv/main/lib/python3.12/site-packages/transformers/utils/hub.py\", line 437, in cached_files\n    hf_hub_download(\n  File \"/venv/main/lib/python3.12/site-packages/huggingface_hub/utils/_validators.py\", line 88, in _inner_fn\n    return fn(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^\n  File \"/venv/main/lib/python3.12/site-packages/huggingface_hub/file_download.py\", line 1027, in hf_hub_download\n    return _hf_hub_download_to_cache_dir(\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/venv/main/lib/python3.12/site-packages/huggingface_hub/file_download.py\", line 1174, in _hf_hub_download_to_cache_dir\n    _raise_on_head_call_error(head_call_error, force_download, local_files_only)\n  File \"/venv/main/lib/python3.12/site-packages/huggingface_hub/file_download.py\", line 1913, in _raise_on_head_call_error\n    raise head_call_error\nhuggingface_hub.errors.GatedRepoError: 401 Client Error. (Request ID: Root=1-6a9880d0-5d97a62f1d4f118d46cd585b;54769d0c-7e50-470b-9963-dc3b0bc2d6ab)\n\nCannot access gated repo for url https://huggingface.co/meta-llama/Llama-3.1-8B-Instruct/resolve/main/config.json.\nAccess to model meta-llama/Llama-3.1-8B-Instruct is restricted. You must have access to it and be authenticated to access it. Please log in.\n\nThe above exception was the direct cause of the following exception:\n\nTraceback (most recent call last):\n  File \"/workspace/r14-run-sglang/python/sglang/srt/utils/common.py\", line 3243, in retry\n    return fn()\n           ^^^^\n  File \"/workspace/r14-run-sglang/python/sglang/test/test_utils.py\", line 2385, in <lambda>\n    lambda: super(CustomTestCase, self)._callTestMethod(method),\n            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/venv/main/lib/python3.12/unittest/case.py\", line 589, in _callTestMethod\n    if method() is not None:\n       ^^^^^^^^\n  File \"/workspace/r14-run-sglang/test/registered/lora/test_lora_overlap_loading.py\", line 53, in test_single_request_single_lora\n    run_lora_test_one_by_one(\n  File \"/workspace/r14-run-sglang/python/sglang/test/lora_utils.py\", line 422, in run_lora_test_one_by_one\n    with SRTRunner(\n         ^^^^^^^^^^\n  File \"/workspace/r14-run-sglang/python/sglang/test/runners.py\", line 611, in __init__\n    self.engine = Engine(\n                  ^^^^^^^\n  File \"/workspace/r14-run-sglang/python/sglang/srt/entrypoints/engine.py\", line 243, in __init__\n    server_args = self.server_args_class(**kwargs)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 462, in __init__\n  File \"/workspace/r14-run-sglang/python/sglang/srt/server_args.py\", line 3509, in __post_init__\n    self._apply_inkling_prefill_cuda_graph_default()\n  File \"/workspace/r14-run-sglang/python/sglang/srt/server_args.py\", line 4231, in _apply_inkling_prefill_cuda_graph_default\n    arch = self.get_model_config().hf_config.architectures[0]\n           ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/r14-run-sglang/python/sglang/srt/server_args.py\", line 8575, in get_model_config\n    self.model_config = ModelConfig.from_server_args(self)\n                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/r14-run-sglang/python/sglang/srt/configs/model_config.py\", line 551, in from_server_args\n    return ModelConfig(\n           ^^^^^^^^^^^^\n  File \"/workspace/r14-run-sglang/python/sglang/srt/configs/model_config.py\", line 300, in __init__\n    get_config(\n  File \"/workspace/r14-run-sglang/python/sglang/srt/utils/common.py\", line 4017, in wrapper\n    result = func(*args, **kwargs)\n             ^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/r14-run-sglang/python/sglang/srt/utils/hf_transformers/config.py\", line 252, in get_config\n    config = parser.parse(\n             ^^^^^^^^^^^^^\n  File \"/workspace/r14-run-sglang/python/sglang/srt/utils/hf_transformers/config.py\", line 84, in parse\n    config = _try_load_longcat_config(model, revision, **kwargs)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/r14-run-sglang/python/sglang/srt/utils/hf_transformers/config.py\", line 63, in _try_load_longcat_config\n    config_dict, _ = PretrainedConfig.get_config_dict(\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/venv/main/lib/python3.12/site-packages/transformers/configuration_utils.py\", line 687, in get_config_dict\n    config_dict, kwargs = cls._get_config_dict(pretrained_model_name_or_path, **kwargs)\n                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/venv/main/lib/python3.12/site-packages/transformers/configuration_utils.py\", line 742, in _get_config_dict\n    resolved_config_file = cached_file(\n                           ^^^^^^^^^^^^\n  File \"/venv/main/lib/python3.12/site-packages/transformers/utils/hub.py\", line 293, in cached_file\n    file = cached_files(path_or_repo_id=path_or_repo_id, filenames=[filename], **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/venv/main/lib/python3.12/site-packages/transformers/utils/hub.py\", line 503, in cached_files\n    raise OSError(\nOSError: You are trying to access a gated repo.\nMake sure to have access to it at https://huggingface.co/meta-llama/Llama-3.1-8B-Instruct.\n401 Client Error. (Request ID: Root=1-6a9880d0-5d97a62f1d4f118d46cd585b;54769d0c-7e50-470b-9963-dc3b0bc2d6ab)\n\nCannot access gated repo for url https://huggingface.co/meta-llama/Llama-3.1-8B-Instruct/resolve/main/config.json.\nAccess to model meta-llama/Llama-3.1-8B-Instruct is restricted. You must have access to it and be authenticated to access it. Please log in.\n=============================== warnings summary ===============================\n../../venv/main/lib/python3.12/site-packages/torch/jit/_script.py:365: 14 warnings\n  /venv/main/lib/python3.12/site-packages/torch/jit/_script.py:365: DeprecationWarning: `torch.jit.script_method` is deprecated. Please switch to `torch.compile` or `torch.export`.\n    warnings.warn(\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!\n1 failed, 2 deselected, 14 warnings in 14.99s\nWelcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nPrevious HEAD position was 2078398d93 Merge branch 'main' into pyc/feat-gemma4-yoco-fast-prefill-upstream\nHEAD is now at 41a291fba1 LoRA Async Pipelining Per Requeust Load\n",
+      "ref": "refs/r18/pr-27181",
+      "remote_command": "cd /workspace/r14-run-sglang && git switch --detach refs/r18/pr-27181 >/dev/null && test \"$(git rev-parse HEAD)\" = 41a291fba1505233f765fde7b8b19e9f24e552b4 && timeout 420s env PYTHONDONTWRITEBYTECODE=1 CUDA_VISIBLE_DEVICES=1 PYTHONPATH=/workspace/r18-deps/common:/workspace/r17-deps/opencv:/workspace/r14-shims:python:. /venv/main/bin/python -m pytest -q -rs --tb=short --maxfail=1 test/registered/lora/test_lora_overlap_loading.py test/registered/lora/test_lora_tp.py test/registered/unit/lora/test_lora_overlap_loader_unit.py -k 'test_all_lora_models or test_capacity_constraints_block_new_loads or test_completed_stale_loads_are_reaped_before_capacity_check or test_cross_stream_synchronization or test_eviction_on_new_lora or test_flag_initial_state or test_full_lifecycle_single_lora_load or test_loaded_lora_reused_after_stale_event_drain or test_loader_uses_manager_pending_event_store or test_lora_overlap_loading_single_lora_tp2 or test_mark_loading_and_ready or test_mark_ready_does_not_clear_pending_wait or test_multiple_flags_independent or test_no_wait_when_not_loading or test_pending_load_is_synchronized_before_unload or test_pending_lora_load_must_complete_even_if_memory_pool_has_slot or test_pending_wait_re_arms_on_each_load or test_single_request_single_lora or test_two_loras_batch_replace or test_validation_includes_pending_and_running_loras'",
+      "returncode": 1,
+      "status": "completed",
+      "summary_lines": [
+        "httpx.HTTPStatusError: Client error '401 Unauthorized' for url 'https://huggingface.co/meta-llama/Llama-3.1-8B-Instruct/resolve/main/config.json'",
+        "_raise_on_head_call_error(head_call_error, force_download, local_files_only)",
+        "/venv/main/lib/python3.12/site-packages/huggingface_hub/file_download.py:1913: in _raise_on_head_call_error",
+        "raise head_call_error",
+        "E   huggingface_hub.errors.GatedRepoError: 401 Client Error. (Request ID: Root=1-6a9880d0-5d97a62f1d4f118d46cd585b;54769d0c-7e50-470b-9963-dc3b0bc2d6ab)",
+        "raise OSError(",
+        "E   OSError: You are trying to access a gated repo.",
+        "E   401 Client Error. (Request ID: Root=1-6a9880d0-5d97a62f1d4f118d46cd585b;54769d0c-7e50-470b-9963-dc3b0bc2d6ab)",
+        "httpx.HTTPStatusError: Client error '401 Unauthorized' for url 'https://huggingface.co/meta-llama/Llama-3.1-8B-Instruct/resolve/main/config.json'",
+        "_raise_on_head_call_error(head_call_error, force_download, local_files_only)",
+        "File \"/venv/main/lib/python3.12/site-packages/huggingface_hub/file_download.py\", line 1913, in _raise_on_head_call_error",
+        "raise head_call_error",
+        "huggingface_hub.errors.GatedRepoError: 401 Client Error. (Request ID: Root=1-6a9880d0-5d97a62f1d4f118d46cd585b;54769d0c-7e50-470b-9963-dc3b0bc2d6ab)",
+        "raise OSError(",
+        "OSError: You are trying to access a gated repo.",
+        "401 Client Error. (Request ID: Root=1-6a9880d0-5d97a62f1d4f118d46cd585b;54769d0c-7e50-470b-9963-dc3b0bc2d6ab)",
+        "1 failed, 2 deselected, 14 warnings in 14.99s"
+      ],
+      "test_names": [
+        "test_all_lora_models",
+        "test_capacity_constraints_block_new_loads",
+        "test_completed_stale_loads_are_reaped_before_capacity_check",
+        "test_cross_stream_synchronization",
+        "test_eviction_on_new_lora",
+        "test_flag_initial_state",
+        "test_full_lifecycle_single_lora_load",
+        "test_loaded_lora_reused_after_stale_event_drain",
+        "test_loader_uses_manager_pending_event_store",
+        "test_lora_overlap_loading_single_lora_tp2",
+        "test_mark_loading_and_ready",
+        "test_mark_ready_does_not_clear_pending_wait",
+        "test_multiple_flags_independent",
+        "test_no_wait_when_not_loading",
+        "test_pending_load_is_synchronized_before_unload",
+        "test_pending_lora_load_must_complete_even_if_memory_pool_has_slot",
+        "test_pending_wait_re_arms_on_each_load",
+        "test_single_request_single_lora",
+        "test_two_loras_batch_replace",
+        "test_validation_includes_pending_and_running_loras"
+      ],
+      "test_paths": [
+        "test/registered/lora/test_lora_overlap_loading.py",
+        "test/registered/lora/test_lora_tp.py",
+        "test/registered/unit/lora/test_lora_overlap_loader_unit.py"
+      ]
+    },
+    {
+      "case_id": "sglang-pr-27188",
+      "duration_seconds": 17.219820250058547,
+      "head_sha": "844b960c9831e4a49db6a8b8964cbbeab90ff588",
+      "output_sha256": "sha256:000878578ec1152839721e9ddb1df70596aaeff4fee4db7ffe2cdc89198ed79a",
+      "output_tail": "E\n==================================== ERRORS ====================================\n___________ ERROR at setup of TestDeepSeekR1MXFP4TP2MI35x.test_gsm8k ___________\ntest/registered/amd/accuracy/mi35x/test_deepseek_r1_mxfp4_tp2_mi35x.py:139: in setUpClass\n    cls.process = popen_launch_server(\npython/sglang/test/test_utils.py:969: in popen_launch_server\n    process = _launch_server_process(command, env, return_stdout_stderr, model)\n              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\npython/sglang/test/test_utils.py:817: in _launch_server_process\n    return _subprocess_popen_with_outputs(\npython/sglang/test/test_utils.py:764: in _subprocess_popen_with_outputs\n    return subprocess.Popen(command, stdout=None, stderr=None, env=env)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n/venv/main/lib/python3.12/subprocess.py:1026: in __init__\n    self._execute_child(args, executable, preexec_fn, close_fds,\n/venv/main/lib/python3.12/subprocess.py:1955: in _execute_child\n    raise child_exception_type(errno_num, err_msg, err_filename)\nE   FileNotFoundError: [Errno 2] No such file or directory: 'sglang'\n---------------------------- Captured stdout setup -----------------------------\ncommand=sglang serve --model-path amd/DeepSeek-R1-MXFP4-Preview --attention-backend aiter --tp 2 --chunked-prefill-size 131072 --disable-radix-cache --mem-fraction-static 0.85 --trust-remote-code --kv-cache-dtype fp8_e4m3 --model-loader-extra-config '{\"enable_multithread_load\": true}' --device cuda --host 127.0.0.1 --port 22000\nCI_OFFLINE: Launching server HF_HUB_OFFLINE=0 model=amd/DeepSeek-R1-MXFP4-Preview\n!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!\n1 error in 9.48s\nWelcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nPrevious HEAD position was 41a291fba1 LoRA Async Pipelining Per Requeust Load\nHEAD is now at 844b960c98 fix nhead=64 Dense MLA bug and add nightly tests to cover nhead=32 & 64\n",
+      "ref": "refs/r18/pr-27188",
+      "remote_command": "cd /workspace/r14-run-sglang && git switch --detach refs/r18/pr-27188 >/dev/null && test \"$(git rev-parse HEAD)\" = 844b960c9831e4a49db6a8b8964cbbeab90ff588 && timeout 420s env PYTHONDONTWRITEBYTECODE=1 CUDA_VISIBLE_DEVICES=1 PYTHONPATH=/workspace/r18-deps/common:/workspace/r17-deps/opencv:/workspace/r14-shims:python:. /venv/main/bin/python -m pytest -q -rs --tb=short --maxfail=1 test/registered/amd/accuracy/mi35x/test_deepseek_r1_mxfp4_tp2_mi35x.py test/registered/amd/accuracy/mi35x/test_deepseek_r1_mxfp4_tp4_mi35x.py test/run_suite.py -k test_gsm8k",
+      "returncode": 1,
+      "status": "completed",
+      "summary_lines": [
+        "==================================== ERRORS ====================================",
+        "___________ ERROR at setup of TestDeepSeekR1MXFP4TP2MI35x.test_gsm8k ___________",
+        "E   FileNotFoundError: [Errno 2] No such file or directory: 'sglang'",
+        "1 error in 9.48s"
+      ],
+      "test_names": [
+        "test_gsm8k"
+      ],
+      "test_paths": [
+        "test/registered/amd/accuracy/mi35x/test_deepseek_r1_mxfp4_tp2_mi35x.py",
+        "test/registered/amd/accuracy/mi35x/test_deepseek_r1_mxfp4_tp4_mi35x.py",
+        "test/run_suite.py"
+      ]
+    },
+    {
+      "case_id": "sglang-pr-27183",
+      "duration_seconds": 16.751089375000447,
+      "head_sha": "2078398d939c68ec0404a0b81a0821a4d56e7c06",
+      "output_sha256": "sha256:a4372a29f149fdd26f81d65088bafebd5edfe975b9dddeeb7b9590d00c20e3ba",
+      "output_tail": "\n==================================== ERRORS ====================================\n___ ERROR collecting registered/unit/models/test_gemma4_yoco_fast_prefill.py ___\nImportError while importing test module '/workspace/r14-run-sglang/test/registered/unit/models/test_gemma4_yoco_fast_prefill.py'.\nHint: make sure your test modules/packages have valid Python names.\nTraceback:\n/venv/main/lib/python3.12/importlib/__init__.py:90: in import_module\n    return _bootstrap._gcd_import(name[level:], package, level)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntest/registered/unit/models/test_gemma4_yoco_fast_prefill.py:15: in <module>\n    from sglang.srt.models import gemma4_causal as gemma4_causal_module\npython/sglang/srt/models/gemma4_causal.py:45: in <module>\n    from sglang.srt.layers.logits_processor import LogitsProcessor\npython/sglang/srt/layers/logits_processor.py:50: in <module>\n    from sglang.srt.layers.vocab_parallel_embedding import VocabParallelEmbedding\npython/sglang/srt/layers/vocab_parallel_embedding.py:33: in <module>\n    from sglang.srt.layers.quantization.base_config import (\npython/sglang/srt/layers/quantization/__init__.py:26: in <module>\n    from sglang.srt.layers.quantization.compressed_tensors.compressed_tensors import (\npython/sglang/srt/layers/quantization/compressed_tensors/compressed_tensors.py:40: in <module>\n    from sglang.srt.layers.quantization.compressed_tensors.schemes import (\npython/sglang/srt/layers/quantization/compressed_tensors/schemes/__init__.py:8: in <module>\n    from .compressed_tensors_w4a4_nvfp4 import CompressedTensorsW4A4Fp4\npython/sglang/srt/layers/quantization/compressed_tensors/schemes/compressed_tensors_w4a4_nvfp4.py:20: in <module>\n    from sglang.srt.layers.quantization.modelopt_quant import (\npython/sglang/srt/layers/quantization/modelopt_quant.py:45: in <module>\n    from sglang.srt.layers.quantization.fp8_utils import (\npython/sglang/srt/layers/quantization/fp8_utils.py:104: in <module>\n    from sgl_kernel import fp8_blockwise_scaled_mm, fp8_scaled_mm\nE   ImportError: cannot import name 'fp8_blockwise_scaled_mm' from 'sgl_kernel' (/venv/main/lib/python3.12/site-packages/sgl_kernel/__init__.py). Did you mean: 'fp8_blockwise_scaled_grouped_mm'?\n=============================== warnings summary ===============================\n<frozen importlib._bootstrap_external>:1301\n  <frozen importlib._bootstrap_external>:1301: FutureWarning: The cuda.cudart module is deprecated and will be removed in a future release, please switch to use the cuda.bindings.runtime module instead.\n\n<frozen importlib._bootstrap_external>:1301\n  <frozen importlib._bootstrap_external>:1301: FutureWarning: The cuda.nvrtc module is deprecated and will be removed in a future release, please switch to use the cuda.bindings.nvrtc module instead.\n\n../../venv/main/lib/python3.12/site-packages/torch/jit/_script.py:365: 14 warnings\n  /venv/main/lib/python3.12/site-packages/torch/jit/_script.py:365: DeprecationWarning: `torch.jit.script_method` is deprecated. Please switch to `torch.compile` or `torch.export`.\n    warnings.warn(\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!\n!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!\n16 warnings, 1 error in 9.70s\nWelcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nPrevious HEAD position was 844b960c98 fix nhead=64 Dense MLA bug and add nightly tests to cover nhead=32 & 64\nHEAD is now at 2078398d93 Merge branch 'main' into pyc/feat-gemma4-yoco-fast-prefill-upstream\n",
+      "ref": "refs/r18/pr-27183",
+      "remote_command": "cd /workspace/r14-run-sglang && git switch --detach refs/r18/pr-27183 >/dev/null && test \"$(git rev-parse HEAD)\" = 2078398d939c68ec0404a0b81a0821a4d56e7c06 && timeout 420s env PYTHONDONTWRITEBYTECODE=1 CUDA_VISIBLE_DEVICES=1 PYTHONPATH=/workspace/r18-deps/common:/workspace/r17-deps/opencv:/workspace/r14-shims:python:. /venv/main/bin/python -m pytest -q -rs --tb=short --maxfail=1 test/registered/unit/models/test_gemma4_yoco_fast_prefill.py -k 'test_decode_forward_mode or test_flag_disabled or test_flag_enabled or test_no_kv_shared_layers or test_pipeline_parallel or test_prompt_logprobs_disable or test_pure_decode_batch or test_speculative_decoding or test_truncate_indices_and_restore'",
+      "returncode": 2,
+      "status": "completed",
+      "summary_lines": [
+        "==================================== ERRORS ====================================",
+        "___ ERROR collecting registered/unit/models/test_gemma4_yoco_fast_prefill.py ___",
+        "ImportError while importing test module '/workspace/r14-run-sglang/test/registered/unit/models/test_gemma4_yoco_fast_prefill.py'.",
+        "E   ImportError: cannot import name 'fp8_blockwise_scaled_mm' from 'sgl_kernel' (/venv/main/lib/python3.12/site-packages/sgl_kernel/__init__.py). Did you mean: 'fp8_blockwise_scaled_grouped_mm'?",
+        "!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!",
+        "16 warnings, 1 error in 9.70s"
+      ],
+      "test_names": [
+        "test_decode_forward_mode",
+        "test_flag_disabled",
+        "test_flag_enabled",
+        "test_no_kv_shared_layers",
+        "test_pipeline_parallel",
+        "test_prompt_logprobs_disable",
+        "test_pure_decode_batch",
+        "test_speculative_decoding",
+        "test_truncate_indices_and_restore"
+      ],
+      "test_paths": [
+        "test/registered/unit/models/test_gemma4_yoco_fast_prefill.py"
+      ]
+    },
+    {
+      "case_id": "tensorrt_llm-pr-14849",
+      "duration_seconds": 4.805471417028457,
+      "head_sha": "f874c5d747428f27120de23d71bc3d0d98df74d3",
+      "output_sha256": "sha256:ffc1ee60196e69c695d1ef230b05ff4184819640e527ad877d6734c43179c3a1",
+      "output_tail": "\nno tests ran in 0.00s\nWelcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nHEAD is now at f874c5d74 [None][fix] Remove context KV cache allocation rollback\nERROR: file or directory not found: tests/unittest/kv_cache_manager_v2_tests/test_kv_cache_stats_behavior.py\n\n",
+      "ref": "refs/r18/pr-14849",
+      "remote_command": "cd /workspace/r17-tensorrt-wt && git switch --detach refs/r18/pr-14849 >/dev/null && test \"$(git rev-parse HEAD)\" = f874c5d747428f27120de23d71bc3d0d98df74d3 && timeout 420s env PYTHONDONTWRITEBYTECODE=1 CUDA_VISIBLE_DEVICES=1 PYTHONPATH=/workspace/r18-deps/common:/workspace/r17-deps/tensorrt:. /venv/main/bin/python -m pytest -q -rs --tb=short --maxfail=1 --noconftest tests/unittest/kv_cache_manager_v2_tests/test_kv_cache_stats_behavior.py -k test_waited_context_allocation_reports_pending_stats_when_scheduled",
+      "returncode": 4,
+      "status": "completed",
+      "summary_lines": [
+        "ERROR: file or directory not found: tests/unittest/kv_cache_manager_v2_tests/test_kv_cache_stats_behavior.py"
+      ],
+      "test_names": [
+        "test_waited_context_allocation_reports_pending_stats_when_scheduled"
+      ],
+      "test_paths": [
+        "tests/unittest/kv_cache_manager_v2_tests/test_kv_cache_stats_behavior.py"
+      ]
+    },
+    {
+      "case_id": "tensorrt_llm-pr-14765",
+      "duration_seconds": 8.988496999954805,
+      "head_sha": "4aa72d82df2631470d566eb37b2f880f61b04287",
+      "output_sha256": "sha256:c84feec364c2e3cecb42fc04f0fb4b4986d0dffa7c829f2b17f031d112b65300",
+      "output_tail": "\n==================================== ERRORS ====================================\n___________ ERROR collecting _torch/lora/test_lora_layout_sidecar.py ___________\nImportError while importing test module '/workspace/r17-tensorrt-wt/tests/unittest/_torch/lora/test_lora_layout_sidecar.py'.\nHint: make sure your test modules/packages have valid Python names.\nTraceback:\n/venv/main/lib/python3.12/importlib/__init__.py:90: in import_module\n    return _bootstrap._gcd_import(name[level:], package, level)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntests/unittest/_torch/lora/test_lora_layout_sidecar.py:15: in <module>\n    from tensorrt_llm.lora_layout_sidecar import (KERNEL_FLAG_KEYS,\ntensorrt_llm/__init__.py:107: in <module>\n    import tensorrt_llm._torch.models as torch_models\ntensorrt_llm/_torch/__init__.py:1: in <module>\n    from .llm import LLM\ntensorrt_llm/_torch/llm.py:1: in <module>\n    from tensorrt_llm.llmapi.llm import _TorchLLM\ntensorrt_llm/llmapi/__init__.py:1: in <module>\n    from .._torch.async_llm import AsyncLLM\ntensorrt_llm/_torch/async_llm.py:3: in <module>\n    from ..llmapi.llm import LLM\ntensorrt_llm/llmapi/llm.py:19: in <module>\n    from tensorrt_llm._utils import mpi_disabled\ntensorrt_llm/_utils.py:46: in <module>\n    import tensorrt as trt\nE   ModuleNotFoundError: No module named 'tensorrt'\n=============================== warnings summary ===============================\n../../venv/main/lib/python3.12/site-packages/_pytest/config/__init__.py:1464\n  /venv/main/lib/python3.12/site-packages/_pytest/config/__init__.py:1464: PytestConfigWarning: Unknown config option: env\n  \n    self._warn_or_fail_if_strict(f\"Unknown config option: {key}\\n\")\n\n../../venv/main/lib/python3.12/site-packages/_pytest/config/__init__.py:1464\n  /venv/main/lib/python3.12/site-packages/_pytest/config/__init__.py:1464: PytestConfigWarning: Unknown config option: threadleak\n  \n    self._warn_or_fail_if_strict(f\"Unknown config option: {key}\\n\")\n\n../../venv/main/lib/python3.12/site-packages/_pytest/config/__init__.py:1464\n  /venv/main/lib/python3.12/site-packages/_pytest/config/__init__.py:1464: PytestConfigWarning: Unknown config option: threadleak_exclude\n  \n    self._warn_or_fail_if_strict(f\"Unknown config option: {key}\\n\")\n\n../../venv/main/lib/python3.12/site-packages/_pytest/config/__init__.py:1464\n  /venv/main/lib/python3.12/site-packages/_pytest/config/__init__.py:1464: PytestConfigWarning: Unknown config option: xdist_start_method\n  \n    self._warn_or_fail_if_strict(f\"Unknown config option: {key}\\n\")\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!\n4 warnings, 1 error in 3.33s\nWelcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nPrevious HEAD position was f874c5d74 [None][fix] Remove context KV cache allocation rollback\nHEAD is now at 4aa72d82d [TRTLLM-12507][feat] add lora_layout.json sidecar for shared-outer MoE LoRA\n",
+      "ref": "refs/r18/pr-14765",
+      "remote_command": "cd /workspace/r17-tensorrt-wt && git switch --detach refs/r18/pr-14765 >/dev/null && test \"$(git rev-parse HEAD)\" = 4aa72d82df2631470d566eb37b2f880f61b04287 && timeout 420s env PYTHONDONTWRITEBYTECODE=1 CUDA_VISIBLE_DEVICES=1 PYTHONPATH=/workspace/r18-deps/common:/workspace/r17-deps/tensorrt:. /venv/main/bin/python -m pytest -q -rs --tb=short --maxfail=1 --noconftest tests/unittest/_torch/lora/test_lora_layout_sidecar.py tests/unittest/others/test_lora_manager.py -k 'test_all_false_flags_has_six_keys or test_layout_to_kernel_flags_default_shared_outer_pattern or test_layout_to_kernel_flags_empty or test_layout_to_kernel_flags_none or test_layout_to_kernel_flags_null_side_yields_no_flag or test_layout_to_kernel_flags_only_partial_modules or test_load_parses_minimal_valid_sidecar or test_load_raises_on_invalid_json or test_load_returns_none_when_sidecar_missing or test_no_sidecar_yields_all_false_flags or test_parse_accepts_null_shared_side or test_parse_defaults_version_to_1 or test_parse_rejects_invalid_shared_side or test_parse_rejects_non_dict_module_spec or test_parse_rejects_non_dict_moe_section or test_parse_rejects_non_dict_top_level or test_parse_rejects_unknown_module or test_parse_rejects_unsupported_version or test_parse_tolerates_extra_top_level_keys or test_sidecar_does_not_change_cached_weights or test_sidecar_flags_propagate_to_manager or test_unknown_uid_returns_all_false'",
+      "returncode": 1,
+      "status": "completed",
+      "summary_lines": [
+        "==================================== ERRORS ====================================",
+        "___________ ERROR collecting _torch/lora/test_lora_layout_sidecar.py ___________",
+        "ImportError while importing test module '/workspace/r17-tensorrt-wt/tests/unittest/_torch/lora/test_lora_layout_sidecar.py'.",
+        "E   ModuleNotFoundError: No module named 'tensorrt'",
+        "4 warnings, 1 error in 3.33s"
+      ],
+      "test_names": [
+        "test_all_false_flags_has_six_keys",
+        "test_layout_to_kernel_flags_default_shared_outer_pattern",
+        "test_layout_to_kernel_flags_empty",
+        "test_layout_to_kernel_flags_none",
+        "test_layout_to_kernel_flags_null_side_yields_no_flag",
+        "test_layout_to_kernel_flags_only_partial_modules",
+        "test_load_parses_minimal_valid_sidecar",
+        "test_load_raises_on_invalid_json",
+        "test_load_returns_none_when_sidecar_missing",
+        "test_no_sidecar_yields_all_false_flags",
+        "test_parse_accepts_null_shared_side",
+        "test_parse_defaults_version_to_1",
+        "test_parse_rejects_invalid_shared_side",
+        "test_parse_rejects_non_dict_module_spec",
+        "test_parse_rejects_non_dict_moe_section",
+        "test_parse_rejects_non_dict_top_level",
+        "test_parse_rejects_unknown_module",
+        "test_parse_rejects_unsupported_version",
+        "test_parse_tolerates_extra_top_level_keys",
+        "test_sidecar_does_not_change_cached_weights",
+        "test_sidecar_flags_propagate_to_manager",
+        "test_unknown_uid_returns_all_false"
+      ],
+      "test_paths": [
+        "tests/unittest/_torch/lora/test_lora_layout_sidecar.py",
+        "tests/unittest/others/test_lora_manager.py"
+      ]
+    },
+    {
+      "case_id": "tensorrt_llm-pr-14853",
+      "duration_seconds": 10.756747083971277,
+      "head_sha": "d2e080551be9aadcc3c90531687c78fcecb3c5b7",
+      "output_sha256": "sha256:863e34c16969bc417d67e8e80823b6f8a26da522339b7d82fd44df3c60910e22",
+      "output_tail": "\n==================================== ERRORS ====================================\n_________ ERROR collecting _torch/executor/test_mamba_cache_manager.py _________\nImportError while importing test module '/workspace/r17-tensorrt-wt/tests/unittest/_torch/executor/test_mamba_cache_manager.py'.\nHint: make sure your test modules/packages have valid Python names.\nTraceback:\n/venv/main/lib/python3.12/importlib/__init__.py:90: in import_module\n    return _bootstrap._gcd_import(name[level:], package, level)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntests/unittest/_torch/executor/test_mamba_cache_manager.py:13: in <module>\n    from tensorrt_llm._torch.pyexecutor.cuda_graph_runner import CUDA_GRAPH_DUMMY_REQUEST_ID\ntensorrt_llm/__init__.py:107: in <module>\n    import tensorrt_llm._torch.models as torch_models\ntensorrt_llm/_torch/__init__.py:1: in <module>\n    from .llm import LLM\ntensorrt_llm/_torch/llm.py:1: in <module>\n    from tensorrt_llm.llmapi.llm import _TorchLLM\ntensorrt_llm/llmapi/__init__.py:1: in <module>\n    from .._torch.async_llm import AsyncLLM\ntensorrt_llm/_torch/async_llm.py:3: in <module>\n    from ..llmapi.llm import LLM\ntensorrt_llm/llmapi/llm.py:19: in <module>\n    from tensorrt_llm._utils import mpi_disabled\ntensorrt_llm/_utils.py:46: in <module>\n    import tensorrt as trt\nE   ModuleNotFoundError: No module named 'tensorrt'\n=============================== warnings summary ===============================\n../../venv/main/lib/python3.12/site-packages/_pytest/config/__init__.py:1464\n  /venv/main/lib/python3.12/site-packages/_pytest/config/__init__.py:1464: PytestConfigWarning: Unknown config option: env\n  \n    self._warn_or_fail_if_strict(f\"Unknown config option: {key}\\n\")\n\n../../venv/main/lib/python3.12/site-packages/_pytest/config/__init__.py:1464\n  /venv/main/lib/python3.12/site-packages/_pytest/config/__init__.py:1464: PytestConfigWarning: Unknown config option: threadleak\n  \n    self._warn_or_fail_if_strict(f\"Unknown config option: {key}\\n\")\n\n../../venv/main/lib/python3.12/site-packages/_pytest/config/__init__.py:1464\n  /venv/main/lib/python3.12/site-packages/_pytest/config/__init__.py:1464: PytestConfigWarning: Unknown config option: threadleak_exclude\n  \n    self._warn_or_fail_if_strict(f\"Unknown config option: {key}\\n\")\n\n../../venv/main/lib/python3.12/site-packages/_pytest/config/__init__.py:1464\n  /venv/main/lib/python3.12/site-packages/_pytest/config/__init__.py:1464: PytestConfigWarning: Unknown config option: xdist_start_method\n  \n    self._warn_or_fail_if_strict(f\"Unknown config option: {key}\\n\")\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!\n4 warnings, 1 error in 3.17s\nWelcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nPrevious HEAD position was 4aa72d82d [TRTLLM-12507][feat] add lora_layout.json sidecar for shared-outer MoE LoRA\nHEAD is now at d2e080551 [None][feat] Reserve one more slots for attention_dp in mixed mamba cache manager\n",
+      "ref": "refs/r18/pr-14853",
+      "remote_command": "cd /workspace/r17-tensorrt-wt && git switch --detach refs/r18/pr-14853 >/dev/null && test \"$(git rev-parse HEAD)\" = d2e080551be9aadcc3c90531687c78fcecb3c5b7 && timeout 420s env PYTHONDONTWRITEBYTECODE=1 CUDA_VISIBLE_DEVICES=1 PYTHONPATH=/workspace/r18-deps/common:/workspace/r17-deps/tensorrt:. /venv/main/bin/python -m pytest -q -rs --tb=short --maxfail=1 --noconftest tests/unittest/_torch/executor/test_mamba_cache_manager.py tests/unittest/disaggregated/test_mamba_transfer.py -k 'test_attention_dp_dummy_has_reserved_slot_with_batch_size_one or test_mamba_disagg_attention_dp_dummy_with_batch_size_one'",
+      "returncode": 1,
+      "status": "completed",
+      "summary_lines": [
+        "==================================== ERRORS ====================================",
+        "_________ ERROR collecting _torch/executor/test_mamba_cache_manager.py _________",
+        "ImportError while importing test module '/workspace/r17-tensorrt-wt/tests/unittest/_torch/executor/test_mamba_cache_manager.py'.",
+        "E   ModuleNotFoundError: No module named 'tensorrt'",
+        "4 warnings, 1 error in 3.17s"
+      ],
+      "test_names": [
+        "test_attention_dp_dummy_has_reserved_slot_with_batch_size_one",
+        "test_mamba_disagg_attention_dp_dummy_with_batch_size_one"
+      ],
+      "test_paths": [
+        "tests/unittest/_torch/executor/test_mamba_cache_manager.py",
+        "tests/unittest/disaggregated/test_mamba_transfer.py"
+      ]
+    },
+    {
+      "case_id": "tensorrt_llm-pr-14845",
+      "duration_seconds": 10.59353299997747,
+      "head_sha": "d7647ac7e6c81d1d38ea47535f400a826cb0210d",
+      "output_sha256": "sha256:83148921961cd6371671b4c3e866832dfece59e851a68149ada8a4a66b6a0119",
+      "output_tail": "\n==================================== ERRORS ====================================\n___ ERROR collecting disaggregated/test_cache_transceiver_single_process.py ____\nImportError while importing test module '/workspace/r17-tensorrt-wt/tests/unittest/disaggregated/test_cache_transceiver_single_process.py'.\nHint: make sure your test modules/packages have valid Python names.\nTraceback:\n/venv/main/lib/python3.12/importlib/__init__.py:90: in import_module\n    return _bootstrap._gcd_import(name[level:], package, level)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntests/unittest/disaggregated/test_cache_transceiver_single_process.py:17: in <module>\n    import tensorrt_llm\ntensorrt_llm/__init__.py:107: in <module>\n    import tensorrt_llm._torch.models as torch_models\ntensorrt_llm/_torch/__init__.py:1: in <module>\n    from .llm import LLM\ntensorrt_llm/_torch/llm.py:1: in <module>\n    from tensorrt_llm.llmapi.llm import _TorchLLM\ntensorrt_llm/llmapi/__init__.py:1: in <module>\n    from .._torch.async_llm import AsyncLLM\ntensorrt_llm/_torch/async_llm.py:3: in <module>\n    from ..llmapi.llm import LLM\ntensorrt_llm/llmapi/llm.py:19: in <module>\n    from tensorrt_llm._utils import mpi_disabled\ntensorrt_llm/_utils.py:46: in <module>\n    import tensorrt as trt\nE   ModuleNotFoundError: No module named 'tensorrt'\n=============================== warnings summary ===============================\n../../venv/main/lib/python3.12/site-packages/_pytest/config/__init__.py:1464\n  /venv/main/lib/python3.12/site-packages/_pytest/config/__init__.py:1464: PytestConfigWarning: Unknown config option: env\n  \n    self._warn_or_fail_if_strict(f\"Unknown config option: {key}\\n\")\n\n../../venv/main/lib/python3.12/site-packages/_pytest/config/__init__.py:1464\n  /venv/main/lib/python3.12/site-packages/_pytest/config/__init__.py:1464: PytestConfigWarning: Unknown config option: threadleak\n  \n    self._warn_or_fail_if_strict(f\"Unknown config option: {key}\\n\")\n\n../../venv/main/lib/python3.12/site-packages/_pytest/config/__init__.py:1464\n  /venv/main/lib/python3.12/site-packages/_pytest/config/__init__.py:1464: PytestConfigWarning: Unknown config option: threadleak_exclude\n  \n    self._warn_or_fail_if_strict(f\"Unknown config option: {key}\\n\")\n\n../../venv/main/lib/python3.12/site-packages/_pytest/config/__init__.py:1464\n  /venv/main/lib/python3.12/site-packages/_pytest/config/__init__.py:1464: PytestConfigWarning: Unknown config option: xdist_start_method\n  \n    self._warn_or_fail_if_strict(f\"Unknown config option: {key}\\n\")\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!\n4 warnings, 1 error in 3.23s\nWelcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nPrevious HEAD position was d2e080551 [None][feat] Reserve one more slots for attention_dp in mixed mamba cache manager\nHEAD is now at d7647ac7e [None][fix] Add disk_cache_size/path to KvCacheConfigV2 test mocks\n",
+      "ref": "refs/r18/pr-14845",
+      "remote_command": "cd /workspace/r17-tensorrt-wt && git switch --detach refs/r18/pr-14845 >/dev/null && test \"$(git rev-parse HEAD)\" = d7647ac7e6c81d1d38ea47535f400a826cb0210d && timeout 420s env PYTHONDONTWRITEBYTECODE=1 CUDA_VISIBLE_DEVICES=1 PYTHONPATH=/workspace/r18-deps/common:/workspace/r17-deps/tensorrt:. /venv/main/bin/python -m pytest -q -rs --tb=short --maxfail=1 --noconftest tests/unittest/disaggregated/test_cache_transceiver_single_process.py tests/unittest/disaggregated/test_kv_transfer.py tests/unittest/llmapi/test_llm_args.py -k 'test_CapacitySchedulerPolicy or test_KvCacheConfig_disk_cache_validation'",
+      "returncode": 1,
+      "status": "completed",
+      "summary_lines": [
+        "==================================== ERRORS ====================================",
+        "___ ERROR collecting disaggregated/test_cache_transceiver_single_process.py ____",
+        "ImportError while importing test module '/workspace/r17-tensorrt-wt/tests/unittest/disaggregated/test_cache_transceiver_single_process.py'.",
+        "E   ModuleNotFoundError: No module named 'tensorrt'",
+        "4 warnings, 1 error in 3.23s"
+      ],
+      "test_names": [
+        "test_CapacitySchedulerPolicy",
+        "test_KvCacheConfig_disk_cache_validation"
+      ],
+      "test_paths": [
+        "tests/unittest/disaggregated/test_cache_transceiver_single_process.py",
+        "tests/unittest/disaggregated/test_kv_transfer.py",
+        "tests/unittest/llmapi/test_llm_args.py"
+      ]
+    },
+    {
+      "case_id": "vllm-pr-54979",
+      "duration_seconds": 4.017469083191827,
+      "head_sha": "40e7734084a792c9870e1aa67041521d8d67dc4d",
+      "output_sha256": "sha256:727f799e1faf7347b5234c3093bd380fc0cbd292f7c41a4d02827e01dea2caab",
+      "output_tail": "Welcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nerror: Your local changes to the following files would be overwritten by checkout:\n\t.buildkite/ci_config_rocm.yaml\n\t.buildkite/hardware_tests/amd.yaml\n\t.buildkite/hardware_tests/cpu.yaml\n\t.buildkite/hardware_tests/intel_xpu_ci/test-intel.yaml\n\t.buildkite/image_build/image_build.sh\n\t.buildkite/image_build/image_build_arm64.sh\n\t.buildkite/image_build/image_build_cpu.sh\n\t.buildkite/image_build/image_build_torch_nightly.sh\n\t.buildkite/intel_jobs/basic_correctness.yaml\n\t.buildkite/intel_jobs/engine_intel.yaml\n\t.buildkite/intel_jobs/expert_parallelism_intel.yaml\n\t.buildkite/intel_jobs/kernels_intel.yaml\n\t.buildkite/intel_jobs/lora_intel.yaml\n\t.buildkite/intel_jobs/misc_intel.yaml\n\t.buildkite/intel_jobs/model_runner_v2_intel.yaml\n\t.buildkite/intel_jobs/models_multimodal_intel.yaml\n\t.buildkite/intel_jobs/quantization.yaml\n\t.buildkite/intel_jobs/test-intel.yaml\n\t.buildkite/lm-eval-harness/configs/Meta-Llama-4-Maverick-17B-128E-Instruct-FP8.yaml\n\t.buildkite/lm-eval-harness/test_lm_eval_correctness.py\n\t.buildkite/release-pipeline.yaml\n\t.buildkite/scripts/build-macos-wheel.sh\n\t.buildkite/scripts/ci-bake-rocm.sh\n\t.buildkite/scripts/ci-fetch-log.sh\n\t.buildkite/scripts/generate-and-upload-nightly-index.sh\n\t.buildkite/scripts/hardware_ci/run-amd-test.sh\n\t.buildkite/scripts/hardware_ci/run-cpu-test-arm.sh\n\t.buildkite/scripts/hardware_ci/run-intel-ci-test.sh\n\t.buildkite/scripts/hardware_ci/run-intel-test.sh\n\t.buildkite/scripts/hardware_ci/run-npu-test.sh\n\t.buildkite/scripts/install-kv-connectors.sh\n\t.buildkite/scripts/publish-release-images.sh\n\t.buildkite/scripts/rocm/build-ci-base.sh\n\t.buildkite/scripts/rocm/build-test-image.sh\n\t.buildkite/scripts/rocm/refresh-base-image.sh\n\t.buildkite/scripts/rocm/smoke-test-image.sh\n\t.buildkite/scripts/run-multi-node-test.sh\n\t.buildkite/scripts/run-rust-frontend-cargo-ci.sh\n\t.buildkite/scripts/xpu/create-xpu-ecr-manifest.sh\n\t.buildkite/test-amd.yaml\n\t.buildkite/test_areas/attention.yaml\n\t.buildkite/test_areas/basic_correctness.yaml\n\t.buildkite/test_areas/benchmarks.yaml\n\t.buildkite/test_areas/compile.yaml\n\t.buildkite/test_areas/cuda.yaml\n\t.buildkite/test_areas/disaggregated.yaml\n\t.buildkite/test_areas/distributed.yaml\n\t.buildkite/test_areas/docker.yaml\n\t.buildkite/test_areas/e2e_integration.yaml\n\t.buildkite/test_areas/engine.yaml\n\t.buildkite/test_areas/entrypoints.yaml\n\t.buildkite/test_areas/expert_parallelism.yaml\n\t.buildkite/test_areas/kernels.yaml\n\t.buildkite/test_areas/lm_eval.yaml\n\t.buildkite/test_areas/lora.yaml\n\t.buildkite/test_areas/misc.yaml\n\t.buildkite/test_areas/model_executor.yaml\n\t.buildkite/test_areas/model_runner_v2.yaml\n\t.buildkite/test_areas/models_basic.yaml\n\t.buildkite/test_areas/models_distributed.yaml\n\t.buildkite/test_areas/models_language.yaml\n\t.buildkite/test_areas/models_multimodal.yaml\n\t.buildkite/test_areas/plugins.yaml\n\t.buildkite/test_areas/pytorch.yaml\n\t.buildkite/test_areas/quantization.yaml\n\t.buildkite/test_areas/rust_frontend.yaml\n\t.buildkite/test_areas/rust_frontend_cargo.yaml\n\t.buildkite/test_areas/samplers.yaml\n\t.buildkite/test_areas/spec_decode.yaml\n\t.buildkite/test_areas/weight_loading.yaml\n\t.github/CODEOWNERS\n\t.github/actionlint.yaml\n\t.github/mergify.yml\n\t.github/workflows/issue_autolabel.yml\n\t.github/workflows/pre-commit.yml\n\t.gitignore\n\t.pre-commit-config.yaml\n\tAGENTS.md\n\tCMakeLists.txt\n\tbenchmarks/attention_benchmarks/benchmark.py\n\tbenchmarks/attention_benchmarks/common.py\n\tbenchmarks/attention_benchmarks/mla_runner.py\n\tbenchmarks/attention_benchmarks/runner.py\n\tbenchmarks/kernels/benchmark_moe.py\n\tbuild_vllm_ppc64le.sh\n\tcmake/cpu_extension.cmake\n\tcmake/external_projects/deepgemm.cmake\n\tcmake/external_projects/flashmla.cmake\n\tcmake/external_projects/fmha_sm100.cmake\n\tcmake/external_projects/qutlass.cmake\n\tcmake/external_projects/vllm_flash_attn.cmake\n\tcmake/utils.cmake\n\tcsrc/cpu/cpu_attn.cpp\n\tcsrc/cpu/cpu_fused_moe.cpp\n\tcsrc/cpu/cpu_types_arm.hpp\n\tcsrc/cpu/cpu_types_riscv_impl.hpp\n\tcsrc/cpu/cpu_types_scalar.hpp\n\tcsrc/cpu/cpu_types_vsx.hpp\n\tcsrc/cpu/cpu_types_vxe.hpp\n\tcsrc/cpu/cpu_types_x86.hpp\n\tcsrc/cpu/micro_gemm/cpu_micro_gemm_impl.hpp\n\tcsrc/cpu/micro_gemm/cp\nAborting\n",
+      "ref": "refs/r18/pr-54979",
+      "remote_command": "cd /workspace/r14-run-vllm && git switch --detach refs/r18/pr-54979 >/dev/null && test \"$(git rev-parse HEAD)\" = 40e7734084a792c9870e1aa67041521d8d67dc4d && timeout 420s env PYTHONDONTWRITEBYTECODE=1 CUDA_VISIBLE_DEVICES=0 PYTHONPATH=/workspace/r17-deps/vllm:/workspace/r18-deps/common:/workspace/r15-vllm-shim:/workspace/r14-shims:. /venv/main/bin/python -m pytest -q -rs --tb=short --maxfail=1 --noconftest tests/v1/core/prefix_cache/test_partial_prefix_cache_hits.py tests/v1/core/test_async_scheduler.py tests/v1/core/test_scheduler.py -k 'test_finished_request_does_not_cache_in_flight_tokens or test_finished_spec_decode_registers_accepted_tokens or test_no_spec_decode_padding_up_to_max_model_len or test_partial_hit_then_internal_checkpoint_uses_distinct_mamba_blocks'",
+      "returncode": 1,
+      "status": "completed",
+      "summary_lines": [
+        "error: Your local changes to the following files would be overwritten by checkout:"
+      ],
+      "test_names": [
+        "test_finished_request_does_not_cache_in_flight_tokens",
+        "test_finished_spec_decode_registers_accepted_tokens",
+        "test_no_spec_decode_padding_up_to_max_model_len",
+        "test_partial_hit_then_internal_checkpoint_uses_distinct_mamba_blocks"
+      ],
+      "test_paths": [
+        "tests/v1/core/prefix_cache/test_partial_prefix_cache_hits.py",
+        "tests/v1/core/test_async_scheduler.py",
+        "tests/v1/core/test_scheduler.py"
+      ]
+    },
+    {
+      "case_id": "vllm-pr-44450",
+      "duration_seconds": 11.586308290949091,
+      "head_sha": "2ff6ce39be2904eb11a1ca9e23443e2efe448beb",
+      "output_sha256": "sha256:30e0b8d2a459017f409884db1f9d0bd7a174ca020756bff823ba8997d4fd8701",
+      "output_tail": "\n==================================== ERRORS ====================================\n__________ ERROR collecting tests/v1/worker/test_gpu_model_runner.py ___________\nImportError while importing test module '/workspace/r14-run-vllm/tests/v1/worker/test_gpu_model_runner.py'.\nHint: make sure your test modules/packages have valid Python names.\nTraceback:\n/venv/main/lib/python3.12/importlib/__init__.py:90: in import_module\n    return _bootstrap._gcd_import(name[level:], package, level)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntests/v1/worker/test_gpu_model_runner.py:12: in <module>\n    import vllm.v1.worker.gpu_model_runner as gpu_model_runner_module\nvllm/v1/worker/gpu_model_runner.py:24: in <module>\n    from vllm.compilation.breakable_cudagraph import (\nvllm/compilation/breakable_cudagraph.py:36: in <module>\n    from vllm.compilation.monitor import validate_cudagraph_capturing_enabled\nvllm/compilation/monitor.py:8: in <module>\n    from vllm.config import CompilationMode, VllmConfig\nvllm/config/__init__.py:6: in <module>\n    from vllm.config.compilation import (\nvllm/config/compilation.py:22: in <module>\n    from vllm.platforms import current_platform\nvllm/platforms/__init__.py:278: in __getattr__\n    _current_platform = resolve_obj_by_qualname(platform_cls_qualname)()\n                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nvllm/utils/import_utils.py:109: in resolve_obj_by_qualname\n    module = importlib.import_module(module_name)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n/venv/main/lib/python3.12/importlib/__init__.py:90: in import_module\n    return _bootstrap._gcd_import(name[level:], package, level)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nvllm/platforms/cuda.py:21: in <module>\n    import vllm._C  # noqa\n    ^^^^^^^^^^^^^^\nE   ModuleNotFoundError: No module named 'vllm._C'\n=============================== warnings summary ===============================\nvllm/__init__.py:7\n  /workspace/r14-run-vllm/vllm/__init__.py:7: RuntimeWarning: Failed to read commit hash:\n  No module named 'vllm._version'\n    from .version import __version__, __version_tuple__  # isort:skip\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!\n!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!\n1 warning, 1 error in 4.84s\nWelcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nPrevious HEAD position was bbb9e7e26 Merge origin/main into lwilkinson/kv-layout/bind-kv-cache\nHEAD is now at 2ff6ce39b add test\n",
+      "ref": "refs/r18/pr-44450",
+      "remote_command": "cd /workspace/r14-run-vllm && git switch --detach refs/r18/pr-44450 >/dev/null && test \"$(git rev-parse HEAD)\" = 2ff6ce39be2904eb11a1ca9e23443e2efe448beb && timeout 420s env PYTHONDONTWRITEBYTECODE=1 CUDA_VISIBLE_DEVICES=0 PYTHONPATH=/workspace/r17-deps/vllm:/workspace/r18-deps/common:/workspace/r15-vllm-shim:/workspace/r14-shims:. /venv/main/bin/python -m pytest -q -rs --tb=short --maxfail=1 --noconftest tests/v1/worker/test_gpu_model_runner.py -k 'test_set_active_mm_loras_builds_tower_and_connector_mappings or test_update_states_new_request'",
+      "returncode": 2,
+      "status": "completed",
+      "summary_lines": [
+        "==================================== ERRORS ====================================",
+        "__________ ERROR collecting tests/v1/worker/test_gpu_model_runner.py ___________",
+        "ImportError while importing test module '/workspace/r14-run-vllm/tests/v1/worker/test_gpu_model_runner.py'.",
+        "E   ModuleNotFoundError: No module named 'vllm._C'",
+        "/workspace/r14-run-vllm/vllm/__init__.py:7: RuntimeWarning: Failed to read commit hash:",
+        "!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!",
+        "1 warning, 1 error in 4.84s"
+      ],
+      "test_names": [
+        "test_set_active_mm_loras_builds_tower_and_connector_mappings",
+        "test_update_states_new_request"
+      ],
+      "test_paths": [
+        "tests/v1/worker/test_gpu_model_runner.py"
+      ]
+    },
+    {
+      "case_id": "vllm-pr-44528",
+      "duration_seconds": 12.504919749917462,
+      "head_sha": "ff1dbe081e46c60d48b77af9b5961565bbc4ab12",
+      "output_sha256": "sha256:334b26a41d47167d53940d16f5e212e4867d0333655f5ebf406d4f542367f07e",
+      "output_tail": "\n==================================== ERRORS ====================================\n____ ERROR collecting tests/v1/kv_connector/unit/test_mooncake_connector.py ____\nImportError while importing test module '/workspace/r14-run-vllm/tests/v1/kv_connector/unit/test_mooncake_connector.py'.\nHint: make sure your test modules/packages have valid Python names.\nTraceback:\n/venv/main/lib/python3.12/importlib/__init__.py:90: in import_module\n    return _bootstrap._gcd_import(name[level:], package, level)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntests/v1/kv_connector/unit/test_mooncake_connector.py:15: in <module>\n    from vllm.config import set_current_vllm_config\nvllm/config/__init__.py:6: in <module>\n    from vllm.config.compilation import (\nvllm/config/compilation.py:22: in <module>\n    from vllm.platforms import current_platform\nvllm/platforms/__init__.py:278: in __getattr__\n    _current_platform = resolve_obj_by_qualname(platform_cls_qualname)()\n                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nvllm/utils/import_utils.py:109: in resolve_obj_by_qualname\n    module = importlib.import_module(module_name)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n/venv/main/lib/python3.12/importlib/__init__.py:90: in import_module\n    return _bootstrap._gcd_import(name[level:], package, level)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nvllm/platforms/cuda.py:21: in <module>\n    import vllm._C  # noqa\n    ^^^^^^^^^^^^^^\nE   ModuleNotFoundError: No module named 'vllm._C'\n=============================== warnings summary ===============================\nvllm/__init__.py:7\n  /workspace/r14-run-vllm/vllm/__init__.py:7: RuntimeWarning: Failed to read commit hash:\n  No module named 'vllm._version'\n    from .version import __version__, __version_tuple__  # isort:skip\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!\n1 warning, 1 error in 4.46s\nWelcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nPrevious HEAD position was 2ff6ce39b add test\nHEAD is now at ff1dbe081 Merge branch 'main' into codex/pr/mooncake-pp-transfer\n",
+      "ref": "refs/r18/pr-44528",
+      "remote_command": "cd /workspace/r14-run-vllm && git switch --detach refs/r18/pr-44528 >/dev/null && test \"$(git rev-parse HEAD)\" = ff1dbe081e46c60d48b77af9b5961565bbc4ab12 && timeout 420s env PYTHONDONTWRITEBYTECODE=1 CUDA_VISIBLE_DEVICES=0 PYTHONPATH=/workspace/r17-deps/vllm:/workspace/r18-deps/common:/workspace/r15-vllm-shim:/workspace/r14-shims:. /venv/main/bin/python -m pytest -q -rs --tb=short --maxfail=1 --noconftest tests/v1/kv_connector/unit/test_mooncake_connector.py tests/v1/kv_connector/unit/test_mooncake_connector_hma.py -k 'test_align_transfer_regions_uses_layer_name_occurrences or test_basic_interface or test_build_transfer_params_separates_prefill_pp_layers or test_get_mooncake_bootstrap_addr_selects_expected_host or test_receive_kv_selects_remote_pp_workers or test_resolve_need_send_accounts_for_remote_tp_fanout or test_scheduler_request_finished or test_send_kv_to_decode_aligns_consumer_regions_by_layer_metadata or test_should_launch_bootstrap_server_selects_single_owner'",
+      "returncode": 1,
+      "status": "completed",
+      "summary_lines": [
+        "==================================== ERRORS ====================================",
+        "____ ERROR collecting tests/v1/kv_connector/unit/test_mooncake_connector.py ____",
+        "ImportError while importing test module '/workspace/r14-run-vllm/tests/v1/kv_connector/unit/test_mooncake_connector.py'.",
+        "E   ModuleNotFoundError: No module named 'vllm._C'",
+        "/workspace/r14-run-vllm/vllm/__init__.py:7: RuntimeWarning: Failed to read commit hash:",
+        "1 warning, 1 error in 4.46s"
+      ],
+      "test_names": [
+        "test_align_transfer_regions_uses_layer_name_occurrences",
+        "test_basic_interface",
+        "test_build_transfer_params_separates_prefill_pp_layers",
+        "test_get_mooncake_bootstrap_addr_selects_expected_host",
+        "test_receive_kv_selects_remote_pp_workers",
+        "test_resolve_need_send_accounts_for_remote_tp_fanout",
+        "test_scheduler_request_finished",
+        "test_send_kv_to_decode_aligns_consumer_regions_by_layer_metadata",
+        "test_should_launch_bootstrap_server_selects_single_owner"
+      ],
+      "test_paths": [
+        "tests/v1/kv_connector/unit/test_mooncake_connector.py",
+        "tests/v1/kv_connector/unit/test_mooncake_connector_hma.py"
+      ]
+    },
+    {
+      "case_id": "vllm-pr-44431",
+      "duration_seconds": 10.095878625055775,
+      "head_sha": "cc5aa15558a87b932f5af65e5b2a2065af597950",
+      "output_sha256": "sha256:44d5b2d72bd038ef2ba49b568543508232ba64f0c965248868620444c4aa27a6",
+      "output_tail": "\n==================================== ERRORS ====================================\n_______________ ERROR collecting tests/v1/core/test_scheduler.py _______________\nImportError while importing test module '/workspace/r14-run-vllm/tests/v1/core/test_scheduler.py'.\nHint: make sure your test modules/packages have valid Python names.\nTraceback:\n/venv/main/lib/python3.12/importlib/__init__.py:90: in import_module\n    return _bootstrap._gcd_import(name[level:], package, level)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntests/v1/core/test_scheduler.py:9: in <module>\n    import vllm.envs as envs\nvllm/__init__.py:14: in <module>\n    import vllm.env_override  # noqa: F401\n    ^^^^^^^^^^^^^^^^^^^^^^^^\nvllm/env_override.py:90: in <module>\n    from vllm.utils.torch_utils import is_torch_equal, is_torch_equal_or_newer\nvllm/utils/torch_utils.py:72: in <module>\n    PIN_MEMORY = is_pin_memory_available()\n                 ^^^^^^^^^^^^^^^^^^^^^^^^^\nvllm/utils/platform_utils.py:45: in is_pin_memory_available\n    from vllm.platforms import current_platform\nvllm/platforms/__init__.py:277: in __getattr__\n    _current_platform = resolve_obj_by_qualname(platform_cls_qualname)()\n                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nvllm/utils/import_utils.py:109: in resolve_obj_by_qualname\n    module = importlib.import_module(module_name)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n/venv/main/lib/python3.12/importlib/__init__.py:90: in import_module\n    return _bootstrap._gcd_import(name[level:], package, level)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nvllm/platforms/cuda.py:23: in <module>\n    import vllm._C_stable_libtorch  # noqa\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nE   ModuleNotFoundError: No module named 'vllm._C_stable_libtorch'\n=============================== warnings summary ===============================\nvllm/__init__.py:7\n  /workspace/r14-run-vllm/vllm/__init__.py:7: RuntimeWarning: Failed to read commit hash:\n  No module named 'vllm._version'\n    from .version import __version__, __version_tuple__  # isort:skip\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!\n!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!\n1 warning, 1 error in 2.45s\nWelcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nPrevious HEAD position was ff1dbe081 Merge branch 'main' into codex/pr/mooncake-pp-transfer\nHEAD is now at cc5aa1555 Don't double-count local prefix cache stats on scheduling retries (#43736)\n",
+      "ref": "refs/r18/pr-44431",
+      "remote_command": "cd /workspace/r14-run-vllm && git switch --detach refs/r18/pr-44431 >/dev/null && test \"$(git rev-parse HEAD)\" = cc5aa15558a87b932f5af65e5b2a2065af597950 && timeout 420s env PYTHONDONTWRITEBYTECODE=1 CUDA_VISIBLE_DEVICES=0 PYTHONPATH=/workspace/r17-deps/vllm:/workspace/r18-deps/common:/workspace/r15-vllm-shim:/workspace/r14-shims:. /venv/main/bin/python -m pytest -q -rs --tb=short --maxfail=1 --noconftest tests/v1/core/test_scheduler.py -k 'test_local_prefix_cache_stats_counted_once_for_retried_then_scheduled_request or test_local_prefix_cache_stats_empty_when_caching_disabled or test_local_prefix_cache_stats_not_double_counted_on_retry'",
+      "returncode": 2,
+      "status": "completed",
+      "summary_lines": [
+        "==================================== ERRORS ====================================",
+        "_______________ ERROR collecting tests/v1/core/test_scheduler.py _______________",
+        "ImportError while importing test module '/workspace/r14-run-vllm/tests/v1/core/test_scheduler.py'.",
+        "E   ModuleNotFoundError: No module named 'vllm._C_stable_libtorch'",
+        "/workspace/r14-run-vllm/vllm/__init__.py:7: RuntimeWarning: Failed to read commit hash:",
+        "!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!",
+        "1 warning, 1 error in 2.45s"
+      ],
+      "test_names": [
+        "test_local_prefix_cache_stats_counted_once_for_retried_then_scheduled_request",
+        "test_local_prefix_cache_stats_empty_when_caching_disabled",
+        "test_local_prefix_cache_stats_not_double_counted_on_retry"
+      ],
+      "test_paths": [
+        "tests/v1/core/test_scheduler.py"
+      ]
+    },
+    {
+      "case_id": "vllm-pr-44584",
+      "duration_seconds": 12.944725000066683,
+      "head_sha": "6323cd5a519baf18babfb805341f8fe33e19c403",
+      "output_sha256": "sha256:01a70b7817490faaef7eade1095f121e97df00157ccb1013d1aa81977b6892b1",
+      "output_tail": "\n==================================== ERRORS ====================================\n__ ERROR collecting tests/kernels/attention/test_triton_unified_attention.py ___\nImportError while importing test module '/workspace/r14-run-vllm/tests/kernels/attention/test_triton_unified_attention.py'.\nHint: make sure your test modules/packages have valid Python names.\nTraceback:\n/venv/main/lib/python3.12/importlib/__init__.py:90: in import_module\n    return _bootstrap._gcd_import(name[level:], package, level)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntests/kernels/attention/test_triton_unified_attention.py:8: in <module>\n    from vllm.platforms import current_platform\nvllm/platforms/__init__.py:278: in __getattr__\n    _current_platform = resolve_obj_by_qualname(platform_cls_qualname)()\n                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nvllm/utils/import_utils.py:109: in resolve_obj_by_qualname\n    module = importlib.import_module(module_name)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n/venv/main/lib/python3.12/importlib/__init__.py:90: in import_module\n    return _bootstrap._gcd_import(name[level:], package, level)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nvllm/platforms/cuda.py:21: in <module>\n    import vllm._C  # noqa\n    ^^^^^^^^^^^^^^\nE   ModuleNotFoundError: No module named 'vllm._C'\n=============================== warnings summary ===============================\nvllm/__init__.py:7\n  /workspace/r14-run-vllm/vllm/__init__.py:7: RuntimeWarning: Failed to read commit hash:\n  No module named 'vllm._version'\n    from .version import __version__, __version_tuple__  # isort:skip\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!\n!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!\n1 warning, 1 error in 4.51s\nWelcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nPrevious HEAD position was cc5aa1555 Don't double-count local prefix cache stats on scheduling retries (#43736)\nHEAD is now at 6323cd5a5 perf: extend window-aligned KV-tile iteration to the 3D-segmented path\n",
+      "ref": "refs/r18/pr-44584",
+      "remote_command": "cd /workspace/r14-run-vllm && git switch --detach refs/r18/pr-44584 >/dev/null && test \"$(git rev-parse HEAD)\" = 6323cd5a519baf18babfb805341f8fe33e19c403 && timeout 420s env PYTHONDONTWRITEBYTECODE=1 CUDA_VISIBLE_DEVICES=0 PYTHONPATH=/workspace/r17-deps/vllm:/workspace/r18-deps/common:/workspace/r15-vllm-shim:/workspace/r14-shims:. /venv/main/bin/python -m pytest -q -rs --tb=short --maxfail=1 --noconftest tests/kernels/attention/test_triton_unified_attention.py -k test_triton_unified_attn_sw_tile_base_bit_exact",
+      "returncode": 2,
+      "status": "completed",
+      "summary_lines": [
+        "==================================== ERRORS ====================================",
+        "__ ERROR collecting tests/kernels/attention/test_triton_unified_attention.py ___",
+        "ImportError while importing test module '/workspace/r14-run-vllm/tests/kernels/attention/test_triton_unified_attention.py'.",
+        "E   ModuleNotFoundError: No module named 'vllm._C'",
+        "/workspace/r14-run-vllm/vllm/__init__.py:7: RuntimeWarning: Failed to read commit hash:",
+        "!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!",
+        "1 warning, 1 error in 4.51s"
+      ],
+      "test_names": [
+        "test_triton_unified_attn_sw_tile_base_bit_exact"
+      ],
+      "test_paths": [
+        "tests/kernels/attention/test_triton_unified_attention.py"
+      ]
+    },
+    {
+      "case_id": "vllm-pr-44518",
+      "duration_seconds": 13.871899583842605,
+      "head_sha": "7fe45acd77e0b0e381fd484524d21b6a2cfbe579",
+      "output_sha256": "sha256:a277ff5527e591e4f5515f1ae8fa07e01b24062384b235e2408d7f7cdfe63ea4",
+      "output_tail": "\n==================================== ERRORS ====================================\n_ ERROR collecting tests/models/multimodal/processing/test_qwen2_5_omni_audio_tower.py _\nImportError while importing test module '/workspace/r14-run-vllm/tests/models/multimodal/processing/test_qwen2_5_omni_audio_tower.py'.\nHint: make sure your test modules/packages have valid Python names.\nTraceback:\n/venv/main/lib/python3.12/importlib/__init__.py:90: in import_module\n    return _bootstrap._gcd_import(name[level:], package, level)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntests/models/multimodal/processing/test_qwen2_5_omni_audio_tower.py:10: in <module>\n    import vllm.model_executor.layers.linear as linear\nvllm/model_executor/__init__.py:4: in <module>\n    from vllm.model_executor.parameter import BasevLLMParameter, PackedvLLMParameter\nvllm/model_executor/parameter.py:11: in <module>\n    from vllm.distributed import (\nvllm/distributed/__init__.py:4: in <module>\n    from .communication_op import *\nvllm/distributed/communication_op.py:9: in <module>\n    from .parallel_state import get_tp_group\nvllm/distributed/parallel_state.py:49: in <module>\n    from vllm.distributed.utils import (\nvllm/distributed/utils.py:34: in <module>\n    from vllm.utils.system_utils import suppress_stdout\nvllm/utils/system_utils.py:19: in <module>\n    from vllm.platforms import current_platform\nvllm/platforms/__init__.py:278: in __getattr__\n    _current_platform = resolve_obj_by_qualname(platform_cls_qualname)()\n                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nvllm/utils/import_utils.py:109: in resolve_obj_by_qualname\n    module = importlib.import_module(module_name)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n/venv/main/lib/python3.12/importlib/__init__.py:90: in import_module\n    return _bootstrap._gcd_import(name[level:], package, level)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nvllm/platforms/cuda.py:21: in <module>\n    import vllm._C  # noqa\n    ^^^^^^^^^^^^^^\nE   ModuleNotFoundError: No module named 'vllm._C'\n=============================== warnings summary ===============================\nvllm/__init__.py:7\n  /workspace/r14-run-vllm/vllm/__init__.py:7: RuntimeWarning: Failed to read commit hash:\n  No module named 'vllm._version'\n    from .version import __version__, __version_tuple__  # isort:skip\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!\n!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!\n1 warning, 1 error in 6.07s\nWelcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nPrevious HEAD position was 6323cd5a5 perf: extend window-aligned KV-tile iteration to the 3D-segmented path\nHEAD is now at 7fe45acd7 Merge branch 'main' into fix/qwen25-omni-native-audio-attn\n",
+      "ref": "refs/r18/pr-44518",
+      "remote_command": "cd /workspace/r14-run-vllm && git switch --detach refs/r18/pr-44518 >/dev/null && test \"$(git rev-parse HEAD)\" = 7fe45acd77e0b0e381fd484524d21b6a2cfbe579 && timeout 420s env PYTHONDONTWRITEBYTECODE=1 CUDA_VISIBLE_DEVICES=0 PYTHONPATH=/workspace/r17-deps/vllm:/workspace/r18-deps/common:/workspace/r15-vllm-shim:/workspace/r14-shims:. /venv/main/bin/python -m pytest -q -rs --tb=short --maxfail=1 --noconftest tests/models/multimodal/processing/test_qwen2_5_omni_audio_tower.py -k 'test_audio_attention_forwards_varlen_metadata_to_mm_encoder_attention or test_audio_encoder_forward_uses_mm_encoder_attention or test_audio_encoder_load_weights_remaps_hf_qkv_to_packed_qkv or test_audio_encoder_uses_packed_qkv_weight_structure or test_qwen2_5_omni_audio_tower_is_vllm_native'",
+      "returncode": 2,
+      "status": "completed",
+      "summary_lines": [
+        "==================================== ERRORS ====================================",
+        "_ ERROR collecting tests/models/multimodal/processing/test_qwen2_5_omni_audio_tower.py _",
+        "ImportError while importing test module '/workspace/r14-run-vllm/tests/models/multimodal/processing/test_qwen2_5_omni_audio_tower.py'.",
+        "E   ModuleNotFoundError: No module named 'vllm._C'",
+        "/workspace/r14-run-vllm/vllm/__init__.py:7: RuntimeWarning: Failed to read commit hash:",
+        "!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!",
+        "1 warning, 1 error in 6.07s"
+      ],
+      "test_names": [
+        "test_audio_attention_forwards_varlen_metadata_to_mm_encoder_attention",
+        "test_audio_encoder_forward_uses_mm_encoder_attention",
+        "test_audio_encoder_load_weights_remaps_hf_qkv_to_packed_qkv",
+        "test_audio_encoder_uses_packed_qkv_weight_structure",
+        "test_qwen2_5_omni_audio_tower_is_vllm_native"
+      ],
+      "test_paths": [
+        "tests/models/multimodal/processing/test_qwen2_5_omni_audio_tower.py"
+      ]
+    }
+  ],
+  "remote": {
+    "gpu_lanes": [
+      0,
+      1
+    ],
+    "host": "root@38.49.42.120",
+    "port": 54270
+  },
+  "schema_version": "0.1",
+  "selection_lock_sha256": "sha256:8589c445a9337530e50a3b166f0838bf454299c453c7cee5e393c36069f5c622",
+  "started_at": "2026-09-02T20:02:04.612270+00:00",
+  "static_evidence_sha256": "sha256:e333566443503e15f27113968fe837e1c3e29663e7107e02d54646afaf6f56ac",
+  "test_plan_sha256": "sha256:60299d98042deaa88a1b39ba11e6c62c9d3eb04d9b61b067dcca33b076206dc2",
+  "test_timeout_seconds": 420
+}

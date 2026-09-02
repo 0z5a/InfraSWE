@@ -205,7 +205,14 @@ def main(*, round_label: str = "R11") -> int:
                 "title": case["title"],
                 "machine_decision": lock_material["decision"],
                 "legacy_r10_style_decision": lock_material["legacy_r10_style_decision"],
-                "machine_rationale_codes": lock_material["rationale_codes"],
+                # R18 locks the full technical findings and residual contract but
+                # predates this presentational field.  Derive only a display code
+                # from the already-locked decision so the original lock and its
+                # digest remain unchanged during reveal.
+                "machine_rationale_codes": lock_material.get(
+                    "rationale_codes",
+                    [f"PRELOCKED_{lock_material['decision'].upper()}_DECISION"],
+                ),
                 "judgment_lock_sha256": lock["lock_sha256"],
                 "observed_at": observed_at.isoformat(),
                 "head_committed_at": head_committed_at.isoformat(),

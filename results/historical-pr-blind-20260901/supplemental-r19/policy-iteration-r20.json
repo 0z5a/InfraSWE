@@ -1,0 +1,121 @@
+{
+  "derived_after_r19_reveal": true,
+  "generated_at": "2026-09-02T21:13:44.702686+00:00",
+  "iteration_sha256": "sha256:ac617b7676e462043655fd392e9cde39f106b8bb6a3ebf21327745bb143f802e",
+  "known_limitations": [
+    "The check oracle consumes post-lock human review activity that allowed blind evidence cannot directly reveal.",
+    "R19 showed that even exhaustive tests and production receipts cannot distinguish merged from abandoned recent work.",
+    "Mature governance outcomes remain weakly identifiable: several sparse-body PRs merged while technically stronger peers stayed open or closed-unmerged.",
+    "R20 is the final 20-case inference group, so its iteration will be summarized as a terminal recommendation rather than used to preselect another requested group."
+  ],
+  "observed_metrics": {
+    "binary_direction_matches": 15,
+    "cases": 30,
+    "exact_label_matches": 15,
+    "frozen_nonaccept_exact_matches": 6,
+    "legacy_exact_label_matches": 9,
+    "legacy_frozen_nonaccept_exact_matches": 0,
+    "machine_check_precision": null,
+    "machine_reject_precision": 0.5,
+    "oracle_decisions": {
+      "accept": 15,
+      "check": 0,
+      "reject": 15
+    },
+    "same_cohort_exact_accuracy_gain": 0.2
+  },
+  "prospective_rules": [
+    {
+      "evidence": [
+        "All four R19 recent cases were oracle-reject, including SGLang #37638 with 270/270 local tests and a 44/44 production receipt."
+      ],
+      "id": "R20-RECENT-NO-DIRECT-ACCEPT",
+      "rule": "A <=7-day PR without an explicit external-review or QA handoff proxy is reject even when candidate tests and author-reported production validation are exceptionally strong. Direct technical closure is recorded separately and does not predict historical acceptance during the hot window."
+    },
+    {
+      "evidence": [
+        "R19 made no check predictions and its oracle contained no check cases; R18 showed that technical success alone yielded zero check precision."
+      ],
+      "id": "R20-CHECK-EXTERNAL-HANDOFF-ONLY",
+      "rule": "Predict check only for a recent PR whose outcome-free body or commits explicitly identify reviewer-requested or collaborator-owned follow-up, show the response, and leave exactly one bounded executable residual. Otherwise prefer reject over speculative check."
+    },
+    {
+      "evidence": [
+        "TensorRT-LLM #14806/#14961/#14979 merged despite local generated-binding gaps or C++-only coverage."
+      ],
+      "id": "R20-TEST-LANGUAGE-NEUTRAL",
+      "rule": "Count candidate-owned C++, integration-list, and existing-matrix changes as first-class test evidence. Python-only discovery is an execution convenience, not a readiness criterion."
+    },
+    {
+      "evidence": [
+        "R19 false rejects TensorRT-LLM #14806/#14961/#14979 and vLLM #44514/#44577 later merged despite sparse or not-ready body text."
+      ],
+      "id": "R20-MATURE-FINAL-HEAD-OVER-BODY",
+      "rule": "For mature PRs, final-head source and candidate tests outrank stale checklist, draft, or pending-CI prose. Accept when the title-scoped production route and its negative/control path are represented; reject only for an exact counterexample or a concrete uncovered invariant."
+    },
+    {
+      "evidence": [
+        "FlashInfer #3434 and vLLM #44566 had detailed self-reported receipts but remained inactive-open."
+      ],
+      "id": "R20-SELF-REPORTED-RECEIPT-NOT-ENOUGH",
+      "rule": "A body-only benchmark or base/head reproduction without candidate-owned test or independently executable narrow invariant cannot by itself justify mature accept."
+    },
+    {
+      "evidence": [
+        "TensorRT-LLM #14764 passed 39 helper tests but remained open as preparation for a follow-up, exposing the disposition limit of isolated helper correctness."
+      ],
+      "id": "R20-PREPARATORY-SCOPE-REQUIRES-OWN-CLOSURE",
+      "rule": "A preparatory or stacked PR may accept only when its own title-scoped helper/API contract is exhaustively tested and useful independently; do not borrow closure from a follow-up integration."
+    },
+    {
+      "evidence": [
+        "FlashInfer #4900 reproduced its 19-versus-20 plan signature failure in a unique JIT workspace and was correctly rejected."
+      ],
+      "id": "R20-EXACT-FAILURE-FIRST",
+      "rule": "A reproducible candidate-owned assertion, signature, syntax, conflict, safety, or import failure at the changed boundary rejects before any receipt or project prior. Environment-only dependency failures stay capability gaps."
+    },
+    {
+      "evidence": [
+        "R19 exact labels improved by 20 points entirely through reject labeling while binary accept/non-accept accuracy stayed 15/30."
+      ],
+      "id": "R20-DUAL-OUTPUT",
+      "rule": "Continue freezing technical_contract separately from disposition. The benchmark must expose technically passing but historically rejected PRs rather than falsifying their numeric or state results."
+    }
+  ],
+  "protocol_id": "historical-pr-iterative-policy-r19-to-r20-v0.1",
+  "r20_group": {
+    "allocation": {
+      "inference": 20
+    },
+    "case_count": 20,
+    "future_groups_preselected": false,
+    "inference_project_allocation": {
+      "flashinfer": 5,
+      "sglang": 5,
+      "tensorrt_llm": 5,
+      "vllm": 5
+    },
+    "reason": "complete the requested 100 inference PRs with 25 cases from each main draft"
+  },
+  "retrospective_r19_locks_changed": false,
+  "schema_version": "0.1",
+  "source_audit_sha256": "sha256:2c4aedf99053afd4a205b123ac0cec3839c8214b4ce9016136189e4758e543d9",
+  "source_lock_set_sha256": "sha256:da561d647a3cd1a9dd93d078412b5f79a6f7128924d905d8505fbab91a979958",
+  "workload_ledger": {
+    "completed_through_r19": {
+      "communication": 50,
+      "inference": 80,
+      "training": 50
+    },
+    "remaining_after_r19": {
+      "communication": 0,
+      "inference": 20,
+      "training": 0
+    },
+    "requested_after_r13": {
+      "communication": 50,
+      "inference": 100,
+      "training": 50
+    }
+  }
+}

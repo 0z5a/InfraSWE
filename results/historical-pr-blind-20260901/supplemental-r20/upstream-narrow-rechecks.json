@@ -1,0 +1,39 @@
+{
+  "evidence_sha256": "sha256:f91addbd26239211fd1f1e979a180f0ed885e3ccdc8f2dc4c79b97471eee0eb5",
+  "finished_at": "2026-09-02T21:34:25.978312+00:00",
+  "focused_test_evidence_sha256": "sha256:4f4756023da580f666177b95fbeb5dcf05830ce70aca210fa1a93c0b828c2b30",
+  "mamba_probe_sha256": "sha256:89504535e690ca90d9f7d6137c85c5305dd5a4f4f64b568487a53ab955ceee65",
+  "outcome_review_ci_fields_requested": false,
+  "protocol_id": "r20-narrow-outcome-free-rechecks-v0.1",
+  "records": [
+    {
+      "case_id": "vllm-pr-44526",
+      "command": "cd /workspace/r14-run-vllm && git switch --detach refs/r20/pr-44526 >/dev/null && test \"$(git rev-parse HEAD)\" = 6361e1e0a7a965d30d891b5d8099f9bde019482f && timeout 120s env CUDA_VISIBLE_DEVICES=0 INFRASWE_R15_VLLM_SOURCE_IMPORT_SHIM=1 PYTHONPATH=/workspace/r17-deps/vllm:/workspace/r18-deps/common:/workspace/r15-vllm-shim:/workspace/r14-shims:. /venv/main/bin/python -c 'from tests.v1.streaming_input.test_scheduler_streaming import DummyRequest; from vllm.v1.core.sched.scheduler import Scheduler; from vllm.v1.request import StreamingUpdate; session=DummyRequest(request_id='\"'\"'session'\"'\"',prompt_token_ids=[1,2,3]); session.num_computed_tokens=9; incoming=DummyRequest(request_id='\"'\"'session'\"'\"',prompt_token_ids=[4,5,6]); update=StreamingUpdate.from_request(incoming); scheduler=object.__new__(Scheduler); scheduler.num_waiting_for_streaming_input=0; scheduler.log_stats=False; Scheduler._update_request_as_session(scheduler,session,update); assert session.num_computed_tokens==session.num_prompt_tokens==6 and session.num_tokens==6; print('\"'\"'streaming-clamp-pass'\"'\"',session.num_computed_tokens,session.num_prompt_tokens)'",
+      "duration_seconds": 14.418609333923087,
+      "head_sha": "6361e1e0a7a965d30d891b5d8099f9bde019482f",
+      "lane": 0,
+      "output_sha256": "sha256:61194cab4dfc5ffbd6ae12c2de51307b62dc53b3e5d49b7b4cea78a5b51d3160",
+      "output_tail": "streaming-clamp-pass 6 6\nWelcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nHEAD is now at 6361e1e0a fix: use continue instead of break to skip request\n/workspace/r14-run-vllm/vllm/__init__.py:7: RuntimeWarning: Failed to read commit hash:\nNo module named 'vllm._version'\n  from .version import __version__, __version_tuple__  # isort:skip\n",
+      "purpose": "bypass an unrelated stale scheduler fixture and execute the exact over-computed streaming-session clamp",
+      "returncode": 0,
+      "status": "completed",
+      "timeout": 150
+    },
+    {
+      "case_id": "tensorrt_llm-pr-14869",
+      "command": "cd /workspace/r19-tensorrt-wt && GIT_LFS_SKIP_SMUDGE=1 git switch --detach refs/r20/pr-14869 >/dev/null && test \"$(git rev-parse HEAD)\" = d23bafc591151acda3ce5f7d8b55de03a039fffb && test \"$(sha256sum /workspace/r20-probes/r20_mamba_state_probe.py | cut -d' ' -f1)\" = 89504535e690ca90d9f7d6137c85c5305dd5a4f4f64b568487a53ab955ceee65 && timeout 150s env CUDA_VISIBLE_DEVICES=1 PYTHONPATH=. /venv/main/bin/python /workspace/r20-probes/r20_mamba_state_probe.py --source tensorrt_llm/_torch/pyexecutor/mamba_cache_manager.py",
+      "duration_seconds": 8.414648416917771,
+      "head_sha": "d23bafc591151acda3ce5f7d8b55de03a039fffb",
+      "lane": 1,
+      "output_sha256": "sha256:d26321b959be37954cff2a13b9fbbd4c4a95004318ef927f5064fc887090c0f6",
+      "output_tail": "mamba-strided-copy-pass (1024, 128, 1)\nWelcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nHEAD is now at d23bafc59 [None][perf] Use a Triton kernel for Cpp mamba hybrid state update (By Agent)\n",
+      "purpose": "execute the exact Triton functions in isolation and compare their strided pool writes against a tensor reference",
+      "returncode": 0,
+      "status": "completed",
+      "timeout": 180
+    }
+  ],
+  "schema_version": "0.1",
+  "selection_lock_sha256": "sha256:a611e87197fd30a4a3b4441849fbd9eed538086cb3e2169b3f995c93c18a0865",
+  "started_at": "2026-09-02T21:34:11.558979+00:00"
+}

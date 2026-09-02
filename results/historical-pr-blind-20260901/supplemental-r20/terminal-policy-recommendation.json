@@ -1,0 +1,118 @@
+{
+  "derived_after_r20_reveal": true,
+  "generated_at": "2026-09-02T21:39:10.747741+00:00",
+  "known_limitations": [
+    "The blind evidence policy excludes the non-author review activity that defines the check oracle, so perfect check recall is structurally impossible without a new allowed evidence channel.",
+    "Technically excellent mature PRs may remain open for ownership, priority, duplication, or product reasons that source and tests cannot identify.",
+    "The 200-PR extension is historical and project-stratified but is not a random sample of every infrastructure repository or PR type.",
+    "No weighted score was used, so the historical decision labels must not be interpreted as calibrated code-quality scores."
+  ],
+  "observed_metrics": {
+    "binary_direction_matches": 16,
+    "cases": 20,
+    "exact_label_matches": 14,
+    "frozen_nonaccept_exact_matches": 3,
+    "legacy_exact_label_matches": 12,
+    "legacy_frozen_nonaccept_exact_matches": 1,
+    "machine_check_precision": 0.0,
+    "machine_reject_precision": 0.75,
+    "merged_cases": 11,
+    "merged_machine_accepts": 11,
+    "oracle_decisions": {
+      "accept": 11,
+      "check": 1,
+      "reject": 8
+    },
+    "same_cohort_exact_accuracy_gain": 0.09999999999999998
+  },
+  "protocol_id": "historical-pr-terminal-policy-after-r20-v0.1",
+  "recommendation_sha256": "sha256:aed8331c6099b99d99e9b0bc083057f24c19df4231207ab9bc13d6bff9064451",
+  "release_gate": {
+    "eligible_for_commit": true,
+    "exact_accuracy": 0.7,
+    "legacy_exact_accuracy": 0.6,
+    "merged_accept_recall": 1.0,
+    "reason": "R20 improved exact and frozen non-accept classification while accepting every merged case; R18 and R19 had already independently improved their target metric.",
+    "same_cohort_target_improved": true
+  },
+  "retrospective_r20_locks_changed": false,
+  "schema_version": "0.1",
+  "source_audit_sha256": "sha256:8c261986bb3aef08ab6ca3d8c94f38c0ba7b1b272c144263b672eea77c9bd414",
+  "source_lock_set_sha256": "sha256:cf8deab1e41bf825f98d23ee0715927b42fff5128a25a7a7f2f5ef6a3b939bb0",
+  "terminal_rules": [
+    {
+      "evidence": [
+        "FlashInfer #4879 was the only oracle-check and had ten post-lock human feedback items, which the blind evidence could not see.",
+        "TensorRT-LLM #18600 contained a bot-generated QA follow-up in its body but had zero revealed human feedback and was oracle-reject."
+      ],
+      "id": "POST-R20-CHECK-NEEDS-INDEPENDENT-HUMAN-ACTIVITY",
+      "rule": "Use check only when pre-lock allowed evidence itself contains a named, non-author human review or handoff event tied to the final head. Bot-generated QA summaries, author-written reviewer notes, and generic `needs follow-up` prose are not check evidence."
+    },
+    {
+      "evidence": [
+        "Three of four recent R20 cases were oracle-reject; the remaining check case was distinguishable only by hidden review activity."
+      ],
+      "id": "POST-R20-RECENT-BLIND-DEFAULT-REJECT",
+      "rule": "When independent human activity is unavailable under the blind protocol, classify a recent technically complete PR as reject for historical disposition and retain its technical pass separately; do not synthesize check from quality alone."
+    },
+    {
+      "evidence": [
+        "SGLang #27257 passed four selected cases but its own parallel-expand case raised an exact IndexError and was correctly predicted reject."
+      ],
+      "id": "POST-R20-EXACT-CANDIDATE-FAILURE-DOMINATES",
+      "rule": "A reproducible candidate-owned assertion failure at the changed boundary rejects immediately, even if sibling cases pass or the implementation looks locally plausible."
+    },
+    {
+      "evidence": [
+        "Source-extracted TensorRT-LLM #14869 matched the strided tensor reference and merged; FlashInfer #3461 passed 18 existing alignment cases and merged.",
+        "Technically passing FlashInfer #3506 and vLLM #44475/#44526 still remained inactive-open, proving that technical closure must not be presented as disposition certainty."
+      ],
+      "id": "POST-R20-INDEPENDENT-NARROW-PROBE",
+      "rule": "For a mature PR without candidate test changes, require either a target integration route or an independently executable narrow invariant before technical accept; store author receipts only as corroboration."
+    },
+    {
+      "evidence": [
+        "All four mature TensorRT-LLM predictions accepted under this rule merged, despite local generated-binding collection gaps."
+      ],
+      "id": "POST-R20-TEST-LANGUAGE-AND-ROUTE-NEUTRAL",
+      "rule": "Continue treating C++, integration-list, waiver removal, API-schema, and existing-matrix evidence as first-class. Local generated-binding failures are capability gaps unless a candidate assertion is reached."
+    },
+    {
+      "evidence": [
+        "R20 accepted all 11 merged PRs while improving exact labels by 10 percentage points over the same-cohort legacy baseline."
+      ],
+      "id": "POST-R20-MERGED-RECALL-GUARD",
+      "rule": "Preserve the final-head contract rule that accepts a mature, title-scoped implementation with represented positive and negative controls. Audit merged recall explicitly before release."
+    },
+    {
+      "evidence": [
+        "R20 binary accuracy was unchanged at 16/20 while exact non-accept labeling improved from one to three; the remaining errors were governance outcomes, not kernel-contract mistakes."
+      ],
+      "id": "POST-R20-DUAL-OUTPUT-REQUIRED",
+      "rule": "Always emit technical_contract and historical_disposition separately. If review activity is prohibited, also mark check_observability as unavailable instead of implying that a technically passing open PR is review-active."
+    }
+  ],
+  "workload_ledger": {
+    "completed_through_r20": {
+      "communication": 50,
+      "inference": 100,
+      "training": 50
+    },
+    "inference_project_totals": {
+      "flashinfer": 25,
+      "sglang": 25,
+      "tensorrt_llm": 25,
+      "vllm": 25
+    },
+    "remaining_after_r20": {
+      "communication": 0,
+      "inference": 0,
+      "training": 0
+    },
+    "requested_after_r13": {
+      "communication": 50,
+      "inference": 100,
+      "training": 50
+    }
+  }
+}

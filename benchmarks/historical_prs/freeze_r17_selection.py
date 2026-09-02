@@ -176,7 +176,10 @@ def select_project(
     return selected
 
 
-def main() -> int:
+def main(
+    round_label: str = "R17",
+    iteration_binding_field: str = "r16_policy_iteration_sha256",
+) -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--policy", type=Path, required=True)
     parser.add_argument("--discovery", type=Path, required=True)
@@ -187,15 +190,15 @@ def main() -> int:
     policy = read(args.policy)
     policy_material = {key: value for key, value in policy.items() if key != "policy_sha256"}
     if policy["policy_sha256"] != canonical_sha256(policy_material):
-        raise SystemExit("R17 policy digest mismatch")
+        raise SystemExit(f"{round_label} policy digest mismatch")
     discovery = read(args.discovery)
     discovery_material = {
         key: value for key, value in discovery.items() if key != "discovery_sha256"
     }
     if discovery["discovery_sha256"] != canonical_sha256(discovery_material):
-        raise SystemExit("R17 discovery digest mismatch")
+        raise SystemExit(f"{round_label} discovery digest mismatch")
     if discovery["policy_sha256"] != policy["policy_sha256"]:
-        raise SystemExit("R17 discovery/policy binding mismatch")
+        raise SystemExit(f"{round_label} discovery/policy binding mismatch")
     hidden = (
         discovery["outcome_fields_requested"],
         discovery["review_or_comment_fields_requested"],
@@ -205,7 +208,7 @@ def main() -> int:
         discovery["excluded_resolution_gray_zone_queried"],
     )
     if any(value is not False for value in hidden):
-        raise SystemExit("R17 discovery exposes forbidden evidence")
+        raise SystemExit(f"{round_label} discovery exposes forbidden evidence")
 
     prior, prior_bindings = prior_identities(args.prior_lock)
     reserved = set(prior)
@@ -225,7 +228,7 @@ def main() -> int:
                 if candidate_identity in prior:
                     reasons.append("previously-scored")
                 elif candidate_identity in reserved:
-                    reasons.append("selected-in-earlier-r17-domain")
+                    reasons.append(f"selected-in-earlier-{round_label.lower()}-domain")
                 enriched = {
                     **item,
                     "domain_score": domain_score(item, domain, policy),
@@ -289,20 +292,21 @@ def main() -> int:
                     "risk_family": item["risk_family"],
                 })
 
-    if len(chosen) != 30 or len({item["case_id"] for item in chosen}) != 30:
-        raise SystemExit("R17 selection is not 30 unique cases")
+    expected_count = int(policy["case_count"])
+    if len(chosen) != expected_count or len({item["case_id"] for item in chosen}) != expected_count:
+        raise SystemExit(f"{round_label} selection is not {expected_count} unique cases")
     allocation = {
         domain: sum(item["benchmark_domain"] == domain for item in chosen)
         for domain in policy["domains_in_order"]
     }
     if allocation != policy["domain_allocation"]:
-        raise SystemExit("R17 domain allocation changed")
+        raise SystemExit(f"{round_label} domain allocation changed")
     material = {
         "schema_version": "0.1",
         "protocol_id": policy["protocol_id"],
         "policy_sha256": policy["policy_sha256"],
         "discovery_sha256": discovery["discovery_sha256"],
-        "r16_policy_iteration_sha256": policy["r16_policy_iteration_sha256"],
+        iteration_binding_field: policy[iteration_binding_field],
         "prior_lock_bindings": prior_bindings,
         "prior_identity_count": len(prior),
         "review_or_comment_visible": False,

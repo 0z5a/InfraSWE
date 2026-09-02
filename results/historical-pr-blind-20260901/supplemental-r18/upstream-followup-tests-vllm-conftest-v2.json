@@ -1,0 +1,73 @@
+{
+  "evidence_sha256": "sha256:6c9d4601234572eb991bfb46e5891530a106734797b5b8759d390ee29ebea190",
+  "finished_at": "2026-09-02T20:15:29.980615+00:00",
+  "noconftest_projects": [],
+  "outcome_review_ci_fields_requested": false,
+  "protocol_id": "r18-exact-candidate-upstream-tests-v0.1",
+  "records": [
+    {
+      "case_id": "vllm-pr-44450",
+      "duration_seconds": 25.297168750083074,
+      "head_sha": "2ff6ce39be2904eb11a1ca9e23443e2efe448beb",
+      "output_sha256": "sha256:909128419a298e62f6c06e9d8a7e2fcd5bccc251240f3c4fa17195871ccaa121",
+      "output_tail": ".E\n==================================== ERRORS ====================================\n_______________ ERROR at setup of test_update_states_new_request _______________\n/venv/main/lib/python3.12/site-packages/pytest_asyncio/plugin.py:924: in pytest_fixture_setup\n    return (yield)\n            ^^^^^\ntests/conftest.py:225: in dist_init\n    from tests.utils import ensure_current_vllm_config\ntests/utils.py:48: in <module>\n    from vllm.entrypoints.cli.serve import ServeSubcommand\nvllm/entrypoints/cli/serve.py:13: in <module>\n    from vllm.entrypoints.openai.api_server import run_server, setup_server\nvllm/entrypoints/openai/api_server.py:36: in <module>\n    from vllm.entrypoints.serve.sagemaker.api_router import sagemaker_standards_bootstrap\nvllm/entrypoints/serve/sagemaker/api_router.py:8: in <module>\n    import model_hosting_container_standards.sagemaker as sagemaker_standards\nE   ModuleNotFoundError: No module named 'model_hosting_container_standards'\n---------------------------- Captured stdout setup -----------------------------\nINFO 09-02 20:15:06 [model.py:611] Resolved architecture: OPTForCausalLM\nINFO 09-02 20:15:06 [model.py:1745] Using max model len 2048\nINFO 09-02 20:15:06 [scheduler.py:239] Chunked prefill is enabled with max_num_batched_tokens=512.\nINFO 09-02 20:15:06 [vllm.py:999] Asynchronous scheduling is enabled.\nINFO 09-02 20:15:06 [kernel.py:270] Final IR op priority after setting platform defaults: IrOpPriorityConfig(rms_norm=['native'], fused_add_rms_norm=['native'])\nINFO 09-02 20:15:07 [cuda.py:378] Using TRITON_ATTN attention backend out of potential backends: ['TRITON_ATTN', 'FLEX_ATTENTION'].\nINFO 09-02 20:15:07 [topk_topp_sampler.py:55] Using FlashInfer for top-p & top-k sampling.\n---------------------------- Captured stderr setup -----------------------------\nWarning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.\n------------------------------ Captured log setup ------------------------------\nWARNING  huggingface_hub.utils._http:_http.py:955 Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.\nINFO     vllm.config.model:model.py:611 Resolved architecture: OPTForCausalLM\nINFO     vllm.config.model:model.py:1745 Using max model len 2048\nINFO     vllm.config.scheduler:scheduler.py:239 Chunked prefill is enabled with max_num_batched_tokens=512.\nINFO     vllm.config.vllm:vllm.py:999 Asynchronous scheduling is enabled.\nINFO     vllm.config.kernel:kernel.py:270 Final IR op priority after setting platform defaults: IrOpPriorityConfig(rms_norm=['native'], fused_add_rms_norm=['native'])\nINFO     vllm.platforms.cuda:cuda.py:378 Using TRITON_ATTN attention backend out of potential backends: ['TRITON_ATTN', 'FLEX_ATTENTION'].\nINFO     vllm.v1.sample.ops.topk_topp_sampler:topk_topp_sampler.py:55 Using FlashInfer for top-p & top-k sampling.\n=============================== warnings summary ===============================\nvllm/__init__.py:7\n  /workspace/r14-run-vllm/vllm/__init__.py:7: RuntimeWarning: Failed to read commit hash:\n  No module named 'vllm._version'\n    from .version import __version__, __version_tuple__  # isort:skip\n\n../../venv/main/lib/python3.12/site-packages/torch/jit/_script.py:365: 14 warnings\n  /venv/main/lib/python3.12/site-packages/torch/jit/_script.py:365: DeprecationWarning: `torch.jit.script_method` is deprecated. Please switch to `torch.compile` or `torch.export`.\n    warnings.warn(\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!\n1 passed, 33 deselected, 15 warnings, 1 error in 6.90s\nWelcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nPrevious HEAD position was 7fe45acd7 Merge branch 'main' into fix/qwen25-omni-native-audio-attn\nHEAD is now at 2ff6ce39b add test\n",
+      "ref": "refs/r18/pr-44450",
+      "remote_command": "cd /workspace/r14-run-vllm && git switch --detach refs/r18/pr-44450 >/dev/null && test \"$(git rev-parse HEAD)\" = 2ff6ce39be2904eb11a1ca9e23443e2efe448beb && timeout 300s env PYTHONDONTWRITEBYTECODE=1 INFRASWE_R15_VLLM_SOURCE_IMPORT_SHIM=1 CUDA_VISIBLE_DEVICES=0 PYTHONPATH=/workspace/r17-deps/vllm:/workspace/r18-deps/common:/workspace/r15-vllm-shim:/workspace/r14-shims:. /venv/main/bin/python -m pytest -q -rs --tb=short --maxfail=1 tests/v1/worker/test_gpu_model_runner.py -k 'test_set_active_mm_loras_builds_tower_and_connector_mappings or test_update_states_new_request'",
+      "returncode": 1,
+      "status": "completed",
+      "summary_lines": [
+        "==================================== ERRORS ====================================",
+        "_______________ ERROR at setup of test_update_states_new_request _______________",
+        "E   ModuleNotFoundError: No module named 'model_hosting_container_standards'",
+        "/workspace/r14-run-vllm/vllm/__init__.py:7: RuntimeWarning: Failed to read commit hash:",
+        "1 passed, 33 deselected, 15 warnings, 1 error in 6.90s"
+      ],
+      "test_names": [
+        "test_set_active_mm_loras_builds_tower_and_connector_mappings",
+        "test_update_states_new_request"
+      ],
+      "test_paths": [
+        "tests/v1/worker/test_gpu_model_runner.py"
+      ]
+    },
+    {
+      "case_id": "vllm-pr-44518",
+      "duration_seconds": 17.30247954209335,
+      "head_sha": "7fe45acd77e0b0e381fd484524d21b6a2cfbe579",
+      "output_sha256": "sha256:44b70ea41372ca4e22e93d836c5e4e56772deba56e27b30bd0152d47d5a4ae5e",
+      "output_tail": "Welcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nPrevious HEAD position was 2ff6ce39b add test\nHEAD is now at 7fe45acd7 Merge branch 'main' into fix/qwen25-omni-native-audio-attn\nImportError while loading conftest '/workspace/r14-run-vllm/tests/models/multimodal/conftest.py'.\ntests/models/multimodal/conftest.py:11: in <module>\n    from tests.utils import prewarm_hf_cache\ntests/utils.py:48: in <module>\n    from vllm.entrypoints.cli.serve import ServeSubcommand\nvllm/entrypoints/cli/serve.py:13: in <module>\n    from vllm.entrypoints.openai.api_server import run_server, setup_server\nvllm/entrypoints/openai/api_server.py:36: in <module>\n    from vllm.entrypoints.serve.sagemaker.api_router import sagemaker_standards_bootstrap\nvllm/entrypoints/serve/sagemaker/api_router.py:8: in <module>\n    import model_hosting_container_standards.sagemaker as sagemaker_standards\nE   ModuleNotFoundError: No module named 'model_hosting_container_standards'\n",
+      "ref": "refs/r18/pr-44518",
+      "remote_command": "cd /workspace/r14-run-vllm && git switch --detach refs/r18/pr-44518 >/dev/null && test \"$(git rev-parse HEAD)\" = 7fe45acd77e0b0e381fd484524d21b6a2cfbe579 && timeout 300s env PYTHONDONTWRITEBYTECODE=1 INFRASWE_R15_VLLM_SOURCE_IMPORT_SHIM=1 CUDA_VISIBLE_DEVICES=0 PYTHONPATH=/workspace/r17-deps/vllm:/workspace/r18-deps/common:/workspace/r15-vllm-shim:/workspace/r14-shims:. /venv/main/bin/python -m pytest -q -rs --tb=short --maxfail=1 tests/models/multimodal/processing/test_qwen2_5_omni_audio_tower.py -k 'test_audio_attention_forwards_varlen_metadata_to_mm_encoder_attention or test_audio_encoder_forward_uses_mm_encoder_attention or test_audio_encoder_load_weights_remaps_hf_qkv_to_packed_qkv or test_audio_encoder_uses_packed_qkv_weight_structure or test_qwen2_5_omni_audio_tower_is_vllm_native'",
+      "returncode": 4,
+      "status": "completed",
+      "summary_lines": [
+        "ImportError while loading conftest '/workspace/r14-run-vllm/tests/models/multimodal/conftest.py'.",
+        "E   ModuleNotFoundError: No module named 'model_hosting_container_standards'"
+      ],
+      "test_names": [
+        "test_audio_attention_forwards_varlen_metadata_to_mm_encoder_attention",
+        "test_audio_encoder_forward_uses_mm_encoder_attention",
+        "test_audio_encoder_load_weights_remaps_hf_qkv_to_packed_qkv",
+        "test_audio_encoder_uses_packed_qkv_weight_structure",
+        "test_qwen2_5_omni_audio_tower_is_vllm_native"
+      ],
+      "test_paths": [
+        "tests/models/multimodal/processing/test_qwen2_5_omni_audio_tower.py"
+      ]
+    }
+  ],
+  "remote": {
+    "gpu_lanes": [
+      0,
+      1
+    ],
+    "host": "root@38.49.42.120",
+    "port": 54270
+  },
+  "schema_version": "0.1",
+  "selection_lock_sha256": "sha256:8589c445a9337530e50a3b166f0838bf454299c453c7cee5e393c36069f5c622",
+  "started_at": "2026-09-02T20:14:47.378236+00:00",
+  "static_evidence_sha256": "sha256:e333566443503e15f27113968fe837e1c3e29663e7107e02d54646afaf6f56ac",
+  "test_plan_sha256": "sha256:60299d98042deaa88a1b39ba11e6c62c9d3eb04d9b61b067dcca33b076206dc2",
+  "test_timeout_seconds": 300
+}

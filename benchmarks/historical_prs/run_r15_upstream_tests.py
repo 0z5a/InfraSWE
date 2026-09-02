@@ -22,19 +22,24 @@ REMOTE = "root@38.49.42.120"
 PORT = 54270
 IDENTITY = "~/.ssh/id_ed25519_winpc"
 PROJECT_RUNTIME = {
-    "vllm": ("/workspace/r14-run-vllm", "/venv/main/bin/python", ".", "0"),
+    "vllm": (
+        "/workspace/r14-run-vllm",
+        "/venv/main/bin/python",
+        "/workspace/r17-deps/vllm:/workspace/r18-deps/common:/workspace/r15-vllm-shim:/workspace/r14-shims:.",
+        "0",
+    ),
     "sglang": (
         "/workspace/r14-run-sglang",
         "/venv/main/bin/python",
-        "/workspace/r14-shims:python:.",
-        "0",
+        "/workspace/r18-deps/common:/workspace/r17-deps/opencv:/workspace/r14-shims:python:.",
+        "1",
     ),
     "flashinfer": ("/workspace/r14-run-flashinfer", "/venv/main/bin/python", ".", "0"),
     "tensorrt-llm": (
-        "/workspace/r17-tensorrt-wt",
+        "/workspace/r19-tensorrt-wt",
         "/venv/main/bin/python",
-        ".",
-        "0",
+        "/workspace/r18-deps/common:/workspace/r17-deps/tensorrt:.",
+        "1",
     ),
     "liger-kernel": ("/workspace/r13-run-liger", "/venv/main/bin/python", ".", "0"),
     "megatron-core": ("/workspace/r13-run-megatron", "/venv/main/bin/python", ".", "1"),
@@ -54,9 +59,9 @@ PROJECT_RUNTIME = {
 }
 LANE = {
     "vllm": 0,
-    "sglang": 0,
+    "sglang": 1,
     "flashinfer": 0,
-    "tensorrt-llm": 0,
+    "tensorrt-llm": 1,
     "liger-kernel": 0,
     "megatron-core": 1,
     "torchtitan": 1,
@@ -136,6 +141,8 @@ def _build_command(
         "--tb=short",
         "--maxfail=1",
     ]
+    if case["project"] == "vllm":
+        arguments.insert(4, "INFRASWE_R15_VLLM_SOURCE_IMPORT_SHIM=1")
     if case["project"] in noconftest_projects:
         arguments.append("--noconftest")
     arguments.extend(test_paths)
@@ -143,9 +150,11 @@ def _build_command(
         arguments.extend(["-k", " or ".join(test_names)])
     test_command = " ".join(shlex.quote(item) for item in arguments)
     expected_head = shlex.quote(case["head_sha"])
+    switch_prefix = "GIT_LFS_SKIP_SMUDGE=1 " if case["project"] == "tensorrt-llm" else ""
     command = (
         f"cd {shlex.quote(worktree)} && "
-        f"git switch --detach refs/{round_label.lower()}/pr-{case['pull_number']} "
+        f"{switch_prefix}git switch --detach "
+        f"refs/{round_label.lower()}/pr-{case['pull_number']} "
         ">/dev/null && "
         f"test \"$(git rev-parse HEAD)\" = {expected_head} && "
         f"{test_command}"

@@ -1,0 +1,177 @@
+{
+  "evidence_sha256": "sha256:76fb7c1997e3e49689156f8878bb43dc8cd46b6990dd85997a4dd16aa938e3c3",
+  "finished_at": "2026-09-02T20:12:26.524034+00:00",
+  "noconftest_projects": [
+    "vllm"
+  ],
+  "outcome_review_ci_fields_requested": false,
+  "protocol_id": "r18-exact-candidate-upstream-tests-v0.1",
+  "records": [
+    {
+      "case_id": "vllm-pr-54979",
+      "duration_seconds": 26.395881374832243,
+      "head_sha": "40e7734084a792c9870e1aa67041521d8d67dc4d",
+      "output_sha256": "sha256:a92a621f832f3d5ebce9e309946aaf881355204c982ca95678cc5c465038b86d",
+      "output_tail": "........                                                                 [100%]\n=============================== warnings summary ===============================\nvllm/__init__.py:7\n  /workspace/r14-run-vllm/vllm/__init__.py:7: RuntimeWarning: Failed to read commit hash:\n  No module named 'vllm._version'\n    from .version import __version__, __version_tuple__  # isort:skip\n\n../../venv/main/lib/python3.12/site-packages/torch/jit/_script.py:365: 14 warnings\n  /venv/main/lib/python3.12/site-packages/torch/jit/_script.py:365: DeprecationWarning: `torch.jit.script_method` is deprecated. Please switch to `torch.compile` or `torch.export`.\n    warnings.warn(\n\ntests/v1/core/test_async_scheduler.py::test_finished_request_does_not_cache_in_flight_tokens\n  /venv/main/lib/python3.12/site-packages/transformers/models/gpt2/tokenization_gpt2.py:110: DeprecationWarning: Deprecated in 0.9.0: BPE.__init__ will not create from files anymore, try `BPE.from_file` instead\n    BPE(\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n8 passed, 214 deselected, 16 warnings in 16.30s\nWelcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nPrevious HEAD position was 7fe45acd7 Merge branch 'main' into fix/qwen25-omni-native-audio-attn\nHEAD is now at 40e773408 [Bugfix][V1] Register accepted spec-decode tokens before terminal cleanup\n",
+      "ref": "refs/r18/pr-54979",
+      "remote_command": "cd /workspace/r14-run-vllm && git switch --detach refs/r18/pr-54979 >/dev/null && test \"$(git rev-parse HEAD)\" = 40e7734084a792c9870e1aa67041521d8d67dc4d && timeout 300s env PYTHONDONTWRITEBYTECODE=1 INFRASWE_R15_VLLM_SOURCE_IMPORT_SHIM=1 CUDA_VISIBLE_DEVICES=0 PYTHONPATH=/workspace/r17-deps/vllm:/workspace/r18-deps/common:/workspace/r15-vllm-shim:/workspace/r14-shims:. /venv/main/bin/python -m pytest -q -rs --tb=short --maxfail=1 --noconftest tests/v1/core/prefix_cache/test_partial_prefix_cache_hits.py tests/v1/core/test_async_scheduler.py tests/v1/core/test_scheduler.py -k 'test_finished_request_does_not_cache_in_flight_tokens or test_finished_spec_decode_registers_accepted_tokens or test_no_spec_decode_padding_up_to_max_model_len or test_partial_hit_then_internal_checkpoint_uses_distinct_mamba_blocks'",
+      "returncode": 0,
+      "status": "completed",
+      "summary_lines": [
+        "/workspace/r14-run-vllm/vllm/__init__.py:7: RuntimeWarning: Failed to read commit hash:",
+        "8 passed, 214 deselected, 16 warnings in 16.30s"
+      ],
+      "test_names": [
+        "test_finished_request_does_not_cache_in_flight_tokens",
+        "test_finished_spec_decode_registers_accepted_tokens",
+        "test_no_spec_decode_padding_up_to_max_model_len",
+        "test_partial_hit_then_internal_checkpoint_uses_distinct_mamba_blocks"
+      ],
+      "test_paths": [
+        "tests/v1/core/prefix_cache/test_partial_prefix_cache_hits.py",
+        "tests/v1/core/test_async_scheduler.py",
+        "tests/v1/core/test_scheduler.py"
+      ]
+    },
+    {
+      "case_id": "vllm-pr-44450",
+      "duration_seconds": 34.55865374999121,
+      "head_sha": "2ff6ce39be2904eb11a1ca9e23443e2efe448beb",
+      "output_sha256": "sha256:26cdc416e3ec066eed4c6406974142d0eb64f7c777dd7add465dad42a3af4b0d",
+      "output_tail": ".E\n==================================== ERRORS ====================================\n_______________ ERROR at setup of test_update_states_new_request _______________\nfile /workspace/r14-run-vllm/tests/v1/worker/test_gpu_model_runner.py, line 396\n  def test_update_states_new_request(model_runner, dist_init):\nE       fixture 'dist_init' not found\n>       available fixtures: _asyncio_loop_factory, _class_scoped_runner, _function_scoped_runner, _module_scoped_runner, _package_scoped_runner, _session_scoped_runner, anyio_backend, anyio_backend_name, anyio_backend_options, cache, capfd, capfdbinary, caplog, capsys, capsysbinary, capteesys, cov, doctest_namespace, event_loop_policy, free_tcp_port, free_tcp_port_factory, free_udp_port, free_udp_port_factory, hydra_restore_singletons, hydra_sweep_runner, hydra_task_runner, model_runner, model_runner_2, monkeypatch, no_cover, pytestconfig, record_property, record_testsuite_property, record_xml_attribute, recwarn, subtests, tmp_path, tmp_path_factory, tmpdir, tmpdir_factory, unused_tcp_port, unused_tcp_port_factory, unused_udp_port, unused_udp_port_factory\n>       use 'pytest --fixtures [testpath]' for help on them.\n\n/workspace/r14-run-vllm/tests/v1/worker/test_gpu_model_runner.py:396\n---------------------------- Captured stdout setup -----------------------------\nINFO 09-02 20:10:40 [model.py:611] Resolved architecture: OPTForCausalLM\nINFO 09-02 20:10:40 [model.py:1745] Using max model len 2048\nINFO 09-02 20:10:40 [scheduler.py:239] Chunked prefill is enabled with max_num_batched_tokens=512.\nINFO 09-02 20:10:40 [vllm.py:999] Asynchronous scheduling is enabled.\nINFO 09-02 20:10:40 [kernel.py:270] Final IR op priority after setting platform defaults: IrOpPriorityConfig(rms_norm=['native'], fused_add_rms_norm=['native'])\nINFO 09-02 20:10:41 [cuda.py:378] Using TRITON_ATTN attention backend out of potential backends: ['TRITON_ATTN', 'FLEX_ATTENTION'].\nINFO 09-02 20:10:41 [topk_topp_sampler.py:55] Using FlashInfer for top-p & top-k sampling.\n---------------------------- Captured stderr setup -----------------------------\nWarning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.\n------------------------------ Captured log setup ------------------------------\nWARNING  huggingface_hub.utils._http:_http.py:955 Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.\nINFO     vllm.config.model:model.py:611 Resolved architecture: OPTForCausalLM\nINFO     vllm.config.model:model.py:1745 Using max model len 2048\nINFO     vllm.config.scheduler:scheduler.py:239 Chunked prefill is enabled with max_num_batched_tokens=512.\nINFO     vllm.config.vllm:vllm.py:999 Asynchronous scheduling is enabled.\nINFO     vllm.config.kernel:kernel.py:270 Final IR op priority after setting platform defaults: IrOpPriorityConfig(rms_norm=['native'], fused_add_rms_norm=['native'])\nINFO     vllm.platforms.cuda:cuda.py:378 Using TRITON_ATTN attention backend out of potential backends: ['TRITON_ATTN', 'FLEX_ATTENTION'].\nINFO     vllm.v1.sample.ops.topk_topp_sampler:topk_topp_sampler.py:55 Using FlashInfer for top-p & top-k sampling.\n=============================== warnings summary ===============================\nvllm/__init__.py:7\n  /workspace/r14-run-vllm/vllm/__init__.py:7: RuntimeWarning: Failed to read commit hash:\n  No module named 'vllm._version'\n    from .version import __version__, __version_tuple__  # isort:skip\n\n../../venv/main/lib/python3.12/site-packages/torch/jit/_script.py:365: 14 warnings\n  /venv/main/lib/python3.12/site-packages/torch/jit/_script.py:365: DeprecationWarning: `torch.jit.script_method` is deprecated. Please switch to `torch.compile` or `torch.export`.\n    warnings.warn(\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!\n1 passed, 33 deselected, 15 warnings, 1 error in 24.49s\nWelcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nPrevious HEAD position was 40e773408 [Bugfix][V1] Register accepted spec-decode tokens before terminal cleanup\nHEAD is now at 2ff6ce39b add test\n",
+      "ref": "refs/r18/pr-44450",
+      "remote_command": "cd /workspace/r14-run-vllm && git switch --detach refs/r18/pr-44450 >/dev/null && test \"$(git rev-parse HEAD)\" = 2ff6ce39be2904eb11a1ca9e23443e2efe448beb && timeout 300s env PYTHONDONTWRITEBYTECODE=1 INFRASWE_R15_VLLM_SOURCE_IMPORT_SHIM=1 CUDA_VISIBLE_DEVICES=0 PYTHONPATH=/workspace/r17-deps/vllm:/workspace/r18-deps/common:/workspace/r15-vllm-shim:/workspace/r14-shims:. /venv/main/bin/python -m pytest -q -rs --tb=short --maxfail=1 --noconftest tests/v1/worker/test_gpu_model_runner.py -k 'test_set_active_mm_loras_builds_tower_and_connector_mappings or test_update_states_new_request'",
+      "returncode": 1,
+      "status": "completed",
+      "summary_lines": [
+        "==================================== ERRORS ====================================",
+        "_______________ ERROR at setup of test_update_states_new_request _______________",
+        "/workspace/r14-run-vllm/vllm/__init__.py:7: RuntimeWarning: Failed to read commit hash:",
+        "1 passed, 33 deselected, 15 warnings, 1 error in 24.49s"
+      ],
+      "test_names": [
+        "test_set_active_mm_loras_builds_tower_and_connector_mappings",
+        "test_update_states_new_request"
+      ],
+      "test_paths": [
+        "tests/v1/worker/test_gpu_model_runner.py"
+      ]
+    },
+    {
+      "case_id": "vllm-pr-44528",
+      "duration_seconds": 32.071635000174865,
+      "head_sha": "ff1dbe081e46c60d48b77af9b5961565bbc4ab12",
+      "output_sha256": "sha256:6a3689dcb8841431c2a1191254d65fcd36005748429548608f559a54e1f982ce",
+      "output_tail": ".................                                                        [100%]\n=============================== warnings summary ===============================\nvllm/__init__.py:7\n  /workspace/r14-run-vllm/vllm/__init__.py:7: RuntimeWarning: Failed to read commit hash:\n  No module named 'vllm._version'\n    from .version import __version__, __version_tuple__  # isort:skip\n\n../../venv/main/lib/python3.12/site-packages/torch/jit/_script.py:365: 14 warnings\n  /venv/main/lib/python3.12/site-packages/torch/jit/_script.py:365: DeprecationWarning: `torch.jit.script_method` is deprecated. Please switch to `torch.compile` or `torch.export`.\n    warnings.warn(\n\ntests/v1/kv_connector/unit/test_mooncake_connector.py::test_basic_interface\n  /venv/main/lib/python3.12/site-packages/transformers/models/gpt2/tokenization_gpt2.py:110: DeprecationWarning: Deprecated in 0.9.0: BPE.__init__ will not create from files anymore, try `BPE.from_file` instead\n    BPE(\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n17 passed, 20 deselected, 16 warnings in 22.43s\nWelcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nPrevious HEAD position was 2ff6ce39b add test\nHEAD is now at ff1dbe081 Merge branch 'main' into codex/pr/mooncake-pp-transfer\n/venv/main/lib/python3.12/site-packages/_pytest/unraisableexception.py:67: PytestUnraisableExceptionWarning: Exception ignored in: <function MooncakeConnectorWorker.__del__ at 0x71a4dab7cc20>\n\nTraceback (most recent call last):\n  File \"/workspace/r14-run-vllm/vllm/distributed/kv_transfer/kv_connector/v1/mooncake/mooncake_connector.py\", line 964, in __del__\n    self.shutdown()\n  File \"/workspace/r14-run-vllm/vllm/distributed/kv_transfer/kv_connector/v1/mooncake/mooncake_connector.py\", line 974, in shutdown\n    if should_launch_bootstrap_server(self.vllm_config) and hasattr(\n       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/r14-run-vllm/vllm/distributed/kv_transfer/kv_connector/v1/mooncake/mooncake_connector.py\", line 1935, in should_launch_bootstrap_server\n    if get_tensor_model_parallel_rank() != 0:\n       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/r14-run-vllm/vllm/distributed/parallel_state.py\", line 1999, in get_tensor_model_parallel_rank\n    return get_tp_group().rank_in_group\n           ^^^^^^^^^^^^^^\n  File \"/workspace/r14-run-vllm/vllm/distributed/parallel_state.py\", line 1335, in get_tp_group\n    assert _TP is not None, \"tensor model parallel group is not initialized\"\n           ^^^^^^^^^^^^^^^\nAssertionError: tensor model parallel group is not initialized\n\nEnable tracemalloc to get traceback where the object was allocated.\nSee https://docs.pytest.org/en/stable/how-to/capture-warnings.html#resource-warnings for more info.\n  warnings.warn(pytest.PytestUnraisableExceptionWarning(msg))\n",
+      "ref": "refs/r18/pr-44528",
+      "remote_command": "cd /workspace/r14-run-vllm && git switch --detach refs/r18/pr-44528 >/dev/null && test \"$(git rev-parse HEAD)\" = ff1dbe081e46c60d48b77af9b5961565bbc4ab12 && timeout 300s env PYTHONDONTWRITEBYTECODE=1 INFRASWE_R15_VLLM_SOURCE_IMPORT_SHIM=1 CUDA_VISIBLE_DEVICES=0 PYTHONPATH=/workspace/r17-deps/vllm:/workspace/r18-deps/common:/workspace/r15-vllm-shim:/workspace/r14-shims:. /venv/main/bin/python -m pytest -q -rs --tb=short --maxfail=1 --noconftest tests/v1/kv_connector/unit/test_mooncake_connector.py tests/v1/kv_connector/unit/test_mooncake_connector_hma.py -k 'test_align_transfer_regions_uses_layer_name_occurrences or test_basic_interface or test_build_transfer_params_separates_prefill_pp_layers or test_get_mooncake_bootstrap_addr_selects_expected_host or test_receive_kv_selects_remote_pp_workers or test_resolve_need_send_accounts_for_remote_tp_fanout or test_scheduler_request_finished or test_send_kv_to_decode_aligns_consumer_regions_by_layer_metadata or test_should_launch_bootstrap_server_selects_single_owner'",
+      "returncode": 0,
+      "status": "completed",
+      "summary_lines": [
+        "/workspace/r14-run-vllm/vllm/__init__.py:7: RuntimeWarning: Failed to read commit hash:",
+        "17 passed, 20 deselected, 16 warnings in 22.43s",
+        "AssertionError: tensor model parallel group is not initialized"
+      ],
+      "test_names": [
+        "test_align_transfer_regions_uses_layer_name_occurrences",
+        "test_basic_interface",
+        "test_build_transfer_params_separates_prefill_pp_layers",
+        "test_get_mooncake_bootstrap_addr_selects_expected_host",
+        "test_receive_kv_selects_remote_pp_workers",
+        "test_resolve_need_send_accounts_for_remote_tp_fanout",
+        "test_scheduler_request_finished",
+        "test_send_kv_to_decode_aligns_consumer_regions_by_layer_metadata",
+        "test_should_launch_bootstrap_server_selects_single_owner"
+      ],
+      "test_paths": [
+        "tests/v1/kv_connector/unit/test_mooncake_connector.py",
+        "tests/v1/kv_connector/unit/test_mooncake_connector_hma.py"
+      ]
+    },
+    {
+      "case_id": "vllm-pr-44431",
+      "duration_seconds": 39.65701433387585,
+      "head_sha": "cc5aa15558a87b932f5af65e5b2a2065af597950",
+      "output_sha256": "sha256:3235b3501e5daf51eb413ec4be7a66a58355c9fcc6dc98d78699dfb5318b530e",
+      "output_tail": "...                                                                      [100%]\n=============================== warnings summary ===============================\nvllm/__init__.py:7\n  /workspace/r14-run-vllm/vllm/__init__.py:7: RuntimeWarning: Failed to read commit hash:\n  No module named 'vllm._version'\n    from .version import __version__, __version_tuple__  # isort:skip\n\n../../venv/main/lib/python3.12/site-packages/torch/jit/_script.py:365: 14 warnings\n  /venv/main/lib/python3.12/site-packages/torch/jit/_script.py:365: DeprecationWarning: `torch.jit.script_method` is deprecated. Please switch to `torch.compile` or `torch.export`.\n    warnings.warn(\n\ntests/v1/core/test_scheduler.py::test_local_prefix_cache_stats_not_double_counted_on_retry\n  /venv/main/lib/python3.12/site-packages/transformers/models/gpt2/tokenization_gpt2.py:110: DeprecationWarning: Deprecated in 0.9.0: BPE.__init__ will not create from files anymore, try `BPE.from_file` instead\n    BPE(\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n3 passed, 128 deselected, 16 warnings in 30.33s\nWelcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nPrevious HEAD position was ff1dbe081 Merge branch 'main' into codex/pr/mooncake-pp-transfer\nHEAD is now at cc5aa1555 Don't double-count local prefix cache stats on scheduling retries (#43736)\n",
+      "ref": "refs/r18/pr-44431",
+      "remote_command": "cd /workspace/r14-run-vllm && git switch --detach refs/r18/pr-44431 >/dev/null && test \"$(git rev-parse HEAD)\" = cc5aa15558a87b932f5af65e5b2a2065af597950 && timeout 300s env PYTHONDONTWRITEBYTECODE=1 INFRASWE_R15_VLLM_SOURCE_IMPORT_SHIM=1 CUDA_VISIBLE_DEVICES=0 PYTHONPATH=/workspace/r17-deps/vllm:/workspace/r18-deps/common:/workspace/r15-vllm-shim:/workspace/r14-shims:. /venv/main/bin/python -m pytest -q -rs --tb=short --maxfail=1 --noconftest tests/v1/core/test_scheduler.py -k 'test_local_prefix_cache_stats_counted_once_for_retried_then_scheduled_request or test_local_prefix_cache_stats_empty_when_caching_disabled or test_local_prefix_cache_stats_not_double_counted_on_retry'",
+      "returncode": 0,
+      "status": "completed",
+      "summary_lines": [
+        "/workspace/r14-run-vllm/vllm/__init__.py:7: RuntimeWarning: Failed to read commit hash:",
+        "3 passed, 128 deselected, 16 warnings in 30.33s"
+      ],
+      "test_names": [
+        "test_local_prefix_cache_stats_counted_once_for_retried_then_scheduled_request",
+        "test_local_prefix_cache_stats_empty_when_caching_disabled",
+        "test_local_prefix_cache_stats_not_double_counted_on_retry"
+      ],
+      "test_paths": [
+        "tests/v1/core/test_scheduler.py"
+      ]
+    },
+    {
+      "case_id": "vllm-pr-44584",
+      "duration_seconds": 13.99538983288221,
+      "head_sha": "6323cd5a519baf18babfb805341f8fe33e19c403",
+      "output_sha256": "sha256:559ee645e94095cbded0500f124a517f538a45a75b3ad30d7aaea9b0978dddb8",
+      "output_tail": "..                                                                       [100%]\n=============================== warnings summary ===============================\nvllm/__init__.py:7\n  /workspace/r14-run-vllm/vllm/__init__.py:7: RuntimeWarning: Failed to read commit hash:\n  No module named 'vllm._version'\n    from .version import __version__, __version_tuple__  # isort:skip\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n2 passed, 1874 deselected, 1 warning in 5.12s\nWelcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nPrevious HEAD position was cc5aa1555 Don't double-count local prefix cache stats on scheduling retries (#43736)\nHEAD is now at 6323cd5a5 perf: extend window-aligned KV-tile iteration to the 3D-segmented path\n",
+      "ref": "refs/r18/pr-44584",
+      "remote_command": "cd /workspace/r14-run-vllm && git switch --detach refs/r18/pr-44584 >/dev/null && test \"$(git rev-parse HEAD)\" = 6323cd5a519baf18babfb805341f8fe33e19c403 && timeout 300s env PYTHONDONTWRITEBYTECODE=1 INFRASWE_R15_VLLM_SOURCE_IMPORT_SHIM=1 CUDA_VISIBLE_DEVICES=0 PYTHONPATH=/workspace/r17-deps/vllm:/workspace/r18-deps/common:/workspace/r15-vllm-shim:/workspace/r14-shims:. /venv/main/bin/python -m pytest -q -rs --tb=short --maxfail=1 --noconftest tests/kernels/attention/test_triton_unified_attention.py -k test_triton_unified_attn_sw_tile_base_bit_exact",
+      "returncode": 0,
+      "status": "completed",
+      "summary_lines": [
+        "/workspace/r14-run-vllm/vllm/__init__.py:7: RuntimeWarning: Failed to read commit hash:",
+        "2 passed, 1874 deselected, 1 warning in 5.12s"
+      ],
+      "test_names": [
+        "test_triton_unified_attn_sw_tile_base_bit_exact"
+      ],
+      "test_paths": [
+        "tests/kernels/attention/test_triton_unified_attention.py"
+      ]
+    },
+    {
+      "case_id": "vllm-pr-44518",
+      "duration_seconds": 15.917303166119382,
+      "head_sha": "7fe45acd77e0b0e381fd484524d21b6a2cfbe579",
+      "output_sha256": "sha256:0e2f126c3aacd594bfef245e5045d30a3402b508ca75252079f13e33b84adde9",
+      "output_tail": ".E\n==================================== ERRORS ====================================\n_ ERROR at setup of test_audio_attention_forwards_varlen_metadata_to_mm_encoder_attention _\nfile /workspace/r14-run-vllm/tests/models/multimodal/processing/test_qwen2_5_omni_audio_tower.py, line 91\n  def test_audio_attention_forwards_varlen_metadata_to_mm_encoder_attention(\nE       fixture 'default_vllm_config' not found\n>       available fixtures: _asyncio_loop_factory, _class_scoped_runner, _function_scoped_runner, _module_scoped_runner, _package_scoped_runner, _session_scoped_runner, anyio_backend, anyio_backend_name, anyio_backend_options, cache, capfd, capfdbinary, caplog, capsys, capsysbinary, capteesys, cov, doctest_namespace, event_loop_policy, free_tcp_port, free_tcp_port_factory, free_udp_port, free_udp_port_factory, hydra_restore_singletons, hydra_sweep_runner, hydra_task_runner, monkeypatch, no_cover, pytestconfig, record_property, record_testsuite_property, record_xml_attribute, recwarn, subtests, tmp_path, tmp_path_factory, tmpdir, tmpdir_factory, unused_tcp_port, unused_tcp_port_factory, unused_udp_port, unused_udp_port_factory\n>       use 'pytest --fixtures [testpath]' for help on them.\n\n/workspace/r14-run-vllm/tests/models/multimodal/processing/test_qwen2_5_omni_audio_tower.py:91\n=============================== warnings summary ===============================\nvllm/__init__.py:7\n  /workspace/r14-run-vllm/vllm/__init__.py:7: RuntimeWarning: Failed to read commit hash:\n  No module named 'vllm._version'\n    from .version import __version__, __version_tuple__  # isort:skip\n\n../../venv/main/lib/python3.12/site-packages/torch/jit/_script.py:365: 14 warnings\n  /venv/main/lib/python3.12/site-packages/torch/jit/_script.py:365: DeprecationWarning: `torch.jit.script_method` is deprecated. Please switch to `torch.compile` or `torch.export`.\n    warnings.warn(\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!\n1 passed, 15 warnings, 1 error in 7.13s\nWelcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nPrevious HEAD position was 6323cd5a5 perf: extend window-aligned KV-tile iteration to the 3D-segmented path\nHEAD is now at 7fe45acd7 Merge branch 'main' into fix/qwen25-omni-native-audio-attn\n",
+      "ref": "refs/r18/pr-44518",
+      "remote_command": "cd /workspace/r14-run-vllm && git switch --detach refs/r18/pr-44518 >/dev/null && test \"$(git rev-parse HEAD)\" = 7fe45acd77e0b0e381fd484524d21b6a2cfbe579 && timeout 300s env PYTHONDONTWRITEBYTECODE=1 INFRASWE_R15_VLLM_SOURCE_IMPORT_SHIM=1 CUDA_VISIBLE_DEVICES=0 PYTHONPATH=/workspace/r17-deps/vllm:/workspace/r18-deps/common:/workspace/r15-vllm-shim:/workspace/r14-shims:. /venv/main/bin/python -m pytest -q -rs --tb=short --maxfail=1 --noconftest tests/models/multimodal/processing/test_qwen2_5_omni_audio_tower.py -k 'test_audio_attention_forwards_varlen_metadata_to_mm_encoder_attention or test_audio_encoder_forward_uses_mm_encoder_attention or test_audio_encoder_load_weights_remaps_hf_qkv_to_packed_qkv or test_audio_encoder_uses_packed_qkv_weight_structure or test_qwen2_5_omni_audio_tower_is_vllm_native'",
+      "returncode": 1,
+      "status": "completed",
+      "summary_lines": [
+        "==================================== ERRORS ====================================",
+        "_ ERROR at setup of test_audio_attention_forwards_varlen_metadata_to_mm_encoder_attention _",
+        "/workspace/r14-run-vllm/vllm/__init__.py:7: RuntimeWarning: Failed to read commit hash:",
+        "1 passed, 15 warnings, 1 error in 7.13s"
+      ],
+      "test_names": [
+        "test_audio_attention_forwards_varlen_metadata_to_mm_encoder_attention",
+        "test_audio_encoder_forward_uses_mm_encoder_attention",
+        "test_audio_encoder_load_weights_remaps_hf_qkv_to_packed_qkv",
+        "test_audio_encoder_uses_packed_qkv_weight_structure",
+        "test_qwen2_5_omni_audio_tower_is_vllm_native"
+      ],
+      "test_paths": [
+        "tests/models/multimodal/processing/test_qwen2_5_omni_audio_tower.py"
+      ]
+    }
+  ],
+  "remote": {
+    "gpu_lanes": [
+      0,
+      1
+    ],
+    "host": "root@38.49.42.120",
+    "port": 54270
+  },
+  "schema_version": "0.1",
+  "selection_lock_sha256": "sha256:8589c445a9337530e50a3b166f0838bf454299c453c7cee5e393c36069f5c622",
+  "started_at": "2026-09-02T20:09:43.920117+00:00",
+  "static_evidence_sha256": "sha256:e333566443503e15f27113968fe837e1c3e29663e7107e02d54646afaf6f56ac",
+  "test_plan_sha256": "sha256:60299d98042deaa88a1b39ba11e6c62c9d3eb04d9b61b067dcca33b076206dc2",
+  "test_timeout_seconds": 300
+}

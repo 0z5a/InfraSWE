@@ -1,0 +1,89 @@
+{
+  "base_sha": "680824dd5e01a2e83750bf87fc366ec6fa98766c",
+  "candidate_evidence": {
+    "body_present": true,
+    "body_sha256": "sha256:ef563747f5a1a1dd8d614db7ab8a75a57857db9fd8401e5cb07ad37189604eca",
+    "line_count": 3,
+    "mentions_benchmark": false,
+    "mentions_multi_gpu": false,
+    "mentions_test": false
+  },
+  "candidate_evidence_projection_sha256": "sha256:2d15044293701cbe701d752e15f0face7e0c6a23bfeacf880417d46f679d5372",
+  "case_id": "slime-pr-2198",
+  "environment": {
+    "cuda": "12.8",
+    "cuda_visible_devices": null,
+    "gpu_count": 2,
+    "gpu_names": [
+      "NVIDIA A100-SXM4-40GB",
+      "NVIDIA A100-SXM4-40GB"
+    ],
+    "platform": "Linux-6.8.0-138-generic-x86_64-with-glibc2.39",
+    "python": "3.12.14",
+    "torch": "2.11.0+cu128",
+    "torch_cuda_available": true
+  },
+  "environment_sha256": "sha256:18a57faaaf52c323ae26148bc33bdbe56f1d567765c4a468cb37eb0462f9e14c",
+  "evidence_sha256": "sha256:3186cbb51adcd8d7e3896d9ae973ae15fc36a68c7b21aefc78e220e278c5d8ab",
+  "facts": {
+    "all_policy_ratio_call_sites_changed": true,
+    "candidate_evidence": {
+      "body_present": true,
+      "body_sha256": "sha256:ef563747f5a1a1dd8d614db7ab8a75a57857db9fd8401e5cb07ad37189604eca",
+      "line_count": 3,
+      "mentions_benchmark": false,
+      "mentions_multi_gpu": false,
+      "mentions_test": false
+    },
+    "changed_path_count": 4,
+    "changed_test_count": 1,
+    "changed_test_paths": [
+      "tests/test_ppo_ratio_numerics.py"
+    ],
+    "clamp_bound": 20.0,
+    "dtype_matrix": [
+      {
+        "all_extreme_gradients_finite": true,
+        "all_extreme_outputs_finite": true,
+        "dtype": "torch.float32",
+        "far_tail_zero_gradient_count": 4,
+        "gradient_dtype": "torch.float32",
+        "healthy_ratio_max_abs": 0.0,
+        "output_dtype": "torch.float32"
+      },
+      {
+        "all_extreme_gradients_finite": true,
+        "all_extreme_outputs_finite": true,
+        "dtype": "torch.bfloat16",
+        "far_tail_zero_gradient_count": 4,
+        "gradient_dtype": "torch.bfloat16",
+        "healthy_ratio_max_abs": 0.0037163496017456055,
+        "output_dtype": "torch.float32"
+      }
+    ],
+    "head_conflict_marker_free": true,
+    "head_python_syntax_ok": true,
+    "helper_casts_to_float32": true,
+    "low_variance_kl_only_is_clamped": true,
+    "merge_conflict_markers": [],
+    "nan_remains_visible": true,
+    "patch_sha256": "sha256:f65532ea5075aae3ea76c6ea3e0d4cb367b92347c3764170bc7ab111ee502092",
+    "python_parse_errors": [],
+    "source_file_count": 2
+  },
+  "failure_codes": [],
+  "finished_at": "2026-09-02T12:16:53.076946+00:00",
+  "head_sha": "afd059072e3351086b241c30af86e71080d8511b",
+  "probe_status": "pass",
+  "protocol_id": "historical-pr-blind-training-v0.1-r13-expanded-29",
+  "schema_version": "0.1",
+  "selection_lock_sha256": "sha256:e2238331bb44378e5a89d1739e372f322292bf17c0cab4e97afe8782eb9865af",
+  "source_bundle_sha256": "sha256:dc0cab095afa903e0780196b8511b4a8a935d41aeff85ca400293c4fbb525ee7",
+  "source_digests": {
+    "base:slime/utils/ppo_utils.py": "sha256:7bd89b4500bc0c8f2d85d26fc55533f082dc85f51b61e5d627f2849106808c6d",
+    "head:slime/utils/ppo_utils.py": "sha256:dbee97898bac1f8bd1d53a19b0dfcfc8d610470c52fde8695a98a9561adf317c",
+    "head:tests/test_ppo_ratio_numerics.py": "sha256:20126ab3cb37c00138c3bd7954db7a6460d8887c6cef7c2cad6e5fe27ea56e0d"
+  },
+  "started_at": "2026-09-02T12:16:52.933461+00:00",
+  "test_plan_sha256": "sha256:8e872fe8158a688a8443657b1679026c4d8109257d795779b6b6149aabc089d9"
+}

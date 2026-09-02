@@ -1,0 +1,84 @@
+{
+  "schema_version": "0.1",
+  "protocol_id": "historical-pr-blind-training-v0.1-r13-extension-15",
+  "frozen_at": "2026-09-02T11:48:02Z",
+  "base_r13_case_count": 14,
+  "extension_case_count": 15,
+  "expanded_case_count": 29,
+  "allocation": {
+    "megatron-core": 5,
+    "slime": 5,
+    "verl": 5
+  },
+  "base_r13_selection_lock_sha256": "sha256:11af8096b62d70248e5765c6b15bb23b7c358fb65178947fee5ea98494823a03",
+  "base_r13_test_plan_sha256": "sha256:223d654bfd7cc9e367d7f15cef4cd0386cc5d3fa663948054fcb15cb57e3883f",
+  "source_r8_discovery_lock_sha256": "sha256:dd6e6596bbf73578255bbe49a20b69d55f68f2ad2f1f2c1be2bc02770c0cf3ef",
+  "slime_discovery_query": "repo:THUDM/slime is:pr created:2025-01-01..2026-07-15 sort:created-desc",
+  "merge_outcomes_visible_to_machine_judge": false,
+  "review_text_visible_to_machine_judge": false,
+  "ci_fields_visible_to_machine_judge": false,
+  "candidate_body_visible_during_policy_freeze": false,
+  "diff_content_visible_during_policy_freeze": false,
+  "selection_basis": [
+    "outcome-free title",
+    "changed repository-relative paths",
+    "additions, deletions, and changed-file count",
+    "exact base and head SHA metadata"
+  ],
+  "selection_rules": [
+    "add exactly five previously unscored pull requests from each of Megatron-LM, slime, and verl",
+    "retain the already-frozen fourteen-case R13 cohort unchanged and bind this extension to it",
+    "prefer compact training-path claims with exact local, CUDA, or two-rank closure tests",
+    "permit candidates outside the older generic R8 eligibility filter when the title and changed paths expose a direct training contract",
+    "freeze each title-scoped contract before reading its source diff or candidate body",
+    "require production configuration reachability before a synthetic counterexample can block acceptance",
+    "do not infer disposition from title sentiment, author identity, PR age, review, CI, state, or merge outcome"
+  ],
+  "selected_case_ids": [
+    "megatron-pr-5819",
+    "megatron-pr-5761",
+    "megatron-pr-5724",
+    "megatron-pr-5714",
+    "megatron-pr-5710",
+    "slime-pr-2207",
+    "slime-pr-2205",
+    "slime-pr-2204",
+    "slime-pr-2198",
+    "slime-pr-2152",
+    "verl-pr-7012",
+    "verl-pr-7005",
+    "verl-pr-6996",
+    "verl-pr-6963",
+    "verl-pr-6960"
+  ],
+  "candidate_evidence_projection": {
+    "acquire_after_test_plan_freeze": true,
+    "allowed_fields": [
+      "title",
+      "body",
+      "headRefOid"
+    ],
+    "forbidden_fields": [
+      "state",
+      "merged",
+      "mergedAt",
+      "closedAt",
+      "reviews",
+      "labels",
+      "comments",
+      "checks",
+      "statusCheckRollup"
+    ]
+  },
+  "machine_policy": {
+    "policy_id": "training-case-contract-v0.1",
+    "accept_rule": "the reachable title-scoped training claim passes independent forward, backward, state, precision, distributed, and regression invariants with complete required evidence",
+    "check_rule": "the reachable primary direction is demonstrated, no known gradient corruption, state loss, deadlock, or baseline regression remains, and the missing evidence or repair is bounded by an executable closure test",
+    "reject_rule": "a reachable primary claim is false, gradients or state are wrong, ranks disagree, baseline regresses, remediation is design-level, or multiple reachable failure families remain",
+    "unresolved_rule": "required training hardware, dependency ABI, or exact source evidence could not be obtained for infrastructure reasons",
+    "unreachable_counterexample_policy": "record as non-blocking hardening unless a production call path and supported configuration can reach it",
+    "technical_disposition_separation": true,
+    "weighted_score": false,
+    "forced_polarization": false
+  }
+}

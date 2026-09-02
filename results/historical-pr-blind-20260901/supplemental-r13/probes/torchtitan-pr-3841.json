@@ -1,0 +1,84 @@
+{
+  "base_sha": "012e489b1907a2ccf7daa3d36801bea7369e3ab3",
+  "candidate_evidence": {
+    "body_present": true,
+    "body_sha256": "sha256:f22a3a0c9f668ef342f33f1eb985ab956473d9a82d300a1d386b99eda087a66f",
+    "line_count": 13,
+    "mentions_benchmark": false,
+    "mentions_multi_gpu": false,
+    "mentions_test": false
+  },
+  "candidate_evidence_projection_sha256": "sha256:b3a0020e956cf5813d12095718b36685c801bde5a6233a94df49d6346166fb7b",
+  "case_id": "torchtitan-pr-3841",
+  "environment": {
+    "cuda": "12.8",
+    "cuda_visible_devices": null,
+    "gpu_count": 2,
+    "gpu_names": [
+      "NVIDIA A100-SXM4-40GB",
+      "NVIDIA A100-SXM4-40GB"
+    ],
+    "platform": "Linux-6.8.0-138-generic-x86_64-with-glibc2.39",
+    "python": "3.12.14",
+    "torch": "2.11.0+cu128",
+    "torch_cuda_available": true
+  },
+  "environment_sha256": "sha256:18a57faaaf52c323ae26148bc33bdbe56f1d567765c4a468cb37eb0462f9e14c",
+  "evidence_sha256": "sha256:72688987fe26ed6db64f852efa66d2b70c0dc198796f995b34f22739ee529ec6",
+  "facts": {
+    "candidate_evidence": {
+      "body_present": true,
+      "body_sha256": "sha256:f22a3a0c9f668ef342f33f1eb985ab956473d9a82d300a1d386b99eda087a66f",
+      "line_count": 13,
+      "mentions_benchmark": false,
+      "mentions_multi_gpu": false,
+      "mentions_test": false
+    },
+    "candidate_has_explicit_residual_control": true,
+    "candidate_has_explicit_shared_parameter_control": false,
+    "candidate_has_no_input_grad_control": true,
+    "candidate_has_real_dsv3_moe_control": true,
+    "candidate_split_tests": [
+      "test_real_dsv3_moe_block_split_reconstructs_backward",
+      "test_real_dsv3_moe_block_without_input_grad_skips_split"
+    ],
+    "changed_path_count": 3,
+    "changed_test_count": 1,
+    "changed_test_paths": [
+      "torchtitan/experiments/graph_trainer/tests/test_graph_pp_passes.py"
+    ],
+    "get_attr_kept_as_graph_constant": true,
+    "graphs_linted_and_recompiled": true,
+    "head_conflict_marker_free": true,
+    "head_python_syntax_ok": true,
+    "merge_conflict_markers": [],
+    "no_input_grad_returns_none": true,
+    "patch_sha256": "sha256:e21a732243337998bed5fb84639ee5f13cbbcc78bb0f321f40077c47e5eca66d",
+    "python_parse_errors": [],
+    "source_file_count": 3,
+    "split_functions": [
+      "_collect_saved_values_for_dw",
+      "_reorder_backward_outputs_for_di",
+      "split_di_dw_graph"
+    ],
+    "split_source_lines": 269,
+    "symbolic_shape_liveins_separated": true
+  },
+  "failure_codes": [],
+  "finished_at": "2026-09-02T12:16:49.802889+00:00",
+  "head_sha": "615d6123ad6634f177cbac33f585833e3e76ec12",
+  "probe_status": "pass",
+  "protocol_id": "historical-pr-blind-training-v0.1-r13-expanded-29",
+  "schema_version": "0.1",
+  "selection_lock_sha256": "sha256:e2238331bb44378e5a89d1739e372f322292bf17c0cab4e97afe8782eb9865af",
+  "source_bundle_sha256": "sha256:dc0cab095afa903e0780196b8511b4a8a935d41aeff85ca400293c4fbb525ee7",
+  "source_digests": {
+    "base:torchtitan/experiments/graph_trainer/graph_pp/__init__.py": "sha256:f3aa1637f84c22cda7da493681ba51d7cd235dbe3c6e4841574cf5714844c989",
+    "base:torchtitan/experiments/graph_trainer/tests/test_graph_pp_passes.py": "sha256:f9e0a17efbc9662d737bda4dd2f9d9804190af4270c76807ecaa0d68ecadcdcd",
+    "head:torchtitan/experiments/graph_trainer/graph_pp/__init__.py": "sha256:3eadee1b22229dc564461f9488ca608292595b0a797369a3a43584918d5038f9",
+    "head:torchtitan/experiments/graph_trainer/graph_pp/split_di_dw.py": "sha256:88569768057493187e85207efea757046dc373fc5ef37836d2d32cffa921f1c4",
+    "head:torchtitan/experiments/graph_trainer/tests/test_graph_pp_passes.py": "sha256:6ca90cc4d21574893110d17e318c2c89a78c303f849006cb029741f001cebde7"
+  },
+  "started_at": "2026-09-02T12:16:49.727037+00:00",
+  "test_plan_sha256": "sha256:8e872fe8158a688a8443657b1679026c4d8109257d795779b6b6149aabc089d9"
+}

@@ -1,10 +1,10 @@
 # InfraSWE 当前成果与新对话交接
 
-更新时间：2026-09-02 19:27 +08:00
+更新时间：2026-09-02 22:10 +08:00
 本地工程：`/Users/0z5a/Documents/infra/infraswe`  
-状态：v0.1 已发布；历史 PR 盲测已推进到 R12 通信类双卡实测。
+状态：v0.1 已发布；历史 PR 盲测已完成 R13 的 29 个训练类双卡实测，准备扩容 200 例。
 
-## 0. 19:27 当前状态（覆盖本文后续旧快照）
+## 0. 22:10 当前状态（覆盖本文后续旧快照）
 
 本文件第 7–9 节保留的是旧历史快照，其中“r5 尚未锁 verdict、#53038 未跑、从第 8
 节继续”等描述已经失效，不得继续执行。当前权威增量报告与实现状态：
@@ -32,6 +32,16 @@
 - R12 已在 `38.49.42.120:54270` 的 `2×A100-SXM4-40GB` 上完成 12 个探针、双 rank
   NCCL 与精确 TorchTitan DDP graph 测试，结果均已同步回本地；Intel XPU/XCCL 仍不在该
   NVIDIA 双卡主机的可执行范围；
+- R13 完成 29 个训练类 PR（原 14 个，加 Megatron、slime、verl 各 5 个），同队列 exact
+  从 17.2% 提高到 27.6%，binary 均为 48.3%，机器 reject precision 为 75%；改善仍只成立于
+  check/reject 分离，且成熟队列没有 oracle check 正例；
+- R13 在同一双 A100 主机执行精确 upstream tests、NCCL、Megatron deferred reduction、
+  slime TP2 数值/显存与 verl CP/NCCL 反例；技术 contract 与项目 disposition 必须在后续并列
+  锁定和报告；
+- 后续目标总量为 200：通信 50、训练 50、推理 100；推理按 vLLM、SGLang、
+  FlashAttention、FlashInfer 各 25。R13 保持 29 例；从 R14 起每组 30 例，上一组完成
+  outcome-free 选择/计划、测试、判断锁、揭示、审计和规则迭代后，才启动下一组。R14 先做
+  30 个通信类 PR；只在指标有改善时提交主分支；
 - prospective mergeability 已冻结：official ProjectFit `>=85` 才可 accept；`check` 仅限
   30 天内且 14 天内明确在审的新 PR；长期 reviewed-open PR 按 reject；
 - precedent retrieval 已具备 footprint、SQLite/FTS/graph、泄漏、冲突、trust、rule、
@@ -301,5 +311,6 @@ vastai show instances --raw | select(id == 49539878) -> []
 - r10：`results/historical-pr-blind-20260901/supplemental-r10`
 - r11：`results/historical-pr-blind-20260901/supplemental-r11`
 - r12：`results/historical-pr-blind-20260901/supplemental-r12`
+- r13：`results/historical-pr-blind-20260901/supplemental-r13`
 
-新对话应先读取第 0 节和 R12 报告；第 7–9 节只作历史记录，不再从旧第 8 节继续。
+新对话应先读取第 0 节和 R13 报告；第 7–9 节只作历史记录，不再从旧第 8 节继续。

@@ -58,14 +58,14 @@ def _ratio(numerator: int, denominator: int) -> float | None:
     return numerator / denominator if denominator else None
 
 
-def main(*, round_label: str = "R11") -> int:
+def main(*, round_label: str = "R11", selection_name: str = "selection-lock.json") -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--result-root", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--r10-audit", type=Path)
     args = parser.parse_args()
 
-    selection = _load(args.result_root / "selection-lock.json")
+    selection = _load(args.result_root / selection_name)
     locks = _load(args.result_root / "machine-judgment-locks.json")
     reveal = _load(args.result_root / "revealed-outcomes-reviews.json")
     lock_material = {key: value for key, value in locks.items() if key != "lock_set_sha256"}

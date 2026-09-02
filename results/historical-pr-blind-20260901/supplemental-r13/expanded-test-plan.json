@@ -1,0 +1,751 @@
+{
+  "base_contracts_preserved_byte_for_byte": true,
+  "base_r13_test_plan_sha256": "sha256:223d654bfd7cc9e367d7f15cef4cd0386cc5d3fa663948054fcb15cb57e3883f",
+  "candidate_body_requested_for_extension": false,
+  "candidate_evidence_policy": {
+    "body_claim_is_not_evaluator_execution": true,
+    "body_may_be_acquired_after_this_lock": true,
+    "candidate_authored_tests_and_benchmarks_are_admissible": true,
+    "outcome_review_ci_fields_remain_forbidden": true
+  },
+  "cases": [
+    {
+      "base_sha": "fc8cbad6b6b90220cf6ef8121c29e299a3ba7d9a",
+      "case_id": "flashattention-pr-2654",
+      "changed_paths": [
+        "flash_attn/cute/flash_bwd.py",
+        "flash_attn/cute/interface.py",
+        "flash_attn/cute/utils.py"
+      ],
+      "claim": "CuTe FlashAttention backward supports the title-scoped score_mod derivative path on SM80 and SM120 without changing the identity path.",
+      "decision_rule": "Accept if the reachable SM80 score_mod backward matrix and identity controls pass. One bounded modifier or retained-test gap with a runnable closure test is check; wrong gradients, wrong masking, compile failure in the named path, or an identity regression is reject. Missing required dependencies is unresolved.",
+      "execution_tier": "exact source data-flow plus SM80 forward/backward comparison against a PyTorch autograd oracle",
+      "head_sha": "c4ee34be4c5ae4a25d7b48b7c892527b81203bb4",
+      "project": "flash-attention",
+      "pull_number": 2654,
+      "questions": [
+        "For identity and representative differentiable score_mod functions, do output and dQ/dK/dV match an independent autograd oracle?",
+        "Is the derivative applied at the correct pre-softmax value with the correct softmax scale and masking semantics?",
+        "Does architecture routing make the named SM80 path reachable without changing non-score_mod behavior?",
+        "Is there a candidate-owned regression that distinguishes base from head on a supported architecture?"
+      ],
+      "repository": "Dao-AILab/flash-attention",
+      "required_hardware": "SM80 CUDA GPU for the runnable title-scoped architecture; SM120 is a corroborating architecture",
+      "training_risk": "custom attention-score autograd and backward-kernel architecture routing"
+    },
+    {
+      "base_sha": "8832b2e7588629c3c0ec2c26e98147836bbe7626",
+      "case_id": "liger-pr-1274",
+      "changed_paths": [
+        "src/liger_kernel/chunked_loss/grpo_loss.py"
+      ],
+      "claim": "The SAPO loss path avoids a torch.compile graph break while preserving eager forward and backward semantics.",
+      "decision_rule": "Accept if head closes the named graph break and matches eager values/gradients. One bounded missing compile regression with evaluator closure is check; a retained break, wrong loss, wrong gradient, or eager regression is reject. Environment-only compiler failure is unresolved.",
+      "execution_tier": "exact base/head function isolation under eager and torch.compile(fullgraph=True)",
+      "head_sha": "0d399071888d13180d5025100ebcce73ae4e89c1",
+      "project": "liger-kernel",
+      "pull_number": 1274,
+      "questions": [
+        "Does head compile as one full graph on representative positive/negative log-probability inputs while base distinguishes the failure?",
+        "Do eager and compiled loss values and gradients agree across dtypes and boundary coefficients?",
+        "Does the change avoid data-dependent Python branching or scalar extraction?",
+        "Does a candidate-owned test exercise both compile closure and numeric gradients?"
+      ],
+      "repository": "linkedin/Liger-Kernel",
+      "required_hardware": "CUDA GPU for the normal training path; CPU graph isolation is diagnostic",
+      "training_risk": "compiled RL loss graph capture and gradient equivalence"
+    },
+    {
+      "base_sha": "c5d3e242aff25cd6b121bba9504c76ec66f36412",
+      "case_id": "liger-pr-1268",
+      "changed_paths": [
+        "src/liger_kernel/ops/cross_entropy.py"
+      ],
+      "claim": "The single-shot cross-entropy dx_y correction preserves exact loss and input gradients while reducing correction overhead.",
+      "decision_rule": "Accept if all reachable numeric controls pass and the performance direction is non-regressive. A correct kernel with only bounded missing/noisy performance evidence is check; any reachable gradient error, ignored-row write, dtype regression, or measured material slowdown is reject. Missing CUDA is unresolved.",
+      "execution_tier": "exact algebra/source isolation plus A100 dtype, reduction, ignore-index, and shape matrix with paired timing",
+      "head_sha": "347e38e71f9ecc1442295924d8a357537b60b27e",
+      "project": "liger-kernel",
+      "pull_number": 1268,
+      "questions": [
+        "Do loss and logits gradients match an independent torch cross_entropy oracle for mean, sum, none, ignore-index, and label smoothing controls?",
+        "Is the target-column correction applied exactly once for every valid row and skipped for ignored rows?",
+        "Are FP32 accumulation and FP16/BF16 output semantics unchanged?",
+        "Does paired timing show no material regression, and is candidate benchmark evidence available?"
+      ],
+      "repository": "linkedin/Liger-Kernel",
+      "required_hardware": "CUDA GPU",
+      "training_risk": "fused cross-entropy backward gradient accumulation and performance"
+    },
+    {
+      "base_sha": "30b8486a2bd48dff97f22c5f0c88520b8825cb35",
+      "case_id": "liger-pr-1230",
+      "changed_paths": [
+        "docs/Examples.md",
+        "examples/alignment/run_orpo.py",
+        "src/liger_kernel/transformers/trainer/orpo_trainer.py",
+        "test/transformers/test_orpo_trainer.py"
+      ],
+      "claim": "LigerORPOTrainer works when FSDP is not configured and retains the existing FSDP setup path.",
+      "decision_rule": "Accept if no-FSDP initialization is safe and the reachable FSDP branch is preserved. One bounded missing FSDP control with a closure test is check; an absent-plugin crash, wrong owner mutation, or FSDP regression is reject.",
+      "execution_tier": "exact constructor/setup isolation across no-FSDP, FSDP1, and neighboring trainer controls",
+      "head_sha": "5041ab0c0f3b980509116d52818e344348fd17f8",
+      "project": "liger-kernel",
+      "pull_number": 1230,
+      "questions": [
+        "Does a no-FSDP trainer initialize without dereferencing or mutating an absent FSDP plugin?",
+        "Does the FSDP path still set every intended option on the actual plugin owner?",
+        "Are accelerator state and unrelated trainer configurations unchanged?",
+        "Does a candidate-owned regression distinguish no-FSDP base from head and retain an FSDP control?"
+      ],
+      "repository": "linkedin/Liger-Kernel",
+      "required_hardware": "none for configuration ownership proof; a CUDA training step is corroborating",
+      "training_risk": "trainer configuration branching and distributed-plugin ownership"
+    },
+    {
+      "base_sha": "e97ac83603e4bd79a1fe27f015b176510c0a3e1d",
+      "case_id": "megatron-pr-5808",
+      "changed_paths": [
+        "megatron/core/distributed/fsdp/src/megatron_fsdp/megatron_fsdp.py",
+        "tests/unit_tests/distributed/mfsdp_v1/test_mfsdp_fully_shard.py"
+      ],
+      "claim": "MegatronFSDP dispatches root-module hooks through the correct root state without skipping or duplicating child hooks.",
+      "decision_rule": "Accept if reachable root and child hook dispatch is owner-correct, exactly once, and numerically neutral. One bounded untested nesting pattern with a closure test is check; skipped/duplicate hooks, wrong owner state, rank divergence, or gradient change is reject.",
+      "execution_tier": "exact base/head hook state machine plus two-rank root/child module execution",
+      "head_sha": "0b5f9db249baee11522b0be364ef9eee9a3e3984",
+      "project": "megatron-core",
+      "pull_number": 5808,
+      "questions": [
+        "Does the root hook run exactly once against the root state for root-only and nested module trees?",
+        "Do child hooks retain their owner, order, arguments, and exactly-once cardinality?",
+        "Are forward/backward values and parameter gradients unchanged relative to an unhooked reference?",
+        "Does the changed test distinguish base and include a nested control?"
+      ],
+      "repository": "NVIDIA/Megatron-LM",
+      "required_hardware": "two CUDA GPUs for distributed corroboration; deterministic traversal proof is required locally",
+      "training_risk": "FSDP module-hook traversal, root ownership, and exactly-once execution"
+    },
+    {
+      "base_sha": "48a887fecd01674346f724dcf44f417f455989f0",
+      "case_id": "megatron-pr-5798",
+      "changed_paths": [
+        "megatron/core/transformer/moe/router.py",
+        "tests/unit_tests/transformer/moe/test_aux_loss.py"
+      ],
+      "claim": "Sequence-level auxiliary MoE loss is invariant to batch packing and batch-size partition while preserving token weighting and gradients.",
+      "decision_rule": "Accept if loss and gradients are partition-invariant for all supported layouts. One bounded unsupported padding layout with a direct closure test is check; batch-dependent loss, wrong gradient scale, NaN, or a neighboring token-level regression is reject.",
+      "execution_tier": "exact formula extraction plus batch partition, padding, sequence-length, and gradient oracle matrix",
+      "head_sha": "6c1b91a27241e3b96b03f9e49d0037f88544cdd0",
+      "project": "megatron-core",
+      "pull_number": 5798,
+      "questions": [
+        "Does one logical token/sequence set yield the same auxiliary loss under equivalent batch partitions?",
+        "Are padding, sequence boundaries, expert counts, and variable lengths normalized over the intended denominator?",
+        "Do router-logit gradients match an independently grouped reference and retain expected scale?",
+        "Does a direct candidate test include at least two batch sizes that distinguish base from head?"
+      ],
+      "repository": "NVIDIA/Megatron-LM",
+      "required_hardware": "CUDA GPU for training-tensor execution; formula proof is architecture-independent",
+      "training_risk": "auxiliary loss normalization and MoE router gradient scale"
+    },
+    {
+      "base_sha": "ce8865c6c1e3f339e502b9c258a38f26894ab3c4",
+      "case_id": "megatron-pr-5743",
+      "changed_paths": [
+        "megatron/core/distributed/fsdp/src/megatron_fsdp/experimental/dbuffer.py",
+        "megatron/core/distributed/fsdp/src/megatron_fsdp/experimental/module.py",
+        "megatron/core/distributed/fsdp/src/megatron_fsdp/experimental/parameter_group.py",
+        "tests/unit_tests/distributed/mfsdp_v2/test_fully_shard.py"
+      ],
+      "claim": "HSDP can defer the DP-outer gradient reduction and later execute exactly one equivalent reduction without stale or overwritten buffers.",
+      "decision_rule": "Accept if deferred and eager reachable paths are numerically equivalent with exactly-once reduction and safe ownership. One bounded lifecycle case with a runnable closure test is check; missing/duplicate reduction, wrong group, stale buffer, deadlock, or gradient divergence is reject. Missing two-GPU execution is unresolved.",
+      "execution_tier": "exact state-machine/source proof plus two-rank NCCL eager-versus-deferred numeric control",
+      "head_sha": "66b592a2cb3cc4007ae0be06fc86a8ab78430ce2",
+      "project": "megatron-core",
+      "pull_number": 5743,
+      "questions": [
+        "Does defer suppress only the outer reduction while preserving inner shard semantics and accumulation?",
+        "Does the later flush reduce every intended gradient exactly once on the correct group and op?",
+        "Are buffers owned until completion across microbatches, no_sync, zero-grad, and exception/empty cases?",
+        "Do candidate tests distinguish eager and deferred paths and compare resulting gradients?"
+      ],
+      "repository": "NVIDIA/Megatron-LM",
+      "required_hardware": "two CUDA GPUs",
+      "training_risk": "deferred distributed gradient reduction, buffer lifecycle, and rank agreement"
+    },
+    {
+      "base_sha": "27e312ca10a2dfdadabfdee4fe39a2172a6656d4",
+      "case_id": "megatron-pr-5742",
+      "changed_paths": [
+        "megatron/core/optimizer/__init__.py",
+        "megatron/core/optimizer/distrib_optimizer.py",
+        "tests/unit_tests/dist_checkpointing/test_optimizer.py",
+        "tests/unit_tests/dist_checkpointing/utils.py",
+        "tests/unit_tests/test_lion_optimizer.py"
+      ],
+      "claim": "Lion is routed through DistributedOptimizer and its single-moment state can be saved and restored without Adam-only assumptions.",
+      "decision_rule": "Accept if Lion dispatch and one-moment checkpoint/resume exactly match a continuous reference while neighboring optimizers pass. One bounded metadata compatibility gap with a closure test is check; wrong optimizer routing, state loss, second-moment assumption, or resumed divergence is reject.",
+      "execution_tier": "exact optimizer construction/state serialization plus continuous-versus-resumed update trajectory",
+      "head_sha": "1bdab4719957c68dd449c5666b3a64e2d0e47cb5",
+      "project": "megatron-core",
+      "pull_number": 5742,
+      "questions": [
+        "Does selecting Lion construct the intended distributed wrapper rather than an Adam-specific path?",
+        "Does checkpoint save/load preserve the single moment, step, group metadata, dtype, and shard mapping without requiring a second moment?",
+        "Do uninterrupted and save/resume parameter trajectories match for multiple steps?",
+        "Do Adam and non-distributed Lion controls remain unchanged with direct tests?"
+      ],
+      "repository": "NVIDIA/Megatron-LM",
+      "required_hardware": "none for optimizer/checkpoint proof; two-rank execution is corroborating",
+      "training_risk": "distributed optimizer dispatch and checkpoint state-schema compatibility"
+    },
+    {
+      "base_sha": "012e489b1907a2ccf7daa3d36801bea7369e3ab3",
+      "case_id": "torchtitan-pr-3841",
+      "changed_paths": [
+        "torchtitan/experiments/graph_trainer/graph_pp/__init__.py",
+        "torchtitan/experiments/graph_trainer/graph_pp/split_di_dw.py",
+        "torchtitan/experiments/graph_trainer/tests/test_graph_pp_passes.py"
+      ],
+      "claim": "Graph pipeline parallelism splits backward into dI and dW graphs without losing dependencies, gradients, or supported graph nodes.",
+      "decision_rule": "Accept if every supported graph partitions, lints, recomposes, and matches autograd. One explicitly guarded unsupported node family with a runnable closure test is check; omitted/duplicate nodes, broken dependencies, wrong gradients, or silent fallback is reject.",
+      "execution_tier": "exact FX graph pass over linear, residual, shared-parameter, and control graphs with independent autograd comparison",
+      "head_sha": "615d6123ad6634f177cbac33f585833e3e76ec12",
+      "project": "torchtitan",
+      "pull_number": 3841,
+      "questions": [
+        "Does the split assign input-gradient and weight-gradient nodes to the correct graph exactly once?",
+        "Are shared ancestors, saved tensors, ordering edges, outputs, and graph lint preserved?",
+        "Do recomposed dI/dW results match the unsplit backward for representative modules?",
+        "Do direct tests include a base-distinguishing graph plus residual/shared dependency controls?"
+      ],
+      "repository": "pytorch/torchtitan",
+      "required_hardware": "none for FX partition proof; CUDA execution is corroborating",
+      "training_risk": "AOT backward graph partitioning and dependency preservation"
+    },
+    {
+      "base_sha": "4b041be613612d781eb96db710398dd975dc2fe4",
+      "case_id": "torchtitan-pr-3897",
+      "changed_paths": [
+        "tests/unit_tests/test_loss.py",
+        "tests/unit_tests/test_optimizer_param_groups.py",
+        "torchtitan/components/loss.py",
+        "torchtitan/experiments/rl/actors/trainer.py",
+        "torchtitan/experiments/rl/examples/alphabet_sort/config_registry.py",
+        "torchtitan/experiments/rl/tests/integration_tests.py",
+        "torchtitan/experiments/rl/tests/test_generator.py",
+        "torchtitan/models/common/attention.py"
+      ],
+      "claim": "The RL training pipeline supports FP16 with correct loss, optimizer, attention, and generator dtype behavior.",
+      "decision_rule": "Accept only if the compound FP16 pipeline trains stably and every named component satisfies dtype and gradient controls. Exactly one bounded local component gap with a direct closure test is check; NaN/inf, silent underflow, wrong dtype, wrong update, or multiple residual components is reject. Missing compatible CUDA execution is unresolved.",
+      "execution_tier": "exact compound dtype/data-flow matrix plus A100 multi-step FP16 training smoke against FP32/BF16 controls",
+      "head_sha": "110dc8225ac5c3b8c8d5d757681a903158300e0a",
+      "project": "torchtitan",
+      "pull_number": 3897,
+      "questions": [
+        "Are logits, loss reductions, optimizer parameters/states, masks, and attention intermediates in safe intended dtypes?",
+        "Does loss scaling or equivalent overflow handling prevent silent zero/inf gradients over multiple steps?",
+        "Do FP16 updates track an FP32 reference within tolerance and leave BF16 behavior unchanged?",
+        "Do candidate tests exercise every title-implied component rather than only configuration parsing?"
+      ],
+      "repository": "pytorch/torchtitan",
+      "required_hardware": "CUDA GPU with FP16 support",
+      "training_risk": "mixed-precision training stability and cross-component dtype contracts"
+    },
+    {
+      "base_sha": "7083a8055cbdbea5b6846d69c27a4b8480d8f58e",
+      "case_id": "torchtitan-pr-3867",
+      "changed_paths": [
+        "tests/unit_tests/test_fused_qkv.py",
+        "torchtitan/experiments/rl/actors/generator.py"
+      ],
+      "claim": "TorchStore weight synchronization correctly transfers models with fused parameters using the public split state-dict contract.",
+      "decision_rule": "Accept if reachable fused/unfused round-trips are exact and key validation fails closed. One bounded additional fusion family with a direct closure test is check; missing/duplicate/wrong slices, silent skip, or receiver divergence is reject.",
+      "execution_tier": "exact fused-QKV state mapping and sender/receiver round-trip with unfused controls",
+      "head_sha": "e19d9e28041216907928e5bd2c5653f4421f1aad",
+      "project": "torchtitan",
+      "pull_number": 3867,
+      "questions": [
+        "Are every fused source parameter and exposed split destination key mapped exactly once with correct slice, shape, dtype, and order?",
+        "Does a sync round-trip reproduce all receiver weights for fused QKV and neighboring unfused modules?",
+        "Are missing, duplicate, extra, and version-mismatched keys rejected rather than silently skipped?",
+        "Does the candidate direct test distinguish base and cover both fused and unfused models?"
+      ],
+      "repository": "pytorch/torchtitan",
+      "required_hardware": "none for state mapping; two-rank CUDA execution is corroborating",
+      "training_risk": "RL trainer-to-generator parameter naming, fusion mapping, shape, and version ownership"
+    },
+    {
+      "base_sha": "ad2e3c272ee95fc5627c5007af59b5d25100be1a",
+      "case_id": "verl-pr-7014",
+      "changed_paths": [
+        "verl/workers/engine/fsdp/transformer_impl.py"
+      ],
+      "claim": "FSDP synchronizes merged LoRA weights before leaving the merge context so exported base weights contain the adapter update.",
+      "decision_rule": "Accept if reachable sync observes the merged value exactly once and context exit restores the intended local state. One bounded lifecycle case with a closure test is check; stale base export, double delta, rank divergence, or unsafe exception ownership is reject.",
+      "execution_tier": "exact context-manager/source ordering plus two-rank merge-sync-unmerge value model",
+      "head_sha": "ff6724da165030746b72396c2449e9958494b5e8",
+      "project": "verl",
+      "pull_number": 7014,
+      "questions": [
+        "Is synchronization invoked while merged weights are still live and before unmerge restores local base storage?",
+        "Do all ranks/export consumers observe base plus LoRA delta exactly once?",
+        "Are exception, nested context, no-adapter, and repeated-sync paths ownership-safe?",
+        "Does a candidate test distinguish the former stale export and verify post-context restoration?"
+      ],
+      "repository": "verl-project/verl",
+      "required_hardware": "two CUDA GPUs for distributed corroboration; ownership/order proof is required locally",
+      "training_risk": "LoRA merge/unmerge lifetime and FSDP weight-export ordering"
+    },
+    {
+      "base_sha": "d8acd86ecb74680dad8d63ae2a9f376ec9a7fe16",
+      "case_id": "verl-pr-7013",
+      "changed_paths": [
+        "tests/trainer/ppo/test_adaptive_kl_checkpoint_on_cpu.py",
+        "verl/experimental/fully_async_policy/fully_async_trainer.py",
+        "verl/trainer/ppo/core_algos.py",
+        "verl/trainer/ppo/ray_trainer.py",
+        "verl/trainer/ppo/v1/trainer_base.py"
+      ],
+      "claim": "Adaptive KL controller state persists across checkpoint resume for every changed trainer path and produces the same subsequent trajectory.",
+      "decision_rule": "Accept if every title-scoped trainer resumes an identical controller trajectory and compatibility is explicit. One bounded legacy-schema case with a closure test is check; state loss, wrong step ordering, divergent trajectory, or multiple unhandled trainers is reject.",
+      "execution_tier": "exact state-schema/source matrix plus uninterrupted-versus-resumed controller trajectory",
+      "head_sha": "90867ec69fc4717c28b783721d507a5722388d49",
+      "project": "verl",
+      "pull_number": 7013,
+      "questions": [
+        "Are controller value, target, horizon, update count, and variant-specific fields serialized and restored at the correct step?",
+        "Do all changed trainer implementations use the same authoritative state owner without double restore?",
+        "Does a save/resume sequence produce the same next KL coefficients as uninterrupted execution?",
+        "Do old checkpoints without the field have an explicit compatible default and direct test?"
+      ],
+      "repository": "verl-project/verl",
+      "required_hardware": "none",
+      "training_risk": "stateful RL control checkpoint completeness and resume determinism"
+    },
+    {
+      "base_sha": "62ac6d6e9fccc09ab6af2171217cee6e290b799b",
+      "case_id": "verl-pr-6984",
+      "changed_paths": [
+        "verl/workers/engine/fsdp/transformer_impl.py"
+      ],
+      "claim": "Dropping per-micro-batch model_output releases training graph memory without changing accumulated gradients, metrics, or required post-step consumers.",
+      "decision_rule": "Accept if output is provably dead, memory is bounded/reduced, and all training results match. A correct lifetime fix with only bounded missing large-model peak evidence is check; a later consumer break, gradient/metric change, retained graph, or measured memory regression is reject. Missing CUDA is unresolved.",
+      "execution_tier": "exact use/lifetime analysis plus A100 multi-microbatch weak-reference, memory, and gradient control",
+      "head_sha": "31599e2baec39f8ae79b4ace82118f98f87b41a0",
+      "project": "verl",
+      "pull_number": 6984,
+      "questions": [
+        "Is model_output dead after each backward, with no later metric, auxiliary loss, logging, or hook consumer?",
+        "Do weak references and allocated-memory traces show graphs become reclaimable between microbatches?",
+        "Do accumulated gradients, loss, metrics, and optimizer updates exactly match the retained-output baseline?",
+        "Does candidate evidence include a workload that previously grows or OOMs and now stays bounded?"
+      ],
+      "repository": "verl-project/verl",
+      "required_hardware": "CUDA GPU for the OOM/memory claim; source liveness proof is required locally",
+      "training_risk": "autograd graph lifetime, microbatch accumulation, and actor-update peak memory"
+    },
+    {
+      "base_sha": "6856424ca2a7eebc51a5e492b628792c52e4073e",
+      "case_id": "megatron-pr-5819",
+      "changed_paths": [
+        "megatron/core/full_cuda_graph.py"
+      ],
+      "claim": "Full-iteration CUDA graph capture and replay preserves the intended data-iterator position and batch sequence without corruption, duplication, or skipping.",
+      "decision_rule": "Accept if every reachable capture/replay sequence preserves iterator position and batch identity. One bounded untested multi-chunk lifecycle with a runnable closure test is check; skipped, duplicated, stale, or extra-consumed training data is reject. Missing CUDA graph support is unresolved.",
+      "execution_tier": "exact iterator state-machine isolation plus A100 capture/replay sequence comparison",
+      "head_sha": "4b6e02c1c6a490839c1ecf915a542fd0474d6f1c",
+      "project": "megatron-core",
+      "pull_number": 5819,
+      "questions": [
+        "Do eager and full-iteration graph paths consume exactly the same logical batches across warmup, capture, and repeated replay?",
+        "Are iterator reads suppressed or restored at the correct capture boundary without stale values or extra advancement?",
+        "Do fresh capture, repeated capture, exhaustion, and multi-chunk controls preserve ownership?",
+        "Is there a direct regression that distinguishes the former corrupting sequence from head?"
+      ],
+      "repository": "NVIDIA/Megatron-LM",
+      "required_hardware": "CUDA GPU",
+      "training_risk": "CUDA graph capture side effects on stateful training-data iteration"
+    },
+    {
+      "base_sha": "48a887fecd01674346f724dcf44f417f455989f0",
+      "case_id": "megatron-pr-5761",
+      "changed_paths": [
+        "megatron/core/pipeline_parallel/combined_1f1b.py"
+      ],
+      "claim": "Combined 1F1B execution enters both autocast and FP8 contexts around the intended model work while preserving disabled and single-context behavior.",
+      "decision_rule": "Accept if joint context ownership and reachable numeric controls pass. One bounded missing real-FP8 execution with a complete instrumented closure test is check; a missing/misnested context, leaked context, wrong dtype, or gradient divergence is reject. Missing required FP8 runtime is unresolved only for the hardware-specific portion.",
+      "execution_tier": "exact context-manager instrumentation plus A100 dtype and gradient controls",
+      "head_sha": "20a3a530d6c37ab372bb1ce0cef03b30a7d5ab06",
+      "project": "megatron-core",
+      "pull_number": 5761,
+      "questions": [
+        "Are autocast and FP8 contexts both active during every intended combined-1F1B compute region and exited in stack order?",
+        "Do enabled/disabled combinations preserve prior BF16/FP16 behavior and exception cleanup?",
+        "Are loss, gradients, and parameter updates finite and numerically consistent with the non-combined schedule?",
+        "Does candidate evidence directly execute the joint-context path rather than only parse configuration?"
+      ],
+      "repository": "NVIDIA/Megatron-LM",
+      "required_hardware": "CUDA GPU; Transformer Engine availability is required for the real FP8 path",
+      "training_risk": "mixed-precision context composition and pipeline forward/backward dtype semantics"
+    },
+    {
+      "base_sha": "d64ba4ccb1e3e878c15171c9cc58d5d3b46bf4d5",
+      "case_id": "megatron-pr-5724",
+      "changed_paths": [
+        "megatron/core/datasets/data_schedule.py",
+        "megatron/core/model_parallel_config.py",
+        "megatron/core/packed_seq_params.py",
+        "megatron/core/transformer/transformer_config.py",
+        "pretrain_gpt.py",
+        "tests/unit_tests/models/test_hybrid_moe_model.py",
+        "tests/unit_tests/transformer/test_thd_cuda_graph.py"
+      ],
+      "claim": "THD packed-sequence padding has identical shape, token-validity, output, and gradient semantics in eager and CUDA-graph training modes.",
+      "decision_rule": "Accept if metadata and numeric parity hold across reachable THD layouts. One explicitly bounded unsupported alignment with a runnable closure test is check; wrong token validity, shape mismatch, padding leakage, graph replay failure, or gradient divergence is reject. Missing CUDA graph support is unresolved.",
+      "execution_tier": "exact metadata flow plus A100 eager-versus-graph packed-sequence matrix",
+      "head_sha": "9263ead3220483db3e5d7a2caa241dc0cb4aaf3f",
+      "project": "megatron-core",
+      "pull_number": 5724,
+      "questions": [
+        "Do cu_seqlens, max sequence length, padded token count, and valid-token masks agree for eager and graph modes?",
+        "Do zero-padding, non-aligned lengths, multiple microbatches, and boundary-sized batches avoid reading or training on padding?",
+        "Do outputs and input/parameter gradients match for the same logical token set?",
+        "Do changed tests distinguish the old divergence and cover both eager and graph paths?"
+      ],
+      "repository": "NVIDIA/Megatron-LM",
+      "required_hardware": "CUDA GPU",
+      "training_risk": "packed-sequence padding metadata and eager/graph training parity"
+    },
+    {
+      "base_sha": "48a887fecd01674346f724dcf44f417f455989f0",
+      "case_id": "megatron-pr-5714",
+      "changed_paths": [
+        "megatron/core/distributed/torch_fully_sharded_data_parallel.py",
+        "megatron/core/transformer/mlp.py",
+        "megatron/core/transformer/moe/experts.py",
+        "megatron/core/utils.py",
+        "tests/unit_tests/distributed/test_torch_fully_sharded_parallel.py"
+      ],
+      "claim": "FSDP2 checkpoints preserve SwiGLU parameters and reconstruct the live model so save/load and resumed forward behavior match an uninterrupted reference.",
+      "decision_rule": "Accept if supported SwiGLU FSDP2 round-trips are exact and neighboring MLP controls pass. One bounded additional owner such as an untested expert wrapper with a runnable closure test is check; missing/wrong gate slices, silent key loss, shard disagreement, or resumed divergence is reject. Missing two-GPU FSDP2 execution is unresolved.",
+      "execution_tier": "exact state-key mapping plus two-rank FSDP2 save/load and resume round-trip",
+      "head_sha": "5e25a285b12127ed89f4d33b72bf4318d1e236b6",
+      "project": "megatron-core",
+      "pull_number": 5714,
+      "questions": [
+        "Are fused and split SwiGLU keys mapped exactly once with correct gate/up ordering, shapes, and shard placement?",
+        "Does a two-rank checkpoint round-trip reproduce every parameter and the next forward/backward result?",
+        "Do tied/shared, expert, and ordinary unfused MLP controls remain unchanged where supported?",
+        "Do direct candidate tests distinguish base from head and fail closed on malformed keys?"
+      ],
+      "repository": "NVIDIA/Megatron-LM",
+      "required_hardware": "two CUDA GPUs",
+      "training_risk": "fused SwiGLU state-dict mapping under FSDP2 sharding"
+    },
+    {
+      "base_sha": "91fcdfe4cb371c8d4d01108222273fcda5d3efc8",
+      "case_id": "megatron-pr-5710",
+      "changed_paths": [
+        "megatron/core/distributed/fsdp/src/megatron_fsdp/experimental/module.py",
+        "tests/unit_tests/distributed/mfsdp_v2/test_annotation.py"
+      ],
+      "claim": "Frozen-parameter FSDP backward hooks remain correctly paired so mixed frozen/trainable modules complete repeated backward passes without stale hook state or gradient corruption.",
+      "decision_rule": "Accept if hook cardinality, lifecycle, and gradients are correct across reachable frozen layouts. One bounded unused-parameter permutation with a runnable closure test is check; dangling/duplicate hooks, deadlock, stale state, frozen updates, or trainable-gradient divergence is reject. Missing two-GPU execution is unresolved.",
+      "execution_tier": "exact hook state-machine proof plus two-rank repeated-backward controls",
+      "head_sha": "5da705896bdd96b4c0a552f601c558d5d4acd8cd",
+      "project": "megatron-core",
+      "pull_number": 5710,
+      "questions": [
+        "Does every installed pre-backward hook have exactly one valid completion path when all or some owned parameters are frozen?",
+        "Do mixed frozen/trainable, all-frozen, unused, no-grad, and repeated-iteration paths avoid stale state and duplicate callbacks?",
+        "Are trainable gradients and updates equal to an unsharded reference while frozen parameters remain unchanged?",
+        "Does the changed test distinguish the former unpaired-hook failure?"
+      ],
+      "repository": "NVIDIA/Megatron-LM",
+      "required_hardware": "two CUDA GPUs",
+      "training_risk": "FSDP pre/post-backward hook cardinality for frozen parameters"
+    },
+    {
+      "base_sha": "680824dd5e01a2e83750bf87fc366ec6fa98766c",
+      "case_id": "slime-pr-2207",
+      "changed_paths": [
+        "slime/rollout/sglang_rollout.py",
+        "slime/utils/types.py",
+        "tests/test_partial_rollout_loss_mask.py"
+      ],
+      "claim": "Partial-rollout off-policy loss masks align with the exact generated-token span so prefixes and stale/unowned tokens never contribute to policy loss or gradients.",
+      "decision_rule": "Accept if every reachable token span and gradient mask matches the independent oracle. One bounded unsupported batching layout with a direct closure test is check; any trainable-prefix leak, dropped continuation token, off-by-one mask, or gradient mismatch is reject.",
+      "execution_tier": "exact sample transformation plus tokenwise loss/gradient oracle matrix",
+      "head_sha": "1c70f71648f95b91de80aa07b05aad8bedc1e457",
+      "project": "slime",
+      "pull_number": 2207,
+      "questions": [
+        "Does each continued rollout mark exactly its newly trainable response tokens after prefix reuse, truncation, and padding?",
+        "Are left/right padding, empty continuation, multi-turn, unequal prefix, and batched controls aligned without an off-by-one shift?",
+        "Do masked loss and gradients match an independently indexed token oracle?",
+        "Do candidate tests distinguish the previous alignment and include boundary cases?"
+      ],
+      "repository": "THUDM/slime",
+      "required_hardware": "none for alignment proof; CUDA training tensors are corroborating",
+      "training_risk": "partial-rollout token alignment and off-policy loss masking"
+    },
+    {
+      "base_sha": "680824dd5e01a2e83750bf87fc366ec6fa98766c",
+      "case_id": "slime-pr-2205",
+      "changed_paths": [
+        ".github/workflows/pr-test.yml",
+        ".github/workflows/pr-test.yml.j2",
+        "slime/utils/ppo_utils.py",
+        "tests/test_discounted_returns.py"
+      ],
+      "claim": "Vectorized REINFORCE++ discounted returns are numerically equivalent to the scalar recurrence and improve or preserve A100 performance.",
+      "decision_rule": "Accept if all reachable numeric controls pass and performance is non-regressive. Correctness with only noisy or bounded missing timing evidence is check; wrong recurrence, mask leakage, NaN/inf, dtype regression, or a material measured slowdown is reject. Missing CUDA is unresolved only for performance.",
+      "execution_tier": "independent recurrence oracle plus A100 shape/dtype correctness and paired timing",
+      "head_sha": "d4802fa3a4aa4fe34dab10bffbd300f1459c5fa3",
+      "project": "slime",
+      "pull_number": 2205,
+      "questions": [
+        "Do vectorized returns match a right-to-left scalar recurrence for variable lengths, masks, rewards, and all supported discount settings?",
+        "Are empty, length-one, long-sequence, all-masked, terminal, FP32, BF16, and noncontiguous controls safe?",
+        "Does the vectorization preserve output dtype/device and avoid overflow or cancellation outside declared tolerances?",
+        "Does paired A100 timing show no material regression at representative response lengths?"
+      ],
+      "repository": "THUDM/slime",
+      "required_hardware": "CUDA GPU for performance; correctness is architecture-independent",
+      "training_risk": "RL return recurrence, response masking, and vectorized numerical stability"
+    },
+    {
+      "base_sha": "680824dd5e01a2e83750bf87fc366ec6fa98766c",
+      "case_id": "slime-pr-2204",
+      "changed_paths": [
+        ".github/workflows/pr-test.yml",
+        ".github/workflows/pr-test.yml.j2",
+        "slime/ray/rollout.py",
+        "slime/rollout/_fanout_test_helpers.py",
+        "slime/rollout/reward_utils.py",
+        "tests/test_qwen2.5_0.5B_fanout_short.py",
+        "tests/test_reward_utils.py"
+      ],
+      "claim": "Reward normalization uses explicit sample groups and is invariant to batch ordering while preserving per-group zero-mean/scaling semantics.",
+      "decision_rule": "Accept if explicit groups determine the exact independent normalization for every supported layout. One bounded malformed-input validation gap with a closure test is check; cross-group leakage, order dependence, wrong scale, NaN, or silent regrouping of valid samples is reject.",
+      "execution_tier": "exact grouping isolation plus independent irregular-group normalization oracle",
+      "head_sha": "55d49e4c53fda48056a2ed8a36e2f0066a87c35d",
+      "project": "slime",
+      "pull_number": 2204,
+      "questions": [
+        "Do noncontiguous, interleaved, unequal-size, singleton, filtered, and repeated prompt groups normalize only against their declared members?",
+        "Is the result invariant to batch permutation and stable for zero-variance groups?",
+        "Are missing, duplicate, malformed, or inconsistent group identifiers handled explicitly rather than silently regrouped?",
+        "Do changed tests distinguish implicit adjacency assumptions from explicit grouping?"
+      ],
+      "repository": "THUDM/slime",
+      "required_hardware": "none",
+      "training_risk": "RL reward grouping and advantage normalization"
+    },
+    {
+      "base_sha": "680824dd5e01a2e83750bf87fc366ec6fa98766c",
+      "case_id": "slime-pr-2198",
+      "changed_paths": [
+        ".github/workflows/pr-test.yml",
+        ".github/workflows/pr-test.yml.j2",
+        "slime/utils/ppo_utils.py",
+        "tests/test_ppo_ratio_numerics.py"
+      ],
+      "claim": "Clamping PPO log-ratios before exponentiation prevents overflow without changing the intended clipped objective or gradients in the valid operating range.",
+      "decision_rule": "Accept if extremes are finite and the valid-range PPO objective/gradients are unchanged. One bounded diagnostic-metric discrepancy with a closure test is check; retained overflow, silent zeroing of valid gradients, wrong clipping branch, or central-range regression is reject. Missing CUDA is unresolved.",
+      "execution_tier": "exact formula isolation plus A100 extreme-value forward/backward dtype matrix",
+      "head_sha": "afd059072e3351086b241c30af86e71080d8511b",
+      "project": "slime",
+      "pull_number": 2198,
+      "questions": [
+        "Are ratio, clipped objective, approximate KL, clip fraction, and gradients finite for extreme positive and negative log-ratios?",
+        "Does the central operating range remain bitwise or tolerance-equivalent to the unclamped formula?",
+        "Are clamp bounds safe for FP16/BF16/FP32 and consistent with all exponentiation call sites?",
+        "Do direct tests cover overflow, underflow, both PPO branches, masks, and gradients?"
+      ],
+      "repository": "THUDM/slime",
+      "required_hardware": "CUDA GPU for production dtypes; CPU FP32 is diagnostic",
+      "training_risk": "PPO importance-ratio overflow and policy-gradient semantics"
+    },
+    {
+      "base_sha": "6a0ee15881cba74c2ef57a3a671024621ce64bf4",
+      "case_id": "slime-pr-2152",
+      "changed_paths": [
+        "slime/backends/megatron_utils/loss.py",
+        "slime/utils/ppo_utils.py",
+        "tests/test_ppo_logprob_entropy_gpu.py"
+      ],
+      "claim": "The optimized vocab-parallel log-probability/entropy operator reduces peak memory while preserving values and backward gradients across tensor-parallel shards.",
+      "decision_rule": "Accept if two-rank values/gradients match and memory is non-regressive with the claimed optimization visible. One bounded noisy peak-memory comparison with complete correctness is check; wrong shard math, rank divergence, bad gradients, OOM, or material memory regression is reject. Missing two-GPU execution is unresolved.",
+      "execution_tier": "two-rank exact-shard oracle plus A100 memory and backward matrix",
+      "head_sha": "3a2888de47aae36a2f305d522e67440e57573785",
+      "project": "slime",
+      "pull_number": 2152,
+      "questions": [
+        "Do log-probability, entropy, logits gradients, and masked-token semantics match an unsharded FP32 oracle for TP=1 and TP=2?",
+        "Are uneven/empty local vocabulary ownership, boundary token IDs, padding, noncontiguous inputs, and BF16/FP32 handled correctly?",
+        "Do collectives use the right reduction and preserve rank agreement without retaining full-vocab intermediates?",
+        "Is peak allocated memory materially lower or at least non-regressive for a representative large-vocab batch?"
+      ],
+      "repository": "THUDM/slime",
+      "required_hardware": "two CUDA GPUs",
+      "training_risk": "vocabulary-parallel fused loss statistics, collectives, and activation memory"
+    },
+    {
+      "base_sha": "876d3ff9f434f5a7399716fb3a25654bfa2f284d",
+      "case_id": "verl-pr-7012",
+      "changed_paths": [
+        "verl/trainer/distillation/megatron/losses.py"
+      ],
+      "claim": "Megatron forward-KL top-k distillation aligns teacher sequence tensors with the student under context-parallel splitting without losing valid tokens or misaligning indices.",
+      "decision_rule": "Accept if token alignment and two-rank loss/gradients match for every supported layout. One bounded unsupported odd-length layout with a runnable closure test is check; misindexed teacher targets, token loss/duplication, shape failure, or gradient divergence is reject. Missing two-GPU execution is unresolved.",
+      "execution_tier": "exact alignment flow plus two-rank CP top-k loss/gradient oracle",
+      "head_sha": "107cc3ed02498e38f9853e3c94211fb6235ed7bd",
+      "project": "verl",
+      "pull_number": 7012,
+      "questions": [
+        "Do teacher values/indices and student logits cover the same logical token positions after CP splitting for unequal stored sequence lengths?",
+        "Are padding, odd lengths, boundaries, multiple top-k values, and no-CP controls aligned without truncation or duplication?",
+        "Do distributed loss and student gradients match an unsharded independent oracle?",
+        "Is there a direct test that distinguishes the prior sequence-length mismatch?"
+      ],
+      "repository": "verl-project/verl",
+      "required_hardware": "two CUDA GPUs",
+      "training_risk": "teacher/student sequence alignment and CP-sharded distillation loss"
+    },
+    {
+      "base_sha": "220e9039902c6db56860e2afd659803dc34ec005",
+      "case_id": "verl-pr-7005",
+      "changed_paths": [
+        "verl/workers/engine/fsdp/transformer_impl.py"
+      ],
+      "claim": "FSDP2 weight export can bypass whole-shard staging while emitting exactly the same complete weights and reducing or preserving peak memory.",
+      "decision_rule": "Accept if export/reload is exact and peak memory is non-regressive with the staging removal demonstrated. One bounded tied-parameter lifecycle gap with a closure test is check; missing/duplicate/stale weights, rank mismatch, unsafe ownership, or material memory regression is reject. Missing two-GPU execution is unresolved.",
+      "execution_tier": "exact export data-flow plus two-rank old-versus-new state-dict and peak-memory comparison",
+      "head_sha": "1a36ed40fa4b133d35503195e8bb2dcef5f7f1cb",
+      "project": "verl",
+      "pull_number": 7005,
+      "questions": [
+        "Does each logical parameter export exactly once with correct name, shape, dtype, value, and ordering under FSDP2?",
+        "Do uneven shards, tied parameters, offload, empty ownership, repeated export, and exception cleanup preserve state?",
+        "Does the exported mapping match the staged baseline and reload into an equivalent model?",
+        "Does A100 peak allocation show the removed whole-shard staging rather than moving it elsewhere?"
+      ],
+      "repository": "verl-project/verl",
+      "required_hardware": "two CUDA GPUs",
+      "training_risk": "FSDP2 sharded parameter export ownership and staging memory"
+    },
+    {
+      "base_sha": "c47d54e836f27b04fc51acd4c12e5f7c06640ab7",
+      "case_id": "verl-pr-6996",
+      "changed_paths": [
+        "verl/workers/engine/fsdp/transformer_impl.py"
+      ],
+      "claim": "Asynchronous FSDP model loading restores the intended parameters before use without race, partial state, or sync-path regression.",
+      "decision_rule": "Accept if async ownership, error propagation, and two-rank numeric parity hold. One bounded reentrant-load case with a runnable closure test is check; early visibility, partial/stale state, swallowed failure, deadlock, rank disagreement, or sync regression is reject. Missing two-GPU execution is unresolved.",
+      "execution_tier": "exact async state-machine instrumentation plus two-rank delayed-load and forward controls",
+      "head_sha": "9708019aba71867b506578fb5c3b35868cc01efa",
+      "project": "verl",
+      "pull_number": 6996,
+      "questions": [
+        "Is every asynchronous load awaited at the authoritative readiness boundary before forward or weight export can observe the model?",
+        "Do delayed, failed, repeated, empty, offloaded, and mixed-shard loads finish or fail deterministically without partial visibility?",
+        "Do loaded parameters and the next forward/backward match a synchronous reference on every rank?",
+        "Does the fix leave synchronous loading and neighboring non-FSDP engines unchanged?"
+      ],
+      "repository": "verl-project/verl",
+      "required_hardware": "two CUDA GPUs",
+      "training_risk": "async checkpoint/load ordering and FSDP state ownership"
+    },
+    {
+      "base_sha": "e52747a403f55044578d9435069825f949b549bf",
+      "case_id": "verl-pr-6963",
+      "changed_paths": [
+        "verl/experimental/fully_async_policy/detach_utils.py",
+        "verl/experimental/fully_async_policy/fully_async_rollouter.py",
+        "verl/experimental/separation/ray_trainer.py",
+        "verl/workers/utils/losses.py"
+      ],
+      "claim": "Every changed fully-async training path fails loudly when rollout log-probabilities are requested but absent, while valid not-requested and present-empty states remain distinct.",
+      "decision_rule": "Accept if every reachable requested/absent path fails closed and legitimate states remain valid. One bounded trainer variant with a direct closure test is check; any silent requested-data fallback, false rejection of supported batches, or inconsistent owner is reject.",
+      "execution_tier": "exact call-path and configuration reachability matrix with sentinel batch controls",
+      "head_sha": "2ef94312bf12de93844b8d280982501bed0bbf94",
+      "project": "verl",
+      "pull_number": 6963,
+      "questions": [
+        "Do all changed consumers reject an absent requested log-probability field before computing a silently wrong objective?",
+        "Are not-requested, present-empty, masked-empty, and valid-present states handled according to distinct contracts?",
+        "Is the check placed at the authoritative owner without duplicate or contradictory defaults across trainer variants?",
+        "Do direct tests cover every changed path and distinguish the former fallback?"
+      ],
+      "repository": "verl-project/verl",
+      "required_hardware": "none",
+      "training_risk": "off-policy correction precondition enforcement across async trainers"
+    },
+    {
+      "base_sha": "e52747a403f55044578d9435069825f949b549bf",
+      "case_id": "verl-pr-6960",
+      "changed_paths": [
+        "verl/utils/kernel/linear_cross_entropy.py"
+      ],
+      "claim": "Fused linear cross-entropy backward returns contiguous gradient buffers wherever the training consumer requires them without altering loss or gradients.",
+      "decision_rule": "Accept if reachable buffers satisfy the required layout and all numeric controls pass. One bounded untested compiler variant with a runnable closure test is check; retained noncontiguity at the production consumer, copy aliasing, wrong loss, wrong gradient, or compile failure is reject. Missing CUDA is unresolved.",
+      "execution_tier": "exact autograd isolation plus A100 stride, dtype, shape, compile, and numeric matrix",
+      "head_sha": "82c2eb933bdcc52ce4c727bce5a842f7152d37c8",
+      "project": "verl",
+      "pull_number": 6960,
+      "questions": [
+        "Are all returned input/weight/bias gradient buffers contiguous at the consumer boundary that requires contiguous storage?",
+        "Do values match an unfused linear-plus-cross-entropy oracle for noncontiguous inputs, reductions, ignore-index, and supported dtypes?",
+        "Do repeated backward, accumulation, torch.compile, and higher-dimensional batches preserve layout and values?",
+        "Is there a regression that distinguishes the prior noncontiguous buffer in a production-reachable shape?"
+      ],
+      "repository": "verl-project/verl",
+      "required_hardware": "CUDA GPU",
+      "training_risk": "custom autograd gradient layout and fused loss correctness"
+    }
+  ],
+  "ci_fields_visible_to_machine_judge": false,
+  "claim_scope_policy": {
+    "compound_title_claims_are_all_blocking": true,
+    "synthetic_failure_requires_production_reachability_to_block": true,
+    "title_scoped_acceptance_is_blocking": true,
+    "unclaimed_hardening_is_blocking": false
+  },
+  "component_selection_lock_sha256": [
+    "sha256:11af8096b62d70248e5765c6b15bb23b7c358fb65178947fee5ea98494823a03",
+    "sha256:19343751121384e750605a7ba05715f264ff193407d1ec402c5bcb87a60f2843"
+  ],
+  "cross_case_controls": [
+    "A synthetic shape, module root, process group, or state transition cannot block unless a supported training configuration reaches it.",
+    "Performance or memory improvement cannot compensate for wrong loss, gradient, optimizer state, rank agreement, or checkpoint trajectory.",
+    "Candidate PR-body evidence is recorded separately from evaluator execution and cannot expose state, merge, review, label, or CI fields.",
+    "Base and head use the same numeric, lifecycle, and distributed matrix; head does not receive an easier oracle.",
+    "Static source evidence cannot be promoted to runtime evidence when the frozen contract requires CUDA or two-rank execution."
+  ],
+  "extension_frozen_before_candidate_body_acquisition": true,
+  "extension_frozen_before_source_diff_content_inspection": true,
+  "frozen_at": "2026-09-02T11:53:42.453834+00:00",
+  "merge_outcomes_visible_to_machine_judge": false,
+  "protocol_id": "historical-pr-blind-training-v0.1-r13-expanded-29",
+  "review_text_requested": false,
+  "review_text_visible_to_machine_judge": false,
+  "schema_version": "0.1",
+  "scoring_policy": {
+    "check_is_bounded_repairability_or_bounded_claim-evidence_gap": true,
+    "decisions": [
+      "accept_with_scope",
+      "check",
+      "reject",
+      "unresolved"
+    ],
+    "forced_polarization_used": false,
+    "kind": "ordered exact training-contract judgment with repairability triage",
+    "missing_required_environment_evidence": "unresolved, never candidate fail",
+    "technical_contract_and_disposition_are_reported_separately": true,
+    "weighted_score_used": false
+  },
+  "selection_lock_sha256": "sha256:e2238331bb44378e5a89d1739e372f322292bf17c0cab4e97afe8782eb9865af",
+  "test_plan_sha256": "sha256:8e872fe8158a688a8443657b1679026c4d8109257d795779b6b6149aabc089d9"
+}

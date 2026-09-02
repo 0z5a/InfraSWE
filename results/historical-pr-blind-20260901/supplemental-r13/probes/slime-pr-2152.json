@@ -1,0 +1,91 @@
+{
+  "base_sha": "6a0ee15881cba74c2ef57a3a671024621ce64bf4",
+  "candidate_evidence": {
+    "body_present": false,
+    "body_sha256": "sha256:12ae32cb1ec02d01eda3581b127c1fee3b0dc53572ed6baf239721a03d82e126",
+    "line_count": 0,
+    "mentions_benchmark": false,
+    "mentions_multi_gpu": false,
+    "mentions_test": false
+  },
+  "candidate_evidence_projection_sha256": "sha256:0802ae595ebad5503e34af670ed6928851b6410b52664d55f854e322c6f089dd",
+  "case_id": "slime-pr-2152",
+  "environment": {
+    "cuda": "12.8",
+    "cuda_visible_devices": null,
+    "gpu_count": 2,
+    "gpu_names": [
+      "NVIDIA A100-SXM4-40GB",
+      "NVIDIA A100-SXM4-40GB"
+    ],
+    "platform": "Linux-6.8.0-138-generic-x86_64-with-glibc2.39",
+    "python": "3.12.14",
+    "torch": "2.11.0+cu128",
+    "torch_cuda_available": true
+  },
+  "environment_sha256": "sha256:18a57faaaf52c323ae26148bc33bdbe56f1d567765c4a468cb37eb0462f9e14c",
+  "evidence_sha256": "sha256:6d7a395283a0871492c1e0db3f81a28addab5d120945a8a310f1e7c523b70206",
+  "facts": {
+    "backward_mutates_saved_logprob_softmax_inplace": true,
+    "candidate_evidence": {
+      "body_present": false,
+      "body_sha256": "sha256:12ae32cb1ec02d01eda3581b127c1fee3b0dc53572ed6baf239721a03d82e126",
+      "line_count": 0,
+      "mentions_benchmark": false,
+      "mentions_multi_gpu": false,
+      "mentions_test": false
+    },
+    "changed_path_count": 3,
+    "changed_test_count": 1,
+    "changed_test_paths": [
+      "tests/test_ppo_logprob_entropy_gpu.py"
+    ],
+    "head_conflict_marker_free": true,
+    "head_python_syntax_ok": true,
+    "inplace_softmax_scratch_present": true,
+    "merge_conflict_markers": [],
+    "metric_only_entropy_avoids_full_vocab_saved_tensors": true,
+    "metric_only_entropy_marked_non_differentiable": true,
+    "patch_sha256": "sha256:7d2de9bc97c45bc54472afd7046efbd205d6936dc486dad02b69987ef0886e57",
+    "python_parse_errors": [],
+    "source_file_count": 3,
+    "tp1_value_gradient_and_repeat_matrix": [
+      {
+        "entropy_max_abs": 4.76837158203125e-07,
+        "entropy_requires_grad": false,
+        "first_backward_gradient_max_abs": 0.0012108683586120605,
+        "log_prob_max_abs": 0.0,
+        "repeat_backward_exception": "RuntimeError: one of the variables needed for gradient computation has been modified by an inplace operation: [torch.cuda.FloatTensor [9, 17]] is at version 5; expected version 2 instead. Hint: enable anomaly detection to find the operation that failed to compute its gradient, with torch.autograd.set_detect_anomaly(True, check_nan=False).",
+        "repeat_backward_gradient_max_abs": null,
+        "with_entropy_grad": false
+      },
+      {
+        "entropy_max_abs": 4.76837158203125e-07,
+        "entropy_requires_grad": true,
+        "first_backward_gradient_max_abs": 0.0012108683586120605,
+        "log_prob_max_abs": 0.0,
+        "repeat_backward_exception": "RuntimeError: one of the variables needed for gradient computation has been modified by an inplace operation: [torch.cuda.FloatTensor [9, 17]] is at version 5; expected version 2 instead. Hint: enable anomaly detection to find the operation that failed to compute its gradient, with torch.autograd.set_detect_anomaly(True, check_nan=False).",
+        "repeat_backward_gradient_max_abs": null,
+        "with_entropy_grad": true
+      }
+    ]
+  },
+  "failure_codes": [],
+  "finished_at": "2026-09-02T12:16:53.235383+00:00",
+  "head_sha": "3a2888de47aae36a2f305d522e67440e57573785",
+  "probe_status": "pass",
+  "protocol_id": "historical-pr-blind-training-v0.1-r13-expanded-29",
+  "schema_version": "0.1",
+  "selection_lock_sha256": "sha256:e2238331bb44378e5a89d1739e372f322292bf17c0cab4e97afe8782eb9865af",
+  "source_bundle_sha256": "sha256:dc0cab095afa903e0780196b8511b4a8a935d41aeff85ca400293c4fbb525ee7",
+  "source_digests": {
+    "base:slime/backends/megatron_utils/loss.py": "sha256:eef21eb09c6efc68edcf36ecdd9bbd5bc5495ae22f58a79acf720717cf689c9e",
+    "base:slime/utils/ppo_utils.py": "sha256:2c7dc9b256e99bcf7e403d884b2c88e580015a94537628179f8fefd0dfc1b108",
+    "base:tests/test_ppo_logprob_entropy_gpu.py": "sha256:55f3b49a4c0f33d261697735c2f67a668a8960e14c04db4f39737a8b4c487e57",
+    "head:slime/backends/megatron_utils/loss.py": "sha256:2751b52559445c67452c44d74f402e45138b992aed4005a41fac3c013164a274",
+    "head:slime/utils/ppo_utils.py": "sha256:fbfc01fe40794746f303f6c200b6a8bd0a5972fffde806fc4e33ce46343535aa",
+    "head:tests/test_ppo_logprob_entropy_gpu.py": "sha256:8fbfa5b22d206b71ceeb58352022819a73eca11fcbf18610d5abe0df4ed48d15"
+  },
+  "started_at": "2026-09-02T12:16:53.078920+00:00",
+  "test_plan_sha256": "sha256:8e872fe8158a688a8443657b1679026c4d8109257d795779b6b6149aabc089d9"
+}

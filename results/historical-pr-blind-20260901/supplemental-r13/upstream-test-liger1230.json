@@ -1,0 +1,33 @@
+{
+  "evidence_sha256": "sha256:f58415eabdcb22b07d2b3b7f8171e3ae4898663d83099bda73a3ea8ef1c2a583",
+  "executed_at": "2026-09-02T13:15:22.287545+00:00",
+  "outcome_review_ci_fields_requested": false,
+  "protocol_id": "r13-exact-candidate-upstream-tests-v0.1",
+  "records": [
+    {
+      "case_id": "liger-pr-1230",
+      "duration_seconds": 20.262717833044007,
+      "output_sha256": "sha256:b41e6878582bee918bd704b83b22e67931856a9b830100a93584ce738403ba17",
+      "output_tail": "\ntest/transformers/test_orpo_trainer.py::test_concatenated_forward_without_fsdp PASSED [100%]\n\n=============================== warnings summary ===============================\n../../venv/main/lib/python3.12/site-packages/_pytest/config/__init__.py:1464\n  /venv/main/lib/python3.12/site-packages/_pytest/config/__init__.py:1464: PytestConfigWarning: Unknown config option: asyncio_mode\n  \n    self._warn_or_fail_if_strict(f\"Unknown config option: {key}\\n\")\n\nsrc/liger_kernel/transformers/trainer/orpo_trainer.py:14\n  /workspace/r13-run-liger/src/liger_kernel/transformers/trainer/orpo_trainer.py:14: TRLExperimentalWarning: You are importing from 'trl.experimental'. APIs here are unstable and may change or be removed without notice. Silence this warning by setting environment variable TRL_EXPERIMENTAL_SILENCE=1.\n    from trl.experimental.orpo import ORPOTrainer\n\ntest/transformers/test_orpo_trainer.py: 14 warnings\n  /venv/main/lib/python3.12/site-packages/torch/jit/_script.py:365: DeprecationWarning: `torch.jit.script_method` is deprecated. Please switch to `torch.compile` or `torch.export`.\n    warnings.warn(\n\ntest/transformers/test_orpo_trainer.py::test_concatenated_forward_without_fsdp\n  /venv/main/lib/python3.12/site-packages/torch/_inductor/compile_fx.py:322: UserWarning: TensorFloat32 tensor cores for float32 matrix multiplication available but not enabled. Consider setting `torch.set_float32_matmul_precision('high')` for better performance.\n    warnings.warn(\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n======================== 1 passed, 17 warnings in 8.39s ========================\nWelcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nPrevious HEAD position was 347e38e address nit and removed comments\nHEAD is now at 5041ab0 Merge branch 'main' into bugfix/orpo_trainer\n",
+      "ref": "refs/r13/pr-1230",
+      "remote_command": "cd /workspace/r13-run-liger && git switch --detach refs/r13/pr-1230 >/dev/null && PYTHONPATH=. /venv/main/bin/python -m pytest -q test/transformers/test_orpo_trainer.py",
+      "returncode": 0,
+      "scope": "candidate-owned non-FSDP ORPO trainer regression",
+      "started_at": "2026-09-02T13:15:02.023358+00:00",
+      "summary_lines": [
+        "======================== 1 passed, 17 warnings in 8.39s ========================"
+      ],
+      "worktree": "/workspace/r13-run-liger"
+    }
+  ],
+  "remote": {
+    "host": "root@38.49.42.120",
+    "port": 54270
+  },
+  "requested_case_ids": [
+    "liger-pr-1230"
+  ],
+  "schema_version": "0.1",
+  "selection_lock_sha256": "sha256:e2238331bb44378e5a89d1739e372f322292bf17c0cab4e97afe8782eb9865af",
+  "test_plan_sha256": "sha256:8e872fe8158a688a8443657b1679026c4d8109257d795779b6b6149aabc089d9"
+}

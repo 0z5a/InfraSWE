@@ -1,0 +1,81 @@
+{
+  "schema_version": "0.1",
+  "protocol_id": "historical-pr-blind-training-v0.1-r13-14",
+  "frozen_at": "2026-09-02T11:36:00Z",
+  "case_count": 14,
+  "project_count": 5,
+  "source_discovery_lock_sha256": "sha256:dd6e6596bbf73578255bbe49a20b69d55f68f2ad2f1f2c1be2bc02770c0cf3ef",
+  "prior_selection_lock_sha256": [
+    "sha256:e3e4ce43bba9f8e8552a82c670e81b3a20f2c4af7f9c855960da61297cb982eb",
+    "sha256:de17daef35221ddc7f893f39132ead5173eb8d32f056de541a5e9d506cd3334f",
+    "sha256:90a16796bc3816ac1283c400f3c0d02a796b936dd2a138e5a73f9648e3d92750",
+    "sha256:7ddbd98c43d1952e5b3ae3abcb25e1f58e5a1e3adb8c648fa1399475194baa53"
+  ],
+  "merge_outcomes_visible_to_machine_judge": false,
+  "review_text_visible_to_machine_judge": false,
+  "ci_fields_visible_to_machine_judge": false,
+  "candidate_body_visible_during_policy_freeze": false,
+  "diff_content_visible_during_policy_freeze": false,
+  "selection_basis": [
+    "outcome-free title",
+    "changed repository-relative paths",
+    "additions, deletions, and changed-file count",
+    "exact base and head SHA metadata"
+  ],
+  "selection_rules": [
+    "select exactly fourteen eligible, previously unused training-path cases from the frozen R8 discovery pool",
+    "cover backward kernels and graph splitting, loss and gradient semantics, FSDP and HSDP, optimizer and checkpoint state, precision, weight synchronization, and training-memory lifetime",
+    "prefer A100-executable paths while retaining one SM80 FlashAttention backward case",
+    "freeze the title-scoped contract before reading source diff or candidate body",
+    "require a production call-site and configuration reachability proof before a synthetic counterexample can block acceptance",
+    "do not infer disposition from title sentiment, author identity, PR age, review, CI, state, or merge outcome"
+  ],
+  "candidate_evidence_projection": {
+    "acquire_after_test_plan_freeze": true,
+    "allowed_fields": [
+      "title",
+      "body",
+      "headRefOid"
+    ],
+    "forbidden_fields": [
+      "state",
+      "merged",
+      "mergedAt",
+      "closedAt",
+      "reviews",
+      "labels",
+      "comments",
+      "checks",
+      "statusCheckRollup"
+    ],
+    "purpose": "retain candidate-authored tests and benchmarks without disposition, review, or CI leakage"
+  },
+  "machine_policy": {
+    "policy_id": "training-case-contract-v0.1",
+    "accept_rule": "the reachable title-scoped training claim passes independent forward, backward, state, precision, distributed, and regression invariants with complete required evidence",
+    "check_rule": "the reachable primary direction is demonstrated, no known gradient corruption, state loss, deadlock, or baseline regression remains, remediation or missing evidence is bounded, and an executable closure test exists",
+    "reject_rule": "a reachable primary claim is false, gradients or optimizer state are wrong, checkpoint resume diverges, distributed ranks disagree, memory ownership remains unsafe, baseline regresses, remediation is design-level, closure testing is absent, or multiple reachable failure families remain",
+    "unresolved_rule": "required training hardware, dependency ABI, or exact source evidence could not be obtained for infrastructure reasons",
+    "unreachable_counterexample_policy": "record as non-blocking hardening unless a production call path and supported configuration can reach it",
+    "technical_disposition_separation": true,
+    "weighted_score": false,
+    "forced_polarization": false,
+    "hardening_outside_claim_is_blocking": false
+  },
+  "selected_case_ids": [
+    "flashattention-pr-2654",
+    "liger-pr-1274",
+    "liger-pr-1268",
+    "liger-pr-1230",
+    "megatron-pr-5808",
+    "megatron-pr-5798",
+    "megatron-pr-5743",
+    "megatron-pr-5742",
+    "torchtitan-pr-3841",
+    "torchtitan-pr-3897",
+    "torchtitan-pr-3867",
+    "verl-pr-7014",
+    "verl-pr-7013",
+    "verl-pr-6984"
+  ]
+}

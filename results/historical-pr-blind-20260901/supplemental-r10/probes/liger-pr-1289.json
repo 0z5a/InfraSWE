@@ -1,0 +1,65 @@
+{
+  "base_sha": "a67aad96defb5790076ead1ca6635d7d0a611d91",
+  "case_id": "liger-pr-1289",
+  "environment": {
+    "ci": false,
+    "hostname_sha256": "sha256:980f6866a2987f78dc4c035257a76eed1d8264df9c1cccac8bfd43c0f5200ab4",
+    "nvcc": "/usr/local/cuda/bin/nvcc",
+    "platform": "Linux-6.8.0-138-generic-x86_64-with-glibc2.39",
+    "python": "3.12.14"
+  },
+  "evidence_sha256": "sha256:46d56de02bdb092117af78ce961c341885c774ef25262a44dde5d0e6c165e90b",
+  "facts": {
+    "base_zero_exception": "ZeroDivisionError",
+    "direct_zero_regression_present": true,
+    "head_optimized_zero_exception": "ZeroDivisionError",
+    "head_zero_exception": "AssertionError",
+    "head_zero_fails_before_triton_calls": true,
+    "head_zero_message_is_actionable": true,
+    "head_zero_policy_survives_python_optimized_mode": false,
+    "positive_vocab_prefix_matrix": {
+      "1": {
+        "base_exception": "_StopAtTorch",
+        "head_exception": "_StopAtTorch",
+        "prefix_calls_equal": true
+      },
+      "15": {
+        "base_exception": "_StopAtTorch",
+        "head_exception": "_StopAtTorch",
+        "prefix_calls_equal": true
+      },
+      "16": {
+        "base_exception": "_StopAtTorch",
+        "head_exception": "_StopAtTorch",
+        "prefix_calls_equal": true
+      },
+      "17": {
+        "base_exception": "_StopAtTorch",
+        "head_exception": "_StopAtTorch",
+        "prefix_calls_equal": true
+      },
+      "32000": {
+        "base_exception": "_StopAtTorch",
+        "head_exception": "_StopAtTorch",
+        "prefix_calls_equal": true
+      }
+    },
+    "positive_vocab_prefix_preserved": true,
+    "retained_positive_test_method_count": 12
+  },
+  "failure_codes": [],
+  "head_sha": "431b51d36ee9a32ebcfd0e3826ebb0f29d3095e4",
+  "observed_at": "2026-09-02T07:45:28.023634+00:00",
+  "path_parity": true,
+  "protocol_id": "historical-pr-blind-case-contract-v0.1-r10-10",
+  "schema_version": "0.1",
+  "selection_lock_sha256": "sha256:de17daef35221ddc7f893f39132ead5173eb8d32f056de541a5e9d506cd3334f",
+  "source_digests": {
+    "base:src/liger_kernel/ops/fused_linear_cross_entropy.py": "sha256:62cf8a8c363e52ed2eefb16ba092ddb81af5a72a1cd8f51070e400c829732593",
+    "base:test/transformers/test_fused_linear_cross_entropy.py": "sha256:f688eb1512fd2967f2c116ddba55ca9af873b23c2ebc14825929feb339e70f62",
+    "head:src/liger_kernel/ops/fused_linear_cross_entropy.py": "sha256:e921ad9c822d900be96a70276dfbc78aab6cc92cd40b987d79a24ca511fb54fc",
+    "head:test/transformers/test_fused_linear_cross_entropy.py": "sha256:3777e53b1c9575c276d3d5fb1047f61b0a0eff2b1b69053f7a419e95d717507d"
+  },
+  "status": "pass",
+  "test_plan_sha256": "sha256:759b6be7bbecac434559e27816e6cd6622ecba1f2dbab5a94dbd6c554eb60b33"
+}

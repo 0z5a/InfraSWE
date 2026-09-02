@@ -131,6 +131,8 @@ R8 polarized 30-PR cohort is retained as a negative control after producing the 
 ordered, case-specific contract route without a numeric score; R5 remains an explicit replay mode
 for old locks only. The five-case R9 follow-up is documented in
 [`results/historical-pr-blind-20260901/supplemental-r9/REPORT_20260902_ZH.md`](results/historical-pr-blind-20260901/supplemental-r9/REPORT_20260902_ZH.md).
+The post-release ten-case R10 follow-up is documented in
+[`results/historical-pr-blind-20260901/supplemental-r10/REPORT_20260902_ZH.md`](results/historical-pr-blind-20260901/supplemental-r10/REPORT_20260902_ZH.md).
 
 ## Quick start
 

@@ -1,0 +1,233 @@
+{
+  "base_sha": "9a48eef89a777fc7039d9765fb2f6fc618216948",
+  "case_id": "vllm-pr-48705",
+  "environment": {
+    "ci": false,
+    "hostname_sha256": "sha256:980f6866a2987f78dc4c035257a76eed1d8264df9c1cccac8bfd43c0f5200ab4",
+    "nvcc": "/usr/local/cuda/bin/nvcc",
+    "platform": "Linux-6.8.0-138-generic-x86_64-with-glibc2.39",
+    "python": "3.12.14"
+  },
+  "evidence_sha256": "sha256:b0c17b94b83085dfaebea653d93c7841e26059f9b1cc7db032b28e43bbcdc547",
+  "facts": {
+    "base_has_at_least_one_corrupt_chunking_per_case": true,
+    "direct_test_has_two_and_three_key_regressions": true,
+    "direct_test_methods": [
+      "test_streamed_arguments_form_valid_json_with_three_keys",
+      "test_streamed_arguments_form_valid_json_with_two_keys"
+    ],
+    "head_all_frozen_chunkings_pass": false,
+    "incomplete_stream_emissions": [],
+    "incomplete_stream_finalized_json": false,
+    "streaming_matrices": {
+      "get_weather": {
+        "base": {
+          "all_passed": false,
+          "chunking_count": 52,
+          "failure_examples": [
+            {
+              "chunk_count": 54,
+              "collected": "{\"city\": \"NYC\"} \"unit\": \"celsius\"}",
+              "emissions": [
+                "{\"city\": \"NYC\"}",
+                " \"unit\": \"celsius\"}"
+              ]
+            },
+            {
+              "chunk_count": 5,
+              "collected": "{\"unit\": \"celsius\"}it\": \"celsius\"}",
+              "emissions": [
+                "{\"unit\": \"celsius\"}",
+                "it\": \"celsius\"}"
+              ]
+            },
+            {
+              "chunk_count": 5,
+              "collected": "{\"unit\": \"celsius\"}it\": \"celsius\"}",
+              "emissions": [
+                "{\"unit\": \"celsius\"}",
+                "it\": \"celsius\"}"
+              ]
+            }
+          ],
+          "passed": 19
+        },
+        "head": {
+          "all_passed": false,
+          "chunking_count": 52,
+          "failure_examples": [
+            {
+              "chunk_count": 5,
+              "collected": "{\"unit\": \"celsius\"city\": \"NYC\", \"unit\": \"celsius\"}",
+              "emissions": [
+                "{\"unit\": \"celsius\"",
+                "city\": \"NYC\", \"unit\": \"celsius\"}"
+              ]
+            },
+            {
+              "chunk_count": 5,
+              "collected": "{\"unit\": \"celsius\"city\": \"NYC\", \"unit\": \"celsius\"}",
+              "emissions": [
+                "{\"unit\": \"celsius\"",
+                "city\": \"NYC\", \"unit\": \"celsius\"}"
+              ]
+            },
+            {
+              "chunk_count": 5,
+              "collected": "{\"city\": \"NYC<\", \"unit\": \"celsius\"\", \"unit\": \"celsius\"}",
+              "emissions": [
+                "{\"city\": \"NYC<\", \"unit\": \"celsius\"",
+                "\", \"unit\": \"celsius\"}"
+              ]
+            }
+          ],
+          "passed": 46
+        }
+      },
+      "render": {
+        "base": {
+          "all_passed": false,
+          "chunking_count": 56,
+          "failure_examples": [
+            {
+              "chunk_count": 58,
+              "collected": "{\"text\": \"line\\nnext\"} \"count\": 2}",
+              "emissions": [
+                "{\"text\": \"line\\nnext\"}",
+                " \"count\": 2}"
+              ]
+            },
+            {
+              "chunk_count": 5,
+              "collected": "{\"count\": 2}ne\\nnext\", \"count\": 2}",
+              "emissions": [
+                "{\"count\": 2}",
+                "ne\\nnext\", \"count\": 2}"
+              ]
+            },
+            {
+              "chunk_count": 5,
+              "collected": "{\"count\": 2}ne\\nnext\", \"count\": 2}",
+              "emissions": [
+                "{\"count\": 2}",
+                "ne\\nnext\", \"count\": 2}"
+              ]
+            }
+          ],
+          "passed": 28
+        },
+        "head": {
+          "all_passed": false,
+          "chunking_count": 56,
+          "failure_examples": [
+            {
+              "chunk_count": 5,
+              "collected": "{\"count\": 2text\": \"line\\nnext\", \"count\": 2}",
+              "emissions": [
+                "{\"count\": 2",
+                "text\": \"line\\nnext\", \"count\": 2}"
+              ]
+            },
+            {
+              "chunk_count": 5,
+              "collected": "{\"count\": 2text\": \"line\\nnext\", \"count\": 2}",
+              "emissions": [
+                "{\"count\": 2",
+                "text\": \"line\\nnext\", \"count\": 2}"
+              ]
+            },
+            {
+              "chunk_count": 5,
+              "collected": "{\"text\": \"\\\"line\\\\nnext\\\"<\", \"count\": 2line\\nnext\", \"count\": 2}",
+              "emissions": [
+                "{\"text\": \"\\\"line\\\\nnext\\\"<\", \"count\": 2",
+                "line\\nnext\", \"count\": 2}"
+              ]
+            }
+          ],
+          "passed": 50
+        }
+      },
+      "search": {
+        "base": {
+          "all_passed": false,
+          "chunking_count": 82,
+          "failure_examples": [
+            {
+              "chunk_count": 84,
+              "collected": "{\"query\": \"python\"} \"limit\": 10} \"sort\": \"relevance\"}",
+              "emissions": [
+                "{\"query\": \"python\"}",
+                " \"limit\": 10}",
+                " \"sort\": \"relevance\"}"
+              ]
+            },
+            {
+              "chunk_count": 5,
+              "collected": "{\"limit\": 10, \"sort\": \"relevance\"}sort\": \"relevance\"}",
+              "emissions": [
+                "{\"limit\": 10, \"sort\": \"relevance\"}",
+                "sort\": \"relevance\"}"
+              ]
+            },
+            {
+              "chunk_count": 5,
+              "collected": "{\"limit\": 10, \"sort\": \"relevance\"}sort\": \"relevance\"}",
+              "emissions": [
+                "{\"limit\": 10, \"sort\": \"relevance\"}",
+                "sort\": \"relevance\"}"
+              ]
+            }
+          ],
+          "passed": 23
+        },
+        "head": {
+          "all_passed": false,
+          "chunking_count": 82,
+          "failure_examples": [
+            {
+              "chunk_count": 5,
+              "collected": "{\"limit\": 10, \"sort\": \"relevance\"query\": \"python\", \"limit\": 10, \"sort\": \"relevance\"}",
+              "emissions": [
+                "{\"limit\": 10, \"sort\": \"relevance\"",
+                "query\": \"python\", \"limit\": 10, \"sort\": \"relevance\"}"
+              ]
+            },
+            {
+              "chunk_count": 5,
+              "collected": "{\"limit\": 10, \"sort\": \"relevance\"query\": \"python\", \"limit\": 10, \"sort\": \"relevance\"}",
+              "emissions": [
+                "{\"limit\": 10, \"sort\": \"relevance\"",
+                "query\": \"python\", \"limit\": 10, \"sort\": \"relevance\"}"
+              ]
+            },
+            {
+              "chunk_count": 5,
+              "collected": "{\"query\": \"python<\", \"limit\": 10, \"sort\": \"relevance\"\", \"limit\": 10, \"sort\": \"relevance\"}",
+              "emissions": [
+                "{\"query\": \"python<\", \"limit\": 10, \"sort\": \"relevance\"",
+                "\", \"limit\": 10, \"sort\": \"relevance\"}"
+              ]
+            }
+          ],
+          "passed": 72
+        }
+      }
+    }
+  },
+  "failure_codes": [],
+  "head_sha": "195f9bf00ae8151347e1bb6fafe5941db82bf410",
+  "observed_at": "2026-09-02T07:39:54.373616+00:00",
+  "path_parity": true,
+  "protocol_id": "historical-pr-blind-case-contract-v0.1-r10-10",
+  "schema_version": "0.1",
+  "selection_lock_sha256": "sha256:de17daef35221ddc7f893f39132ead5173eb8d32f056de541a5e9d506cd3334f",
+  "source_digests": {
+    "base:tests/tool_parsers/test_functiongemma_tool_parser.py": "sha256:2b299b238749bdd453d190e083eb5ee4b66bfe75fbec6721e4bb6dea88888201",
+    "base:vllm/tool_parsers/functiongemma_tool_parser.py": "sha256:01a7bc22b0a563a474db14eb4b828b610009d85ba41f9e38ae865e206006959f",
+    "head:tests/tool_parsers/test_functiongemma_tool_parser.py": "sha256:dca50ffd99d24bb8ceb7ec17027e728dbd634343bda0b84e4739b7cd890b80d2",
+    "head:vllm/tool_parsers/functiongemma_tool_parser.py": "sha256:43137e46f8f693adaee46d1f86d035481190af05d39640e9614a76ac8fdf7b69"
+  },
+  "status": "pass",
+  "test_plan_sha256": "sha256:759b6be7bbecac434559e27816e6cd6622ecba1f2dbab5a94dbd6c554eb60b33"
+}

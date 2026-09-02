@@ -1,0 +1,49 @@
+{
+  "base_sha": "2599f2975b06a67d5ee25e4a7292afeda1475c9b",
+  "case_id": "cutlass-pr-3300",
+  "environment": {
+    "ci": false,
+    "hostname_sha256": "sha256:980f6866a2987f78dc4c035257a76eed1d8264df9c1cccac8bfd43c0f5200ab4",
+    "nvcc": "/usr/local/cuda/bin/nvcc",
+    "platform": "Linux-6.8.0-138-generic-x86_64-with-glibc2.39",
+    "python": "3.12.14"
+  },
+  "evidence_sha256": "sha256:940e60b1b53e6df07a6a61a9ea6d16bd39944ff8a86e04dd82ba6db1846846b9",
+  "facts": {
+    "base_compile": {
+      "returncode": 2,
+      "stderr_sha256": "sha256:d7c94a0d531ebe6fac68154aecf4573ce348bf39e3e347c140128be1af1ffdca",
+      "stderr_tail": "nvcc warning : Support for offline compilation for architectures prior to '<compute/sm/lto>_75' will be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).\n/tmp/infraswe-r10-cutlass-4b6u_qn4/include/cute/util/print_tensor.hpp(92): error: smem_ptr_flag_bits is not a template\n  print_layout(ComposedLayout<SwizzleFn,smem_ptr_flag_bits<B>,Layout> const& layout)\n                                        ^\n\n1 error detected in the compilation of \"/tmp/tmpxft_00000daa_00000000-1_stdin\".\n",
+      "stdout_sha256": "sha256:12ae32cb1ec02d01eda3581b127c1fee3b0dc53572ed6baf239721a03d82e126"
+    },
+    "base_direct_pointer_flagged_include_count": 0,
+    "base_failure_head_success": true,
+    "base_manifest_lists_header": false,
+    "compiler": "nvcc: NVIDIA (R) Cuda compiler driver\nCopyright (c) 2005-2025 NVIDIA Corporation\nBuilt on Fri_Feb_21_20:23:50_PST_2025\nCuda compilation tools, release 12.8, V12.8.93\nBuild cuda_12.8.r12.8/compiler.35583870_0",
+    "head_compile": {
+      "returncode": 0,
+      "stderr_sha256": "sha256:e051aefa053d47b177fef6d6da59b1fd5125d791bd83d3b801aa948859543afc",
+      "stderr_tail": "nvcc warning : Support for offline compilation for architectures prior to '<compute/sm/lto>_75' will be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).\n",
+      "stdout_sha256": "sha256:12ae32cb1ec02d01eda3581b127c1fee3b0dc53572ed6baf239721a03d82e126"
+    },
+    "head_direct_pointer_flagged_include_count": 1,
+    "head_manifest_lists_header": true,
+    "head_uses_smem_ptr_flag_bits": true,
+    "native_compile_executed": true
+  },
+  "failure_codes": [],
+  "head_sha": "50d2f929af9538b6c420bf09615c73fe110607a5",
+  "observed_at": "2026-09-02T07:43:58.055330+00:00",
+  "path_parity": true,
+  "protocol_id": "historical-pr-blind-case-contract-v0.1-r10-10",
+  "schema_version": "0.1",
+  "selection_lock_sha256": "sha256:de17daef35221ddc7f893f39132ead5173eb8d32f056de541a5e9d506cd3334f",
+  "source_digests": {
+    "base:include/cute/util/print_tensor.hpp": "sha256:9d53447f4bfebf9e33f14e218242646e950aa5a81726230067c56d7a92f2a346",
+    "base:test/self_contained_includes/CMakeLists.txt": "sha256:13974dd6676cb03d604a5c13ed4794d0773dd0887da0841c304e4fb6fe6aa588",
+    "head:include/cute/util/print_tensor.hpp": "sha256:deff3d564e7412165026a00daa9a1d320811c2a313f4bce92d2b68eba20be2ad",
+    "head:test/self_contained_includes/CMakeLists.txt": "sha256:a6350f0d130259d496e564a6d0a6267140881a317cf281adcda4f475ad31b9c4"
+  },
+  "status": "pass",
+  "test_plan_sha256": "sha256:759b6be7bbecac434559e27816e6cd6622ecba1f2dbab5a94dbd6c554eb60b33"
+}

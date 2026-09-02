@@ -1,0 +1,235 @@
+{
+  "cases": [
+    {
+      "base_sha": "2599f2975b06a67d5ee25e4a7292afeda1475c9b",
+      "case_id": "cutlass-pr-3300",
+      "changed_paths": [
+        "include/cute/util/print_tensor.hpp",
+        "test/self_contained_includes/CMakeLists.txt"
+      ],
+      "claim": "cute/util/print_tensor.hpp is a self-contained public include.",
+      "decision_rule": "Accept with scope only if exact head compilation fixes a base failure, direct include ownership is explicit, and the repository's self-contained-header test is wired. CUDA-only compilation remains unresolved when the required toolchain is absent.",
+      "execution_tier": "exact base/head minimal C++ compilation and include-order audit",
+      "head_sha": "50d2f929af9538b6c420bf09615c73fe110607a5",
+      "project": "cutlass-cute",
+      "pull_number": 3300,
+      "questions": [
+        "Does a minimal translation unit including only print_tensor.hpp compile?",
+        "Are declarations used by the header provided by direct, not accidental, includes?",
+        "Is behavior independent of representative preceding include order?",
+        "Does the self-contained-include test manifest cover this public header?"
+      ],
+      "repository": "NVIDIA/cutlass"
+    },
+    {
+      "base_sha": "7f2a703ed51ac1f7af07f5e1453b2d3267d37d50",
+      "case_id": "deepgemm-pr-310",
+      "changed_paths": [
+        "deep_gemm/utils/math.py"
+      ],
+      "claim": "pack_ue8m0_to_int enforces both exponent bounds with correct precedence.",
+      "decision_rule": "Accept with scope only if exact head execution rejects both invalid sides, preserves valid boundary packing, and removes the precedence ambiguity. Missing direct upstream coverage is revise even when the independent contract passes.",
+      "execution_tier": "exact helper extraction with a valid/invalid boundary matrix",
+      "head_sha": "1436d10523c13f3622f1f6ef8b598e85e4245f7a",
+      "project": "deepgemm",
+      "pull_number": 310,
+      "questions": [
+        "Are lower and upper exponent bounds enforced for every input element?",
+        "Are exact boundary values accepted while either-side violations are rejected?",
+        "Are packed results for valid values unchanged?",
+        "Is the corrected predicate covered by a direct or independent regression matrix?"
+      ],
+      "repository": "deepseek-ai/DeepGEMM"
+    },
+    {
+      "base_sha": "940cd9680f3315f2f06b43ab5bea2c2cf2d96806",
+      "case_id": "flashattention-pr-2645",
+      "changed_paths": [
+        "flash_attn/cute/interface.py",
+        "tests/cute/test_mask_mod.py"
+      ],
+      "claim": "backward compilation keys include subtile_factor wherever it changes codegen.",
+      "decision_rule": "Accept with scope only if a base/head isolation matrix proves the collision is removed across affected backward paths without destabilizing identical keys, with direct tests. Full GPU kernel compilation remains separately unresolved if unavailable.",
+      "execution_tier": "exact AST/cache-key isolation probe plus changed regression audit",
+      "head_sha": "85a0f721ea58079319e6511fae114c01631e53a4",
+      "project": "flash-attention",
+      "pull_number": 2645,
+      "questions": [
+        "Do otherwise identical configurations with different subtile_factor get distinct keys?",
+        "Do identical configurations retain stable equal keys?",
+        "Is every backward compilation path affected by subtile_factor keyed consistently?",
+        "Do direct tests exercise both collision and stable-key controls?"
+      ],
+      "repository": "Dao-AILab/flash-attention"
+    },
+    {
+      "base_sha": "9d1fb61fdcd95609e49baebaa6c7436b6819fba6",
+      "case_id": "flashinfer-pr-3918",
+      "changed_paths": [
+        "flashinfer/autotuner/autotuner.py",
+        "tests/autotuner/test_autotuner_core.py"
+      ],
+      "claim": "the autotuner accepts non-tensor guarded arguments without tensor-only access.",
+      "decision_rule": "Accept with scope only if exact head execution handles the frozen non-tensor matrix, preserves tensor discrimination, and has direct mixed-signature regression coverage.",
+      "execution_tier": "exact autotuner guard/key probe with tensor and non-tensor arguments",
+      "head_sha": "7e737fdec10247b12bf3efac375f0836a38185e8",
+      "project": "flashinfer",
+      "pull_number": 3918,
+      "questions": [
+        "Are tensor metadata operations restricted to actual tensor arguments?",
+        "Are scalar, boolean, None, and structured non-tensor guards deterministic?",
+        "Do tensor guards still distinguish shape, dtype, and device where declared?",
+        "Does direct coverage include mixed tensor/non-tensor signatures and cache reuse?"
+      ],
+      "repository": "flashinfer-ai/flashinfer"
+    },
+    {
+      "base_sha": "a67aad96defb5790076ead1ca6635d7d0a611d91",
+      "case_id": "liger-pr-1289",
+      "changed_paths": [
+        "src/liger_kernel/ops/fused_linear_cross_entropy.py",
+        "test/transformers/test_fused_linear_cross_entropy.py"
+      ],
+      "claim": "fused linear cross entropy handles a zero-width vocabulary deterministically.",
+      "decision_rule": "Accept with scope only if zero width follows an explicit deterministic policy, no ZeroDivisionError leaks, positive-size behavior is preserved, and direct coverage exists. A silent semantically invalid result is revise.",
+      "execution_tier": "exact control-flow and callable boundary probe over vocabulary sizes",
+      "head_sha": "431b51d36ee9a32ebcfd0e3826ebb0f29d3095e4",
+      "project": "liger-kernel",
+      "pull_number": 1289,
+      "questions": [
+        "Does vocabulary size zero avoid Python division or modulo by zero?",
+        "Is zero-width behavior an explicit stable result or a precise domain error?",
+        "Are positive vocabulary sizes and reduction modes unchanged?",
+        "Does a direct regression cover zero plus neighboring nonzero sizes?"
+      ],
+      "repository": "linkedin/Liger-Kernel"
+    },
+    {
+      "base_sha": "48a887fecd01674346f724dcf44f417f455989f0",
+      "case_id": "megatron-pr-5750",
+      "changed_paths": [
+        "megatron/core/ssm/mamba_layer.py",
+        "tests/unit_tests/ssm/test_mamba_layer.py"
+      ],
+      "claim": "MambaLayer propagates the configured normalization epsilon.",
+      "decision_rule": "Accept with scope only if exact construction proves custom and default propagation at all affected norm sites, without a hard-coded fallback, and direct coverage is present.",
+      "execution_tier": "exact constructor/configuration probe over default and custom epsilon",
+      "head_sha": "b90ceebc63fc8f476a8861c526865aca6c64a862",
+      "project": "megatron-core",
+      "pull_number": 5750,
+      "questions": [
+        "Does a custom configured epsilon reach every MambaLayer norm constructed from it?",
+        "Is the default epsilon preserved when no override is supplied?",
+        "Are unrelated normalization and layer configuration fields unchanged?",
+        "Does a direct regression assert the instantiated norm epsilon?"
+      ],
+      "repository": "NVIDIA/Megatron-LM"
+    },
+    {
+      "base_sha": "495ae9aaa609d39fd4e294d4f64faf52e29f50a6",
+      "case_id": "sglang-pr-31344",
+      "changed_paths": [
+        "python/sglang/srt/layers/attention/dsa_backend.py",
+        "python/sglang/srt/server_args.py",
+        "test/registered/unit/test_dsa_decode_backend_validation.py"
+      ],
+      "claim": "prefill-only flashmla_auto is rejected as a DSA decode backend at CLI validation.",
+      "decision_rule": "Accept with scope only if the exact truth table rejects only the prefill-only decode selection, preserves valid neighboring configurations, and provides a precise early error.",
+      "execution_tier": "exact argparse/validation truth table over DSA backend choices",
+      "head_sha": "0243a83255b5c72056bec393c9be8ec9c2bcbf74",
+      "project": "sglang",
+      "pull_number": 31344,
+      "questions": [
+        "Is flashmla_auto rejected specifically in the DSA decode-backend position?",
+        "Does failure occur during normal argument parsing or validation before dispatch?",
+        "Are valid DSA decode backends and prefill use of flashmla_auto preserved?",
+        "Do direct tests cover the forbidden case and valid neighbors?"
+      ],
+      "repository": "sgl-project/sglang"
+    },
+    {
+      "base_sha": "013cd8be753b1152918e30d6ddfb531700d4d8a1",
+      "case_id": "torchtitan-pr-3862",
+      "changed_paths": [
+        "tests/unit_tests/test_helion_rope.py",
+        "torchtitan/overrides/helion_rope.py"
+      ],
+      "claim": "the Helion RoPE fake-tensor path produces valid stride metadata.",
+      "decision_rule": "Accept with scope only if exact fake execution fixes the base stride failure across a shape matrix, real layouts remain valid, and the regression is not a single hard-coded shape.",
+      "execution_tier": "exact fake/meta and real-tensor shape/stride contract probe",
+      "head_sha": "e65d290b33442426b67b3834ee0bf084fd139d0e",
+      "project": "torchtitan",
+      "pull_number": 3862,
+      "questions": [
+        "Do fake/meta executions produce rank-consistent non-overlapping output strides?",
+        "Do shape, dtype, and device metadata match the public RoPE contract?",
+        "Are real-tensor layouts unchanged across representative shapes?",
+        "Does a direct regression cover the fake path and a real/layout control?"
+      ],
+      "repository": "pytorch/torchtitan"
+    },
+    {
+      "base_sha": "1bfd02c4359a44310759aab7c0382e2bf5836756",
+      "case_id": "verl-pr-7044",
+      "changed_paths": [
+        "tests/experimental/agent_loop/test_qwen3_tool_parser_on_cpu.py",
+        "verl/experimental/agent_loop/tool_parser.py"
+      ],
+      "claim": "the Qwen3 tool parser handles malformed XML without circular fallback.",
+      "decision_rule": "Accept with scope only if the malformed-input matrix is bounded and deterministic, valid calls are preserved, plain text is not consumed, and direct CPU coverage exists.",
+      "execution_tier": "exact CPU parser state-machine probe over valid and malformed streams",
+      "head_sha": "a7a9676f0771adab52a8b9c5977521b3c15b66ec",
+      "project": "verl",
+      "pull_number": 7044,
+      "questions": [
+        "Do truncated, mismatched, nested, and stray tags terminate without recursion or hangs?",
+        "Are valid tool calls still parsed with identical names and arguments?",
+        "Is ordinary text preserved rather than misclassified as a tool call?",
+        "Do direct tests cover malformed cases plus valid and plain-text controls?"
+      ],
+      "repository": "verl-project/verl"
+    },
+    {
+      "base_sha": "9a48eef89a777fc7039d9765fb2f6fc618216948",
+      "case_id": "vllm-pr-48705",
+      "changed_paths": [
+        "tests/tool_parsers/test_functiongemma_tool_parser.py",
+        "vllm/tool_parsers/functiongemma_tool_parser.py"
+      ],
+      "claim": "FunctionGemma streaming preserves argument content when a second key arrives.",
+      "decision_rule": "Accept with scope only if exhaustive frozen chunk splits reconstruct multi-key arguments without corruption or duplicate deltas, while incomplete input fails or waits explicitly.",
+      "execution_tier": "exact CPU streaming-parser probe across JSON chunk boundaries",
+      "head_sha": "195f9bf00ae8151347e1bb6fafe5941db82bf410",
+      "project": "vllm",
+      "pull_number": 48705,
+      "questions": [
+        "Are first-key values unchanged when the second and later keys begin?",
+        "Are emitted deltas exactly-once and reconstruct the final argument object?",
+        "Do split points inside escapes, Unicode, numbers, and delimiters remain correct?",
+        "Do direct tests cover multiple keys, chunk boundaries, and incomplete input?"
+      ],
+      "repository": "vllm-project/vllm"
+    }
+  ],
+  "frozen_at": "2026-09-02T07:19:47.532198+00:00",
+  "frozen_before_source_diff_content_inspection": true,
+  "merge_outcomes_visible_to_machine_judge": false,
+  "protocol_id": "historical-pr-blind-case-contract-v0.1-r10-10",
+  "review_text_requested": false,
+  "review_text_visible_to_machine_judge": false,
+  "schema_version": "0.1",
+  "scoring_policy": {
+    "decisions": [
+      "accept_with_scope",
+      "revise",
+      "reject",
+      "unresolved"
+    ],
+    "forced_polarization_used": false,
+    "kind": "ordered explainable contract judgment",
+    "missing_environment_evidence": "unresolved, never candidate fail",
+    "weighted_score_used": false
+  },
+  "selection_lock_sha256": "sha256:de17daef35221ddc7f893f39132ead5173eb8d32f056de541a5e9d506cd3334f",
+  "test_plan_sha256": "sha256:759b6be7bbecac434559e27816e6cd6622ecba1f2dbab5a94dbd6c554eb60b33"
+}

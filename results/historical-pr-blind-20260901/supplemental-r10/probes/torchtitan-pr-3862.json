@@ -1,0 +1,81 @@
+{
+  "base_sha": "013cd8be753b1152918e30d6ddfb531700d4d8a1",
+  "case_id": "torchtitan-pr-3862",
+  "environment": {
+    "ci": false,
+    "hostname_sha256": "sha256:980f6866a2987f78dc4c035257a76eed1d8264df9c1cccac8bfd43c0f5200ab4",
+    "nvcc": "/usr/local/cuda/bin/nvcc",
+    "platform": "Linux-6.8.0-138-generic-x86_64-with-glibc2.39",
+    "python": "3.12.14"
+  },
+  "evidence_sha256": "sha256:5d570c8c0dd5b4c0618af52f3e1d915e7646369fee0920f831458ddaf3ced67a",
+  "facts": {
+    "actual_helion_gpu_opcheck_executed": false,
+    "base_preserves_noncontiguous_fake_strides": false,
+    "direct_opcheck_uses_noncontiguous_grads": true,
+    "head_preserves_shapes": true,
+    "head_produces_contiguous_fake_strides": true,
+    "real_backward_explicitly_contiguates_inputs": true,
+    "real_torch_base_outputs_contiguous": [
+      false,
+      false
+    ],
+    "real_torch_cpu_executed": true,
+    "real_torch_head_outputs_contiguous": [
+      true,
+      true
+    ],
+    "real_torch_shapes_preserved": true,
+    "real_torch_version": "2.14.0+cpu",
+    "shape_stride_matrix": [
+      {
+        "base_outputs_contiguous": false,
+        "head_outputs_contiguous": true,
+        "head_shapes_preserved": true,
+        "q_shape": [
+          2,
+          17,
+          8,
+          64
+        ]
+      },
+      {
+        "base_outputs_contiguous": true,
+        "head_outputs_contiguous": true,
+        "head_shapes_preserved": true,
+        "q_shape": [
+          2,
+          1,
+          1,
+          128
+        ]
+      },
+      {
+        "base_outputs_contiguous": false,
+        "head_outputs_contiguous": true,
+        "head_shapes_preserved": true,
+        "q_shape": [
+          4,
+          7,
+          3,
+          32
+        ]
+      }
+    ]
+  },
+  "failure_codes": [],
+  "head_sha": "e65d290b33442426b67b3834ee0bf084fd139d0e",
+  "observed_at": "2026-09-02T07:43:59.346693+00:00",
+  "path_parity": true,
+  "protocol_id": "historical-pr-blind-case-contract-v0.1-r10-10",
+  "schema_version": "0.1",
+  "selection_lock_sha256": "sha256:de17daef35221ddc7f893f39132ead5173eb8d32f056de541a5e9d506cd3334f",
+  "source_digests": {
+    "base:tests/unit_tests/test_helion_rope.py": "sha256:d82a0e5a7c20c4f6aded9ff8466c7791c77970f6b1f61adefa5bf5e011cc8bec",
+    "base:torchtitan/overrides/helion_rope.py": "sha256:e967d9883b4dd74246aa1f83a810ebb3f6022cb1c722de9869bec3550f8d4424",
+    "head:tests/unit_tests/test_helion_rope.py": "sha256:f3847901d480fe1bda01f55630abcda35f85434f27f6f1661d994f1e213565f5",
+    "head:torchtitan/overrides/helion_rope.py": "sha256:8bf676b410a9724a40e353cfa3ce8f5c41304982925aa75d2e8efa6f5914e2d5"
+  },
+  "status": "pass",
+  "test_plan_sha256": "sha256:759b6be7bbecac434559e27816e6cd6622ecba1f2dbab5a94dbd6c554eb60b33"
+}

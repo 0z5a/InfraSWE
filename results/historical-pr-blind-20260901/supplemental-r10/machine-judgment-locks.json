@@ -1,0 +1,681 @@
+{
+  "evidence_bindings": {
+    "cutlass-pr-3300": {
+      "artifact_sha256": "sha256:eebf9a40b81b7bfafb6a936fc9b7eadf8487d19cd84deeac85d4c5b7d603d4a2",
+      "evidence_sha256": "sha256:940e60b1b53e6df07a6a61a9ea6d16bd39944ff8a86e04dd82ba6db1846846b9",
+      "path": "probes/cutlass-pr-3300.json"
+    },
+    "deepgemm-pr-310": {
+      "artifact_sha256": "sha256:6d89ef75766028fbeb0dc13f6f70115eef1b1782b6e0209cb1f25056d9ec0224",
+      "evidence_sha256": "sha256:47d6663451e7f57c23b4d44441a8788aea2693945fdf95b244fb11885921d66a",
+      "path": "probes/deepgemm-pr-310.json"
+    },
+    "flashattention-pr-2645": {
+      "artifact_sha256": "sha256:b642cfd0ecb50914a020c44869c401285f26d5c42e1aca8e2e758a5cbf52f14a",
+      "evidence_sha256": "sha256:2eb3a84f9b63e0ade7da6e7fee9dec09e6bc0c6005c7bee0f92151cd97ff8f82",
+      "path": "probes/flashattention-pr-2645.json"
+    },
+    "flashinfer-pr-3918": {
+      "artifact_sha256": "sha256:28ac1386e8c4d9770a359c3f64c9fd5262fed76eced9054ac0db8e20092e76a2",
+      "evidence_sha256": "sha256:64282253bf311e240e3db8505203778f4eda4f18fbed65854c4021ae96c26955",
+      "path": "probes/flashinfer-pr-3918.json"
+    },
+    "liger-pr-1289": {
+      "artifact_sha256": "sha256:3e65feb711287f23432697a5a27a13436540ed54a5abf4aaf896692ef00ce149",
+      "evidence_sha256": "sha256:46d56de02bdb092117af78ce961c341885c774ef25262a44dde5d0e6c165e90b",
+      "path": "probes/liger-pr-1289.json"
+    },
+    "megatron-pr-5750": {
+      "artifact_sha256": "sha256:5cf8d412299c7dd409244866eccb1de7b19682746a9300c567980c733658d15b",
+      "evidence_sha256": "sha256:b045bed6188dec87509adf3435de16eeb6b73806438d4da0fe13b4fd3a40a97e",
+      "path": "probes/megatron-pr-5750.json"
+    },
+    "sglang-pr-31344": {
+      "artifact_sha256": "sha256:3c5168caf753a639a9b8fc10b77f8bc22a8e13b264656b4f5e082d430a24768c",
+      "evidence_sha256": "sha256:140d5e5c389dbe4f2430aa962c95af6cbc20a5b7037b0294cd4f860eace4dbf6",
+      "path": "probes/sglang-pr-31344.json"
+    },
+    "torchtitan-pr-3862": {
+      "artifact_sha256": "sha256:fb6419e9da402549a36923d3b96d3c174bf35978a2af655e7a1493eed974e715",
+      "evidence_sha256": "sha256:5d570c8c0dd5b4c0618af52f3e1d915e7646369fee0920f831458ddaf3ced67a",
+      "path": "probes/torchtitan-pr-3862.json"
+    },
+    "verl-pr-7044": {
+      "artifact_sha256": "sha256:d5f663b39f7c27233dfcceb0fa0c3469e65cb174e36beab6cf9360cc42faca8d",
+      "evidence_sha256": "sha256:c3acc773ba799ccb6bcea0d45b7b79561aa7b01381c6a7d901c61bc33c1f90fc",
+      "path": "probes/verl-pr-7044.json"
+    },
+    "vllm-pr-48705": {
+      "artifact_sha256": "sha256:1e6bffff0bd20430c38810eb41251efbcb908f3b156254260ebfee40c843b221",
+      "evidence_sha256": "sha256:b0c17b94b83085dfaebea653d93c7841e26059f9b1cc7db032b28e43bbcdc547",
+      "path": "probes/vllm-pr-48705.json"
+    }
+  },
+  "forced_polarization_used": false,
+  "frozen_at": "2026-09-02T07:49:16.004293+00:00",
+  "learned_model_used": false,
+  "lock_set_sha256": "sha256:3243d8633f39a7a69e2805230fe3f7c46df31c07751b245c44e99c51937bd8f6",
+  "locks": [
+    {
+      "lock_sha256": "sha256:b07dc945de19102954e05a701dee15ebc37289c0e196b0a4f512e57c14cea9f8",
+      "material": {
+        "candidate_sha256": "sha256:362edf719c266b8623b673ddd5c43960609fd4e28d9fb375ebe2e93c9ae763c0",
+        "case_id": "cutlass-pr-3300",
+        "decision": "accept_with_scope",
+        "evidence_sha256": "sha256:e4d6186939c95d99266e995b5028049c923646682cdb553d2bb6b92f7725c3be",
+        "frozen_at": "2026-09-02T07:49:16.004293Z",
+        "narrative": "[self-contained-header-compiles-after-direct-dependency: pass] CUDA 12.8 nvcc reproduces the base smem_ptr_flag_bits compile failure and compiles the exact head successfully. [header-dependency-and-self-contained-test-have-one-owner: pass] The head directly includes pointer_flagged.hpp and adds print_tensor.hpp to the self-contained include manifest; the base has neither.",
+        "observations": [
+          {
+            "blocking": true,
+            "conclusion": "CUDA 12.8 nvcc reproduces the base smem_ptr_flag_bits compile failure and compiles the exact head successfully.",
+            "counterevidence": [],
+            "evidence": [
+              "sha256:940e60b1b53e6df07a6a61a9ea6d16bd39944ff8a86e04dd82ba6db1846846b9",
+              "sha256:eebf9a40b81b7bfafb6a936fc9b7eadf8487d19cd84deeac85d4c5b7d603d4a2"
+            ],
+            "failure_code": null,
+            "question": "Does the exact minimal print_tensor.hpp translation unit compile?",
+            "rule_id": "self-contained-header-compiles-after-direct-dependency",
+            "status": "pass"
+          },
+          {
+            "blocking": true,
+            "conclusion": "The head directly includes pointer_flagged.hpp and adds print_tensor.hpp to the self-contained include manifest; the base has neither.",
+            "counterevidence": [],
+            "evidence": [
+              "sha256:940e60b1b53e6df07a6a61a9ea6d16bd39944ff8a86e04dd82ba6db1846846b9",
+              "sha256:eebf9a40b81b7bfafb6a936fc9b7eadf8487d19cd84deeac85d4c5b7d603d4a2"
+            ],
+            "failure_code": null,
+            "question": "Are the declaration owner and self-contained regression wired directly?",
+            "rule_id": "header-dependency-and-self-contained-test-have-one-owner",
+            "status": "pass"
+          }
+        ],
+        "policy_id": "historical-explainable-agent-v0.5-r4",
+        "rationale_codes": [],
+        "schema_version": "0.5",
+        "test_plan_sha256": "sha256:759b6be7bbecac434559e27816e6cd6622ecba1f2dbab5a94dbd6c554eb60b33"
+      }
+    },
+    {
+      "lock_sha256": "sha256:e604c4b9150bd6a1bdafbdbe61cbe89bb43f3cb680d096eb846ab99422047dfa",
+      "material": {
+        "candidate_sha256": "sha256:63bc0dabd888b5d8545ba40d0d3a41638c923ee6fa371983b3b2c146d2e2d025",
+        "case_id": "deepgemm-pr-310",
+        "decision": "revise",
+        "evidence_sha256": "sha256:f36c47b49704426a7c8aebd32dd949493f07ef33e7cbae84f3c3453a2a98c37f",
+        "frozen_at": "2026-09-02T07:49:16.004293Z",
+        "narrative": "[precedence-change-alters-executable-predicate: fail] Python parses the base and head pack_ue8m0_to_int assertions to the exact same AST, so the patch is a semantic no-op. [frozen-ue8m0-exponent-boundaries-are-enforced: fail] The exact head accepts both the zero exponent and all-ones exponent controls; the frozen two-sided exponent contract is not enforced. [valid-pack-and-mantissa-neighbors-are-preserved: pass] Real PyTorch execution gives byte-identical valid packing and both revisions reject nonzero mantissas. [direct-regression-covers-pack-boundary-matrix: fail] The PR changes only math.py and adds no direct regression.",
+        "observations": [
+          {
+            "blocking": true,
+            "conclusion": "Python parses the base and head pack_ue8m0_to_int assertions to the exact same AST, so the patch is a semantic no-op.",
+            "counterevidence": [],
+            "evidence": [
+              "sha256:47d6663451e7f57c23b4d44441a8788aea2693945fdf95b244fb11885921d66a",
+              "sha256:6d89ef75766028fbeb0dc13f6f70115eef1b1782b6e0209cb1f25056d9ec0224"
+            ],
+            "failure_code": "DEEPGEMM_PRECEDENCE_PATCH_SEMANTIC_NOOP",
+            "question": "Does the parenthesization change the executable validation predicate?",
+            "rule_id": "precedence-change-alters-executable-predicate",
+            "status": "fail"
+          },
+          {
+            "blocking": true,
+            "conclusion": "The exact head accepts both the zero exponent and all-ones exponent controls; the frozen two-sided exponent contract is not enforced.",
+            "counterevidence": [],
+            "evidence": [
+              "sha256:47d6663451e7f57c23b4d44441a8788aea2693945fdf95b244fb11885921d66a",
+              "sha256:6d89ef75766028fbeb0dc13f6f70115eef1b1782b6e0209cb1f25056d9ec0224"
+            ],
+            "failure_code": "DEEPGEMM_UE8M0_EXPONENT_BOUNDS_UNENFORCED",
+            "question": "Does the head reject values outside both frozen exponent bounds?",
+            "rule_id": "frozen-ue8m0-exponent-boundaries-are-enforced",
+            "status": "fail"
+          },
+          {
+            "blocking": true,
+            "conclusion": "Real PyTorch execution gives byte-identical valid packing and both revisions reject nonzero mantissas.",
+            "counterevidence": [],
+            "evidence": [
+              "sha256:47d6663451e7f57c23b4d44441a8788aea2693945fdf95b244fb11885921d66a",
+              "sha256:6d89ef75766028fbeb0dc13f6f70115eef1b1782b6e0209cb1f25056d9ec0224"
+            ],
+            "failure_code": null,
+            "question": "Are valid pack outputs and the existing mantissa check preserved?",
+            "rule_id": "valid-pack-and-mantissa-neighbors-are-preserved",
+            "status": "pass"
+          },
+          {
+            "blocking": true,
+            "conclusion": "The PR changes only math.py and adds no direct regression.",
+            "counterevidence": [],
+            "evidence": [
+              "sha256:47d6663451e7f57c23b4d44441a8788aea2693945fdf95b244fb11885921d66a",
+              "sha256:6d89ef75766028fbeb0dc13f6f70115eef1b1782b6e0209cb1f25056d9ec0224"
+            ],
+            "failure_code": "DEEPGEMM_PACK_UE8M0_DIRECT_REGRESSION_MISSING",
+            "question": "Does the PR include a direct regression for the claimed predicate repair?",
+            "rule_id": "direct-regression-covers-pack-boundary-matrix",
+            "status": "fail"
+          }
+        ],
+        "policy_id": "historical-explainable-agent-v0.5-r4",
+        "rationale_codes": [
+          "DEEPGEMM_PACK_UE8M0_DIRECT_REGRESSION_MISSING",
+          "DEEPGEMM_PRECEDENCE_PATCH_SEMANTIC_NOOP",
+          "DEEPGEMM_UE8M0_EXPONENT_BOUNDS_UNENFORCED"
+        ],
+        "schema_version": "0.5",
+        "test_plan_sha256": "sha256:759b6be7bbecac434559e27816e6cd6622ecba1f2dbab5a94dbd6c554eb60b33"
+      }
+    },
+    {
+      "lock_sha256": "sha256:cc247ef50254e0e4e5b489a2adf83051f7df77b5eecc2622da61580820831e44",
+      "material": {
+        "candidate_sha256": "sha256:78968887c09a5275cb03aac681f2567254fd88548d30794226ccd075929d54de",
+        "case_id": "flashattention-pr-2645",
+        "decision": "accept_with_scope",
+        "evidence_sha256": "sha256:088f9816e06ba532a485c03dc4866e89492587d3e0bed1b14cb36e9792d44eca",
+        "frozen_at": "2026-09-02T07:49:16.004293Z",
+        "narrative": "[all-backward-codegen-keys-own-subtile-factor: pass] Both exact backward key branches add q_subtile_factor exactly once; identical factors remain stable while different factors separate. [direct-regression-exercises-key-collision-and-gradients: pass] The changed same-process SM90 regression uses sparse block sizes 128 and 256 and compares dq, dk, and dv against dense references. [full-sm90-backward-kernel-runtime: unresolved] The exact key contract and direct test were audited, but the available GPU is SM80.",
+        "observations": [
+          {
+            "blocking": true,
+            "conclusion": "Both exact backward key branches add q_subtile_factor exactly once; identical factors remain stable while different factors separate.",
+            "counterevidence": [],
+            "evidence": [
+              "sha256:2eb3a84f9b63e0ade7da6e7fee9dec09e6bc0c6005c7bee0f92151cd97ff8f82",
+              "sha256:b642cfd0ecb50914a020c44869c401285f26d5c42e1aca8e2e758a5cbf52f14a"
+            ],
+            "failure_code": null,
+            "question": "Do all affected backward compilation keys isolate subtile_factor?",
+            "rule_id": "all-backward-codegen-keys-own-subtile-factor",
+            "status": "pass"
+          },
+          {
+            "blocking": true,
+            "conclusion": "The changed same-process SM90 regression uses sparse block sizes 128 and 256 and compares dq, dk, and dv against dense references.",
+            "counterevidence": [],
+            "evidence": [
+              "sha256:2eb3a84f9b63e0ade7da6e7fee9dec09e6bc0c6005c7bee0f92151cd97ff8f82",
+              "sha256:b642cfd0ecb50914a020c44869c401285f26d5c42e1aca8e2e758a5cbf52f14a"
+            ],
+            "failure_code": null,
+            "question": "Does a direct same-process regression exercise two factors and correctness?",
+            "rule_id": "direct-regression-exercises-key-collision-and-gradients",
+            "status": "pass"
+          },
+          {
+            "blocking": false,
+            "conclusion": "The exact key contract and direct test were audited, but the available GPU is SM80.",
+            "counterevidence": [],
+            "evidence": [
+              "sha256:2eb3a84f9b63e0ade7da6e7fee9dec09e6bc0c6005c7bee0f92151cd97ff8f82",
+              "sha256:b642cfd0ecb50914a020c44869c401285f26d5c42e1aca8e2e758a5cbf52f14a"
+            ],
+            "failure_code": "FLASHATTENTION_SM90_RUNTIME_UNAVAILABLE",
+            "question": "Does the full changed SM90 backward test execute in this cell?",
+            "rule_id": "full-sm90-backward-kernel-runtime",
+            "status": "unresolved"
+          }
+        ],
+        "policy_id": "historical-explainable-agent-v0.5-r4",
+        "rationale_codes": [],
+        "schema_version": "0.5",
+        "test_plan_sha256": "sha256:759b6be7bbecac434559e27816e6cd6622ecba1f2dbab5a94dbd6c554eb60b33"
+      }
+    },
+    {
+      "lock_sha256": "sha256:727ffc829f8fb23b82c5e583f50cbaae0971ca1ff59cdb611c59db6e5ac6068c",
+      "material": {
+        "candidate_sha256": "sha256:a857849f6aa9846879200e4f16bdcf001fd93653ff1d7918e3a74a7ae307b88f",
+        "case_id": "flashinfer-pr-3918",
+        "decision": "accept_with_scope",
+        "evidence_sha256": "sha256:a0a0d90464fe36eab00bab0dbf3c617c882089b2ddbc44fb66c56eead06da757",
+        "frozen_at": "2026-09-02T07:49:16.004293Z",
+        "narrative": "[mixed-cold-l2-batches-clone-only-tensors: pass] The base crashes on mixed inputs; the exact head creates five batches, clones only tensors, and preserves every non-tensor object. [non-tensor-size-and-zero-buffer-controls-are-deterministic: pass] Scalar, boolean, None, and structured controls map to the non-tensor size marker; an all-non-tensor input returns one unchanged batch. [direct-test-covers-mixed-signature-copy-semantics: pass] The changed regression covers dtype and None non-tensors and asserts tensor clone versus non-tensor identity behavior. [actual-gpu-autotuner-profile: unresolved] The exact batching contract passed; a full kernel profiling run was not required here.",
+        "observations": [
+          {
+            "blocking": true,
+            "conclusion": "The base crashes on mixed inputs; the exact head creates five batches, clones only tensors, and preserves every non-tensor object.",
+            "counterevidence": [],
+            "evidence": [
+              "sha256:64282253bf311e240e3db8505203778f4eda4f18fbed65854c4021ae96c26955",
+              "sha256:28ac1386e8c4d9770a359c3f64c9fd5262fed76eced9054ac0db8e20092e76a2"
+            ],
+            "failure_code": null,
+            "question": "Does cold-L2 batching clone tensors while preserving non-tensors?",
+            "rule_id": "mixed-cold-l2-batches-clone-only-tensors",
+            "status": "pass"
+          },
+          {
+            "blocking": true,
+            "conclusion": "Scalar, boolean, None, and structured controls map to the non-tensor size marker; an all-non-tensor input returns one unchanged batch.",
+            "counterevidence": [],
+            "evidence": [
+              "sha256:64282253bf311e240e3db8505203778f4eda4f18fbed65854c4021ae96c26955",
+              "sha256:28ac1386e8c4d9770a359c3f64c9fd5262fed76eced9054ac0db8e20092e76a2"
+            ],
+            "failure_code": null,
+            "question": "Are non-tensor size guards and no-tensor batches deterministic?",
+            "rule_id": "non-tensor-size-and-zero-buffer-controls-are-deterministic",
+            "status": "pass"
+          },
+          {
+            "blocking": true,
+            "conclusion": "The changed regression covers dtype and None non-tensors and asserts tensor clone versus non-tensor identity behavior.",
+            "counterevidence": [],
+            "evidence": [
+              "sha256:64282253bf311e240e3db8505203778f4eda4f18fbed65854c4021ae96c26955",
+              "sha256:28ac1386e8c4d9770a359c3f64c9fd5262fed76eced9054ac0db8e20092e76a2"
+            ],
+            "failure_code": null,
+            "question": "Does direct coverage exercise mixed inputs and identity/copy behavior?",
+            "rule_id": "direct-test-covers-mixed-signature-copy-semantics",
+            "status": "pass"
+          },
+          {
+            "blocking": false,
+            "conclusion": "The exact batching contract passed; a full kernel profiling run was not required here.",
+            "counterevidence": [],
+            "evidence": [
+              "sha256:64282253bf311e240e3db8505203778f4eda4f18fbed65854c4021ae96c26955",
+              "sha256:28ac1386e8c4d9770a359c3f64c9fd5262fed76eced9054ac0db8e20092e76a2"
+            ],
+            "failure_code": "FLASHINFER_GPU_AUTOTUNER_PROFILE_NOT_EXECUTED",
+            "question": "Does a full GPU autotuner profile preserve the same mixed-input behavior?",
+            "rule_id": "actual-gpu-autotuner-profile",
+            "status": "unresolved"
+          }
+        ],
+        "policy_id": "historical-explainable-agent-v0.5-r4",
+        "rationale_codes": [],
+        "schema_version": "0.5",
+        "test_plan_sha256": "sha256:759b6be7bbecac434559e27816e6cd6622ecba1f2dbab5a94dbd6c554eb60b33"
+      }
+    },
+    {
+      "lock_sha256": "sha256:3ca2b8cd19644cae9394ee9628f6f491d4fde299b5fe590f928928f4a468379e",
+      "material": {
+        "candidate_sha256": "sha256:e1a030621c39516442a345710b111ab3e9152625a0b4d941fe58f4f9a188a2a8",
+        "case_id": "liger-pr-1289",
+        "decision": "revise",
+        "evidence_sha256": "sha256:92d62ee03a2f9906040ff5bfeb186a0991c0f0490a039c885878b9d4c4cff979",
+        "frozen_at": "2026-09-02T07:49:16.004293Z",
+        "narrative": "[zero-vocab-fails-early-with-actionable-domain-error: pass] The base reaches ZeroDivisionError; normal head execution fails before any Triton call with a materialization/all-gather explanation. [zero-vocab-policy-survives-optimized-python: fail] With optimized bytecode, the assertion disappears and the exact head returns to ZeroDivisionError; the domain policy is not stable. [positive-vocabulary-neighbors-are-preserved: pass] Five positive vocabulary boundaries take bytecode-equivalent prefixes in base and head, and twelve retained positive tests remain. [direct-test-covers-zero-vocabulary: pass] The changed regression calls the exact forward helper with weight[0] == 0.",
+        "observations": [
+          {
+            "blocking": true,
+            "conclusion": "The base reaches ZeroDivisionError; normal head execution fails before any Triton call with a materialization/all-gather explanation.",
+            "counterevidence": [],
+            "evidence": [
+              "sha256:46d56de02bdb092117af78ce961c341885c774ef25262a44dde5d0e6c165e90b",
+              "sha256:3e65feb711287f23432697a5a27a13436540ed54a5abf4aaf896692ef00ce149"
+            ],
+            "failure_code": null,
+            "question": "Does zero vocabulary fail before Triton division with actionable context?",
+            "rule_id": "zero-vocab-fails-early-with-actionable-domain-error",
+            "status": "pass"
+          },
+          {
+            "blocking": true,
+            "conclusion": "With optimized bytecode, the assertion disappears and the exact head returns to ZeroDivisionError; the domain policy is not stable.",
+            "counterevidence": [],
+            "evidence": [
+              "sha256:46d56de02bdb092117af78ce961c341885c774ef25262a44dde5d0e6c165e90b",
+              "sha256:3e65feb711287f23432697a5a27a13436540ed54a5abf4aaf896692ef00ce149"
+            ],
+            "failure_code": "LIGER_ZERO_VOCAB_VALIDATION_USES_REMOVABLE_ASSERT",
+            "question": "Is the zero-vocabulary policy stable when Python assertions are optimized out?",
+            "rule_id": "zero-vocab-policy-survives-optimized-python",
+            "status": "fail"
+          },
+          {
+            "blocking": true,
+            "conclusion": "Five positive vocabulary boundaries take bytecode-equivalent prefixes in base and head, and twelve retained positive tests remain.",
+            "counterevidence": [],
+            "evidence": [
+              "sha256:46d56de02bdb092117af78ce961c341885c774ef25262a44dde5d0e6c165e90b",
+              "sha256:3e65feb711287f23432697a5a27a13436540ed54a5abf4aaf896692ef00ce149"
+            ],
+            "failure_code": null,
+            "question": "Are positive vocabulary sizes and retained regression coverage unchanged?",
+            "rule_id": "positive-vocabulary-neighbors-are-preserved",
+            "status": "pass"
+          },
+          {
+            "blocking": true,
+            "conclusion": "The changed regression calls the exact forward helper with weight[0] == 0.",
+            "counterevidence": [],
+            "evidence": [
+              "sha256:46d56de02bdb092117af78ce961c341885c774ef25262a44dde5d0e6c165e90b",
+              "sha256:3e65feb711287f23432697a5a27a13436540ed54a5abf4aaf896692ef00ce149"
+            ],
+            "failure_code": null,
+            "question": "Does a direct regression cover the zero-width vocabulary path?",
+            "rule_id": "direct-test-covers-zero-vocabulary",
+            "status": "pass"
+          }
+        ],
+        "policy_id": "historical-explainable-agent-v0.5-r4",
+        "rationale_codes": [
+          "LIGER_ZERO_VOCAB_VALIDATION_USES_REMOVABLE_ASSERT"
+        ],
+        "schema_version": "0.5",
+        "test_plan_sha256": "sha256:759b6be7bbecac434559e27816e6cd6622ecba1f2dbab5a94dbd6c554eb60b33"
+      }
+    },
+    {
+      "lock_sha256": "sha256:48ba5b1d8dd3eed9580ebca2eb2d14a975d307dcea0ab63903ae16a34adfe688",
+      "material": {
+        "candidate_sha256": "sha256:19c2b28209dc48f2c6daaf83df26939f5f5acdc6a4e1efdd460135aaf180b7ad",
+        "case_id": "megatron-pr-5750",
+        "decision": "accept_with_scope",
+        "evidence_sha256": "sha256:5d7e4a67f2578fcabb64867c0578e2c7496305d7f23584cd30aaea2e8a90d20a",
+        "frozen_at": "2026-09-02T07:49:16.004293Z",
+        "narrative": "[mamba-norm-receives-configured-epsilon-matrix: pass] The base omits epsilon; the exact head forwards 1e-5, 1e-6, and 1e-8 unchanged to the norm builder. [norm-builder-contract-is-explicit: pass] All exact head invocations use the explicit config, hidden_size, and eps keyword contract. [direct-test-asserts-instantiated-norm-epsilon: pass] The changed unit test sets 1e-6 and checks the instantiated norm value.",
+        "observations": [
+          {
+            "blocking": true,
+            "conclusion": "The base omits epsilon; the exact head forwards 1e-5, 1e-6, and 1e-8 unchanged to the norm builder.",
+            "counterevidence": [],
+            "evidence": [
+              "sha256:b045bed6188dec87509adf3435de16eeb6b73806438d4da0fe13b4fd3a40a97e",
+              "sha256:5cf8d412299c7dd409244866eccb1de7b19682746a9300c567980c733658d15b"
+            ],
+            "failure_code": null,
+            "question": "Does every frozen custom/default epsilon reach MambaLayer's norm?",
+            "rule_id": "mamba-norm-receives-configured-epsilon-matrix",
+            "status": "pass"
+          },
+          {
+            "blocking": true,
+            "conclusion": "All exact head invocations use the explicit config, hidden_size, and eps keyword contract.",
+            "counterevidence": [],
+            "evidence": [
+              "sha256:b045bed6188dec87509adf3435de16eeb6b73806438d4da0fe13b4fd3a40a97e",
+              "sha256:5cf8d412299c7dd409244866eccb1de7b19682746a9300c567980c733658d15b"
+            ],
+            "failure_code": null,
+            "question": "Are config, hidden_size, and eps owned explicitly at the builder boundary?",
+            "rule_id": "norm-builder-contract-is-explicit",
+            "status": "pass"
+          },
+          {
+            "blocking": true,
+            "conclusion": "The changed unit test sets 1e-6 and checks the instantiated norm value.",
+            "counterevidence": [],
+            "evidence": [
+              "sha256:b045bed6188dec87509adf3435de16eeb6b73806438d4da0fe13b4fd3a40a97e",
+              "sha256:5cf8d412299c7dd409244866eccb1de7b19682746a9300c567980c733658d15b"
+            ],
+            "failure_code": null,
+            "question": "Does a direct test assert the instantiated norm's configured epsilon?",
+            "rule_id": "direct-test-asserts-instantiated-norm-epsilon",
+            "status": "pass"
+          }
+        ],
+        "policy_id": "historical-explainable-agent-v0.5-r4",
+        "rationale_codes": [],
+        "schema_version": "0.5",
+        "test_plan_sha256": "sha256:759b6be7bbecac434559e27816e6cd6622ecba1f2dbab5a94dbd6c554eb60b33"
+      }
+    },
+    {
+      "lock_sha256": "sha256:4cdea339c04b3103ef3ac30881b0025f3d8ea4bf4ec591b8827b9421c97a3532",
+      "material": {
+        "candidate_sha256": "sha256:48b2129facb681c7d1a767d4d3960f13f56d76bfca884cef349f75a55c91a692",
+        "case_id": "sglang-pr-31344",
+        "decision": "accept_with_scope",
+        "evidence_sha256": "sha256:86554c6163007b69e2f5f1cbf3314ebcfcad09f750a9399f6f94b5e916aaa055",
+        "frozen_at": "2026-09-02T07:49:16.004293Z",
+        "narrative": "[decode-backend-truth-table-excludes-only-prefill-auto: pass] The exact seven-choice matrix rejects only flashmla_auto and accepts all six declared decode backends. [primary-alias-and-prefill-lifecycles-are-consistent: pass] Both decode flags use the narrow list, while prefill retains flashmla_auto. [runtime-fallback-and-direct-neighbor-tests-are-explicit: pass] The residual runtime guard uses ValueError instead of removable assert, and five direct tests cover primary, alias, prefill, and valid neighbors.",
+        "observations": [
+          {
+            "blocking": true,
+            "conclusion": "The exact seven-choice matrix rejects only flashmla_auto and accepts all six declared decode backends.",
+            "counterevidence": [],
+            "evidence": [
+              "sha256:140d5e5c389dbe4f2430aa962c95af6cbc20a5b7037b0294cd4f860eace4dbf6",
+              "sha256:3c5168caf753a639a9b8fc10b77f8bc22a8e13b264656b4f5e082d430a24768c"
+            ],
+            "failure_code": null,
+            "question": "Does CLI validation reject exactly flashmla_auto in decode position?",
+            "rule_id": "decode-backend-truth-table-excludes-only-prefill-auto",
+            "status": "pass"
+          },
+          {
+            "blocking": true,
+            "conclusion": "Both decode flags use the narrow list, while prefill retains flashmla_auto.",
+            "counterevidence": [],
+            "evidence": [
+              "sha256:140d5e5c389dbe4f2430aa962c95af6cbc20a5b7037b0294cd4f860eace4dbf6",
+              "sha256:3c5168caf753a639a9b8fc10b77f8bc22a8e13b264656b4f5e082d430a24768c"
+            ],
+            "failure_code": null,
+            "question": "Are the primary/alias decode flags narrowed while prefill stays supported?",
+            "rule_id": "primary-alias-and-prefill-lifecycles-are-consistent",
+            "status": "pass"
+          },
+          {
+            "blocking": true,
+            "conclusion": "The residual runtime guard uses ValueError instead of removable assert, and five direct tests cover primary, alias, prefill, and valid neighbors.",
+            "counterevidence": [],
+            "evidence": [
+              "sha256:140d5e5c389dbe4f2430aa962c95af6cbc20a5b7037b0294cd4f860eace4dbf6",
+              "sha256:3c5168caf753a639a9b8fc10b77f8bc22a8e13b264656b4f5e082d430a24768c"
+            ],
+            "failure_code": null,
+            "question": "Is the fallback a real exception and is the full neighbor matrix tested?",
+            "rule_id": "runtime-fallback-and-direct-neighbor-tests-are-explicit",
+            "status": "pass"
+          }
+        ],
+        "policy_id": "historical-explainable-agent-v0.5-r4",
+        "rationale_codes": [],
+        "schema_version": "0.5",
+        "test_plan_sha256": "sha256:759b6be7bbecac434559e27816e6cd6622ecba1f2dbab5a94dbd6c554eb60b33"
+      }
+    },
+    {
+      "lock_sha256": "sha256:f4b2eee456a8ecbba2895364face70b9ddd212bd232dd5be150919bdb2904d88",
+      "material": {
+        "candidate_sha256": "sha256:689f07bcdca7f5b65741b43c08503662c1b9471f4bd4317e70a2fd7420e3b3c3",
+        "case_id": "torchtitan-pr-3862",
+        "decision": "accept_with_scope",
+        "evidence_sha256": "sha256:b8680b64e23b14fc42435e0bed88443cb13e0f68ad647d4562c561ff20059ee7",
+        "frozen_at": "2026-09-02T07:49:16.004293Z",
+        "narrative": "[real-torch-fake-kernel-matches-contiguous-output-contract: pass] Real PyTorch non-contiguous gradients yield non-contiguous base fake outputs and contiguous shape-preserving head outputs. [fake-and-real-rope-layout-contracts-agree: pass] All three frozen shape/stride cases produce contiguous head fake outputs, matching the real backward's explicit contiguous conversion. [direct-opcheck-covers-noncontiguous-gradients: pass] The changed opcheck constructs transposed q/k gradients and asserts both are non-contiguous before invoking the custom backward op. [actual-helion-gpu-opcheck: unresolved] Real PyTorch stride semantics passed; the Helion GPU dependency stack was unavailable.",
+        "observations": [
+          {
+            "blocking": true,
+            "conclusion": "Real PyTorch non-contiguous gradients yield non-contiguous base fake outputs and contiguous shape-preserving head outputs.",
+            "counterevidence": [],
+            "evidence": [
+              "sha256:5d570c8c0dd5b4c0618af52f3e1d915e7646369fee0920f831458ddaf3ced67a",
+              "sha256:fb6419e9da402549a36923d3b96d3c174bf35978a2af655e7a1493eed974e715"
+            ],
+            "failure_code": null,
+            "question": "Does real PyTorch reproduce the base stride mismatch and head repair?",
+            "rule_id": "real-torch-fake-kernel-matches-contiguous-output-contract",
+            "status": "pass"
+          },
+          {
+            "blocking": true,
+            "conclusion": "All three frozen shape/stride cases produce contiguous head fake outputs, matching the real backward's explicit contiguous conversion.",
+            "counterevidence": [],
+            "evidence": [
+              "sha256:5d570c8c0dd5b4c0618af52f3e1d915e7646369fee0920f831458ddaf3ced67a",
+              "sha256:fb6419e9da402549a36923d3b96d3c174bf35978a2af655e7a1493eed974e715"
+            ],
+            "failure_code": null,
+            "question": "Do fake outputs agree with the real backward contiguous layout?",
+            "rule_id": "fake-and-real-rope-layout-contracts-agree",
+            "status": "pass"
+          },
+          {
+            "blocking": true,
+            "conclusion": "The changed opcheck constructs transposed q/k gradients and asserts both are non-contiguous before invoking the custom backward op.",
+            "counterevidence": [],
+            "evidence": [
+              "sha256:5d570c8c0dd5b4c0618af52f3e1d915e7646369fee0920f831458ddaf3ced67a",
+              "sha256:fb6419e9da402549a36923d3b96d3c174bf35978a2af655e7a1493eed974e715"
+            ],
+            "failure_code": null,
+            "question": "Does direct opcheck coverage exercise non-contiguous incoming gradients?",
+            "rule_id": "direct-opcheck-covers-noncontiguous-gradients",
+            "status": "pass"
+          },
+          {
+            "blocking": false,
+            "conclusion": "Real PyTorch stride semantics passed; the Helion GPU dependency stack was unavailable.",
+            "counterevidence": [],
+            "evidence": [
+              "sha256:5d570c8c0dd5b4c0618af52f3e1d915e7646369fee0920f831458ddaf3ced67a",
+              "sha256:fb6419e9da402549a36923d3b96d3c174bf35978a2af655e7a1493eed974e715"
+            ],
+            "failure_code": "TORCHTITAN_HELION_GPU_STACK_UNAVAILABLE",
+            "question": "Does the complete Helion GPU custom-op stack pass opcheck?",
+            "rule_id": "actual-helion-gpu-opcheck",
+            "status": "unresolved"
+          }
+        ],
+        "policy_id": "historical-explainable-agent-v0.5-r4",
+        "rationale_codes": [],
+        "schema_version": "0.5",
+        "test_plan_sha256": "sha256:759b6be7bbecac434559e27816e6cd6622ecba1f2dbab5a94dbd6c554eb60b33"
+      }
+    },
+    {
+      "lock_sha256": "sha256:93fccdde6f58392c12c3a6c03e09f5f2c2f289d484888ca1f925b5435d35e0d1",
+      "material": {
+        "candidate_sha256": "sha256:960ccdd718a667232ce854a01fad572040065ced32118b4f2f35ccc612c5057a",
+        "case_id": "verl-pr-7044",
+        "decision": "accept_with_scope",
+        "evidence_sha256": "sha256:c16177b50161d5456d0d45074a8177c120d3a599bfe31511db769cf229cf1e79",
+        "frozen_at": "2026-09-02T07:49:16.004293Z",
+        "narrative": "[malformed-xml-matrix-is-bounded-and-loss-local: pass] The base raises on a truncated parameter; the head completes six malformed cases, preserves prior valid data, and tolerates missing tool schemas. [valid-calls-and-plain-text-controls-are-preserved: pass] Base and head produce the same typed valid call, and ordinary text yields no function call. [direct-tests-cover-three-new-malformed-boundaries: pass] All three newly repaired malformed-input boundaries have direct tests.",
+        "observations": [
+          {
+            "blocking": true,
+            "conclusion": "The base raises on a truncated parameter; the head completes six malformed cases, preserves prior valid data, and tolerates missing tool schemas.",
+            "counterevidence": [
+              "The parser remains intentionally permissive: some mismatched or nested fragments are returned as string values rather than rejected semantically."
+            ],
+            "evidence": [
+              "sha256:c3acc773ba799ccb6bcea0d45b7b79561aa7b01381c6a7d901c61bc33c1f90fc",
+              "sha256:d5f663b39f7c27233dfcceb0fa0c3469e65cb174e36beab6cf9360cc42faca8d"
+            ],
+            "failure_code": null,
+            "question": "Do malformed headers/parameters terminate without discarding prior valid data?",
+            "rule_id": "malformed-xml-matrix-is-bounded-and-loss-local",
+            "status": "pass"
+          },
+          {
+            "blocking": true,
+            "conclusion": "Base and head produce the same typed valid call, and ordinary text yields no function call.",
+            "counterevidence": [],
+            "evidence": [
+              "sha256:c3acc773ba799ccb6bcea0d45b7b79561aa7b01381c6a7d901c61bc33c1f90fc",
+              "sha256:d5f663b39f7c27233dfcceb0fa0c3469e65cb174e36beab6cf9360cc42faca8d"
+            ],
+            "failure_code": null,
+            "question": "Are valid calls identical while ordinary text stays ordinary?",
+            "rule_id": "valid-calls-and-plain-text-controls-are-preserved",
+            "status": "pass"
+          },
+          {
+            "blocking": true,
+            "conclusion": "All three newly repaired malformed-input boundaries have direct tests.",
+            "counterevidence": [],
+            "evidence": [
+              "sha256:c3acc773ba799ccb6bcea0d45b7b79561aa7b01381c6a7d901c61bc33c1f90fc",
+              "sha256:d5f663b39f7c27233dfcceb0fa0c3469e65cb174e36beab6cf9360cc42faca8d"
+            ],
+            "failure_code": null,
+            "question": "Do direct CPU tests cover header, parameter, and missing-tools boundaries?",
+            "rule_id": "direct-tests-cover-three-new-malformed-boundaries",
+            "status": "pass"
+          }
+        ],
+        "policy_id": "historical-explainable-agent-v0.5-r4",
+        "rationale_codes": [],
+        "schema_version": "0.5",
+        "test_plan_sha256": "sha256:759b6be7bbecac434559e27816e6cd6622ecba1f2dbab5a94dbd6c554eb60b33"
+      }
+    },
+    {
+      "lock_sha256": "sha256:edd115e8d7997d2d2d03d5d37b0ced28c8ce3928da7538317ba44d66f38ea006",
+      "material": {
+        "candidate_sha256": "sha256:f0d39668b841c7286208ad6ee22618ccfff8682b721a70bf3b69178665d823ef",
+        "case_id": "vllm-pr-48705",
+        "decision": "revise",
+        "evidence_sha256": "sha256:70511176aeee6fd058f8f5f2795259102c420bad75ac548a1c25aadcf2a4fda7",
+        "frozen_at": "2026-09-02T07:49:16.004293Z",
+        "narrative": "[streaming-repair-improves-every-frozen-multi-key-case: pass] Every case improves its valid reconstruction count (get_weather: 19->46/52, render: 28->50/56, search: 23->72/82). [all-frozen-json-chunk-boundaries-reconstruct-exactly-once: fail] The head still emits unretractable partial argument fragments at several frozen boundaries (get_weather: 19->46/52, render: 28->50/56, search: 23->72/82); concatenated deltas are invalid or corrupted. [incomplete-input-waits-and-direct-regressions-exist: pass] Incomplete input emits no finalized arguments, and two direct regressions cover the demonstrated multi-key failure.",
+        "observations": [
+          {
+            "blocking": true,
+            "conclusion": "Every case improves its valid reconstruction count (get_weather: 19->46/52, render: 28->50/56, search: 23->72/82).",
+            "counterevidence": [],
+            "evidence": [
+              "sha256:b0c17b94b83085dfaebea653d93c7841e26059f9b1cc7db032b28e43bbcdc547",
+              "sha256:1e6bffff0bd20430c38810eb41251efbcb908f3b156254260ebfee40c843b221"
+            ],
+            "failure_code": null,
+            "question": "Does the head reduce corruption for every frozen multi-key payload?",
+            "rule_id": "streaming-repair-improves-every-frozen-multi-key-case",
+            "status": "pass"
+          },
+          {
+            "blocking": true,
+            "conclusion": "The head still emits unretractable partial argument fragments at several frozen boundaries (get_weather: 19->46/52, render: 28->50/56, search: 23->72/82); concatenated deltas are invalid or corrupted.",
+            "counterevidence": [
+              "The upstream two-key and three-key chunk patterns pass and the frozen matrix is substantially better than base."
+            ],
+            "evidence": [
+              "sha256:b0c17b94b83085dfaebea653d93c7841e26059f9b1cc7db032b28e43bbcdc547",
+              "sha256:1e6bffff0bd20430c38810eb41251efbcb908f3b156254260ebfee40c843b221"
+            ],
+            "failure_code": "VLLM_FUNCTIONGEMMA_STREAM_BOUNDARY_CORRUPTION_REMAINS",
+            "question": "Do all frozen key, escape, numeric, and delimiter splits reconstruct JSON?",
+            "rule_id": "all-frozen-json-chunk-boundaries-reconstruct-exactly-once",
+            "status": "fail"
+          },
+          {
+            "blocking": true,
+            "conclusion": "Incomplete input emits no finalized arguments, and two direct regressions cover the demonstrated multi-key failure.",
+            "counterevidence": [],
+            "evidence": [
+              "sha256:b0c17b94b83085dfaebea653d93c7841e26059f9b1cc7db032b28e43bbcdc547",
+              "sha256:1e6bffff0bd20430c38810eb41251efbcb908f3b156254260ebfee40c843b221"
+            ],
+            "failure_code": null,
+            "question": "Does incomplete input wait, with direct two/three-key coverage?",
+            "rule_id": "incomplete-input-waits-and-direct-regressions-exist",
+            "status": "pass"
+          }
+        ],
+        "policy_id": "historical-explainable-agent-v0.5-r4",
+        "rationale_codes": [
+          "VLLM_FUNCTIONGEMMA_STREAM_BOUNDARY_CORRUPTION_REMAINS"
+        ],
+        "schema_version": "0.5",
+        "test_plan_sha256": "sha256:759b6be7bbecac434559e27816e6cd6622ecba1f2dbab5a94dbd6c554eb60b33"
+      }
+    }
+  ],
+  "merge_outcomes_visible_during_machine_judgment": false,
+  "protocol_id": "historical-pr-blind-case-contract-v0.1-r10-10",
+  "review_text_visible_during_machine_judgment": false,
+  "schema_version": "0.1",
+  "selection_lock_file_sha256": "sha256:5cffa1ddd1641d7621b75886ea6c22377b0dc9ebcfe2579af0416c4c24d2793f",
+  "selection_lock_sha256": "sha256:de17daef35221ddc7f893f39132ead5173eb8d32f056de541a5e9d506cd3334f",
+  "test_plan_file_sha256": "sha256:ecd92b9ef44a39851febd7fadb8f74f7653d4de62c254291c5bcc1bc87c2c4cd",
+  "test_plan_sha256": "sha256:759b6be7bbecac434559e27816e6cd6622ecba1f2dbab5a94dbd6c554eb60b33",
+  "trained_weights_used": false,
+  "weighted_score_used": false
+}

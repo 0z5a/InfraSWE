@@ -1,0 +1,70 @@
+{
+  "base_sha": "495ae9aaa609d39fd4e294d4f64faf52e29f50a6",
+  "case_id": "sglang-pr-31344",
+  "environment": {
+    "ci": false,
+    "hostname_sha256": "sha256:980f6866a2987f78dc4c035257a76eed1d8264df9c1cccac8bfd43c0f5200ab4",
+    "nvcc": "/usr/local/cuda/bin/nvcc",
+    "platform": "Linux-6.8.0-138-generic-x86_64-with-glibc2.39",
+    "python": "3.12.14"
+  },
+  "evidence_sha256": "sha256:140d5e5c389dbe4f2430aa962c95af6cbc20a5b7037b0294cd4f860eace4dbf6",
+  "facts": {
+    "argparse_accepted": [
+      "flashmla_sparse",
+      "flashmla_kv",
+      "fa3",
+      "tilelang",
+      "aiter",
+      "trtllm"
+    ],
+    "argparse_rejected": [
+      "flashmla_auto"
+    ],
+    "base_has_distinct_decode_choices": false,
+    "both_primary_and_deprecated_decode_args_use_narrow_choices": true,
+    "direct_test_methods": [
+      "test_decode_backend_accepts_valid_values",
+      "test_decode_backend_rejects_flashmla_auto",
+      "test_decode_choices_exclude_only_flashmla_auto",
+      "test_nsa_decode_alias_rejects_flashmla_auto",
+      "test_prefill_backend_still_accepts_flashmla_auto"
+    ],
+    "head_all_choices": [
+      "flashmla_sparse",
+      "flashmla_kv",
+      "flashmla_auto",
+      "fa3",
+      "tilelang",
+      "aiter",
+      "trtllm"
+    ],
+    "head_decode_choices": [
+      "flashmla_sparse",
+      "flashmla_kv",
+      "fa3",
+      "tilelang",
+      "aiter",
+      "trtllm"
+    ],
+    "head_decode_excludes_exactly_flashmla_auto": true,
+    "prefill_keeps_full_choices": true,
+    "runtime_fallback_changed_from_assert_to_value_error": true
+  },
+  "failure_codes": [],
+  "head_sha": "0243a83255b5c72056bec393c9be8ec9c2bcbf74",
+  "observed_at": "2026-09-02T07:39:54.250164+00:00",
+  "path_parity": true,
+  "protocol_id": "historical-pr-blind-case-contract-v0.1-r10-10",
+  "schema_version": "0.1",
+  "selection_lock_sha256": "sha256:de17daef35221ddc7f893f39132ead5173eb8d32f056de541a5e9d506cd3334f",
+  "source_digests": {
+    "base:python/sglang/srt/layers/attention/dsa_backend.py": "sha256:326fc8336eddd8327da79ee86ecdbc20855a169697b07a1cd96cd7e957434a75",
+    "base:python/sglang/srt/server_args.py": "sha256:fcdffe73589021d65f6addc31b2baedfccfe8912c4ecdcd24415b7e605379d21",
+    "head:python/sglang/srt/layers/attention/dsa_backend.py": "sha256:bf68625f2b61b6e17fac442ba297165ae789d3976f7c1f284473470d73c06437",
+    "head:python/sglang/srt/server_args.py": "sha256:2ea83355432baa095ec2cfc4e3271f009a3f34161322209ec7c0c1f301ca7afd",
+    "head:test/registered/unit/test_dsa_decode_backend_validation.py": "sha256:a7f1b70379fa2556c0fb021aaa266f858f3edbccead2b18af5ec3102e63e951a"
+  },
+  "status": "pass",
+  "test_plan_sha256": "sha256:759b6be7bbecac434559e27816e6cd6622ecba1f2dbab5a94dbd6c554eb60b33"
+}

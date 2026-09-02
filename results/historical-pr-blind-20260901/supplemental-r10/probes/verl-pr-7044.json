@@ -1,0 +1,91 @@
+{
+  "base_sha": "1bfd02c4359a44310759aab7c0382e2bf5836756",
+  "case_id": "verl-pr-7044",
+  "environment": {
+    "ci": false,
+    "hostname_sha256": "sha256:980f6866a2987f78dc4c035257a76eed1d8264df9c1cccac8bfd43c0f5200ab4",
+    "nvcc": "/usr/local/cuda/bin/nvcc",
+    "platform": "Linux-6.8.0-138-generic-x86_64-with-glibc2.39",
+    "python": "3.12.14"
+  },
+  "evidence_sha256": "sha256:c3acc773ba799ccb6bcea0d45b7b79561aa7b01381c6a7d901c61bc33c1f90fc",
+  "facts": {
+    "base_truncated_parameter_raises": true,
+    "base_valid_arguments": {
+      "count": 2,
+      "items": "valid"
+    },
+    "direct_test_methods": [
+      "test_array_literal_is_parsed",
+      "test_array_param_does_not_execute_arbitrary_code",
+      "test_malformed_function_header_returns_none",
+      "test_malformed_parameter_is_skipped_but_valid_parameter_is_preserved",
+      "test_missing_tools_defaults_to_empty_list"
+    ],
+    "head_truncated_parameter_preserves_prior_valid": true,
+    "head_valid_arguments": {
+      "count": 2,
+      "items": "valid"
+    },
+    "malformed_matrix": [
+      {
+        "input": "list_tool",
+        "result": null
+      },
+      {
+        "input": "list_tool><parameter=items",
+        "result": {
+          "arguments": "{}",
+          "name": "list_tool"
+        }
+      },
+      {
+        "input": "list_tool><parameter=items>value",
+        "result": {
+          "arguments": "{\"items\": \"value\"}",
+          "name": "list_tool"
+        }
+      },
+      {
+        "input": "list_tool><parameter=items>value</wrong>",
+        "result": {
+          "arguments": "{\"items\": \"value</wrong>\"}",
+          "name": "list_tool"
+        }
+      },
+      {
+        "input": "><parameter=items>value</parameter>",
+        "result": {
+          "arguments": "{\"items\": \"value\"}",
+          "name": ""
+        }
+      },
+      {
+        "input": "list_tool><parameter=items><parameter=count>2</parameter>",
+        "result": {
+          "arguments": "{\"items\": \"<parameter=count>2\"}",
+          "name": "list_tool"
+        }
+      }
+    ],
+    "malformed_matrix_has_no_exceptions": true,
+    "missing_tools_defaults_to_empty": true,
+    "ordinary_text_produces_no_function_calls": true,
+    "valid_call_preserved": true
+  },
+  "failure_codes": [],
+  "head_sha": "a7a9676f0771adab52a8b9c5977521b3c15b66ec",
+  "observed_at": "2026-09-02T07:39:54.309712+00:00",
+  "path_parity": true,
+  "protocol_id": "historical-pr-blind-case-contract-v0.1-r10-10",
+  "schema_version": "0.1",
+  "selection_lock_sha256": "sha256:de17daef35221ddc7f893f39132ead5173eb8d32f056de541a5e9d506cd3334f",
+  "source_digests": {
+    "base:tests/experimental/agent_loop/test_qwen3_tool_parser_on_cpu.py": "sha256:e48461d4899b27e86e31ac7cbc2769463d8f9f41557636a5602fa5b5a61cc3bd",
+    "base:verl/experimental/agent_loop/tool_parser.py": "sha256:e473d30461ecd214edc1ce8b0a626639d258bf1d041b726554697d2372aee829",
+    "head:tests/experimental/agent_loop/test_qwen3_tool_parser_on_cpu.py": "sha256:f6170b32509db58d2cb8eba2938ad7b555b070cf7ca173fd206fd55aaa1dd4b5",
+    "head:verl/experimental/agent_loop/tool_parser.py": "sha256:e387327197cb94f1004e173b3097950968c8890688e383a25de049f958321eb3"
+  },
+  "status": "pass",
+  "test_plan_sha256": "sha256:759b6be7bbecac434559e27816e6cd6622ecba1f2dbab5a94dbd6c554eb60b33"
+}

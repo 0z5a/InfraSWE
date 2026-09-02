@@ -1,0 +1,55 @@
+{
+  "evidence_sha256": "sha256:e7db1ff2627435f4e02c97554eeca47ae921a936411746e08b199450f3d36a35",
+  "finished_at": "2026-09-02T17:41:38.382747+00:00",
+  "outcome_review_ci_fields_requested": false,
+  "probe_sha256": {
+    "r15_megatron_mxfp8_gate_probe.py": "sha256:990050a8a4b89c53a7463d56770bb92b0098648e660e62b260ed7b614f1f3458",
+    "r15_megatron_teardown_probe.py": "sha256:2f11c898276125b70f231697d59ac9ce9d31fdba3d90d8a6b1b2b483a73b65a0",
+    "r15_slime_phase_memory_probe.py": "sha256:83e3ff148baf996f7866d79dfa3199981e17ac32b21d8aa7dc0fc14187ba4bfa",
+    "r15_topk_memory_probe.py": "sha256:66e1273cbecc4d58362fea5013fc55f6586b3beb9e5364516c11b88b7d3a6e3e",
+    "r15_verl_hccl_async_probe.py": "sha256:7a66163200cc9e12b69f1329148d97c8dd40c30c6a1d50e08135771eb316d3e5",
+    "r15_verl_weight_sync_order_probe.py": "sha256:a2105bf61f41dbcfcc934eaf5961681675c462a65434f0d149746dadda32f7df",
+    "r15_vllm_pytest_driver.py": "sha256:b5b8be9accbccc4e6b73025cfd73b5a252f515c4002af8daa73acbe2745011c6",
+    "r15_vllm_zmq_atomic_bind_probe.py": "sha256:9915a830f2038f166c5401ad757159806a9b2c8fea4b0764d74eee27b71d5c26"
+  },
+  "protocol_id": "r15-exact-followup-tests-v0.1",
+  "records": [
+    {
+      "case_id": "verl-pr-6569",
+      "command": "cd /workspace/r13-run-verl && git switch --detach refs/r15/pr-6569 >/dev/null && test \"$(git rev-parse HEAD)\" = 08d4aaf6cfe5108a88c272f2af1594dc102acf9e && timeout 60s env CUDA_VISIBLE_DEVICES=1 PYTHONPATH=.:/workspace/r14-run-vllm /venv/main/bin/python /workspace/r15-probes/r15_verl_hccl_async_probe.py",
+      "duration_seconds": 6.636066542007029,
+      "output_sha256": "sha256:b736ccf227e7135e89a931c7f7e92681276a9e216cc1df1d5a4f30ffb72b44fe",
+      "output_tail": "R15_VERL_HCCL_ASYNC={\"device_events\": [\"device:7\", \"device:7\"], \"rows\": [{\"events\": [\"constructor-returned\", \"send-topic:r15:2\", \"send-meta:{'rank': 0}\", \"broadcast:0:thread=asyncio_0\", \"wait-returned\"], \"metadata\": {\"rank\": 0}, \"rank\": 0}, {\"events\": [\"constructor-returned\", \"recv-topic\", \"recv-meta\", \"broadcast:0:thread=asyncio_0\", \"wait-returned\"], \"metadata\": {\"rank\": 1}, \"rank\": 1}]}\nWelcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nHEAD is now at 08d4aaf6 [ckpt] fix: restore async hccl broadcast execution\n",
+      "purpose": "exercise candidate asyncio task, ZMQ ordering, executor, and device binding",
+      "returncode": 0,
+      "status": "completed",
+      "timeout": 120
+    },
+    {
+      "case_id": "vllm-pr-44495",
+      "command": "cd /workspace/r14-run-vllm && git switch --detach refs/r15/pr-44495 >/dev/null && test \"$(git rev-parse HEAD)\" = e5ac6d76485f6e78ba89fb2b58c369f3ab3e8aa5 && timeout 60s env PYTHONPATH=. /venv/main/bin/python /workspace/r15-probes/r15_vllm_zmq_atomic_bind_probe.py vllm/distributed/device_communicators/shm_broadcast.py",
+      "duration_seconds": 4.109674999956042,
+      "output_sha256": "sha256:9ebb080522bf93867758743e364f801afb870bcf8920d3bc282eff1cac3bcd1e",
+      "output_tail": "R15_VLLM_ZMQ_ATOMIC_BIND={\"bind_count\": 32, \"source_reads_last_endpoint\": true, \"source_uses_get_open_port\": false, \"source_uses_port_zero\": true, \"unique_endpoint_count\": 32}\nWelcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nPrevious HEAD position was 58060950a Merge branch 'main' into nixl_clean\nHEAD is now at e5ac6d764 [Bugfix] Fix ZMQ port TOCTOU race in shm_broadcast.py\n",
+      "purpose": "validate candidate atomic-bind source and live ZMQ endpoint uniqueness",
+      "returncode": 0,
+      "status": "completed",
+      "timeout": 120
+    }
+  ],
+  "remote": {
+    "gpu_count": 2,
+    "host": "root@38.49.42.120",
+    "port": 54270
+  },
+  "schema_version": "0.1",
+  "selection_lock_sha256": "sha256:0ba902883b19f4a5bb0a070354d70c59ef7c7bbcaa95964dd97eafdb69f12712",
+  "started_at": "2026-09-02T17:41:27.635498+00:00",
+  "static_evidence_sha256": "sha256:c582eabe232638e0fe557eca3d7df6016ab0ba5cd85e63626dc6f88b9a686fb8",
+  "test_plan_sha256": "sha256:8efbb95f125b0b2e5ce18fb9f504768fba1cc10f2947f665f48b4c1feb56c15e",
+  "vllm_shim_sha256": {
+    "METADATA": "sha256:fa4c2b1dd8ee0c303af52cc6ff448909078be74a309eedf974fbe1ce331833ef",
+    "sitecustomize.py": "sha256:fee0b686e3fd6551dcd1994ffdc812abb1dbbdfc6e8871b2275f1a5cbb6cad45",
+    "top_level.txt": "sha256:7c081bf0fb78cd0a0a4d40376672842207238742fdeff7701236034cbe4c104a"
+  }
+}

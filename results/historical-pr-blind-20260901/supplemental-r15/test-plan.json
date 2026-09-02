@@ -1,0 +1,980 @@
+{
+  "cases": [
+    {
+      "base_sha": "71d31b5a23a3c0394edb36330dec1ce2a0def365",
+      "benchmark_domain": "communication",
+      "case_id": "flashinfer-pr-4795",
+      "changed_paths": [
+        "flashinfer/moe_ep/backends/split/comm/nccl_ep/fleet.py",
+        "flashinfer/moe_ep/backends/split/comm/nccl_ep/handle.py",
+        "flashinfer/moe_ep/core/comm/handle.py",
+        "flashinfer/moe_ep/core/validation/common.py",
+        "tests/moe_ep/nccl_ep/conftest.py",
+        "tests/moe_ep/nccl_ep/test_handle_mock.py",
+        "tests/moe_ep/run_tests.sh",
+        "tests/moe_ep/test_moe_ep_cudagraph_multirank.py"
+      ],
+      "claim": "The NCCL-EP split backend is CUDA-graph capturable without stale routing metadata, handle lifetime errors, or replay-dependent output.",
+      "closure": "captured and eager dispatch/combine outputs and route ownership match across repeated replays with balanced handles",
+      "created_at": "2026-08-28T05:03:38Z",
+      "head_sha": "a112cb9b84ba6202b30f6c07e555d1d01d51e852",
+      "matrix": [
+        "EP1/EP2",
+        "eager/capture/replay",
+        "zero/uneven routes",
+        "one/repeated graph",
+        "valid/invalid local metadata"
+      ],
+      "project": "flashinfer",
+      "pull_number": 4795,
+      "repository": "flashinfer-ai/flashinfer",
+      "risk_family": "expert-parallel-capture",
+      "runtime": "candidate mock and multi-rank tests plus two-A100 capture/replay numeric and handle-lifetime probe",
+      "temporal_band": "recent",
+      "title": "feat(moe_ep): make the nccl_ep split path CUDA-graph capturable"
+    },
+    {
+      "base_sha": "6aba7655e093863cf4fc1db3050abbb3f7cf44b7",
+      "benchmark_domain": "communication",
+      "case_id": "flashinfer-pr-3304",
+      "changed_paths": [
+        "include/flashinfer/comm/trtllm_mnnvl_allreduce.cuh",
+        "tests/comm/test_trtllm_mnnvl_allreduce.py"
+      ],
+      "claim": "MNNVL all-reduce uses bitwise sentinel identity so valid subnormal payloads are not mistaken for transport sentinels.",
+      "closure": "every sentinel bit pattern is detected and every valid subnormal is preserved through the all-reduce reference matrix",
+      "created_at": "2026-05-12T23:38:30Z",
+      "head_sha": "e928242b56739d1c5e1921f0d85d7e4d09cc7f6d",
+      "matrix": [
+        "sentinel/subnormal/normal/zero bit patterns",
+        "FP16/BF16/FP32",
+        "one/multiple ranks",
+        "positive/negative subnormal"
+      ],
+      "project": "flashinfer",
+      "pull_number": 3304,
+      "repository": "flashinfer-ai/flashinfer",
+      "risk_family": "collective-sentinel-numerics",
+      "runtime": "exact header-level predicate oracle and candidate target-hardware test; MNNVL execution where supported",
+      "temporal_band": "mature",
+      "title": "fix: MNNVL Allreduce uses bitwise sentinel checking to avoid subnormal value issue (#3053)"
+    },
+    {
+      "base_sha": "171680c881ee1725c15a35a717a7db5daacc219d",
+      "benchmark_domain": "communication",
+      "case_id": "megatron-pr-7029",
+      "changed_paths": [
+        "megatron/core/distributed/fsdp/src/megatron_fsdp/uneven_dtensor.py",
+        "megatron/core/parallel_state.py",
+        "megatron/core/transformer/cuda_graphs.py",
+        "megatron/core/transformer/moe/fused_a2a.py",
+        "tests/unit_tests/transformer/moe/test_upcycling.py"
+      ],
+      "claim": "Parallel-state teardown destroys every created process group and invalidates communicator caches so repeated initialization cannot reuse stale owners.",
+      "closure": "all created groups are destroyed once, caches are empty, and a fresh two-rank collective succeeds after reinitialization",
+      "created_at": "2026-09-01T17:59:13Z",
+      "head_sha": "071d9e8ad6d568a20f43d294a9f5861959dc409e",
+      "matrix": [
+        "init/destroy once/repeated",
+        "default/subgroups",
+        "CUDA graph/FSDP/fused-A2A caches",
+        "normal/partial-init exception"
+      ],
+      "project": "megatron-core",
+      "pull_number": 7029,
+      "repository": "NVIDIA/Megatron-LM",
+      "risk_family": "process-group-lifecycle",
+      "runtime": "exact owner inventory, candidate tests, and two-rank init-use-destroy-reinit collective probe",
+      "temporal_band": "recent",
+      "title": "fix(parallel_state): destroy created process groups and invalidate communicator caches on teardown"
+    },
+    {
+      "base_sha": "de6305c0ae1e78e04929b7b6d55910ae71046ae8",
+      "benchmark_domain": "communication",
+      "case_id": "megatron-pr-5153",
+      "changed_paths": [
+        "megatron/core/models/gpt/fine_grained_callables.py",
+        "megatron/core/transformer/moe/fused_a2a.py",
+        "megatron/core/transformer/moe/token_dispatcher.py",
+        "megatron/core/transformer/transformer_config.py",
+        "tests/unit_tests/transformer/moe/test_token_dispatcher.py"
+      ],
+      "claim": "The DeepEP-v2 flex dispatcher preserves token, expert, and combine ownership across supported dispatch modes.",
+      "closure": "permutation inversion, expert counts, and combined outputs equal the independent routing oracle in every supported mode",
+      "created_at": "2026-06-04T08:15:39Z",
+      "head_sha": "eb688c4a92d2d3baeecda4ead1c60f53ffe7d2b4",
+      "matrix": [
+        "DeepEP v1/v2",
+        "flex/non-flex",
+        "EP1/EP2",
+        "zero/uneven tokens",
+        "fine-grained callable on/off"
+      ],
+      "project": "megatron-core",
+      "pull_number": 5153,
+      "repository": "NVIDIA/Megatron-LM",
+      "risk_family": "expert-parallel-dispatch",
+      "runtime": "candidate dispatcher tests plus exact source-shape and available two-rank dispatch/combine oracle",
+      "temporal_band": "mature",
+      "title": "Add DeepEP v2 flex dispatcher backend"
+    },
+    {
+      "base_sha": "2065b5ab7ac3cb24f93cd491a18f94f633693d45",
+      "benchmark_domain": "communication",
+      "case_id": "megatron-pr-5135",
+      "changed_paths": [
+        "megatron/core/transformer/moe/moe_layer.py",
+        "megatron/core/transformer/moe/shared_experts.py",
+        "megatron/core/transformer/moe/token_dispatcher.py",
+        "tests/unit_tests/transformer/moe/test_shared_experts.py"
+      ],
+      "claim": "Latent-MoE shared-expert overlap preserves shared/routed expert ordering, outputs, and gradients while introducing real overlap.",
+      "closure": "overlap matches serial outputs/gradients and the trace proves no shared-expert read races dispatch or combine",
+      "created_at": "2026-06-03T14:02:54Z",
+      "head_sha": "93fcd2f1b59481b6ec08d116c3286163e6e887cd",
+      "matrix": [
+        "overlap on/off",
+        "shared expert present/absent",
+        "zero/uneven routed tokens",
+        "one/two ranks",
+        "forward/backward"
+      ],
+      "project": "megatron-core",
+      "pull_number": 5135,
+      "repository": "NVIDIA/Megatron-LM",
+      "risk_family": "expert-overlap-ordering",
+      "runtime": "candidate shared-expert tests plus event ordering and eager-equivalence output/gradient probe",
+      "temporal_band": "mature",
+      "title": "Support latent MoE shared expert overlap"
+    },
+    {
+      "base_sha": "959ca033ebb79630da8c89c36e6f131c7f64f146",
+      "benchmark_domain": "communication",
+      "case_id": "sglang-pr-37523",
+      "changed_paths": [
+        "python/sglang/srt/layers/moe/fused_moe_triton/layer.py",
+        "python/sglang/srt/layers/moe/moe_runner/triton.py",
+        "python/sglang/srt/layers/moe/token_dispatcher/__init__.py",
+        "python/sglang/srt/layers/moe/token_dispatcher/base.py",
+        "python/sglang/srt/layers/moe/token_dispatcher/nccl.py",
+        "python/sglang/srt/layers/moe/utils.py",
+        "python/sglang/srt/server_args.py",
+        "test/manual/ep/test_nccl_dispatcher.py"
+      ],
+      "claim": "The opt-in NCCL MoE dispatcher uses local route metadata consistently and leaves the default dispatcher unchanged.",
+      "closure": "local route counts and inverse permutation are exact on every rank; opt-out matches the prior path and malformed metadata fails closed",
+      "created_at": "2026-09-02T03:20:17Z",
+      "head_sha": "816e39159de41e4749240236ffec949754645de2",
+      "matrix": [
+        "dispatcher on/off",
+        "EP1/EP2",
+        "zero/uneven local routes",
+        "prefill/decode",
+        "valid/malformed metadata"
+      ],
+      "project": "sglang",
+      "pull_number": 37523,
+      "repository": "sgl-project/sglang",
+      "risk_family": "expert-parallel-dispatch",
+      "runtime": "candidate manual test, isolated route-metadata oracle, and two-rank NCCL dispatch/combine comparison",
+      "temporal_band": "recent",
+      "title": "feat(moe): add opt-in NCCL dispatcher with local route metadata"
+    },
+    {
+      "base_sha": "02be2e71899491b7aaf2849dce6431f61fc190b6",
+      "benchmark_domain": "communication",
+      "case_id": "sglang-pr-27289",
+      "changed_paths": [
+        "python/sglang/srt/layers/communicator.py",
+        "python/sglang/srt/layers/quantization/fp8_utils.py",
+        "python/sglang/srt/models/deepseek_common/attention_forward_methods/forward_mha.py",
+        "python/sglang/srt/models/deepseek_common/attention_forward_methods/forward_mla.py",
+        "python/sglang/srt/models/deepseek_common/utils.py",
+        "python/sglang/srt/models/deepseek_v2.py",
+        "python/sglang/srt/models/deepseek_v4.py"
+      ],
+      "claim": "Removing the ROCm decode FP8-scale transpose-copy preserves the scale layout, values, and communicator ownership for DSV4 attention.",
+      "closure": "the no-copy scale consumed by every decode path is layout/value-equivalent to the former transpose-copy reference",
+      "created_at": "2026-06-04T17:31:02Z",
+      "head_sha": "985084ad09f7604e3ca8bae3af122de97eb4738a",
+      "matrix": [
+        "MHA/MLA",
+        "prefill/decode",
+        "one/two ranks",
+        "contiguous/noncontiguous scale",
+        "ROCm supported dtype"
+      ],
+      "project": "sglang",
+      "pull_number": 27289,
+      "repository": "sgl-project/sglang",
+      "risk_family": "collective-layout-numerics",
+      "runtime": "exact data-flow/layout proof plus candidate ROCm tests; target-backend numeric execution is required for full closure",
+      "temporal_band": "mature",
+      "title": "[ROCm] dsv4: remove the redundant fp8 scale transpose-copy on decode"
+    },
+    {
+      "base_sha": "7271318dc3f08a0c82650f4f6f986ecefb327024",
+      "benchmark_domain": "communication",
+      "case_id": "sglang-pr-27150",
+      "changed_paths": [
+        "python/sglang/srt/layers/moe/topk.py",
+        "python/sglang/srt/models/deepseek_v2.py",
+        "test/registered/unit/eplb/test_deepep_waterfill_eplb.py"
+      ],
+      "claim": "Waterfill routing remains correct when EPLB dynamically remaps expert ownership between ranks.",
+      "closure": "each token reaches exactly one current expert owner and waterfill scores match the independent placement-aware reference",
+      "created_at": "2026-06-03T10:27:49Z",
+      "head_sha": "5b3cbd84deab5ca63bf6ff46ed57b4bdcf49acd3",
+      "matrix": [
+        "static/dynamic EPLB",
+        "balanced/skewed load",
+        "EP1/EP2",
+        "remap before/after batch",
+        "duplicate/missing placement"
+      ],
+      "project": "sglang",
+      "pull_number": 27150,
+      "repository": "sgl-project/sglang",
+      "risk_family": "dynamic-expert-placement",
+      "runtime": "candidate EPLB tests plus exact waterfill assignment and two-rank remap oracle",
+      "temporal_band": "mature",
+      "title": "Support Waterfill with dynamic EPLB"
+    },
+    {
+      "base_sha": "baeac179f781f464d19f258c0aaed78e83caaa0e",
+      "benchmark_domain": "communication",
+      "case_id": "sglang-pr-27211",
+      "changed_paths": [
+        "docs/advanced_features/server_arguments.md",
+        "docs_new/docs/advanced_features/server_arguments.mdx",
+        "python/sglang/srt/layers/moe/flashinfer_cutedsl_moe.py",
+        "python/sglang/srt/layers/moe/moe_runner/flashinfer_cutedsl.py",
+        "python/sglang/srt/layers/moe/token_dispatcher/deepep.py",
+        "python/sglang/srt/layers/moe/utils.py",
+        "python/sglang/srt/server_args.py"
+      ],
+      "claim": "The FlashInfer CuteDSL fused combine produces correct DeepEP low-latency MoE output without rank, dtype, or shape disagreement.",
+      "closure": "fused output and token ownership equal the reference combine across the declared DeepEP low-latency matrix",
+      "created_at": "2026-06-04T03:41:17Z",
+      "head_sha": "4ef0b2e4db1156344157b9e95442a731e0e2845b",
+      "matrix": [
+        "fused/reference combine",
+        "EP1/EP2",
+        "zero/uneven tokens",
+        "supported dtype/architecture",
+        "prefill/decode"
+      ],
+      "project": "sglang",
+      "pull_number": 27211,
+      "repository": "sgl-project/sglang",
+      "risk_family": "expert-parallel-fused-combine",
+      "runtime": "source contract and candidate tests plus target-hardware fused/reference multi-rank comparison where available",
+      "temporal_band": "mature",
+      "title": "[Qwen3.5] Add FlashInfer CuteDSL fused combine for DeepEP LL MoE"
+    },
+    {
+      "base_sha": "f876c2fe07a5152f8620428bc883f0d977e871a8",
+      "benchmark_domain": "communication",
+      "case_id": "torchtitan-pr-4399",
+      "changed_paths": [
+        "tests/unit_tests/cpu/test_trainer.py",
+        "torchtitan/trainer.py"
+      ],
+      "claim": "Non-loss pipeline stages skip valid-token all-reduce while loss stages retain the collective and global loss normalization.",
+      "closure": "non-loss stages issue no redundant collective, loss stages agree on cardinality, and reported loss matches the global-token reference",
+      "created_at": "2026-09-01T19:56:28Z",
+      "head_sha": "b5a982117913ecc77677e8db9c67b0796254381e",
+      "matrix": [
+        "PP1/PP2",
+        "loss/non-loss stage",
+        "first/steady/last microbatch",
+        "zero/nonzero valid tokens"
+      ],
+      "project": "torchtitan",
+      "pull_number": 4399,
+      "repository": "pytorch/torchtitan",
+      "risk_family": "pipeline-collective-cardinality",
+      "runtime": "candidate CPU tests plus two-rank collective trace and normalized-loss oracle",
+      "temporal_band": "recent",
+      "title": "[trainer] Skip the valid-token all-reduce on non-loss PP stages"
+    },
+    {
+      "base_sha": "b5d8eae0196dceb8c55c53ec1b9497e7b94f0b83",
+      "benchmark_domain": "communication",
+      "case_id": "torchtitan-pr-3447",
+      "changed_paths": [
+        "tests/integration_tests/features.py",
+        "torchtitan/distributed/fsdp.py",
+        "torchtitan/distributed/full_dtensor.py",
+        "torchtitan/models/common/moe.py",
+        "torchtitan/models/deepseek_v3/parallelize.py",
+        "torchtitan/models/gpt_oss/moe.py",
+        "torchtitan/models/gpt_oss/parallelize.py",
+        "torchtitan/models/qwen3/parallelize.py",
+        "torchtitan/models/utils.py"
+      ],
+      "claim": "Full-DTensor mode works for all declared MoE models without losing expert/shard ownership or changing training numerics.",
+      "closure": "every model maps parameters and activations to legal placements and gathered loss/gradients match the non-full-DTensor reference",
+      "created_at": "2026-05-28T18:34:25Z",
+      "head_sha": "a0ee556ae61a883bc6df52188507a8452be8d7e6",
+      "matrix": [
+        "DeepSeek/Qwen/GPT-OSS MoE",
+        "full-DTensor on/off",
+        "FSDP/TP reduced topology",
+        "one-step forward/backward"
+      ],
+      "project": "torchtitan",
+      "pull_number": 3447,
+      "repository": "pytorch/torchtitan",
+      "risk_family": "dtensor-moe-sharding",
+      "runtime": "feature registration and source-shard proof plus available two-rank model-fragment numeric oracle",
+      "temporal_band": "mature",
+      "title": "[Full DTensor] Enable full_dtensor for all MoE models"
+    },
+    {
+      "base_sha": "df095ce69e5c2db0ebb82af6bb46cc9c3846c0db",
+      "benchmark_domain": "communication",
+      "case_id": "torchtitan-pr-3499",
+      "changed_paths": [
+        "tests/test_pp_per_direction_pipeline_stage.py",
+        "tests/test_pp_torchcomms_p2p_deadlock.py",
+        "torchtitan/config/configs.py",
+        "torchtitan/distributed/pipeline_parallel.py",
+        "torchtitan/distributed/pp_p2p.py",
+        "torchtitan/distributed/utils.py"
+      ],
+      "claim": "Per-direction pipeline P2P communication avoids the named TorchComms deadlock while preserving stage payloads and schedule order.",
+      "closure": "the base-distinguishing schedule completes on head with exact peer payloads and balanced send/recv operations",
+      "created_at": "2026-06-03T20:05:38Z",
+      "head_sha": "71c669f54e98d2b665514d63dcc48895824002bd",
+      "matrix": [
+        "PP2",
+        "forward/backward direction",
+        "simultaneous send/recv",
+        "one/multiple microbatches",
+        "delayed peer"
+      ],
+      "project": "torchtitan",
+      "pull_number": 3499,
+      "repository": "pytorch/torchtitan",
+      "risk_family": "pipeline-p2p-progress",
+      "runtime": "candidate P2P tests plus timeout-protected two-rank schedule and tensor-value trace",
+      "temporal_band": "mature",
+      "title": "pp"
+    },
+    {
+      "base_sha": "93131416b4aec2202effde4c741715f2a0253389",
+      "benchmark_domain": "communication",
+      "case_id": "torchtitan-pr-3430",
+      "changed_paths": [
+        "tests/integration_tests/features.py",
+        "tests/unit_tests/test_varlen_cp.py",
+        "torchtitan/distributed/context_parallel.py",
+        "torchtitan/distributed/full_dtensor.py",
+        "torchtitan/distributed/varlen_cp.py",
+        "torchtitan/models/common/attention.py",
+        "torchtitan/models/llama3/model.py",
+        "torchtitan/models/qwen3/model.py"
+      ],
+      "claim": "Variable-length attention remains correct under Context Parallel plus Full DTensor for supported model families.",
+      "closure": "packed positions, masks, outputs, and gathered gradients match the non-CP variable-length reference",
+      "created_at": "2026-05-26T16:39:09Z",
+      "head_sha": "bab7d553dcefadad04a9c9b47049c462c8444a26",
+      "matrix": [
+        "CP1/CP2",
+        "equal/uneven sequence lengths",
+        "full-DTensor on/off",
+        "Llama/Qwen",
+        "forward/backward"
+      ],
+      "project": "torchtitan",
+      "pull_number": 3430,
+      "repository": "pytorch/torchtitan",
+      "risk_family": "context-parallel-varlen",
+      "runtime": "candidate varlen tests plus two-rank shard/gather attention and gradient oracle",
+      "temporal_band": "mature",
+      "title": "[Varlen CP] Enable Varlen attention under Context Parallel + Full DTensor"
+    },
+    {
+      "base_sha": "8e4a572980c4e9a894dc5bb2fd4976652207bdaa",
+      "benchmark_domain": "communication",
+      "case_id": "verl-pr-7631",
+      "changed_paths": [
+        "tests/checkpoint_engine/test_global_steps_on_cpu.py",
+        "verl/workers/engine_workers.py"
+      ],
+      "claim": "Actor parameters are offloaded only after disaggregated weight synchronization has transferred and consumed the current weights.",
+      "closure": "receiver observes the new weights before offload, failures retain recoverable ownership, and the next step reloads exact parameters",
+      "created_at": "2026-08-31T06:48:39Z",
+      "head_sha": "ce0535235f7a7034b4afd308d7a0ba3a1b8161d5",
+      "matrix": [
+        "sync success/failure",
+        "offload on/off",
+        "single/repeated update",
+        "slow receiver",
+        "next actor step"
+      ],
+      "project": "verl",
+      "pull_number": 7631,
+      "repository": "verl-project/verl",
+      "risk_family": "weight-sync-offload-lifecycle",
+      "runtime": "candidate global-step tests plus exact worker call-order/ownership and two-rank weight-value probe",
+      "temporal_band": "recent",
+      "title": "[megatron,worker] fix: offload actor parameters after disaggregated weight sync"
+    },
+    {
+      "base_sha": "accb1a07d22b516a2a4e607a7891b8dea0897b91",
+      "benchmark_domain": "communication",
+      "case_id": "verl-pr-6569",
+      "changed_paths": [
+        "verl/checkpoint_engine/hccl_checkpoint_engine.py"
+      ],
+      "claim": "The HCCL checkpoint engine executes asynchronous broadcast rather than silently dropping or prematurely completing the operation.",
+      "closure": "async broadcast is launched, awaited once, propagates errors, and delivers byte-identical payloads on all ranks",
+      "created_at": "2026-06-02T07:52:59Z",
+      "head_sha": "08d4aaf6cfe5108a88c272f2af1594dc102acf9e",
+      "matrix": [
+        "async/sync",
+        "rank0/peer",
+        "empty/boundary/multi-bucket payload",
+        "success/timeout/error",
+        "repeat load"
+      ],
+      "project": "verl",
+      "pull_number": 6569,
+      "repository": "verl-project/verl",
+      "risk_family": "async-broadcast-progress",
+      "runtime": "exact async-handle/control-flow probe plus target HCCL execution where available",
+      "temporal_band": "mature",
+      "title": "[ckpt] fix: restore async HCCL broadcast execution"
+    },
+    {
+      "base_sha": "7c3118e5eb2ab6282c5e5314158fedcf7c1ec85b",
+      "benchmark_domain": "communication",
+      "case_id": "verl-pr-6507",
+      "changed_paths": [
+        "tests/checkpoint_engine/test_global_steps_on_cpu.py",
+        "tests/checkpoint_engine/test_utils.py",
+        "verl/checkpoint_engine/base.py",
+        "verl/checkpoint_engine/hccl_checkpoint_engine.py",
+        "verl/checkpoint_engine/kimi_checkpoint_engine.py",
+        "verl/checkpoint_engine/mooncake_checkpoint_engine.py",
+        "verl/checkpoint_engine/nccl_checkpoint_engine.py",
+        "verl/checkpoint_engine/nixl_checkpoint_engine.py",
+        "verl/workers/engine_workers.py"
+      ],
+      "claim": "Global training step metadata reaches every checkpoint engine and worker consistently without changing payload or resume ownership.",
+      "closure": "every engine records and restores the identical global step exactly once while legacy missing metadata follows the declared fallback",
+      "created_at": "2026-05-27T16:00:36Z",
+      "head_sha": "dc63fa8d2a1456e1bdced8843d3108eb0056aa91",
+      "matrix": [
+        "HCCL/NCCL/NIXL/Mooncake/Kimi engines",
+        "step 0/1/large",
+        "save/load",
+        "single/repeated checkpoint",
+        "missing metadata"
+      ],
+      "project": "verl",
+      "pull_number": 6507,
+      "repository": "verl-project/verl",
+      "risk_family": "checkpoint-metadata-consistency",
+      "runtime": "candidate CPU tests and exact per-engine call/round-trip matrix",
+      "temporal_band": "mature",
+      "title": "[ckpt] feat: pass global steps to checkpoint engines"
+    },
+    {
+      "base_sha": "7292ee2791985ff3afe38850fb34125ad0853933",
+      "benchmark_domain": "communication",
+      "case_id": "vllm-pr-54960",
+      "changed_paths": [
+        "tests/v1/core/test_scheduler.py",
+        "tests/v1/ec_connector/unit/test_ec_connector_metrics.py",
+        "tests/v1/ec_connector/unit/test_worker_ec_connector.py",
+        "vllm/distributed/ec_transfer/ec_connector/base.py",
+        "vllm/distributed/ec_transfer/ec_connector/metrics.py",
+        "vllm/v1/core/sched/scheduler.py",
+        "vllm/v1/metrics/loggers.py",
+        "vllm/v1/metrics/stats.py",
+        "vllm/v1/outputs.py",
+        "vllm/v1/worker/gpu/ec_connector.py"
+      ],
+      "claim": "EC connector metrics count scheduler and worker transfer activity accurately without double counting, stale labels, or affecting scheduling.",
+      "closure": "counter deltas equal independent event counts, labels remain bounded, reset is exact, and outputs/scheduling match metrics-disabled control",
+      "created_at": "2026-09-02T12:39:17Z",
+      "head_sha": "daeb334f621b7b13f708e26738131cdf186858db",
+      "matrix": [
+        "send/receive success/failure",
+        "zero/one/many requests",
+        "worker/scheduler aggregation",
+        "reset/repeat",
+        "connector disabled"
+      ],
+      "project": "vllm",
+      "pull_number": 54960,
+      "repository": "vllm-project/vllm",
+      "risk_family": "connector-observability",
+      "runtime": "candidate metric tests plus exact event-to-counter trace and scheduling no-op control",
+      "temporal_band": "recent",
+      "title": "[EC Connector]Add Metrics Collection"
+    },
+    {
+      "base_sha": "5e2af28838d735979a29eb1c3558951bb58fbe17",
+      "benchmark_domain": "communication",
+      "case_id": "vllm-pr-44495",
+      "changed_paths": [
+        "vllm/distributed/device_communicators/shm_broadcast.py"
+      ],
+      "claim": "Shared-memory broadcast eliminates the ZMQ port TOCTOU window by retaining atomic ownership from allocation through bind.",
+      "closure": "a competing binder cannot steal the selected port and every failure releases ownership so retry and broadcast complete",
+      "created_at": "2026-06-04T05:33:47Z",
+      "head_sha": "e5ac6d76485f6e78ba89fb2b58c369f3ab3e8aa5",
+      "matrix": [
+        "one/two concurrent creators",
+        "port collision",
+        "bind success/failure",
+        "close/retry",
+        "IPv4/declared endpoint"
+      ],
+      "project": "vllm",
+      "pull_number": 44495,
+      "repository": "vllm-project/vllm",
+      "risk_family": "shared-memory-port-lifecycle",
+      "runtime": "isolated socket ownership race plus repeated multiprocess bind/broadcast probe",
+      "temporal_band": "mature",
+      "title": "[Bugfix] Fix ZMQ port TOCTOU race in shm_broadcast.py"
+    },
+    {
+      "base_sha": "fd9e91d7e4116c9f3d1a3fc237677c925bf9d6d9",
+      "benchmark_domain": "communication",
+      "case_id": "vllm-pr-44583",
+      "changed_paths": [
+        "tests/v1/kv_connector/unit/test_nixl_connector.py",
+        "tests/v1/kv_connector/unit/test_tp_mapping.py",
+        "vllm/distributed/kv_transfer/kv_connector/v1/nixl/worker.py"
+      ],
+      "claim": "NIXL classifies and transfers mixed full-attention and MLA KV regions with correct per-region offsets and TP ownership.",
+      "closure": "every region is classified once, transferred to its intended owner, and reconstructs the original mixed KV tensors byte-for-byte",
+      "created_at": "2026-06-04T21:57:03Z",
+      "head_sha": "58060950a860aaa0734cc0f22c826a76deb4c59f",
+      "matrix": [
+        "full-attn/MLA/mixed groups",
+        "TP1/TP2",
+        "one/multiple regions",
+        "partial/full transfer",
+        "invalid mapping"
+      ],
+      "project": "vllm",
+      "pull_number": 44583,
+      "repository": "vllm-project/vllm",
+      "risk_family": "kv-transfer-region-mapping",
+      "runtime": "candidate unit tests plus exact region classifier/offset and two-rank reconstruction oracle",
+      "temporal_band": "mature",
+      "title": "[NIXL] Per-region KV transfer classification for mixed full-attn + MLA groups"
+    },
+    {
+      "base_sha": "e28e369f78c3453c031ad89dd089f966a63e9f2b",
+      "benchmark_domain": "communication",
+      "case_id": "vllm-pr-44577",
+      "changed_paths": [
+        "tests/v1/core/test_contiguous_kv_packing.py",
+        "vllm/distributed/kv_transfer/kv_connector/v1/nixl/base_worker.py",
+        "vllm/distributed/kv_transfer/kv_connector/v1/offloading/worker.py",
+        "vllm/v1/core/kv_cache_utils.py",
+        "vllm/v1/kv_cache_interface.py",
+        "vllm/v1/worker/gpu/attn_utils.py",
+        "vllm/v1/worker/gpu_model_runner.py"
+      ],
+      "claim": "DeepSeek-V4 KV caches pack into contiguous per-block allocations without overlap, holes, stale views, or attention-value changes.",
+      "closure": "all cache views are in-bounds, non-overlapping and contiguous per block, and round-trip attention tensors equal the unpacked reference",
+      "created_at": "2026-06-04T20:37:18Z",
+      "head_sha": "56c471867f46d5c288e713785a83bfc71efd9e84",
+      "matrix": [
+        "one/multiple attention groups",
+        "full-attn/MLA",
+        "one/multiple blocks",
+        "allocate/free/reuse",
+        "eager/captured access"
+      ],
+      "project": "vllm",
+      "pull_number": 44577,
+      "repository": "vllm-project/vllm",
+      "risk_family": "kv-cache-packing-ownership",
+      "runtime": "candidate packing tests plus exact offset/non-overlap proof and attention read/write reconstruction oracle",
+      "temporal_band": "mature",
+      "title": "[DSv4] Pack KV caches into contiguous per-block allocations for DeepSeek V4"
+    },
+    {
+      "base_sha": "ead96b618e5c67bddc6a6e9bcb99bfe6b5ab661c",
+      "benchmark_domain": "training",
+      "case_id": "liger-pr-1405",
+      "changed_paths": [
+        "README.md",
+        "benchmark/scripts/benchmark_cce.py",
+        "src/liger_kernel/ops/__init__.py",
+        "src/liger_kernel/ops/cce.py",
+        "src/liger_kernel/transformers/__init__.py",
+        "src/liger_kernel/transformers/cce.py",
+        "src/liger_kernel/transformers/functional.py",
+        "test/transformers/test_cce.py"
+      ],
+      "claim": "CCE loss preserves reference cross-entropy values and gradients across supported reductions, masking, dtypes, and model integration.",
+      "closure": "loss and every input/weight gradient meet frozen tolerances, ignored rows contribute zero, and peak memory does not regress its claim",
+      "created_at": "2026-08-25T08:53:03Z",
+      "head_sha": "a80440de826086fe1ba864d37bb25f849a37b6c9",
+      "matrix": [
+        "FP32/BF16",
+        "none/sum/mean",
+        "ignore index present/absent",
+        "small/large vocab",
+        "functional/module API"
+      ],
+      "project": "liger-kernel",
+      "pull_number": 1405,
+      "repository": "linkedin/Liger-Kernel",
+      "risk_family": "cross-entropy-loss",
+      "runtime": "candidate CCE tests and independent PyTorch forward/backward oracle with an A100 memory/timing control",
+      "temporal_band": "recent",
+      "title": "Add CCE loss"
+    },
+    {
+      "base_sha": "842964682b7cc9b4bd623eed9525ba220b726da4",
+      "benchmark_domain": "training",
+      "case_id": "liger-pr-1219",
+      "changed_paths": [
+        "src/liger_kernel/ops/backends/_ascend/ops/swiglu.py"
+      ],
+      "claim": "Ascend SwiGLU multiplier and mixed-precision tuning preserve forward/backward semantics and legal UB/grid launch configuration.",
+      "closure": "forward and gradients match the independent SwiGLU multiplier oracle and every declared shape has an in-bounds launch",
+      "created_at": "2026-05-08T09:30:59Z",
+      "head_sha": "07dceae336e10be972c3ff19c6f5ae17a3cdbaac",
+      "matrix": [
+        "multiplier default/custom",
+        "FP16/BF16/FP32 accumulation",
+        "short/long hidden size",
+        "contiguous/strided",
+        "forward/backward"
+      ],
+      "project": "liger-kernel",
+      "pull_number": 1219,
+      "repository": "linkedin/Liger-Kernel",
+      "risk_family": "swiglu-mixed-precision",
+      "runtime": "exact algebra and launch-shape proof plus target NPU reference tests where available",
+      "temporal_band": "mature",
+      "title": "[npu, feat] SwiGLU \u2014 multiplier API, mixed precision, UB/grid tune"
+    },
+    {
+      "base_sha": "db23b33ee4afb5705d38d20dee228cdcca63d8d8",
+      "benchmark_domain": "training",
+      "case_id": "megatron-pr-5146",
+      "changed_paths": [
+        "megatron/core/optimizer/optimizer.py"
+      ],
+      "claim": "ChainedOptimizer defers MXFP8 synchronization only when DDP-level overlap_param_gather owns the overlap, avoiding missing or duplicate sync.",
+      "closure": "each step performs exactly one required sync at the owning layer and matches the non-deferred optimizer update",
+      "created_at": "2026-06-04T03:23:15Z",
+      "head_sha": "061dd608251f8ba56e22b0f297b81c57c4f20582",
+      "matrix": [
+        "overlap on/off",
+        "MXFP8/non-MXFP8",
+        "one/chained optimizers",
+        "one/multiple steps",
+        "exception/normal finalize"
+      ],
+      "project": "megatron-core",
+      "pull_number": 5146,
+      "repository": "NVIDIA/Megatron-LM",
+      "risk_family": "optimizer-sync-ownership",
+      "runtime": "exact branch/call-count probe and one-step parameter/state equivalence oracle",
+      "temporal_band": "mature",
+      "title": "cp: `fix(optimizer): gate ChainedOptimizer MXFP8 defer-sync on DDP-level overlap_param_gather (4982)` into `core_r0.18.0`"
+    },
+    {
+      "base_sha": "db23b33ee4afb5705d38d20dee228cdcca63d8d8",
+      "benchmark_domain": "training",
+      "case_id": "megatron-pr-5144",
+      "changed_paths": [
+        "megatron/core/model_parallel_config.py",
+        "megatron/core/transformer/moe/README.md",
+        "megatron/training/arguments.py",
+        "tests/functional_tests/test_cases/gpt/gpt3_15b_8t_release_gb200/model_config.yaml",
+        "tests/functional_tests/test_cases/gpt/gpt3_15b_8t_release_sm_gb200/model_config.yaml",
+        "tests/functional_tests/test_cases/mixtral/deepseekv3_proxy_flex_tp1pp4emp16etp1cp1_release/model_config.yaml",
+        "tests/functional_tests/test_cases/mixtral/deepseekv3_proxy_flex_tp1pp4emp16etp1cp1_release_sm/model_config.yaml",
+        "tests/functional_tests/test_cases/mixtral/deepseekv3_proxy_flex_tp2pp2emp16etp1cp1_gb_200_release/model_config.yaml",
+        "tests/functional_tests/test_cases/mixtral/deepseekv3_proxy_flex_tp2pp2emp16etp1cp1_gb_200_release_sm/model_config.yaml",
+        "tests/unit_tests/models/test_mimo_1f1b_schedule.py",
+        "tests/unit_tests/test_model_parallel_config.py"
+      ],
+      "claim": "TE cross-entropy fusion is disabled for the incompatible release configurations while compatible configurations retain their prior behavior.",
+      "closure": "affected configs select the safe loss path with reference-equivalent loss/gradients and unaffected configs do not change",
+      "created_at": "2026-06-03T23:11:06Z",
+      "head_sha": "ff6414418075816eac874cdc342092c9c2f6c1b2",
+      "matrix": [
+        "fusion requested/default",
+        "affected/unaffected model configs",
+        "TP/PP/CP release layouts",
+        "forward/backward loss"
+      ],
+      "project": "megatron-core",
+      "pull_number": 5144,
+      "repository": "NVIDIA/Megatron-LM",
+      "risk_family": "loss-fusion-compatibility",
+      "runtime": "candidate config tests plus exact configuration projection and fused/reference loss-gradient oracle where TE permits",
+      "temporal_band": "mature",
+      "title": "cp: `Disable TE cross entropy loss fusion (5115)` into `core_r0.18.0`"
+    },
+    {
+      "base_sha": "624b824a898ab0ec1fcb4d373004c7f3852bf515",
+      "benchmark_domain": "training",
+      "case_id": "slime-pr-2304",
+      "changed_paths": [
+        "slime/backends/megatron_utils/actor.py",
+        "slime/utils/accelerator/torch_accelerator.py",
+        "slime/utils/memory_utils.py",
+        "tests/test_accelerator.py"
+      ],
+      "claim": "Peak-memory reporting for log-probability and actor training measures the intended phase on the active accelerator without perturbing training.",
+      "closure": "reported peaks bound independently measured phase allocations, reset between phases, and training values/gradients remain exact",
+      "created_at": "2026-08-21T19:19:16Z",
+      "head_sha": "08dcd75b0af583efd2a6a013f40ebc3c9eaa1526",
+      "matrix": [
+        "log-prob/actor-train phase",
+        "CUDA/accelerator abstraction",
+        "reset/repeat",
+        "empty/normal batch",
+        "success/exception"
+      ],
+      "project": "slime",
+      "pull_number": 2304,
+      "repository": "THUDM/slime",
+      "risk_family": "training-memory-observability",
+      "runtime": "candidate accelerator tests plus phase-delimited allocation probe and loss/gradient no-op control",
+      "temporal_band": "recent",
+      "title": "feat(megatron): report peak memory for log_probs and actor_train"
+    },
+    {
+      "base_sha": "d719f0361aab548743f0a3c7a8abe0ee26b00bb1",
+      "benchmark_domain": "training",
+      "case_id": "slime-pr-2011",
+      "changed_paths": [
+        ".github/workflows/pr-test.yml.j2",
+        "examples/retool/retool_qwen3_4b_rl.sh",
+        "slime/backends/megatron_utils/model.py",
+        "slime/utils/ppo_utils.py",
+        "tests/test_logprob_entropy_fused.py",
+        "tools/repro_1951.py"
+      ],
+      "claim": "The fused log-probability plus entropy cross-entropy path reduces peak memory while preserving PPO values, gradients, and repeated-backward behavior.",
+      "closure": "loss/log-prob/entropy and gradients meet tolerances, retained-graph replay is valid, and measured peak is lower than the baseline",
+      "created_at": "2026-06-02T21:10:21Z",
+      "head_sha": "fda5193c82bfa06d43b371e879d11db78bca9831",
+      "matrix": [
+        "entropy requested/omitted",
+        "FP32/BF16",
+        "short/long vocabulary",
+        "single/repeated backward",
+        "TP1/TP2 where supported"
+      ],
+      "project": "slime",
+      "pull_number": 2011,
+      "repository": "THUDM/slime",
+      "risk_family": "ppo-loss-memory",
+      "runtime": "candidate fused tests plus A100 reference value/gradient and peak-allocation comparison",
+      "temporal_band": "mature",
+      "title": "perf(ppo): reduce log-prob + entropy cross-entropy peak memory"
+    },
+    {
+      "base_sha": "8ec585e1d795dad3976ae3bf9aa579f3606920f0",
+      "benchmark_domain": "training",
+      "case_id": "torchtitan-pr-3525",
+      "changed_paths": [
+        "torchtitan/experiments/rl/actors/generator.py",
+        "torchtitan/experiments/rl/actors/trainer.py",
+        "torchtitan/experiments/rl/config_registry.py",
+        "torchtitan/experiments/rl/grpo.py",
+        "torchtitan/experiments/rl/models/attention.py",
+        "torchtitan/experiments/rl/models/vllm_wrapper.py",
+        "torchtitan/models/common/token_dispatcher.py"
+      ],
+      "claim": "The RL trainer/generator supports DP=2 on a four-GPU dense and MoE mesh with correct sharding, progress, loss, and gradients.",
+      "closure": "the declared four-GPU step completes and gathered parameters, losses, and gradients match the DP1 reference",
+      "created_at": "2026-06-04T14:53:09Z",
+      "head_sha": "065c0229a9760a8ecdf7c7d242aca39f81df8090",
+      "matrix": [
+        "dense/MoE",
+        "DP1/DP2",
+        "four-GPU declared mesh",
+        "generate/train",
+        "one/multiple rollout batches"
+      ],
+      "project": "torchtitan",
+      "pull_number": 3525,
+      "repository": "pytorch/torchtitan",
+      "risk_family": "rl-data-parallel-topology",
+      "runtime": "candidate integration path and reduced two-GPU ownership checks; exact four-GPU execution is required for full closure",
+      "temporal_band": "mature",
+      "title": "[DRAFT] Demo of DP=2 on 4 GPU mesh (Dense, MoE)"
+    },
+    {
+      "base_sha": "c3574ca7d4a1e26674dc8da9f0fa66c315802795",
+      "benchmark_domain": "training",
+      "case_id": "torchtitan-pr-3522",
+      "changed_paths": [
+        "torchtitan/experiments/graph_trainer/configs.py",
+        "torchtitan/experiments/graph_trainer/cpu_offload.py",
+        "torchtitan/experiments/graph_trainer/memory_policy.py",
+        "torchtitan/experiments/graph_trainer/passes.py",
+        "torchtitan/experiments/graph_trainer/tests/test_cpu_offload.py",
+        "torchtitan/experiments/graph_trainer/trainer.py"
+      ],
+      "claim": "CPU activation offload replays tensor views with correct storage, shape, stride, version, and backward gradients.",
+      "closure": "replayed views reproduce metadata and values, avoid illegal alias mutation, and match non-offloaded gradients across repeated use",
+      "created_at": "2026-06-04T04:00:01Z",
+      "head_sha": "b47c32d139f080a1923b4b50f6e3b25d7a7b2ea4",
+      "matrix": [
+        "base/view/nested view",
+        "contiguous/strided",
+        "single/repeated backward",
+        "offload on/off",
+        "mutation/no mutation"
+      ],
+      "project": "torchtitan",
+      "pull_number": 3522,
+      "repository": "pytorch/torchtitan",
+      "risk_family": "activation-offload-view-lifecycle",
+      "runtime": "candidate CPU-offload tests plus exact storage/view reconstruction and gradient oracle",
+      "temporal_band": "mature",
+      "title": "[graph_trainer] Add view replay for CPU activation offloading"
+    },
+    {
+      "base_sha": "efc48d5369d2681303ef811522bb8c44b53b954f",
+      "benchmark_domain": "training",
+      "case_id": "verl-pr-6566",
+      "changed_paths": [
+        "tests/utils/megatron/test_optimizer.py",
+        "verl/utils/megatron/optimizer.py",
+        "verl/utils/megatron_utils.py",
+        "verl/version/version",
+        "verl/workers/engine/megatron/transformer_impl.py",
+        "verl/workers/megatron_workers.py"
+      ],
+      "claim": "The changed Megatron optimizer integration preserves parameter grouping, optimizer construction, state ownership, and one-step updates.",
+      "closure": "all trainable parameters appear once, state round-trips, and resumed parameters/moments match the continuous reference",
+      "created_at": "2026-06-02T04:42:44Z",
+      "head_sha": "062415275f29ec442890041dec6639ef5238ba02",
+      "matrix": [
+        "single/chained optimizer",
+        "offload on/off",
+        "FP32/mixed precision",
+        "save/load state",
+        "one/two steps"
+      ],
+      "project": "verl",
+      "pull_number": 6566,
+      "repository": "verl-project/verl",
+      "risk_family": "megatron-optimizer-integration",
+      "runtime": "candidate optimizer tests plus exact parameter-group/state schema and continuous-versus-resumed trajectory oracle",
+      "temporal_band": "mature",
+      "title": "Kolehma8/megatron"
+    },
+    {
+      "base_sha": "74cebc50d424d91a0de967291cf070907c05a47b",
+      "benchmark_domain": "training",
+      "case_id": "verl-pr-6593",
+      "changed_paths": [
+        "tests/workers/test_chunked_topk_log_probs_on_cpu.py",
+        "verl/trainer/distillation/fsdp/losses.py",
+        "verl/workers/config/distillation.py"
+      ],
+      "claim": "Chunked gather-logsumexp computes the same top-K distillation loss and gradients while bounding peak memory at long context.",
+      "closure": "loss and student gradients meet frozen tolerances at all boundaries and measured peak scales with chunk rather than full context",
+      "created_at": "2026-06-03T14:12:04Z",
+      "head_sha": "e088d91951b322a3a1228c94e48d9c0c98405ca6",
+      "matrix": [
+        "one/multiple chunks",
+        "chunk boundary +/-1",
+        "short/long context",
+        "FP32/BF16",
+        "top-K small/large"
+      ],
+      "project": "verl",
+      "pull_number": 6593,
+      "repository": "verl-project/verl",
+      "risk_family": "distillation-loss-memory",
+      "runtime": "candidate CPU tests plus A100 unchunked reference value/gradient and peak-allocation comparison",
+      "temporal_band": "mature",
+      "title": "[fsdp] feat: chunked gather-logsumexp for top-K loss to avoid OOM at long context"
+    }
+  ],
+  "ci_or_label_requested": false,
+  "cross_case_controls": [
+    "No synthetic counterexample blocks unless production reachability is demonstrated.",
+    "A timeout needs bounded rank diagnostics and a healthy control before proving deadlock.",
+    "Test pass or technical correctness alone does not prove historical merge disposition.",
+    "A100-side skip cannot masquerade as target NPU, ROCm, MNNVL, or newer-architecture execution.",
+    "Short terms such as p2p, ppo, and dpo are token matched; test paths alone cannot define the domain.",
+    "Candidate body remains an outcome-free but separately hashed evidence tier."
+  ],
+  "disposition_policy": {
+    "accept": "title-scoped production contract has sufficient exact evidence and no reachable blocker",
+    "check": "recent, <=4 changed files, primary direction demonstrated, candidate closure coverage, exactly one executable residual, and no superseding or reachable counterexample",
+    "forced_polarization_used": false,
+    "mature_created_at_cutoff": "2026-06-04T23:59:59Z",
+    "prospective_created_at_cutoff": "2026-08-04T00:00:00Z",
+    "reject": "exact reachable failure, broad remediation, mature disposition lacking accept evidence, or broad hardware feature without evaluator numeric closure",
+    "resolution_gray_zone_excluded": true,
+    "unresolved": "required backend, architecture, topology, or exact evidence is unavailable; recorded technically without fabricating a failure",
+    "weighted_score_used": false
+  },
+  "domain_allocation": {
+    "communication": 20,
+    "training": 10
+  },
+  "domain_amendment_sha256": "sha256:9273c049ca41ea1eb39d6a21afa8a8557ce16446286ba70e68a7227a55a07f4a",
+  "evaluation_layers": {
+    "disposition_prediction": [
+      "accept",
+      "check",
+      "reject",
+      "unresolved"
+    ],
+    "governance_gap_recorded_separately": true,
+    "technical_bounded_gap_does_not_automatically_map_to_disposition_check": true,
+    "technical_contract": [
+      "pass",
+      "bounded-gap",
+      "fail",
+      "unresolved"
+    ]
+  },
+  "evidence_tiers": [
+    "exact candidate-owned tests",
+    "exact isolated base/head contract probe",
+    "two-A100 multi-rank numeric/progress/lifecycle probe",
+    "candidate-authored body evidence projected only after this plan is frozen",
+    "full model/backend E2E where hardware and dependencies permit"
+  ],
+  "frozen_at": "2026-09-02T16:34:26.781759+00:00",
+  "frozen_before_candidate_body_access": true,
+  "frozen_before_source_diff_content_access": true,
+  "machine_policy_id": "mixed-contract-disposition-split-v0.1-r15",
+  "merge_outcome_or_state_requested": false,
+  "ordered_reachability_gate": [
+    "configuration is legal and title-scoped",
+    "production call site reaches the alleged behavior",
+    "rank/group/shape/stream/lifetime invariant is violated or satisfied",
+    "exact counterexample or independent oracle distinguishes base and head",
+    "remediation remains bounded to the candidate direction"
+  ],
+  "protocol_id": "mixed-iterative-contract-v0.1-r15-30",
+  "r14_policy_iteration_sha256": "sha256:b4326c71480c9c468b1cecf354c337f26a18bd43ba053dca3541df76c3f2a027",
+  "review_or_comment_requested": false,
+  "schema_version": "0.1",
+  "selection_lock_sha256": "sha256:0ba902883b19f4a5bb0a070354d70c59ef7c7bbcaa95964dd97eafdb69f12712",
+  "target_hardware_transfer_rule": {
+    "broad_new_hardware_feature_eligible": false,
+    "eligible": "mature bug fix changing <=3 files with candidate target-hardware coverage, locally closed source invariant, and no exact counterexample",
+    "missing_evaluator_hardware_alone_is_reject": false
+  },
+  "test_plan_sha256": "sha256:8efbb95f125b0b2e5ce18fb9f504768fba1cc10f2947f665f48b4c1feb56c15e"
+}

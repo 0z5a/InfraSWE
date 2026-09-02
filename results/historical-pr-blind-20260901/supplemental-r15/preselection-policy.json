@@ -1,0 +1,325 @@
+{
+  "blindness": {
+    "allowed_selection_fields": [
+      "number",
+      "title",
+      "createdAt",
+      "baseRefName",
+      "baseRefOid",
+      "headRefOid",
+      "changedFiles",
+      "additions",
+      "deletions",
+      "files.path",
+      "commits.first.commit.oid",
+      "commits.first.commit.parents.first.oid"
+    ],
+    "candidate_body_visible": false,
+    "ci_or_label_visible": false,
+    "diff_content_visible": false,
+    "review_or_comment_visible": false,
+    "state_or_merge_visible": false
+  },
+  "case_count": 30,
+  "created_at_window": {
+    "excluded_resolution_gray_zone": [
+      "2026-06-05T00:00:00Z",
+      "2026-08-03T23:59:59Z"
+    ],
+    "mature_end": "2026-06-04T23:59:59Z",
+    "observation_cutoff": "2026-09-02T23:59:59Z",
+    "per_project_recent_target": 1,
+    "recent_shortfall_fallback": "fill from mature ranking",
+    "recent_start": "2026-08-04T00:00:00Z",
+    "start": "2025-01-01T00:00:00Z"
+  },
+  "domain_allocation": {
+    "communication": 20,
+    "training": 10
+  },
+  "domain_signals": {
+    "communication": {
+      "path_terms": [
+        "distributed",
+        "communication",
+        "communicator",
+        "collective",
+        "all_reduce",
+        "all_gather",
+        "reduce_scatter",
+        "all_to_all",
+        "nccl",
+        "xccl",
+        "deepep",
+        "p2p",
+        "cuda_ipc",
+        "parallel_state",
+        "tensor_parallel",
+        "expert_parallel",
+        "context_parallel",
+        "pipeline_parallel",
+        "weight_transfer",
+        "weight_sync"
+      ],
+      "risk_families": [
+        "collective-numerics",
+        "rank-topology-sharding",
+        "p2p-transfer",
+        "overlap-ordering",
+        "resource-lifecycle"
+      ],
+      "secondary_title_terms": [
+        "tensor parallel",
+        "expert parallel",
+        "data parallel",
+        "context parallel",
+        "sequence parallel",
+        "pipeline parallel",
+        "distributed",
+        "sharding",
+        "overlap",
+        "remote",
+        "moe"
+      ],
+      "strong_title_terms": [
+        "all_reduce",
+        "all-reduce",
+        "allreduce",
+        "all_gather",
+        "all-gather",
+        "allgather",
+        "reduce_scatter",
+        "reduce-scatter",
+        "broadcast",
+        "collective",
+        "communicator",
+        "communication",
+        "nccl",
+        "xccl",
+        "deepep",
+        "p2p",
+        "send/recv",
+        "cuda ipc",
+        "cuda_ipc",
+        "weight sync",
+        "weight transfer",
+        "deadlock"
+      ]
+    },
+    "training": {
+      "path_terms": [
+        "optimizer",
+        "training",
+        "trainer",
+        "loss",
+        "checkpoint",
+        "scheduler",
+        "backward",
+        "gradient",
+        "fsdp",
+        "ppo",
+        "rollout",
+        "reward",
+        "actor",
+        "critic",
+        "finetun",
+        "distill",
+        "lora"
+      ],
+      "risk_families": [
+        "optimizer-state",
+        "loss-gradient",
+        "checkpoint-resume",
+        "scheduling-pipeline",
+        "memory-performance"
+      ],
+      "secondary_title_terms": [
+        "fsdp",
+        "ddp",
+        "pipeline",
+        "microbatch",
+        "micro-batch",
+        "lora",
+        "moe",
+        "memory",
+        "offload",
+        "recompute",
+        "freeze",
+        "frozen"
+      ],
+      "strong_title_terms": [
+        "train",
+        "training",
+        "optimizer",
+        "loss",
+        "gradient",
+        "backward",
+        "checkpoint",
+        "resume",
+        "activation checkpoint",
+        "mixed precision",
+        "fp8",
+        "reward",
+        "rollout",
+        "actor",
+        "critic",
+        "grpo",
+        "ppo",
+        "dpo",
+        "distill",
+        "finetun",
+        "learning rate",
+        "lr scheduler"
+      ]
+    },
+    "weights": {
+      "candidate_test_path": 1,
+      "domain_path": 4,
+      "secondary_title": 3,
+      "strong_title": 5
+    }
+  },
+  "domains_in_order": [
+    "communication",
+    "training"
+  ],
+  "eligibility": {
+    "changed_files_max": 12,
+    "changed_files_min": 1,
+    "changed_lines_max": 1200,
+    "domain_score_min": 4,
+    "exclude_all_previously_scored_pr_identities": true,
+    "exclude_dependency_or_generated_only": true,
+    "exclude_docs_only": true,
+    "exclude_tests_only": true,
+    "require_complete_path_list": true,
+    "require_first_commit_parent": true,
+    "require_runtime_source_path": true
+  },
+  "frozen_at": "2026-09-02T16:13:21.907550+00:00",
+  "grouping_policy": {
+    "finish_reveal_audit_and_iterate_before_next_round": true,
+    "future_rounds_are_not_preselected": true,
+    "round_size": 30
+  },
+  "machine_policy": {
+    "disposition_check_requires_prospective_eligibility": true,
+    "forced_polarization_used": false,
+    "policy_id": "mixed-contract-disposition-split-v0.1-r15",
+    "technical_contract_and_disposition_are_separate": true,
+    "weighted_score_used": false
+  },
+  "policy_sha256": "sha256:68a27bf4c6e4ed10b45dd66ed1f62c6a9728470653166abbfb41bcb92e566bea",
+  "projects": {
+    "communication": {
+      "flashinfer": {
+        "count": 3,
+        "repository": "flashinfer-ai/flashinfer",
+        "source_prefixes": [
+          "flashinfer/",
+          "python/flashinfer/",
+          "include/",
+          "csrc/"
+        ]
+      },
+      "megatron": {
+        "count": 3,
+        "repository": "NVIDIA/Megatron-LM",
+        "source_prefixes": [
+          "megatron/core/"
+        ]
+      },
+      "sglang": {
+        "count": 4,
+        "repository": "sgl-project/sglang",
+        "source_prefixes": [
+          "python/sglang/",
+          "sgl-kernel/"
+        ]
+      },
+      "torchtitan": {
+        "count": 3,
+        "repository": "pytorch/torchtitan",
+        "source_prefixes": [
+          "torchtitan/"
+        ]
+      },
+      "verl": {
+        "count": 3,
+        "repository": "verl-project/verl",
+        "source_prefixes": [
+          "verl/"
+        ]
+      },
+      "vllm": {
+        "count": 4,
+        "repository": "vllm-project/vllm",
+        "source_prefixes": [
+          "vllm/",
+          "csrc/"
+        ]
+      }
+    },
+    "training": {
+      "liger": {
+        "count": 2,
+        "repository": "linkedin/Liger-Kernel",
+        "source_prefixes": [
+          "src/liger_kernel/"
+        ]
+      },
+      "megatron": {
+        "count": 2,
+        "repository": "NVIDIA/Megatron-LM",
+        "source_prefixes": [
+          "megatron/core/"
+        ]
+      },
+      "slime": {
+        "count": 2,
+        "repository": "THUDM/slime",
+        "source_prefixes": [
+          "slime/"
+        ]
+      },
+      "torchtitan": {
+        "count": 2,
+        "repository": "pytorch/torchtitan",
+        "source_prefixes": [
+          "torchtitan/"
+        ]
+      },
+      "verl": {
+        "count": 2,
+        "repository": "verl-project/verl",
+        "source_prefixes": [
+          "verl/"
+        ]
+      }
+    }
+  },
+  "protocol_id": "mixed-iterative-contract-v0.1-r15-30",
+  "r14_policy_iteration_sha256": "sha256:b4326c71480c9c468b1cecf354c337f26a18bd43ba053dca3541df76c3f2a027",
+  "r15_disposition_rules": [
+    "R15-MATURITY-BANDS",
+    "R15-CHECK-NARROWING",
+    "R15-NARROW-HARDWARE-BUGFIX-TRANSFER",
+    "R15-REJECT-EVIDENCE-ORDER",
+    "R15-DUAL-OUTPUT"
+  ],
+  "round": "R15",
+  "schema_version": "0.1",
+  "selection_algorithm": {
+    "family_diversity": "greedy family coverage within each domain/project slice",
+    "fill": "deterministic rank among remaining eligible cases",
+    "rank_key": [
+      "candidate-owned-test-first",
+      "domain-score-descending",
+      "created-at-descending-within-band",
+      "changed-files-ascending",
+      "changed-lines-ascending",
+      "pull-number-ascending"
+    ],
+    "recent_first": "one best eligible recent case per project when available"
+  }
+}

@@ -1,0 +1,428 @@
+{
+  "blindness": {
+    "allowed_selection_fields": [
+      "number",
+      "title",
+      "createdAt",
+      "baseRefName",
+      "baseRefOid",
+      "headRefOid",
+      "changedFiles",
+      "additions",
+      "deletions",
+      "files.path",
+      "commits.first.commit.oid",
+      "commits.first.commit.parents.first.oid"
+    ],
+    "candidate_body_visible": false,
+    "ci_or_label_visible": false,
+    "diff_content_visible": false,
+    "review_or_comment_visible": false,
+    "state_or_merge_visible": false
+  },
+  "case_count": 30,
+  "created_at_window": {
+    "excluded_resolution_gray_zone": [
+      "2026-06-05T00:00:00Z",
+      "2026-08-26T23:59:59Z"
+    ],
+    "mature_end": "2026-06-04T23:59:59Z",
+    "observation_cutoff": "2026-09-02T23:59:59Z",
+    "per_project_recent_target": 1,
+    "recent_shortfall_fallback": "fill from mature ranking",
+    "recent_start": "2026-08-27T00:00:00Z",
+    "start": "2025-01-01T00:00:00Z"
+  },
+  "domain_allocation": {
+    "inference": 20,
+    "training": 10
+  },
+  "domain_anchor": {
+    "inference": {
+      "direct_terms": [
+        "inference",
+        "serving",
+        "serve",
+        "scheduler",
+        "kv cache",
+        "kv-cache",
+        "prefix cache",
+        "decode",
+        "prefill",
+        "speculative",
+        "draft",
+        "cuda graph",
+        "cudagraph",
+        "attention",
+        "quantization",
+        "lora",
+        "adapter",
+        "batching",
+        "request",
+        "engine",
+        "executor",
+        "model runner",
+        "model_runner",
+        "sampling"
+      ],
+      "source_path_terms": [
+        "/scheduler",
+        "/engine",
+        "/executor",
+        "/worker",
+        "model_runner",
+        "kv_cache",
+        "/attention",
+        "spec_decode",
+        "speculative",
+        "/sampling",
+        "/lora",
+        "/adapter",
+        "/quant",
+        "/serve",
+        "/runtime",
+        "/batch",
+        "cache_manager"
+      ]
+    },
+    "title_docs_prefix_is_excluded": true,
+    "training": {
+      "direct_terms": [
+        "train",
+        "training",
+        "trainer",
+        "optimizer",
+        "loss",
+        "gradient",
+        "backward",
+        "checkpoint",
+        "resume",
+        "activation checkpoint",
+        "mixed precision",
+        "fp8",
+        "reward",
+        "rollout",
+        "actor",
+        "critic",
+        "grpo",
+        "ppo",
+        "dpo",
+        "distill",
+        "finetun",
+        "learning rate",
+        "lr scheduler",
+        "offload",
+        "recompute",
+        "log_prob",
+        "logprob"
+      ],
+      "source_path_terms": [
+        "/optimizer",
+        "training/",
+        "/trainer",
+        "/loss",
+        "checkpoint",
+        "/scheduler",
+        "backward",
+        "gradient",
+        "/fsdp",
+        "/ppo",
+        "/rollout",
+        "/reward",
+        "/actor",
+        "/critic",
+        "finetun",
+        "distill",
+        "logprob",
+        "log_prob",
+        "cpu_offload",
+        "memory_policy"
+      ]
+    }
+  },
+  "domain_signals": {
+    "inference": {
+      "path_terms": [
+        "scheduler",
+        "engine",
+        "executor",
+        "worker",
+        "model_runner",
+        "kv_cache",
+        "attention",
+        "spec_decode",
+        "speculative",
+        "sampling",
+        "lora",
+        "adapter",
+        "quant",
+        "serve",
+        "runtime",
+        "batch",
+        "kernel",
+        "cache_manager"
+      ],
+      "risk_families": [
+        "scheduler-progress",
+        "cache-state-layout",
+        "attention-numerics",
+        "model-runtime-integration",
+        "memory-performance"
+      ],
+      "secondary_title_terms": [
+        "latency",
+        "throughput",
+        "memory",
+        "cache",
+        "sampling",
+        "token",
+        "model runner",
+        "worker",
+        "backend",
+        "flashinfer",
+        "trtllm"
+      ],
+      "strong_title_terms": [
+        "inference",
+        "serving",
+        "scheduler",
+        "kv cache",
+        "kv-cache",
+        "prefix cache",
+        "decode",
+        "prefill",
+        "speculative",
+        "draft",
+        "cuda graph",
+        "cudagraph",
+        "attention",
+        "quantization",
+        "lora",
+        "adapter",
+        "batching",
+        "request",
+        "engine",
+        "executor",
+        "kernel"
+      ]
+    },
+    "training": {
+      "path_terms": [
+        "optimizer",
+        "training",
+        "trainer",
+        "loss",
+        "checkpoint",
+        "scheduler",
+        "backward",
+        "gradient",
+        "fsdp",
+        "ppo",
+        "rollout",
+        "reward",
+        "actor",
+        "critic",
+        "finetun",
+        "distill",
+        "lora",
+        "logprob",
+        "log_prob",
+        "memory_policy"
+      ],
+      "risk_families": [
+        "optimizer-state",
+        "loss-gradient",
+        "checkpoint-resume",
+        "scheduling-pipeline",
+        "memory-performance"
+      ],
+      "secondary_title_terms": [
+        "fsdp",
+        "ddp",
+        "pipeline",
+        "microbatch",
+        "micro-batch",
+        "lora",
+        "moe",
+        "memory",
+        "freeze",
+        "frozen"
+      ],
+      "strong_title_terms": [
+        "train",
+        "training",
+        "optimizer",
+        "loss",
+        "gradient",
+        "backward",
+        "checkpoint",
+        "resume",
+        "activation checkpoint",
+        "mixed precision",
+        "fp8",
+        "reward",
+        "rollout",
+        "actor",
+        "critic",
+        "grpo",
+        "ppo",
+        "dpo",
+        "distill",
+        "finetun",
+        "learning rate",
+        "lr scheduler",
+        "offload",
+        "recompute",
+        "log_prob",
+        "logprob"
+      ]
+    },
+    "weights": {
+      "candidate_test_path": 1,
+      "domain_path": 4,
+      "secondary_title": 3,
+      "strong_title": 5
+    }
+  },
+  "domains_in_order": [
+    "training",
+    "inference"
+  ],
+  "eligibility": {
+    "changed_files_max": 12,
+    "changed_files_min": 1,
+    "changed_lines_max": 1200,
+    "domain_score_min": 4,
+    "exclude_all_previously_scored_pr_identities": true,
+    "exclude_dependency_or_generated_only": true,
+    "exclude_docs_only": true,
+    "exclude_tests_only": true,
+    "require_complete_path_list": true,
+    "require_first_commit_parent": true,
+    "require_runtime_source_path": true
+  },
+  "frozen_at": "2026-09-02T18:46:32.585372+00:00",
+  "grouping_policy": {
+    "finish_reveal_audit_and_iterate_before_next_round": true,
+    "future_rounds_are_not_preselected": true,
+    "round_size": 30
+  },
+  "machine_policy": {
+    "candidate_test_required_for_check": true,
+    "explicit_not_ready_body_is_disposition_veto": true,
+    "forced_polarization_used": false,
+    "policy_id": "mixed-contract-disposition-split-v0.1-r17",
+    "technical_contract_and_disposition_are_separate": true,
+    "weighted_score_used": false
+  },
+  "policy_sha256": "sha256:3bcd37c708d67618dd42ac767653eef715303a59bc38f641a8ad9299b9186a11",
+  "projects": {
+    "inference": {
+      "flashinfer": {
+        "count": 5,
+        "repository": "flashinfer-ai/flashinfer",
+        "source_prefixes": [
+          "flashinfer/",
+          "python/flashinfer/",
+          "include/",
+          "csrc/"
+        ]
+      },
+      "sglang": {
+        "count": 5,
+        "repository": "sgl-project/sglang",
+        "source_prefixes": [
+          "python/sglang/",
+          "sgl-kernel/"
+        ]
+      },
+      "tensorrt_llm": {
+        "count": 5,
+        "repository": "NVIDIA/TensorRT-LLM",
+        "source_prefixes": [
+          "tensorrt_llm/",
+          "cpp/"
+        ]
+      },
+      "vllm": {
+        "count": 5,
+        "repository": "vllm-project/vllm",
+        "source_prefixes": [
+          "vllm/",
+          "csrc/"
+        ]
+      }
+    },
+    "training": {
+      "liger": {
+        "count": 2,
+        "repository": "linkedin/Liger-Kernel",
+        "source_prefixes": [
+          "src/liger_kernel/"
+        ]
+      },
+      "megatron": {
+        "count": 2,
+        "repository": "NVIDIA/Megatron-LM",
+        "source_prefixes": [
+          "megatron/core/",
+          "megatron/training/"
+        ]
+      },
+      "slime": {
+        "count": 2,
+        "repository": "THUDM/slime",
+        "source_prefixes": [
+          "slime/"
+        ]
+      },
+      "torchtitan": {
+        "count": 2,
+        "repository": "pytorch/torchtitan",
+        "source_prefixes": [
+          "torchtitan/"
+        ]
+      },
+      "verl": {
+        "count": 2,
+        "repository": "verl-project/verl",
+        "source_prefixes": [
+          "verl/"
+        ]
+      }
+    }
+  },
+  "protocol_id": "mixed-iterative-contract-v0.1-r17-30",
+  "r16_policy_iteration_sha256": "sha256:9a91111429959388bf11331e499c8eb28713c5ef5091bf83e86fb14e759d9b4f",
+  "r17_disposition_rules": [
+    "R17-CHECK-REQUIRES-READINESS-SIGNAL",
+    "R17-EXPLICIT-NOT-READY-VETO",
+    "R17-MATURE-NO-TEST-DEFAULT",
+    "R17-STRUCTURAL-MIGRATION-EXCEPTION",
+    "R17-ARTIFACT-BOUNDARY-EXCEPTION",
+    "R17-STACKED-SERIES-DIVERSITY",
+    "R17-RESOURCE-CLAIM-NEEDS-RUNTIME",
+    "R17-EXACT-HEAD-INTEGRITY-FIRST",
+    "R17-DUAL-OUTPUT"
+  ],
+  "round": "R17",
+  "schema_version": "0.1",
+  "selection_algorithm": {
+    "family_diversity": "greedy family coverage within each project slice",
+    "fill": "deterministic rank among remaining mature eligible cases",
+    "rank_key": [
+      "candidate-owned-test-first",
+      "domain-score-descending",
+      "created-at-descending-within-band",
+      "changed-files-ascending",
+      "changed-lines-ascending",
+      "pull-number-ascending"
+    ],
+    "recent_first": "one best eligible <=7-day case per project when available",
+    "stacked_series_diversity": {
+      "max_per_overlap_cluster_per_project": 2,
+      "non_test_path_jaccard_min": 0.5,
+      "normalized_title_prefix_token_count": 3
+    }
+  }
+}

@@ -1,0 +1,1002 @@
+{
+  "cases": [
+    {
+      "base_sha": "0245181a117293dc5f4661b82c9c9188677f73df",
+      "benchmark_domain": "training",
+      "case_id": "liger-pr-1435",
+      "changed_paths": [
+        "src/liger_kernel/ops/mlp.py"
+      ],
+      "claim": "The production change titled 'fix(mlp): correct SwiGLU backward_dI on Blackwell (SM100/B200)' preserves all unchanged loss-gradient behavior while satisfying its named direction.",
+      "closure": "loss or operator values and every reachable gradient meet the frozen reference tolerances",
+      "created_at": "2026-09-01T22:09:25Z",
+      "head_sha": "32bec3ab5d6eddeccda9894235d003bf51f15aff",
+      "matrix": [
+        "forward/backward",
+        "boundary/normal shape",
+        "FP32/mixed precision",
+        "feature on/off"
+      ],
+      "project": "liger-kernel",
+      "pull_number": 1435,
+      "repository": "linkedin/Liger-Kernel",
+      "risk_family": "loss-gradient",
+      "runtime": "candidate exact tests plus independent value/gradient base-head comparison on available accelerator",
+      "temporal_band": "recent",
+      "title": "fix(mlp): correct SwiGLU backward_dI on Blackwell (SM100/B200)"
+    },
+    {
+      "base_sha": "781083b2cdead14bdc035058ab52e5d396bb0113",
+      "benchmark_domain": "training",
+      "case_id": "liger-pr-1157",
+      "changed_paths": [
+        "src/liger_kernel/ops/fused_linear_cross_entropy.py"
+      ],
+      "claim": "The production change titled 'fix: guard save_for_backward on grad_bias not bias in fused linear CE forward' preserves all unchanged checkpoint-resume behavior while satisfying its named direction.",
+      "closure": "all state is uniquely represented, atomically finalized, reloadable, and equivalent after resume",
+      "created_at": "2026-03-21T09:42:38Z",
+      "head_sha": "f52e160e470b6ac0f069292960cf8dff2af6a4f7",
+      "matrix": [
+        "save/load",
+        "fresh/resumed",
+        "complete/partial state",
+        "single/distributed owner"
+      ],
+      "project": "liger-kernel",
+      "pull_number": 1157,
+      "repository": "linkedin/Liger-Kernel",
+      "risk_family": "checkpoint-resume",
+      "runtime": "candidate exact tests plus key, tensor, shard/index, and resumed-trajectory parity checks",
+      "temporal_band": "mature",
+      "title": "fix: guard save_for_backward on grad_bias not bias in fused linear CE forward"
+    },
+    {
+      "base_sha": "a3344a6fa2031770855f203d991a31cebc89a23b",
+      "benchmark_domain": "training",
+      "case_id": "megatron-pr-7013",
+      "changed_paths": [
+        "megatron/core/optimizer/distrib_optimizer.py",
+        "tests/unit_tests/optimizer/test_distrib_optimizer_fp32_param_shard.py"
+      ],
+      "claim": "The production change titled 'Fix non-leaf shard param for FP32 model params in DistributedOptimizer' preserves all unchanged optimizer-state behavior while satisfying its named direction.",
+      "closure": "each trainable parameter and state slot has one owner and the head trajectory matches the independent reference",
+      "created_at": "2026-09-01T09:13:37Z",
+      "head_sha": "abee34eaafc610b0a408551ad171a16740c5ae72",
+      "matrix": [
+        "one/two steps",
+        "fresh/resumed state",
+        "mixed/full precision",
+        "enabled/disabled path"
+      ],
+      "project": "megatron-core",
+      "pull_number": 7013,
+      "repository": "NVIDIA/Megatron-LM",
+      "risk_family": "optimizer-state",
+      "runtime": "candidate exact tests plus parameter, gradient, optimizer-state, and continuous-versus-resumed base/head oracle",
+      "temporal_band": "recent",
+      "title": "Fix non-leaf shard param for FP32 model params in DistributedOptimizer"
+    },
+    {
+      "base_sha": "378d81fbd32a3faa90726d0e59344f7893ce4b47",
+      "benchmark_domain": "training",
+      "case_id": "megatron-pr-5047",
+      "changed_paths": [
+        "megatron/core/transformer/moe/router.py",
+        "tests/unit_tests/transformer/moe/test_aux_loss.py",
+        "tests/unit_tests/transformer/moe/test_token_dispatcher.py"
+      ],
+      "claim": "The production change titled 'Fix MoE aux_loss / z_loss gradient scaling with TP > 1' preserves all unchanged loss-gradient behavior while satisfying its named direction.",
+      "closure": "loss or operator values and every reachable gradient meet the frozen reference tolerances",
+      "created_at": "2026-05-28T21:59:36Z",
+      "head_sha": "d2633d8f75ee79ff00dd26623c9cb1f8f74cdda2",
+      "matrix": [
+        "forward/backward",
+        "boundary/normal shape",
+        "FP32/mixed precision",
+        "feature on/off"
+      ],
+      "project": "megatron-core",
+      "pull_number": 5047,
+      "repository": "NVIDIA/Megatron-LM",
+      "risk_family": "loss-gradient",
+      "runtime": "candidate exact tests plus independent value/gradient base-head comparison on available accelerator",
+      "temporal_band": "mature",
+      "title": "Fix MoE aux_loss / z_loss gradient scaling with TP > 1"
+    },
+    {
+      "base_sha": "2f4bd0d889593d8fec57ed6ea095f9fa586ca8da",
+      "benchmark_domain": "training",
+      "case_id": "slime-pr-1930",
+      "changed_paths": [
+        "slime/backends/megatron_utils/actor.py",
+        "slime/backends/megatron_utils/data.py",
+        "slime/backends/megatron_utils/loss.py",
+        "slime/backends/megatron_utils/model.py",
+        "slime/ray/rollout.py",
+        "slime/utils/dp_schedule.py",
+        "tests/test_dp_schedule.py"
+      ],
+      "claim": "The production change titled '[1/N] Support training with variable global batch size' preserves all unchanged loss-gradient behavior while satisfying its named direction.",
+      "closure": "loss or operator values and every reachable gradient meet the frozen reference tolerances",
+      "created_at": "2026-05-21T04:17:21Z",
+      "head_sha": "e0f396a30e603f1fefa125a8c8e49bec80c4f593",
+      "matrix": [
+        "forward/backward",
+        "boundary/normal shape",
+        "FP32/mixed precision",
+        "feature on/off"
+      ],
+      "project": "slime",
+      "pull_number": 1930,
+      "repository": "THUDM/slime",
+      "risk_family": "loss-gradient",
+      "runtime": "candidate exact tests plus independent value/gradient base-head comparison on available accelerator",
+      "temporal_band": "mature",
+      "title": "[1/N] Support training with variable global batch size"
+    },
+    {
+      "base_sha": "d3490718ece785ba2de67fa92df58b34453c2fa3",
+      "benchmark_domain": "training",
+      "case_id": "slime-pr-1959",
+      "changed_paths": [
+        "slime/rollout/forge_load.py",
+        "slime/utils/arguments.py"
+      ],
+      "claim": "The production change titled 'rollout: add forge_load to replay dumped rollouts with sglang alive' preserves all unchanged checkpoint-resume behavior while satisfying its named direction.",
+      "closure": "all state is uniquely represented, atomically finalized, reloadable, and equivalent after resume",
+      "created_at": "2026-05-27T06:28:26Z",
+      "head_sha": "5d82629aeb79cd77700fa1ce8c4caaf45951b45f",
+      "matrix": [
+        "save/load",
+        "fresh/resumed",
+        "complete/partial state",
+        "single/distributed owner"
+      ],
+      "project": "slime",
+      "pull_number": 1959,
+      "repository": "THUDM/slime",
+      "risk_family": "checkpoint-resume",
+      "runtime": "candidate exact tests plus key, tensor, shard/index, and resumed-trajectory parity checks",
+      "temporal_band": "mature",
+      "title": "rollout: add forge_load to replay dumped rollouts with sglang alive"
+    },
+    {
+      "base_sha": "eae4563ade4bc6e877f5e181388e64fcf8e0ec48",
+      "benchmark_domain": "training",
+      "case_id": "torchtitan-pr-4398",
+      "changed_paths": [
+        "tests/unit_tests/cpu/components/data/test_grain_data.py",
+        "tests/unit_tests/cpu/components/data/test_qwen_multimodal_data.py",
+        "tests/unit_tests/cpu/test_invalid_loss.py",
+        "tests/unit_tests/cpu/test_trainer.py",
+        "tests/unit_tests/cpu/test_validate.py",
+        "torchtitan/components/data/collators.py",
+        "torchtitan/components/validate.py",
+        "torchtitan/experiments/forge/example_train.py",
+        "torchtitan/experiments/torchft/trainer.py",
+        "torchtitan/hf_datasets/multimodal/mm_collator.py",
+        "torchtitan/trainer.py"
+      ],
+      "claim": "The production change titled '[data] Compute valid-token counts during collation' preserves all unchanged loss-gradient behavior while satisfying its named direction.",
+      "closure": "loss or operator values and every reachable gradient meet the frozen reference tolerances",
+      "created_at": "2026-09-01T19:34:01Z",
+      "head_sha": "101ff500d9b9d0c6debc53e95677e7141022f547",
+      "matrix": [
+        "forward/backward",
+        "boundary/normal shape",
+        "FP32/mixed precision",
+        "feature on/off"
+      ],
+      "project": "torchtitan",
+      "pull_number": 4398,
+      "repository": "pytorch/torchtitan",
+      "risk_family": "loss-gradient",
+      "runtime": "candidate exact tests plus independent value/gradient base-head comparison on available accelerator",
+      "temporal_band": "recent",
+      "title": "[data] Compute valid-token counts during collation"
+    },
+    {
+      "base_sha": "db7a99d1690073fac24ad42afcb7ef04f4225ecf",
+      "benchmark_domain": "training",
+      "case_id": "torchtitan-pr-3521",
+      "changed_paths": [
+        "torchtitan/experiments/graph_trainer/configs.py",
+        "torchtitan/experiments/graph_trainer/cpu_offload.py",
+        "torchtitan/experiments/graph_trainer/memory_policy.py",
+        "torchtitan/experiments/graph_trainer/passes.py",
+        "torchtitan/experiments/graph_trainer/tests/test_cpu_offload.py",
+        "torchtitan/experiments/graph_trainer/trainer.py"
+      ],
+      "claim": "The production change titled '[graph_trainer] Add view replay and tuning for CPU activation offloading' preserves all unchanged checkpoint-resume behavior while satisfying its named direction.",
+      "closure": "all state is uniquely represented, atomically finalized, reloadable, and equivalent after resume",
+      "created_at": "2026-06-04T03:52:12Z",
+      "head_sha": "175034cae32127b33004431cc0b18a6b66c0a437",
+      "matrix": [
+        "save/load",
+        "fresh/resumed",
+        "complete/partial state",
+        "single/distributed owner"
+      ],
+      "project": "torchtitan",
+      "pull_number": 3521,
+      "repository": "pytorch/torchtitan",
+      "risk_family": "checkpoint-resume",
+      "runtime": "candidate exact tests plus key, tensor, shard/index, and resumed-trajectory parity checks",
+      "temporal_band": "mature",
+      "title": "[graph_trainer] Add view replay and tuning for CPU activation offloading"
+    },
+    {
+      "base_sha": "483b8a009ba3a97563edee3a19887e4862b8094a",
+      "benchmark_domain": "training",
+      "case_id": "verl-pr-7685",
+      "changed_paths": [
+        "tests/models/test_engine.py",
+        "tests/utils/megatron/test_param_offload_deduplication.py",
+        "tests/workers/config/test_engine_config_on_cpu.py",
+        "verl/experimental/separation/engine_workers.py",
+        "verl/trainer/config/_generated_ppo_megatron_trainer.yaml",
+        "verl/trainer/config/engine/megatron.yaml",
+        "verl/trainer/config/ref/megatron_ref.yaml",
+        "verl/utils/megatron_utils.py",
+        "verl/workers/config/engine.py",
+        "verl/workers/engine/megatron/transformer_impl.py"
+      ],
+      "claim": "The production change titled '[megatron] feat: deduplicate host parameter-offload replicas' preserves all unchanged checkpoint-resume behavior while satisfying its named direction.",
+      "closure": "all state is uniquely represented, atomically finalized, reloadable, and equivalent after resume",
+      "created_at": "2026-09-02T10:53:43Z",
+      "head_sha": "06f7b7dd279c927395a7c84be478d7fd2f9fe3a4",
+      "matrix": [
+        "save/load",
+        "fresh/resumed",
+        "complete/partial state",
+        "single/distributed owner"
+      ],
+      "project": "verl",
+      "pull_number": 7685,
+      "repository": "verl-project/verl",
+      "risk_family": "checkpoint-resume",
+      "runtime": "candidate exact tests plus key, tensor, shard/index, and resumed-trajectory parity checks",
+      "temporal_band": "recent",
+      "title": "[megatron] feat: deduplicate host parameter-offload replicas"
+    },
+    {
+      "base_sha": "603944b0be0465c1506e736f3b1a2e217f20526a",
+      "benchmark_domain": "training",
+      "case_id": "verl-pr-6526",
+      "changed_paths": [
+        "tests/utils/megatron/test_optimizer.py",
+        "verl/trainer/config/_generated_ppo_megatron_trainer.yaml",
+        "verl/trainer/config/optim/megatron.yaml",
+        "verl/utils/megatron/optimizer.py",
+        "verl/utils/megatron_utils.py",
+        "verl/workers/config/optimizer.py",
+        "verl/workers/engine/megatron/transformer_impl.py"
+      ],
+      "claim": "The production change titled '[megatron] feat: align optimizer states and DDP grad bucket with model precision' preserves all unchanged optimizer-state behavior while satisfying its named direction.",
+      "closure": "each trainable parameter and state slot has one owner and the head trajectory matches the independent reference",
+      "created_at": "2026-05-28T19:01:22Z",
+      "head_sha": "6c0f352bfaef35a478175382abc5a99d35502e1a",
+      "matrix": [
+        "one/two steps",
+        "fresh/resumed state",
+        "mixed/full precision",
+        "enabled/disabled path"
+      ],
+      "project": "verl",
+      "pull_number": 6526,
+      "repository": "verl-project/verl",
+      "risk_family": "optimizer-state",
+      "runtime": "candidate exact tests plus parameter, gradient, optimizer-state, and continuous-versus-resumed base/head oracle",
+      "temporal_band": "mature",
+      "title": "[megatron] feat: align optimizer states and DDP grad bucket with model precision"
+    },
+    {
+      "base_sha": "5a8e62ac5d359a70307c1ac163a1974dfcdcd660",
+      "benchmark_domain": "inference",
+      "case_id": "flashinfer-pr-4861",
+      "changed_paths": [
+        "csrc/sampling.cu",
+        "flashinfer/sampling.py",
+        "include/flashinfer/sampling.cuh",
+        "tests/utils/test_sampling.py"
+      ],
+      "claim": "The production change titled 'fix: honor per-request seed/offset in sampling kernels' preserves all unchanged scheduler-progress behavior while satisfying its named direction.",
+      "closure": "every request reaches exactly one legal terminal or continuation state without starvation, leak, or changed output",
+      "created_at": "2026-09-01T03:08:14Z",
+      "head_sha": "a5998e46cd1e69f7d407a50edf6268ada78ca536",
+      "matrix": [
+        "empty/one/many requests",
+        "prefill/decode",
+        "normal/preempted/aborted",
+        "single/repeated batch"
+      ],
+      "project": "flashinfer",
+      "pull_number": 4861,
+      "repository": "flashinfer-ai/flashinfer",
+      "risk_family": "scheduler-progress",
+      "runtime": "candidate exact tests plus request-state transition, progress, output, and cleanup base/head oracle",
+      "temporal_band": "recent",
+      "title": "fix: honor per-request seed/offset in sampling kernels"
+    },
+    {
+      "base_sha": "fc12ef21d9eddcd9a7b1a4a8024fb3e81fda804d",
+      "benchmark_domain": "inference",
+      "case_id": "flashinfer-pr-3467",
+      "changed_paths": [
+        "flashinfer/prefill.py",
+        "tests/attention/test_custom_mask_validation.py"
+      ],
+      "claim": "The production change titled 'fix: add custom_mask shape validation in single_prefill_with_kv_cache' preserves all unchanged cache-state-layout behavior while satisfying its named direction.",
+      "closure": "cache regions are complete, in bounds, non-overlapping, correctly owned, and reconstruct reference values",
+      "created_at": "2026-05-31T02:24:45Z",
+      "head_sha": "ea9db53c7db8c9bf7838e52024e1184fd96ad4e7",
+      "matrix": [
+        "empty/partial/full cache",
+        "allocate/free/reuse",
+        "contiguous/paged layout",
+        "single/multiple owners"
+      ],
+      "project": "flashinfer",
+      "pull_number": 3467,
+      "repository": "flashinfer-ai/flashinfer",
+      "risk_family": "cache-state-layout",
+      "runtime": "candidate exact tests plus offset, ownership, eviction, reuse, and byte/value reconstruction oracle",
+      "temporal_band": "mature",
+      "title": "fix: add custom_mask shape validation in single_prefill_with_kv_cache"
+    },
+    {
+      "base_sha": "9c5ed7c194e7412780862491742fc655daaad6ac",
+      "benchmark_domain": "inference",
+      "case_id": "flashinfer-pr-3474",
+      "changed_paths": [
+        "csrc/trtllm_fmha_kernel_launcher.cu",
+        "flashinfer/decode.py",
+        "flashinfer/mla/_core.py",
+        "flashinfer/prefill.py",
+        "tests/attention/test_trtllm_gen_attention_decode.py"
+      ],
+      "claim": "The production change titled 'fix: zero TRTLLM-GEN counter workspace region before each decode launch' preserves all unchanged attention-numerics behavior while satisfying its named direction.",
+      "closure": "outputs and declared metadata match the reference across boundary shapes and supported numeric modes",
+      "created_at": "2026-06-01T06:56:24Z",
+      "head_sha": "10af130cf089ece90ec6f49fd4081f7a72f5b7db",
+      "matrix": [
+        "prefill/decode",
+        "short/boundary/long sequence",
+        "one/multiple heads",
+        "supported dtype/backend"
+      ],
+      "project": "flashinfer",
+      "pull_number": 3474,
+      "repository": "flashinfer-ai/flashinfer",
+      "risk_family": "attention-numerics",
+      "runtime": "candidate exact tests plus independent attention or sampling value oracle and target-kernel execution where available",
+      "temporal_band": "mature",
+      "title": "fix: zero TRTLLM-GEN counter workspace region before each decode launch"
+    },
+    {
+      "base_sha": "2cf8f4cc7aacd49a442b072ed2d60c73e32007f1",
+      "benchmark_domain": "inference",
+      "case_id": "flashinfer-pr-3449",
+      "changed_paths": [
+        "flashinfer/autotuner.py",
+        "flashinfer/gemm/gemm_base.py",
+        "tests/gemm/test_autotune_cudnn_dynamic_shape_fuzz.py",
+        "tests/gemm/test_cudnn_tactic_resolution.py"
+      ],
+      "claim": "The production change titled 'feat(gemm): structured (engine_id, knobs) tactics for cuDNN GEMM autotuning' preserves all unchanged model-runtime-integration behavior while satisfying its named direction.",
+      "closure": "the production runtime reaches the new path, preserves the control path, and fails invalid configurations closed",
+      "created_at": "2026-05-29T03:37:02Z",
+      "head_sha": "b17964a4d510f580c7aa2a229bb64130a184c37b",
+      "matrix": [
+        "feature on/off",
+        "one/repeated request",
+        "supported model/config",
+        "success/invalid input"
+      ],
+      "project": "flashinfer",
+      "pull_number": 3449,
+      "repository": "flashinfer-ai/flashinfer",
+      "risk_family": "model-runtime-integration",
+      "runtime": "candidate exact tests plus import/configuration, production reachability, state ownership, and output oracle",
+      "temporal_band": "mature",
+      "title": "feat(gemm): structured (engine_id, knobs) tactics for cuDNN GEMM autotuning"
+    },
+    {
+      "base_sha": "c3c40a7b90b792fc59f90f8f55c9e2de9c1b6833",
+      "benchmark_domain": "inference",
+      "case_id": "flashinfer-pr-3497",
+      "changed_paths": [
+        "csrc/nv_internal/tensorrt_llm/thop/fp4Quantize.cpp",
+        "flashinfer/quantization/fp4_quantization.py",
+        "tests/utils/test_fp4_quantize.py"
+      ],
+      "claim": "The production change titled \"fix(quantization): `nvfp4_quantize(backend='cuda')` silently corrupts scale factors when global_scale is not float32\" preserves all unchanged memory-performance behavior while satisfying its named direction.",
+      "closure": "reference values are preserved and the named resource metric improves without hidden lifetime or synchronization debt",
+      "created_at": "2026-06-02T20:18:12Z",
+      "head_sha": "b227563f60cf30b166604c35562751d497385d34",
+      "matrix": [
+        "small/large shape",
+        "cold/warm run",
+        "feature on/off",
+        "forward/repeated execution"
+      ],
+      "project": "flashinfer",
+      "pull_number": 3497,
+      "repository": "flashinfer-ai/flashinfer",
+      "risk_family": "memory-performance",
+      "runtime": "candidate exact tests plus value parity and measured allocator, workspace, latency, or throughput comparison matching the claim",
+      "temporal_band": "mature",
+      "title": "fix(quantization): `nvfp4_quantize(backend='cuda')` silently corrupts scale factors when global_scale is not float32"
+    },
+    {
+      "base_sha": "99b910955377375a1385122680e0daefcf706f79",
+      "benchmark_domain": "inference",
+      "case_id": "sglang-pr-37612",
+      "changed_paths": [
+        "python/sglang/srt/managers/scheduler.py",
+        "test/registered/unit/managers/test_scheduler_hybrid_ssm_admission_latch.py",
+        "test/registered/unit/managers/test_scheduler_hybrid_ssm_admission_retry.py"
+      ],
+      "claim": "The production change titled 'Retry latched prefill admission for Mamba-aware hybrid SSM caches' preserves all unchanged scheduler-progress behavior while satisfying its named direction.",
+      "closure": "every request reaches exactly one legal terminal or continuation state without starvation, leak, or changed output",
+      "created_at": "2026-09-02T13:25:21Z",
+      "head_sha": "595d6b45b7b0668cb4711a76b827340fbc8aea6c",
+      "matrix": [
+        "empty/one/many requests",
+        "prefill/decode",
+        "normal/preempted/aborted",
+        "single/repeated batch"
+      ],
+      "project": "sglang",
+      "pull_number": 37612,
+      "repository": "sgl-project/sglang",
+      "risk_family": "scheduler-progress",
+      "runtime": "candidate exact tests plus request-state transition, progress, output, and cleanup base/head oracle",
+      "temporal_band": "recent",
+      "title": "Retry latched prefill admission for Mamba-aware hybrid SSM caches"
+    },
+    {
+      "base_sha": "448d3afb76d611d16d9d30d8fdd5bfa1e4442654",
+      "benchmark_domain": "inference",
+      "case_id": "sglang-pr-27312",
+      "changed_paths": [
+        "docs_new/docs/advanced_features/server_arguments.mdx",
+        "python/sglang/srt/arg_groups/deepseek_v4_hook.py",
+        "python/sglang/srt/server_args.py",
+        "test/manual/test_dsa_alias_cli_registry_env.py",
+        "test/registered/unit/server_args/test_server_args.py"
+      ],
+      "claim": "The production change titled '[1/n] [CP] Simplify prefill context parallel server args' preserves all unchanged attention-numerics behavior while satisfying its named direction.",
+      "closure": "outputs and declared metadata match the reference across boundary shapes and supported numeric modes",
+      "created_at": "2026-06-04T23:53:04Z",
+      "head_sha": "c7b75d0d17b6b1e48408cbf646e67615fd582f05",
+      "matrix": [
+        "prefill/decode",
+        "short/boundary/long sequence",
+        "one/multiple heads",
+        "supported dtype/backend"
+      ],
+      "project": "sglang",
+      "pull_number": 27312,
+      "repository": "sgl-project/sglang",
+      "risk_family": "attention-numerics",
+      "runtime": "candidate exact tests plus independent attention or sampling value oracle and target-kernel execution where available",
+      "temporal_band": "mature",
+      "title": "[1/n] [CP] Simplify prefill context parallel server args"
+    },
+    {
+      "base_sha": "8933ec877235e24fd994246c6f8db225a4cb2823",
+      "benchmark_domain": "inference",
+      "case_id": "sglang-pr-27274",
+      "changed_paths": [
+        "python/sglang/srt/layers/moe/moe_runner/triton_utils/fused_moe_triton_kernels.py",
+        "python/sglang/srt/lora/triton_ops/virtual_experts.py",
+        "test/registered/lora/test_virtual_experts_kernels.py"
+      ],
+      "claim": "The production change titled '[LoRA] Fix MoE virtual-experts gated gate_up: up half must use up_A shrink' preserves all unchanged model-runtime-integration behavior while satisfying its named direction.",
+      "closure": "the production runtime reaches the new path, preserves the control path, and fails invalid configurations closed",
+      "created_at": "2026-06-04T12:39:14Z",
+      "head_sha": "2dacdcbc29c96420956c77662c6540569d5d5dc1",
+      "matrix": [
+        "feature on/off",
+        "one/repeated request",
+        "supported model/config",
+        "success/invalid input"
+      ],
+      "project": "sglang",
+      "pull_number": 27274,
+      "repository": "sgl-project/sglang",
+      "risk_family": "model-runtime-integration",
+      "runtime": "candidate exact tests plus import/configuration, production reachability, state ownership, and output oracle",
+      "temporal_band": "mature",
+      "title": "[LoRA] Fix MoE virtual-experts gated gate_up: up half must use up_A shrink"
+    },
+    {
+      "base_sha": "11605767e0fe12fe83127ae44b0127d02725497d",
+      "benchmark_domain": "inference",
+      "case_id": "sglang-pr-27203",
+      "changed_paths": [
+        "python/sglang/multimodal_gen/runtime/models/dits/lingbot_world.py",
+        "python/sglang/multimodal_gen/runtime/pipelines_core/stages/model_specific_stages/lingbot_world/lingbot_world_causal_denoising.py",
+        "python/sglang/multimodal_gen/test/unit/realtime/test_lingbot_causal_denoising.py"
+      ],
+      "claim": "The production change titled '[diffusion] Cache LingBot camera modulation' preserves all unchanged memory-performance behavior while satisfying its named direction.",
+      "closure": "reference values are preserved and the named resource metric improves without hidden lifetime or synchronization debt",
+      "created_at": "2026-06-04T02:40:37Z",
+      "head_sha": "687f493cacfbaf80ecbd193a0815a74d18cf52a1",
+      "matrix": [
+        "small/large shape",
+        "cold/warm run",
+        "feature on/off",
+        "forward/repeated execution"
+      ],
+      "project": "sglang",
+      "pull_number": 27203,
+      "repository": "sgl-project/sglang",
+      "risk_family": "memory-performance",
+      "runtime": "candidate exact tests plus value parity and measured allocator, workspace, latency, or throughput comparison matching the claim",
+      "temporal_band": "mature",
+      "title": "[diffusion] Cache LingBot camera modulation"
+    },
+    {
+      "base_sha": "8e836e7dc9b8ff48987c21fdcf6bcd65b16a9837",
+      "benchmark_domain": "inference",
+      "case_id": "sglang-pr-27291",
+      "changed_paths": [
+        "python/sglang/srt/managers/scheduler.py",
+        "test/registered/radix_cache/unified_radix_tree/test_unified_radix_cache_kl_dsv4.py",
+        "test/registered/radix_cache/unified_radix_tree/test_unified_radix_cache_kl_mamba.py",
+        "test/registered/radix_cache/unified_radix_tree/test_unified_radix_cache_kl_nightly.py"
+      ],
+      "claim": "The production change titled '[HiCache] Fix SWA L3 cache miss due to a prefetch/hit len mismatch' preserves all unchanged scheduler-progress behavior while satisfying its named direction.",
+      "closure": "every request reaches exactly one legal terminal or continuation state without starvation, leak, or changed output",
+      "created_at": "2026-06-04T17:42:43Z",
+      "head_sha": "dc2cd17d8a1abf1789a5d6220d3b42222a2b4dc7",
+      "matrix": [
+        "empty/one/many requests",
+        "prefill/decode",
+        "normal/preempted/aborted",
+        "single/repeated batch"
+      ],
+      "project": "sglang",
+      "pull_number": 27291,
+      "repository": "sgl-project/sglang",
+      "risk_family": "scheduler-progress",
+      "runtime": "candidate exact tests plus request-state transition, progress, output, and cleanup base/head oracle",
+      "temporal_band": "mature",
+      "title": "[HiCache] Fix SWA L3 cache miss due to a prefetch/hit len mismatch"
+    },
+    {
+      "base_sha": "6d10c672bd0f4ceaeda462f4704488bddad99c4c",
+      "benchmark_domain": "inference",
+      "case_id": "tensorrt_llm-pr-18596",
+      "changed_paths": [
+        "tensorrt_llm/_torch/attention_backend/flashinfer.py",
+        "tests/unittest/_torch/attention/test_flashinfer_attention.py"
+      ],
+      "claim": "The production change titled '[https://nvbugs/6692197][perf] Reuse FlashInfer plans for single-token decode' preserves all unchanged attention-numerics behavior while satisfying its named direction.",
+      "closure": "outputs and declared metadata match the reference across boundary shapes and supported numeric modes",
+      "created_at": "2026-09-02T08:51:45Z",
+      "head_sha": "b556c277ae83927d7a69d5f5cdefc682d73b0954",
+      "matrix": [
+        "prefill/decode",
+        "short/boundary/long sequence",
+        "one/multiple heads",
+        "supported dtype/backend"
+      ],
+      "project": "tensorrt-llm",
+      "pull_number": 18596,
+      "repository": "NVIDIA/TensorRT-LLM",
+      "risk_family": "attention-numerics",
+      "runtime": "candidate exact tests plus independent attention or sampling value oracle and target-kernel execution where available",
+      "temporal_band": "recent",
+      "title": "[https://nvbugs/6692197][perf] Reuse FlashInfer plans for single-token decode"
+    },
+    {
+      "base_sha": "a0d540050cefe74c406c6609122834b8a4457ff9",
+      "benchmark_domain": "inference",
+      "case_id": "tensorrt_llm-pr-14945",
+      "changed_paths": [
+        "tensorrt_llm/_torch/pyexecutor/llm_request.py",
+        "tensorrt_llm/_torch/pyexecutor/resource_manager.py",
+        "tensorrt_llm/runtime/kv_cache_manager_v2/_block_radix_tree.py",
+        "tensorrt_llm/runtime/kv_cache_manager_v2/_core/_kv_cache.py",
+        "tests/integration/defs/accuracy/test_llm_api_pytorch.py",
+        "tests/integration/test_lists/qa/llm_function_core.txt",
+        "tests/integration/test_lists/qa/llm_function_rtx6k.txt",
+        "tests/unittest/kv_cache_manager_v2_tests/test_kv_cache_manager_v2.py"
+      ],
+      "claim": "The production change titled '[None][feat] Support beam search in KV cache manager v2' preserves all unchanged scheduler-progress behavior while satisfying its named direction.",
+      "closure": "every request reaches exactly one legal terminal or continuation state without starvation, leak, or changed output",
+      "created_at": "2026-06-04T06:56:21Z",
+      "head_sha": "3c18c3a15780211c26ecf9612e6baa67344c6efe",
+      "matrix": [
+        "empty/one/many requests",
+        "prefill/decode",
+        "normal/preempted/aborted",
+        "single/repeated batch"
+      ],
+      "project": "tensorrt-llm",
+      "pull_number": 14945,
+      "repository": "NVIDIA/TensorRT-LLM",
+      "risk_family": "scheduler-progress",
+      "runtime": "candidate exact tests plus request-state transition, progress, output, and cleanup base/head oracle",
+      "temporal_band": "mature",
+      "title": "[None][feat] Support beam search in KV cache manager v2"
+    },
+    {
+      "base_sha": "bedad859d7117799bb7998d0dd091d4a60151b56",
+      "benchmark_domain": "inference",
+      "case_id": "tensorrt_llm-pr-14911",
+      "changed_paths": [
+        "examples/auto_deploy/llmc/create_standalone_package.py",
+        "tensorrt_llm/_torch/auto_deploy/custom_ops/attention/trtllm_attention.py",
+        "tensorrt_llm/_torch/auto_deploy/custom_ops/attention_interface.py",
+        "tensorrt_llm/_torch/auto_deploy/llm_args.py",
+        "tensorrt_llm/_torch/auto_deploy/shim/ad_executor.py",
+        "tensorrt_llm/_torch/auto_deploy/shim/interface.py",
+        "tensorrt_llm/_torch/auto_deploy/transform/library/kvcache.py",
+        "tests/unittest/auto_deploy/singlegpu/custom_ops/attention/test_trtllm_attention_op.py",
+        "tests/unittest/auto_deploy/singlegpu/shim/test_ad_executor_swa_eviction.py",
+        "tests/unittest/auto_deploy/singlegpu/shim/test_llm_config.py",
+        "tests/unittest/auto_deploy/singlegpu/transformations/library/test_kv_cache_trtllm_multipool.py",
+        "tests/unittest/auto_deploy/singlegpu/transformations/library/test_kvcache_vswa_metadata.py"
+      ],
+      "claim": "The production change titled '[#14828][feat] AutoDeploy: support multi KV cache memory pool in trtllm attention' preserves all unchanged cache-state-layout behavior while satisfying its named direction.",
+      "closure": "cache regions are complete, in bounds, non-overlapping, correctly owned, and reconstruct reference values",
+      "created_at": "2026-06-03T14:57:58Z",
+      "head_sha": "ae81c00784b2df3f502f99cede8c2f679bed87e1",
+      "matrix": [
+        "empty/partial/full cache",
+        "allocate/free/reuse",
+        "contiguous/paged layout",
+        "single/multiple owners"
+      ],
+      "project": "tensorrt-llm",
+      "pull_number": 14911,
+      "repository": "NVIDIA/TensorRT-LLM",
+      "risk_family": "cache-state-layout",
+      "runtime": "candidate exact tests plus offset, ownership, eviction, reuse, and byte/value reconstruction oracle",
+      "temporal_band": "mature",
+      "title": "[#14828][feat] AutoDeploy: support multi KV cache memory pool in trtllm attention"
+    },
+    {
+      "base_sha": "fbf66e92df5d7a44a40276e25cfde16f7029a418",
+      "benchmark_domain": "inference",
+      "case_id": "tensorrt_llm-pr-14922",
+      "changed_paths": [
+        "tensorrt_llm/_torch/pyexecutor/adp_iter_stats.py",
+        "tensorrt_llm/_torch/pyexecutor/perf_metrics_manager.py",
+        "tensorrt_llm/_torch/pyexecutor/py_executor.py",
+        "tensorrt_llm/executor/base_worker.py",
+        "tests/unittest/executor/test_stats_serializer.py",
+        "tests/unittest/pyexecutor/test_iter_stats_populate.py"
+      ],
+      "claim": "The production change titled 'Fix PyExecutor FPM iteration timing' preserves all unchanged model-runtime-integration behavior while satisfying its named direction.",
+      "closure": "the production runtime reaches the new path, preserves the control path, and fails invalid configurations closed",
+      "created_at": "2026-06-03T23:41:09Z",
+      "head_sha": "6acf2895b2db556407e46e75ffa628d9a10de2c7",
+      "matrix": [
+        "feature on/off",
+        "one/repeated request",
+        "supported model/config",
+        "success/invalid input"
+      ],
+      "project": "tensorrt-llm",
+      "pull_number": 14922,
+      "repository": "NVIDIA/TensorRT-LLM",
+      "risk_family": "model-runtime-integration",
+      "runtime": "candidate exact tests plus import/configuration, production reachability, state ownership, and output oracle",
+      "temporal_band": "mature",
+      "title": "Fix PyExecutor FPM iteration timing"
+    },
+    {
+      "base_sha": "a50b5e2dfc91c8fb5550a55f2eb4c1d27628230a",
+      "benchmark_domain": "inference",
+      "case_id": "tensorrt_llm-pr-14830",
+      "changed_paths": [
+        "docs/source/commands/trtllm-serve/trtllm-serve.rst",
+        "tensorrt_llm/_torch/models/__init__.py",
+        "tensorrt_llm/_torch/models/checkpoints/__init__.py",
+        "tensorrt_llm/_torch/models/checkpoints/hf/qwen3_embedding_weight_mapper.py",
+        "tensorrt_llm/_torch/models/modeling_qwen3.py",
+        "tensorrt_llm/serve/openai_protocol.py",
+        "tensorrt_llm/serve/openai_server.py",
+        "tests/integration/defs/accuracy/test_llm_api_pytorch_embedding.py",
+        "tests/integration/test_lists/test-db/l0_a100.yml"
+      ],
+      "claim": "The production change titled '[#14715][feat] Add Qwen3 embedding model support and /v1/embeddings serving endpoint' preserves all unchanged memory-performance behavior while satisfying its named direction.",
+      "closure": "reference values are preserved and the named resource metric improves without hidden lifetime or synchronization debt",
+      "created_at": "2026-06-01T18:47:41Z",
+      "head_sha": "894ed3889cd172f033fc015fbed10a6477d8bbdf",
+      "matrix": [
+        "small/large shape",
+        "cold/warm run",
+        "feature on/off",
+        "forward/repeated execution"
+      ],
+      "project": "tensorrt-llm",
+      "pull_number": 14830,
+      "repository": "NVIDIA/TensorRT-LLM",
+      "risk_family": "memory-performance",
+      "runtime": "candidate exact tests plus value parity and measured allocator, workspace, latency, or throughput comparison matching the claim",
+      "temporal_band": "mature",
+      "title": "[#14715][feat] Add Qwen3 embedding model support and /v1/embeddings serving endpoint"
+    },
+    {
+      "base_sha": "73029d42441321b631779db3475031f5ec26dd6c",
+      "benchmark_domain": "inference",
+      "case_id": "vllm-pr-54990",
+      "changed_paths": [
+        "tests/v1/core/test_kv_cache_utils.py",
+        "vllm/v1/metrics/loggers.py"
+      ],
+      "claim": "The production change titled '[Bugfix][Metrics] Do not log a 0.0% prefix cache hit rate before any query' preserves all unchanged cache-state-layout behavior while satisfying its named direction.",
+      "closure": "cache regions are complete, in bounds, non-overlapping, correctly owned, and reconstruct reference values",
+      "created_at": "2026-09-02T16:13:09Z",
+      "head_sha": "83adee6eaaffdaa99d7872b36c9381a841207830",
+      "matrix": [
+        "empty/partial/full cache",
+        "allocate/free/reuse",
+        "contiguous/paged layout",
+        "single/multiple owners"
+      ],
+      "project": "vllm",
+      "pull_number": 54990,
+      "repository": "vllm-project/vllm",
+      "risk_family": "cache-state-layout",
+      "runtime": "candidate exact tests plus offset, ownership, eviction, reuse, and byte/value reconstruction oracle",
+      "temporal_band": "recent",
+      "title": "[Bugfix][Metrics] Do not log a 0.0% prefix cache hit rate before any query"
+    },
+    {
+      "base_sha": "3dbb4e0acef59930bef53b5b8e15ed869cf0a499",
+      "benchmark_domain": "inference",
+      "case_id": "vllm-pr-44558",
+      "changed_paths": [
+        "tests/v1/core/test_scheduler.py",
+        "tests/v1/distributed/test_async_llm_dp.py",
+        "vllm/config/scheduler.py",
+        "vllm/engine/arg_utils.py",
+        "vllm/v1/core/sched/interface.py",
+        "vllm/v1/core/sched/scheduler.py",
+        "vllm/v1/engine/core.py"
+      ],
+      "claim": "The production change titled '[Core] Add prefill step cadence for better non-PD DP balancing' preserves all unchanged scheduler-progress behavior while satisfying its named direction.",
+      "closure": "every request reaches exactly one legal terminal or continuation state without starvation, leak, or changed output",
+      "created_at": "2026-06-04T17:09:49Z",
+      "head_sha": "a78257a0061c334d006b090689f0070fa39faa57",
+      "matrix": [
+        "empty/one/many requests",
+        "prefill/decode",
+        "normal/preempted/aborted",
+        "single/repeated batch"
+      ],
+      "project": "vllm",
+      "pull_number": 44558,
+      "repository": "vllm-project/vllm",
+      "risk_family": "scheduler-progress",
+      "runtime": "candidate exact tests plus request-state transition, progress, output, and cleanup base/head oracle",
+      "temporal_band": "mature",
+      "title": "[Core] Add prefill step cadence for better non-PD DP balancing"
+    },
+    {
+      "base_sha": "a6183563b6f604ef7b481ce8ce7af359c6dc1b74",
+      "benchmark_domain": "inference",
+      "case_id": "vllm-pr-44544",
+      "changed_paths": [
+        "tests/v1/attention/test_mla_backends.py",
+        "tests/v1/attention/test_mla_prefill_selector.py",
+        "vllm/model_executor/layers/attention/mla_attention.py",
+        "vllm/model_executor/layers/attention/sparse_mla_attention.py",
+        "vllm/v1/attention/backends/mla/prefill/aiter_asm.py",
+        "vllm/v1/attention/backends/mla/prefill/base.py",
+        "vllm/v1/attention/backends/mla/prefill/registry.py",
+        "vllm/v1/attention/backends/mla/prefill/selector.py",
+        "vllm/v1/attention/backends/mla/rocm_aiter_mla.py"
+      ],
+      "claim": "The production change titled '[ROCm][MLA] AITER FP8 ASM prefill backend' preserves all unchanged attention-numerics behavior while satisfying its named direction.",
+      "closure": "outputs and declared metadata match the reference across boundary shapes and supported numeric modes",
+      "created_at": "2026-06-04T14:51:11Z",
+      "head_sha": "50ba7daa02ed5324c3416d89e442391a98fc1de0",
+      "matrix": [
+        "prefill/decode",
+        "short/boundary/long sequence",
+        "one/multiple heads",
+        "supported dtype/backend"
+      ],
+      "project": "vllm",
+      "pull_number": 44544,
+      "repository": "vllm-project/vllm",
+      "risk_family": "attention-numerics",
+      "runtime": "candidate exact tests plus independent attention or sampling value oracle and target-kernel execution where available",
+      "temporal_band": "mature",
+      "title": "[ROCm][MLA] AITER FP8 ASM prefill backend"
+    },
+    {
+      "base_sha": "8d9536a775a87eae5e0a1904603aa4725562765e",
+      "benchmark_domain": "inference",
+      "case_id": "vllm-pr-44572",
+      "changed_paths": [
+        "csrc/libtorch_stable/quantization/w8a8/cutlass/c3x/scaled_mm_blockwise_sm90_fp8_dispatch.cuh",
+        "tests/kernels/quantization/test_cutlass_scaled_mm.py",
+        "vllm/model_executor/kernels/linear/scaled_mm/cutlass.py"
+      ],
+      "claim": "The production change titled '[Perf] SM90 cutlass fp8 mm supports odd M by swap_ab, 180~290% kernel performance improvement' preserves all unchanged model-runtime-integration behavior while satisfying its named direction.",
+      "closure": "the production runtime reaches the new path, preserves the control path, and fails invalid configurations closed",
+      "created_at": "2026-06-04T19:38:44Z",
+      "head_sha": "16022a2d37a7be3a8db37ff53e586a2ec2aec560",
+      "matrix": [
+        "feature on/off",
+        "one/repeated request",
+        "supported model/config",
+        "success/invalid input"
+      ],
+      "project": "vllm",
+      "pull_number": 44572,
+      "repository": "vllm-project/vllm",
+      "risk_family": "model-runtime-integration",
+      "runtime": "candidate exact tests plus import/configuration, production reachability, state ownership, and output oracle",
+      "temporal_band": "mature",
+      "title": "[Perf] SM90 cutlass fp8 mm supports odd M by swap_ab, 180~290% kernel performance improvement"
+    },
+    {
+      "base_sha": "afc94523c965a61bd6869287c798b2a45f2c205e",
+      "benchmark_domain": "inference",
+      "case_id": "vllm-pr-44513",
+      "changed_paths": [
+        ".buildkite/intel_jobs/test-intel.yaml",
+        "tests/models/multimodal/processing/test_common.py",
+        "tests/quantization/test_online.py",
+        "tests/quantization/utils.py",
+        "vllm/platforms/xpu.py"
+      ],
+      "claim": "The production change titled '[XPU] Add online fp8 quantization test' preserves all unchanged memory-performance behavior while satisfying its named direction.",
+      "closure": "reference values are preserved and the named resource metric improves without hidden lifetime or synchronization debt",
+      "created_at": "2026-06-04T08:03:51Z",
+      "head_sha": "29d516528ba3be050585cf7ff86b9be15eca21b6",
+      "matrix": [
+        "small/large shape",
+        "cold/warm run",
+        "feature on/off",
+        "forward/repeated execution"
+      ],
+      "project": "vllm",
+      "pull_number": 44513,
+      "repository": "vllm-project/vllm",
+      "risk_family": "memory-performance",
+      "runtime": "candidate exact tests plus value parity and measured allocator, workspace, latency, or throughput comparison matching the claim",
+      "temporal_band": "mature",
+      "title": "[XPU] Add online fp8 quantization test"
+    }
+  ],
+  "ci_or_label_requested": false,
+  "cross_case_controls": [
+    "Syntax, conflict-marker, import, or candidate exact failure rejects first.",
+    "A resource claim requires the actual scheduler, allocator, or runtime unless it is exact algebraic data motion.",
+    "Structural migration and artifact-boundary exceptions remain narrow and require complete inventories.",
+    "Technical correctness and historical disposition are frozen separately.",
+    "No outcome, state, review, comment, CI, or label evidence is visible before judgment lock."
+  ],
+  "disposition_policy": {
+    "accept": "title-scoped contract has candidate or evaluator exact closure and no reachable blocker",
+    "check": "<=7 days, <=8 files, candidate-owned exact core test, no explicit not-ready body, and exactly one executable residual",
+    "forced_polarization_used": false,
+    "mature_created_at_cutoff": "2026-06-04T23:59:59Z",
+    "prospective_created_at_cutoff": "2026-08-27T00:00:00Z",
+    "reject": "exact failure, explicit not-ready body, mature algorithm without tests/exception, or unresolved runtime resource claim",
+    "resolution_gray_zone_excluded": true,
+    "unresolved": "required backend or topology is unavailable and neither a bounded structural nor artifact exception closes it",
+    "weighted_score_used": false
+  },
+  "domain_allocation": {
+    "inference": 20,
+    "training": 10
+  },
+  "evaluation_layers": {
+    "disposition_prediction": [
+      "accept",
+      "check",
+      "reject",
+      "unresolved"
+    ],
+    "governance_gap_recorded_separately": true,
+    "technical_contract": [
+      "pass",
+      "bounded-gap",
+      "fail",
+      "unresolved"
+    ]
+  },
+  "frozen_at": "2026-09-02T18:49:55.990592+00:00",
+  "frozen_before_candidate_body_access": true,
+  "frozen_before_source_diff_content_access": true,
+  "machine_policy_id": "mixed-contract-disposition-split-v0.1-r17",
+  "merge_outcome_or_state_requested": false,
+  "ordered_reachability_gate": [
+    "configuration is legal and title-scoped",
+    "a changed production call site reaches the behavior",
+    "shape/state/owner/lifetime invariant is explicit",
+    "an exact candidate test or independent oracle distinguishes base and head",
+    "the remaining remediation is bounded to the candidate direction"
+  ],
+  "prospective_rules": [
+    {
+      "evidence": [
+        "R16 produced zero oracle checks; both machine checks missed.",
+        "Liger #1413 was merged and supplied detailed B300 functional results, so check understated a strong narrow repair.",
+        "slime #2345 had only py_compile/self-validation and no human review, so its fresh age alone did not justify check."
+      ],
+      "id": "R17-CHECK-REQUIRES-READINESS-SIGNAL",
+      "rule": "Keep the <=7-day and <=8-file check gates, but also require a candidate-owned exact core test, no explicit unreviewed/draft/CI-not-requested disclaimer, one executable integration residual, and evidence insufficient for direct accept. A target-functional body plus locally closed invariant should be accept rather than check."
+    },
+    {
+      "evidence": [
+        "verl #7697 had strong functional unit tests but unchecked human-review and CI declarations; it remained open without review and oracle-rejected.",
+        "This signal is candidate-authored readiness evidence, not post-lock review/state leakage."
+      ],
+      "id": "R17-EXPLICIT-NOT-READY-VETO",
+      "rule": "When the outcome-free body explicitly says required human review or public CI has not occurred, predict reject for disposition unless an independent evaluator-owned end-to-end closure is complete; retain a separate technical result."
+    },
+    {
+      "evidence": [
+        "Liger #1244 passed an import probe but closed unmerged, and several mature open PRs with technically plausible code had no review activity.",
+        "Do not rewrite exact technical passes such as slime #2010 solely because history remained open."
+      ],
+      "id": "R17-MATURE-NO-TEST-DEFAULT",
+      "rule": "A mature feature or algorithm change with no candidate-owned test defaults to disposition reject. Exceptions require an exact evaluator base/head oracle or one of the bounded structural migration/artifact rules below."
+    },
+    {
+      "evidence": [
+        "Megatron #5134 and #5169 merged despite unavailable eight-rank or absent new-test closure.",
+        "Both were structural API/configuration migrations rather than new optimizer, collective, or numerical algorithms."
+      ],
+      "id": "R17-STRUCTURAL-MIGRATION-EXCEPTION",
+      "rule": "A mature deprecation removal or configuration-container refactor may accept when a repository-wide old-symbol inventory reaches zero, every production call site has an explicit replacement, import/compile succeeds, and affected existing tests are updated; distributed topology is not required when runtime algorithms and state layout are unchanged."
+    },
+    {
+      "evidence": [
+        "slime #1969 and #2020 merged; their candidate tests closed asset filtering, shard/index bytes, merged node-writer state, and incomplete final groups.",
+        "The exception does not cover parameter mapping omissions or a quantitative performance claim without parity."
+      ],
+      "id": "R17-ARTIFACT-BOUNDARY-EXCEPTION",
+      "rule": "For checkpoint/export writer changes, exact tensor uniqueness, shard/index completeness, atomic finalization, and reload parity can close the title-scoped artifact contract without an optimizer step. A concurrency speedup may be accepted without a timing threshold only when work partitioning is structural and artifact parity is exact."
+    },
+    {
+      "evidence": [
+        "R16 selected four tightly related TorchTitan graph-trainer patches; #3530/#3533 merged while #3534/#3538 closed unmerged despite passing focused tests.",
+        "Reducing correlated stacks improves coverage and avoids treating superseded series members as independent evidence."
+      ],
+      "id": "R17-STACKED-SERIES-DIVERSITY",
+      "rule": "At metadata-only selection time, cap highly overlapping same-subsystem candidates: retain at most two PRs per project when normalized title prefixes match and non-test path Jaccard overlap is >=0.5. Prefer distinct runtime paths and risk families."
+    },
+    {
+      "evidence": [
+        "verl #6574 passed eight sizing tests but closed unmerged without a Ray placement/progress run.",
+        "slime #2010 remains a technical pass because an exact base/head A100 allocation probe measured the claimed reduction with value/gradient parity."
+      ],
+      "id": "R17-RESOURCE-CLAIM-NEEDS-RUNTIME",
+      "rule": "Resource arithmetic or configuration tests do not close scheduler progress, memory, or concurrency claims; require an actual scheduler, allocator, or multi-worker execution unless the transformation is algebraically exact data motion."
+    },
+    {
+      "evidence": [
+        "verl #6558 contained an unclosed production parenthesis reproduced by static parsing and py_compile; its oracle was reject."
+      ],
+      "id": "R17-EXACT-HEAD-INTEGRITY-FIRST",
+      "rule": "Syntax, conflict-marker, import, or candidate-owned exact failures reject immediately and override otherwise plausible scope or body claims."
+    },
+    {
+      "evidence": [
+        "R16 gained 10.0 exact-label points over the same-cohort check-only fallback, but many technically strong training changes were closed or remained unreviewed."
+      ],
+      "id": "R17-DUAL-OUTPUT",
+      "rule": "Continue freezing technical_contract and disposition_prediction separately. Closed/open governance mismatches never convert a passing numeric, gradient, or memory contract into a technical failure."
+    }
+  ],
+  "protocol_id": "mixed-iterative-contract-v0.1-r17-30",
+  "r16_policy_iteration_sha256": "sha256:9a91111429959388bf11331e499c8eb28713c5ef5091bf83e86fb14e759d9b4f",
+  "review_or_comment_requested": false,
+  "schema_version": "0.1",
+  "selection_lock_sha256": "sha256:ede934e0bf3af3c15bbba5bc5f55696077605fc48cbff23e4abce485a6f953fb",
+  "test_plan_sha256": "sha256:1d9cd3d63d09f97af0c86164a4b537f6a2054d11f4a0acbe7a9e5eb548335a58"
+}

@@ -1,0 +1,127 @@
+{
+  "derived_after_r17_reveal": true,
+  "generated_at": "2026-09-02T19:43:50.780437+00:00",
+  "iteration_sha256": "sha256:913fa960ae9a21287e22a5ca8d9663b5cec3069984e0b25dbee892f10b04930a",
+  "known_limitations": [
+    "The blind evaluator cannot observe human review activity, which is a direct input to the check oracle.",
+    "Mature merged and closed-unmerged PRs can have indistinguishable source/test evidence; project and scope priors are not outcomes.",
+    "R17 did not use weighted scores, so the historical >=85 merged-PR floor is not formally auditable.",
+    "R18 is inference-only and tests whether target-gap transfer rules generalize across the four main drafts."
+  ],
+  "observed_metrics": {
+    "binary_direction_matches": 14,
+    "cases": 30,
+    "exact_label_matches": 13,
+    "frozen_nonaccept_exact_matches": 6,
+    "legacy_exact_label_matches": 9,
+    "legacy_frozen_nonaccept_exact_matches": 2,
+    "machine_check_precision": 1.0,
+    "machine_reject_precision": 0.38461538461538464,
+    "oracle_decisions": {
+      "accept": 14,
+      "check": 4,
+      "reject": 12
+    },
+    "same_cohort_exact_accuracy_gain": 0.13333333333333336
+  },
+  "prospective_rules": [
+    {
+      "evidence": [
+        "FlashInfer #4861 had one exact per-row seed assertion failure but was actively reviewed and oracle-check.",
+        "verl #7685 was recent but broad ten-file distributed ownership work without review and remained reject."
+      ],
+      "id": "R18-RECENT-BOUNDED-FAILURE-CHECK",
+      "rule": "For a <=7-day, <=8-file PR with a candidate-owned exact core test and no integrity or safety failure, a title-scoped failing assertion is check when the repair direction and one residual are bounded; do not force reject merely because the author is still iterating."
+    },
+    {
+      "evidence": [
+        "TensorRT-LLM #18596 was correctly check from a bounded QA follow-up; TorchTitan #4398 also named addressed reviewer feedback and was oracle-check.",
+        "vLLM #54990 said its suite was not run and offered closure; despite local focused passes it had no active human review and oracle-rejected."
+      ],
+      "id": "R18-RECENT-READINESS-PROXY",
+      "rule": "Predict check only when recent metadata gates combine with an outcome-free readiness proxy: addressed-review notes, a bounded QA follow-up, exact base/head reproduction, or independently executed core tests. Explicit cannot-run, happy-to-close, draft, CI-not-requested, or incomplete-checklist language vetoes check unless evaluator end-to-end closure exists."
+    },
+    {
+      "evidence": [
+        "Megatron #7013 and TorchTitan #4398 passed exact tests but were active-review oracle checks.",
+        "Liger #1435 merged quickly with a complete target failure matrix and no residual, so the narrow direct-accept exception remains."
+      ],
+      "id": "R18-RECENT-STRONG-PROOF-NOT-AUTO-ACCEPT",
+      "rule": "A recent technically closed PR defaults to check, not accept, when the body or diff shows ongoing review/QA activity. Direct accept is reserved for unusually complete target-functional evidence without a named residual; technical pass remains separately recorded."
+    },
+    {
+      "evidence": [
+        "FlashInfer #3497, SGLang #27291, TensorRT-LLM #14922, and vLLM #44513/#44572 merged despite evaluator target gaps or incomplete local execution.",
+        "Exact reachable failures in SGLang #27203 and vLLM #44544 still correctly rejected."
+      ],
+      "id": "R18-TARGET-GAP-NOT-A-REJECT-VETO",
+      "rule": "For mature inference work, unavailable accelerator architecture, generated bindings, or topology is a bounded technical gap rather than a disposition reject when candidate-owned tests exist, the changed production route is explicit, static integrity holds, and no exact reachable counterexample appears."
+    },
+    {
+      "evidence": [
+        "Several merged mature inference PRs extended existing parameter matrices rather than adding named tests.",
+        "slime #1959 remains evidence that an evaluator-only smoke probe cannot replace a candidate-owned production-route test."
+      ],
+      "id": "R18-MATURE-TESTED-ROUTE-EXCEPTION",
+      "rule": "A mature inference change may accept with bounded-gap when it changes a candidate test path and every reachable title-scoped check passes or skips only for the declared backend; absence of an added test function alone is not fatal if an existing exact matrix is extended. No-test production changes still default reject."
+    },
+    {
+      "evidence": [
+        "slime #1930 was the first member of a series, passed all seven changed tests, and merged.",
+        "Stack membership remains unable to distinguish merged from closed-unmerged without forbidden outcome fields."
+      ],
+      "id": "R18-STACK-MARKER-IS-WEAK",
+      "rule": "Use stack-overlap only for cohort diversity. Do not reject a selected case merely because its body says 1/N or supersedes another PR; judge whether that frozen member independently closes its contract."
+    },
+    {
+      "evidence": [
+        "R17 correctly rejected the exact SGLang TP-initialization and vLLM backend-availability failures."
+      ],
+      "id": "R18-EXACT-INTEGRITY-FIRST",
+      "rule": "Syntax, conflict-marker, import-at-the-changed-boundary, safety, or mature candidate-owned title-scoped failures reject. Environment-only import failures and unsupported-device skips never masquerade as candidate failures."
+    },
+    {
+      "evidence": [
+        "R17 exact labels improved by 13.3 points while binary direction stayed 14/30, showing the gain came from check/reject separation rather than retrospective technical rewriting."
+      ],
+      "id": "R18-DUAL-OUTPUT",
+      "rule": "Continue freezing technical_contract and disposition_prediction separately; historical governance cannot rewrite a valid numeric, state, or performance result."
+    }
+  ],
+  "protocol_id": "historical-pr-iterative-policy-r17-to-r18-v0.1",
+  "r18_group": {
+    "allocation": {
+      "inference": 30
+    },
+    "case_count": 30,
+    "future_groups_preselected": false,
+    "inference_project_allocation": {
+      "flashinfer": 7,
+      "sglang": 8,
+      "tensorrt_llm": 7,
+      "vllm": 8
+    },
+    "reason": "continue the four-draft inference tranche; rotate the 8/8 shares in R19 and retain five each for R20"
+  },
+  "retrospective_r17_locks_changed": false,
+  "schema_version": "0.1",
+  "source_audit_sha256": "sha256:fa61324983257f4679ba5c01b9b5e7347d9ed7720d287ee360ada82e80304750",
+  "source_lock_set_sha256": "sha256:c466a9e6cb56ad813ea53193a62a7cb37d96967acdac0bc00efb1beed8999d0d",
+  "workload_ledger": {
+    "completed_through_r17": {
+      "communication": 50,
+      "inference": 20,
+      "training": 50
+    },
+    "remaining_after_r17": {
+      "communication": 0,
+      "inference": 80,
+      "training": 0
+    },
+    "requested_after_r13": {
+      "communication": 50,
+      "inference": 100,
+      "training": 50
+    }
+  }
+}

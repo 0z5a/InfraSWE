@@ -19,7 +19,7 @@ from infraswe.history.blind import canonical_sha256
 from infraswe.io import atomic_write_json
 
 
-def main() -> int:
+def main(round_label: str = "R16") -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--bundle", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
@@ -30,7 +30,7 @@ def main() -> int:
         key: value for key, value in bundle.items() if key != "source_bundle_sha256"
     }
     if bundle["source_bundle_sha256"] != canonical_sha256(material):
-        raise SystemExit("R16 source bundle digest mismatch")
+        raise SystemExit(f"{round_label} source bundle digest mismatch")
     if any(
         bundle[field]
         for field in (
@@ -39,9 +39,9 @@ def main() -> int:
             "ci_or_label_fields_requested",
         )
     ):
-        raise SystemExit("R16 source bundle exposes forbidden evidence")
+        raise SystemExit(f"{round_label} source bundle exposes forbidden evidence")
     if not bundle["outcome_bearing_body_blocks_removed_before_storage"]:
-        raise SystemExit("R16 body was not sanitized before storage")
+        raise SystemExit(f"{round_label} body was not sanitized before storage")
 
     cases = []
     for case in bundle["cases"]:
@@ -103,7 +103,7 @@ def main() -> int:
 
     evidence_material = {
         "schema_version": "0.1",
-        "protocol_id": "r16-outcome-free-static-evidence-v0.1",
+        "protocol_id": f"{round_label.lower()}-outcome-free-static-evidence-v0.1",
         "selection_lock_sha256": bundle["selection_lock_sha256"],
         "test_plan_sha256": bundle["test_plan_sha256"],
         "source_bundle_sha256": bundle["source_bundle_sha256"],
@@ -130,4 +130,4 @@ def main() -> int:
 
 
 if __name__ == "__main__":
-    raise SystemExit(main())
+    raise SystemExit(main("R16"))

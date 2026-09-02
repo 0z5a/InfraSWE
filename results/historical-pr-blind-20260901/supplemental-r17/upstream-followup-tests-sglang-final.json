@@ -1,0 +1,40 @@
+{
+  "environment_repairs": [
+    "FlashInfer package data symlink restored from the installed exact data package",
+    "TorchTitan spmd_types==0.2.5 and pinned Grain dependency paths used",
+    "verl tests receive the exact Megatron source path",
+    "TensorRT-LLM runs from a clean LFS-smudge-disabled worktree",
+    "vLLM source tests use the existing fail-closed compiled-extension import shim",
+    "SGLang optional fp8 import alias raises if the unrelated kernel is executed",
+    "Targeted mistral-common and OpenCV dependencies are isolated under /workspace/r17-deps"
+  ],
+  "evidence_sha256": "sha256:4f692590f47e9210838107cb161f5fa15a59db4bfa2633288447cdaccc832192",
+  "finished_at": "2026-09-02T19:34:02.025396+00:00",
+  "initial_test_evidence_sha256": "sha256:c46902f14bbe32535c74d23dfa931678d840507b0e38ce6e9d5f781cdc6680a6",
+  "outcome_review_ci_fields_requested": false,
+  "protocol_id": "r17-exact-head-followups-v0.1",
+  "records": [
+    {
+      "case_id": "sglang-pr-27203",
+      "command": "cd /workspace/r14-run-sglang && git switch --detach refs/r17/pr-27203 >/dev/null && test \"$(git rev-parse HEAD)\" = 687f493cacfbaf80ecbd193a0815a74d18cf52a1 && timeout 240s env CUDA_VISIBLE_DEVICES=1 PYTHONPATH=/workspace/r17-deps/opencv:/workspace/r14-shims:python:. /venv/main/bin/python -c 'import sgl_kernel,pytest; sgl_kernel.fp8_blockwise_scaled_mm=lambda *a,**k: (_ for _ in ()).throw(RuntimeError('\"'\"'fail-closed optional kernel shim was executed'\"'\"')); raise SystemExit(pytest.main(['\"'\"'-q'\"'\"','\"'\"'-rs'\"'\"','\"'\"'--tb=short'\"'\"','\"'\"'--maxfail=1'\"'\"','\"'\"'python/sglang/multimodal_gen/test/unit/realtime/test_lingbot_causal_denoising.py'\"'\"','\"'\"'-k'\"'\"','\"'\"'test_lingbot_camera_conditioner_accepts_cached_modulation or test_lingbot_camera_modulation_cache_enabled_policy or test_lingbot_camera_modulation_cache_memory_estimate or test_lingbot_camera_modulation_cache_reuses_until_key_changes or test_lingbot_camera_modulation_cache_skips_when_memory_guard_fails or test_lingbot_camera_modulation_cache_stage_policy or test_lingbot_condition_embedding_skips_text_when_crossattn_cache_ready'\"'\"']))'",
+      "duration_seconds": 22.057590457843617,
+      "lane": 1,
+      "output_sha256": "sha256:81880bcf3813920695c81603187efb88827a5b051508ac57dfb839aebf74288f",
+      "output_tail": "F\n=================================== FAILURES ===================================\n__________ test_lingbot_camera_conditioner_accepts_cached_modulation ___________\npython/sglang/multimodal_gen/test/unit/realtime/test_lingbot_causal_denoising.py:201: in test_lingbot_camera_conditioner_accepts_cached_modulation\n    conditioner = LingBotWorldCamConditioner(dim=4)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\npython/sglang/multimodal_gen/runtime/models/dits/lingbot_world.py:132: in __init__\n    self.cam_injector = MLP(dim, dim, dim, bias=True, act_type=\"silu\")\n                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\npython/sglang/multimodal_gen/runtime/layers/mlp.py:43: in __init__\n    self.fc_in = ColumnParallelLinear(\npython/sglang/multimodal_gen/runtime/layers/linear.py:341: in __init__\n    self.tp_group = tp_group or get_tp_group()\n                                ^^^^^^^^^^^^^^\npython/sglang/multimodal_gen/runtime/distributed/parallel_state.py:178: in get_tp_group\n    assert _TP is not None, \"tensor model parallel group is not initialized\"\n           ^^^^^^^^^^^^^^^\nE   AssertionError: tensor model parallel group is not initialized\n=============================== warnings summary ===============================\n../../venv/main/lib/python3.12/site-packages/torch/jit/_script.py:365: 14 warnings\n  /venv/main/lib/python3.12/site-packages/torch/jit/_script.py:365: DeprecationWarning: `torch.jit.script_method` is deprecated. Please switch to `torch.compile` or `torch.export`.\n    warnings.warn(\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!\n1 failed, 7 deselected, 14 warnings in 11.40s\nWelcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nHEAD is now at 687f493cac revert\n",
+      "purpose": "cross the unrelated optional-kernel import and run causal-denoising unit tests",
+      "returncode": 1,
+      "status": "completed",
+      "timeout": 300
+    }
+  ],
+  "remote": {
+    "gpu_count": 2,
+    "host": "38.49.42.120",
+    "port": 54270
+  },
+  "schema_version": "0.1",
+  "selection_lock_sha256": "sha256:ede934e0bf3af3c15bbba5bc5f55696077605fc48cbff23e4abce485a6f953fb",
+  "started_at": "2026-09-02T19:33:39.966570+00:00",
+  "static_evidence_sha256": "sha256:120230e119a8d23885b43471d9f72e1f72cae62c7f7946f98f4035b1f7874164",
+  "test_plan_sha256": "sha256:1d9cd3d63d09f97af0c86164a4b537f6a2054d11f4a0acbe7a9e5eb548335a58"
+}

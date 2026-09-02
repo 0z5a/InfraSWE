@@ -21,7 +21,7 @@ from infraswe.history.blind import canonical_sha256
 from infraswe.io import atomic_write_json
 
 
-def main() -> int:
+def main(round_label: str = "R16") -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--selection-lock", type=Path, required=True)
     parser.add_argument("--test-plan", type=Path, required=True)
@@ -32,19 +32,19 @@ def main() -> int:
     selection = _read(args.selection_lock)
     selection_material = selection["selection_material"]
     if selection["selection_lock_sha256"] != canonical_sha256(selection_material):
-        raise SystemExit("R16 selection digest mismatch")
+        raise SystemExit(f"{round_label} selection digest mismatch")
     plan = _read(args.test_plan)
     plan_material = {
         key: value for key, value in plan.items() if key != "test_plan_sha256"
     }
     if plan["test_plan_sha256"] != canonical_sha256(plan_material):
-        raise SystemExit("R16 test-plan digest mismatch")
+        raise SystemExit(f"{round_label} test-plan digest mismatch")
     if plan["selection_lock_sha256"] != selection["selection_lock_sha256"]:
-        raise SystemExit("R16 plan/selection binding mismatch")
+        raise SystemExit(f"{round_label} plan/selection binding mismatch")
     if not plan["frozen_before_candidate_body_access"]:
-        raise SystemExit("R16 body acquisition lacks a prior plan lock")
+        raise SystemExit(f"{round_label} body acquisition lacks a prior plan lock")
     if not plan["frozen_before_source_diff_content_access"]:
-        raise SystemExit("R16 source acquisition lacks a prior plan lock")
+        raise SystemExit(f"{round_label} source acquisition lacks a prior plan lock")
     if any(
         plan[field]
         for field in (
@@ -53,7 +53,7 @@ def main() -> int:
             "ci_or_label_requested",
         )
     ):
-        raise SystemExit("R16 plan requests forbidden outcome evidence")
+        raise SystemExit(f"{round_label} plan requests forbidden outcome evidence")
 
     cases: list[dict[str, Any]] = selection_material["cases"]
     acquired_at = datetime.now(UTC).isoformat()
@@ -123,7 +123,10 @@ def main() -> int:
 
     bundle_material = {
         "schema_version": "0.1",
-        "protocol_id": "r16-exact-candidate-evidence-v0.1-sanitized-before-storage",
+        "protocol_id": (
+            f"{round_label.lower()}-exact-candidate-evidence-v0.1-"
+            "sanitized-before-storage"
+        ),
         "selection_lock_sha256": selection["selection_lock_sha256"],
         "test_plan_sha256": plan["test_plan_sha256"],
         "acquired_at": acquired_at,
@@ -207,4 +210,4 @@ def main() -> int:
 
 
 if __name__ == "__main__":
-    raise SystemExit(main())
+    raise SystemExit(main("R16"))

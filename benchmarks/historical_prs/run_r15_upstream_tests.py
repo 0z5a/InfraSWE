@@ -30,6 +30,12 @@ PROJECT_RUNTIME = {
         "0",
     ),
     "flashinfer": ("/workspace/r14-run-flashinfer", "/venv/main/bin/python", ".", "0"),
+    "tensorrt-llm": (
+        "/workspace/r17-tensorrt-wt",
+        "/venv/main/bin/python",
+        ".",
+        "0",
+    ),
     "liger-kernel": ("/workspace/r13-run-liger", "/venv/main/bin/python", ".", "0"),
     "megatron-core": ("/workspace/r13-run-megatron", "/venv/main/bin/python", ".", "1"),
     "torchtitan": (
@@ -50,6 +56,7 @@ LANE = {
     "vllm": 0,
     "sglang": 0,
     "flashinfer": 0,
+    "tensorrt-llm": 0,
     "liger-kernel": 0,
     "megatron-core": 1,
     "torchtitan": 1,
@@ -105,6 +112,7 @@ def _build_command(
     case: dict[str, Any],
     static_case: dict[str, Any],
     *,
+    round_label: str,
     test_timeout: int,
     noconftest_projects: set[str],
 ) -> tuple[str | None, list[str], list[str]]:
@@ -137,7 +145,8 @@ def _build_command(
     expected_head = shlex.quote(case["head_sha"])
     command = (
         f"cd {shlex.quote(worktree)} && "
-        f"git switch --detach refs/r15/pr-{case['pull_number']} >/dev/null && "
+        f"git switch --detach refs/{round_label.lower()}/pr-{case['pull_number']} "
+        ">/dev/null && "
         f"test \"$(git rev-parse HEAD)\" = {expected_head} && "
         f"{test_command}"
     )
@@ -150,18 +159,20 @@ def _run_case(
     case: dict[str, Any],
     static_case: dict[str, Any],
     *,
+    round_label: str,
     test_timeout: int,
     noconftest_projects: set[str],
 ) -> dict[str, Any]:
     command, test_paths, test_names = _build_command(
         case,
         static_case,
+        round_label=round_label,
         test_timeout=test_timeout,
         noconftest_projects=noconftest_projects,
     )
     common = {
         "case_id": case["case_id"],
-        "ref": f"refs/r15/pr-{case['pull_number']}",
+        "ref": f"refs/{round_label.lower()}/pr-{case['pull_number']}",
         "head_sha": case["head_sha"],
         "test_paths": test_paths,
         "test_names": test_names,
@@ -209,7 +220,7 @@ def _run_case(
     }
 
 
-def main() -> int:
+def main(round_label: str = "R15") -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--selection-lock", type=Path, required=True)
     parser.add_argument("--static-evidence", type=Path, required=True)
@@ -222,13 +233,13 @@ def main() -> int:
     selection = _read(args.selection_lock)
     selection_material = selection["selection_material"]
     if selection["selection_lock_sha256"] != canonical_sha256(selection_material):
-        raise SystemExit("R15 selection digest mismatch")
+        raise SystemExit(f"{round_label} selection digest mismatch")
     static = _read(args.static_evidence)
     static_material = {key: value for key, value in static.items() if key != "evidence_sha256"}
     if static["evidence_sha256"] != canonical_sha256(static_material):
-        raise SystemExit("R15 static evidence digest mismatch")
+        raise SystemExit(f"{round_label} static evidence digest mismatch")
     if static["selection_lock_sha256"] != selection["selection_lock_sha256"]:
-        raise SystemExit("R15 static/selection binding mismatch")
+        raise SystemExit(f"{round_label} static/selection binding mismatch")
     static_by_id = {item["case_id"]: item for item in static["cases"]}
     selected_cases = selection_material["cases"]
     if args.only:
@@ -253,6 +264,7 @@ def main() -> int:
                     len(selected_cases),
                     case,
                     static_by_id[case["case_id"]],
+                    round_label=round_label,
                     test_timeout=args.test_timeout,
                     noconftest_projects=set(args.noconftest_project),
                 ),
@@ -269,7 +281,7 @@ def main() -> int:
     records = [record for _, record in sorted(indexed_records)]
     material = {
         "schema_version": "0.1",
-        "protocol_id": "r15-exact-candidate-upstream-tests-v0.1",
+        "protocol_id": f"{round_label.lower()}-exact-candidate-upstream-tests-v0.1",
         "selection_lock_sha256": selection["selection_lock_sha256"],
         "test_plan_sha256": static["test_plan_sha256"],
         "static_evidence_sha256": static["evidence_sha256"],
@@ -288,4 +300,4 @@ def main() -> int:
 
 
 if __name__ == "__main__":
-    raise SystemExit(main())
+    raise SystemExit(main("R15"))

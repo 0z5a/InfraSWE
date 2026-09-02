@@ -1,0 +1,30 @@
+{
+  "evidence_sha256": "sha256:63bf3d222744687871eb9ca5829a620b575c42d847b027b4490705979636260e",
+  "finished_at": "2026-09-02T15:33:48.012687+00:00",
+  "outcome_review_ci_fields_requested": false,
+  "protocol_id": "r14-exact-followup-tests-v0.1",
+  "records": [
+    {
+      "case_id": "torchtitan-pr-3980",
+      "command": "cd /workspace/r13-run-torchtitan && git switch --detach refs/r14/pr-3980 >/dev/null && test \"$(git rev-parse HEAD)\" = e080230f0e6197345893dd5fc17d5d209eefc9a6 && timeout 120s env CUDA_VISIBLE_DEVICES=0 INFRASWE_R14_BYPASS_TORCHTITAN_RL_INIT=1 INFRASWE_R14_TORCHTITAN_ROOT=/workspace/r13-run-torchtitan PYTHONPATH=/workspace/r14-verl-shim:. /workspace/venv-tt/bin/python -m pytest -q -rs --tb=short --maxfail=1 tests/unit_tests/test_context_parallel.py torchtitan/experiments/rl/tests/test_trainer.py",
+      "duration_seconds": 12.22280712518841,
+      "output_sha256": "sha256:5f5e3e2251cd1e1d107795d60ae73cedcb5dbaa4337c1d0500717485b7fa8bc9",
+      "output_tail": "...                                                                      [100%]\n3 passed in 4.96s\nWelcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nHEAD is now at e080230f0 [rl] Split pipeline loss inputs across microbatches\n",
+      "purpose": "isolate candidate unit tests from the unrelated vLLM integration import",
+      "returncode": 0,
+      "status": "completed",
+      "timeout": 180
+    }
+  ],
+  "remote": {
+    "gpu_count": 2,
+    "host": "root@38.49.42.120",
+    "port": 54270
+  },
+  "sanitized_source_bundle_sha256": "sha256:1efdbfc09c8ba05fa183c1e6e702ef423b30f54b6e18cba94abe8c87630cdcbd",
+  "schema_version": "0.1",
+  "selection_lock_sha256": "sha256:bcbc9038eb7facae3cdd5ea1278927227908e552f7eaadfe9b97ace920dcce76",
+  "started_at": "2026-09-02T15:33:35.789337+00:00",
+  "static_evidence_sha256": "sha256:400875ca67265d9feeade81cbb619964e31c9834dd86da89378f591c797ca514",
+  "test_plan_sha256": "sha256:8c1ea5cb3abf130dd41b7771097dc5c9f75c848be9f5ef523326619eb2a20077"
+}

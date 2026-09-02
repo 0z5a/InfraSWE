@@ -1,0 +1,103 @@
+{
+  "evidence_sha256": "sha256:4c8399ab97bdd217282bb05f5e7bb7841e880edb38da08b2432e7f4a9ace6735",
+  "finished_at": "2026-09-02T14:28:12.111406+00:00",
+  "noconftest_projects": [
+    "vllm"
+  ],
+  "outcome_review_ci_fields_requested": false,
+  "protocol_id": "r14-exact-candidate-upstream-tests-v0.1",
+  "records": [
+    {
+      "case_id": "vllm-pr-54643",
+      "duration_seconds": 15.0114268749021,
+      "head_sha": "8ad6f351f3db95c1fc8007c35efc079e55e08361",
+      "output_sha256": "sha256:08221e15d7c27266e2fe2877d5d5f55fced2472329c558a664586d9349627e48",
+      "output_tail": "..                                                                       [100%]\n=============================== warnings summary ===============================\nvllm/__init__.py:7\n  /workspace/r14-run-vllm/vllm/__init__.py:7: RuntimeWarning: Failed to read commit hash:\n  No module named 'vllm._version'\n    from .version import __version__, __version_tuple__  # isort:skip\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n2 passed, 31 deselected, 1 warning in 7.77s\nWelcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nPrevious HEAD position was 9fa8f9f6d [PD][NixlPush] Extract WRITE posting into helpers (no behavior change)\nHEAD is now at 8ad6f351f [Bugfix][MooncakeStore] Drop rejected pending loads\n",
+      "ref": "refs/r14/pr-54643",
+      "remote_command": "cd /workspace/r14-run-vllm && git switch --detach refs/r14/pr-54643 >/dev/null && test \"$(git rev-parse HEAD)\" = 8ad6f351f3db95c1fc8007c35efc079e55e08361 && timeout 240s env PYTHONDONTWRITEBYTECODE=1 CUDA_VISIBLE_DEVICES=0 PYTHONPATH=. /venv/main/bin/python -m pytest -q --tb=short --maxfail=1 --noconftest tests/v1/kv_connector/unit/test_mooncake_store_scheduler.py -k 'test_pending_load_for_non_chosen_connector_is_dropped or test_update_state_excludes_nontransfer_groups'",
+      "returncode": 0,
+      "status": "completed",
+      "summary_lines": [
+        "/workspace/r14-run-vllm/vllm/__init__.py:7: RuntimeWarning: Failed to read commit hash:",
+        "2 passed, 31 deselected, 1 warning in 7.77s"
+      ],
+      "test_names": [
+        "test_pending_load_for_non_chosen_connector_is_dropped",
+        "test_update_state_excludes_nontransfer_groups"
+      ],
+      "test_paths": [
+        "tests/v1/kv_connector/unit/test_mooncake_store_scheduler.py"
+      ]
+    },
+    {
+      "case_id": "vllm-pr-50658",
+      "duration_seconds": 18.012823041994125,
+      "head_sha": "ac974678e117c4be93c456d3bc5e3ea7774e238f",
+      "output_sha256": "sha256:0ae4998ce266e799644d3fce5c7dac84b8c4a5ef5d8e6cd65fc53d732302fc6b",
+      "output_tail": ".........                                                                [100%]\n=============================== warnings summary ===============================\nvllm/__init__.py:7\n  /workspace/r14-run-vllm/vllm/__init__.py:7: RuntimeWarning: Failed to read commit hash:\n  No module named 'vllm._version'\n    from .version import __version__, __version_tuple__  # isort:skip\n\n../../venv/main/lib/python3.12/site-packages/torch/jit/_script.py:365: 14 warnings\n  /venv/main/lib/python3.12/site-packages/torch/jit/_script.py:365: DeprecationWarning: `torch.jit.script_method` is deprecated. Please switch to `torch.compile` or `torch.export`.\n    warnings.warn(\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n9 passed, 22 deselected, 15 warnings in 8.69s\nWelcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nPrevious HEAD position was 8ad6f351f [Bugfix][MooncakeStore] Drop rejected pending loads\nHEAD is now at ac974678e [Model][Kimi K3] Project DSpark aux states before SP all-gather\n",
+      "ref": "refs/r14/pr-50658",
+      "remote_command": "cd /workspace/r14-run-vllm && git switch --detach refs/r14/pr-50658 >/dev/null && test \"$(git rev-parse HEAD)\" = ac974678e117c4be93c456d3bc5e3ea7774e238f && timeout 240s env PYTHONDONTWRITEBYTECODE=1 CUDA_VISIBLE_DEVICES=0 PYTHONPATH=. /venv/main/bin/python -m pytest -q --tb=short --maxfail=1 --noconftest tests/models/kimi_k3/test_sequence_parallel.py tests/models/test_dspark_mla.py tests/v1/cudagraph/test_cudagraph_manager.py -k 'test_dspark_enables_sequence_sharded_target_aux_after_draft_load or test_dspark_projects_local_aux_before_single_gather_and_crops_padding or test_dspark_target_aux_preparation_is_noop_without_aux or test_dspark_target_aux_preparation_keeps_unsharded_path or test_fullgraph_aux_outputs_use_per_descriptor_leading_dims or test_kimi_can_keep_raw_aux_sequence_sharded_with_padding or test_kimi_mtp_restores_sequence_parallel_output or test_kimi_raw_aux_capability_is_noop_without_sequence_parallel or test_kimi_start_layer_aux_stays_full_by_default'",
+      "returncode": 0,
+      "status": "completed",
+      "summary_lines": [
+        "/workspace/r14-run-vllm/vllm/__init__.py:7: RuntimeWarning: Failed to read commit hash:",
+        "9 passed, 22 deselected, 15 warnings in 8.69s"
+      ],
+      "test_names": [
+        "test_dspark_enables_sequence_sharded_target_aux_after_draft_load",
+        "test_dspark_projects_local_aux_before_single_gather_and_crops_padding",
+        "test_dspark_target_aux_preparation_is_noop_without_aux",
+        "test_dspark_target_aux_preparation_keeps_unsharded_path",
+        "test_fullgraph_aux_outputs_use_per_descriptor_leading_dims",
+        "test_kimi_can_keep_raw_aux_sequence_sharded_with_padding",
+        "test_kimi_mtp_restores_sequence_parallel_output",
+        "test_kimi_raw_aux_capability_is_noop_without_sequence_parallel",
+        "test_kimi_start_layer_aux_stays_full_by_default"
+      ],
+      "test_paths": [
+        "tests/models/kimi_k3/test_sequence_parallel.py",
+        "tests/models/test_dspark_mla.py",
+        "tests/v1/cudagraph/test_cudagraph_manager.py"
+      ]
+    },
+    {
+      "case_id": "vllm-pr-50754",
+      "duration_seconds": 17.211511875037104,
+      "head_sha": "9fa8f9f6d142268657ea2c324c68946ea24cbef2",
+      "output_sha256": "sha256:6df833cddca1844df2d38529eb02328564537213c290ae7696204dfa519b31aa",
+      "output_tail": "..........                                                               [100%]\n=============================== warnings summary ===============================\nvllm/__init__.py:7\n  /workspace/r14-run-vllm/vllm/__init__.py:7: RuntimeWarning: Failed to read commit hash:\n  No module named 'vllm._version'\n    from .version import __version__, __version_tuple__  # isort:skip\n\n../../venv/main/lib/python3.12/site-packages/torch/jit/_script.py:365: 14 warnings\n  /venv/main/lib/python3.12/site-packages/torch/jit/_script.py:365: DeprecationWarning: `torch.jit.script_method` is deprecated. Please switch to `torch.compile` or `torch.export`.\n    warnings.warn(\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n10 passed, 41 deselected, 15 warnings in 8.64s\nWelcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nPrevious HEAD position was ac974678e [Model][Kimi K3] Project DSpark aux states before SP all-gather\nHEAD is now at 9fa8f9f6d [PD][NixlPush] Extract WRITE posting into helpers (no behavior change)\n",
+      "ref": "refs/r14/pr-50754",
+      "remote_command": "cd /workspace/r14-run-vllm && git switch --detach refs/r14/pr-50754 >/dev/null && test \"$(git rev-parse HEAD)\" = 9fa8f9f6d142268657ea2c324c68946ea24cbef2 && timeout 240s env PYTHONDONTWRITEBYTECODE=1 CUDA_VISIBLE_DEVICES=0 PYTHONPATH=. /venv/main/bin/python -m pytest -q --tb=short --maxfail=1 --noconftest tests/v1/kv_connector/unit/test_nixl_push_connector.py -k 'test_all_writes_landing_still_completes_normally or test_expired_request_does_not_leak_the_poison_flag or test_failure_does_not_land_until_sibling_writes_have or test_multi_group_models_are_left_to_the_lease or test_multiple_groups_without_hma_are_also_gated or test_producer_reports_the_rank_whose_write_was_not_posted or test_report_is_sent_before_any_write_is_attempted or test_report_travels_from_producer_to_consumer_unchanged or test_unattempted_ranks_are_reported_when_the_loop_unwinds'",
+      "returncode": 0,
+      "status": "completed",
+      "summary_lines": [
+        "/workspace/r14-run-vllm/vllm/__init__.py:7: RuntimeWarning: Failed to read commit hash:",
+        "10 passed, 41 deselected, 15 warnings in 8.64s"
+      ],
+      "test_names": [
+        "test_all_writes_landing_still_completes_normally",
+        "test_expired_request_does_not_leak_the_poison_flag",
+        "test_failure_does_not_land_until_sibling_writes_have",
+        "test_multi_group_models_are_left_to_the_lease",
+        "test_multiple_groups_without_hma_are_also_gated",
+        "test_producer_reports_the_rank_whose_write_was_not_posted",
+        "test_report_is_sent_before_any_write_is_attempted",
+        "test_report_travels_from_producer_to_consumer_unchanged",
+        "test_unattempted_ranks_are_reported_when_the_loop_unwinds"
+      ],
+      "test_paths": [
+        "tests/v1/kv_connector/unit/test_nixl_push_connector.py"
+      ]
+    }
+  ],
+  "remote": {
+    "host": "root@38.49.42.120",
+    "port": 54270
+  },
+  "schema_version": "0.1",
+  "selection_lock_sha256": "sha256:bcbc9038eb7facae3cdd5ea1278927227908e552f7eaadfe9b97ace920dcce76",
+  "started_at": "2026-09-02T14:27:21.872913+00:00",
+  "static_evidence_sha256": "sha256:400875ca67265d9feeade81cbb619964e31c9834dd86da89378f591c797ca514",
+  "test_plan_sha256": "sha256:8c1ea5cb3abf130dd41b7771097dc5c9f75c848be9f5ef523326619eb2a20077",
+  "test_timeout_seconds": 240
+}

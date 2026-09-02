@@ -1,8 +1,8 @@
 # InfraSWE 当前成果与新对话交接
 
-更新时间：2026-09-02 22:10 +08:00
+更新时间：2026-09-03 +08:00
 本地工程：`/Users/0z5a/Documents/infra/infraswe`  
-状态：v0.1 已发布；历史 PR 盲测已完成 R13 的 29 个训练类双卡实测，准备扩容 200 例。
+状态：v0.1 已发布；历史 PR 盲测已完成 R14 的首组 30 个通信类双卡实测，准备按 R15 规则继续。
 
 ## 0. 22:10 当前状态（覆盖本文后续旧快照）
 
@@ -38,12 +38,22 @@
 - R13 在同一双 A100 主机执行精确 upstream tests、NCCL、Megatron deferred reduction、
   slime TP2 数值/显存与 verl CP/NCCL 反例；技术 contract 与项目 disposition 必须在后续并列
   锁定和报告；
+- R14 完成首个严格 30 例通信组：同队列 exact 从 20.0% 提高到 36.7%，binary 均为 46.7%，
+  reject precision 为 60%；12 个冻结非 accept 的 exact 从 1/12 提升到 6/12；
+- R14 已并列锁定 `technical_contract` 与 disposition，机器为 18 accept、2 check、10 reject，
+  oracle 为 8 accept、2 check、20 reject；两个机器 check 均未命中，check 仍需继续收窄；
+- R14 的 SGLang 正文动态 CI 区块已确定性清洗，5 例 5 区块；一次短暂暴露已写入 lock/report，
+  未进入判断；完整报告见 `results/historical-pr-blind-20260901/supplemental-r14/REPORT_20260903_ZH.md`；
+- R15 的 30 例分配冻结为 20 通信 + 10 训练；选择排除 31–89 天 disposition 灰区，check 要求
+  近期、窄作用域、候选闭环覆盖且仅一个 residual；规则见 `policy-iteration-r15.json`；
 - 后续目标总量为 200：通信 50、训练 50、推理 100；推理按 vLLM、SGLang、
   FlashAttention、FlashInfer 各 25。R13 保持 29 例；从 R14 起每组 30 例，上一组完成
   outcome-free 选择/计划、测试、判断锁、揭示、审计和规则迭代后，才启动下一组。R14 先做
   30 个通信类 PR；只在指标有改善时提交主分支；
 - prospective mergeability 已冻结：official ProjectFit `>=85` 才可 accept；`check` 仅限
   30 天内且 14 天内明确在审的新 PR；长期 reviewed-open PR 按 reject；
+- 当前远端 `38.49.42.120:54270` 为双 A100；必须等全部既定分组完成、结果同步并验证后自动
+  destroy 实例，禁止在中间组提前关闭；
 - precedent retrieval 已具备 footprint、SQLite/FTS/graph、泄漏、冲突、trust、rule、
   PrecedentSet/RetrievalBundle digest 与完整 CLI；
 - communication 与 memory-tiering Draft、InfraCert hard gate、单一 C、O=C、cell-local card、

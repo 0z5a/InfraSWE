@@ -1,0 +1,158 @@
+{
+  "evidence_sha256": "sha256:f22b74ced74d581e4cd997b2ed04883c7f774860780676f27495e8b449811955",
+  "finished_at": "2026-09-02T14:22:43.608589+00:00",
+  "noconftest_projects": [
+    "vllm"
+  ],
+  "outcome_review_ci_fields_requested": false,
+  "protocol_id": "r14-exact-candidate-upstream-tests-v0.1",
+  "records": [
+    {
+      "case_id": "vllm-pr-54643",
+      "duration_seconds": 15.389991750009358,
+      "head_sha": "8ad6f351f3db95c1fc8007c35efc079e55e08361",
+      "output_sha256": "sha256:f1d3cb6a97cc214c3ef44758f5f8fcbaab0d30ccbce07f83db5a4e7321dae948",
+      "output_tail": "\n==================================== ERRORS ====================================\n_ ERROR collecting tests/v1/kv_connector/unit/test_mooncake_store_scheduler.py _\nImportError while importing test module '/workspace/r14-run-vllm/tests/v1/kv_connector/unit/test_mooncake_store_scheduler.py'.\nHint: make sure your test modules/packages have valid Python names.\nTraceback:\n/venv/main/lib/python3.12/importlib/__init__.py:90: in import_module\n    return _bootstrap._gcd_import(name[level:], package, level)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntests/v1/kv_connector/unit/test_mooncake_store_scheduler.py:8: in <module>\n    from vllm.distributed.kv_transfer.kv_connector.v1.mooncake.store.data import (\nvllm/distributed/kv_transfer/__init__.py:4: in <module>\n    from vllm.distributed.kv_transfer.kv_transfer_state import (\nvllm/distributed/kv_transfer/kv_transfer_state.py:5: in <module>\n    from vllm.distributed.kv_transfer.kv_connector.base import KVConnectorBaseType\nvllm/distributed/kv_transfer/kv_connector/base.py:5: in <module>\n    from vllm.distributed.kv_transfer.kv_connector.v1 import KVConnectorBase_V1\nvllm/distributed/kv_transfer/kv_connector/v1/__init__.py:3: in <module>\n    from vllm.distributed.kv_transfer.kv_connector.v1.base import (\nvllm/distributed/kv_transfer/kv_connector/v1/base.py:52: in <module>\n    from vllm.v1.core.sched.output import SchedulerOutput\nvllm/v1/core/sched/output.py:8: in <module>\n    from vllm.config.ec_manager_config import EncoderCacheManagerMetadata\nvllm/config/__init__.py:40: in <module>\n    from vllm.config.reasoning import ReasoningConfig\nvllm/config/reasoning.py:8: in <module>\n    from vllm.reasoning import ReasoningParserManager\nvllm/reasoning/__init__.py:4: in <module>\n    from vllm.reasoning.abs_reasoning_parsers import ReasoningParser, ReasoningParserManager\nvllm/reasoning/abs_reasoning_parsers.py:11: in <module>\n    from vllm.entrypoints.mcp.tool_server import ToolServer\nvllm/entrypoints/mcp/tool_server.py:9: in <module>\n    from vllm.entrypoints.mcp.tool import HarmonyBrowserTool, HarmonyPythonTool, Tool\nvllm/entrypoints/mcp/tool.py:8: in <module>\n    from openai.types.responses.response_function_tool_call_output_item import (\nE   ModuleNotFoundError: No module named 'openai'\n------------------------------- Captured stdout --------------------------------\nWARNING 09-02 14:21:52 [__init__.py:27] The vLLM package was not found, so its version could not be inspected. This may cause platform detection to fail.\nWARNING 09-02 14:21:52 [__init__.py:27] The vLLM package was not found, so its version could not be inspected. This may cause platform detection to fail.\n=============================== warnings summary ===============================\nvllm/__init__.py:7\n  /workspace/r14-run-vllm/vllm/__init__.py:7: RuntimeWarning: Failed to read commit hash:\n  No module named 'vllm._version'\n    from .version import __version__, __version_tuple__  # isort:skip\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n=========================== short test summary info ============================\nERROR tests/v1/kv_connector/unit/test_mooncake_store_scheduler.py\n!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!\n!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!\n1 warning, 1 error in 6.85s\nWelcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nPrevious HEAD position was 9fa8f9f6d [PD][NixlPush] Extract WRITE posting into helpers (no behavior change)\nHEAD is now at 8ad6f351f [Bugfix][MooncakeStore] Drop rejected pending loads\n",
+      "ref": "refs/r14/pr-54643",
+      "remote_command": "cd /workspace/r14-run-vllm && git switch --detach refs/r14/pr-54643 >/dev/null && test \"$(git rev-parse HEAD)\" = 8ad6f351f3db95c1fc8007c35efc079e55e08361 && timeout 180s env PYTHONDONTWRITEBYTECODE=1 CUDA_VISIBLE_DEVICES=0 PYTHONPATH=. /venv/main/bin/python -m pytest -q --tb=short --maxfail=1 --noconftest tests/v1/kv_connector/unit/test_mooncake_store_scheduler.py -k 'test_pending_load_for_non_chosen_connector_is_dropped or test_update_state_excludes_nontransfer_groups'",
+      "returncode": 2,
+      "status": "completed",
+      "summary_lines": [
+        "==================================== ERRORS ====================================",
+        "_ ERROR collecting tests/v1/kv_connector/unit/test_mooncake_store_scheduler.py _",
+        "ImportError while importing test module '/workspace/r14-run-vllm/tests/v1/kv_connector/unit/test_mooncake_store_scheduler.py'.",
+        "E   ModuleNotFoundError: No module named 'openai'",
+        "/workspace/r14-run-vllm/vllm/__init__.py:7: RuntimeWarning: Failed to read commit hash:",
+        "ERROR tests/v1/kv_connector/unit/test_mooncake_store_scheduler.py",
+        "!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!",
+        "1 warning, 1 error in 6.85s"
+      ],
+      "test_names": [
+        "test_pending_load_for_non_chosen_connector_is_dropped",
+        "test_update_state_excludes_nontransfer_groups"
+      ],
+      "test_paths": [
+        "tests/v1/kv_connector/unit/test_mooncake_store_scheduler.py"
+      ]
+    },
+    {
+      "case_id": "vllm-pr-50658",
+      "duration_seconds": 14.534054457908496,
+      "head_sha": "ac974678e117c4be93c456d3bc5e3ea7774e238f",
+      "output_sha256": "sha256:86b2bd649c7fcf5cfe66b53dc70710db9f9dd33e0475df3496b636fd13a2c536",
+      "output_tail": "\n==================================== ERRORS ====================================\n_______ ERROR collecting tests/models/kimi_k3/test_sequence_parallel.py ________\nImportError while importing test module '/workspace/r14-run-vllm/tests/models/kimi_k3/test_sequence_parallel.py'.\nHint: make sure your test modules/packages have valid Python names.\nTraceback:\n/venv/main/lib/python3.12/importlib/__init__.py:90: in import_module\n    return _bootstrap._gcd_import(name[level:], package, level)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntests/models/kimi_k3/test_sequence_parallel.py:11: in <module>\n    from vllm.config import ParallelConfig\nvllm/config/__init__.py:40: in <module>\n    from vllm.config.reasoning import ReasoningConfig\nvllm/config/reasoning.py:8: in <module>\n    from vllm.reasoning import ReasoningParserManager\nvllm/reasoning/__init__.py:4: in <module>\n    from vllm.reasoning.abs_reasoning_parsers import ReasoningParser, ReasoningParserManager\nvllm/reasoning/abs_reasoning_parsers.py:11: in <module>\n    from vllm.entrypoints.mcp.tool_server import ToolServer\nvllm/entrypoints/mcp/tool_server.py:9: in <module>\n    from vllm.entrypoints.mcp.tool import HarmonyBrowserTool, HarmonyPythonTool, Tool\nvllm/entrypoints/mcp/tool.py:8: in <module>\n    from openai.types.responses.response_function_tool_call_output_item import (\nE   ModuleNotFoundError: No module named 'openai'\n------------------------------- Captured stdout --------------------------------\nWARNING 09-02 14:22:07 [__init__.py:27] The vLLM package was not found, so its version could not be inspected. This may cause platform detection to fail.\nWARNING 09-02 14:22:07 [__init__.py:27] The vLLM package was not found, so its version could not be inspected. This may cause platform detection to fail.\n=============================== warnings summary ===============================\nvllm/__init__.py:7\n  /workspace/r14-run-vllm/vllm/__init__.py:7: RuntimeWarning: Failed to read commit hash:\n  No module named 'vllm._version'\n    from .version import __version__, __version_tuple__  # isort:skip\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n=========================== short test summary info ============================\nERROR tests/models/kimi_k3/test_sequence_parallel.py\n!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!\n1 warning, 1 error in 6.46s\nWelcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nPrevious HEAD position was 8ad6f351f [Bugfix][MooncakeStore] Drop rejected pending loads\nHEAD is now at ac974678e [Model][Kimi K3] Project DSpark aux states before SP all-gather\n",
+      "ref": "refs/r14/pr-50658",
+      "remote_command": "cd /workspace/r14-run-vllm && git switch --detach refs/r14/pr-50658 >/dev/null && test \"$(git rev-parse HEAD)\" = ac974678e117c4be93c456d3bc5e3ea7774e238f && timeout 180s env PYTHONDONTWRITEBYTECODE=1 CUDA_VISIBLE_DEVICES=0 PYTHONPATH=. /venv/main/bin/python -m pytest -q --tb=short --maxfail=1 --noconftest tests/models/kimi_k3/test_sequence_parallel.py tests/models/test_dspark_mla.py tests/v1/cudagraph/test_cudagraph_manager.py -k 'test_dspark_enables_sequence_sharded_target_aux_after_draft_load or test_dspark_projects_local_aux_before_single_gather_and_crops_padding or test_dspark_target_aux_preparation_is_noop_without_aux or test_dspark_target_aux_preparation_keeps_unsharded_path or test_fullgraph_aux_outputs_use_per_descriptor_leading_dims or test_kimi_can_keep_raw_aux_sequence_sharded_with_padding or test_kimi_mtp_restores_sequence_parallel_output or test_kimi_raw_aux_capability_is_noop_without_sequence_parallel or test_kimi_start_layer_aux_stays_full_by_default'",
+      "returncode": 1,
+      "status": "completed",
+      "summary_lines": [
+        "==================================== ERRORS ====================================",
+        "_______ ERROR collecting tests/models/kimi_k3/test_sequence_parallel.py ________",
+        "ImportError while importing test module '/workspace/r14-run-vllm/tests/models/kimi_k3/test_sequence_parallel.py'.",
+        "E   ModuleNotFoundError: No module named 'openai'",
+        "/workspace/r14-run-vllm/vllm/__init__.py:7: RuntimeWarning: Failed to read commit hash:",
+        "ERROR tests/models/kimi_k3/test_sequence_parallel.py",
+        "1 warning, 1 error in 6.46s"
+      ],
+      "test_names": [
+        "test_dspark_enables_sequence_sharded_target_aux_after_draft_load",
+        "test_dspark_projects_local_aux_before_single_gather_and_crops_padding",
+        "test_dspark_target_aux_preparation_is_noop_without_aux",
+        "test_dspark_target_aux_preparation_keeps_unsharded_path",
+        "test_fullgraph_aux_outputs_use_per_descriptor_leading_dims",
+        "test_kimi_can_keep_raw_aux_sequence_sharded_with_padding",
+        "test_kimi_mtp_restores_sequence_parallel_output",
+        "test_kimi_raw_aux_capability_is_noop_without_sequence_parallel",
+        "test_kimi_start_layer_aux_stays_full_by_default"
+      ],
+      "test_paths": [
+        "tests/models/kimi_k3/test_sequence_parallel.py",
+        "tests/models/test_dspark_mla.py",
+        "tests/v1/cudagraph/test_cudagraph_manager.py"
+      ]
+    },
+    {
+      "case_id": "vllm-pr-54619",
+      "duration_seconds": 14.387385291978717,
+      "head_sha": "0dc1dd46e39013253cdfa152b260f1828e6410d7",
+      "output_sha256": "sha256:ea018d3b9bcb630eb0e72d55559ab21129f919feca3092ec0fa51d2d9802705e",
+      "output_tail": "\n==================================== ERRORS ====================================\n___ ERROR collecting tests/v1/ec_connector/unit/cpu/test_ec_shared_region.py ___\nImportError while importing test module '/workspace/r14-run-vllm/tests/v1/ec_connector/unit/cpu/test_ec_shared_region.py'.\nHint: make sure your test modules/packages have valid Python names.\nTraceback:\n/venv/main/lib/python3.12/importlib/__init__.py:90: in import_module\n    return _bootstrap._gcd_import(name[level:], package, level)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntests/v1/ec_connector/unit/cpu/test_ec_shared_region.py:17: in <module>\n    from vllm.distributed.ec_transfer.ec_connector.cpu.ec_shared_region import (\nvllm/distributed/ec_transfer/__init__.py:4: in <module>\n    from vllm.distributed.ec_transfer.ec_transfer_state import (\nvllm/distributed/ec_transfer/ec_transfer_state.py:5: in <module>\n    from vllm.distributed.ec_transfer.ec_connector.base import (\nvllm/distributed/ec_transfer/ec_connector/base.py:34: in <module>\n    from vllm.v1.core.sched.output import SchedulerOutput\nvllm/v1/core/sched/output.py:8: in <module>\n    from vllm.config.ec_manager_config import EncoderCacheManagerMetadata\nvllm/config/__init__.py:40: in <module>\n    from vllm.config.reasoning import ReasoningConfig\nvllm/config/reasoning.py:8: in <module>\n    from vllm.reasoning import ReasoningParserManager\nvllm/reasoning/__init__.py:4: in <module>\n    from vllm.reasoning.abs_reasoning_parsers import ReasoningParser, ReasoningParserManager\nvllm/reasoning/abs_reasoning_parsers.py:11: in <module>\n    from vllm.entrypoints.mcp.tool_server import ToolServer\nvllm/entrypoints/mcp/tool_server.py:9: in <module>\n    from vllm.entrypoints.mcp.tool import HarmonyBrowserTool, HarmonyPythonTool, Tool\nvllm/entrypoints/mcp/tool.py:8: in <module>\n    from openai.types.responses.response_function_tool_call_output_item import (\nE   ModuleNotFoundError: No module named 'openai'\n------------------------------- Captured stdout --------------------------------\nWARNING 09-02 14:22:21 [__init__.py:27] The vLLM package was not found, so its version could not be inspected. This may cause platform detection to fail.\nWARNING 09-02 14:22:21 [__init__.py:27] The vLLM package was not found, so its version could not be inspected. This may cause platform detection to fail.\n=============================== warnings summary ===============================\nvllm/__init__.py:7\n  /workspace/r14-run-vllm/vllm/__init__.py:7: RuntimeWarning: Failed to read commit hash:\n  No module named 'vllm._version'\n    from .version import __version__, __version_tuple__  # isort:skip\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n=========================== short test summary info ============================\nERROR tests/v1/ec_connector/unit/cpu/test_ec_shared_region.py\n!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!\n1 warning, 1 error in 6.81s\nWelcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nPrevious HEAD position was ac974678e [Model][Kimi K3] Project DSpark aux states before SP all-gather\nHEAD is now at 0dc1dd46e Publish region files atomically and release the region lock on every failure path\n",
+      "ref": "refs/r14/pr-54619",
+      "remote_command": "cd /workspace/r14-run-vllm && git switch --detach refs/r14/pr-54619 >/dev/null && test \"$(git rev-parse HEAD)\" = 0dc1dd46e39013253cdfa152b260f1828e6410d7 && timeout 180s env PYTHONDONTWRITEBYTECODE=1 CUDA_VISIBLE_DEVICES=0 PYTHONPATH=. /venv/main/bin/python -m pytest -q --tb=short --maxfail=1 --noconftest tests/v1/ec_connector/unit/cpu/test_ec_shared_region.py tests/v1/kv_offload/cpu/test_shared_offload_region.py -k 'test_constructor_failure_releases_the_region or test_creator_failure_leaves_no_temp_file or test_failed_join_releases_the_region_lock or test_joining_a_differently_sized_region_fails_fast or test_live_ec_region_survives_another_start or test_live_region_survives_another_start or test_orphaned_ec_file_reclaimed_on_next_start or test_orphaned_file_reclaimed_on_next_start or test_published_file_is_fully_sized or test_stale_ec_file_with_same_engine_id_does_not_wedge_restart or test_stale_file_with_same_engine_id_does_not_wedge_restart or test_zero_length_orphan_is_reclaimed'",
+      "returncode": 1,
+      "status": "completed",
+      "summary_lines": [
+        "==================================== ERRORS ====================================",
+        "___ ERROR collecting tests/v1/ec_connector/unit/cpu/test_ec_shared_region.py ___",
+        "ImportError while importing test module '/workspace/r14-run-vllm/tests/v1/ec_connector/unit/cpu/test_ec_shared_region.py'.",
+        "E   ModuleNotFoundError: No module named 'openai'",
+        "/workspace/r14-run-vllm/vllm/__init__.py:7: RuntimeWarning: Failed to read commit hash:",
+        "ERROR tests/v1/ec_connector/unit/cpu/test_ec_shared_region.py",
+        "1 warning, 1 error in 6.81s"
+      ],
+      "test_names": [
+        "test_constructor_failure_releases_the_region",
+        "test_creator_failure_leaves_no_temp_file",
+        "test_failed_join_releases_the_region_lock",
+        "test_joining_a_differently_sized_region_fails_fast",
+        "test_live_ec_region_survives_another_start",
+        "test_live_region_survives_another_start",
+        "test_orphaned_ec_file_reclaimed_on_next_start",
+        "test_orphaned_file_reclaimed_on_next_start",
+        "test_published_file_is_fully_sized",
+        "test_stale_ec_file_with_same_engine_id_does_not_wedge_restart",
+        "test_stale_file_with_same_engine_id_does_not_wedge_restart",
+        "test_zero_length_orphan_is_reclaimed"
+      ],
+      "test_paths": [
+        "tests/v1/ec_connector/unit/cpu/test_ec_shared_region.py",
+        "tests/v1/kv_offload/cpu/test_shared_offload_region.py"
+      ]
+    },
+    {
+      "case_id": "vllm-pr-50754",
+      "duration_seconds": 14.843207000056282,
+      "head_sha": "9fa8f9f6d142268657ea2c324c68946ea24cbef2",
+      "output_sha256": "sha256:07648bbef3c27acdbcb799607094622859a80063f0586e89cdf64ac38f2bbc45",
+      "output_tail": "\n==================================== ERRORS ====================================\n___ ERROR collecting tests/v1/kv_connector/unit/test_nixl_push_connector.py ____\nImportError while importing test module '/workspace/r14-run-vllm/tests/v1/kv_connector/unit/test_nixl_push_connector.py'.\nHint: make sure your test modules/packages have valid Python names.\nTraceback:\n/venv/main/lib/python3.12/importlib/__init__.py:90: in import_module\n    return _bootstrap._gcd_import(name[level:], package, level)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntests/v1/kv_connector/unit/test_nixl_push_connector.py:36: in <module>\n    from vllm.distributed.kv_transfer.kv_connector.v1.nixl.base_worker import (\nvllm/distributed/kv_transfer/__init__.py:4: in <module>\n    from vllm.distributed.kv_transfer.kv_transfer_state import (\nvllm/distributed/kv_transfer/kv_transfer_state.py:5: in <module>\n    from vllm.distributed.kv_transfer.kv_connector.base import KVConnectorBaseType\nvllm/distributed/kv_transfer/kv_connector/base.py:5: in <module>\n    from vllm.distributed.kv_transfer.kv_connector.v1 import KVConnectorBase_V1\nvllm/distributed/kv_transfer/kv_connector/v1/__init__.py:3: in <module>\n    from vllm.distributed.kv_transfer.kv_connector.v1.base import (\nvllm/distributed/kv_transfer/kv_connector/v1/base.py:52: in <module>\n    from vllm.v1.core.sched.output import SchedulerOutput\nvllm/v1/core/sched/output.py:8: in <module>\n    from vllm.config.ec_manager_config import EncoderCacheManagerMetadata\nvllm/config/__init__.py:40: in <module>\n    from vllm.config.reasoning import ReasoningConfig\nvllm/config/reasoning.py:8: in <module>\n    from vllm.reasoning import ReasoningParserManager\nvllm/reasoning/__init__.py:4: in <module>\n    from vllm.reasoning.abs_reasoning_parsers import ReasoningParser, ReasoningParserManager\nvllm/reasoning/abs_reasoning_parsers.py:11: in <module>\n    from vllm.entrypoints.mcp.tool_server import ToolServer\nvllm/entrypoints/mcp/tool_server.py:9: in <module>\n    from vllm.entrypoints.mcp.tool import HarmonyBrowserTool, HarmonyPythonTool, Tool\nvllm/entrypoints/mcp/tool.py:8: in <module>\n    from openai.types.responses.response_function_tool_call_output_item import (\nE   ModuleNotFoundError: No module named 'openai'\n------------------------------- Captured stdout --------------------------------\nWARNING 09-02 14:22:36 [__init__.py:27] The vLLM package was not found, so its version could not be inspected. This may cause platform detection to fail.\nWARNING 09-02 14:22:36 [__init__.py:27] The vLLM package was not found, so its version could not be inspected. This may cause platform detection to fail.\n=============================== warnings summary ===============================\nvllm/__init__.py:7\n  /workspace/r14-run-vllm/vllm/__init__.py:7: RuntimeWarning: Failed to read commit hash:\n  No module named 'vllm._version'\n    from .version import __version__, __version_tuple__  # isort:skip\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n=========================== short test summary info ============================\nERROR tests/v1/kv_connector/unit/test_nixl_push_connector.py\n!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!\n!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!\n1 warning, 1 error in 6.72s\nWelcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nPrevious HEAD position was 0dc1dd46e Publish region files atomically and release the region lock on every failure path\nHEAD is now at 9fa8f9f6d [PD][NixlPush] Extract WRITE posting into helpers (no behavior change)\n",
+      "ref": "refs/r14/pr-50754",
+      "remote_command": "cd /workspace/r14-run-vllm && git switch --detach refs/r14/pr-50754 >/dev/null && test \"$(git rev-parse HEAD)\" = 9fa8f9f6d142268657ea2c324c68946ea24cbef2 && timeout 180s env PYTHONDONTWRITEBYTECODE=1 CUDA_VISIBLE_DEVICES=0 PYTHONPATH=. /venv/main/bin/python -m pytest -q --tb=short --maxfail=1 --noconftest tests/v1/kv_connector/unit/test_nixl_push_connector.py -k 'test_all_writes_landing_still_completes_normally or test_expired_request_does_not_leak_the_poison_flag or test_failure_does_not_land_until_sibling_writes_have or test_multi_group_models_are_left_to_the_lease or test_multiple_groups_without_hma_are_also_gated or test_producer_reports_the_rank_whose_write_was_not_posted or test_report_is_sent_before_any_write_is_attempted or test_report_travels_from_producer_to_consumer_unchanged or test_unattempted_ranks_are_reported_when_the_loop_unwinds'",
+      "returncode": 2,
+      "status": "completed",
+      "summary_lines": [
+        "==================================== ERRORS ====================================",
+        "___ ERROR collecting tests/v1/kv_connector/unit/test_nixl_push_connector.py ____",
+        "ImportError while importing test module '/workspace/r14-run-vllm/tests/v1/kv_connector/unit/test_nixl_push_connector.py'.",
+        "E   ModuleNotFoundError: No module named 'openai'",
+        "/workspace/r14-run-vllm/vllm/__init__.py:7: RuntimeWarning: Failed to read commit hash:",
+        "ERROR tests/v1/kv_connector/unit/test_nixl_push_connector.py",
+        "!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!",
+        "1 warning, 1 error in 6.72s"
+      ],
+      "test_names": [
+        "test_all_writes_landing_still_completes_normally",
+        "test_expired_request_does_not_leak_the_poison_flag",
+        "test_failure_does_not_land_until_sibling_writes_have",
+        "test_multi_group_models_are_left_to_the_lease",
+        "test_multiple_groups_without_hma_are_also_gated",
+        "test_producer_reports_the_rank_whose_write_was_not_posted",
+        "test_report_is_sent_before_any_write_is_attempted",
+        "test_report_travels_from_producer_to_consumer_unchanged",
+        "test_unattempted_ranks_are_reported_when_the_loop_unwinds"
+      ],
+      "test_paths": [
+        "tests/v1/kv_connector/unit/test_nixl_push_connector.py"
+      ]
+    }
+  ],
+  "remote": {
+    "host": "root@38.49.42.120",
+    "port": 54270
+  },
+  "schema_version": "0.1",
+  "selection_lock_sha256": "sha256:bcbc9038eb7facae3cdd5ea1278927227908e552f7eaadfe9b97ace920dcce76",
+  "started_at": "2026-09-02T14:21:44.448890+00:00",
+  "static_evidence_sha256": "sha256:400875ca67265d9feeade81cbb619964e31c9834dd86da89378f591c797ca514",
+  "test_plan_sha256": "sha256:8c1ea5cb3abf130dd41b7771097dc5c9f75c848be9f5ef523326619eb2a20077",
+  "test_timeout_seconds": 180
+}

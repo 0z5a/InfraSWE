@@ -1,0 +1,41 @@
+{
+  "evidence_sha256": "sha256:a1e026acf7aa2753bcec75c2e4f6f8bc4c773ebedd0cc5264c3d91816c4fd960",
+  "finished_at": "2026-09-02T15:32:08.385401+00:00",
+  "outcome_review_ci_fields_requested": false,
+  "protocol_id": "r14-exact-followup-tests-v0.1",
+  "records": [
+    {
+      "case_id": "torchtitan-pr-3980",
+      "command": "cd /workspace/r13-run-torchtitan && git switch --detach refs/r14/pr-3980 >/dev/null && test \"$(git rev-parse HEAD)\" = e080230f0e6197345893dd5fc17d5d209eefc9a6 && timeout 120s env CUDA_VISIBLE_DEVICES=0 INFRASWE_R14_BYPASS_TORCHTITAN_RL_INIT=1 INFRASWE_R14_TORCHTITAN_ROOT=/workspace/r13-run-torchtitan PYTHONPATH=/workspace/r14-verl-shim:. /workspace/venv-tt/bin/python -m pytest -q -rs --tb=short --maxfail=1 tests/unit_tests/test_context_parallel.py torchtitan/experiments/rl/tests/test_trainer.py",
+      "duration_seconds": 12.425800333032385,
+      "output_sha256": "sha256:2ed0f569dfc6a6616afb44b41ebf081088d8ef2452d83ffd53d44acd1429f896",
+      "output_tail": "\n==================================== ERRORS ====================================\n_______ ERROR collecting torchtitan/experiments/rl/tests/test_trainer.py _______\nImportError while importing test module '/workspace/r13-run-torchtitan/torchtitan/experiments/rl/tests/test_trainer.py'.\nHint: make sure your test modules/packages have valid Python names.\nTraceback:\n/venv/main/lib/python3.12/importlib/__init__.py:90: in import_module\n    return _bootstrap._gcd_import(name[level:], package, level)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntorchtitan/experiments/rl/tests/test_trainer.py:13: in <module>\n    from torchtitan.experiments.rl.actors.trainer import PolicyTrainer\ntorchtitan/experiments/rl/actors/trainer.py:14: in <module>\n    import torchstore as ts\nE   ModuleNotFoundError: No module named 'torchstore'\n!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!\n!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!\n1 error in 5.00s\nWelcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nHEAD is now at e080230f0 [rl] Split pipeline loss inputs across microbatches\n",
+      "purpose": "isolate candidate unit tests from the unrelated vLLM integration import",
+      "returncode": 2,
+      "status": "completed",
+      "timeout": 180
+    },
+    {
+      "case_id": "verl-pr-7045",
+      "command": "cd /workspace/r13-run-verl && git switch --detach refs/r14/pr-7045 >/dev/null && test \"$(git rev-parse HEAD)\" = 0de5324db2fc306e148672b1d73a5af7d9e095a6 && timeout 60s env PYTHONPATH=. /venv/main/bin/python -c 'import sys,types; cupy=types.ModuleType('\"'\"'cupy'\"'\"'); cupy.ndarray=object; sys.modules['\"'\"'cupy'\"'\"']=cupy; import verl.checkpoint_engine.nccl_checkpoint_engine'",
+      "duration_seconds": 14.666631625033915,
+      "output_sha256": "sha256:57d8b74222a8242f40df62fa22c14f6622a1af63aee108f8f3a88359af468ea0",
+      "output_tail": "Welcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nHEAD is now at 0de5324d [checkpoint_engine] move init timeout to controller-side build_process_group\nTraceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n  File \"/workspace/r13-run-verl/verl/checkpoint_engine/nccl_checkpoint_engine.py\", line 30, in <module>\n    from verl.checkpoint_engine._group_init import run_group_init_with_timeout\nImportError: cannot import name 'run_group_init_with_timeout' from 'verl.checkpoint_engine._group_init' (/workspace/r13-run-verl/verl/checkpoint_engine/_group_init.py)\n",
+      "purpose": "import the production module that the candidate's focused tests omit",
+      "returncode": 1,
+      "status": "completed",
+      "timeout": 90
+    }
+  ],
+  "remote": {
+    "gpu_count": 2,
+    "host": "root@38.49.42.120",
+    "port": 54270
+  },
+  "sanitized_source_bundle_sha256": "sha256:1efdbfc09c8ba05fa183c1e6e702ef423b30f54b6e18cba94abe8c87630cdcbd",
+  "schema_version": "0.1",
+  "selection_lock_sha256": "sha256:bcbc9038eb7facae3cdd5ea1278927227908e552f7eaadfe9b97ace920dcce76",
+  "started_at": "2026-09-02T15:31:41.289348+00:00",
+  "static_evidence_sha256": "sha256:400875ca67265d9feeade81cbb619964e31c9834dd86da89378f591c797ca514",
+  "test_plan_sha256": "sha256:8c1ea5cb3abf130dd41b7771097dc5c9f75c848be9f5ef523326619eb2a20077"
+}

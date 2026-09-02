@@ -1,0 +1,123 @@
+{
+  "evidence_sha256": "sha256:9deb03bea7bbbe2c40d13c5110875c90923194e0ee3c5b41bc256c17411ac0fd",
+  "finished_at": "2026-09-02T14:26:25.413985+00:00",
+  "noconftest_projects": [
+    "vllm"
+  ],
+  "outcome_review_ci_fields_requested": false,
+  "protocol_id": "r14-exact-candidate-upstream-tests-v0.1",
+  "records": [
+    {
+      "case_id": "vllm-pr-54643",
+      "duration_seconds": 15.405992917018011,
+      "head_sha": "8ad6f351f3db95c1fc8007c35efc079e55e08361",
+      "output_sha256": "sha256:d368d0eeeeab1e6f83384e84c4b2e9207df6a170f9e6d90c472bde310e6baa89",
+      "output_tail": "\n==================================== ERRORS ====================================\n_ ERROR collecting tests/v1/kv_connector/unit/test_mooncake_store_scheduler.py _\nImportError while importing test module '/workspace/r14-run-vllm/tests/v1/kv_connector/unit/test_mooncake_store_scheduler.py'.\nHint: make sure your test modules/packages have valid Python names.\nTraceback:\n/venv/main/lib/python3.12/importlib/__init__.py:90: in import_module\n    return _bootstrap._gcd_import(name[level:], package, level)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntests/v1/kv_connector/unit/test_mooncake_store_scheduler.py:8: in <module>\n    from vllm.distributed.kv_transfer.kv_connector.v1.mooncake.store.data import (\nvllm/distributed/kv_transfer/kv_connector/v1/mooncake/store/data.py:21: in <module>\n    from vllm.v1.core.kv_cache_utils import (\nvllm/v1/core/kv_cache_utils.py:41: in <module>\n    from vllm.v1.request import Request\nvllm/v1/request.py:24: in <module>\n    from vllm.v1.structured_output.request import StructuredOutputRequest\nvllm/v1/structured_output/__init__.py:14: in <module>\n    from vllm.v1.structured_output.backend_guidance import GuidanceBackend\nvllm/v1/structured_output/backend_guidance.py:147: in <module>\n    class GuidanceGrammar(StructuredOutputGrammar):\nvllm/v1/structured_output/backend_guidance.py:148: in GuidanceGrammar\n    ll_matcher: llguidance.LLMatcher\n                ^^^^^^^^^^^^^^^^^^^^\nvllm/utils/import_utils.py:383: in __getattr__\n    self._module = self._load()\n                   ^^^^^^^^^^^^\nvllm/utils/import_utils.py:373: in _load\n    raise err from None\nvllm/utils/import_utils.py:367: in _load\n    module = importlib.import_module(self.__name__)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n/venv/main/lib/python3.12/importlib/__init__.py:90: in import_module\n    return _bootstrap._gcd_import(name[level:], package, level)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nE   ModuleNotFoundError: No module named 'llguidance'\n------------------------------- Captured stdout --------------------------------\nWARNING 09-02 14:25:41 [__init__.py:27] The vLLM package was not found, so its version could not be inspected. This may cause platform detection to fail.\nWARNING 09-02 14:25:41 [__init__.py:27] The vLLM package was not found, so its version could not be inspected. This may cause platform detection to fail.\nWARNING 09-02 14:25:47 [importing.py:80] Triton is installed, but `triton.backends` could not be imported. Disabling Triton.\nINFO 09-02 14:25:47 [importing.py:95] Triton not installed or not compatible; certain GPU-related functions will not be available.\n=============================== warnings summary ===============================\nvllm/__init__.py:7\n  /workspace/r14-run-vllm/vllm/__init__.py:7: RuntimeWarning: Failed to read commit hash:\n  No module named 'vllm._version'\n    from .version import __version__, __version_tuple__  # isort:skip\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n=========================== short test summary info ============================\nERROR tests/v1/kv_connector/unit/test_mooncake_store_scheduler.py\n!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!\n!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!\n1 warning, 1 error in 8.37s\nWelcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nPrevious HEAD position was 9fa8f9f6d [PD][NixlPush] Extract WRITE posting into helpers (no behavior change)\nHEAD is now at 8ad6f351f [Bugfix][MooncakeStore] Drop rejected pending loads\n",
+      "ref": "refs/r14/pr-54643",
+      "remote_command": "cd /workspace/r14-run-vllm && git switch --detach refs/r14/pr-54643 >/dev/null && test \"$(git rev-parse HEAD)\" = 8ad6f351f3db95c1fc8007c35efc079e55e08361 && timeout 180s env PYTHONDONTWRITEBYTECODE=1 CUDA_VISIBLE_DEVICES=0 PYTHONPATH=. /venv/main/bin/python -m pytest -q --tb=short --maxfail=1 --noconftest tests/v1/kv_connector/unit/test_mooncake_store_scheduler.py -k 'test_pending_load_for_non_chosen_connector_is_dropped or test_update_state_excludes_nontransfer_groups'",
+      "returncode": 2,
+      "status": "completed",
+      "summary_lines": [
+        "==================================== ERRORS ====================================",
+        "_ ERROR collecting tests/v1/kv_connector/unit/test_mooncake_store_scheduler.py _",
+        "ImportError while importing test module '/workspace/r14-run-vllm/tests/v1/kv_connector/unit/test_mooncake_store_scheduler.py'.",
+        "E   ModuleNotFoundError: No module named 'llguidance'",
+        "/workspace/r14-run-vllm/vllm/__init__.py:7: RuntimeWarning: Failed to read commit hash:",
+        "ERROR tests/v1/kv_connector/unit/test_mooncake_store_scheduler.py",
+        "!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!",
+        "1 warning, 1 error in 8.37s"
+      ],
+      "test_names": [
+        "test_pending_load_for_non_chosen_connector_is_dropped",
+        "test_update_state_excludes_nontransfer_groups"
+      ],
+      "test_paths": [
+        "tests/v1/kv_connector/unit/test_mooncake_store_scheduler.py"
+      ]
+    },
+    {
+      "case_id": "vllm-pr-50658",
+      "duration_seconds": 18.34167533298023,
+      "head_sha": "ac974678e117c4be93c456d3bc5e3ea7774e238f",
+      "output_sha256": "sha256:0757f0b21043287ce2a6d488ca1c2e44fcefe9957f176d6d780b971b0ddbbd6b",
+      "output_tail": "\n==================================== ERRORS ====================================\n_______________ ERROR collecting tests/models/test_dspark_mla.py _______________\nImportError while importing test module '/workspace/r14-run-vllm/tests/models/test_dspark_mla.py'.\nHint: make sure your test modules/packages have valid Python names.\nTraceback:\n/venv/main/lib/python3.12/importlib/__init__.py:90: in import_module\n    return _bootstrap._gcd_import(name[level:], package, level)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntests/models/test_dspark_mla.py:17: in <module>\n    from vllm.v1.worker.gpu.spec_decode.dspark import speculator as dspark_speculator\nvllm/v1/worker/gpu/spec_decode/dspark/speculator.py:34: in <module>\n    from vllm.v1.worker.gpu.spec_decode.dflash.speculator import DFlashSpeculator\nvllm/v1/worker/gpu/spec_decode/dflash/speculator.py:18: in <module>\n    from vllm.v1.worker.gpu.attn_utils import build_slot_mappings_by_layer\nvllm/v1/worker/gpu/attn_utils.py:32: in <module>\n    from vllm.v1.worker.gpu.model_states.interface import ModelSpecificAttnMetadata\nvllm/v1/worker/gpu/model_states/interface.py:17: in <module>\n    from vllm.v1.worker.gpu.mm.encoder_runner import EncoderRunner\nvllm/v1/worker/gpu/mm/encoder_runner.py:8: in <module>\n    from vllm.multimodal.encoder_budget import MultiModalBudget\nvllm/multimodal/encoder_budget.py:11: in <module>\n    from vllm.v1.core.encoder_cache_manager import compute_mm_encoder_budget\nvllm/v1/core/encoder_cache_manager.py:10: in <module>\n    from vllm.v1.request import Request\nvllm/v1/request.py:24: in <module>\n    from vllm.v1.structured_output.request import StructuredOutputRequest\nvllm/v1/structured_output/__init__.py:14: in <module>\n    from vllm.v1.structured_output.backend_guidance import GuidanceBackend\nvllm/v1/structured_output/backend_guidance.py:143: in <module>\n    class GuidanceGrammar(StructuredOutputGrammar):\nvllm/v1/structured_output/backend_guidance.py:144: in GuidanceGrammar\n    ll_matcher: llguidance.LLMatcher\n                ^^^^^^^^^^^^^^^^^^^^\nvllm/utils/import_utils.py:383: in __getattr__\n    self._module = self._load()\n                   ^^^^^^^^^^^^\nvllm/utils/import_utils.py:373: in _load\n    raise err from None\nvllm/utils/import_utils.py:367: in _load\n    module = importlib.import_module(self.__name__)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n/venv/main/lib/python3.12/importlib/__init__.py:90: in import_module\n    return _bootstrap._gcd_import(name[level:], package, level)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nE   ModuleNotFoundError: No module named 'llguidance'\n=============================== warnings summary ===============================\nvllm/__init__.py:7\n  /workspace/r14-run-vllm/vllm/__init__.py:7: RuntimeWarning: Failed to read commit hash:\n  No module named 'vllm._version'\n    from .version import __version__, __version_tuple__  # isort:skip\n\n../../venv/main/lib/python3.12/site-packages/torch/jit/_script.py:365: 14 warnings\n  /venv/main/lib/python3.12/site-packages/torch/jit/_script.py:365: DeprecationWarning: `torch.jit.script_method` is deprecated. Please switch to `torch.compile` or `torch.export`.\n    warnings.warn(\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n=========================== short test summary info ============================\nERROR tests/models/test_dspark_mla.py\n!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!\n15 warnings, 1 error in 9.14s\nWelcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nPrevious HEAD position was 8ad6f351f [Bugfix][MooncakeStore] Drop rejected pending loads\nHEAD is now at ac974678e [Model][Kimi K3] Project DSpark aux states before SP all-gather\n",
+      "ref": "refs/r14/pr-50658",
+      "remote_command": "cd /workspace/r14-run-vllm && git switch --detach refs/r14/pr-50658 >/dev/null && test \"$(git rev-parse HEAD)\" = ac974678e117c4be93c456d3bc5e3ea7774e238f && timeout 180s env PYTHONDONTWRITEBYTECODE=1 CUDA_VISIBLE_DEVICES=0 PYTHONPATH=. /venv/main/bin/python -m pytest -q --tb=short --maxfail=1 --noconftest tests/models/kimi_k3/test_sequence_parallel.py tests/models/test_dspark_mla.py tests/v1/cudagraph/test_cudagraph_manager.py -k 'test_dspark_enables_sequence_sharded_target_aux_after_draft_load or test_dspark_projects_local_aux_before_single_gather_and_crops_padding or test_dspark_target_aux_preparation_is_noop_without_aux or test_dspark_target_aux_preparation_keeps_unsharded_path or test_fullgraph_aux_outputs_use_per_descriptor_leading_dims or test_kimi_can_keep_raw_aux_sequence_sharded_with_padding or test_kimi_mtp_restores_sequence_parallel_output or test_kimi_raw_aux_capability_is_noop_without_sequence_parallel or test_kimi_start_layer_aux_stays_full_by_default'",
+      "returncode": 1,
+      "status": "completed",
+      "summary_lines": [
+        "==================================== ERRORS ====================================",
+        "_______________ ERROR collecting tests/models/test_dspark_mla.py _______________",
+        "ImportError while importing test module '/workspace/r14-run-vllm/tests/models/test_dspark_mla.py'.",
+        "E   ModuleNotFoundError: No module named 'llguidance'",
+        "/workspace/r14-run-vllm/vllm/__init__.py:7: RuntimeWarning: Failed to read commit hash:",
+        "ERROR tests/models/test_dspark_mla.py",
+        "15 warnings, 1 error in 9.14s"
+      ],
+      "test_names": [
+        "test_dspark_enables_sequence_sharded_target_aux_after_draft_load",
+        "test_dspark_projects_local_aux_before_single_gather_and_crops_padding",
+        "test_dspark_target_aux_preparation_is_noop_without_aux",
+        "test_dspark_target_aux_preparation_keeps_unsharded_path",
+        "test_fullgraph_aux_outputs_use_per_descriptor_leading_dims",
+        "test_kimi_can_keep_raw_aux_sequence_sharded_with_padding",
+        "test_kimi_mtp_restores_sequence_parallel_output",
+        "test_kimi_raw_aux_capability_is_noop_without_sequence_parallel",
+        "test_kimi_start_layer_aux_stays_full_by_default"
+      ],
+      "test_paths": [
+        "tests/models/kimi_k3/test_sequence_parallel.py",
+        "tests/models/test_dspark_mla.py",
+        "tests/v1/cudagraph/test_cudagraph_manager.py"
+      ]
+    },
+    {
+      "case_id": "vllm-pr-50754",
+      "duration_seconds": 16.41278808284551,
+      "head_sha": "9fa8f9f6d142268657ea2c324c68946ea24cbef2",
+      "output_sha256": "sha256:f98f02f0af26ca96143a188186bed3f94afe09cc81de27839aae192e251c2093",
+      "output_tail": "\n==================================== ERRORS ====================================\n___ ERROR collecting tests/v1/kv_connector/unit/test_nixl_push_connector.py ____\nImportError while importing test module '/workspace/r14-run-vllm/tests/v1/kv_connector/unit/test_nixl_push_connector.py'.\nHint: make sure your test modules/packages have valid Python names.\nTraceback:\n/venv/main/lib/python3.12/importlib/__init__.py:90: in import_module\n    return _bootstrap._gcd_import(name[level:], package, level)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntests/v1/kv_connector/unit/test_nixl_push_connector.py:36: in <module>\n    from vllm.distributed.kv_transfer.kv_connector.v1.nixl.base_worker import (\nvllm/distributed/kv_transfer/kv_connector/v1/nixl/__init__.py:8: in <module>\n    from vllm.distributed.kv_transfer.kv_connector.v1.nixl.base_worker import (\nvllm/distributed/kv_transfer/kv_connector/v1/nixl/base_worker.py:81: in <module>\n    from vllm.v1.worker.utils import select_common_block_size\nvllm/v1/worker/utils.py:28: in <module>\n    from vllm.v1.core.kv_cache_utils import KVCacheBlockCopy\nvllm/v1/core/kv_cache_utils.py:38: in <module>\n    from vllm.v1.request import Request\nvllm/v1/request.py:24: in <module>\n    from vllm.v1.structured_output.request import StructuredOutputRequest\nvllm/v1/structured_output/__init__.py:14: in <module>\n    from vllm.v1.structured_output.backend_guidance import GuidanceBackend\nvllm/v1/structured_output/backend_guidance.py:143: in <module>\n    class GuidanceGrammar(StructuredOutputGrammar):\nvllm/v1/structured_output/backend_guidance.py:144: in GuidanceGrammar\n    ll_matcher: llguidance.LLMatcher\n                ^^^^^^^^^^^^^^^^^^^^\nvllm/utils/import_utils.py:383: in __getattr__\n    self._module = self._load()\n                   ^^^^^^^^^^^^\nvllm/utils/import_utils.py:373: in _load\n    raise err from None\nvllm/utils/import_utils.py:367: in _load\n    module = importlib.import_module(self.__name__)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n/venv/main/lib/python3.12/importlib/__init__.py:90: in import_module\n    return _bootstrap._gcd_import(name[level:], package, level)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nE   ModuleNotFoundError: No module named 'llguidance'\n------------------------------- Captured stdout --------------------------------\nWARNING 09-02 14:26:16 [__init__.py:27] The vLLM package was not found, so its version could not be inspected. This may cause platform detection to fail.\nWARNING 09-02 14:26:16 [__init__.py:27] The vLLM package was not found, so its version could not be inspected. This may cause platform detection to fail.\nWARNING 09-02 14:26:21 [importing.py:73] Triton is installed, but `triton.backends` could not be imported. Disabling Triton.\nINFO 09-02 14:26:21 [importing.py:88] Triton not installed or not compatible; certain GPU-related functions will not be available.\nINFO 09-02 14:26:21 [nixl_utils.py:32] Setting UCX_RCACHE_MAX_UNRELEASED to '1024' to avoid a rare memory leak in UCX when using NIXL.\nWARNING 09-02 14:26:21 [nixl_utils.py:62] NIXL is not available\nWARNING 09-02 14:26:21 [nixl_utils.py:64] NIXL agent config is not available\nWARNING 09-02 14:26:21 [interface.py:368] Failed to import from vllm._C: ModuleNotFoundError(\"No module named 'vllm._C'\")\nWARNING 09-02 14:26:22 [interface.py:368] Failed to import from vllm._C: ModuleNotFoundError(\"No module named 'vllm._C'\")\nWARNING 09-02 14:26:22 [interface.py:368] Failed to import from vllm._C: ModuleNotFoundError(\"No module named 'vllm._C'\")\n=============================== warnings summary ===============================\nvllm/__init__.py:7\n  /workspace/r14-run-vllm/vllm/__init__.py:7: RuntimeWarning: Failed to read commit hash:\n  No module named 'vllm._version'\n    from .version import __version__, __version_tuple__  # isort:skip\n\n../../venv/main/lib/python3.12/site-packages/torch/jit/_script.py:365: 14 warnings\n  /venv/main/lib/python3.12/site-packages/torch/jit/_script.py:365: DeprecationWarning: `torch.jit.script_method` is deprecated. Please switch to `torch.compile` or `torch.export`.\n    warnings.warn(\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n=========================== short test summary info ============================\nERROR tests/v1/kv_connector/unit/test_nixl_push_connector.py\n!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!\n!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!\n15 warnings, 1 error in 8.55s\nWelcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nPrevious HEAD position was ac974678e [Model][Kimi K3] Project DSpark aux states before SP all-gather\nHEAD is now at 9fa8f9f6d [PD][NixlPush] Extract WRITE posting into helpers (no behavior change)\n",
+      "ref": "refs/r14/pr-50754",
+      "remote_command": "cd /workspace/r14-run-vllm && git switch --detach refs/r14/pr-50754 >/dev/null && test \"$(git rev-parse HEAD)\" = 9fa8f9f6d142268657ea2c324c68946ea24cbef2 && timeout 180s env PYTHONDONTWRITEBYTECODE=1 CUDA_VISIBLE_DEVICES=0 PYTHONPATH=. /venv/main/bin/python -m pytest -q --tb=short --maxfail=1 --noconftest tests/v1/kv_connector/unit/test_nixl_push_connector.py -k 'test_all_writes_landing_still_completes_normally or test_expired_request_does_not_leak_the_poison_flag or test_failure_does_not_land_until_sibling_writes_have or test_multi_group_models_are_left_to_the_lease or test_multiple_groups_without_hma_are_also_gated or test_producer_reports_the_rank_whose_write_was_not_posted or test_report_is_sent_before_any_write_is_attempted or test_report_travels_from_producer_to_consumer_unchanged or test_unattempted_ranks_are_reported_when_the_loop_unwinds'",
+      "returncode": 2,
+      "status": "completed",
+      "summary_lines": [
+        "==================================== ERRORS ====================================",
+        "___ ERROR collecting tests/v1/kv_connector/unit/test_nixl_push_connector.py ____",
+        "ImportError while importing test module '/workspace/r14-run-vllm/tests/v1/kv_connector/unit/test_nixl_push_connector.py'.",
+        "E   ModuleNotFoundError: No module named 'llguidance'",
+        "WARNING 09-02 14:26:21 [interface.py:368] Failed to import from vllm._C: ModuleNotFoundError(\"No module named 'vllm._C'\")",
+        "WARNING 09-02 14:26:22 [interface.py:368] Failed to import from vllm._C: ModuleNotFoundError(\"No module named 'vllm._C'\")",
+        "WARNING 09-02 14:26:22 [interface.py:368] Failed to import from vllm._C: ModuleNotFoundError(\"No module named 'vllm._C'\")",
+        "/workspace/r14-run-vllm/vllm/__init__.py:7: RuntimeWarning: Failed to read commit hash:",
+        "ERROR tests/v1/kv_connector/unit/test_nixl_push_connector.py",
+        "!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!",
+        "15 warnings, 1 error in 8.55s"
+      ],
+      "test_names": [
+        "test_all_writes_landing_still_completes_normally",
+        "test_expired_request_does_not_leak_the_poison_flag",
+        "test_failure_does_not_land_until_sibling_writes_have",
+        "test_multi_group_models_are_left_to_the_lease",
+        "test_multiple_groups_without_hma_are_also_gated",
+        "test_producer_reports_the_rank_whose_write_was_not_posted",
+        "test_report_is_sent_before_any_write_is_attempted",
+        "test_report_travels_from_producer_to_consumer_unchanged",
+        "test_unattempted_ranks_are_reported_when_the_loop_unwinds"
+      ],
+      "test_paths": [
+        "tests/v1/kv_connector/unit/test_nixl_push_connector.py"
+      ]
+    }
+  ],
+  "remote": {
+    "host": "root@38.49.42.120",
+    "port": 54270
+  },
+  "schema_version": "0.1",
+  "selection_lock_sha256": "sha256:bcbc9038eb7facae3cdd5ea1278927227908e552f7eaadfe9b97ace920dcce76",
+  "started_at": "2026-09-02T14:25:35.249667+00:00",
+  "static_evidence_sha256": "sha256:400875ca67265d9feeade81cbb619964e31c9834dd86da89378f591c797ca514",
+  "test_plan_sha256": "sha256:8c1ea5cb3abf130dd41b7771097dc5c9f75c848be9f5ef523326619eb2a20077",
+  "test_timeout_seconds": 180
+}

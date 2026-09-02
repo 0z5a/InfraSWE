@@ -1,0 +1,105 @@
+{
+  "evidence_sha256": "sha256:dd82e98f9bae1de5c6a95df71f24da323f218619687202af1acfa22a58886bb5",
+  "finished_at": "2026-09-02T15:06:24.820298+00:00",
+  "noconftest_projects": [
+    "flashinfer"
+  ],
+  "outcome_review_ci_fields_requested": false,
+  "protocol_id": "r14-exact-candidate-upstream-tests-v0.1",
+  "records": [
+    {
+      "case_id": "flashinfer-pr-4302",
+      "duration_seconds": 13.814848250010982,
+      "head_sha": "bb134557aa847b4f662f097eccbd94255a509267",
+      "output_sha256": "sha256:6071e35113300bbe075996bfb6e91615db1f1ed569f0c7d5441e8e5ec312f281",
+      "output_tail": ".....ssssssssssssssssssss........s.                                      [100%]\n=============================== warnings summary ===============================\nflashinfer/cute_dsl/utils.py:112\n  /workspace/r14-run-flashinfer/flashinfer/cute_dsl/utils.py:112: DeprecationWarning: Arch from arch.py is deprecated. Use Arch from enums.py instead.\n    from cutlass.base_dsl.arch import Arch\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n=========================== short test summary info ============================\nSKIPPED [1] tests/moe/test_b12x_w4a16_ep.py:239: b12x fused MoE requires CUDA 13 or later\nSKIPPED [1] tests/moe/test_b12x_w4a16_ep.py:244: b12x fused MoE requires CUDA 13 or later\nSKIPPED [1] tests/moe/test_b12x_w4a16_ep.py:250: b12x fused MoE requires CUDA 13 or later\nSKIPPED [1] tests/moe/test_b12x_w4a16_ep.py:255: b12x fused MoE requires CUDA 13 or later\nSKIPPED [1] tests/moe/test_b12x_w4a16_ep.py:266: b12x fused MoE requires CUDA 13 or later\nSKIPPED [1] tests/moe/test_b12x_w4a16_ep.py:287: b12x fused MoE requires CUDA 13 or later\nSKIPPED [1] tests/moe/test_b12x_w4a16_ep.py:300: b12x fused MoE requires CUDA 13 or later\nSKIPPED [1] tests/moe/test_b12x_w4a16_ep.py:313: b12x fused MoE requires CUDA 13 or later\nSKIPPED [1] tests/moe/test_b12x_w4a16_ep.py:328: b12x fused MoE requires CUDA 13 or later\nSKIPPED [6] tests/moe/test_b12x_w4a16_ep.py:355: b12x fused MoE requires CUDA 13 or later\nSKIPPED [1] tests/moe/test_b12x_w4a16_ep.py:412: b12x fused MoE requires CUDA 13 or later\nSKIPPED [1] tests/moe/test_b12x_w4a16_ep.py:464: b12x fused MoE requires CUDA 13 or later\nSKIPPED [1] tests/moe/test_b12x_w4a16_ep.py:558: b12x fused MoE requires CUDA 13 or later\nSKIPPED [1] tests/moe/test_b12x_w4a16_ep.py:600: b12x fused MoE requires CUDA 13 or later\nSKIPPED [1] tests/moe/test_b12x_w4a16_ep.py:637: b12x fused MoE requires CUDA 13 or later\nSKIPPED [1] tests/moe/test_unified_moe_b12x.py:881: b12x fused MoE requires CUDA 13 or later\n14 passed, 21 skipped, 59 deselected, 1 warning in 6.32s\nWelcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nPrevious HEAD position was c60aa11e fix(moe_ep): preserve singleton expert TMA modes\nHEAD is now at bb134557 fix(moe): validate both packed weight tensors against the local expert count\n",
+      "ref": "refs/r14/pr-4302",
+      "remote_command": "cd /workspace/r14-run-flashinfer && git switch --detach refs/r14/pr-4302 >/dev/null && test \"$(git rev-parse HEAD)\" = bb134557aa847b4f662f097eccbd94255a509267 && timeout 300s env PYTHONDONTWRITEBYTECODE=1 CUDA_VISIBLE_DEVICES=0 PYTHONPATH=. /venv/main/bin/python -m pytest -q -rs --tb=short --maxfail=1 --noconftest tests/moe/test_b12x_w4a16_ep.py tests/moe/test_unified_moe_b12x.py tests/trace/test_b12x_moe_trace.py -k 'test_b12x_does_not_support_unfinalized_output or test_b12x_nvfp4_does_not_support_expert_parallelism or test_b12x_pack_inputs_rejects_wrong_expert_dim or test_b12x_reference_applies_expert_map or test_b12x_w4a16_rejects_out_of_bounds_local_count or test_b12x_w4a16_rejects_out_of_range_expert_shard or test_b12x_w4a16_supports_expert_parallelism or test_ep_permutation_map_matches_non_ep_run or test_ep_rank_partials_sum_to_full_moe or test_ep_wrapper_cuda_graph_replays_changed_routes or test_ep_zero_partial_when_no_local_expert_routed or test_nvfp4_rejects_ep_counts or test_nvfp4_rejects_expert_map or test_prepare_ep_expert_map_accepts_linear_and_round_robin_placement or test_prepare_ep_expert_map_rejects_bad_tensor_forms or test_prepare_ep_expert_map_rejects_unsafe_values or test_w4a16_ep_partials_sum_to_full or test_w4a16_ep_rejects_bad_map_forms or test_w4a16_ep_rejects_wrong_length_map or test_w4a16_ep_requires_expert_map or test_wrapper_isolated_from_caller_map_mutation or test_wrapper_nvfp4_rejects_ep or test_wrapper_rejects_rebound_expert_map or test_wrapper_w4a16_ep_rejects_wrong_device_map or test_wrapper_w4a16_ep_requires_expert_map or test_wrapper_w4a16_ep_validates_map_contract'",
+      "returncode": 0,
+      "status": "completed",
+      "summary_lines": [
+        "SKIPPED [1] tests/moe/test_b12x_w4a16_ep.py:239: b12x fused MoE requires CUDA 13 or later",
+        "SKIPPED [1] tests/moe/test_b12x_w4a16_ep.py:244: b12x fused MoE requires CUDA 13 or later",
+        "SKIPPED [1] tests/moe/test_b12x_w4a16_ep.py:250: b12x fused MoE requires CUDA 13 or later",
+        "SKIPPED [1] tests/moe/test_b12x_w4a16_ep.py:255: b12x fused MoE requires CUDA 13 or later",
+        "SKIPPED [1] tests/moe/test_b12x_w4a16_ep.py:266: b12x fused MoE requires CUDA 13 or later",
+        "SKIPPED [1] tests/moe/test_b12x_w4a16_ep.py:287: b12x fused MoE requires CUDA 13 or later",
+        "SKIPPED [1] tests/moe/test_b12x_w4a16_ep.py:300: b12x fused MoE requires CUDA 13 or later",
+        "SKIPPED [1] tests/moe/test_b12x_w4a16_ep.py:313: b12x fused MoE requires CUDA 13 or later",
+        "SKIPPED [1] tests/moe/test_b12x_w4a16_ep.py:328: b12x fused MoE requires CUDA 13 or later",
+        "SKIPPED [6] tests/moe/test_b12x_w4a16_ep.py:355: b12x fused MoE requires CUDA 13 or later",
+        "SKIPPED [1] tests/moe/test_b12x_w4a16_ep.py:412: b12x fused MoE requires CUDA 13 or later",
+        "SKIPPED [1] tests/moe/test_b12x_w4a16_ep.py:464: b12x fused MoE requires CUDA 13 or later",
+        "SKIPPED [1] tests/moe/test_b12x_w4a16_ep.py:558: b12x fused MoE requires CUDA 13 or later",
+        "SKIPPED [1] tests/moe/test_b12x_w4a16_ep.py:600: b12x fused MoE requires CUDA 13 or later",
+        "SKIPPED [1] tests/moe/test_b12x_w4a16_ep.py:637: b12x fused MoE requires CUDA 13 or later",
+        "SKIPPED [1] tests/moe/test_unified_moe_b12x.py:881: b12x fused MoE requires CUDA 13 or later",
+        "14 passed, 21 skipped, 59 deselected, 1 warning in 6.32s"
+      ],
+      "test_names": [
+        "test_b12x_does_not_support_unfinalized_output",
+        "test_b12x_nvfp4_does_not_support_expert_parallelism",
+        "test_b12x_pack_inputs_rejects_wrong_expert_dim",
+        "test_b12x_reference_applies_expert_map",
+        "test_b12x_w4a16_rejects_out_of_bounds_local_count",
+        "test_b12x_w4a16_rejects_out_of_range_expert_shard",
+        "test_b12x_w4a16_supports_expert_parallelism",
+        "test_ep_permutation_map_matches_non_ep_run",
+        "test_ep_rank_partials_sum_to_full_moe",
+        "test_ep_wrapper_cuda_graph_replays_changed_routes",
+        "test_ep_zero_partial_when_no_local_expert_routed",
+        "test_nvfp4_rejects_ep_counts",
+        "test_nvfp4_rejects_expert_map",
+        "test_prepare_ep_expert_map_accepts_linear_and_round_robin_placement",
+        "test_prepare_ep_expert_map_rejects_bad_tensor_forms",
+        "test_prepare_ep_expert_map_rejects_unsafe_values",
+        "test_w4a16_ep_partials_sum_to_full",
+        "test_w4a16_ep_rejects_bad_map_forms",
+        "test_w4a16_ep_rejects_wrong_length_map",
+        "test_w4a16_ep_requires_expert_map",
+        "test_wrapper_isolated_from_caller_map_mutation",
+        "test_wrapper_nvfp4_rejects_ep",
+        "test_wrapper_rejects_rebound_expert_map",
+        "test_wrapper_w4a16_ep_rejects_wrong_device_map",
+        "test_wrapper_w4a16_ep_requires_expert_map",
+        "test_wrapper_w4a16_ep_validates_map_contract"
+      ],
+      "test_paths": [
+        "tests/moe/test_b12x_w4a16_ep.py",
+        "tests/moe/test_unified_moe_b12x.py",
+        "tests/trace/test_b12x_moe_trace.py"
+      ]
+    },
+    {
+      "case_id": "flashinfer-pr-4296",
+      "duration_seconds": 10.401650958927348,
+      "head_sha": "c60aa11e17fffda1b8f4a767946f0c565a9c06d8",
+      "output_sha256": "sha256:85cd4054eab845c7a436652cc14289a03ae45d2db4fa739d0cf1d0a768d95bb0",
+      "output_tail": "sss                                                                      [100%]\n=============================== warnings summary ===============================\ntests/moe_ep/test_nvfp4_cutedsl_kernel_vs_reference.py:268\n  /workspace/r14-run-flashinfer/tests/moe_ep/test_nvfp4_cutedsl_kernel_vs_reference.py:268: PytestUnknownMarkWarning: Unknown pytest.mark.arch_blackwell - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html\n    @pytest.mark.arch_blackwell\n\ntests/moe_ep/test_nvfp4_cutedsl_kernel_vs_reference.py:335\n  /workspace/r14-run-flashinfer/tests/moe_ep/test_nvfp4_cutedsl_kernel_vs_reference.py:335: PytestUnknownMarkWarning: Unknown pytest.mark.arch_blackwell - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html\n    @pytest.mark.arch_blackwell\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n=========================== short test summary info ============================\nSKIPPED [3] tests/moe_ep/test_nvfp4_cutedsl_kernel_vs_reference.py:357: nvfp4_mega_moe requires sm_100a or sm_103a; got sm_80\n3 skipped, 1 deselected, 2 warnings in 4.10s\nWelcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nPrevious HEAD position was bb134557 fix(moe): validate both packed weight tensors against the local expert count\nHEAD is now at c60aa11e fix(moe_ep): preserve singleton expert TMA modes\n",
+      "ref": "refs/r14/pr-4296",
+      "remote_command": "cd /workspace/r14-run-flashinfer && git switch --detach refs/r14/pr-4296 >/dev/null && test \"$(git rev-parse HEAD)\" = c60aa11e17fffda1b8f4a767946f0c565a9c06d8 && timeout 300s env PYTHONDONTWRITEBYTECODE=1 CUDA_VISIBLE_DEVICES=0 PYTHONPATH=. /venv/main/bin/python -m pytest -q -rs --tb=short --maxfail=1 --noconftest tests/moe_ep/test_nvfp4_cutedsl_kernel_vs_reference.py -k test_nvfp4_kernel_matches_torch_reference",
+      "returncode": 0,
+      "status": "completed",
+      "summary_lines": [
+        "SKIPPED [3] tests/moe_ep/test_nvfp4_cutedsl_kernel_vs_reference.py:357: nvfp4_mega_moe requires sm_100a or sm_103a; got sm_80",
+        "3 skipped, 1 deselected, 2 warnings in 4.10s"
+      ],
+      "test_names": [
+        "test_nvfp4_kernel_matches_torch_reference"
+      ],
+      "test_paths": [
+        "tests/moe_ep/test_nvfp4_cutedsl_kernel_vs_reference.py"
+      ]
+    }
+  ],
+  "remote": {
+    "host": "root@38.49.42.120",
+    "port": 54270
+  },
+  "schema_version": "0.1",
+  "selection_lock_sha256": "sha256:bcbc9038eb7facae3cdd5ea1278927227908e552f7eaadfe9b97ace920dcce76",
+  "started_at": "2026-09-02T15:06:00.601053+00:00",
+  "static_evidence_sha256": "sha256:400875ca67265d9feeade81cbb619964e31c9834dd86da89378f591c797ca514",
+  "test_plan_sha256": "sha256:8c1ea5cb3abf130dd41b7771097dc5c9f75c848be9f5ef523326619eb2a20077",
+  "test_timeout_seconds": 300
+}

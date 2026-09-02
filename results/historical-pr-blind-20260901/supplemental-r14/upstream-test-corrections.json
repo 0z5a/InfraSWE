@@ -1,0 +1,389 @@
+{
+  "evidence_sha256": "sha256:25d6290fda22e789642cd83fa362d4ae91d48eecc0d5c2af772fb8edb3596d31",
+  "finished_at": "2026-09-02T14:07:55.763122+00:00",
+  "outcome_review_ci_fields_requested": false,
+  "protocol_id": "r14-exact-candidate-upstream-tests-v0.1",
+  "records": [
+    {
+      "case_id": "vllm-pr-54643",
+      "duration_seconds": 13.142672583926469,
+      "head_sha": "8ad6f351f3db95c1fc8007c35efc079e55e08361",
+      "output_sha256": "sha256:65a612ed51cdbc4d93254cbf7c32720f7a81b1899a417405ee0ceaac8c4e6c25",
+      "output_tail": "WARNING 09-02 14:05:49 [__init__.py:27] The vLLM package was not found, so its version could not be inspected. This may cause platform detection to fail.\nWARNING 09-02 14:05:49 [__init__.py:27] The vLLM package was not found, so its version could not be inspected. This may cause platform detection to fail.\nWelcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nPrevious HEAD position was 9fa8f9f6d [PD][NixlPush] Extract WRITE posting into helpers (no behavior change)\nHEAD is now at 8ad6f351f [Bugfix][MooncakeStore] Drop rejected pending loads\nImportError while loading conftest '/workspace/r14-run-vllm/tests/conftest.py'.\ntests/conftest.py:45: in <module>\n    from tests.models.utils import (\ntests/models/utils.py:13: in <module>\n    from vllm.config.model import AttnTypeStr, ModelConfig, ModelDType, RunnerOption\nvllm/config/__init__.py:12: in <module>\n    from vllm.config.device import DeviceConfig\nvllm/config/device.py:11: in <module>\n    from vllm.utils.hashing import safe_hash\nvllm/utils/hashing.py:12: in <module>\n    import cbor2\nE   ModuleNotFoundError: No module named 'cbor2'\n",
+      "ref": "refs/r14/pr-54643",
+      "remote_command": "cd /workspace/r14-run-vllm && git switch --detach refs/r14/pr-54643 >/dev/null && test \"$(git rev-parse HEAD)\" = 8ad6f351f3db95c1fc8007c35efc079e55e08361 && timeout 180s env PYTHONDONTWRITEBYTECODE=1 CUDA_VISIBLE_DEVICES=0 PYTHONPATH=. /venv/main/bin/python -m pytest -q --tb=short --maxfail=1 tests/v1/kv_connector/unit/test_mooncake_store_scheduler.py -k 'test_pending_load_for_non_chosen_connector_is_dropped or test_update_state_excludes_nontransfer_groups'",
+      "returncode": 4,
+      "status": "completed",
+      "summary_lines": [
+        "ImportError while loading conftest '/workspace/r14-run-vllm/tests/conftest.py'.",
+        "E   ModuleNotFoundError: No module named 'cbor2'"
+      ],
+      "test_names": [
+        "test_pending_load_for_non_chosen_connector_is_dropped",
+        "test_update_state_excludes_nontransfer_groups"
+      ],
+      "test_paths": [
+        "tests/v1/kv_connector/unit/test_mooncake_store_scheduler.py"
+      ]
+    },
+    {
+      "case_id": "vllm-pr-50775",
+      "duration_seconds": 11.959173500072211,
+      "head_sha": "eee28f8381e954e588539b53601aeaf3fd415ecb",
+      "output_sha256": "sha256:bbeefe528370166e9b78f4bc2172cceb7205642aad7817da6fedf37b141f82bc",
+      "output_tail": "WARNING 09-02 14:06:01 [__init__.py:27] The vLLM package was not found, so its version could not be inspected. This may cause platform detection to fail.\nWARNING 09-02 14:06:01 [__init__.py:27] The vLLM package was not found, so its version could not be inspected. This may cause platform detection to fail.\nWelcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nPrevious HEAD position was 8ad6f351f [Bugfix][MooncakeStore] Drop rejected pending loads\nHEAD is now at eee28f838 test: Cover all-peer P2P driver checks\nImportError while loading conftest '/workspace/r14-run-vllm/tests/conftest.py'.\ntests/conftest.py:45: in <module>\n    from tests.models.utils import (\ntests/models/utils.py:13: in <module>\n    from vllm.config.model import AttnTypeStr, ModelConfig, ModelDType, RunnerOption\nvllm/config/__init__.py:12: in <module>\n    from vllm.config.device import DeviceConfig\nvllm/config/device.py:11: in <module>\n    from vllm.utils.hashing import safe_hash\nvllm/utils/hashing.py:12: in <module>\n    import cbor2\nE   ModuleNotFoundError: No module named 'cbor2'\n",
+      "ref": "refs/r14/pr-50775",
+      "remote_command": "cd /workspace/r14-run-vllm && git switch --detach refs/r14/pr-50775 >/dev/null && test \"$(git rev-parse HEAD)\" = eee28f8381e954e588539b53601aeaf3fd415ecb && timeout 180s env PYTHONDONTWRITEBYTECODE=1 CUDA_VISIBLE_DEVICES=0 PYTHONPATH=. /venv/main/bin/python -m pytest -q --tb=short --maxfail=1 tests/distributed/test_custom_all_reduce_unit.py -k test_can_p2p_skip_check_checks_each_peer",
+      "returncode": 4,
+      "status": "completed",
+      "summary_lines": [
+        "ImportError while loading conftest '/workspace/r14-run-vllm/tests/conftest.py'.",
+        "E   ModuleNotFoundError: No module named 'cbor2'"
+      ],
+      "test_names": [
+        "test_can_p2p_skip_check_checks_each_peer"
+      ],
+      "test_paths": [
+        "tests/distributed/test_custom_all_reduce_unit.py"
+      ]
+    },
+    {
+      "case_id": "vllm-pr-50658",
+      "duration_seconds": 13.683679833076894,
+      "head_sha": "ac974678e117c4be93c456d3bc5e3ea7774e238f",
+      "output_sha256": "sha256:a54e684c765e35736090d950ebcf8c0dd5c8a0e66390c1dc1ebbc5090ca397ab",
+      "output_tail": "WARNING 09-02 14:06:14 [__init__.py:27] The vLLM package was not found, so its version could not be inspected. This may cause platform detection to fail.\nWARNING 09-02 14:06:14 [__init__.py:27] The vLLM package was not found, so its version could not be inspected. This may cause platform detection to fail.\nWelcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nPrevious HEAD position was eee28f838 test: Cover all-peer P2P driver checks\nHEAD is now at ac974678e [Model][Kimi K3] Project DSpark aux states before SP all-gather\nImportError while loading conftest '/workspace/r14-run-vllm/tests/conftest.py'.\ntests/conftest.py:45: in <module>\n    from tests.models.utils import (\ntests/models/utils.py:13: in <module>\n    from vllm.config.model import AttnTypeStr, ModelConfig, ModelDType, RunnerOption\nvllm/config/__init__.py:12: in <module>\n    from vllm.config.device import DeviceConfig\nvllm/config/device.py:11: in <module>\n    from vllm.utils.hashing import safe_hash\nvllm/utils/hashing.py:12: in <module>\n    import cbor2\nE   ModuleNotFoundError: No module named 'cbor2'\n",
+      "ref": "refs/r14/pr-50658",
+      "remote_command": "cd /workspace/r14-run-vllm && git switch --detach refs/r14/pr-50658 >/dev/null && test \"$(git rev-parse HEAD)\" = ac974678e117c4be93c456d3bc5e3ea7774e238f && timeout 180s env PYTHONDONTWRITEBYTECODE=1 CUDA_VISIBLE_DEVICES=0 PYTHONPATH=. /venv/main/bin/python -m pytest -q --tb=short --maxfail=1 tests/models/kimi_k3/test_sequence_parallel.py tests/models/test_dspark_mla.py tests/v1/cudagraph/test_cudagraph_manager.py -k 'test_dspark_enables_sequence_sharded_target_aux_after_draft_load or test_dspark_projects_local_aux_before_single_gather_and_crops_padding or test_dspark_target_aux_preparation_is_noop_without_aux or test_dspark_target_aux_preparation_keeps_unsharded_path or test_fullgraph_aux_outputs_use_per_descriptor_leading_dims or test_kimi_can_keep_raw_aux_sequence_sharded_with_padding or test_kimi_mtp_restores_sequence_parallel_output or test_kimi_raw_aux_capability_is_noop_without_sequence_parallel or test_kimi_start_layer_aux_stays_full_by_default'",
+      "returncode": 4,
+      "status": "completed",
+      "summary_lines": [
+        "ImportError while loading conftest '/workspace/r14-run-vllm/tests/conftest.py'.",
+        "E   ModuleNotFoundError: No module named 'cbor2'"
+      ],
+      "test_names": [
+        "test_dspark_enables_sequence_sharded_target_aux_after_draft_load",
+        "test_dspark_projects_local_aux_before_single_gather_and_crops_padding",
+        "test_dspark_target_aux_preparation_is_noop_without_aux",
+        "test_dspark_target_aux_preparation_keeps_unsharded_path",
+        "test_fullgraph_aux_outputs_use_per_descriptor_leading_dims",
+        "test_kimi_can_keep_raw_aux_sequence_sharded_with_padding",
+        "test_kimi_mtp_restores_sequence_parallel_output",
+        "test_kimi_raw_aux_capability_is_noop_without_sequence_parallel",
+        "test_kimi_start_layer_aux_stays_full_by_default"
+      ],
+      "test_paths": [
+        "tests/models/kimi_k3/test_sequence_parallel.py",
+        "tests/models/test_dspark_mla.py",
+        "tests/v1/cudagraph/test_cudagraph_manager.py"
+      ]
+    },
+    {
+      "case_id": "vllm-pr-54619",
+      "duration_seconds": 13.068914250005037,
+      "head_sha": "0dc1dd46e39013253cdfa152b260f1828e6410d7",
+      "output_sha256": "sha256:d5b1e8c7b84c9b392839b00ab28b12577c107025025d4c823ef1900e85f6923b",
+      "output_tail": "WARNING 09-02 14:06:27 [__init__.py:27] The vLLM package was not found, so its version could not be inspected. This may cause platform detection to fail.\nWARNING 09-02 14:06:28 [__init__.py:27] The vLLM package was not found, so its version could not be inspected. This may cause platform detection to fail.\nWelcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nPrevious HEAD position was ac974678e [Model][Kimi K3] Project DSpark aux states before SP all-gather\nHEAD is now at 0dc1dd46e Publish region files atomically and release the region lock on every failure path\nImportError while loading conftest '/workspace/r14-run-vllm/tests/conftest.py'.\ntests/conftest.py:45: in <module>\n    from tests.models.utils import (\ntests/models/utils.py:13: in <module>\n    from vllm.config.model import AttnTypeStr, ModelConfig, ModelDType, RunnerOption\nvllm/config/__init__.py:12: in <module>\n    from vllm.config.device import DeviceConfig\nvllm/config/device.py:11: in <module>\n    from vllm.utils.hashing import safe_hash\nvllm/utils/hashing.py:12: in <module>\n    import cbor2\nE   ModuleNotFoundError: No module named 'cbor2'\n",
+      "ref": "refs/r14/pr-54619",
+      "remote_command": "cd /workspace/r14-run-vllm && git switch --detach refs/r14/pr-54619 >/dev/null && test \"$(git rev-parse HEAD)\" = 0dc1dd46e39013253cdfa152b260f1828e6410d7 && timeout 180s env PYTHONDONTWRITEBYTECODE=1 CUDA_VISIBLE_DEVICES=0 PYTHONPATH=. /venv/main/bin/python -m pytest -q --tb=short --maxfail=1 tests/v1/ec_connector/unit/cpu/test_ec_shared_region.py tests/v1/kv_offload/cpu/test_shared_offload_region.py -k 'test_constructor_failure_releases_the_region or test_creator_failure_leaves_no_temp_file or test_failed_join_releases_the_region_lock or test_joining_a_differently_sized_region_fails_fast or test_live_ec_region_survives_another_start or test_live_region_survives_another_start or test_orphaned_ec_file_reclaimed_on_next_start or test_orphaned_file_reclaimed_on_next_start or test_published_file_is_fully_sized or test_stale_ec_file_with_same_engine_id_does_not_wedge_restart or test_stale_file_with_same_engine_id_does_not_wedge_restart or test_zero_length_orphan_is_reclaimed'",
+      "returncode": 4,
+      "status": "completed",
+      "summary_lines": [
+        "ImportError while loading conftest '/workspace/r14-run-vllm/tests/conftest.py'.",
+        "E   ModuleNotFoundError: No module named 'cbor2'"
+      ],
+      "test_names": [
+        "test_constructor_failure_releases_the_region",
+        "test_creator_failure_leaves_no_temp_file",
+        "test_failed_join_releases_the_region_lock",
+        "test_joining_a_differently_sized_region_fails_fast",
+        "test_live_ec_region_survives_another_start",
+        "test_live_region_survives_another_start",
+        "test_orphaned_ec_file_reclaimed_on_next_start",
+        "test_orphaned_file_reclaimed_on_next_start",
+        "test_published_file_is_fully_sized",
+        "test_stale_ec_file_with_same_engine_id_does_not_wedge_restart",
+        "test_stale_file_with_same_engine_id_does_not_wedge_restart",
+        "test_zero_length_orphan_is_reclaimed"
+      ],
+      "test_paths": [
+        "tests/v1/ec_connector/unit/cpu/test_ec_shared_region.py",
+        "tests/v1/kv_offload/cpu/test_shared_offload_region.py"
+      ]
+    },
+    {
+      "case_id": "vllm-pr-50754",
+      "duration_seconds": 16.60721716703847,
+      "head_sha": "9fa8f9f6d142268657ea2c324c68946ea24cbef2",
+      "output_sha256": "sha256:ef458e931858a16db3532527c331c3d84cb59252c16ca865f239622d4d82f049",
+      "output_tail": "WARNING 09-02 14:06:44 [__init__.py:27] The vLLM package was not found, so its version could not be inspected. This may cause platform detection to fail.\nWARNING 09-02 14:06:44 [__init__.py:27] The vLLM package was not found, so its version could not be inspected. This may cause platform detection to fail.\nWelcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nPrevious HEAD position was 0dc1dd46e Publish region files atomically and release the region lock on every failure path\nHEAD is now at 9fa8f9f6d [PD][NixlPush] Extract WRITE posting into helpers (no behavior change)\nImportError while loading conftest '/workspace/r14-run-vllm/tests/conftest.py'.\ntests/conftest.py:45: in <module>\n    from tests.models.utils import (\ntests/models/utils.py:13: in <module>\n    from vllm.config.model import AttnTypeStr, ModelConfig, ModelDType, RunnerOption\nvllm/config/__init__.py:12: in <module>\n    from vllm.config.device import DeviceConfig\nvllm/config/device.py:11: in <module>\n    from vllm.utils.hashing import safe_hash\nvllm/utils/hashing.py:12: in <module>\n    import cbor2\nE   ModuleNotFoundError: No module named 'cbor2'\n",
+      "ref": "refs/r14/pr-50754",
+      "remote_command": "cd /workspace/r14-run-vllm && git switch --detach refs/r14/pr-50754 >/dev/null && test \"$(git rev-parse HEAD)\" = 9fa8f9f6d142268657ea2c324c68946ea24cbef2 && timeout 180s env PYTHONDONTWRITEBYTECODE=1 CUDA_VISIBLE_DEVICES=0 PYTHONPATH=. /venv/main/bin/python -m pytest -q --tb=short --maxfail=1 tests/v1/kv_connector/unit/test_nixl_push_connector.py -k 'test_all_writes_landing_still_completes_normally or test_expired_request_does_not_leak_the_poison_flag or test_failure_does_not_land_until_sibling_writes_have or test_multi_group_models_are_left_to_the_lease or test_multiple_groups_without_hma_are_also_gated or test_producer_reports_the_rank_whose_write_was_not_posted or test_report_is_sent_before_any_write_is_attempted or test_report_travels_from_producer_to_consumer_unchanged or test_unattempted_ranks_are_reported_when_the_loop_unwinds'",
+      "returncode": 4,
+      "status": "completed",
+      "summary_lines": [
+        "ImportError while loading conftest '/workspace/r14-run-vllm/tests/conftest.py'.",
+        "E   ModuleNotFoundError: No module named 'cbor2'"
+      ],
+      "test_names": [
+        "test_all_writes_landing_still_completes_normally",
+        "test_expired_request_does_not_leak_the_poison_flag",
+        "test_failure_does_not_land_until_sibling_writes_have",
+        "test_multi_group_models_are_left_to_the_lease",
+        "test_multiple_groups_without_hma_are_also_gated",
+        "test_producer_reports_the_rank_whose_write_was_not_posted",
+        "test_report_is_sent_before_any_write_is_attempted",
+        "test_report_travels_from_producer_to_consumer_unchanged",
+        "test_unattempted_ranks_are_reported_when_the_loop_unwinds"
+      ],
+      "test_paths": [
+        "tests/v1/kv_connector/unit/test_nixl_push_connector.py"
+      ]
+    },
+    {
+      "case_id": "sglang-pr-37261",
+      "duration_seconds": 9.147601542063057,
+      "head_sha": "b5dee26a24b5b7ce833b544ba5a6a64412a40e9e",
+      "output_sha256": "sha256:b1d56497c0db758e61bcfb8acb6d602ae65e124cbb414a2eeaa56694a67be339",
+      "output_tail": "\n==================================== ERRORS ====================================\n_______ ERROR collecting registered/unit/server_args/test_server_args.py _______\nImportError while importing test module '/workspace/r14-run-sglang/test/registered/unit/server_args/test_server_args.py'.\nHint: make sure your test modules/packages have valid Python names.\nTraceback:\n/venv/main/lib/python3.12/importlib/__init__.py:90: in import_module\n    return _bootstrap._gcd_import(name[level:], package, level)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntest/registered/unit/server_args/test_server_args.py:11: in <module>\n    import sglang.srt.server_args as server_args_module\npython/sglang/__init__.py:21: in <module>\n    from sglang.srt.utils.hf_transformers_patches import apply_all as _apply_hf_patches\npython/sglang/srt/utils/__init__.py:2: in <module>\n    from sglang.srt.utils.common import *\npython/sglang/srt/utils/common.py:95: in <module>\n    from torchvision.io import decode_jpeg\nE   ModuleNotFoundError: No module named 'torchvision'\n=========================== short test summary info ============================\nERROR test/registered/unit/server_args/test_server_args.py\n!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!\n!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!\n1 error in 2.28s\nWelcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nPrevious HEAD position was 4d294b5d12 Fix diffusion accelerator rank binding\nHEAD is now at b5dee26a24 feat(deepep_v2): expanded (do_expand=True) prefill dispatch for DeepEP-V2 MoE\n",
+      "ref": "refs/r14/pr-37261",
+      "remote_command": "cd /workspace/r14-run-sglang && git switch --detach refs/r14/pr-37261 >/dev/null && test \"$(git rev-parse HEAD)\" = b5dee26a24b5b7ce833b544ba5a6a64412a40e9e && timeout 180s env PYTHONDONTWRITEBYTECODE=1 CUDA_VISIBLE_DEVICES=0 PYTHONPATH=python:. /venv/main/bin/python -m pytest -q --tb=short --maxfail=1 test/registered/unit/server_args/test_server_args.py -k 'test_disabled_chunking_uses_max_prefill_tokens or test_prefill_budget_divides_by_attn_tp_size'",
+      "returncode": 2,
+      "status": "completed",
+      "summary_lines": [
+        "==================================== ERRORS ====================================",
+        "_______ ERROR collecting registered/unit/server_args/test_server_args.py _______",
+        "ImportError while importing test module '/workspace/r14-run-sglang/test/registered/unit/server_args/test_server_args.py'.",
+        "E   ModuleNotFoundError: No module named 'torchvision'",
+        "ERROR test/registered/unit/server_args/test_server_args.py",
+        "!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!",
+        "1 error in 2.28s"
+      ],
+      "test_names": [
+        "test_disabled_chunking_uses_max_prefill_tokens",
+        "test_prefill_budget_divides_by_attn_tp_size"
+      ],
+      "test_paths": [
+        "test/registered/unit/server_args/test_server_args.py"
+      ]
+    },
+    {
+      "case_id": "sglang-pr-33029",
+      "duration_seconds": 8.79953037505038,
+      "head_sha": "54c6ee41fa786459f3c8b24c22429abae8ad808c",
+      "output_sha256": "sha256:d81b28d1a8ba19db9b2e2957ad7c4330773529cec803f32239c1fe8d72eb23be",
+      "output_tail": "\n==================================== ERRORS ====================================\n_ ERROR collecting registered/unit/mem_cache/test_hiradix_bulk_prefetch_progress.py _\nImportError while importing test module '/workspace/r14-run-sglang/test/registered/unit/mem_cache/test_hiradix_bulk_prefetch_progress.py'.\nHint: make sure your test modules/packages have valid Python names.\nTraceback:\n/venv/main/lib/python3.12/importlib/__init__.py:90: in import_module\n    return _bootstrap._gcd_import(name[level:], package, level)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntest/registered/unit/mem_cache/test_hiradix_bulk_prefetch_progress.py:6: in <module>\n    from sglang.srt.mem_cache.hiradix_cache import HiRadixCache\npython/sglang/__init__.py:29: in <module>\n    from sglang.srt.utils.hf_transformers_patches import apply_all as _apply_hf_patches\npython/sglang/srt/utils/__init__.py:2: in <module>\n    from sglang.srt.utils.common import *\npython/sglang/srt/utils/common.py:94: in <module>\n    from torchvision.io import decode_jpeg\nE   ModuleNotFoundError: No module named 'torchvision'\n=========================== short test summary info ============================\nERROR test/registered/unit/mem_cache/test_hiradix_bulk_prefetch_progress.py\n!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!\n!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!\n1 error in 2.24s\nWelcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nPrevious HEAD position was b5dee26a24 feat(deepep_v2): expanded (do_expand=True) prefill dispatch for DeepEP-V2 MoE\nHEAD is now at 54c6ee41fa [Fix] HiCache prefetch progress TP all_reduce deadlock\n",
+      "ref": "refs/r14/pr-33029",
+      "remote_command": "cd /workspace/r14-run-sglang && git switch --detach refs/r14/pr-33029 >/dev/null && test \"$(git rev-parse HEAD)\" = 54c6ee41fa786459f3c8b24c22429abae8ad808c && timeout 180s env PYTHONDONTWRITEBYTECODE=1 CUDA_VISIBLE_DEVICES=0 PYTHONPATH=python:. /venv/main/bin/python -m pytest -q --tb=short --maxfail=1 test/registered/unit/mem_cache/test_hiradix_bulk_prefetch_progress.py -k 'test_call_count_equals_input_length or test_delegates_to_per_req_check or test_duplicate_req_ids_still_call_per_slot or test_returns_empty_dict_for_empty_input or test_returns_empty_dict_when_storage_disabled'",
+      "returncode": 2,
+      "status": "completed",
+      "summary_lines": [
+        "==================================== ERRORS ====================================",
+        "_ ERROR collecting registered/unit/mem_cache/test_hiradix_bulk_prefetch_progress.py _",
+        "ImportError while importing test module '/workspace/r14-run-sglang/test/registered/unit/mem_cache/test_hiradix_bulk_prefetch_progress.py'.",
+        "E   ModuleNotFoundError: No module named 'torchvision'",
+        "ERROR test/registered/unit/mem_cache/test_hiradix_bulk_prefetch_progress.py",
+        "!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!",
+        "1 error in 2.24s"
+      ],
+      "test_names": [
+        "test_call_count_equals_input_length",
+        "test_delegates_to_per_req_check",
+        "test_duplicate_req_ids_still_call_per_slot",
+        "test_returns_empty_dict_for_empty_input",
+        "test_returns_empty_dict_when_storage_disabled"
+      ],
+      "test_paths": [
+        "test/registered/unit/mem_cache/test_hiradix_bulk_prefetch_progress.py"
+      ]
+    },
+    {
+      "case_id": "sglang-pr-33220",
+      "duration_seconds": 8.318347041960806,
+      "head_sha": "9549cb3a62a92e22fab609ea41fe88516d5c3082",
+      "output_sha256": "sha256:6c0a0978968e7130cc2d85bdf2091d4760b539ace4c608ceb9645efda8ec5ed7",
+      "output_tail": "\n==================================== ERRORS ====================================\n___________ ERROR collecting registered/unit/test_runtime_context.py ___________\nImportError while importing test module '/workspace/r14-run-sglang/test/registered/unit/test_runtime_context.py'.\nHint: make sure your test modules/packages have valid Python names.\nTraceback:\n/venv/main/lib/python3.12/importlib/__init__.py:90: in import_module\n    return _bootstrap._gcd_import(name[level:], package, level)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntest/registered/unit/test_runtime_context.py:3: in <module>\n    from sglang.test.ci.ci_register import register_cpu_ci\npython/sglang/__init__.py:29: in <module>\n    from sglang.srt.utils.hf_transformers_patches import apply_all as _apply_hf_patches\npython/sglang/srt/utils/__init__.py:2: in <module>\n    from sglang.srt.utils.common import *\npython/sglang/srt/utils/common.py:94: in <module>\n    from torchvision.io import decode_jpeg\nE   ModuleNotFoundError: No module named 'torchvision'\n=========================== short test summary info ============================\nERROR test/registered/unit/test_runtime_context.py\n!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!\n!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!\n1 error in 2.17s\nWelcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nPrevious HEAD position was 54c6ee41fa [Fix] HiCache prefetch progress TP all_reduce deadlock\nHEAD is now at 9549cb3a62 Reuse a process-wide stream for CUDA graph capture\n",
+      "ref": "refs/r14/pr-33220",
+      "remote_command": "cd /workspace/r14-run-sglang && git switch --detach refs/r14/pr-33220 >/dev/null && test \"$(git rev-parse HEAD)\" = 9549cb3a62a92e22fab609ea41fe88516d5c3082 && timeout 180s env PYTHONDONTWRITEBYTECODE=1 CUDA_VISIBLE_DEVICES=0 PYTHONPATH=python:. /venv/main/bin/python -m pytest -q --tb=short --maxfail=1 test/registered/unit/test_runtime_context.py -k 'test_capturer_slots_roundtrip_and_reset or test_get_buffer_keyed_lazy or test_get_or_create_accepts_device_factory or test_graph_capture_default_stream_is_process_scoped'",
+      "returncode": 2,
+      "status": "completed",
+      "summary_lines": [
+        "==================================== ERRORS ====================================",
+        "___________ ERROR collecting registered/unit/test_runtime_context.py ___________",
+        "ImportError while importing test module '/workspace/r14-run-sglang/test/registered/unit/test_runtime_context.py'.",
+        "E   ModuleNotFoundError: No module named 'torchvision'",
+        "ERROR test/registered/unit/test_runtime_context.py",
+        "!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!",
+        "1 error in 2.17s"
+      ],
+      "test_names": [
+        "test_capturer_slots_roundtrip_and_reset",
+        "test_get_buffer_keyed_lazy",
+        "test_get_or_create_accepts_device_factory",
+        "test_graph_capture_default_stream_is_process_scoped"
+      ],
+      "test_paths": [
+        "test/registered/unit/test_runtime_context.py"
+      ]
+    },
+    {
+      "case_id": "sglang-pr-33228",
+      "duration_seconds": 8.86281158379279,
+      "head_sha": "978767e67458e83fcce002d42d692393223b39ed",
+      "output_sha256": "sha256:46831153b8cadc4ecbd0d26ee2070f18ea8b4e9c649a2542fc05d801041b7bdc",
+      "output_tail": "\n==================================== ERRORS ====================================\n_ ERROR collecting registered/unit/eplb/test_deepep_low_latency_recorder_shared_slots.py _\nImportError while importing test module '/workspace/r14-run-sglang/test/registered/unit/eplb/test_deepep_low_latency_recorder_shared_slots.py'.\nHint: make sure your test modules/packages have valid Python names.\nTraceback:\n/venv/main/lib/python3.12/importlib/__init__.py:90: in import_module\n    return _bootstrap._gcd_import(name[level:], package, level)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntest/registered/unit/eplb/test_deepep_low_latency_recorder_shared_slots.py:8: in <module>\n    from sglang.srt.eplb.expert_distribution import (\npython/sglang/__init__.py:37: in <module>\n    from sglang.srt.utils.hf_transformers_patches import apply_all as _apply_hf_patches\npython/sglang/srt/utils/__init__.py:2: in <module>\n    from sglang.srt.utils.common import *\npython/sglang/srt/utils/common.py:94: in <module>\n    from torchvision.io import decode_jpeg\nE   ModuleNotFoundError: No module named 'torchvision'\n=========================== short test summary info ============================\nERROR test/registered/unit/eplb/test_deepep_low_latency_recorder_shared_slots.py\n!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!\n!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!\n1 error in 2.03s\nWelcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nPrevious HEAD position was 9549cb3a62 Reuse a process-wide stream for CUDA graph capture\nHEAD is now at 978767e674 fix(eplb): cover normal DeepEP counts\n",
+      "ref": "refs/r14/pr-33228",
+      "remote_command": "cd /workspace/r14-run-sglang && git switch --detach refs/r14/pr-33228 >/dev/null && test \"$(git rev-parse HEAD)\" = 978767e67458e83fcce002d42d692393223b39ed && timeout 180s env PYTHONDONTWRITEBYTECODE=1 CUDA_VISIBLE_DEVICES=0 PYTHONPATH=python:. /venv/main/bin/python -m pytest -q --tb=short --maxfail=1 test/registered/unit/eplb/test_deepep_low_latency_recorder_shared_slots.py -k 'test_active_dispatchers_require_the_layout_contract or test_deepep_dispatch_forwards_the_layout_contract or test_deepep_normal_dispatch_forwards_the_layout_contract or test_dispatcher_funnel_only_passes_contract_to_active_recorders or test_invalid_shared_slot_count_is_rejected or test_mori_low_latency_dispatch_forwards_the_layout_contract or test_mori_normal_dispatch_forwards_the_layout_contract or test_nonelastic_unexplained_shape_mismatch_fails_closed or test_normal_recorder_drops_trailing_shared_slots or test_recorder_drops_trailing_shared_slots or test_recorder_forwards_the_layout_contract_to_the_active_gatherer or test_routed_length_is_derived_for_each_elastic_callback'",
+      "returncode": 2,
+      "status": "completed",
+      "summary_lines": [
+        "==================================== ERRORS ====================================",
+        "_ ERROR collecting registered/unit/eplb/test_deepep_low_latency_recorder_shared_slots.py _",
+        "ImportError while importing test module '/workspace/r14-run-sglang/test/registered/unit/eplb/test_deepep_low_latency_recorder_shared_slots.py'.",
+        "E   ModuleNotFoundError: No module named 'torchvision'",
+        "ERROR test/registered/unit/eplb/test_deepep_low_latency_recorder_shared_slots.py",
+        "!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!",
+        "1 error in 2.03s"
+      ],
+      "test_names": [
+        "test_active_dispatchers_require_the_layout_contract",
+        "test_deepep_dispatch_forwards_the_layout_contract",
+        "test_deepep_normal_dispatch_forwards_the_layout_contract",
+        "test_dispatcher_funnel_only_passes_contract_to_active_recorders",
+        "test_invalid_shared_slot_count_is_rejected",
+        "test_mori_low_latency_dispatch_forwards_the_layout_contract",
+        "test_mori_normal_dispatch_forwards_the_layout_contract",
+        "test_nonelastic_unexplained_shape_mismatch_fails_closed",
+        "test_normal_recorder_drops_trailing_shared_slots",
+        "test_recorder_drops_trailing_shared_slots",
+        "test_recorder_forwards_the_layout_contract_to_the_active_gatherer",
+        "test_routed_length_is_derived_for_each_elastic_callback"
+      ],
+      "test_paths": [
+        "test/registered/unit/eplb/test_deepep_low_latency_recorder_shared_slots.py"
+      ]
+    },
+    {
+      "case_id": "sglang-pr-33053",
+      "duration_seconds": 8.223859708989039,
+      "head_sha": "4d294b5d129ab4fb86f8afbc208ceeb031de9d82",
+      "output_sha256": "sha256:1a4172f9866c8ee636ca2b681726c67838808c9c265a4be335f283425af44c2a",
+      "output_tail": "Welcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nPrevious HEAD position was 978767e674 fix(eplb): cover normal DeepEP counts\nHEAD is now at 4d294b5d12 Fix diffusion accelerator rank binding\nImportError while loading conftest '/workspace/r14-run-sglang/python/sglang/multimodal_gen/test/unit/conftest.py'.\npython/sglang/multimodal_gen/test/unit/conftest.py:7: in <module>\n    from sglang.multimodal_gen.runtime import server_args as server_args_module\npython/sglang/__init__.py:29: in <module>\n    from sglang.srt.utils.hf_transformers_patches import apply_all as _apply_hf_patches\npython/sglang/srt/utils/__init__.py:2: in <module>\n    from sglang.srt.utils.common import *\npython/sglang/srt/utils/common.py:94: in <module>\n    from torchvision.io import decode_jpeg\nE   ModuleNotFoundError: No module named 'torchvision'\n",
+      "ref": "refs/r14/pr-33053",
+      "remote_command": "cd /workspace/r14-run-sglang && git switch --detach refs/r14/pr-33053 >/dev/null && test \"$(git rev-parse HEAD)\" = 4d294b5d129ab4fb86f8afbc208ceeb031de9d82 && timeout 180s env PYTHONDONTWRITEBYTECODE=1 CUDA_VISIBLE_DEVICES=0 PYTHONPATH=python:. /venv/main/bin/python -m pytest -q --tb=short --maxfail=1 python/sglang/multimodal_gen/test/unit/test_distributed_device_binding.py -k 'test_distributed_init_binds_rank_before_creating_groups or test_gpu_worker_allows_device_modules_without_set_device'",
+      "returncode": 4,
+      "status": "completed",
+      "summary_lines": [
+        "ImportError while loading conftest '/workspace/r14-run-sglang/python/sglang/multimodal_gen/test/unit/conftest.py'.",
+        "E   ModuleNotFoundError: No module named 'torchvision'"
+      ],
+      "test_names": [
+        "test_distributed_init_binds_rank_before_creating_groups",
+        "test_gpu_worker_allows_device_modules_without_set_device"
+      ],
+      "test_paths": [
+        "python/sglang/multimodal_gen/test/unit/test_distributed_device_binding.py"
+      ]
+    },
+    {
+      "case_id": "flashinfer-pr-4302",
+      "duration_seconds": 7.604735333006829,
+      "head_sha": "bb134557aa847b4f662f097eccbd94255a509267",
+      "output_sha256": "sha256:5885c3acb53999a1fe646467bbff503d378eaf5dcaacdc35fef5fa9184af6ac1",
+      "output_tail": "Welcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nPrevious HEAD position was c60aa11e fix(moe_ep): preserve singleton expert TMA modes\nHEAD is now at bb134557 fix(moe): validate both packed weight tensors against the local expert count\nImportError while loading conftest '/workspace/r14-run-flashinfer/tests/conftest.py'.\ntests/conftest.py:25: in <module>\n    import flashinfer\nflashinfer/__init__.py:26: in <module>\n    from .activation import gelu_and_mul as gelu_and_mul\nflashinfer/activation.py:31: in <module>\n    from .utils import (\nflashinfer/utils.py:27: in <module>\n    import pynvml\nE   ModuleNotFoundError: No module named 'pynvml'\n",
+      "ref": "refs/r14/pr-4302",
+      "remote_command": "cd /workspace/r14-run-flashinfer && git switch --detach refs/r14/pr-4302 >/dev/null && test \"$(git rev-parse HEAD)\" = bb134557aa847b4f662f097eccbd94255a509267 && timeout 180s env PYTHONDONTWRITEBYTECODE=1 CUDA_VISIBLE_DEVICES=0 PYTHONPATH=. /venv/main/bin/python -m pytest -q --tb=short --maxfail=1 tests/moe/test_b12x_w4a16_ep.py tests/moe/test_unified_moe_b12x.py tests/trace/test_b12x_moe_trace.py -k 'test_b12x_does_not_support_unfinalized_output or test_b12x_nvfp4_does_not_support_expert_parallelism or test_b12x_pack_inputs_rejects_wrong_expert_dim or test_b12x_reference_applies_expert_map or test_b12x_w4a16_rejects_out_of_bounds_local_count or test_b12x_w4a16_rejects_out_of_range_expert_shard or test_b12x_w4a16_supports_expert_parallelism or test_ep_permutation_map_matches_non_ep_run or test_ep_rank_partials_sum_to_full_moe or test_ep_wrapper_cuda_graph_replays_changed_routes or test_ep_zero_partial_when_no_local_expert_routed or test_nvfp4_rejects_ep_counts or test_nvfp4_rejects_expert_map or test_prepare_ep_expert_map_accepts_linear_and_round_robin_placement or test_prepare_ep_expert_map_rejects_bad_tensor_forms or test_prepare_ep_expert_map_rejects_unsafe_values or test_w4a16_ep_partials_sum_to_full or test_w4a16_ep_rejects_bad_map_forms or test_w4a16_ep_rejects_wrong_length_map or test_w4a16_ep_requires_expert_map or test_wrapper_isolated_from_caller_map_mutation or test_wrapper_nvfp4_rejects_ep or test_wrapper_rejects_rebound_expert_map or test_wrapper_w4a16_ep_rejects_wrong_device_map or test_wrapper_w4a16_ep_requires_expert_map or test_wrapper_w4a16_ep_validates_map_contract'",
+      "returncode": 4,
+      "status": "completed",
+      "summary_lines": [
+        "ImportError while loading conftest '/workspace/r14-run-flashinfer/tests/conftest.py'.",
+        "E   ModuleNotFoundError: No module named 'pynvml'"
+      ],
+      "test_names": [
+        "test_b12x_does_not_support_unfinalized_output",
+        "test_b12x_nvfp4_does_not_support_expert_parallelism",
+        "test_b12x_pack_inputs_rejects_wrong_expert_dim",
+        "test_b12x_reference_applies_expert_map",
+        "test_b12x_w4a16_rejects_out_of_bounds_local_count",
+        "test_b12x_w4a16_rejects_out_of_range_expert_shard",
+        "test_b12x_w4a16_supports_expert_parallelism",
+        "test_ep_permutation_map_matches_non_ep_run",
+        "test_ep_rank_partials_sum_to_full_moe",
+        "test_ep_wrapper_cuda_graph_replays_changed_routes",
+        "test_ep_zero_partial_when_no_local_expert_routed",
+        "test_nvfp4_rejects_ep_counts",
+        "test_nvfp4_rejects_expert_map",
+        "test_prepare_ep_expert_map_accepts_linear_and_round_robin_placement",
+        "test_prepare_ep_expert_map_rejects_bad_tensor_forms",
+        "test_prepare_ep_expert_map_rejects_unsafe_values",
+        "test_w4a16_ep_partials_sum_to_full",
+        "test_w4a16_ep_rejects_bad_map_forms",
+        "test_w4a16_ep_rejects_wrong_length_map",
+        "test_w4a16_ep_requires_expert_map",
+        "test_wrapper_isolated_from_caller_map_mutation",
+        "test_wrapper_nvfp4_rejects_ep",
+        "test_wrapper_rejects_rebound_expert_map",
+        "test_wrapper_w4a16_ep_rejects_wrong_device_map",
+        "test_wrapper_w4a16_ep_requires_expert_map",
+        "test_wrapper_w4a16_ep_validates_map_contract"
+      ],
+      "test_paths": [
+        "tests/moe/test_b12x_w4a16_ep.py",
+        "tests/moe/test_unified_moe_b12x.py",
+        "tests/trace/test_b12x_moe_trace.py"
+      ]
+    },
+    {
+      "case_id": "flashinfer-pr-4139",
+      "duration_seconds": 7.778827707981691,
+      "head_sha": "b848e0ae5a679012e85649236984b3410487cbe0",
+      "output_sha256": "sha256:30063887f7b182e004316f0e10b9078a5fcacec60431cb2b715d7532c62d075a",
+      "output_tail": "Welcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nPrevious HEAD position was bb134557 fix(moe): validate both packed weight tensors against the local expert count\nHEAD is now at b848e0ae fix(moe_ep): drive NIXL dispatch/combine synchronously (async_finish=False + recv hook)\nImportError while loading conftest '/workspace/r14-run-flashinfer/tests/conftest.py'.\ntests/conftest.py:25: in <module>\n    import flashinfer\nflashinfer/__init__.py:25: in <module>\n    from .activation import gelu_and_mul as gelu_and_mul\nflashinfer/activation.py:31: in <module>\n    from .utils import (\nflashinfer/utils.py:27: in <module>\n    import pynvml\nE   ModuleNotFoundError: No module named 'pynvml'\n",
+      "ref": "refs/r14/pr-4139",
+      "remote_command": "cd /workspace/r14-run-flashinfer && git switch --detach refs/r14/pr-4139 >/dev/null && test \"$(git rev-parse HEAD)\" = b848e0ae5a679012e85649236984b3410487cbe0 && timeout 180s env PYTHONDONTWRITEBYTECODE=1 CUDA_VISIBLE_DEVICES=0 PYTHONPATH=. /venv/main/bin/python -m pytest -q --tb=short --maxfail=1 tests/moe_ep/nixl_ep/test_fleet_mock.py -k test_user_stream_knob_accepted_but_not_redirected",
+      "returncode": 4,
+      "status": "completed",
+      "summary_lines": [
+        "ImportError while loading conftest '/workspace/r14-run-flashinfer/tests/conftest.py'.",
+        "E   ModuleNotFoundError: No module named 'pynvml'"
+      ],
+      "test_names": [
+        "test_user_stream_knob_accepted_but_not_redirected"
+      ],
+      "test_paths": [
+        "tests/moe_ep/nixl_ep/test_fleet_mock.py"
+      ]
+    },
+    {
+      "case_id": "flashinfer-pr-4296",
+      "duration_seconds": 7.353414500132203,
+      "head_sha": "c60aa11e17fffda1b8f4a767946f0c565a9c06d8",
+      "output_sha256": "sha256:729ee7a1c3ccac2269c57dc8cf838d23a5566751828eee21bd71de44bb6ee1a0",
+      "output_tail": "Welcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nPrevious HEAD position was b848e0ae fix(moe_ep): drive NIXL dispatch/combine synchronously (async_finish=False + recv hook)\nHEAD is now at c60aa11e fix(moe_ep): preserve singleton expert TMA modes\nImportError while loading conftest '/workspace/r14-run-flashinfer/tests/conftest.py'.\ntests/conftest.py:25: in <module>\n    import flashinfer\nflashinfer/__init__.py:26: in <module>\n    from .activation import gelu_and_mul as gelu_and_mul\nflashinfer/activation.py:31: in <module>\n    from .utils import (\nflashinfer/utils.py:27: in <module>\n    import pynvml\nE   ModuleNotFoundError: No module named 'pynvml'\n",
+      "ref": "refs/r14/pr-4296",
+      "remote_command": "cd /workspace/r14-run-flashinfer && git switch --detach refs/r14/pr-4296 >/dev/null && test \"$(git rev-parse HEAD)\" = c60aa11e17fffda1b8f4a767946f0c565a9c06d8 && timeout 180s env PYTHONDONTWRITEBYTECODE=1 CUDA_VISIBLE_DEVICES=0 PYTHONPATH=. /venv/main/bin/python -m pytest -q --tb=short --maxfail=1 tests/moe_ep/test_nvfp4_cutedsl_kernel_vs_reference.py -k test_nvfp4_kernel_matches_torch_reference",
+      "returncode": 4,
+      "status": "completed",
+      "summary_lines": [
+        "ImportError while loading conftest '/workspace/r14-run-flashinfer/tests/conftest.py'.",
+        "E   ModuleNotFoundError: No module named 'pynvml'"
+      ],
+      "test_names": [
+        "test_nvfp4_kernel_matches_torch_reference"
+      ],
+      "test_paths": [
+        "tests/moe_ep/test_nvfp4_cutedsl_kernel_vs_reference.py"
+      ]
+    }
+  ],
+  "remote": {
+    "host": "root@38.49.42.120",
+    "port": 54270
+  },
+  "schema_version": "0.1",
+  "selection_lock_sha256": "sha256:bcbc9038eb7facae3cdd5ea1278927227908e552f7eaadfe9b97ace920dcce76",
+  "started_at": "2026-09-02T14:05:41.205107+00:00",
+  "static_evidence_sha256": "sha256:400875ca67265d9feeade81cbb619964e31c9834dd86da89378f591c797ca514",
+  "test_plan_sha256": "sha256:8c1ea5cb3abf130dd41b7771097dc5c9f75c848be9f5ef523326619eb2a20077",
+  "test_timeout_seconds": 180
+}

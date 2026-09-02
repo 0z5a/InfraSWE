@@ -1,0 +1,80 @@
+{
+  "derived_after_r14_reveal": true,
+  "generated_at": "2026-09-02T16:08:32.918928+00:00",
+  "iteration_sha256": "sha256:b4326c71480c9c468b1cecf354c337f26a18bd43ba053dca3541df76c3f2a027",
+  "known_limitations": [
+    "The blind acquisition fields cannot directly prove active human review, so check remains intrinsically low-identifiability.",
+    "Repository-specific merge latency is a governance signal, not a correctness score.",
+    "R14 is nonweighted and cannot establish the official merged-PR ProjectFit >=85 floor."
+  ],
+  "observed_metrics": {
+    "binary_direction_matches": 14,
+    "cases": 30,
+    "exact_label_matches": 11,
+    "legacy_exact_label_matches": 6,
+    "machine_check_precision": 0.0,
+    "machine_reject_precision": 0.6,
+    "oracle_decisions": {
+      "accept": 8,
+      "check": 2,
+      "reject": 20
+    },
+    "same_cohort_exact_accuracy_gain": 0.16666666666666663
+  },
+  "prospective_rules": [
+    {
+      "evidence": [
+        "All four technically passing mature SGLang cases were still open at only 31-33 days.",
+        "The disposition oracle cannot distinguish project latency from rejection inside that gray zone."
+      ],
+      "id": "R15-MATURITY-BANDS",
+      "rule": "At selection time, use either a <=30-day prospective case or a >=90-day mature case; exclude the 31-89-day resolution gray zone."
+    },
+    {
+      "evidence": [
+        "R14 check precision was 0/2.",
+        "Megatron #6973 was the only frozen non-accept that became an active-review check; its gap was one unavailable four-rank parity closure.",
+        "A bounded technical gap alone does not establish active human review."
+      ],
+      "id": "R15-CHECK-NARROWING",
+      "rule": "Predict check only for a <=30-day case with a demonstrated primary direction, <=4 changed files, candidate-owned closure coverage, exactly one executable residual, and no superseding or reachable counterexample."
+    },
+    {
+      "evidence": [
+        "FlashInfer #4139 and #4296 were merged despite A100-side target tests being skipped.",
+        "Keep broad new hardware features such as #4302 non-accept until evaluator-owned numeric evidence exists."
+      ],
+      "id": "R15-NARROW-HARDWARE-BUGFIX-TRANSFER",
+      "rule": "Do not reject a <=3-file mature bug fix solely because evaluator hardware is unavailable when candidate-owned target-hardware coverage exists, the source invariant is locally closed, and no exact counterexample is found."
+    },
+    {
+      "evidence": [
+        "verl #7045 produced an exact production import failure and was correctly rejected.",
+        "verl #7161 was merged, so an inferred version-gate regression without an executed counterexample was insufficient."
+      ],
+      "id": "R15-REJECT-EVIDENCE-ORDER",
+      "rule": "A technical reject requires legal production reachability followed by an exact semantic, progress, safety, or import failure; absence of local E2E evidence is recorded as unresolved, not fabricated as a failure."
+    },
+    {
+      "evidence": [
+        "R14 exact improvement came only from check/reject disposition separation; binary accuracy remained 14/30."
+      ],
+      "id": "R15-DUAL-OUTPUT",
+      "rule": "Continue locking technical_contract and disposition_prediction separately; never rewrite technical evidence from post-lock outcome or review data."
+    }
+  ],
+  "protocol_id": "historical-pr-iterative-policy-r14-to-r15-v0.1",
+  "r15_group": {
+    "allocation": {
+      "communication": 20,
+      "training": 10
+    },
+    "case_count": 30,
+    "future_groups_preselected": false,
+    "reason": "finish the remaining communication tranche, then begin the training tranche without violating the 30-case group boundary"
+  },
+  "retrospective_r14_locks_changed": false,
+  "schema_version": "0.1",
+  "source_audit_sha256": "sha256:137dcb29a541fc66bd13f58b4d7dc535db17e90d9fa992fda9f1b080d321340b",
+  "source_lock_set_sha256": "sha256:372c37f80c37aa39309dc6e210ce84530d914a328d24eb99caa2bd2844f2df0f"
+}

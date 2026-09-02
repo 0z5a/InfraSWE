@@ -1,0 +1,171 @@
+{
+  "evidence_sha256": "sha256:08413013b5f75ac81aa468ef542be653d48361d04e0c85ed5543d85072580ea5",
+  "finished_at": "2026-09-02T14:45:03.914437+00:00",
+  "noconftest_projects": [
+    "sglang"
+  ],
+  "outcome_review_ci_fields_requested": false,
+  "protocol_id": "r14-exact-candidate-upstream-tests-v0.1",
+  "records": [
+    {
+      "case_id": "sglang-pr-37261",
+      "duration_seconds": 17.200407791882753,
+      "head_sha": "b5dee26a24b5b7ce833b544ba5a6a64412a40e9e",
+      "output_sha256": "sha256:b3bbfcfc9a713e458424aec7f2031a7cf3854460e14575613efd93dce8413c04",
+      "output_tail": "\n==================================== ERRORS ====================================\n_______ ERROR collecting registered/unit/server_args/test_server_args.py _______\nImportError while importing test module '/workspace/r14-run-sglang/test/registered/unit/server_args/test_server_args.py'.\nHint: make sure your test modules/packages have valid Python names.\nTraceback:\n/venv/main/lib/python3.12/importlib/__init__.py:90: in import_module\n    return _bootstrap._gcd_import(name[level:], package, level)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntest/registered/unit/server_args/test_server_args.py:70: in <module>\n    from sglang.srt.layers.cp.base import is_cp_enabled, is_interleave\npython/sglang/srt/layers/cp/__init__.py:33: in <module>\n    from sglang.srt.layers.cp.zigzag import (\npython/sglang/srt/layers/cp/zigzag.py:54: in <module>\n    from sglang.srt.mem_cache.memory_pool import KVWriteLoc\npython/sglang/srt/mem_cache/memory_pool.py:56: in <module>\n    from sglang.srt.layers.quantization.fp4_kv_cache_quant_method import (\npython/sglang/srt/layers/quantization/__init__.py:31: in <module>\n    from sglang.srt.layers.quantization.compressed_tensors.compressed_tensors import (\npython/sglang/srt/layers/quantization/compressed_tensors/compressed_tensors.py:40: in <module>\n    from sglang.srt.layers.quantization.compressed_tensors.schemes import (\npython/sglang/srt/layers/quantization/compressed_tensors/schemes/__init__.py:8: in <module>\n    from .compressed_tensors_w4a4_nvfp4 import CompressedTensorsW4A4Fp4\npython/sglang/srt/layers/quantization/compressed_tensors/schemes/compressed_tensors_w4a4_nvfp4.py:20: in <module>\n    from sglang.srt.layers.quantization.modelopt_quant import (\npython/sglang/srt/layers/quantization/modelopt_quant.py:38: in <module>\n    from sglang.srt.layers.quantization.fp8 import Fp8Config, Fp8LinearMethod, Fp8MoEMethod\npython/sglang/srt/layers/quantization/fp8.py:55: in <module>\n    from sglang.srt.layers.quantization.fp8_utils import (\npython/sglang/srt/layers/quantization/fp8_utils.py:213: in <module>\n    from flashinfer import bmm_fp8 as _raw_bmm_fp8_batched\nE   ModuleNotFoundError: No module named 'flashinfer'\n=============================== warnings summary ===============================\n../../venv/main/lib/python3.12/site-packages/torch/jit/_script.py:365: 14 warnings\n  /venv/main/lib/python3.12/site-packages/torch/jit/_script.py:365: DeprecationWarning: `torch.jit.script_method` is deprecated. Please switch to `torch.compile` or `torch.export`.\n    warnings.warn(\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n=========================== short test summary info ============================\nERROR test/registered/unit/server_args/test_server_args.py\n!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!\n!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!\n14 warnings, 1 error in 9.38s\nWelcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nPrevious HEAD position was 4d294b5d12 Fix diffusion accelerator rank binding\nHEAD is now at b5dee26a24 feat(deepep_v2): expanded (do_expand=True) prefill dispatch for DeepEP-V2 MoE\n",
+      "ref": "refs/r14/pr-37261",
+      "remote_command": "cd /workspace/r14-run-sglang && git switch --detach refs/r14/pr-37261 >/dev/null && test \"$(git rev-parse HEAD)\" = b5dee26a24b5b7ce833b544ba5a6a64412a40e9e && timeout 240s env PYTHONDONTWRITEBYTECODE=1 CUDA_VISIBLE_DEVICES=0 PYTHONPATH=/workspace/r14-shims:python:. /venv/main/bin/python -m pytest -q --tb=short --maxfail=1 --noconftest test/registered/unit/server_args/test_server_args.py -k 'test_disabled_chunking_uses_max_prefill_tokens or test_prefill_budget_divides_by_attn_tp_size'",
+      "returncode": 2,
+      "status": "completed",
+      "summary_lines": [
+        "==================================== ERRORS ====================================",
+        "_______ ERROR collecting registered/unit/server_args/test_server_args.py _______",
+        "ImportError while importing test module '/workspace/r14-run-sglang/test/registered/unit/server_args/test_server_args.py'.",
+        "E   ModuleNotFoundError: No module named 'flashinfer'",
+        "ERROR test/registered/unit/server_args/test_server_args.py",
+        "!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!",
+        "14 warnings, 1 error in 9.38s"
+      ],
+      "test_names": [
+        "test_disabled_chunking_uses_max_prefill_tokens",
+        "test_prefill_budget_divides_by_attn_tp_size"
+      ],
+      "test_paths": [
+        "test/registered/unit/server_args/test_server_args.py"
+      ]
+    },
+    {
+      "case_id": "sglang-pr-33029",
+      "duration_seconds": 17.668635625159368,
+      "head_sha": "54c6ee41fa786459f3c8b24c22429abae8ad808c",
+      "output_sha256": "sha256:44fde742e811aac12905fd6ae862e6cdd9662e42e8003d1320e8c2394f7f59d8",
+      "output_tail": "\n==================================== ERRORS ====================================\n_ ERROR collecting registered/unit/mem_cache/test_hiradix_bulk_prefetch_progress.py _\nImportError while importing test module '/workspace/r14-run-sglang/test/registered/unit/mem_cache/test_hiradix_bulk_prefetch_progress.py'.\nHint: make sure your test modules/packages have valid Python names.\nTraceback:\n/venv/main/lib/python3.12/importlib/__init__.py:90: in import_module\n    return _bootstrap._gcd_import(name[level:], package, level)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntest/registered/unit/mem_cache/test_hiradix_bulk_prefetch_progress.py:6: in <module>\n    from sglang.srt.mem_cache.hiradix_cache import HiRadixCache\npython/sglang/srt/mem_cache/hiradix_cache.py:17: in <module>\n    from sglang.srt.managers.cache_controller import HiCacheController, PrefetchOperation\npython/sglang/srt/managers/cache_controller.py:41: in <module>\n    from sglang.srt.mem_cache.memory_pool import MLATokenToKVPool\npython/sglang/srt/mem_cache/memory_pool.py:57: in <module>\n    from sglang.srt.layers.quantization.fp4_kv_cache_quant_method import (\npython/sglang/srt/layers/quantization/__init__.py:26: in <module>\n    from sglang.srt.layers.quantization.compressed_tensors.compressed_tensors import (\npython/sglang/srt/layers/quantization/compressed_tensors/compressed_tensors.py:40: in <module>\n    from sglang.srt.layers.quantization.compressed_tensors.schemes import (\npython/sglang/srt/layers/quantization/compressed_tensors/schemes/__init__.py:8: in <module>\n    from .compressed_tensors_w4a4_nvfp4 import CompressedTensorsW4A4Fp4\npython/sglang/srt/layers/quantization/compressed_tensors/schemes/compressed_tensors_w4a4_nvfp4.py:20: in <module>\n    from sglang.srt.layers.quantization.modelopt_quant import (\npython/sglang/srt/layers/quantization/modelopt_quant.py:37: in <module>\n    from sglang.srt.layers.quantization.fp8 import Fp8Config\npython/sglang/srt/layers/quantization/fp8.py:55: in <module>\n    from sglang.srt.layers.quantization.fp8_utils import (\npython/sglang/srt/layers/quantization/fp8_utils.py:164: in <module>\n    from sgl_kernel import fp8_scaled_mm\nE   ModuleNotFoundError: No module named 'sgl_kernel'\n=============================== warnings summary ===============================\n../../venv/main/lib/python3.12/site-packages/torch/jit/_script.py:365: 14 warnings\n  /venv/main/lib/python3.12/site-packages/torch/jit/_script.py:365: DeprecationWarning: `torch.jit.script_method` is deprecated. Please switch to `torch.compile` or `torch.export`.\n    warnings.warn(\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n=========================== short test summary info ============================\nERROR test/registered/unit/mem_cache/test_hiradix_bulk_prefetch_progress.py\n!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!\n!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!\n14 warnings, 1 error in 9.25s\nWelcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nPrevious HEAD position was b5dee26a24 feat(deepep_v2): expanded (do_expand=True) prefill dispatch for DeepEP-V2 MoE\nHEAD is now at 54c6ee41fa [Fix] HiCache prefetch progress TP all_reduce deadlock\n",
+      "ref": "refs/r14/pr-33029",
+      "remote_command": "cd /workspace/r14-run-sglang && git switch --detach refs/r14/pr-33029 >/dev/null && test \"$(git rev-parse HEAD)\" = 54c6ee41fa786459f3c8b24c22429abae8ad808c && timeout 240s env PYTHONDONTWRITEBYTECODE=1 CUDA_VISIBLE_DEVICES=0 PYTHONPATH=/workspace/r14-shims:python:. /venv/main/bin/python -m pytest -q --tb=short --maxfail=1 --noconftest test/registered/unit/mem_cache/test_hiradix_bulk_prefetch_progress.py -k 'test_call_count_equals_input_length or test_delegates_to_per_req_check or test_duplicate_req_ids_still_call_per_slot or test_returns_empty_dict_for_empty_input or test_returns_empty_dict_when_storage_disabled'",
+      "returncode": 2,
+      "status": "completed",
+      "summary_lines": [
+        "==================================== ERRORS ====================================",
+        "_ ERROR collecting registered/unit/mem_cache/test_hiradix_bulk_prefetch_progress.py _",
+        "ImportError while importing test module '/workspace/r14-run-sglang/test/registered/unit/mem_cache/test_hiradix_bulk_prefetch_progress.py'.",
+        "E   ModuleNotFoundError: No module named 'sgl_kernel'",
+        "ERROR test/registered/unit/mem_cache/test_hiradix_bulk_prefetch_progress.py",
+        "!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!",
+        "14 warnings, 1 error in 9.25s"
+      ],
+      "test_names": [
+        "test_call_count_equals_input_length",
+        "test_delegates_to_per_req_check",
+        "test_duplicate_req_ids_still_call_per_slot",
+        "test_returns_empty_dict_for_empty_input",
+        "test_returns_empty_dict_when_storage_disabled"
+      ],
+      "test_paths": [
+        "test/registered/unit/mem_cache/test_hiradix_bulk_prefetch_progress.py"
+      ]
+    },
+    {
+      "case_id": "sglang-pr-33220",
+      "duration_seconds": 17.43210874986835,
+      "head_sha": "9549cb3a62a92e22fab609ea41fe88516d5c3082",
+      "output_sha256": "sha256:fd7c3af7c279352289abd1b576c029a8014ffb1f90aa3154fe89c26406af1201",
+      "output_tail": "\n==================================== ERRORS ====================================\n___________ ERROR collecting registered/unit/test_runtime_context.py ___________\nImportError while importing test module '/workspace/r14-run-sglang/test/registered/unit/test_runtime_context.py'.\nHint: make sure your test modules/packages have valid Python names.\nTraceback:\n/venv/main/lib/python3.12/importlib/__init__.py:90: in import_module\n    return _bootstrap._gcd_import(name[level:], package, level)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntest/registered/unit/test_runtime_context.py:26: in <module>\n    from sglang.test.test_utils import CustomTestCase\npython/sglang/test/test_utils.py:39: in <module>\n    from sglang.benchmark.serving import run_benchmark\npython/sglang/benchmark/serving.py:51: in <module>\n    from sglang.srt.disaggregation.utils import FAKE_BOOTSTRAP_HOST\npython/sglang/srt/disaggregation/utils.py:23: in <module>\n    from sglang.srt.configs.model_config import get_dsa_index_topk\npython/sglang/srt/configs/model_config.py:31: in <module>\n    from sglang.srt.layers.quantization import QUANTIZATION_METHODS\npython/sglang/srt/layers/quantization/__init__.py:26: in <module>\n    from sglang.srt.layers.quantization.compressed_tensors.compressed_tensors import (\npython/sglang/srt/layers/quantization/compressed_tensors/compressed_tensors.py:40: in <module>\n    from sglang.srt.layers.quantization.compressed_tensors.schemes import (\npython/sglang/srt/layers/quantization/compressed_tensors/schemes/__init__.py:8: in <module>\n    from .compressed_tensors_w4a4_nvfp4 import CompressedTensorsW4A4Fp4\npython/sglang/srt/layers/quantization/compressed_tensors/schemes/compressed_tensors_w4a4_nvfp4.py:20: in <module>\n    from sglang.srt.layers.quantization.modelopt_quant import (\npython/sglang/srt/layers/quantization/modelopt_quant.py:39: in <module>\n    from sglang.srt.layers.quantization.fp8 import Fp8Config, Fp8LinearMethod, Fp8MoEMethod\npython/sglang/srt/layers/quantization/fp8.py:55: in <module>\n    from sglang.srt.layers.quantization.fp8_utils import (\npython/sglang/srt/layers/quantization/fp8_utils.py:163: in <module>\n    from sgl_kernel import fp8_scaled_mm\nE   ModuleNotFoundError: No module named 'sgl_kernel'\n=============================== warnings summary ===============================\n../../venv/main/lib/python3.12/site-packages/torch/jit/_script.py:365: 14 warnings\n  /venv/main/lib/python3.12/site-packages/torch/jit/_script.py:365: DeprecationWarning: `torch.jit.script_method` is deprecated. Please switch to `torch.compile` or `torch.export`.\n    warnings.warn(\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n=========================== short test summary info ============================\nERROR test/registered/unit/test_runtime_context.py\n!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!\n!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!\n14 warnings, 1 error in 9.73s\nWelcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nPrevious HEAD position was 54c6ee41fa [Fix] HiCache prefetch progress TP all_reduce deadlock\nHEAD is now at 9549cb3a62 Reuse a process-wide stream for CUDA graph capture\n",
+      "ref": "refs/r14/pr-33220",
+      "remote_command": "cd /workspace/r14-run-sglang && git switch --detach refs/r14/pr-33220 >/dev/null && test \"$(git rev-parse HEAD)\" = 9549cb3a62a92e22fab609ea41fe88516d5c3082 && timeout 240s env PYTHONDONTWRITEBYTECODE=1 CUDA_VISIBLE_DEVICES=0 PYTHONPATH=/workspace/r14-shims:python:. /venv/main/bin/python -m pytest -q --tb=short --maxfail=1 --noconftest test/registered/unit/test_runtime_context.py -k 'test_capturer_slots_roundtrip_and_reset or test_get_buffer_keyed_lazy or test_get_or_create_accepts_device_factory or test_graph_capture_default_stream_is_process_scoped'",
+      "returncode": 2,
+      "status": "completed",
+      "summary_lines": [
+        "==================================== ERRORS ====================================",
+        "___________ ERROR collecting registered/unit/test_runtime_context.py ___________",
+        "ImportError while importing test module '/workspace/r14-run-sglang/test/registered/unit/test_runtime_context.py'.",
+        "E   ModuleNotFoundError: No module named 'sgl_kernel'",
+        "ERROR test/registered/unit/test_runtime_context.py",
+        "!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!",
+        "14 warnings, 1 error in 9.73s"
+      ],
+      "test_names": [
+        "test_capturer_slots_roundtrip_and_reset",
+        "test_get_buffer_keyed_lazy",
+        "test_get_or_create_accepts_device_factory",
+        "test_graph_capture_default_stream_is_process_scoped"
+      ],
+      "test_paths": [
+        "test/registered/unit/test_runtime_context.py"
+      ]
+    },
+    {
+      "case_id": "sglang-pr-33228",
+      "duration_seconds": 19.07026212499477,
+      "head_sha": "978767e67458e83fcce002d42d692393223b39ed",
+      "output_sha256": "sha256:df0c0d9835b108c2af1ddb68b40d533d3e56551f964c71a1c0dff445cda1feb4",
+      "output_tail": "\n==================================== ERRORS ====================================\n_ ERROR collecting registered/unit/eplb/test_deepep_low_latency_recorder_shared_slots.py _\nImportError while importing test module '/workspace/r14-run-sglang/test/registered/unit/eplb/test_deepep_low_latency_recorder_shared_slots.py'.\nHint: make sure your test modules/packages have valid Python names.\nTraceback:\n/venv/main/lib/python3.12/importlib/__init__.py:90: in import_module\n    return _bootstrap._gcd_import(name[level:], package, level)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntest/registered/unit/eplb/test_deepep_low_latency_recorder_shared_slots.py:8: in <module>\n    from sglang.srt.eplb.expert_distribution import (\npython/sglang/srt/eplb/expert_distribution.py:33: in <module>\n    from sglang.srt.observability.metrics_collector import (\npython/sglang/srt/observability/metrics_collector.py:26: in <module>\n    from sglang.srt.disaggregation.utils import DisaggregationMode\npython/sglang/srt/disaggregation/utils.py:23: in <module>\n    from sglang.srt.configs.model_config import get_dsa_index_topk\npython/sglang/srt/configs/model_config.py:31: in <module>\n    from sglang.srt.layers.quantization import QUANTIZATION_METHODS\npython/sglang/srt/layers/quantization/__init__.py:26: in <module>\n    from sglang.srt.layers.quantization.compressed_tensors.compressed_tensors import (\npython/sglang/srt/layers/quantization/compressed_tensors/compressed_tensors.py:40: in <module>\n    from sglang.srt.layers.quantization.compressed_tensors.schemes import (\npython/sglang/srt/layers/quantization/compressed_tensors/schemes/__init__.py:8: in <module>\n    from .compressed_tensors_w4a4_nvfp4 import CompressedTensorsW4A4Fp4\npython/sglang/srt/layers/quantization/compressed_tensors/schemes/compressed_tensors_w4a4_nvfp4.py:20: in <module>\n    from sglang.srt.layers.quantization.modelopt_quant import (\npython/sglang/srt/layers/quantization/modelopt_quant.py:37: in <module>\n    from sglang.srt.layers.quantization.fp8 import Fp8Config, Fp8LinearMethod, Fp8MoEMethod\npython/sglang/srt/layers/quantization/fp8.py:55: in <module>\n    from sglang.srt.layers.quantization.fp8_utils import (\npython/sglang/srt/layers/quantization/fp8_utils.py:173: in <module>\n    from sgl_kernel import fp8_scaled_mm\nE   ModuleNotFoundError: No module named 'sgl_kernel'\n=============================== warnings summary ===============================\n../../venv/main/lib/python3.12/site-packages/torch/jit/_script.py:365: 14 warnings\n  /venv/main/lib/python3.12/site-packages/torch/jit/_script.py:365: DeprecationWarning: `torch.jit.script_method` is deprecated. Please switch to `torch.compile` or `torch.export`.\n    warnings.warn(\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n=========================== short test summary info ============================\nERROR test/registered/unit/eplb/test_deepep_low_latency_recorder_shared_slots.py\n!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!\n!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!\n14 warnings, 1 error in 9.86s\nWelcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nPrevious HEAD position was 9549cb3a62 Reuse a process-wide stream for CUDA graph capture\nHEAD is now at 978767e674 fix(eplb): cover normal DeepEP counts\n",
+      "ref": "refs/r14/pr-33228",
+      "remote_command": "cd /workspace/r14-run-sglang && git switch --detach refs/r14/pr-33228 >/dev/null && test \"$(git rev-parse HEAD)\" = 978767e67458e83fcce002d42d692393223b39ed && timeout 240s env PYTHONDONTWRITEBYTECODE=1 CUDA_VISIBLE_DEVICES=0 PYTHONPATH=/workspace/r14-shims:python:. /venv/main/bin/python -m pytest -q --tb=short --maxfail=1 --noconftest test/registered/unit/eplb/test_deepep_low_latency_recorder_shared_slots.py -k 'test_active_dispatchers_require_the_layout_contract or test_deepep_dispatch_forwards_the_layout_contract or test_deepep_normal_dispatch_forwards_the_layout_contract or test_dispatcher_funnel_only_passes_contract_to_active_recorders or test_invalid_shared_slot_count_is_rejected or test_mori_low_latency_dispatch_forwards_the_layout_contract or test_mori_normal_dispatch_forwards_the_layout_contract or test_nonelastic_unexplained_shape_mismatch_fails_closed or test_normal_recorder_drops_trailing_shared_slots or test_recorder_drops_trailing_shared_slots or test_recorder_forwards_the_layout_contract_to_the_active_gatherer or test_routed_length_is_derived_for_each_elastic_callback'",
+      "returncode": 2,
+      "status": "completed",
+      "summary_lines": [
+        "==================================== ERRORS ====================================",
+        "_ ERROR collecting registered/unit/eplb/test_deepep_low_latency_recorder_shared_slots.py _",
+        "ImportError while importing test module '/workspace/r14-run-sglang/test/registered/unit/eplb/test_deepep_low_latency_recorder_shared_slots.py'.",
+        "E   ModuleNotFoundError: No module named 'sgl_kernel'",
+        "ERROR test/registered/unit/eplb/test_deepep_low_latency_recorder_shared_slots.py",
+        "!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!",
+        "14 warnings, 1 error in 9.86s"
+      ],
+      "test_names": [
+        "test_active_dispatchers_require_the_layout_contract",
+        "test_deepep_dispatch_forwards_the_layout_contract",
+        "test_deepep_normal_dispatch_forwards_the_layout_contract",
+        "test_dispatcher_funnel_only_passes_contract_to_active_recorders",
+        "test_invalid_shared_slot_count_is_rejected",
+        "test_mori_low_latency_dispatch_forwards_the_layout_contract",
+        "test_mori_normal_dispatch_forwards_the_layout_contract",
+        "test_nonelastic_unexplained_shape_mismatch_fails_closed",
+        "test_normal_recorder_drops_trailing_shared_slots",
+        "test_recorder_drops_trailing_shared_slots",
+        "test_recorder_forwards_the_layout_contract_to_the_active_gatherer",
+        "test_routed_length_is_derived_for_each_elastic_callback"
+      ],
+      "test_paths": [
+        "test/registered/unit/eplb/test_deepep_low_latency_recorder_shared_slots.py"
+      ]
+    },
+    {
+      "case_id": "sglang-pr-33053",
+      "duration_seconds": 17.063644791021943,
+      "head_sha": "4d294b5d129ab4fb86f8afbc208ceeb031de9d82",
+      "output_sha256": "sha256:a9b6f78c95b6aecbc97686e6724ca474e14214e7abf71631aab319df1d1a432b",
+      "output_tail": "\n==================================== ERRORS ====================================\n_ ERROR collecting sglang/multimodal_gen/test/unit/test_distributed_device_binding.py _\nImportError while importing test module '/workspace/r14-run-sglang/python/sglang/multimodal_gen/test/unit/test_distributed_device_binding.py'.\nHint: make sure your test modules/packages have valid Python names.\nTraceback:\n/venv/main/lib/python3.12/importlib/__init__.py:90: in import_module\n    return _bootstrap._gcd_import(name[level:], package, level)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\npython/sglang/multimodal_gen/test/unit/test_distributed_device_binding.py:9: in <module>\n    from sglang.multimodal_gen.runtime import platforms\npython/sglang/multimodal_gen/__init__.py:2: in <module>\n    from sglang.multimodal_gen.configs.pipeline_configs import PipelineConfig\npython/sglang/multimodal_gen/configs/pipeline_configs/__init__.py:3: in <module>\n    from sglang.multimodal_gen.configs.pipeline_configs.base import (\npython/sglang/multimodal_gen/configs/pipeline_configs/base.py:17: in <module>\n    from sglang.multimodal_gen.configs.models import (\npython/sglang/multimodal_gen/configs/models/__init__.py:4: in <module>\n    from sglang.multimodal_gen.configs.models.dits.base import DiTConfig\npython/sglang/multimodal_gen/configs/models/dits/__init__.py:3: in <module>\n    from sglang.multimodal_gen.configs.models.dits.cosmos3video import Cosmos3VideoConfig\npython/sglang/multimodal_gen/configs/models/dits/cosmos3video.py:6: in <module>\n    from sglang.multimodal_gen.configs.models.dits.base import DiTArchConfig, DiTConfig\npython/sglang/multimodal_gen/configs/models/dits/base.py:8: in <module>\n    from sglang.multimodal_gen.runtime.layers.quantization import QuantizationConfig\npython/sglang/multimodal_gen/runtime/layers/quantization/__init__.py:11: in <module>\n    from sglang.multimodal_gen.runtime.layers.quantization.fp8 import Fp8Config\npython/sglang/multimodal_gen/runtime/layers/quantization/fp8.py:38: in <module>\n    from sglang.srt.layers.quantization.fp8_utils import (\npython/sglang/srt/layers/quantization/__init__.py:26: in <module>\n    from sglang.srt.layers.quantization.compressed_tensors.compressed_tensors import (\npython/sglang/srt/layers/quantization/compressed_tensors/compressed_tensors.py:40: in <module>\n    from sglang.srt.layers.quantization.compressed_tensors.schemes import (\npython/sglang/srt/layers/quantization/compressed_tensors/schemes/__init__.py:8: in <module>\n    from .compressed_tensors_w4a4_nvfp4 import CompressedTensorsW4A4Fp4\npython/sglang/srt/layers/quantization/compressed_tensors/schemes/compressed_tensors_w4a4_nvfp4.py:20: in <module>\n    from sglang.srt.layers.quantization.modelopt_quant import (\npython/sglang/srt/layers/quantization/modelopt_quant.py:39: in <module>\n    from sglang.srt.layers.quantization.fp8 import Fp8Config, Fp8LinearMethod, Fp8MoEMethod\npython/sglang/srt/layers/quantization/fp8.py:55: in <module>\n    from sglang.srt.layers.quantization.fp8_utils import (\npython/sglang/srt/layers/quantization/fp8_utils.py:164: in <module>\n    from sgl_kernel import fp8_scaled_mm\nE   ModuleNotFoundError: No module named 'sgl_kernel'\n=============================== warnings summary ===============================\n../../venv/main/lib/python3.12/site-packages/torch/jit/_script.py:365: 14 warnings\n  /venv/main/lib/python3.12/site-packages/torch/jit/_script.py:365: DeprecationWarning: `torch.jit.script_method` is deprecated. Please switch to `torch.compile` or `torch.export`.\n    warnings.warn(\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n=========================== short test summary info ============================\nERROR python/sglang/multimodal_gen/test/unit/test_distributed_device_binding.py\n!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!\n!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!\n14 warnings, 1 error in 8.90s\nWelcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nPrevious HEAD position was 978767e674 fix(eplb): cover normal DeepEP counts\nHEAD is now at 4d294b5d12 Fix diffusion accelerator rank binding\n",
+      "ref": "refs/r14/pr-33053",
+      "remote_command": "cd /workspace/r14-run-sglang && git switch --detach refs/r14/pr-33053 >/dev/null && test \"$(git rev-parse HEAD)\" = 4d294b5d129ab4fb86f8afbc208ceeb031de9d82 && timeout 240s env PYTHONDONTWRITEBYTECODE=1 CUDA_VISIBLE_DEVICES=0 PYTHONPATH=/workspace/r14-shims:python:. /venv/main/bin/python -m pytest -q --tb=short --maxfail=1 --noconftest python/sglang/multimodal_gen/test/unit/test_distributed_device_binding.py -k 'test_distributed_init_binds_rank_before_creating_groups or test_gpu_worker_allows_device_modules_without_set_device'",
+      "returncode": 2,
+      "status": "completed",
+      "summary_lines": [
+        "==================================== ERRORS ====================================",
+        "_ ERROR collecting sglang/multimodal_gen/test/unit/test_distributed_device_binding.py _",
+        "ImportError while importing test module '/workspace/r14-run-sglang/python/sglang/multimodal_gen/test/unit/test_distributed_device_binding.py'.",
+        "E   ModuleNotFoundError: No module named 'sgl_kernel'",
+        "ERROR python/sglang/multimodal_gen/test/unit/test_distributed_device_binding.py",
+        "!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!",
+        "14 warnings, 1 error in 8.90s"
+      ],
+      "test_names": [
+        "test_distributed_init_binds_rank_before_creating_groups",
+        "test_gpu_worker_allows_device_modules_without_set_device"
+      ],
+      "test_paths": [
+        "python/sglang/multimodal_gen/test/unit/test_distributed_device_binding.py"
+      ]
+    }
+  ],
+  "remote": {
+    "host": "root@38.49.42.120",
+    "port": 54270
+  },
+  "schema_version": "0.1",
+  "selection_lock_sha256": "sha256:bcbc9038eb7facae3cdd5ea1278927227908e552f7eaadfe9b97ace920dcce76",
+  "started_at": "2026-09-02T14:43:35.473633+00:00",
+  "static_evidence_sha256": "sha256:400875ca67265d9feeade81cbb619964e31c9834dd86da89378f591c797ca514",
+  "test_plan_sha256": "sha256:8c1ea5cb3abf130dd41b7771097dc5c9f75c848be9f5ef523326619eb2a20077",
+  "test_timeout_seconds": 240
+}

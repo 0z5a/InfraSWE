@@ -1,0 +1,48 @@
+{
+  "evidence_sha256": "sha256:570820bff2bfbe8d1fe2fb1c83f3e80519964aaa072081301aad13c3960c8cbb",
+  "finished_at": "2026-09-02T14:57:18.519119+00:00",
+  "noconftest_projects": [
+    "sglang"
+  ],
+  "outcome_review_ci_fields_requested": false,
+  "protocol_id": "r14-exact-candidate-upstream-tests-v0.1",
+  "records": [
+    {
+      "case_id": "sglang-pr-33053",
+      "duration_seconds": 20.767490333877504,
+      "head_sha": "4d294b5d129ab4fb86f8afbc208ceeb031de9d82",
+      "output_sha256": "sha256:ab7060a784fd1fd7c09a25aa3d177134baaa45ae96d3e2caf8e8af18a2898bf6",
+      "output_tail": "\n==================================== ERRORS ====================================\n_ ERROR collecting sglang/multimodal_gen/test/unit/test_distributed_device_binding.py _\nImportError while importing test module '/workspace/r14-run-sglang/python/sglang/multimodal_gen/test/unit/test_distributed_device_binding.py'.\nHint: make sure your test modules/packages have valid Python names.\nTraceback:\n/venv/main/lib/python3.12/importlib/__init__.py:90: in import_module\n    return _bootstrap._gcd_import(name[level:], package, level)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\npython/sglang/multimodal_gen/test/unit/test_distributed_device_binding.py:9: in <module>\n    from sglang.multimodal_gen.runtime import platforms\npython/sglang/multimodal_gen/__init__.py:4: in <module>\n    from sglang.multimodal_gen.runtime.entrypoints.diffusion_generator import DiffGenerator\npython/sglang/multimodal_gen/runtime/entrypoints/diffusion_generator.py:22: in <module>\n    from sglang.multimodal_gen.runtime.entrypoints.utils import (\npython/sglang/multimodal_gen/runtime/entrypoints/utils.py:43: in <module>\n    from sglang.multimodal_gen.runtime.pipelines_core.schedule_batch import Req\npython/sglang/multimodal_gen/runtime/pipelines_core/__init__.py:12: in <module>\n    from sglang.multimodal_gen.registry import get_model_info\npython/sglang/multimodal_gen/registry.py:176: in <module>\n    from sglang.multimodal_gen.runtime.pipelines_core.composed_pipeline_base import (\npython/sglang/multimodal_gen/runtime/pipelines_core/composed_pipeline_base.py:40: in <module>\n    from sglang.multimodal_gen.runtime.pipelines_core.stages import (\npython/sglang/multimodal_gen/runtime/pipelines_core/stages/__init__.py:12: in <module>\n    from sglang.multimodal_gen.runtime.pipelines_core.stages.causal_denoising import (\npython/sglang/multimodal_gen/runtime/pipelines_core/stages/causal_denoising.py:21: in <module>\n    from sglang.multimodal_gen.runtime.pipelines_core.stages.denoising import DenoisingStage\npython/sglang/multimodal_gen/runtime/pipelines_core/stages/denoising.py:33: in <module>\n    from sglang.multimodal_gen.runtime.cache.cache_dit_integration import (\npython/sglang/multimodal_gen/runtime/cache/__init__.py:13: in <module>\n    from sglang.multimodal_gen.runtime.cache.cache_dit_integration import (\npython/sglang/multimodal_gen/runtime/cache/cache_dit_integration.py:24: in <module>\n    import cache_dit\nE   ModuleNotFoundError: No module named 'cache_dit'\n=============================== warnings summary ===============================\n../../venv/main/lib/python3.12/site-packages/torch/jit/_script.py:365: 14 warnings\n  /venv/main/lib/python3.12/site-packages/torch/jit/_script.py:365: DeprecationWarning: `torch.jit.script_method` is deprecated. Please switch to `torch.compile` or `torch.export`.\n    warnings.warn(\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n=========================== short test summary info ============================\nERROR python/sglang/multimodal_gen/test/unit/test_distributed_device_binding.py\n!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!\n!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!\n14 warnings, 1 error in 12.90s\nWelcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nHEAD is now at 4d294b5d12 Fix diffusion accelerator rank binding\n",
+      "ref": "refs/r14/pr-33053",
+      "remote_command": "cd /workspace/r14-run-sglang && git switch --detach refs/r14/pr-33053 >/dev/null && test \"$(git rev-parse HEAD)\" = 4d294b5d129ab4fb86f8afbc208ceeb031de9d82 && timeout 300s env PYTHONDONTWRITEBYTECODE=1 CUDA_VISIBLE_DEVICES=0 PYTHONPATH=/workspace/r14-shims:python:. /venv/main/bin/python -m pytest -q --tb=short --maxfail=1 --noconftest python/sglang/multimodal_gen/test/unit/test_distributed_device_binding.py -k 'test_distributed_init_binds_rank_before_creating_groups or test_gpu_worker_allows_device_modules_without_set_device'",
+      "returncode": 2,
+      "status": "completed",
+      "summary_lines": [
+        "==================================== ERRORS ====================================",
+        "_ ERROR collecting sglang/multimodal_gen/test/unit/test_distributed_device_binding.py _",
+        "ImportError while importing test module '/workspace/r14-run-sglang/python/sglang/multimodal_gen/test/unit/test_distributed_device_binding.py'.",
+        "E   ModuleNotFoundError: No module named 'cache_dit'",
+        "ERROR python/sglang/multimodal_gen/test/unit/test_distributed_device_binding.py",
+        "!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!",
+        "14 warnings, 1 error in 12.90s"
+      ],
+      "test_names": [
+        "test_distributed_init_binds_rank_before_creating_groups",
+        "test_gpu_worker_allows_device_modules_without_set_device"
+      ],
+      "test_paths": [
+        "python/sglang/multimodal_gen/test/unit/test_distributed_device_binding.py"
+      ]
+    }
+  ],
+  "remote": {
+    "host": "root@38.49.42.120",
+    "port": 54270
+  },
+  "schema_version": "0.1",
+  "selection_lock_sha256": "sha256:bcbc9038eb7facae3cdd5ea1278927227908e552f7eaadfe9b97ace920dcce76",
+  "started_at": "2026-09-02T14:56:57.749841+00:00",
+  "static_evidence_sha256": "sha256:400875ca67265d9feeade81cbb619964e31c9834dd86da89378f591c797ca514",
+  "test_plan_sha256": "sha256:8c1ea5cb3abf130dd41b7771097dc5c9f75c848be9f5ef523326619eb2a20077",
+  "test_timeout_seconds": 300
+}

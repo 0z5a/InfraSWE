@@ -1,0 +1,265 @@
+{
+  "environment": {
+    "cuda": "12.8",
+    "gpu_count": 2,
+    "gpu_names": [
+      "NVIDIA A100-SXM4-40GB",
+      "NVIDIA A100-SXM4-40GB"
+    ],
+    "hostname": "d76499a74273",
+    "python": "3.12.14",
+    "torch": "2.11.0+cu128"
+  },
+  "evidence_sha256": "sha256:964d4d8f6221211793fd82e11242ce514de03532cff74b1048074574c6270236",
+  "facts": {
+    "all_cross_gpu_peer_accessible": true,
+    "megatron_6200_candidate_max_abs": 0.0,
+    "megatron_6200_power_of_two_prescale_max_abs": 0.0,
+    "megatron_6200_world2_has_accuracy_gain": false,
+    "megatron_6955_eager_connect_succeeded": true,
+    "megatron_7000_fixed_shape_p2p_exact": true,
+    "sglang_33029_base_cardinality_mismatch_detected": true,
+    "sglang_33029_head_bulk_completed": true,
+    "torchtitan_3953_normalization_max_abs": 0.0,
+    "two_rank_nccl_smoke": true,
+    "verl_7107_all_boundaries_exact": true,
+    "vllm_50658_collectives_reduced": true,
+    "vllm_50658_projection_max_abs": 0.0,
+    "vllm_54619_flock_liveness": {
+      "closed_region_meets_orphan_condition": true,
+      "exclusive_lock_after_owner_close": true,
+      "exclusive_lock_while_owner_live": false,
+      "live_region_survives_reaper_condition": true
+    }
+  },
+  "finished_at": "2026-09-02T15:43:24.160439+00:00",
+  "outcome_review_ci_fields_requested": false,
+  "protocol_id": "r14-two-a100-communication-contract-probe-v0.1",
+  "ranks": [
+    {
+      "cuda_peer_access": [
+        true
+      ],
+      "device": "NVIDIA A100-SXM4-40GB",
+      "megatron_6200": {
+        "candidate_vs_oracle_max_abs": 0.0,
+        "legacy_vs_oracle_max_abs": 0.0,
+        "power_of_two_prescale_vs_postscale_max_abs": 0.0,
+        "rank": 0,
+        "world2_feature_has_accuracy_gain": false
+      },
+      "megatron_6955": {
+        "error": null,
+        "rank": 0,
+        "succeeded": true
+      },
+      "megatron_7000": {
+        "exact": true,
+        "rank": 0,
+        "shape": [
+          4,
+          3
+        ]
+      },
+      "nccl_smoke_sum": 3.0,
+      "rank": 0,
+      "sglang_33029": {
+        "base_counts_mismatch": true,
+        "base_in_loop_collective_counts": [
+          1,
+          3
+        ],
+        "head_bulk_collective_count": 3,
+        "head_progress": {
+          "r0": true,
+          "r1": true,
+          "r2": false
+        },
+        "rank": 0
+      },
+      "torchtitan_3953": {
+        "head_collective_count": 1,
+        "max_abs_error": 0.0,
+        "old_collective_count": 2,
+        "rank": 0
+      },
+      "verl_7107": {
+        "all_exact": true,
+        "cases": [
+          {
+            "bytes": 0,
+            "dtype": "torch.float32",
+            "exact": true,
+            "length": 0
+          },
+          {
+            "bytes": 4,
+            "dtype": "torch.float32",
+            "exact": true,
+            "length": 1
+          },
+          {
+            "bytes": 4096,
+            "dtype": "torch.float32",
+            "exact": true,
+            "length": 1024
+          },
+          {
+            "bytes": 4100,
+            "dtype": "torch.float32",
+            "exact": true,
+            "length": 1025
+          },
+          {
+            "bytes": 0,
+            "dtype": "torch.bfloat16",
+            "exact": true,
+            "length": 0
+          },
+          {
+            "bytes": 2,
+            "dtype": "torch.bfloat16",
+            "exact": true,
+            "length": 1
+          },
+          {
+            "bytes": 2048,
+            "dtype": "torch.bfloat16",
+            "exact": true,
+            "length": 1024
+          },
+          {
+            "bytes": 2050,
+            "dtype": "torch.bfloat16",
+            "exact": true,
+            "length": 1025
+          }
+        ],
+        "rank": 0
+      },
+      "vllm_50658": {
+        "head_collective_count": 1,
+        "head_payload_bytes_per_peer": 30,
+        "max_abs_error": 0.0,
+        "old_collective_count": 3,
+        "old_payload_bytes_per_peer": 72,
+        "rank": 0
+      }
+    },
+    {
+      "cuda_peer_access": [
+        true
+      ],
+      "device": "NVIDIA A100-SXM4-40GB",
+      "megatron_6200": {
+        "candidate_vs_oracle_max_abs": 0.0,
+        "legacy_vs_oracle_max_abs": 0.0,
+        "power_of_two_prescale_vs_postscale_max_abs": 0.0,
+        "rank": 1,
+        "world2_feature_has_accuracy_gain": false
+      },
+      "megatron_6955": {
+        "error": null,
+        "rank": 1,
+        "succeeded": true
+      },
+      "megatron_7000": {
+        "exact": true,
+        "rank": 1,
+        "shape": [
+          4,
+          3
+        ]
+      },
+      "nccl_smoke_sum": 3.0,
+      "rank": 1,
+      "sglang_33029": {
+        "base_counts_mismatch": true,
+        "base_in_loop_collective_counts": [
+          1,
+          3
+        ],
+        "head_bulk_collective_count": 3,
+        "head_progress": {
+          "r0": true,
+          "r1": true,
+          "r2": false
+        },
+        "rank": 1
+      },
+      "torchtitan_3953": {
+        "head_collective_count": 1,
+        "max_abs_error": 0.0,
+        "old_collective_count": 2,
+        "rank": 1
+      },
+      "verl_7107": {
+        "all_exact": true,
+        "cases": [
+          {
+            "bytes": 0,
+            "dtype": "torch.float32",
+            "exact": true,
+            "length": 0
+          },
+          {
+            "bytes": 4,
+            "dtype": "torch.float32",
+            "exact": true,
+            "length": 1
+          },
+          {
+            "bytes": 4096,
+            "dtype": "torch.float32",
+            "exact": true,
+            "length": 1024
+          },
+          {
+            "bytes": 4100,
+            "dtype": "torch.float32",
+            "exact": true,
+            "length": 1025
+          },
+          {
+            "bytes": 0,
+            "dtype": "torch.bfloat16",
+            "exact": true,
+            "length": 0
+          },
+          {
+            "bytes": 2,
+            "dtype": "torch.bfloat16",
+            "exact": true,
+            "length": 1
+          },
+          {
+            "bytes": 2048,
+            "dtype": "torch.bfloat16",
+            "exact": true,
+            "length": 1024
+          },
+          {
+            "bytes": 2050,
+            "dtype": "torch.bfloat16",
+            "exact": true,
+            "length": 1025
+          }
+        ],
+        "rank": 1
+      },
+      "vllm_50658": {
+        "head_collective_count": 1,
+        "head_payload_bytes_per_peer": 30,
+        "max_abs_error": 0.0,
+        "old_collective_count": 3,
+        "old_payload_bytes_per_peer": 72,
+        "rank": 1
+      }
+    }
+  ],
+  "schema_version": "0.1",
+  "selection_lock_sha256": "sha256:bcbc9038eb7facae3cdd5ea1278927227908e552f7eaadfe9b97ace920dcce76",
+  "source_bundle_sha256": "sha256:1efdbfc09c8ba05fa183c1e6e702ef423b30f54b6e18cba94abe8c87630cdcbd",
+  "started_at": "2026-09-02T15:43:14.706889+00:00",
+  "test_plan_sha256": "sha256:8c1ea5cb3abf130dd41b7771097dc5c9f75c848be9f5ef523326619eb2a20077"
+}

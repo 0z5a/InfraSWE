@@ -1,0 +1,51 @@
+{
+  "case_id": "torchtitan-pr-4051",
+  "environment": {
+    "cuda": "13.0",
+    "gpu_count": 2,
+    "hostname": "d76499a74273",
+    "python": "3.12.14",
+    "torch": "2.15.0.dev20260901+cu130"
+  },
+  "evidence_sha256": "sha256:d1c46a4de4a667096bf2a2f7db83fd5d625ca627624ebbbd817e947eadc17594",
+  "facts": {
+    "all_ranks_match_reference": true,
+    "all_ranks_used_two_all_to_all_calls": true
+  },
+  "generated_at": "2026-09-02T15:45:23.286723+00:00",
+  "head_sha": "f0ff6c6925b3c38e6bd007a7d89a4f61b529dcf5",
+  "limitation": "The candidate-owned test requires four GPUs and a 2x2 mesh. This exact-head probe preserves TP=2 and both Shard placements but collapses FSDP to size 1.",
+  "outcome_review_ci_fields_requested": false,
+  "protocol_id": "r14-torchtitan-4051-reduced-tp2-exact-head-v0.1",
+  "rows": [
+    {
+      "all_to_all_call_count": 2,
+      "mesh_shape": [
+        1,
+        2
+      ],
+      "momentum_max_abs": 0.0,
+      "parameter_max_abs": 0.0,
+      "placements": [
+        "Shard(0)",
+        "Shard(1)"
+      ],
+      "rank": 0
+    },
+    {
+      "all_to_all_call_count": 2,
+      "mesh_shape": [
+        1,
+        2
+      ],
+      "momentum_max_abs": 0.0,
+      "parameter_max_abs": 0.0,
+      "placements": [
+        "Shard(0)",
+        "Shard(1)"
+      ],
+      "rank": 1
+    }
+  ],
+  "schema_version": "0.1"
+}

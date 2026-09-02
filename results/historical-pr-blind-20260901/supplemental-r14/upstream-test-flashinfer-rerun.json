@@ -1,0 +1,130 @@
+{
+  "evidence_sha256": "sha256:f08a786bc850110fd2721ab00f5b73c5ed179d579c949b255db82fc111dab0e7",
+  "finished_at": "2026-09-02T15:01:23.427113+00:00",
+  "noconftest_projects": [],
+  "outcome_review_ci_fields_requested": false,
+  "protocol_id": "r14-exact-candidate-upstream-tests-v0.1",
+  "records": [
+    {
+      "case_id": "flashinfer-pr-4302",
+      "duration_seconds": 15.5938067920506,
+      "head_sha": "bb134557aa847b4f662f097eccbd94255a509267",
+      "output_sha256": "sha256:9bed8e0aff1d7eb311fae380f200e31ccc54cdb2df274e6695ae5cdcf56b9a0a",
+      "output_tail": "Connection closed by 38.49.42.120 port 54270\n",
+      "ref": "refs/r14/pr-4302",
+      "remote_command": "cd /workspace/r14-run-flashinfer && git switch --detach refs/r14/pr-4302 >/dev/null && test \"$(git rev-parse HEAD)\" = bb134557aa847b4f662f097eccbd94255a509267 && timeout 300s env PYTHONDONTWRITEBYTECODE=1 CUDA_VISIBLE_DEVICES=0 PYTHONPATH=. /venv/main/bin/python -m pytest -q --tb=short --maxfail=1 tests/moe/test_b12x_w4a16_ep.py tests/moe/test_unified_moe_b12x.py tests/trace/test_b12x_moe_trace.py -k 'test_b12x_does_not_support_unfinalized_output or test_b12x_nvfp4_does_not_support_expert_parallelism or test_b12x_pack_inputs_rejects_wrong_expert_dim or test_b12x_reference_applies_expert_map or test_b12x_w4a16_rejects_out_of_bounds_local_count or test_b12x_w4a16_rejects_out_of_range_expert_shard or test_b12x_w4a16_supports_expert_parallelism or test_ep_permutation_map_matches_non_ep_run or test_ep_rank_partials_sum_to_full_moe or test_ep_wrapper_cuda_graph_replays_changed_routes or test_ep_zero_partial_when_no_local_expert_routed or test_nvfp4_rejects_ep_counts or test_nvfp4_rejects_expert_map or test_prepare_ep_expert_map_accepts_linear_and_round_robin_placement or test_prepare_ep_expert_map_rejects_bad_tensor_forms or test_prepare_ep_expert_map_rejects_unsafe_values or test_w4a16_ep_partials_sum_to_full or test_w4a16_ep_rejects_bad_map_forms or test_w4a16_ep_rejects_wrong_length_map or test_w4a16_ep_requires_expert_map or test_wrapper_isolated_from_caller_map_mutation or test_wrapper_nvfp4_rejects_ep or test_wrapper_rejects_rebound_expert_map or test_wrapper_w4a16_ep_rejects_wrong_device_map or test_wrapper_w4a16_ep_requires_expert_map or test_wrapper_w4a16_ep_validates_map_contract'",
+      "returncode": 255,
+      "status": "completed",
+      "summary_lines": [],
+      "test_names": [
+        "test_b12x_does_not_support_unfinalized_output",
+        "test_b12x_nvfp4_does_not_support_expert_parallelism",
+        "test_b12x_pack_inputs_rejects_wrong_expert_dim",
+        "test_b12x_reference_applies_expert_map",
+        "test_b12x_w4a16_rejects_out_of_bounds_local_count",
+        "test_b12x_w4a16_rejects_out_of_range_expert_shard",
+        "test_b12x_w4a16_supports_expert_parallelism",
+        "test_ep_permutation_map_matches_non_ep_run",
+        "test_ep_rank_partials_sum_to_full_moe",
+        "test_ep_wrapper_cuda_graph_replays_changed_routes",
+        "test_ep_zero_partial_when_no_local_expert_routed",
+        "test_nvfp4_rejects_ep_counts",
+        "test_nvfp4_rejects_expert_map",
+        "test_prepare_ep_expert_map_accepts_linear_and_round_robin_placement",
+        "test_prepare_ep_expert_map_rejects_bad_tensor_forms",
+        "test_prepare_ep_expert_map_rejects_unsafe_values",
+        "test_w4a16_ep_partials_sum_to_full",
+        "test_w4a16_ep_rejects_bad_map_forms",
+        "test_w4a16_ep_rejects_wrong_length_map",
+        "test_w4a16_ep_requires_expert_map",
+        "test_wrapper_isolated_from_caller_map_mutation",
+        "test_wrapper_nvfp4_rejects_ep",
+        "test_wrapper_rejects_rebound_expert_map",
+        "test_wrapper_w4a16_ep_rejects_wrong_device_map",
+        "test_wrapper_w4a16_ep_requires_expert_map",
+        "test_wrapper_w4a16_ep_validates_map_contract"
+      ],
+      "test_paths": [
+        "tests/moe/test_b12x_w4a16_ep.py",
+        "tests/moe/test_unified_moe_b12x.py",
+        "tests/trace/test_b12x_moe_trace.py"
+      ]
+    },
+    {
+      "case_id": "flashinfer-pr-4139",
+      "duration_seconds": 9.057900208979845,
+      "head_sha": "b848e0ae5a679012e85649236984b3410487cbe0",
+      "output_sha256": "sha256:b4799959ddfd8433ff6000527a058c22058e90ec3deb8454aab2b68751086bb0",
+      "output_tail": "s                                                                        [100%]\n1 skipped, 7 deselected in 0.09s\nWelcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nPrevious HEAD position was c60aa11e fix(moe_ep): preserve singleton expert TMA modes\nHEAD is now at b848e0ae fix(moe_ep): drive NIXL dispatch/combine synchronously (async_finish=False + recv hook)\n",
+      "ref": "refs/r14/pr-4139",
+      "remote_command": "cd /workspace/r14-run-flashinfer && git switch --detach refs/r14/pr-4139 >/dev/null && test \"$(git rev-parse HEAD)\" = b848e0ae5a679012e85649236984b3410487cbe0 && timeout 300s env PYTHONDONTWRITEBYTECODE=1 CUDA_VISIBLE_DEVICES=0 PYTHONPATH=. /venv/main/bin/python -m pytest -q --tb=short --maxfail=1 tests/moe_ep/nixl_ep/test_fleet_mock.py -k test_user_stream_knob_accepted_but_not_redirected",
+      "returncode": 0,
+      "status": "completed",
+      "summary_lines": [
+        "1 skipped, 7 deselected in 0.09s"
+      ],
+      "test_names": [
+        "test_user_stream_knob_accepted_but_not_redirected"
+      ],
+      "test_paths": [
+        "tests/moe_ep/nixl_ep/test_fleet_mock.py"
+      ]
+    },
+    {
+      "case_id": "flashinfer-pr-4240",
+      "duration_seconds": 0.0,
+      "head_sha": "1e5ba0e2e94cd26b33ffe8f7cbe79934a10b2543",
+      "output_sha256": null,
+      "output_tail": "",
+      "ref": "refs/r14/pr-4240",
+      "returncode": null,
+      "status": "no-candidate-python-test-path",
+      "summary_lines": [],
+      "test_names": [],
+      "test_paths": []
+    },
+    {
+      "case_id": "flashinfer-pr-4296",
+      "duration_seconds": 8.70459087495692,
+      "head_sha": "c60aa11e17fffda1b8f4a767946f0c565a9c06d8",
+      "output_sha256": "sha256:bf109bff3d433f87ec932382496f70e7f64eb8c81db7307b07d782dfea20a97a",
+      "output_tail": "\n1 skipped in 0.10s\nWelcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nPrevious HEAD position was b848e0ae fix(moe_ep): drive NIXL dispatch/combine synchronously (async_finish=False + recv hook)\nHEAD is now at c60aa11e fix(moe_ep): preserve singleton expert TMA modes\n",
+      "ref": "refs/r14/pr-4296",
+      "remote_command": "cd /workspace/r14-run-flashinfer && git switch --detach refs/r14/pr-4296 >/dev/null && test \"$(git rev-parse HEAD)\" = c60aa11e17fffda1b8f4a767946f0c565a9c06d8 && timeout 300s env PYTHONDONTWRITEBYTECODE=1 CUDA_VISIBLE_DEVICES=0 PYTHONPATH=. /venv/main/bin/python -m pytest -q --tb=short --maxfail=1 tests/moe_ep/test_nvfp4_cutedsl_kernel_vs_reference.py -k test_nvfp4_kernel_matches_torch_reference",
+      "returncode": 5,
+      "status": "completed",
+      "summary_lines": [
+        "1 skipped in 0.10s"
+      ],
+      "test_names": [
+        "test_nvfp4_kernel_matches_torch_reference"
+      ],
+      "test_paths": [
+        "tests/moe_ep/test_nvfp4_cutedsl_kernel_vs_reference.py"
+      ]
+    },
+    {
+      "case_id": "flashinfer-pr-4174",
+      "duration_seconds": 0.0,
+      "head_sha": "639b87b5c6518f04cd61be7a24104ce2dc939541",
+      "output_sha256": null,
+      "output_tail": "",
+      "ref": "refs/r14/pr-4174",
+      "returncode": null,
+      "status": "no-candidate-python-test-path",
+      "summary_lines": [],
+      "test_names": [],
+      "test_paths": []
+    }
+  ],
+  "remote": {
+    "host": "root@38.49.42.120",
+    "port": 54270
+  },
+  "schema_version": "0.1",
+  "selection_lock_sha256": "sha256:bcbc9038eb7facae3cdd5ea1278927227908e552f7eaadfe9b97ace920dcce76",
+  "started_at": "2026-09-02T15:00:50.069532+00:00",
+  "static_evidence_sha256": "sha256:400875ca67265d9feeade81cbb619964e31c9834dd86da89378f591c797ca514",
+  "test_plan_sha256": "sha256:8c1ea5cb3abf130dd41b7771097dc5c9f75c848be9f5ef523326619eb2a20077",
+  "test_timeout_seconds": 300
+}

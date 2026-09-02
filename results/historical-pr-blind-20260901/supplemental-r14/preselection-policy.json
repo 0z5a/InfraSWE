@@ -1,0 +1,212 @@
+{
+  "blindness": {
+    "allowed_selection_fields": [
+      "number",
+      "title",
+      "createdAt",
+      "baseRefName",
+      "baseRefOid",
+      "headRefOid",
+      "changedFiles",
+      "additions",
+      "deletions",
+      "files.path",
+      "commits.first.commit.oid",
+      "commits.first.commit.parents.first.oid"
+    ],
+    "candidate_body_visible": false,
+    "ci_or_label_visible": false,
+    "diff_content_visible": false,
+    "review_or_comment_visible": false,
+    "state_or_merge_visible": false
+  },
+  "case_count": 30,
+  "communication_signal_policy": {
+    "path_terms": [
+      "distributed",
+      "communication",
+      "communicator",
+      "collective",
+      "all_reduce",
+      "all_gather",
+      "reduce_scatter",
+      "all_to_all",
+      "nccl",
+      "xccl",
+      "deepep",
+      "p2p",
+      "cuda_ipc",
+      "parallel_state",
+      "tensor_parallel",
+      "expert_parallel",
+      "context_parallel",
+      "pipeline_parallel",
+      "weight_transfer",
+      "weight_sync"
+    ],
+    "strong_terms": [
+      "all_reduce",
+      "all-reduce",
+      "allreduce",
+      "all_gather",
+      "all-gather",
+      "allgather",
+      "reduce_scatter",
+      "reduce-scatter",
+      "reducescatter",
+      "all_to_all",
+      "all-to-all",
+      "alltoall",
+      "broadcast",
+      "collective",
+      "communicator",
+      "communication",
+      "nccl",
+      "xccl",
+      "deepep",
+      "p2p",
+      "send/recv",
+      "cuda ipc",
+      "cuda_ipc",
+      "weight sync",
+      "weight transfer"
+    ],
+    "topology_terms": [
+      "tensor parallel",
+      "expert parallel",
+      "data parallel",
+      "context parallel",
+      "sequence parallel",
+      "pipeline parallel",
+      "distributed",
+      "sharding",
+      "overlap",
+      "remote",
+      "moe"
+    ],
+    "weights": {
+      "candidate_test_path": 1,
+      "communication_path": 4,
+      "strong_title": 5,
+      "topology_path": 2,
+      "topology_title": 3
+    }
+  },
+  "created_at_window": {
+    "end": "2026-08-31T23:59:59Z",
+    "per_project_recent_target": 1,
+    "prospective_check_cutoff": "2026-08-03T00:00:00Z",
+    "recent_shortfall_fallback": "fill from the mature ranking",
+    "start": "2025-01-01T00:00:00Z"
+  },
+  "domain": "communication",
+  "eligibility": {
+    "changed_files_max": 12,
+    "changed_files_min": 1,
+    "changed_lines_max": 1200,
+    "communication_score_min": 4,
+    "exclude_all_previously_scored_pr_identities": true,
+    "exclude_dependency_or_generated_only": true,
+    "exclude_docs_only": true,
+    "exclude_tests_only": true,
+    "require_complete_path_list": true,
+    "require_first_commit_parent": true,
+    "require_runtime_source_path": true
+  },
+  "frozen_at": "2026-09-02T13:31:40.544809+00:00",
+  "grouping_policy": {
+    "current_r13_case_count_remains": 29,
+    "finish_reveal_audit_and_iterate_before_next_round": true,
+    "future_rounds_are_not_preselected": true,
+    "new_round_size": 30
+  },
+  "machine_policy": {
+    "disposition_check_requires_prospective_eligibility": true,
+    "forced_polarization_used": false,
+    "policy_id": "communication-contract-disposition-split-v0.2-r14",
+    "technical_contract_and_disposition_are_separate": true,
+    "weighted_score_used": false
+  },
+  "policy_sha256": "sha256:6219a8b3e500fe2df7be506631b0f01e13bd0196bbe435a0a7fec8eb93178043",
+  "projects": {
+    "flashinfer": {
+      "count": 5,
+      "repository": "flashinfer-ai/flashinfer",
+      "source_prefixes": [
+        "flashinfer/",
+        "python/flashinfer/",
+        "include/",
+        "csrc/"
+      ]
+    },
+    "megatron": {
+      "count": 5,
+      "repository": "NVIDIA/Megatron-LM",
+      "source_prefixes": [
+        "megatron/core/"
+      ]
+    },
+    "sglang": {
+      "count": 5,
+      "repository": "sgl-project/sglang",
+      "source_prefixes": [
+        "python/sglang/",
+        "sgl-kernel/"
+      ]
+    },
+    "torchtitan": {
+      "count": 5,
+      "repository": "pytorch/torchtitan",
+      "source_prefixes": [
+        "torchtitan/"
+      ]
+    },
+    "verl": {
+      "count": 5,
+      "repository": "verl-project/verl",
+      "source_prefixes": [
+        "verl/"
+      ]
+    },
+    "vllm": {
+      "count": 5,
+      "repository": "vllm-project/vllm",
+      "source_prefixes": [
+        "vllm/",
+        "csrc/"
+      ]
+    }
+  },
+  "projects_in_order": [
+    "vllm",
+    "sglang",
+    "flashinfer",
+    "megatron",
+    "torchtitan",
+    "verl"
+  ],
+  "protocol_id": "communication-iterative-contract-v0.2-r14-30",
+  "risk_families_in_order": [
+    "collective-numerics",
+    "rank-topology-sharding",
+    "p2p-transfer",
+    "overlap-ordering",
+    "resource-lifecycle"
+  ],
+  "round": "R14",
+  "schema_version": "0.1",
+  "selection_algorithm": {
+    "family_diversity": "then greedily select the best unselected case from each risk family in order",
+    "fill": "fill remaining slots from the global deterministic ranking",
+    "per_project_count": 5,
+    "rank_key": [
+      "candidate-owned-test-first",
+      "communication-score-descending",
+      "created-at-descending",
+      "changed-files-ascending",
+      "changed-lines-ascending",
+      "pull-number-ascending"
+    ],
+    "recent_first": "select the best eligible recent case when one exists"
+  }
+}

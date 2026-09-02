@@ -1,0 +1,879 @@
+{
+  "cases": [
+    {
+      "base_sha": "21fa2c5a2a471b9c978a5a3b7208a4c7fe88cefa",
+      "case_id": "vllm-pr-54643",
+      "changed_paths": [
+        "tests/v1/kv_connector/unit/test_mooncake_store_scheduler.py",
+        "vllm/distributed/kv_transfer/kv_connector/v1/mooncake/store/scheduler.py"
+      ],
+      "claim": "MooncakeStore finish-time save completes for hybrid models without crashing, losing required save work, or double-finalizing transfer state.",
+      "closure": "a hybrid save that crashes or loses completion on base and completes exactly once on head",
+      "created_at": "2026-08-31T22:22:35+00:00",
+      "head_sha": "8ad6f351f3db95c1fc8007c35efc079e55e08361",
+      "matrix": [
+        "hybrid/non-hybrid",
+        "successful/failed save",
+        "finish once/repeated",
+        "empty/non-empty transferred blocks"
+      ],
+      "project": "vllm",
+      "pull_number": 54643,
+      "repository": "vllm-project/vllm",
+      "risk_family": "transport-lifecycle",
+      "runtime": "candidate-owned scheduler tests plus isolated exact base/head finish state machine",
+      "title": "[Bugfix][MooncakeStore] Fix finish-time save crash on hybrid models"
+    },
+    {
+      "base_sha": "e6b2a8ad5eb1757b211475cdd57fdf1f37e94331",
+      "case_id": "vllm-pr-50775",
+      "changed_paths": [
+        "tests/distributed/test_custom_all_reduce_unit.py",
+        "vllm/distributed/device_communicators/custom_all_reduce.py"
+      ],
+      "claim": "The skip-P2P-check mode validates every peer pair needed by the custom all-reduce topology rather than accepting after a partial check.",
+      "closure": "a non-first incompatible peer pair that base accepts and head rejects or disables custom all-reduce",
+      "created_at": "2026-08-02T21:34:56+00:00",
+      "head_sha": "eee28f8381e954e588539b53601aeaf3fd415ecb",
+      "matrix": [
+        "2/3/4 visible peers",
+        "first/middle/last incompatible pair",
+        "skip flag on/off",
+        "asymmetric peer capability"
+      ],
+      "project": "vllm",
+      "pull_number": 50775,
+      "repository": "vllm-project/vllm",
+      "risk_family": "rank-topology",
+      "runtime": "exact topology call trace and candidate-owned custom-all-reduce unit test; GPU peer access corroboration",
+      "title": "fix: Check all peers in _can_p2p when VLLM_SKIP_P2P_CHECK=1"
+    },
+    {
+      "base_sha": "9c110fa522f0bdd1ab3df34727b71ce2c9454d7d",
+      "case_id": "vllm-pr-50658",
+      "changed_paths": [
+        "benchmarks/kernels/benchmark_kimi_k3_sp_collectives.py",
+        "tests/models/kimi_k3/test_sequence_parallel.py",
+        "tests/models/test_dspark_mla.py",
+        "tests/v1/cudagraph/test_cudagraph_manager.py",
+        "vllm/models/kimi_k3/nvidia/model.py",
+        "vllm/v1/worker/gpu/cudagraph_utils.py",
+        "vllm/v1/worker/gpu/spec_decode/dflash/speculator.py",
+        "vllm/v1/worker/gpu/spec_decode/dspark/speculator.py"
+      ],
+      "claim": "Kimi-K3 DSpark auxiliary states are projected to the correct width before sequence-parallel all-gather while neighboring paths retain shape and values.",
+      "closure": "base/head shape distinction plus gathered auxiliary-state equality to an independent projection oracle",
+      "created_at": "2026-08-01T06:10:06+00:00",
+      "head_sha": "ac974678e117c4be93c456d3bc5e3ea7774e238f",
+      "matrix": [
+        "SP1/SP2",
+        "aux state present/absent",
+        "decode/prefill",
+        "CUDA graph eager/captured"
+      ],
+      "project": "vllm",
+      "pull_number": 50658,
+      "repository": "vllm-project/vllm",
+      "risk_family": "collective-shape-numerics",
+      "runtime": "exact shape/data-flow proof, candidate tests, and two-rank all-gather numeric oracle",
+      "title": "[Model][Kimi K3] Project DSpark aux states before SP all-gather"
+    },
+    {
+      "base_sha": "514c7314a06be9e43d00d3f126a5aaa54211274f",
+      "case_id": "vllm-pr-54619",
+      "changed_paths": [
+        "tests/v1/ec_connector/unit/cpu/test_ec_shared_region.py",
+        "tests/v1/kv_offload/cpu/test_shared_offload_region.py",
+        "vllm/distributed/ec_transfer/ec_connector/cpu/ec_shared_region.py",
+        "vllm/utils/shm_utils.py",
+        "vllm/v1/kv_offload/cpu/shared_offload_region.py"
+      ],
+      "claim": "Flock-based liveness reaps only orphaned shared-memory region files across EC transfer and KV offload owners.",
+      "closure": "orphan is reclaimed while a live locked region survives concurrent scans and closes exactly once",
+      "created_at": "2026-08-31T19:46:31+00:00",
+      "head_sha": "0dc1dd46e39013253cdfa152b260f1828e6410d7",
+      "matrix": [
+        "live/orphan/stale-lock file",
+        "normal/abrupt owner exit",
+        "two concurrent owners",
+        "repeat scan/close"
+      ],
+      "project": "vllm",
+      "pull_number": 54619,
+      "repository": "vllm-project/vllm",
+      "risk_family": "shared-memory-lifecycle",
+      "runtime": "candidate CPU tests plus multiprocess exact lifecycle probe",
+      "title": "[Bugfix] Reap orphaned /dev/shm region files via flock-based liveness"
+    },
+    {
+      "base_sha": "83ad767eed3be3ee7f2df63be693bfaca5c7c922",
+      "case_id": "vllm-pr-50754",
+      "changed_paths": [
+        "tests/v1/kv_connector/unit/test_nixl_push_connector.py",
+        "vllm/distributed/kv_transfer/kv_connector/v1/nixl/metadata.py",
+        "vllm/distributed/kv_transfer/kv_connector/v1/nixl/push_worker.py"
+      ],
+      "claim": "A failed NIXL write notifies the decode side so it stops waiting without falsely completing or leaking pending state.",
+      "closure": "injected post failure causes bounded decode termination and balanced cleanup instead of an indefinite wait",
+      "created_at": "2026-08-02T17:03:29+00:00",
+      "head_sha": "9fa8f9f6d142268657ea2c324c68946ea24cbef2",
+      "matrix": [
+        "post success/failure",
+        "single/multiple blocks",
+        "failure before/after partial post",
+        "retry/cancel/close"
+      ],
+      "project": "vllm",
+      "pull_number": 50754,
+      "repository": "vllm-project/vllm",
+      "risk_family": "p2p-progress",
+      "runtime": "exact metadata/worker state-machine trace and candidate unit tests",
+      "title": "[PD][NixlPush][Bugfix] Notify D of NIXL writes that failed to post so it stops waiting"
+    },
+    {
+      "base_sha": "c9eb475a88964c2fc0315cb8bf8efa87e4769677",
+      "case_id": "sglang-pr-37261",
+      "changed_paths": [
+        "python/sglang/kernels/ops/moe/ep_moe_kernels.py",
+        "python/sglang/srt/arg_groups/moe_hook.py",
+        "python/sglang/srt/environ.py",
+        "python/sglang/srt/layers/moe/moe_runner/deep_gemm.py",
+        "python/sglang/srt/layers/moe/token_dispatcher/deepep_v2.py",
+        "python/sglang/srt/model_executor/model_runner.py",
+        "python/sglang/srt/model_executor/model_runner_components/moe_ep_setup.py",
+        "python/sglang/srt/models/mimo_v2.py",
+        "test/registered/unit/server_args/test_server_args.py"
+      ],
+      "claim": "DeepEP-V2 expanded prefill dispatch routes expanded tokens and expert metadata consistently through supported MoE configurations.",
+      "closure": "token counts, expert ownership, permutation inversion, and outputs match an independent expanded-dispatch oracle",
+      "created_at": "2026-08-31T14:28:00+00:00",
+      "head_sha": "b5dee26a24b5b7ce833b544ba5a6a64412a40e9e",
+      "matrix": [
+        "expand on/off",
+        "prefill/decode",
+        "EP1/EP2",
+        "zero/uneven tokens",
+        "supported model hooks"
+      ],
+      "project": "sglang",
+      "pull_number": 37261,
+      "repository": "sgl-project/sglang",
+      "risk_family": "expert-parallel-dispatch",
+      "runtime": "exact configuration/call-shape matrix, candidate tests, and two-rank dispatch/combine oracle where backend permits",
+      "title": "feat(deepep_v2): expanded (do_expand=True) prefill dispatch for DeepEP-V2"
+    },
+    {
+      "base_sha": "bd47ec97ff7a2881f9bb0316a4a657000a50c020",
+      "case_id": "sglang-pr-33029",
+      "changed_paths": [
+        "python/sglang/srt/managers/scheduler.py",
+        "python/sglang/srt/mem_cache/hiradix_cache.py",
+        "test/registered/unit/mem_cache/test_hiradix_bulk_prefetch_progress.py"
+      ],
+      "claim": "HiCache prefetch progress no longer deadlocks at the tensor-parallel all-reduce and still publishes correct progress.",
+      "closure": "a frozen interleaving that times out on base completes on head with the expected progress on both ranks",
+      "created_at": "2026-07-31T06:42:23+00:00",
+      "head_sha": "54c6ee41fa786459f3c8b24c22429abae8ad808c",
+      "matrix": [
+        "TP1/TP2",
+        "empty/partial/full prefetch",
+        "one rank delayed",
+        "success/error/cancel"
+      ],
+      "project": "sglang",
+      "pull_number": 33029,
+      "repository": "sgl-project/sglang",
+      "risk_family": "collective-progress",
+      "runtime": "two-rank schedule trace with timeout, collective cardinality, and progress-value oracle",
+      "title": "[Fix] HiCache prefetch progress TP all_reduce deadlock"
+    },
+    {
+      "base_sha": "00a219f6c9e5b38ec7beddcfcb99266601182443",
+      "case_id": "sglang-pr-33220",
+      "changed_paths": [
+        "python/sglang/srt/distributed/parallel_state.py",
+        "python/sglang/srt/runtime_context.py",
+        "test/registered/unit/test_runtime_context.py"
+      ],
+      "claim": "A process-wide CUDA graph capture stream is safely reused without cross-instance capture conflicts or lifetime corruption and actually reduces memory.",
+      "closure": "repeated multi-context capture/replay is numerically stable, leak-free, and shows a measured non-regressing peak",
+      "created_at": "2026-08-01T21:06:06+00:00",
+      "head_sha": "9549cb3a62a92e22fab609ea41fe88516d5c3082",
+      "matrix": [
+        "one/two runtime contexts",
+        "sequential/nested capture",
+        "destroy/recreate",
+        "same/different device"
+      ],
+      "project": "sglang",
+      "pull_number": 33220,
+      "repository": "sgl-project/sglang",
+      "risk_family": "stream-lifecycle",
+      "runtime": "exact lifecycle probe plus paired A100 allocation and capture/replay comparison",
+      "title": "[CUDA Graph] Reduce memory by reusing a process-wide capture stream"
+    },
+    {
+      "base_sha": "546965fc72a73b147323fc839ad0aa955ef64aff",
+      "case_id": "sglang-pr-33228",
+      "changed_paths": [
+        "python/sglang/srt/eplb/expert_distribution.py",
+        "python/sglang/srt/layers/moe/fused_moe_triton/layer.py",
+        "python/sglang/srt/layers/moe/token_dispatcher/deepep.py",
+        "python/sglang/srt/layers/moe/token_dispatcher/moriep.py",
+        "python/sglang/srt/models/bailing_moe.py",
+        "python/sglang/srt/models/llada2.py",
+        "test/registered/unit/eplb/test_deepep_low_latency_recorder_shared_slots.py"
+      ],
+      "claim": "EPLB excludes fused shared slots from DeepEP expert counts without dropping routed experts or corrupting load records.",
+      "closure": "all routed experts appear exactly once and fused shared slots contribute zero to DeepEP counts",
+      "created_at": "2026-08-02T02:13:47+00:00",
+      "head_sha": "978767e67458e83fcce002d42d692393223b39ed",
+      "matrix": [
+        "shared fusion on/off",
+        "normal/low-latency DeepEP",
+        "zero/one/many shared slots",
+        "uneven rank ownership"
+      ],
+      "project": "sglang",
+      "pull_number": 33228,
+      "repository": "sgl-project/sglang",
+      "risk_family": "expert-parallel-counts",
+      "runtime": "exact count/slot mapping matrix and candidate recorder tests",
+      "title": "fix(eplb): exclude fused shared slots from DeepEP counts"
+    },
+    {
+      "base_sha": "fd28242b683f367dbee47736a361cc694906d067",
+      "case_id": "sglang-pr-33053",
+      "changed_paths": [
+        "python/sglang/multimodal_gen/runtime/distributed/parallel_state.py",
+        "python/sglang/multimodal_gen/runtime/managers/gpu_worker.py",
+        "python/sglang/multimodal_gen/test/unit/test_distributed_device_binding.py"
+      ],
+      "claim": "Each diffusion worker binds its accelerator before distributed initialization so process-group device ownership matches local rank.",
+      "closure": "set-device precedes process-group creation on every rank and the two-rank collective completes on distinct GPUs",
+      "created_at": "2026-07-31T09:49:10+00:00",
+      "head_sha": "4d294b5d129ab4fb86f8afbc208ceeb031de9d82",
+      "matrix": [
+        "rank0/rank1",
+        "prebound/unbound",
+        "valid/invalid local rank",
+        "initialization once/repeated"
+      ],
+      "project": "sglang",
+      "pull_number": 33053,
+      "repository": "sgl-project/sglang",
+      "risk_family": "device-rank-initialization",
+      "runtime": "candidate CPU call-order test plus two-rank NCCL initialization smoke",
+      "title": "[Diffusion] Bind accelerator before distributed initialization"
+    },
+    {
+      "base_sha": "f09227492c2654ede5315356fab58891adf70afa",
+      "case_id": "flashinfer-pr-4302",
+      "changed_paths": [
+        "flashinfer/fused_moe/cute_dsl/b12x_moe.py",
+        "flashinfer/fused_moe/cute_dsl/blackwell_sm12x/moe_dispatch.py",
+        "flashinfer/fused_moe/runners.py",
+        "flashinfer/trace/templates/moe.py",
+        "tests/moe/test_b12x_w4a16_ep.py",
+        "tests/moe/test_unified_moe_b12x.py",
+        "tests/trace/test_b12x_moe_trace.py"
+      ],
+      "claim": "The SM12x W4A16 fused-MoE expert-parallel path preserves token routing, output numerics, and trace behavior.",
+      "closure": "dispatch/combine ownership and fused output match the non-EP/reference oracle across the frozen routing matrix",
+      "created_at": "2026-07-31T20:42:09+00:00",
+      "head_sha": "bb134557aa847b4f662f097eccbd94255a509267",
+      "matrix": [
+        "EP1/EP2",
+        "balanced/uneven/zero-token expert",
+        "eager/trace",
+        "supported SM12x configuration"
+      ],
+      "project": "flashinfer",
+      "pull_number": 4302,
+      "repository": "flashinfer-ai/flashinfer",
+      "risk_family": "expert-parallel-kernel",
+      "runtime": "candidate kernel/reference tests; exact SM12x multi-rank execution is required for full closure",
+      "title": "feat(moe): expert parallelism for the SM12x W4A16 fused MoE"
+    },
+    {
+      "base_sha": "cea7f46ffc190cabf82c95a39cd0d2aa6c888c17",
+      "case_id": "flashinfer-pr-4139",
+      "changed_paths": [
+        "flashinfer/moe_ep/backends/split/comm/nixl_ep/handle.py",
+        "tests/moe_ep/nixl_ep/test_fleet_mock.py"
+      ],
+      "claim": "NIXL-EP combine avoids both named real-serving deadlocks without dropping tokens or violating handle ownership.",
+      "closure": "both base-distinguishing interleavings terminate with exact combined token ownership and balanced handle cleanup",
+      "created_at": "2026-07-24T19:56:31+00:00",
+      "head_sha": "b848e0ae5a679012e85649236984b3410487cbe0",
+      "matrix": [
+        "two named deadlock interleavings",
+        "empty/non-empty sender",
+        "delayed peer",
+        "failure/cancel/teardown"
+      ],
+      "project": "flashinfer",
+      "pull_number": 4139,
+      "repository": "flashinfer-ai/flashinfer",
+      "risk_family": "p2p-progress",
+      "runtime": "candidate fleet mock plus deterministic state-machine timeout and available two-rank NIXL execution",
+      "title": "fix(moe_ep): fix two NIXL-EP combine deadlocks under real serving load"
+    },
+    {
+      "base_sha": "ac76e1803d37973c4adefdde4c6d1cd5d8decde9",
+      "case_id": "flashinfer-pr-4240",
+      "changed_paths": [
+        "CLAUDE.md",
+        "docs/api/comm.rst",
+        "flashinfer/comm/mixed_comm.py",
+        "flashinfer/comm/ulysses.py",
+        "flashinfer/comm/ulysses_topology.py"
+      ],
+      "claim": "Ulysses and mixed communicators expose a coherent topology/API contract consistent with their executable implementation.",
+      "closure": "documented construction and rank mapping execute without stale names, missing exports, or topology disagreement",
+      "created_at": "2026-07-29T13:43:54+00:00",
+      "head_sha": "1e5ba0e2e94cd26b33ffe8f7cbe79934a10b2543",
+      "matrix": [
+        "Ulysses-only/mixed",
+        "world2/world4 topology model",
+        "valid/invalid group",
+        "construct/use/teardown"
+      ],
+      "project": "flashinfer",
+      "pull_number": 4240,
+      "repository": "flashinfer-ai/flashinfer",
+      "risk_family": "communicator-topology",
+      "runtime": "exact API/import/topology probe; multi-rank numeric smoke when hardware cardinality permits",
+      "title": "docs: improve Ulysses communicator and MoE EP docs"
+    },
+    {
+      "base_sha": "b1d95851675b8799d623df4d5a7d6eac3254b3ff",
+      "case_id": "flashinfer-pr-4296",
+      "changed_paths": [
+        "flashinfer/moe_ep/kernel_src/sm100/cutedsl_megamoe/shim/nvfp4.py",
+        "flashinfer/moe_ep/kernel_src/sm100/cutedsl_megamoe/src/moe_nvfp4_swapab/kernel_fc12.py",
+        "tests/moe_ep/test_nvfp4_cutedsl_kernel_vs_reference.py"
+      ],
+      "claim": "MoE-EP preserves valid singleton-expert TMA modes while retaining multi-expert correctness.",
+      "closure": "singleton and neighboring multi-expert outputs match the independent reference without invalid TMA configuration",
+      "created_at": "2026-07-31T11:17:04+00:00",
+      "head_sha": "c60aa11e17fffda1b8f4a767946f0c565a9c06d8",
+      "matrix": [
+        "one/two/many local experts",
+        "zero/nonzero tokens",
+        "swap-A/B modes",
+        "supported SM100 dtype/layout"
+      ],
+      "project": "flashinfer",
+      "pull_number": 4296,
+      "repository": "flashinfer-ai/flashinfer",
+      "risk_family": "expert-parallel-shape",
+      "runtime": "candidate kernel/reference matrix; exact SM100 execution required for full closure",
+      "title": "fix(moe_ep): preserve singleton expert TMA modes"
+    },
+    {
+      "base_sha": "4b969c9363e0d32a33f8fcccd9ef5a5fec51cd9f",
+      "case_id": "flashinfer-pr-4174",
+      "changed_paths": [
+        "flashinfer/fused_moe/core.py"
+      ],
+      "claim": "Disabling PDL on the FP4 MoE path prevents the named tensor-parallel deadlock without regressing output correctness or supported launches.",
+      "closure": "the base-distinguishing TP schedule completes on head and matches reference output while neighboring launches remain valid",
+      "created_at": "2026-07-27T08:27:13+00:00",
+      "head_sha": "639b87b5c6518f04cd61be7a24104ce2dc939541",
+      "matrix": [
+        "TP1/TP2",
+        "PDL requested/default",
+        "small/large token count",
+        "supported architecture"
+      ],
+      "project": "flashinfer",
+      "pull_number": 4174,
+      "repository": "flashinfer-ai/flashinfer",
+      "risk_family": "kernel-collective-progress",
+      "runtime": "exact launch-option proof plus timeout-protected multi-rank kernel/reference comparison",
+      "title": "fix: disable PDL for FP4 MoE kernel to prevent TP deadlock (#4172)"
+    },
+    {
+      "base_sha": "7b41c262336f7fcb1836d1a216da08459aa7667f",
+      "case_id": "megatron-pr-6955",
+      "changed_paths": [
+        "megatron/core/resharding/copy_services/nccl_copy_service.py",
+        "tests/unit_tests/resharding/test_copy_services.py"
+      ],
+      "claim": "Resharding initializes NCCL on otherwise idle ranks so copy-service operations have a complete participant set and terminate.",
+      "closure": "all required ranks initialize the same communicator and a formerly idle-rank transfer completes exactly once",
+      "created_at": "2026-08-28T18:23:15+00:00",
+      "head_sha": "38962d4b9832ea8a3cf18d3fe8ba5cff2694eb64",
+      "matrix": [
+        "active/idle source and destination ranks",
+        "2-rank reduced topology",
+        "initialization once/repeated",
+        "copy success/failure"
+      ],
+      "project": "megatron-core",
+      "pull_number": 6955,
+      "repository": "NVIDIA/Megatron-LM",
+      "risk_family": "communicator-initialization",
+      "runtime": "candidate copy-service tests plus two-rank initialization/copy state-machine smoke",
+      "title": "fix(resharding): initialize NCCL on idle ranks"
+    },
+    {
+      "base_sha": "42460a7af821366e7115a162cb4410106bea93f0",
+      "case_id": "megatron-pr-6200",
+      "changed_paths": [
+        "docs/api-guide/core/generalized_tensor_parallel.md",
+        "megatron/core/distributed/reduce_scatter_with_fp32_accumulation.py",
+        "megatron/core/tensor_parallel/generalized_tensor_parallelism.py",
+        "megatron/training/arguments.py",
+        "megatron/training/training.py",
+        "tests/unit_tests/distributed/test_reduce_scatter_with_fp32_accumulation.py",
+        "tests/unit_tests/generalized_tensor_parallel/test_gtp_grad_correctness.py"
+      ],
+      "claim": "GTP reduce-scatter with FP32 accumulation improves accumulation accuracy while preserving shards, dtype contract, and gradients.",
+      "closure": "each rank receives the correct shard and error versus FP32 reference is non-regressing across the frozen matrix",
+      "created_at": "2026-08-02T12:47:51+00:00",
+      "head_sha": "64661912b938b333a1a276e8dd5034f00b6257e9",
+      "matrix": [
+        "TP2",
+        "FP16/BF16 input",
+        "small/large reduction depth",
+        "feature on/off",
+        "uneven magnitude"
+      ],
+      "project": "megatron-core",
+      "pull_number": 6200,
+      "repository": "NVIDIA/Megatron-LM",
+      "risk_family": "collective-numerics",
+      "runtime": "candidate correctness tests plus two-rank comparison with independent FP32-accumulate and legacy oracles",
+      "title": "[feat] Add reduce-scatter-with-fp32-accumulation support for GTP"
+    },
+    {
+      "base_sha": "af6d4a985ba80de74cc9e76b2dacdd38353506fc",
+      "case_id": "megatron-pr-6963",
+      "changed_paths": [
+        "megatron/core/distributed/param_and_grad_buffer.py",
+        "megatron/core/optimizer/distrib_optimizer.py",
+        "megatron/core/optimizer/param_layout.py",
+        "megatron/core/transformer/moe/experts.py",
+        "tests/unit_tests/distributed/test_param_layout.py",
+        "tests/unit_tests/transformer/moe/test_grouped_mlp.py"
+      ],
+      "claim": "Fused expert parameter storage remains correctly owned and address-stable through DDP buffering and distributed optimizer layout.",
+      "closure": "fused weights retain intended aliasing, receive exact gradients, and update identically without stale storage",
+      "created_at": "2026-08-29T00:36:34+00:00",
+      "head_sha": "e4a8489163dfb47a026a49203071cd63c9a3e7e5",
+      "matrix": [
+        "fused/non-fused experts",
+        "DDP on/off",
+        "one/two ranks",
+        "step/checkpoint/reload"
+      ],
+      "project": "megatron-core",
+      "pull_number": 6963,
+      "repository": "NVIDIA/Megatron-LM",
+      "risk_family": "ddp-storage-ownership",
+      "runtime": "candidate layout/grouped-MLP tests plus two-rank storage/gradient/update oracle",
+      "title": "fix(moe): preserve fused expert weight storage through DDP"
+    },
+    {
+      "base_sha": "5e12dce0057bcffdcad9cf7720e75df7e8153a7d",
+      "case_id": "megatron-pr-7000",
+      "changed_paths": [
+        "megatron/core/model_parallel_config.py",
+        "megatron/core/pipeline_parallel/p2p_communication.py",
+        "megatron/core/pipeline_parallel/schedules.py",
+        "tests/unit_tests/models/test_hybrid_moe_model.py",
+        "tests/unit_tests/pipeline_parallel/test_pp_mhc_compatibility.py",
+        "tests/unit_tests/test_model_parallel_config.py"
+      ],
+      "claim": "Pipeline parallelism skips shape exchange only for truly fixed packed sequences and preserves matched send/receive tensor metadata.",
+      "closure": "fixed shapes remove only the redundant exchange; dynamic shapes still exchange and every peer agrees on payload metadata",
+      "created_at": "2026-08-31T21:25:16+00:00",
+      "head_sha": "486ddf0ad3da95b80960d600ac78b429db65b0e6",
+      "matrix": [
+        "fixed/dynamic packed shape",
+        "first/steady/last microbatch",
+        "PP2",
+        "MHC-compatible model path"
+      ],
+      "project": "megatron-core",
+      "pull_number": 7000,
+      "repository": "NVIDIA/Megatron-LM",
+      "risk_family": "pipeline-p2p-shape",
+      "runtime": "exact branch/call-count proof plus two-rank P2P send/receive numeric matrix",
+      "title": "[PP] Skip shape exchange for fixed packed sequences"
+    },
+    {
+      "base_sha": "db018b3b968db31751a51037678049a4b577478e",
+      "case_id": "megatron-pr-6973",
+      "changed_paths": [
+        "megatron/core/distributed/fsdp/src/megatron_fsdp/experimental/fully_shard.py",
+        "megatron/core/distributed/fsdp/src/megatron_fsdp/experimental/module.py",
+        "megatron/core/distributed/fsdp/src/megatron_fsdp/experimental/parameter_group.py",
+        "tests/unit_tests/distributed/mfsdp_v2/test_fully_shard.py"
+      ],
+      "claim": "MFSDP DP-outer gradient reduction overlaps on its own stream without racing gradient production, optimizer use, or teardown.",
+      "closure": "overlapped and eager gradients/updates match while trace proves required waits and actual overlap",
+      "created_at": "2026-08-29T11:18:50+00:00",
+      "head_sha": "2682254a3aca62a637c8a85fd8754e0a1653da29",
+      "matrix": [
+        "one/multiple parameter groups",
+        "deferred/eager",
+        "microbatch accumulation",
+        "exception/normal teardown"
+      ],
+      "project": "megatron-core",
+      "pull_number": 6973,
+      "repository": "NVIDIA/Megatron-LM",
+      "risk_family": "overlap-ordering",
+      "runtime": "candidate tests plus two-rank event/stream trace and eager-equivalence gradient/update oracle",
+      "title": "MFSDP v2: overlap the DP-outer gradient reduction on its own stream"
+    },
+    {
+      "base_sha": "5059f32c58deb4b8463e8ff74a139acb8e9a8ce4",
+      "case_id": "torchtitan-pr-3953",
+      "changed_paths": [
+        "torchtitan/experiments/graph_trainer/configs.py",
+        "torchtitan/experiments/graph_trainer/grad_chain_pass.py",
+        "torchtitan/experiments/graph_trainer/passes.py",
+        "torchtitan/experiments/graph_trainer/tests/test_numerics.py",
+        "torchtitan/experiments/graph_trainer/tests/test_passes.py"
+      ],
+      "claim": "Chunked graph-trainer gradient collectives use one consistent normalization and remain numerically equivalent to the unchunked reference.",
+      "closure": "every parameter gradient and one-step update matches the unchunked normalized reference",
+      "created_at": "2026-07-21T16:57:40+00:00",
+      "head_sha": "065e528f301313a7f4401b737ebac4e659d07f82",
+      "matrix": [
+        "one/multiple chunks",
+        "partial final chunk",
+        "one/two ranks",
+        "replicate/shard",
+        "accumulation on/off"
+      ],
+      "project": "torchtitan",
+      "pull_number": 3953,
+      "repository": "pytorch/torchtitan",
+      "risk_family": "collective-numerics",
+      "runtime": "candidate numerics/pass tests plus two-rank independent gradient oracle",
+      "title": "graph_trainer: unify chunked grad collective normalization"
+    },
+    {
+      "base_sha": "93f15a54edee5529731d498c7f1b1035d47e8abc",
+      "case_id": "torchtitan-pr-4051",
+      "changed_paths": [
+        "tests/unit_tests/test_distributed_muon.py",
+        "torchtitan/components/distributed_optimizers/muon.py"
+      ],
+      "claim": "DistributedMuon supports TP-sharded matrices with correct ownership, statistics, communication, and optimizer updates.",
+      "closure": "gathered TP update/state matches the reference and no rank silently omits or duplicates a shard",
+      "created_at": "2026-08-01T19:51:01+00:00",
+      "head_sha": "f0ff6c6925b3c38e6bd007a7d89a4f61b529dcf5",
+      "matrix": [
+        "replicated/row/column shard",
+        "TP2",
+        "matrix/vector parameter",
+        "checkpoint/resume"
+      ],
+      "project": "torchtitan",
+      "pull_number": 4051,
+      "repository": "pytorch/torchtitan",
+      "risk_family": "optimizer-sharding",
+      "runtime": "candidate tests plus two-rank update and state-shard comparison with a gathered single-rank oracle",
+      "title": "Support TP-sharded matrices in DistributedMuon"
+    },
+    {
+      "base_sha": "5eda983306572a8a9f02ba9fd43bddc598afa459",
+      "case_id": "torchtitan-pr-3955",
+      "changed_paths": [
+        ".github/workflows/integration_test_8gpu_graph_trainer_h100.yaml",
+        "tests/unit_tests/test_minimal_async_ep_kernels.py",
+        "torchtitan/distributed/minimal_async_ep/api.py",
+        "torchtitan/experiments/graph_trainer/README.md",
+        "torchtitan/experiments/graph_trainer/common_utils.py",
+        "torchtitan/experiments/graph_trainer/ep_eager_chunk.py",
+        "torchtitan/experiments/graph_trainer/ep_overlap_pass.py",
+        "torchtitan/experiments/graph_trainer/tests/test_passes.py",
+        "torchtitan/models/common/token_dispatcher.py"
+      ],
+      "claim": "MinimalAsyncEP eager overlap preserves dispatch/combine ordering and numerics while creating real communication/compute overlap.",
+      "closure": "outputs/gradients match non-overlap, no schedule deadlocks, and trace contains an actual overlap interval",
+      "created_at": "2026-07-21T16:57:46+00:00",
+      "head_sha": "a82152e081c3a1ce4710692addca40b96351a358",
+      "matrix": [
+        "EP2",
+        "zero/uneven tokens",
+        "one/multiple chunks",
+        "eager-overlap on/off",
+        "delayed peer"
+      ],
+      "project": "torchtitan",
+      "pull_number": 3955,
+      "repository": "pytorch/torchtitan",
+      "risk_family": "expert-parallel-overlap",
+      "runtime": "candidate tests plus timeout-protected two-rank event trace and non-overlap numeric oracle",
+      "title": "minimal_async_ep: enable eager EP overlap"
+    },
+    {
+      "base_sha": "4bed50210be13b142618b829572265093c8dd383",
+      "case_id": "torchtitan-pr-4018",
+      "changed_paths": [
+        "run_train.sh",
+        "tests/unit_tests/test_distributed_utils.py",
+        "torchtitan/distributed/utils.py"
+      ],
+      "claim": "Fake process groups simulate arbitrary ranks with group-correct rank/world semantics rather than leaking the host process rank.",
+      "closure": "each simulated rank observes the expected global/group rank and collective shape while invalid configurations fail closed",
+      "created_at": "2026-07-29T20:06:38+00:00",
+      "head_sha": "f738ba28b0086f69cdc2f541367f7e637cc0ebd0",
+      "matrix": [
+        "world1/2/4",
+        "every simulated rank",
+        "subgroup/non-member",
+        "invalid rank",
+        "nested fake group"
+      ],
+      "project": "torchtitan",
+      "pull_number": 4018,
+      "repository": "pytorch/torchtitan",
+      "risk_family": "rank-topology-testability",
+      "runtime": "candidate CPU tests and exact fake-group operation matrix",
+      "title": "Allow fake process groups to simulate any rank"
+    },
+    {
+      "base_sha": "363709fdab1910b487131925c6256d58f57a4c37",
+      "case_id": "torchtitan-pr-3980",
+      "changed_paths": [
+        "tests/unit_tests/test_context_parallel.py",
+        "torchtitan/distributed/context_parallel.py",
+        "torchtitan/experiments/rl/actors/generator.py",
+        "torchtitan/experiments/rl/actors/trainer.py",
+        "torchtitan/experiments/rl/controller.py",
+        "torchtitan/experiments/rl/examples/alphabet_sort/config_registry.py",
+        "torchtitan/experiments/rl/tests/integration_tests.py",
+        "torchtitan/experiments/rl/tests/test_trainer.py"
+      ],
+      "claim": "The RL trainer/generator supports pipeline and context parallelism without mismatched layouts, gradients, or controller progress.",
+      "closure": "supported topology completes a train/generate step with matched layouts and reference-equivalent loss/gradients",
+      "created_at": "2026-07-24T17:47:55+00:00",
+      "head_sha": "e080230f0e6197345893dd5fc17d5d209eefc9a6",
+      "matrix": [
+        "PP1/2",
+        "CP1/2",
+        "PP2+CP1 reduced hardware case",
+        "train/generate",
+        "odd/padded sequence"
+      ],
+      "project": "torchtitan",
+      "pull_number": 3980,
+      "repository": "pytorch/torchtitan",
+      "risk_family": "rl-parallel-topology",
+      "runtime": "candidate unit/integration tests plus available two-rank PP or CP numeric/progress oracle",
+      "title": "[WIP][rl] Support pipeline and context parallelism in trainer"
+    },
+    {
+      "base_sha": "bd6f5645023a774e75b3ea1ed63f652feb922ace",
+      "case_id": "verl-pr-7591",
+      "changed_paths": [
+        "tests/utils/test_bucketed_weight_transfer.py",
+        "verl/trainer/config/_generated_ppo_megatron_trainer.yaml",
+        "verl/trainer/config/_generated_ppo_torchtitan_trainer.yaml",
+        "verl/trainer/config/_generated_ppo_trainer.yaml",
+        "verl/trainer/config/_generated_ppo_veomni_trainer.yaml",
+        "verl/trainer/config/rollout/rollout.yaml",
+        "verl/workers/config/rollout.py",
+        "verl/workers/rollout/vllm_rollout/bucketed_weight_transfer.py",
+        "verl/workers/rollout/vllm_rollout/utils.py",
+        "verl/workers/rollout/vllm_rollout/vllm_rollout.py"
+      ],
+      "claim": "Bucketed weight transfer overlaps receiver processing without consuming incomplete buckets, reordering parameters, or leaking work.",
+      "closure": "overlap and serial paths produce identical weights/output; trace proves receiver waits per bucket and overlaps later work",
+      "created_at": "2026-08-28T05:07:10+00:00",
+      "head_sha": "f0479b98f27e249737cf7a2c10fc3d3cae17eb32",
+      "matrix": [
+        "one/multiple buckets",
+        "slow sender/receiver",
+        "partial final bucket",
+        "failure/cancel/repeat sync"
+      ],
+      "project": "verl",
+      "pull_number": 7591,
+      "repository": "verl-project/verl",
+      "risk_family": "weight-transfer-overlap",
+      "runtime": "candidate tests plus two-rank bucket/event trace and final-weight/forward oracle",
+      "title": "[BREAKING][perf] feat: overlap bucketed weight transfer with receiver-side processing"
+    },
+    {
+      "base_sha": "a07d3e32d2b40ec35e9514ebebd7361db4d6f554",
+      "case_id": "verl-pr-7107",
+      "changed_paths": [
+        "verl/checkpoint_engine/nccl_checkpoint_engine.py"
+      ],
+      "claim": "NCCL checkpoint broadcast uses a bucket size that is valid for every payload boundary without truncation, overrun, or rank disagreement.",
+      "closure": "all boundary payloads arrive exactly on every rank with identical collective counts and no hang",
+      "created_at": "2026-07-21T15:47:32+00:00",
+      "head_sha": "0e746fa1a04de720a0b3f8848adcbe57d8c9ab50",
+      "matrix": [
+        "0/1/exact-boundary/boundary+1 elements",
+        "two ranks",
+        "multiple dtype sizes",
+        "single/repeated load"
+      ],
+      "project": "verl",
+      "pull_number": 7107,
+      "repository": "verl-project/verl",
+      "risk_family": "collective-shape",
+      "runtime": "two-rank exact base/head checkpoint broadcast against a byte-for-byte payload oracle",
+      "title": "[ckpt]: nccl broadcast bucket size fix"
+    },
+    {
+      "base_sha": "220e9039902c6db56860e2afd659803dc34ec005",
+      "case_id": "verl-pr-7045",
+      "changed_paths": [
+        "tests/checkpoint_engine/test_group_init_timeout_on_cpu.py",
+        "verl/checkpoint_engine/_group_init.py",
+        "verl/checkpoint_engine/base.py",
+        "verl/checkpoint_engine/nccl_checkpoint_engine.py"
+      ],
+      "claim": "The first NCCL checkpoint group initialization fails fast when a participant hangs and cleans up without poisoning retry.",
+      "closure": "hung initialization returns a bounded diagnostic on all live owners and a later healthy initialization succeeds",
+      "created_at": "2026-07-15T05:10:02+00:00",
+      "head_sha": "0de5324db2fc306e148672b1d73a5af7d9e095a6",
+      "matrix": [
+        "all ranks ready/one delayed/one absent",
+        "timeout boundary",
+        "first attempt/retry",
+        "CPU orchestration/NCCL"
+      ],
+      "project": "verl",
+      "pull_number": 7045,
+      "repository": "verl-project/verl",
+      "risk_family": "communicator-progress",
+      "runtime": "candidate timeout test plus two-rank injected-delay initialization/retry probe",
+      "title": "[checkpoint_engine] fail fast on hung first NCCL group init (#6967)"
+    },
+    {
+      "base_sha": "f483b0710c235f8e561eb0ca823fcafdcd4d31de",
+      "case_id": "verl-pr-7161",
+      "changed_paths": [
+        "tests/checkpoint_engine/test_correctness_on_npu.py",
+        "tests/checkpoint_engine/test_utils.py",
+        "tests/models/test_engine.py",
+        "tests/special_e2e/run_fully_async_policy.sh",
+        "tests/utils/test_rollout_trace_on_cpu.py",
+        "tests/workers/rollout/test_vllm_moe_param_converter_on_cpu.py",
+        "tests/workers/test_engine_return_model_output_on_cpu.py",
+        "verl/workers/engine/fsdp/transformer_impl.py",
+        "verl/workers/engine/fsdp/utils.py",
+        "verl/workers/rollout/vllm_rollout/vllm_rollout.py"
+      ],
+      "claim": "Moving unfuse_moe_params into the FSDP backend preserves the training-to-rollout parameter conversion and backend ownership contract.",
+      "closure": "rollout receives every expected unfused parameter exactly once and repeat conversion is idempotent without changing neighboring backends",
+      "created_at": "2026-07-27T11:13:25+00:00",
+      "head_sha": "7bde51d94e4b90ba22c7339e56f062e2b2a03100",
+      "matrix": [
+        "fused/unfused MoE",
+        "FSDP supported backend",
+        "single/repeated sync",
+        "failure rollback",
+        "neighbor backend"
+      ],
+      "project": "verl",
+      "pull_number": 7161,
+      "repository": "verl-project/verl",
+      "risk_family": "weight-conversion-ownership",
+      "runtime": "candidate CPU conversion tests plus exact parameter-key/shape/value round trip",
+      "title": "[fsdp] refactor: move unfuse_moe_params to FSDP backend"
+    },
+    {
+      "base_sha": "549e5bfbf1e26aaf84811f086aa6f02d15b781e6",
+      "case_id": "verl-pr-7589",
+      "changed_paths": [
+        "tests/utils/test_bucketed_weight_transfer.py",
+        "verl/trainer/config/_generated_ppo_megatron_trainer.yaml",
+        "verl/trainer/config/_generated_ppo_torchtitan_trainer.yaml",
+        "verl/trainer/config/_generated_ppo_trainer.yaml",
+        "verl/trainer/config/_generated_ppo_veomni_trainer.yaml",
+        "verl/trainer/config/rollout/rollout.yaml",
+        "verl/workers/config/rollout.py",
+        "verl/workers/rollout/vllm_rollout/bucketed_weight_transfer.py",
+        "verl/workers/rollout/vllm_rollout/utils.py",
+        "verl/workers/rollout/vllm_rollout/vllm_rollout.py"
+      ],
+      "claim": "The rollout/vLLM bucketed weight-transfer overlap preserves receiver processing order, final weights, and cleanup across the full integration path.",
+      "closure": "integration and serial paths are value-identical, per-bucket readiness is respected, and #7589/#7591 differences are explicitly bounded",
+      "created_at": "2026-08-28T04:48:07+00:00",
+      "head_sha": "658333943d7c83213db818bf0ab668f43d938a94",
+      "matrix": [
+        "one/multiple buckets",
+        "slow sender/receiver",
+        "partial final bucket",
+        "failure/cancel/repeat sync"
+      ],
+      "project": "verl",
+      "pull_number": 7589,
+      "repository": "verl-project/verl",
+      "risk_family": "weight-transfer-overlap",
+      "runtime": "candidate tests plus two-rank integration trace and final-weight/forward oracle; compare directly with paired case #7591",
+      "title": "[rollout, vllm] feat: overlap bucketed weight transfer with receiver-side processing"
+    }
+  ],
+  "ci_or_label_requested": false,
+  "cross_case_controls": [
+    "No synthetic counterexample can block unless production reachability is demonstrated.",
+    "A timeout must have bounded rank diagnostics and a healthy control before it proves deadlock.",
+    "Collective optimization cannot compensate for wrong values, rank ownership, shape, order, or lifetime.",
+    "The paired verl #7589/#7591 cases use the same matrix and must explain any differing result.",
+    "Candidate body is outcome-free evidence but is stored and weighted separately from evaluator execution."
+  ],
+  "disposition_policy": {
+    "accept": "title-scoped production contract is demonstrated with sufficient exact evidence and no reachable blocker",
+    "check": "only a prospectively eligible recent case with one bounded closure item; never a mature-history default",
+    "forced_polarization_used": false,
+    "prospective_created_at_cutoff": "2026-08-03T00:00:00Z",
+    "reject": "reachable semantic/progress/safety failure, design-scale remediation, or mature disposition prediction lacking accept evidence",
+    "unresolved": "required backend, architecture, topology, or exact evidence is unavailable; never counted as candidate failure",
+    "weighted_score_used": false
+  },
+  "domain_amendment_sha256": "sha256:9b195c15c73bb3953b53def9d063069f2fcb4cccca7e49d78aec9c3ec5cff696",
+  "evaluation_layers": {
+    "disposition_prediction": [
+      "accept",
+      "check",
+      "reject",
+      "unresolved"
+    ],
+    "governance_gap_recorded_separately": true,
+    "technical_bounded_gap_does_not_automatically_map_to_disposition_check": true,
+    "technical_contract": [
+      "pass",
+      "bounded-gap",
+      "fail",
+      "unresolved"
+    ]
+  },
+  "evidence_tiers": [
+    "exact candidate-owned tests",
+    "exact isolated base/head contract probe",
+    "two-A100 multi-rank numeric/progress/lifecycle probe",
+    "candidate-authored body evidence projected only after this plan is frozen",
+    "full model/backend E2E where hardware and dependencies permit"
+  ],
+  "frozen_at": "2026-09-02T13:44:44.425711+00:00",
+  "frozen_before_candidate_body_access": true,
+  "frozen_before_source_diff_content_access": true,
+  "machine_policy_id": "communication-contract-disposition-split-v0.2-r14",
+  "merge_outcome_or_state_requested": false,
+  "ordered_reachability_gate": [
+    "configuration is legal and title-scoped",
+    "production call site reaches the alleged behavior",
+    "rank/group/shape/stream/lifetime invariant is violated or satisfied",
+    "exact counterexample or independent oracle distinguishes base and head",
+    "remediation remains bounded to the candidate direction"
+  ],
+  "protocol_id": "communication-iterative-contract-v0.2-r14-30",
+  "review_or_comment_requested": false,
+  "schema_version": "0.1",
+  "selection_lock_sha256": "sha256:bcbc9038eb7facae3cdd5ea1278927227908e552f7eaadfe9b97ace920dcce76",
+  "test_plan_sha256": "sha256:8c1ea5cb3abf130dd41b7771097dc5c9f75c848be9f5ef523326619eb2a20077"
+}

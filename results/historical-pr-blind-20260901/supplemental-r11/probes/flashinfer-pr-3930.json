@@ -1,0 +1,96 @@
+{
+  "base_sha": "1aca0f887b65f2ba2bc5e9e9d35ff0bd078da76d",
+  "case_id": "flashinfer-pr-3930",
+  "environment": {
+    "cuda_dot_product": 32.0,
+    "gpu_count": 2,
+    "gpu_names": [
+      "NVIDIA A100-SXM4-40GB",
+      "NVIDIA A100-SXM4-40GB"
+    ],
+    "nvcc": "nvcc: NVIDIA (R) Cuda compiler driver\nCopyright (c) 2005-2025 NVIDIA Corporation\nBuilt on Fri_Feb_21_20:23:50_PST_2025\nCuda compilation tools, release 12.8, V12.8.93\nBuild cuda_12.8.r12.8/compiler.35583870_0\n",
+    "platform": "Linux-6.8.0-138-generic-x86_64-with-glibc2.39",
+    "python": "3.12.14 | packaged by conda-forge | (main, Aug 21 2026, 22:48:28) [GCC 14.4.0]",
+    "torch": "2.11.0+cu128",
+    "torch_cuda_available": true
+  },
+  "environment_sha256": "sha256:4f544cefe550a17a058d6ed6870b655d1b2ca9551f32827565a26139e6c53e7b",
+  "evidence_sha256": "sha256:46a5b37800ab11bf4f4432efd9fa401f741e06320b98ef2b78d2b3f54c89a764",
+  "facts": {
+    "changed_direct_test": false,
+    "head_exact_match_contract_satisfied": false,
+    "head_false_positive_lookalike_families": [
+      "evil_dot_before_real",
+      "nested_so_before_real"
+    ],
+    "head_rejects_libcudart_stub": true,
+    "path_order_matrix": {
+      "base": {
+        "absent": {
+          "error": null,
+          "result": null
+        },
+        "canonical_version": {
+          "error": null,
+          "result": "/x/libcudart.so.13.1"
+        },
+        "evil_dot_before_real": {
+          "error": null,
+          "result": "/x/libcudart.evil.so"
+        },
+        "hash_name": {
+          "error": null,
+          "result": "/x/libcudart-abc123.so.12"
+        },
+        "nested_so_before_real": {
+          "error": null,
+          "result": "/x/libcudart.so.stub.so"
+        },
+        "stub_before_real": {
+          "error": null,
+          "result": "/x/libcudart_stub.so"
+        }
+      },
+      "head": {
+        "absent": {
+          "error": null,
+          "result": null
+        },
+        "canonical_version": {
+          "error": null,
+          "result": "/x/libcudart.so.13.1"
+        },
+        "evil_dot_before_real": {
+          "error": null,
+          "result": "/x/libcudart.evil.so"
+        },
+        "hash_name": {
+          "error": null,
+          "result": "/x/libcudart-abc123.so.12"
+        },
+        "nested_so_before_real": {
+          "error": null,
+          "result": "/x/libcudart.so.stub.so"
+        },
+        "stub_before_real": {
+          "error": null,
+          "result": "/x/libcudart.so.13"
+        }
+      }
+    }
+  },
+  "failure_codes": [],
+  "finished_at": "2026-09-02T09:04:47.987760+00:00",
+  "head_sha": "e855cc25993d11d4707678d68fbde108d0578bef",
+  "probe_status": "pass",
+  "protocol_id": "historical-pr-blind-repairability-v0.1-r11-20",
+  "schema_version": "0.1",
+  "selection_lock_sha256": "sha256:90a16796bc3816ac1283c400f3c0d02a796b936dd2a138e5a73f9648e3d92750",
+  "source_bundle_sha256": "sha256:e25489c5cdb780c07083e041f44b4b07b6cdc0f285c6beb0f1f0708cf110d9a2",
+  "source_digests": {
+    "base:flashinfer/comm/cuda_ipc.py": "sha256:01f38a73c118efe82a8d6df969ec8a65512a22cef2d3a329f4b43a375b37955e",
+    "head:flashinfer/comm/cuda_ipc.py": "sha256:3cd0045a708d58dcfd03973d553947d7fa470bdda1889d54bdcd4fe8a010cd2b"
+  },
+  "started_at": "2026-09-02T09:04:47.960037+00:00",
+  "test_plan_sha256": "sha256:8f5d306954fe6acac7c650dda397c4469f93e6ec6b467393738e0aa778f3bfb8"
+}

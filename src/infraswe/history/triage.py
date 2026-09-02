@@ -3,14 +3,14 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import Literal
 
-TriageDecision = Literal["accept_with_scope", "revise", "reject", "unresolved"]
+TriageDecision = Literal["accept_with_scope", "check", "reject", "unresolved"]
 RemediationScope = Literal["none", "single-site", "bounded-multi-site", "cross-cutting", "unknown"]
 ClosureTest = Literal["existing", "frozen-probe", "missing"]
 
 
 @dataclass(frozen=True, slots=True)
 class CaseContractTriageEvidence:
-    """Outcome-free evidence used to separate revise from reject.
+    """Outcome-free evidence used to separate check from reject.
 
     The classifier is intentionally downstream of a case-specific contract. It does not infer
     mergeability from PR metadata and it never consumes review, CI, state, or merge outcomes.
@@ -43,7 +43,7 @@ class CaseContractTriageResult:
 def classify_case_contract(evidence: CaseContractTriageEvidence) -> CaseContractTriageResult:
     """Classify a frozen exact-contract result without outcome or reviewer leakage.
 
-    ``revise`` is a narrow repairability claim: the patch must demonstrate its primary direction,
+    ``check`` is a narrow repairability claim: the patch must demonstrate its primary direction,
     leave no regression or integrity hazard, have a bounded remediation surface, and have an
     executable closure test. A semantic no-op, false primary claim, broad residual invariant, or
     design-level replacement is ``reject``. Missing execution evidence is ``unresolved``.
@@ -84,6 +84,6 @@ def classify_case_contract(evidence: CaseContractTriageEvidence) -> CaseContract
         )
 
     return CaseContractTriageResult(
-        decision="revise",
+        decision="check",
         rationale_codes=("PRIMARY_DIRECTION_VALID_BOUNDED_REPAIR_WITH_CLOSURE_TEST",),
     )

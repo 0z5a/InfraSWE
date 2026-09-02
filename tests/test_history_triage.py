@@ -33,9 +33,9 @@ def test_satisfied_contract_accepts_and_incomplete_evidence_abstains() -> None:
     assert unresolved.decision == "unresolved"
 
 
-def test_revise_requires_a_valid_direction_bounded_repair_and_closure_test() -> None:
+def test_check_requires_a_valid_direction_bounded_repair_and_closure_test() -> None:
     result = classify_case_contract(evidence())
-    assert result.decision == "revise"
+    assert result.decision == "check"
     assert result.rationale_codes == ("PRIMARY_DIRECTION_VALID_BOUNDED_REPAIR_WITH_CLOSURE_TEST",)
 
 
@@ -73,7 +73,7 @@ def test_r10_lessons_separate_deepgemm_liger_and_vllm() -> None:
         )
     )
     assert deepgemm.decision == "reject"
-    assert liger.decision == "revise"
+    assert liger.decision == "check"
     assert vllm.decision == "reject"
 
 

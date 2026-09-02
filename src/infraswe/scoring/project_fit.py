@@ -19,9 +19,9 @@ from infraswe.models.project_score import (
     V05ScoreResult,
 )
 from infraswe.policy import (
+    CHECK_ACTIVITY_MAX_IDLE_DAYS,
+    CHECK_NEW_PR_MAX_AGE_DAYS,
     MERGE_ACCEPT_SCORE_FLOOR_100,
-    REVISE_ACTIVITY_MAX_IDLE_DAYS,
-    REVISE_NEW_PR_MAX_AGE_DAYS,
     STALE_REVIEWED_OPEN_MIN_AGE_DAYS,
 )
 from infraswe.scoring.deployability import weighted_geometric
@@ -466,12 +466,12 @@ def _review_policy_state(
     current_head_review_is_recent = (
         context.current_head_human_non_author_review_count > 0
         and review_idle_days is not None
-        and review_idle_days <= REVISE_ACTIVITY_MAX_IDLE_DAYS
+        and review_idle_days <= CHECK_ACTIVITY_MAX_IDLE_DAYS
     )
     pending_review_is_recent = (
-        context.pending_human_review_request and activity_idle_days <= REVISE_ACTIVITY_MAX_IDLE_DAYS
+        context.pending_human_review_request and activity_idle_days <= CHECK_ACTIVITY_MAX_IDLE_DAYS
     )
-    if age_days <= REVISE_NEW_PR_MAX_AGE_DAYS and (
+    if age_days <= CHECK_NEW_PR_MAX_AGE_DAYS and (
         current_head_review_is_recent or pending_review_is_recent
     ):
         return "active-new-review"
@@ -496,11 +496,11 @@ def _review_limited_failure_decision(
     codes = [*base_codes, "POLARIZED_DECISION_POLICY_V0_5_1"]
     if review_state == "active-new-review":
         return MergeabilityDecision(
-            verdict="revise",
+            verdict="check",
             supported_scope=list(supported_scope),
             excluded_scope=list(excluded_scope),
             required_actions=list(required_actions),
-            rationale_codes=[*codes, "ACTIVE_NEW_PR_REVIEW_REVISE_ELIGIBLE"],
+            rationale_codes=[*codes, "ACTIVE_NEW_PR_REVIEW_CHECK_ELIGIBLE"],
         )
     if review_state == "missing" and unresolved_without_context:
         return MergeabilityDecision(
@@ -513,7 +513,7 @@ def _review_limited_failure_decision(
     reason = (
         "STALE_REVIEWED_OPEN_REJECT"
         if review_state == "stale-reviewed-open"
-        else "REVISE_REQUIRES_ACTIVE_NEW_PR_REVIEW"
+        else "CHECK_REQUIRES_ACTIVE_NEW_PR_REVIEW"
     )
     return MergeabilityDecision(
         verdict="reject",

@@ -10,9 +10,9 @@ from infraswe.models.history import (
     HistoricalReviewActivitySnapshot,
 )
 from infraswe.policy import (
+    CHECK_ACTIVITY_MAX_IDLE_DAYS,
+    CHECK_NEW_PR_MAX_AGE_DAYS,
     MERGE_ACCEPT_SCORE_FLOOR_100,
-    REVISE_ACTIVITY_MAX_IDLE_DAYS,
-    REVISE_NEW_PR_MAX_AGE_DAYS,
     STALE_REVIEWED_OPEN_MIN_AGE_DAYS,
 )
 
@@ -82,18 +82,18 @@ def compile_polarized_oracle(
     current_head_review_is_recent = (
         review.current_head_human_non_author_review_count > 0
         and review_idle_days is not None
-        and review_idle_days <= REVISE_ACTIVITY_MAX_IDLE_DAYS
+        and review_idle_days <= CHECK_ACTIVITY_MAX_IDLE_DAYS
     )
     pending_review_is_recent = (
-        review.pending_human_review_request and activity_idle_days <= REVISE_ACTIVITY_MAX_IDLE_DAYS
+        review.pending_human_review_request and activity_idle_days <= CHECK_ACTIVITY_MAX_IDLE_DAYS
     )
-    if age_days <= REVISE_NEW_PR_MAX_AGE_DAYS and (
+    if age_days <= CHECK_NEW_PR_MAX_AGE_DAYS and (
         current_head_review_is_recent or pending_review_is_recent
     ):
         return HistoricalPolarizedDecisionOracle(
             **common,
-            decision="revise",
-            rationale_codes=["ACTIVE_NEW_PR_REVIEW_REVISE_ORACLE"],
+            decision="check",
+            rationale_codes=["ACTIVE_NEW_PR_REVIEW_CHECK_ORACLE"],
         )
 
     if (
@@ -112,11 +112,15 @@ def compile_polarized_oracle(
 
 def polarized_oracle_matches_machine(
     oracle: HistoricalPolarizedDecisionOracle,
-    machine_decision: Literal["accept", "accept_with_scope", "revise", "reject", "unresolved"],
+    machine_decision: Literal[
+        "accept", "accept_with_scope", "check", "reject", "unresolved", "revise"
+    ],
 ) -> bool:
     normalized = (
         "accept" if machine_decision in {"accept", "accept_with_scope"} else machine_decision
     )
+    if normalized == "revise":
+        normalized = "check"
     if normalized != oracle.decision:
         return False
     return oracle.decision != "accept" or oracle.merged_score_floor_satisfied is True

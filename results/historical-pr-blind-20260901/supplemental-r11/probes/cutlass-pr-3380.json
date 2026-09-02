@@ -1,0 +1,84 @@
+{
+  "base_sha": "e6233cbac5d7c7a865c19c91cd684ceece19513c",
+  "case_id": "cutlass-pr-3380",
+  "environment": {
+    "cuda_dot_product": 32.0,
+    "gpu_count": 2,
+    "gpu_names": [
+      "NVIDIA A100-SXM4-40GB",
+      "NVIDIA A100-SXM4-40GB"
+    ],
+    "nvcc": "nvcc: NVIDIA (R) Cuda compiler driver\nCopyright (c) 2005-2025 NVIDIA Corporation\nBuilt on Fri_Feb_21_20:23:50_PST_2025\nCuda compilation tools, release 12.8, V12.8.93\nBuild cuda_12.8.r12.8/compiler.35583870_0\n",
+    "platform": "Linux-6.8.0-138-generic-x86_64-with-glibc2.39",
+    "python": "3.12.14 | packaged by conda-forge | (main, Aug 21 2026, 22:48:28) [GCC 14.4.0]",
+    "torch": "2.11.0+cu128",
+    "torch_cuda_available": true
+  },
+  "environment_sha256": "sha256:4f544cefe550a17a058d6ed6870b655d1b2ca9551f32827565a26139e6c53e7b",
+  "evidence_sha256": "sha256:fd4b1c2747e555fc8a01a94340efac594711aacfce3ae121b5480a919ea0ca5a",
+  "facts": {
+    "changed_direct_test": false,
+    "conversion_arch_truth_table": {
+      "base": {
+        "sm100_blackwell": true,
+        "sm80_ampere": true,
+        "sm89_ada": true,
+        "sm90_hopper": true
+      },
+      "head": {
+        "sm100_blackwell": true,
+        "sm80_ampere": false,
+        "sm89_ada": false,
+        "sm90_hopper": true
+      }
+    },
+    "copy_gate": {
+      "base_has_leader_and_elect": false,
+      "head_copy_call_count": 2,
+      "head_has_leader_and_elect": true
+    },
+    "head_arch_truth_table_matches_contract": true,
+    "modeled_copy_truth_table": [
+      {
+        "base_copies": false,
+        "elected": false,
+        "head_copies": false,
+        "leader": false
+      },
+      {
+        "base_copies": true,
+        "elected": true,
+        "head_copies": false,
+        "leader": false
+      },
+      {
+        "base_copies": false,
+        "elected": false,
+        "head_copies": false,
+        "leader": true
+      },
+      {
+        "base_copies": true,
+        "elected": true,
+        "head_copies": true,
+        "leader": true
+      }
+    ]
+  },
+  "failure_codes": [],
+  "finished_at": "2026-09-02T09:07:38.128197+00:00",
+  "head_sha": "5d49aefd2467fefd8f79b50ec4f589212e6a03fe",
+  "probe_status": "pass",
+  "protocol_id": "historical-pr-blind-repairability-v0.1-r11-20",
+  "schema_version": "0.1",
+  "selection_lock_sha256": "sha256:90a16796bc3816ac1283c400f3c0d02a796b936dd2a138e5a73f9648e3d92750",
+  "source_bundle_sha256": "sha256:e25489c5cdb780c07083e041f44b4b07b6cdc0f285c6beb0f1f0708cf110d9a2",
+  "source_digests": {
+    "base:include/cutlass/gemm/collective/sm100_blockscaled_mma_mixed_tma_cpasync_warpspecialized.hpp": "sha256:e3bd8543fe9e8de37ecd1de33591ec0e2c2ff094d1a5a434ff615d950bd84c79",
+    "base:python/CuTeDSL/cutlass/cute/arch/numeric_conversion.py": "sha256:530afa2058426ec78aaa9e5421d8ed0c9c91acea4c73cbf6cfb977219f56e035",
+    "head:include/cutlass/gemm/collective/sm100_blockscaled_mma_mixed_tma_cpasync_warpspecialized.hpp": "sha256:47afb3ca17b0dcbd17d569c8a589f6752cc0953692c4933a9a263ce66a4352fe",
+    "head:python/CuTeDSL/cutlass/cute/arch/numeric_conversion.py": "sha256:f424497fccc26f2d68f1ccff84da175bcad5ff7f5d5e0519695eef3c8676769d"
+  },
+  "started_at": "2026-09-02T09:07:38.103937+00:00",
+  "test_plan_sha256": "sha256:8f5d306954fe6acac7c650dda397c4469f93e6ec6b467393738e0aa778f3bfb8"
+}

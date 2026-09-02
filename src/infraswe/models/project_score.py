@@ -4,7 +4,7 @@ import math
 from datetime import datetime
 from typing import Any, Literal
 
-from pydantic import BaseModel, ConfigDict, Field, model_validator
+from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
 
 from infraswe.models.draft import Digest, DraftState, ProjectComparisonCell
 
@@ -18,7 +18,7 @@ class ProjectScoreModel(BaseModel):
 
 
 class PullRequestReviewContext(ProjectScoreModel):
-    """Outcome-free live review context used only to decide REVISE eligibility."""
+    """Outcome-free live review context used only to decide CHECK eligibility."""
 
     created_at: datetime
     observed_at: datetime
@@ -255,11 +255,24 @@ class CellEfficiencyReference(ProjectScoreModel):
 
 
 class MergeabilityDecision(ProjectScoreModel):
-    verdict: Literal["accept", "accept_with_scope", "revise", "reject", "unresolved"]
+    verdict: Literal[
+        "accept",
+        "accept_with_scope",
+        "check",
+        "reject",
+        "unresolved",
+    ]
     supported_scope: list[str] = Field(default_factory=list)
     excluded_scope: list[str] = Field(default_factory=list)
     required_actions: list[str] = Field(default_factory=list)
     rationale_codes: list[str] = Field(default_factory=list)
+
+    @field_validator("verdict", mode="before")
+    @classmethod
+    def normalize_legacy_revise(cls, value: object) -> object:
+        """Read the v0.1 legacy wire label while emitting only ``check``."""
+
+        return "check" if value == "revise" else value
 
 
 class V05ScoreResult(ProjectScoreModel):
@@ -293,10 +306,14 @@ class V05ScoreResult(ProjectScoreModel):
             self.project_fit.score_100 is None or self.project_fit.score_100 < 85
         ):
             raise ValueError("accepted mergeability decisions require ProjectFit >= 85")
-        if self.decision.verdict == "revise" and (
-            "ACTIVE_NEW_PR_REVIEW_REVISE_ELIGIBLE" not in self.decision.rationale_codes
+        if self.decision.verdict == "check" and not (
+            {
+                "ACTIVE_NEW_PR_REVIEW_CHECK_ELIGIBLE",
+                "ACTIVE_NEW_PR_REVIEW_REVISE_ELIGIBLE",
+            }
+            & set(self.decision.rationale_codes)
         ):
-            raise ValueError("REVISE requires explicit active-new-PR review eligibility")
+            raise ValueError("CHECK requires explicit active-new-PR review eligibility")
         if self.project_fit.status == "official":
             if self.draft_state != "D8-decided" or self.sealed_draft_sha256 is None:
                 raise ValueError("official ProjectFit requires a decided sealed Draft")
@@ -316,8 +333,8 @@ class V05ScoreResult(ProjectScoreModel):
                 raise ValueError("failed InfraCert cannot publish ProjectFit-100")
             if self.leaderboard_effective_project_fit_100 != 0:
                 raise ValueError("failed InfraCert requires effective ProjectFit 0")
-            if self.decision.verdict not in {"reject", "revise"}:
-                raise ValueError("failed InfraCert must produce REJECT or REVISE")
+            if self.decision.verdict not in {"reject", "check"}:
+                raise ValueError("failed InfraCert must produce REJECT or CHECK")
         if self.infra_cert == "unresolved":
             if self.leaderboard_effective_project_fit_100 is not None:
                 raise ValueError("unresolved InfraCert cannot publish an effective score")

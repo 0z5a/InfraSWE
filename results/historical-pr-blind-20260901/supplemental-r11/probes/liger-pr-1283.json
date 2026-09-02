@@ -1,0 +1,59 @@
+{
+  "base_sha": "c9fc646f4f32b7f1a852d90159bcb3358444bb93",
+  "case_id": "liger-pr-1283",
+  "environment": {
+    "cuda_dot_product": 32.0,
+    "gpu_count": 2,
+    "gpu_names": [
+      "NVIDIA A100-SXM4-40GB",
+      "NVIDIA A100-SXM4-40GB"
+    ],
+    "nvcc": "nvcc: NVIDIA (R) Cuda compiler driver\nCopyright (c) 2005-2025 NVIDIA Corporation\nBuilt on Fri_Feb_21_20:23:50_PST_2025\nCuda compilation tools, release 12.8, V12.8.93\nBuild cuda_12.8.r12.8/compiler.35583870_0\n",
+    "platform": "Linux-6.8.0-138-generic-x86_64-with-glibc2.39",
+    "python": "3.12.14 | packaged by conda-forge | (main, Aug 21 2026, 22:48:28) [GCC 14.4.0]",
+    "torch": "2.11.0+cu128",
+    "torch_cuda_available": true
+  },
+  "environment_sha256": "sha256:4f544cefe550a17a058d6ed6870b655d1b2ca9551f32827565a26139e6c53e7b",
+  "evidence_sha256": "sha256:df8a10d7b11af1fc8f58f54cf8e765beee70ce2f59db0440bd8918515cef07dd",
+  "facts": {
+    "base_cast_present": false,
+    "changed_direct_test": false,
+    "cuda_matrix": [
+      {
+        "base_error": "RuntimeError: mat1 and mat2 must have the same dtype, but got Half and Float",
+        "dtype": "torch.float16",
+        "head_close_to_reference": true,
+        "head_max_abs_error_vs_fp32_reference": 0.002933025360107422,
+        "repeated_accumulation_matches_control": true,
+        "same_dtype_base_head_equal": true
+      },
+      {
+        "base_error": "RuntimeError: mat1 and mat2 must have the same dtype, but got BFloat16 and Float",
+        "dtype": "torch.bfloat16",
+        "head_close_to_reference": true,
+        "head_max_abs_error_vs_fp32_reference": 0.032181739807128906,
+        "repeated_accumulation_matches_control": true,
+        "same_dtype_base_head_equal": true
+      }
+    ],
+    "gpu_name": "NVIDIA A100-SXM4-40GB",
+    "head_cast_present": true,
+    "head_keeps_fp32_accumulator": true,
+    "torch_version": "2.11.0+cu128"
+  },
+  "failure_codes": [],
+  "finished_at": "2026-09-02T09:11:42.418940+00:00",
+  "head_sha": "15a4ea0feb0fdb61b176e09d6aba39b9bb889aab",
+  "probe_status": "pass",
+  "protocol_id": "historical-pr-blind-repairability-v0.1-r11-20",
+  "schema_version": "0.1",
+  "selection_lock_sha256": "sha256:90a16796bc3816ac1283c400f3c0d02a796b936dd2a138e5a73f9648e3d92750",
+  "source_bundle_sha256": "sha256:e25489c5cdb780c07083e041f44b4b07b6cdc0f285c6beb0f1f0708cf110d9a2",
+  "source_digests": {
+    "base:src/liger_kernel/ops/fused_linear_cross_entropy.py": "sha256:62cf8a8c363e52ed2eefb16ba092ddb81af5a72a1cd8f51070e400c829732593",
+    "head:src/liger_kernel/ops/fused_linear_cross_entropy.py": "sha256:1b4b360a184469b8ec3bc6e13acfab25559e78749dd5cbc9111fe3fd17e0e74e"
+  },
+  "started_at": "2026-09-02T09:11:42.042511+00:00",
+  "test_plan_sha256": "sha256:8f5d306954fe6acac7c650dda397c4469f93e6ec6b467393738e0aa778f3bfb8"
+}

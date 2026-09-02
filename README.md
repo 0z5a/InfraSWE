@@ -133,6 +133,12 @@ for old locks only. The five-case R9 follow-up is documented in
 [`results/historical-pr-blind-20260901/supplemental-r9/REPORT_20260902_ZH.md`](results/historical-pr-blind-20260901/supplemental-r9/REPORT_20260902_ZH.md).
 The post-release ten-case R10 follow-up is documented in
 [`results/historical-pr-blind-20260901/supplemental-r10/REPORT_20260902_ZH.md`](results/historical-pr-blind-20260901/supplemental-r10/REPORT_20260902_ZH.md).
+The twenty-case R11 repairability follow-up is documented in
+[`results/historical-pr-blind-20260901/supplemental-r11/REPORT_20260902_ZH.md`](results/historical-pr-blind-20260901/supplemental-r11/REPORT_20260902_ZH.md).
+
+New decision artifacts use `check` for the narrow state that needs additional verification or a
+bounded correction. The former `revise` spelling is accepted only as a legacy input and remains
+unchanged inside already hash-frozen historical artifacts.
 
 ## Quick start
 

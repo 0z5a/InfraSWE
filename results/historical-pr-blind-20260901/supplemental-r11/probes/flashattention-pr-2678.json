@@ -1,0 +1,53 @@
+{
+  "base_sha": "5ed0361579066273532cc9a7c3a0a144a6003eda",
+  "case_id": "flashattention-pr-2678",
+  "environment": {
+    "cuda_dot_product": 32.0,
+    "gpu_count": 2,
+    "gpu_names": [
+      "NVIDIA A100-SXM4-40GB",
+      "NVIDIA A100-SXM4-40GB"
+    ],
+    "nvcc": "nvcc: NVIDIA (R) Cuda compiler driver\nCopyright (c) 2005-2025 NVIDIA Corporation\nBuilt on Fri_Feb_21_20:23:50_PST_2025\nCuda compilation tools, release 12.8, V12.8.93\nBuild cuda_12.8.r12.8/compiler.35583870_0\n",
+    "platform": "Linux-6.8.0-138-generic-x86_64-with-glibc2.39",
+    "python": "3.12.14 | packaged by conda-forge | (main, Aug 21 2026, 22:48:28) [GCC 14.4.0]",
+    "torch": "2.11.0+cu128",
+    "torch_cuda_available": true
+  },
+  "environment_sha256": "sha256:4f544cefe550a17a058d6ed6870b655d1b2ca9551f32827565a26139e6c53e7b",
+  "evidence_sha256": "sha256:eda5555208d8a7b7e1161040abbadaf453a2049cf2cbefb112a990342122b707",
+  "facts": {
+    "changed_direct_test": false,
+    "head_has_broad_exception_fallback": true,
+    "head_has_trace_safe_precheck": true,
+    "runtime": {
+      "base": {
+        "compile_error": "Unsupported: Attempted to call function marked as skipped\n  Explanation: Dynamo developers have intentionally marked that the function `active_fake_mode` in file `/venv/main/lib/python3.12/site-packages/torch/_guards.py` should not be traced.\n  Hint: Avoid calling the function `active_fake_mode`.\n  Hint: Apply `@torch._dynamo.dont_skip_tracing` to the function `active_fake_mode` to force tracing into the function. More graph breaks may occur as a result of attempting to trace into the function.\n  Hint: Please file an issue to PyTorch.\n\n  Developer debug context: module: torch._guards, qualname: active_fake_mode, skip reason: <missing reason>\n\n For more details about this graph break, please visit: https://meta-pytorch.github.io/compile-graph-break-site/gb/gb0007.html\n\nfrom user code:\n   File \"/venv/main/lib/python3.12/site-packages/torch/_dynamo/external_utils.py\", line 69, in inner\n    return fn(*args, **kwargs)\n  File \"<is_fake_mode>\", line 487, in is_fake_mode\n\nSet TORCHDYNAMO_VERBO",
+        "compiled_fullgraph": null,
+        "eager_fake_context": true,
+        "eager_normal": false
+      },
+      "head": {
+        "compile_error": null,
+        "compiled_fullgraph": true,
+        "eager_fake_context": true,
+        "eager_normal": false
+      }
+    },
+    "torch_version": "2.11.0+cu128"
+  },
+  "failure_codes": [],
+  "finished_at": "2026-09-02T09:04:47.959043+00:00",
+  "head_sha": "fd956114dd40644fd5fc80da878ccfc442190b20",
+  "probe_status": "pass",
+  "protocol_id": "historical-pr-blind-repairability-v0.1-r11-20",
+  "schema_version": "0.1",
+  "selection_lock_sha256": "sha256:90a16796bc3816ac1283c400f3c0d02a796b936dd2a138e5a73f9648e3d92750",
+  "source_bundle_sha256": "sha256:e25489c5cdb780c07083e041f44b4b07b6cdc0f285c6beb0f1f0708cf110d9a2",
+  "source_digests": {
+    "base:flash_attn/cute/testing.py": "sha256:122c89b324110ad35eb3f20ca113ecd78845358be94fe0259e43ee7a02337521",
+    "head:flash_attn/cute/testing.py": "sha256:910d81eb119995bf52b6dc401257b1fbbb175997afedaa91d2d89cfe87aae1ab"
+  },
+  "started_at": "2026-09-02T09:04:44.843391+00:00",
+  "test_plan_sha256": "sha256:8f5d306954fe6acac7c650dda397c4469f93e6ec6b467393738e0aa778f3bfb8"
+}

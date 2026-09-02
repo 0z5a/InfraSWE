@@ -34,6 +34,7 @@ from infraswe.models.draft import (
 from infraswe.models.project_score import (
     BenchmarkCostCard,
     CellEfficiencyReference,
+    MergeabilityDecision,
     ProjectObjectiveResult,
     PullRequestReviewContext,
     PureTritonEligibilityEvidence,
@@ -649,7 +650,7 @@ def test_v05_result_never_places_provisional_score_on_leaderboard() -> None:
         type(result).model_validate(payload)
 
 
-def test_polarized_mergeability_requires_85_and_limits_revise_to_active_review() -> None:
+def test_polarized_mergeability_requires_85_and_limits_check_to_active_review() -> None:
     below = _ordinary_fit(value=0.8499)
     at_floor = _ordinary_fit(value=0.85)
     assert (
@@ -680,8 +681,17 @@ def test_polarized_mergeability_requires_85_and_limits_revise_to_active_review()
         project_objectives={},
         review_context=active,
     )
-    assert active_decision.verdict == "revise"
-    assert "ACTIVE_NEW_PR_REVIEW_REVISE_ELIGIBLE" in active_decision.rationale_codes
+    assert active_decision.verdict == "check"
+    assert "ACTIVE_NEW_PR_REVIEW_CHECK_ELIGIBLE" in active_decision.rationale_codes
+
+    legacy = MergeabilityDecision.model_validate(
+        {
+            "verdict": "revise",
+            "rationale_codes": ["ACTIVE_NEW_PR_REVIEW_REVISE_ELIGIBLE"],
+        }
+    )
+    assert legacy.verdict == "check"
+    assert legacy.model_dump(mode="json")["verdict"] == "check"
 
     stale = PullRequestReviewContext(
         created_at=observed - timedelta(days=180),

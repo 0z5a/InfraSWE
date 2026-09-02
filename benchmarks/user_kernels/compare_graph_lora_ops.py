@@ -543,7 +543,7 @@ def main() -> int:
             ),
         },
         "decision": {
-            "verdict": "revise",
+            "verdict": "check",
             "rationale_codes": decision_codes,
             "supported_scope": [
                 "single NVIDIA H100 PCIe SM90 operator-level CUDA Graph evidence",

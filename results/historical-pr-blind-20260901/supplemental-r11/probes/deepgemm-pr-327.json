@@ -1,0 +1,45 @@
+{
+  "base_sha": "891d57b4db1071624b5c8fa0d1e51cb317fa709f",
+  "case_id": "deepgemm-pr-327",
+  "environment": {
+    "cuda_dot_product": 32.0,
+    "gpu_count": 2,
+    "gpu_names": [
+      "NVIDIA A100-SXM4-40GB",
+      "NVIDIA A100-SXM4-40GB"
+    ],
+    "nvcc": "nvcc: NVIDIA (R) Cuda compiler driver\nCopyright (c) 2005-2025 NVIDIA Corporation\nBuilt on Fri_Feb_21_20:23:50_PST_2025\nCuda compilation tools, release 12.8, V12.8.93\nBuild cuda_12.8.r12.8/compiler.35583870_0\n",
+    "platform": "Linux-6.8.0-138-generic-x86_64-with-glibc2.39",
+    "python": "3.12.14 | packaged by conda-forge | (main, Aug 21 2026, 22:48:28) [GCC 14.4.0]",
+    "torch": "2.11.0+cu128",
+    "torch_cuda_available": true
+  },
+  "environment_sha256": "sha256:4f544cefe550a17a058d6ed6870b655d1b2ca9551f32827565a26139e6c53e7b",
+  "evidence_sha256": "sha256:96d6533ff0bc6397dc00273cebddd4ce0261b4a552a937e823fffba3c71ed114",
+  "facts": {
+    "base_expression": "-cute::numeric_limits<logits_dtype_t>::infinity()",
+    "base_is_negative_infinity": true,
+    "changed_direct_test": false,
+    "decision_sufficient_counterexample": "the exact head source uses finite -1e38f, so negative-infinity semantics are not preserved regardless of compile outcome",
+    "head_changes_ieee_classification": true,
+    "head_expression": "logits_dtype_t(-1e38f)",
+    "head_is_finite": true,
+    "head_is_negative_infinity": false,
+    "nvcc_available": true,
+    "nvcc_version": "nvcc: NVIDIA (R) Cuda compiler driver\nCopyright (c) 2005-2025 NVIDIA Corporation\nBuilt on Fri_Feb_21_20:23:50_PST_2025\nCuda compilation tools, release 12.8, V12.8.93\nBuild cuda_12.8.r12.8/compiler.35583870_0\n"
+  },
+  "failure_codes": [],
+  "finished_at": "2026-09-02T09:04:44.804996+00:00",
+  "head_sha": "f5238042ece0be7e14fd43d6a789775ea7b9a6ef",
+  "probe_status": "pass",
+  "protocol_id": "historical-pr-blind-repairability-v0.1-r11-20",
+  "schema_version": "0.1",
+  "selection_lock_sha256": "sha256:90a16796bc3816ac1283c400f3c0d02a796b936dd2a138e5a73f9648e3d92750",
+  "source_bundle_sha256": "sha256:e25489c5cdb780c07083e041f44b4b07b6cdc0f285c6beb0f1f0708cf110d9a2",
+  "source_digests": {
+    "base:deep_gemm/include/deep_gemm/impls/smxx_clean_logits.cuh": "sha256:b1d93c91681b54c1dffedaa9d4fc5bdbc0244464c5f15868afba707a0a2aa07a",
+    "head:deep_gemm/include/deep_gemm/impls/smxx_clean_logits.cuh": "sha256:507c9eb0800cd5d227a93d3e6002e71b3b39e6f950e42e7f50fe7f068b916172"
+  },
+  "started_at": "2026-09-02T09:04:44.780613+00:00",
+  "test_plan_sha256": "sha256:8f5d306954fe6acac7c650dda397c4469f93e6ec6b467393738e0aa778f3bfb8"
+}

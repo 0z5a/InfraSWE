@@ -228,7 +228,7 @@ def test_post_lock_review_evidence_requires_consistent_human_count() -> None:
         HistoricalReviewEvidence.model_validate(invalid)
 
 
-def test_polarized_oracle_reserves_revise_for_active_new_review() -> None:
+def test_polarized_oracle_reserves_check_for_active_new_review() -> None:
     observed = NOW + timedelta(seconds=4)
     item = candidate().model_copy(update={"created_at": NOW - timedelta(days=10)})
     open_truth = truth("sha256:" + "a" * 64, merged=False).model_copy(
@@ -243,7 +243,8 @@ def test_polarized_oracle_reserves_revise_for_active_new_review() -> None:
         total_human_non_author_review_count=1,
     )
     oracle = compile_polarized_oracle(item, open_truth, review, machine_score_100=80)
-    assert oracle.decision == "revise"
+    assert oracle.decision == "check"
+    assert polarized_oracle_matches_machine(oracle, "check")
     assert polarized_oracle_matches_machine(oracle, "revise")
 
 

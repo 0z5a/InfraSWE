@@ -1,0 +1,60 @@
+{
+  "base_sha": "48a887fecd01674346f724dcf44f417f455989f0",
+  "case_id": "megatron-pr-5759",
+  "environment": {
+    "cuda_dot_product": 32.0,
+    "gpu_count": 2,
+    "gpu_names": [
+      "NVIDIA A100-SXM4-40GB",
+      "NVIDIA A100-SXM4-40GB"
+    ],
+    "nvcc": "nvcc: NVIDIA (R) Cuda compiler driver\nCopyright (c) 2005-2025 NVIDIA Corporation\nBuilt on Fri_Feb_21_20:23:50_PST_2025\nCuda compilation tools, release 12.8, V12.8.93\nBuild cuda_12.8.r12.8/compiler.35583870_0\n",
+    "platform": "Linux-6.8.0-138-generic-x86_64-with-glibc2.39",
+    "python": "3.12.14 | packaged by conda-forge | (main, Aug 21 2026, 22:48:28) [GCC 14.4.0]",
+    "torch": "2.11.0+cu128",
+    "torch_cuda_available": true
+  },
+  "environment_sha256": "sha256:4f544cefe550a17a058d6ed6870b655d1b2ca9551f32827565a26139e6c53e7b",
+  "evidence_sha256": "sha256:fbe88f6a00dbd5136792f6fdece6680324c03fff0b293677652decc265a755ea",
+  "facts": {
+    "base_uses_writer_metadata_path": true,
+    "direct_test_reenabled": true,
+    "direct_test_retains_common_state_shard": true,
+    "head_joins_checkpoint_path_with_pathlib": true,
+    "head_uses_resolved_metadata_filename_for_all_renames": true,
+    "head_uses_writer_metadata_path": false,
+    "public_entrypoint_matrix": {
+      "base": {
+        "error": "AttributeError: type object '_SaveStrategyWithoutRemoval' has no attribute 'remove_sharded_tensors'",
+        "load_strategy_calls": []
+      },
+      "head": {
+        "error": null,
+        "load_strategy_calls": [
+          [
+            "/tmp/checkpoint",
+            "obsolete"
+          ]
+        ]
+      }
+    }
+  },
+  "failure_codes": [],
+  "finished_at": "2026-09-02T09:04:48.713353+00:00",
+  "head_sha": "c656b65cd38a1cd92a2dd92b0e2607455c7ebe95",
+  "probe_status": "pass",
+  "protocol_id": "historical-pr-blind-repairability-v0.1-r11-20",
+  "schema_version": "0.1",
+  "selection_lock_sha256": "sha256:90a16796bc3816ac1283c400f3c0d02a796b936dd2a138e5a73f9648e3d92750",
+  "source_bundle_sha256": "sha256:e25489c5cdb780c07083e041f44b4b07b6cdc0f285c6beb0f1f0708cf110d9a2",
+  "source_digests": {
+    "base:megatron/core/dist_checkpointing/serialization.py": "sha256:db808903e87c6bf8032a7a639a58834f26ccd36c4a9eed0b86a83108a463b949",
+    "base:megatron/core/dist_checkpointing/strategies/torch.py": "sha256:e792f1d687ea509d17851a7d1bf1081be3ce76e9bac1f7d79c0e10925081d16a",
+    "base:tests/unit_tests/dist_checkpointing/test_serialization.py": "sha256:6b90f02923fb1fbe2ef97872618e2c8d56d9b874ae35aab5e4039c4befa6fb15",
+    "head:megatron/core/dist_checkpointing/serialization.py": "sha256:79ef44596000a2ac3c69303996cd16612d057bda97542c06e8a7209b60818dcf",
+    "head:megatron/core/dist_checkpointing/strategies/torch.py": "sha256:311a638b7ab058f5095411c9b67b3c3282ae343c5ee0e3b457a2851843491d03",
+    "head:tests/unit_tests/dist_checkpointing/test_serialization.py": "sha256:65de27620e77857c73dc0926cb840017f9a3de52e1ac1ca642ea86ce24a299cf"
+  },
+  "started_at": "2026-09-02T09:04:48.689968+00:00",
+  "test_plan_sha256": "sha256:8f5d306954fe6acac7c650dda397c4469f93e6ec6b467393738e0aa778f3bfb8"
+}

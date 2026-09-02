@@ -265,7 +265,7 @@ class HistoricalGroundTruth(HistoryModel):
 
 
 class HistoricalReviewActivitySnapshot(HistoryModel):
-    """Post-lock review activity used to derive the narrow REVISE oracle."""
+    """Post-lock review activity used to derive the narrow CHECK oracle."""
 
     schema_version: Literal["0.5.1"] = "0.5.1"
     case_id: str
@@ -310,7 +310,7 @@ class HistoricalPolarizedDecisionOracle(HistoryModel):
     schema_version: Literal["0.5.1"] = "0.5.1"
     policy_id: Literal["historical-polarized-oracle-v0.5.1"] = "historical-polarized-oracle-v0.5.1"
     case_id: str
-    decision: Literal["accept", "revise", "reject"]
+    decision: Literal["accept", "check", "reject", "revise"]
     machine_score_100: float | None = Field(default=None, ge=0, le=100)
     merged_score_floor_100: float = Field(default=85, ge=85, le=85)
     merged_score_floor_satisfied: bool | None = None

@@ -1,0 +1,140 @@
+{
+  "additionalProperties": false,
+  "description": "Temporal audit separating historical review from attributable closure feedback.",
+  "properties": {
+    "api_response_digests": {
+      "items": {
+        "pattern": "^sha256:[0-9a-f]{64}$",
+        "type": "string"
+      },
+      "minItems": 6,
+      "title": "Api Response Digests",
+      "type": "array"
+    },
+    "calibration_eligible": {
+      "title": "Calibration Eligible",
+      "type": "boolean"
+    },
+    "case_id": {
+      "title": "Case Id",
+      "type": "string"
+    },
+    "close_classification": {
+      "enum": [
+        "final-head-changes-requested",
+        "explicit-human-technical-close",
+        "stale-inactivity",
+        "author-close-without-explicit-reason",
+        "other-unattributed-close"
+      ],
+      "title": "Close Classification",
+      "type": "string"
+    },
+    "closed_at": {
+      "format": "date-time",
+      "title": "Closed At",
+      "type": "string"
+    },
+    "closed_by": {
+      "title": "Closed By",
+      "type": "string"
+    },
+    "closure_reason_attributable": {
+      "title": "Closure Reason Attributable",
+      "type": "boolean"
+    },
+    "eligibility_reasons": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Eligibility Reasons",
+      "type": "array"
+    },
+    "explicit_close_feedback_ids": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Explicit Close Feedback Ids",
+      "type": "array"
+    },
+    "final_head_changes_requested_review_ids": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Final Head Changes Requested Review Ids",
+      "type": "array"
+    },
+    "final_head_feedback_eligible": {
+      "title": "Final Head Feedback Eligible",
+      "type": "boolean"
+    },
+    "final_head_inline_feedback_ids": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Final Head Inline Feedback Ids",
+      "type": "array"
+    },
+    "head_committed_at": {
+      "format": "date-time",
+      "title": "Head Committed At",
+      "type": "string"
+    },
+    "head_sha": {
+      "pattern": "^[0-9a-f]{40}$",
+      "title": "Head Sha",
+      "type": "string"
+    },
+    "judgment_lock_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Judgment Lock Sha256",
+      "type": "string"
+    },
+    "post_head_human_feedback_ids": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Post Head Human Feedback Ids",
+      "type": "array"
+    },
+    "pull_number": {
+      "minimum": 1,
+      "title": "Pull Number",
+      "type": "integer"
+    },
+    "repository": {
+      "title": "Repository",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "0.5",
+      "default": "0.5",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "stale_close_feedback_ids": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Stale Close Feedback Ids",
+      "type": "array"
+    }
+  },
+  "required": [
+    "case_id",
+    "repository",
+    "pull_number",
+    "judgment_lock_sha256",
+    "head_sha",
+    "head_committed_at",
+    "closed_at",
+    "closed_by",
+    "final_head_feedback_eligible",
+    "closure_reason_attributable",
+    "close_classification",
+    "calibration_eligible",
+    "api_response_digests"
+  ],
+  "title": "HistoricalReviewFinalityEvidence",
+  "type": "object"
+}

@@ -1,0 +1,348 @@
+{
+  "$defs": {
+    "CapabilityExpression": {
+      "additionalProperties": false,
+      "properties": {
+        "children": {
+          "items": {
+            "$ref": "#/$defs/CapabilityExpression"
+          },
+          "title": "Children",
+          "type": "array"
+        },
+        "operation": {
+          "enum": [
+            "capability",
+            "all_of",
+            "any_of",
+            "one_of",
+            "not",
+            "implies",
+            "conditional"
+          ],
+          "title": "Operation",
+          "type": "string"
+        },
+        "requirement": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/CapabilityRequirement"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "selected_variant_is": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Selected Variant Is"
+        }
+      },
+      "required": [
+        "operation"
+      ],
+      "title": "CapabilityExpression",
+      "type": "object"
+    },
+    "CapabilityParameterConstraint": {
+      "additionalProperties": false,
+      "properties": {
+        "count_gte": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Count Gte"
+        },
+        "eq": {
+          "anyOf": [
+            {},
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Eq"
+        },
+        "gte": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Gte"
+        },
+        "lte": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Lte"
+        },
+        "one_of": {
+          "items": {},
+          "title": "One Of",
+          "type": "array"
+        },
+        "set_contains": {
+          "items": {},
+          "title": "Set Contains",
+          "type": "array"
+        }
+      },
+      "title": "CapabilityParameterConstraint",
+      "type": "object"
+    },
+    "CapabilityRequirement": {
+      "additionalProperties": false,
+      "properties": {
+        "capability_id": {
+          "title": "Capability Id",
+          "type": "string"
+        },
+        "definition_version": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Definition Version"
+        },
+        "min_proof": {
+          "default": "CP1-inventory",
+          "enum": [
+            "CP0-declared",
+            "CP1-inventory",
+            "CP2-compile",
+            "CP3-runtime",
+            "CP4-behavior",
+            "CP5-operational"
+          ],
+          "title": "Min Proof",
+          "type": "string"
+        },
+        "mode": {
+          "enum": [
+            "required-present",
+            "required-usable",
+            "required-native",
+            "required-absent",
+            "forbidden-use",
+            "preferred",
+            "optional-observe",
+            "explicitly-not-assumed"
+          ],
+          "title": "Mode",
+          "type": "string"
+        },
+        "parameters": {
+          "additionalProperties": {
+            "$ref": "#/$defs/CapabilityParameterConstraint"
+          },
+          "title": "Parameters",
+          "type": "object"
+        },
+        "realization": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Realization"
+        }
+      },
+      "required": [
+        "capability_id",
+        "mode"
+      ],
+      "title": "CapabilityRequirement",
+      "type": "object"
+    },
+    "CapabilityVariant": {
+      "additionalProperties": false,
+      "properties": {
+        "phases": {
+          "additionalProperties": {
+            "$ref": "#/$defs/PhaseCapabilityContract"
+          },
+          "propertyNames": {
+            "enum": [
+              "agent",
+              "collect",
+              "build",
+              "verify",
+              "measure",
+              "profile",
+              "judge"
+            ]
+          },
+          "title": "Phases",
+          "type": "object"
+        },
+        "priority": {
+          "title": "Priority",
+          "type": "integer"
+        },
+        "resource_envelope_sha256": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Resource Envelope Sha256",
+          "type": "string"
+        },
+        "topology_contract_sha256": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Topology Contract Sha256",
+          "type": "string"
+        },
+        "variant_id": {
+          "title": "Variant Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "variant_id",
+        "priority",
+        "phases",
+        "resource_envelope_sha256",
+        "topology_contract_sha256"
+      ],
+      "title": "CapabilityVariant",
+      "type": "object"
+    },
+    "PhaseCapabilityContract": {
+      "additionalProperties": false,
+      "properties": {
+        "forbidden_use": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Forbidden Use",
+          "type": "array"
+        },
+        "isolation_requirements": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Isolation Requirements",
+          "type": "array"
+        },
+        "network_policy_id": {
+          "title": "Network Policy Id",
+          "type": "string"
+        },
+        "optional_observe": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Optional Observe",
+          "type": "array"
+        },
+        "requirements": {
+          "$ref": "#/$defs/CapabilityExpression"
+        },
+        "toolchain_profile_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Toolchain Profile Id"
+        }
+      },
+      "required": [
+        "requirements",
+        "network_policy_id"
+      ],
+      "title": "PhaseCapabilityContract",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "allowed_candidate_capabilities": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Allowed Candidate Capabilities",
+      "type": "array"
+    },
+    "closed_world_required": {
+      "const": true,
+      "default": true,
+      "title": "Closed World Required",
+      "type": "boolean"
+    },
+    "contract_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Contract Sha256",
+      "type": "string"
+    },
+    "policy_id": {
+      "title": "Policy Id",
+      "type": "string"
+    },
+    "registry_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Registry Sha256",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "0.1",
+      "default": "0.1",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "variants": {
+      "items": {
+        "$ref": "#/$defs/CapabilityVariant"
+      },
+      "minItems": 1,
+      "title": "Variants",
+      "type": "array"
+    }
+  },
+  "required": [
+    "policy_id",
+    "registry_sha256",
+    "variants",
+    "contract_sha256"
+  ],
+  "title": "CapabilityContract",
+  "type": "object"
+}

@@ -1,0 +1,145 @@
+{
+  "$defs": {
+    "GB10Gate": {
+      "additionalProperties": false,
+      "properties": {
+        "evidence": {
+          "additionalProperties": true,
+          "title": "Evidence",
+          "type": "object"
+        },
+        "failure_codes": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Failure Codes",
+          "type": "array"
+        },
+        "status": {
+          "enum": [
+            "pass",
+            "fail",
+            "unresolved",
+            "not_applicable"
+          ],
+          "title": "Status",
+          "type": "string"
+        }
+      },
+      "required": [
+        "status"
+      ],
+      "title": "GB10Gate",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "capability_fingerprint": {
+      "title": "Capability Fingerprint",
+      "type": "string"
+    },
+    "contract": {
+      "additionalProperties": true,
+      "title": "Contract",
+      "type": "object"
+    },
+    "contract_sha256": {
+      "title": "Contract Sha256",
+      "type": "string"
+    },
+    "failure_codes": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Failure Codes",
+      "type": "array"
+    },
+    "features": {
+      "additionalProperties": {
+        "additionalProperties": true,
+        "type": "object"
+      },
+      "title": "Features",
+      "type": "object"
+    },
+    "gates": {
+      "additionalProperties": {
+        "$ref": "#/$defs/GB10Gate"
+      },
+      "title": "Gates",
+      "type": "object"
+    },
+    "generated_at": {
+      "title": "Generated At",
+      "type": "string"
+    },
+    "hardware": {
+      "additionalProperties": true,
+      "title": "Hardware",
+      "type": "object"
+    },
+    "probe_version": {
+      "title": "Probe Version",
+      "type": "string"
+    },
+    "profile_id": {
+      "title": "Profile Id",
+      "type": "string"
+    },
+    "runtime_attributes": {
+      "additionalProperties": true,
+      "title": "Runtime Attributes",
+      "type": "object"
+    },
+    "schema_version": {
+      "const": "0.1",
+      "default": "0.1",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "status": {
+      "enum": [
+        "ready",
+        "partial",
+        "not_ready"
+      ],
+      "title": "Status",
+      "type": "string"
+    },
+    "toolchain": {
+      "additionalProperties": true,
+      "title": "Toolchain",
+      "type": "object"
+    },
+    "topology": {
+      "additionalProperties": true,
+      "title": "Topology",
+      "type": "object"
+    },
+    "warnings": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Warnings",
+      "type": "array"
+    }
+  },
+  "required": [
+    "generated_at",
+    "probe_version",
+    "profile_id",
+    "status",
+    "capability_fingerprint",
+    "hardware",
+    "toolchain",
+    "runtime_attributes",
+    "topology",
+    "features",
+    "gates",
+    "contract_sha256",
+    "contract"
+  ],
+  "title": "GB10CapabilityManifest",
+  "type": "object"
+}

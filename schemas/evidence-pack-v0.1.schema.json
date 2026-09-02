@@ -1,0 +1,194 @@
+{
+  "$defs": {
+    "EvidenceArtifact": {
+      "additionalProperties": false,
+      "properties": {
+        "authority": {
+          "enum": [
+            "NONE",
+            "CANDIDATE_CLAIM",
+            "VERIFIER",
+            "METER",
+            "INFRASTRUCTURE",
+            "BOUNDED_JUDGE"
+          ],
+          "title": "Authority",
+          "type": "string"
+        },
+        "evidence_id": {
+          "pattern": "^evidence://[a-z0-9][a-z0-9._/-]*$",
+          "title": "Evidence Id",
+          "type": "string"
+        },
+        "media_type": {
+          "title": "Media Type",
+          "type": "string"
+        },
+        "origin_trust": {
+          "enum": [
+            "T0_AGENT_SELF_REPORTED",
+            "T1_COLLECTOR_CAPTURED",
+            "T2_PRISTINE_REEXECUTED",
+            "T3_TRUSTED_METERED",
+            "T4_INFRA_ATTESTED"
+          ],
+          "title": "Origin Trust",
+          "type": "string"
+        },
+        "producer": {
+          "$ref": "#/$defs/EvidenceProducerIdentity"
+        },
+        "relative_path": {
+          "title": "Relative Path",
+          "type": "string"
+        },
+        "sanitized": {
+          "default": false,
+          "title": "Sanitized",
+          "type": "boolean"
+        },
+        "sha256": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Sha256",
+          "type": "string"
+        },
+        "size_bytes": {
+          "minimum": 0,
+          "title": "Size Bytes",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "evidence_id",
+        "relative_path",
+        "media_type",
+        "sha256",
+        "size_bytes",
+        "origin_trust",
+        "authority",
+        "producer"
+      ],
+      "title": "EvidenceArtifact",
+      "type": "object"
+    },
+    "EvidenceProducerIdentity": {
+      "additionalProperties": false,
+      "properties": {
+        "configuration_sha256": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Configuration Sha256",
+          "type": "string"
+        },
+        "image_sha256": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Image Sha256",
+          "type": "string"
+        },
+        "implementation_sha256": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Implementation Sha256",
+          "type": "string"
+        },
+        "producer_id": {
+          "title": "Producer Id",
+          "type": "string"
+        },
+        "role": {
+          "enum": [
+            "pristine-verifier",
+            "trusted-meter",
+            "infra-attestor",
+            "bounded-judge"
+          ],
+          "title": "Role",
+          "type": "string"
+        }
+      },
+      "required": [
+        "producer_id",
+        "role",
+        "implementation_sha256",
+        "image_sha256",
+        "configuration_sha256"
+      ],
+      "title": "EvidenceProducerIdentity",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "artifacts": {
+      "items": {
+        "$ref": "#/$defs/EvidenceArtifact"
+      },
+      "minItems": 1,
+      "title": "Artifacts",
+      "type": "array"
+    },
+    "candidate_artifact_manifest_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Candidate Artifact Manifest Sha256",
+      "type": "string"
+    },
+    "draft_seal_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Draft Seal Sha256",
+      "type": "string"
+    },
+    "evidence_pack_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Evidence Pack Sha256",
+      "type": "string"
+    },
+    "measurement_set_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Measurement Set Sha256",
+      "type": "string"
+    },
+    "runner_attestation_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Runner Attestation Sha256",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "0.1",
+      "default": "0.1",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "score_input_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Score Input Sha256",
+      "type": "string"
+    },
+    "task_seal_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Task Seal Sha256",
+      "type": "string"
+    },
+    "trial_seal_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Trial Seal Sha256",
+      "type": "string"
+    },
+    "verifier_result_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Verifier Result Sha256",
+      "type": "string"
+    }
+  },
+  "required": [
+    "task_seal_sha256",
+    "draft_seal_sha256",
+    "trial_seal_sha256",
+    "candidate_artifact_manifest_sha256",
+    "runner_attestation_sha256",
+    "verifier_result_sha256",
+    "measurement_set_sha256",
+    "score_input_sha256",
+    "artifacts",
+    "evidence_pack_sha256"
+  ],
+  "title": "EvidencePackManifest",
+  "type": "object"
+}

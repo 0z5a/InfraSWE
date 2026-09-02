@@ -1,0 +1,84 @@
+{
+  "cases": [
+    {
+      "case_id": "vllm-pr-8200",
+      "close_classification": "stale-inactivity",
+      "exclusion_reason": "All human review comments predate the final head and the PR was later closed automatically for inactivity; they are design guidance, not a final rejection.",
+      "historical_review_guidance": [
+        {
+          "concept_id": "LAYOUT_IS_ENCODED_BY_TENSOR_STRIDES",
+          "explanation": "The final head implements this guidance and the machine confirms both NHD/NHD and HND/HND. Its mixed key/value stride failure is additional.",
+          "feedback_ids": [
+            "review-comment:2031783575",
+            "review-comment:2031787982",
+            "review-comment:2039694118",
+            "review-comment:2039705133"
+          ],
+          "machine_correspondence": "exact-for-same-layout"
+        }
+      ],
+      "judgment_lock_sha256": "sha256:a474d0f410cf176391297bb16f192ff5202d41274547ab0b3dcf170ff39f2459",
+      "machine_decision": "revise",
+      "machine_only_concepts": [
+        "KEY_VALUE_CACHE_STRIDES_NOT_INDEPENDENT_OR_VALIDATED"
+      ],
+      "review_alignment_eligible": false,
+      "verdict_correspondence": "not-scored"
+    },
+    {
+      "case_id": "vllm-pr-13996",
+      "close_classification": "author-close-without-explicit-reason",
+      "judgment_lock_sha256": "sha256:1f2e10f8ed18039cd473ea4e0e74ccbc196db5ca4dbc2fa25de9ce5336adb55e",
+      "machine_decision": "revise",
+      "machine_only_concepts": [
+        "OPTIONAL_CAPABILITY_GATE_OR_FALLBACK_MISSING",
+        "DEEPGEMM_LHS_SCALE_LAYOUT_CONTRACT_VIOLATED",
+        "DEEPGEMM_RUNTIME_JIT_PRECOMPILE_CONTRACT_MISSING"
+      ],
+      "review_alignment_eligible": true,
+      "reviewer_concepts": [
+        {
+          "concept_id": "DEEPGEMM_END_TO_END_PERFORMANCE_WIN",
+          "correspondence": "partial",
+          "explanation": "The machine preserved benchmark/JIT boundaries but correctly did not claim H200 performance from an A100; it therefore did not reproduce the reported 5% gain.",
+          "feedback_ids": [
+            "issue-comment:2693486627",
+            "issue-comment:2846141720",
+            "issue-comment:2852842104"
+          ],
+          "machine_rule_ids": [
+            "runtime-jit-has-a-precompile-path",
+            "unsupported-backend-early-exit-protects-benchmark-budget"
+          ],
+          "reviewer_concern": "Show an end-to-end throughput win on supported H200 hardware before the integration is picked up."
+        }
+      ],
+      "verdict_correspondence": "partial",
+      "verdict_explanation": "Reviewers required performance evidence and later reported a 5% H200 gain, with interest in picking up the work. The machine's revise decision is based on separate integration contracts, not reviewer opposition."
+    }
+  ],
+  "comparison_sha256": "sha256:3f657bb2e63a1141b794e7a7f041db474a2b0573b787a33e4cc926264fa2d6e5",
+  "judgment_lock_set_sha256": "sha256:c5ad254ad3e3c006cdd035b5c52d71c0ad400f1fdcf6d8cfc1835f4647a12ba8",
+  "learned_model_used": false,
+  "post_lock_only": true,
+  "protocol_id": "historical-human-concept-comparison-v0.5-r4",
+  "rescore_machine_locks": false,
+  "review_finality_audit_sha256": "sha256:81b35b9a4047ca5dfeb6c30e47400207786e227950c3fa753fec78a112e72103",
+  "review_reveal_sha256": "sha256:019777db2a0a184a6e6e2815611dee4df384d00d0784718594b90be0645abcbc",
+  "schema_version": "0.5",
+  "summary": {
+    "closed_unmerged_cases": 2,
+    "closure_reason_attributable_cases": 0,
+    "eligible_concept_correspondence": {
+      "exact": 0,
+      "missed": 0,
+      "partial": 1
+    },
+    "eligible_reviewer_concepts": 1,
+    "excluded_stale_or_unattributed_cases": 1,
+    "outcome_accuracy_computed": false,
+    "outcome_accuracy_exclusion": "Cases were preselected as closed-unmerged failures, so 2/2 is not an unbiased outcome-accuracy estimate.",
+    "review_alignment_eligible_cases": 1
+  },
+  "weighted_score_used": false
+}

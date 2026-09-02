@@ -1,0 +1,66 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "cell_identity_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Cell Identity Sha256",
+      "type": "string"
+    },
+    "cross_cell_ranking_allowed": {
+      "const": false,
+      "default": false,
+      "title": "Cross Cell Ranking Allowed",
+      "type": "boolean"
+    },
+    "host_system": {
+      "additionalProperties": true,
+      "title": "Host System",
+      "type": "object"
+    },
+    "raw_evidence_digests": {
+      "items": {
+        "pattern": "^sha256:[0-9a-f]{64}$",
+        "type": "string"
+      },
+      "title": "Raw Evidence Digests",
+      "type": "array"
+    },
+    "residency": {
+      "additionalProperties": true,
+      "title": "Residency",
+      "type": "object"
+    },
+    "schema_version": {
+      "const": "0.5.2",
+      "default": "0.5.2",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "score_status": {
+      "const": "not-a-score",
+      "default": "not-a-score",
+      "title": "Score Status",
+      "type": "string"
+    },
+    "service": {
+      "additionalProperties": true,
+      "title": "Service",
+      "type": "object"
+    },
+    "transfer": {
+      "additionalProperties": true,
+      "title": "Transfer",
+      "type": "object"
+    }
+  },
+  "required": [
+    "cell_identity_sha256",
+    "service",
+    "residency",
+    "transfer",
+    "host_system",
+    "raw_evidence_digests"
+  ],
+  "title": "MemoryTieringEfficiencyCard",
+  "type": "object"
+}

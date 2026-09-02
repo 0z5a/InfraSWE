@@ -1,0 +1,117 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "apply_result_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Apply Result Sha256",
+      "type": "string"
+    },
+    "build_environment_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Build Environment Sha256",
+      "type": "string"
+    },
+    "cache_policy_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Cache Policy Sha256",
+      "type": "string"
+    },
+    "dependency_lock_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Dependency Lock Sha256",
+      "type": "string"
+    },
+    "failure_code": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Failure Code"
+    },
+    "log_evidence_ref": {
+      "title": "Log Evidence Ref",
+      "type": "string"
+    },
+    "network_observed": {
+      "title": "Network Observed",
+      "type": "boolean"
+    },
+    "network_policy": {
+      "enum": [
+        "disabled",
+        "allowlist"
+      ],
+      "title": "Network Policy",
+      "type": "string"
+    },
+    "output_sha256": {
+      "anyOf": [
+        {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Output Sha256"
+    },
+    "owner": {
+      "enum": [
+        "candidate",
+        "benchmark",
+        "infrastructure",
+        "none"
+      ],
+      "title": "Owner",
+      "type": "string"
+    },
+    "result_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Result Sha256",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "0.1",
+      "default": "0.1",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "status": {
+      "enum": [
+        "BUILT",
+        "BUILD_FAILED",
+        "BENCHMARK_DEFECT",
+        "INFRA_INVALID"
+      ],
+      "title": "Status",
+      "type": "string"
+    },
+    "toolchain_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Toolchain Sha256",
+      "type": "string"
+    }
+  },
+  "required": [
+    "apply_result_sha256",
+    "build_environment_sha256",
+    "toolchain_sha256",
+    "dependency_lock_sha256",
+    "network_policy",
+    "network_observed",
+    "cache_policy_sha256",
+    "status",
+    "owner",
+    "log_evidence_ref",
+    "result_sha256"
+  ],
+  "title": "PristineBuildResult",
+  "type": "object"
+}

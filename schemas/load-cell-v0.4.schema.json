@@ -1,0 +1,137 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "completed_requests": {
+      "minimum": 0,
+      "title": "Completed Requests",
+      "type": "integer"
+    },
+    "deadlock": {
+      "default": false,
+      "title": "Deadlock",
+      "type": "boolean"
+    },
+    "error_drop_rate": {
+      "maximum": 1,
+      "minimum": 0,
+      "title": "Error Drop Rate",
+      "type": "number"
+    },
+    "error_drop_rate_above_max": {
+      "default": false,
+      "title": "Error Drop Rate Above Max",
+      "type": "boolean"
+    },
+    "fairness_score": {
+      "maximum": 1,
+      "minimum": 0,
+      "title": "Fairness Score",
+      "type": "number"
+    },
+    "livelock": {
+      "default": false,
+      "title": "Livelock",
+      "type": "boolean"
+    },
+    "load_ratio": {
+      "exclusiveMinimum": 0,
+      "title": "Load Ratio",
+      "type": "number"
+    },
+    "memory_growth_limit_exceeded": {
+      "default": false,
+      "title": "Memory Growth Limit Exceeded",
+      "type": "boolean"
+    },
+    "offered_requests": {
+      "minimum": 1,
+      "title": "Offered Requests",
+      "type": "integer"
+    },
+    "p99_status": {
+      "enum": [
+        "official",
+        "exploratory"
+      ],
+      "title": "P99 Status",
+      "type": "string"
+    },
+    "protocol_id": {
+      "title": "Protocol Id",
+      "type": "string"
+    },
+    "queue_unbounded": {
+      "default": false,
+      "title": "Queue Unbounded",
+      "type": "boolean"
+    },
+    "regime": {
+      "enum": [
+        "light",
+        "normal",
+        "knee",
+        "saturation",
+        "overload",
+        "burst_or_soak"
+      ],
+      "title": "Regime",
+      "type": "string"
+    },
+    "replay_jitter_score": {
+      "maximum": 1,
+      "minimum": 0,
+      "title": "Replay Jitter Score",
+      "type": "number"
+    },
+    "request_samples_sha256": {
+      "title": "Request Samples Sha256",
+      "type": "string"
+    },
+    "resource_stability_score": {
+      "maximum": 1,
+      "minimum": 0,
+      "title": "Resource Stability Score",
+      "type": "number"
+    },
+    "schema_version": {
+      "const": "0.4",
+      "default": "0.4",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "silent_fallback": {
+      "default": false,
+      "title": "Silent Fallback",
+      "type": "boolean"
+    },
+    "slo_goodput_ratio": {
+      "maximum": 1,
+      "minimum": 0,
+      "title": "Slo Goodput Ratio",
+      "type": "number"
+    },
+    "tail_score": {
+      "maximum": 1,
+      "minimum": 0,
+      "title": "Tail Score",
+      "type": "number"
+    }
+  },
+  "required": [
+    "protocol_id",
+    "regime",
+    "load_ratio",
+    "offered_requests",
+    "completed_requests",
+    "slo_goodput_ratio",
+    "error_drop_rate",
+    "tail_score",
+    "replay_jitter_score",
+    "resource_stability_score",
+    "fairness_score",
+    "p99_status",
+    "request_samples_sha256"
+  ],
+  "title": "LoadCellEvidence",
+  "type": "object"
+}

@@ -1,0 +1,1002 @@
+{
+  "$defs": {
+    "CellArtifactScore": {
+      "additionalProperties": false,
+      "properties": {
+        "components": {
+          "additionalProperties": {
+            "$ref": "#/$defs/ScoreComponent"
+          },
+          "title": "Components",
+          "type": "object"
+        },
+        "cross_cell_ranking_allowed": {
+          "const": false,
+          "default": false,
+          "title": "Cross Cell Ranking Allowed",
+          "type": "boolean"
+        },
+        "formula_template_id": {
+          "enum": [
+            "cell-artifact-mixed-v0.4",
+            "cell-artifact-memory-v0.4",
+            "cell-artifact-compute-v0.4",
+            "cell-artifact-distributed-v0.4",
+            "cell-artifact-memory-tiering-v0.5.2"
+          ],
+          "title": "Formula Template Id",
+          "type": "string"
+        },
+        "score_100": {
+          "anyOf": [
+            {
+              "maximum": 100,
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Score 100"
+        },
+        "status": {
+          "enum": [
+            "scored",
+            "not_deployable",
+            "unresolved",
+            "not_applicable"
+          ],
+          "title": "Status",
+          "type": "string"
+        }
+      },
+      "required": [
+        "status",
+        "formula_template_id"
+      ],
+      "title": "CellArtifactScore",
+      "type": "object"
+    },
+    "CellEfficiencyScore": {
+      "additionalProperties": false,
+      "properties": {
+        "counter_confidence": {
+          "enum": [
+            "low",
+            "medium",
+            "high",
+            "not_applicable"
+          ],
+          "title": "Counter Confidence",
+          "type": "string"
+        },
+        "cross_cell_ranking_allowed": {
+          "const": false,
+          "default": false,
+          "title": "Cross Cell Ranking Allowed",
+          "type": "boolean"
+        },
+        "physical_memory_band_efficiency": {
+          "$ref": "#/$defs/ScoreComponent"
+        },
+        "raw": {
+          "additionalProperties": true,
+          "title": "Raw",
+          "type": "object"
+        },
+        "sol_efficiency": {
+          "$ref": "#/$defs/ScoreComponent"
+        },
+        "status": {
+          "enum": [
+            "scored",
+            "unresolved",
+            "diagnostic",
+            "not_applicable"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "traffic_amplification": {
+          "$ref": "#/$defs/ScoreComponent"
+        },
+        "useful_memory_band_efficiency": {
+          "$ref": "#/$defs/ScoreComponent"
+        },
+        "work_model_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Work Model Id"
+        }
+      },
+      "required": [
+        "status",
+        "sol_efficiency",
+        "useful_memory_band_efficiency",
+        "physical_memory_band_efficiency",
+        "traffic_amplification",
+        "counter_confidence"
+      ],
+      "title": "CellEfficiencyScore",
+      "type": "object"
+    },
+    "CoreComponents": {
+      "additionalProperties": false,
+      "properties": {
+        "correctness": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Correctness",
+          "type": "number"
+        },
+        "efficiency": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Efficiency",
+          "type": "number"
+        },
+        "fresh_replay": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Fresh Replay",
+          "type": "number"
+        },
+        "protocol": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Protocol",
+          "type": "number"
+        },
+        "regression": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Regression",
+          "type": "number"
+        }
+      },
+      "required": [
+        "correctness",
+        "regression",
+        "fresh_replay",
+        "efficiency",
+        "protocol"
+      ],
+      "title": "CoreComponents",
+      "type": "object"
+    },
+    "DeployabilityScore": {
+      "additionalProperties": false,
+      "properties": {
+        "component_floors": {
+          "additionalProperties": {
+            "type": "number"
+          },
+          "title": "Component Floors",
+          "type": "object"
+        },
+        "components": {
+          "additionalProperties": {
+            "$ref": "#/$defs/ScoreComponent"
+          },
+          "title": "Components",
+          "type": "object"
+        },
+        "cross_cell_ranking_allowed": {
+          "default": true,
+          "title": "Cross Cell Ranking Allowed",
+          "type": "boolean"
+        },
+        "formula_template_id": {
+          "const": "deployability-v0.4",
+          "default": "deployability-v0.4",
+          "title": "Formula Template Id",
+          "type": "string"
+        },
+        "score_100": {
+          "anyOf": [
+            {
+              "maximum": 100,
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Score 100"
+        },
+        "status": {
+          "enum": [
+            "scored",
+            "not_deployable",
+            "unresolved",
+            "not_applicable"
+          ],
+          "title": "Status",
+          "type": "string"
+        }
+      },
+      "required": [
+        "status"
+      ],
+      "title": "DeployabilityScore",
+      "type": "object"
+    },
+    "GateResult": {
+      "additionalProperties": false,
+      "properties": {
+        "passed": {
+          "title": "Passed",
+          "type": "boolean"
+        },
+        "reasons": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Reasons",
+          "type": "array"
+        }
+      },
+      "required": [
+        "passed"
+      ],
+      "title": "GateResult",
+      "type": "object"
+    },
+    "InfraComponents": {
+      "additionalProperties": false,
+      "properties": {
+        "fault_recovery": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Fault Recovery",
+          "type": "number"
+        },
+        "observability": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Observability",
+          "type": "number"
+        },
+        "resource_efficiency": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Resource Efficiency",
+          "type": "number"
+        },
+        "safety_rollback": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Safety Rollback",
+          "type": "number"
+        },
+        "slo_goodput": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Slo Goodput",
+          "type": "number"
+        },
+        "topology_robustness": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Topology Robustness",
+          "type": "number"
+        }
+      },
+      "required": [
+        "slo_goodput",
+        "fault_recovery",
+        "safety_rollback",
+        "resource_efficiency",
+        "topology_robustness",
+        "observability"
+      ],
+      "title": "InfraComponents",
+      "type": "object"
+    },
+    "KernelScoreEnvelope": {
+      "additionalProperties": false,
+      "properties": {
+        "applicable": {
+          "title": "Applicable",
+          "type": "boolean"
+        },
+        "artifact_100": {
+          "anyOf": [
+            {
+              "maximum": 100,
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Artifact 100"
+        },
+        "artifact_status": {
+          "default": "not_applicable",
+          "enum": [
+            "scored",
+            "unscored_invalid",
+            "quarantined",
+            "not_applicable"
+          ],
+          "title": "Artifact Status",
+          "type": "string"
+        },
+        "audit_flags": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Audit Flags",
+          "type": "array"
+        },
+        "benchmark_cell_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Benchmark Cell Id"
+        },
+        "certified": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Certified"
+        },
+        "component_formula_origins": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "title": "Component Formula Origins",
+          "type": "object"
+        },
+        "components": {
+          "additionalProperties": {
+            "type": "number"
+          },
+          "title": "Components",
+          "type": "object"
+        },
+        "disposition": {
+          "default": "not_applicable",
+          "enum": [
+            "valid",
+            "invalid",
+            "quarantined",
+            "not_applicable"
+          ],
+          "title": "Disposition",
+          "type": "string"
+        },
+        "formula_origin": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Formula Origin"
+        },
+        "formula_parameters_sha256": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Formula Parameters Sha256"
+        },
+        "formula_version": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Formula Version"
+        },
+        "leaderboard_effective_artifact_100": {
+          "anyOf": [
+            {
+              "maximum": 100,
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Leaderboard Effective Artifact 100"
+        },
+        "leaderboard_season": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Leaderboard Season"
+        },
+        "profile": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Profile"
+        },
+        "raw_metrics": {
+          "additionalProperties": true,
+          "title": "Raw Metrics",
+          "type": "object"
+        },
+        "roles": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "title": "Roles",
+          "type": "object"
+        },
+        "search": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/KernelSearchScore"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "verdict": {
+          "default": "not_applicable",
+          "enum": [
+            "pass",
+            "fail",
+            "unresolved",
+            "not_applicable"
+          ],
+          "title": "Verdict",
+          "type": "string"
+        }
+      },
+      "required": [
+        "applicable"
+      ],
+      "title": "KernelScoreEnvelope",
+      "type": "object"
+    },
+    "KernelSearchScore": {
+      "additionalProperties": false,
+      "properties": {
+        "auc_leased_device_100": {
+          "anyOf": [
+            {
+              "maximum": 100,
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Auc Leased Device 100"
+        },
+        "auc_primary_100": {
+          "anyOf": [
+            {
+              "maximum": 100,
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Auc Primary 100"
+        },
+        "auc_token_100": {
+          "anyOf": [
+            {
+              "maximum": 100,
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Auc Token 100"
+        },
+        "auc_wall_100": {
+          "anyOf": [
+            {
+              "maximum": 100,
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Auc Wall 100"
+        },
+        "candidate_count": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Candidate Count",
+          "type": "integer"
+        },
+        "compile_attempts": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Compile Attempts",
+          "type": "integer"
+        },
+        "primary_budget_axis": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Primary Budget Axis"
+        },
+        "profile_invocations": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Profile Invocations",
+          "type": "integer"
+        },
+        "sealed_checkpoint_count": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Sealed Checkpoint Count",
+          "type": "integer"
+        },
+        "sealed_feedback_during_episode": {
+          "const": false,
+          "default": false,
+          "title": "Sealed Feedback During Episode",
+          "type": "boolean"
+        },
+        "time_to_baseline_sec": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Time To Baseline Sec"
+        },
+        "time_to_first_correct_sec": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Time To First Correct Sec"
+        }
+      },
+      "title": "KernelSearchScore",
+      "type": "object"
+    },
+    "ScoreComponent": {
+      "additionalProperties": false,
+      "description": "A score value bound to its formula and input evidence.\n\nMissing, unsupported, and diagnostic-only evidence are represented explicitly;\ncallers must never turn those states into a numeric zero or renormalize weights.",
+      "properties": {
+        "confidence": {
+          "default": "low",
+          "enum": [
+            "low",
+            "medium",
+            "high",
+            "not_applicable"
+          ],
+          "title": "Confidence",
+          "type": "string"
+        },
+        "formula_version": {
+          "title": "Formula Version",
+          "type": "string"
+        },
+        "input_evidence_digests": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Input Evidence Digests",
+          "type": "array"
+        },
+        "reason": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Reason"
+        },
+        "status": {
+          "enum": [
+            "scored",
+            "not_applicable",
+            "unresolved",
+            "diagnostic"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "value": {
+          "anyOf": [
+            {
+              "maximum": 1,
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Value"
+        }
+      },
+      "required": [
+        "status",
+        "formula_version"
+      ],
+      "title": "ScoreComponent",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "audit_flags": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Audit Flags",
+      "type": "array"
+    },
+    "benchmark_cell_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Benchmark Cell Id"
+    },
+    "cell_artifact": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/CellArtifactScore"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "cell_efficiency": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/CellEfficiencyScore"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "core_100": {
+      "anyOf": [
+        {
+          "maximum": 100,
+          "minimum": 0,
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Core 100"
+    },
+    "core_components": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/CoreComponents"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "coverage": {
+      "anyOf": [
+        {
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Coverage"
+    },
+    "deployability": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/DeployabilityScore"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "disposition": {
+      "anyOf": [
+        {
+          "enum": [
+            "valid",
+            "invalid",
+            "quarantined",
+            "partial",
+            "not_applicable"
+          ],
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Disposition"
+    },
+    "evidence_grade": {
+      "anyOf": [
+        {
+          "enum": [
+            "legacy-framework-trace",
+            "E0-runtime",
+            "E1-framework",
+            "E2-system-trace",
+            "E3-kernel-counter",
+            "E4-sealed"
+          ],
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Evidence Grade"
+    },
+    "failure_codes": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Failure Codes",
+      "type": "array"
+    },
+    "gate": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/GateResult"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "infra_cert": {
+      "anyOf": [
+        {
+          "enum": [
+            "pass",
+            "fail",
+            "unresolved",
+            "not_applicable"
+          ],
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Infra Cert"
+    },
+    "infra_components": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/InfraComponents"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "infra_ext_100": {
+      "anyOf": [
+        {
+          "maximum": 100,
+          "minimum": 0,
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Infra Ext 100"
+    },
+    "infra_total": {
+      "anyOf": [
+        {
+          "maximum": 100,
+          "minimum": 0,
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Infra Total"
+    },
+    "kernel": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/KernelScoreEnvelope"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "leaderboard_effective_deployability_100": {
+      "anyOf": [
+        {
+          "maximum": 100,
+          "minimum": 0,
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Leaderboard Effective Deployability 100"
+    },
+    "raw": {
+      "additionalProperties": true,
+      "title": "Raw",
+      "type": "object"
+    },
+    "raw_metrics": {
+      "additionalProperties": true,
+      "title": "Raw Metrics",
+      "type": "object"
+    },
+    "resolved_at_1": {
+      "anyOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Resolved At 1"
+    },
+    "schema_version": {
+      "default": "0.1",
+      "enum": [
+        "0.1",
+        "0.3",
+        "0.4"
+      ],
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "search": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/KernelSearchScore"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "stable_resolved_at_1": {
+      "anyOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Stable Resolved At 1"
+    }
+  },
+  "title": "ScoreResult",
+  "type": "object"
+}

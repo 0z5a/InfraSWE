@@ -1,0 +1,186 @@
+2026-09-01 14:55:31,284 - INFO - flashinfer.jit: Loading JIT ops: batch_mla_attention_dtype_q_f16_dtype_kv_f16_dtype_o_f16_dtype_idx_i32_head_dim_ckv_512_head_dim_kpe_64
+Traceback (most recent call last):
+  File "/venv/main/lib/python3.12/site-packages/torch/utils/cpp_extension.py", line 2104, in _run_ninja_build
+    subprocess.run(
+  File "/venv/main/lib/python3.12/subprocess.py", line 571, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['ninja', '-v', '-j', '4']' returned non-zero exit status 1.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/workspace/infraswe/benchmarks/historical_prs/probes/flashinfer_mla_page_size_probe.py", line 186, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "/workspace/infraswe/benchmarks/historical_prs/probes/flashinfer_mla_page_size_probe.py", line 166, in main
+    results = [_run_case(*case) for case in cases]
+               ^^^^^^^^^^^^^^^^
+  File "/workspace/infraswe/benchmarks/historical_prs/probes/flashinfer_mla_page_size_probe.py", line 104, in _run_case
+    wrapper.plan(
+  File "/workspace/historical-prs/venvs/flashinfer-pr-810-base/lib/python3.12/site-packages/flashinfer/mla.py", line 69, in plan
+    self._cached_module = get_batch_mla_module(
+                          ^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/historical-prs/venvs/flashinfer-pr-810-base/lib/python3.12/site-packages/flashinfer/mla.py", line 32, in get_batch_mla_module
+    _batch_mla_modules[args] = gen_batch_mla_module(*args)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/historical-prs/venvs/flashinfer-pr-810-base/lib/python3.12/site-packages/flashinfer/jit/attention.py", line 211, in gen_batch_mla_module
+    return load_cuda_ops(uri, source_paths)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/historical-prs/venvs/flashinfer-pr-810-base/lib/python3.12/site-packages/flashinfer/jit/core.py", line 120, in load_cuda_ops
+    module = torch_cpp_ext.load(
+             ^^^^^^^^^^^^^^^^^^^
+  File "/venv/main/lib/python3.12/site-packages/torch/utils/cpp_extension.py", line 1314, in load
+    return _jit_compile(
+           ^^^^^^^^^^^^^
+  File "/venv/main/lib/python3.12/site-packages/torch/utils/cpp_extension.py", line 1721, in _jit_compile
+    _write_ninja_file_and_build_library(
+  File "/venv/main/lib/python3.12/site-packages/torch/utils/cpp_extension.py", line 1833, in _write_ninja_file_and_build_library
+    _run_ninja_build(
+  File "/venv/main/lib/python3.12/site-packages/torch/utils/cpp_extension.py", line 2120, in _run_ninja_build
+    raise RuntimeError(message) from e
+RuntimeError: Error building extension 'batch_mla_attention_dtype_q_f16_dtype_kv_f16_dtype_o_f16_dtype_idx_i32_head_dim_ckv_512_head_dim_kpe_64': [1/4] /usr/local/cuda/bin/nvcc --generate-dependencies-with-compile --dependency-output batch_mla_run.cuda.o.d -DTORCH_EXTENSION_NAME=batch_mla_attention_dtype_q_f16_dtype_kv_f16_dtype_o_f16_dtype_idx_i32_head_dim_ckv_512_head_dim_kpe_64 -DTORCH_API_INCLUDE_EXTENSION_H -DPYBIND11_COMPILER_TYPE=\"_gcc\" -DPYBIND11_STDLIB=\"_libstdcpp\" -DPYBIND11_BUILD_ABI=\"_cxxabi1011\" -I/workspace/historical-prs/venvs/flashinfer-pr-810-base/lib/python3.12/site-packages/flashinfer/data/include -I/workspace/historical-prs/venvs/flashinfer-pr-810-base/lib/python3.12/site-packages/flashinfer/data/csrc -I/workspace/historical-prs/venvs/flashinfer-pr-810-base/lib/python3.12/site-packages/flashinfer/data/cutlass/include -I/workspace/historical-prs/venvs/flashinfer-pr-810-base/lib/python3.12/site-packages/flashinfer/data/cutlass/tools/util/include -isystem /venv/main/lib/python3.12/site-packages/torch/include -isystem /venv/main/lib/python3.12/site-packages/torch/include/torch/csrc/api/include -isystem /venv/main/lib/python3.12/site-packages/torch/include/TH -isystem /venv/main/lib/python3.12/site-packages/torch/include/THC -isystem /usr/local/cuda/include -isystem /venv/main/include/python3.12 -D_GLIBCXX_USE_CXX11_ABI=0 --expt-relaxed-constexpr -gencode=arch=compute_80,code=sm_80 --compiler-options '-fPIC' -O3 -std=c++17 --threads 4 -use_fast_math -DFLASHINFER_ENABLE_F16 -DFLASHINFER_ENABLE_BF16 -DFLASHINFER_ENABLE_FP8_E4M3 -DFLASHINFER_ENABLE_FP8_E5M2 -c /workspace/historical-prs/results/flashinfer-pr-810/base-jit-workspace/generated/batch_mla_attention_dtype_q_f16_dtype_kv_f16_dtype_o_f16_dtype_idx_i32_head_dim_ckv_512_head_dim_kpe_64/batch_mla_run.cu -o batch_mla_run.cuda.o 
+FAILED: batch_mla_run.cuda.o 
+/usr/local/cuda/bin/nvcc --generate-dependencies-with-compile --dependency-output batch_mla_run.cuda.o.d -DTORCH_EXTENSION_NAME=batch_mla_attention_dtype_q_f16_dtype_kv_f16_dtype_o_f16_dtype_idx_i32_head_dim_ckv_512_head_dim_kpe_64 -DTORCH_API_INCLUDE_EXTENSION_H -DPYBIND11_COMPILER_TYPE=\"_gcc\" -DPYBIND11_STDLIB=\"_libstdcpp\" -DPYBIND11_BUILD_ABI=\"_cxxabi1011\" -I/workspace/historical-prs/venvs/flashinfer-pr-810-base/lib/python3.12/site-packages/flashinfer/data/include -I/workspace/historical-prs/venvs/flashinfer-pr-810-base/lib/python3.12/site-packages/flashinfer/data/csrc -I/workspace/historical-prs/venvs/flashinfer-pr-810-base/lib/python3.12/site-packages/flashinfer/data/cutlass/include -I/workspace/historical-prs/venvs/flashinfer-pr-810-base/lib/python3.12/site-packages/flashinfer/data/cutlass/tools/util/include -isystem /venv/main/lib/python3.12/site-packages/torch/include -isystem /venv/main/lib/python3.12/site-packages/torch/include/torch/csrc/api/include -isystem /venv/main/lib/python3.12/site-packages/torch/include/TH -isystem /venv/main/lib/python3.12/site-packages/torch/include/THC -isystem /usr/local/cuda/include -isystem /venv/main/include/python3.12 -D_GLIBCXX_USE_CXX11_ABI=0 --expt-relaxed-constexpr -gencode=arch=compute_80,code=sm_80 --compiler-options '-fPIC' -O3 -std=c++17 --threads 4 -use_fast_math -DFLASHINFER_ENABLE_F16 -DFLASHINFER_ENABLE_BF16 -DFLASHINFER_ENABLE_FP8_E4M3 -DFLASHINFER_ENABLE_FP8_E5M2 -c /workspace/historical-prs/results/flashinfer-pr-810/base-jit-workspace/generated/batch_mla_attention_dtype_q_f16_dtype_kv_f16_dtype_o_f16_dtype_idx_i32_head_dim_ckv_512_head_dim_kpe_64/batch_mla_run.cu -o batch_mla_run.cuda.o 
+In file included from /workspace/historical-prs/results/flashinfer-pr-810/base-jit-workspace/generated/batch_mla_attention_dtype_q_f16_dtype_kv_f16_dtype_o_f16_dtype_idx_i32_head_dim_ckv_512_head_dim_kpe_64/batch_mla_run.cu:23:
+/workspace/historical-prs/results/flashinfer-pr-810/base-jit-workspace/generated/batch_mla_attention_dtype_q_f16_dtype_kv_f16_dtype_o_f16_dtype_idx_i32_head_dim_ckv_512_head_dim_kpe_64/batch_mla_config.inc:20:111: warning: backslash-newline at end of file
+   20 | #define DISPATCH_context(DTypeQ, DTypeKV, DTypeO, IdType, MASK_MODE, HEAD_DIM_CKV, HEAD_DIM_KPE, Params, ...) \
+      |                                                                                                                
+In file included from /workspace/historical-prs/results/flashinfer-pr-810/base-jit-workspace/generated/batch_mla_attention_dtype_q_f16_dtype_kv_f16_dtype_o_f16_dtype_idx_i32_head_dim_ckv_512_head_dim_kpe_64/batch_mla_run.cu:23:
+/workspace/historical-prs/results/flashinfer-pr-810/base-jit-workspace/generated/batch_mla_attention_dtype_q_f16_dtype_kv_f16_dtype_o_f16_dtype_idx_i32_head_dim_ckv_512_head_dim_kpe_64/batch_mla_config.inc:20:111: warning: backslash-newline at end of file
+   20 | #define DISPATCH_context(DTypeQ, DTypeKV, DTypeO, IdType, MASK_MODE, HEAD_DIM_CKV, HEAD_DIM_KPE, Params, ...) \
+      |                                                                                                                
+/workspace/historical-prs/venvs/flashinfer-pr-810-base/lib/python3.12/site-packages/flashinfer/data/include/flashinfer/attention/mla_fa2.cuh(129): warning #177-D: variable "NUM_MMA_D_CKV" was declared but never referenced
+    constexpr uint32_t NUM_MMA_D_CKV = KTraits::NUM_MMA_D_CKV;
+                       ^
+          detected during:
+            instantiation of "void flashinfer::mla::BatchMLAPageAttentionKernel<KTraits,Params>(Params) [with KTraits=flashinfer::mla::KernelTraits<false, 2U, 512U, 64U, 64U, 64U, DTypeQ, DTypeKV, DTypeO, IdType>, Params=flashinfer::MLAParams<DTypeQ, DTypeKV, DTypeO, IdType>]" at line 779
+            instantiation of "cudaError_t flashinfer::mla::BatchMLAPageAttention<MASK_MODE,HEAD_DIM_CKV,HEAD_DIM_KPE,Params>(Params, uint32_t, uint32_t, cudaStream_t) [with MASK_MODE=flashinfer::MaskMode::kNone, HEAD_DIM_CKV=512U, HEAD_DIM_KPE=64U, Params=flashinfer::MLAParams<DTypeQ, DTypeKV, DTypeO, IdType>]" at line 64 of /workspace/historical-prs/results/flashinfer-pr-810/base-jit-workspace/generated/batch_mla_attention_dtype_q_f16_dtype_kv_f16_dtype_o_f16_dtype_idx_i32_head_dim_ckv_512_head_dim_kpe_64/batch_mla_run.cu
+
+Remark: The warnings can be suppressed with "-diag-suppress <warning-number>"
+
+/workspace/historical-prs/venvs/flashinfer-pr-810-base/lib/python3.12/site-packages/flashinfer/data/include/flashinfer/attention/mla_fa2.cuh(130): warning #177-D: variable "NUM_MMA_D_KPE" was declared but never referenced
+    constexpr uint32_t NUM_MMA_D_KPE = KTraits::NUM_MMA_D_KPE;
+                       ^
+          detected during:
+            instantiation of "void flashinfer::mla::BatchMLAPageAttentionKernel<KTraits,Params>(Params) [with KTraits=flashinfer::mla::KernelTraits<false, 2U, 512U, 64U, 64U, 64U, DTypeQ, DTypeKV, DTypeO, IdType>, Params=flashinfer::MLAParams<DTypeQ, DTypeKV, DTypeO, IdType>]" at line 779
+            instantiation of "cudaError_t flashinfer::mla::BatchMLAPageAttention<MASK_MODE,HEAD_DIM_CKV,HEAD_DIM_KPE,Params>(Params, uint32_t, uint32_t, cudaStream_t) [with MASK_MODE=flashinfer::MaskMode::kNone, HEAD_DIM_CKV=512U, HEAD_DIM_KPE=64U, Params=flashinfer::MLAParams<DTypeQ, DTypeKV, DTypeO, IdType>]" at line 64 of /workspace/historical-prs/results/flashinfer-pr-810/base-jit-workspace/generated/batch_mla_attention_dtype_q_f16_dtype_kv_f16_dtype_o_f16_dtype_idx_i32_head_dim_ckv_512_head_dim_kpe_64/batch_mla_run.cu
+
+/workspace/historical-prs/venvs/flashinfer-pr-810-base/lib/python3.12/site-packages/flashinfer/data/include/flashinfer/attention/mla_fa2.cuh(180): warning #177-D: variable "NUM_MMA_D_CKV" was declared but never referenced
+    constexpr uint32_t NUM_MMA_D_CKV = KTraits::NUM_MMA_D_CKV;
+                       ^
+          detected during:
+            instantiation of "void flashinfer::mla::BatchMLAPageAttentionKernel<KTraits,Params>(Params) [with KTraits=flashinfer::mla::KernelTraits<false, 2U, 512U, 64U, 64U, 64U, DTypeQ, DTypeKV, DTypeO, IdType>, Params=flashinfer::MLAParams<DTypeQ, DTypeKV, DTypeO, IdType>]" at line 779
+            instantiation of "cudaError_t flashinfer::mla::BatchMLAPageAttention<MASK_MODE,HEAD_DIM_CKV,HEAD_DIM_KPE,Params>(Params, uint32_t, uint32_t, cudaStream_t) [with MASK_MODE=flashinfer::MaskMode::kNone, HEAD_DIM_CKV=512U, HEAD_DIM_KPE=64U, Params=flashinfer::MLAParams<DTypeQ, DTypeKV, DTypeO, IdType>]" at line 64 of /workspace/historical-prs/results/flashinfer-pr-810/base-jit-workspace/generated/batch_mla_attention_dtype_q_f16_dtype_kv_f16_dtype_o_f16_dtype_idx_i32_head_dim_ckv_512_head_dim_kpe_64/batch_mla_run.cu
+
+/workspace/historical-prs/venvs/flashinfer-pr-810-base/lib/python3.12/site-packages/flashinfer/data/include/flashinfer/attention/mla_fa2.cuh(181): warning #177-D: variable "NUM_MMA_D_KPE" was declared but never referenced
+    constexpr uint32_t NUM_MMA_D_KPE = KTraits::NUM_MMA_D_KPE;
+                       ^
+          detected during:
+            instantiation of "void flashinfer::mla::BatchMLAPageAttentionKernel<KTraits,Params>(Params) [with KTraits=flashinfer::mla::KernelTraits<false, 2U, 512U, 64U, 64U, 64U, DTypeQ, DTypeKV, DTypeO, IdType>, Params=flashinfer::MLAParams<DTypeQ, DTypeKV, DTypeO, IdType>]" at line 779
+            instantiation of "cudaError_t flashinfer::mla::BatchMLAPageAttention<MASK_MODE,HEAD_DIM_CKV,HEAD_DIM_KPE,Params>(Params, uint32_t, uint32_t, cudaStream_t) [with MASK_MODE=flashinfer::MaskMode::kNone, HEAD_DIM_CKV=512U, HEAD_DIM_KPE=64U, Params=flashinfer::MLAParams<DTypeQ, DTypeKV, DTypeO, IdType>]" at line 64 of /workspace/historical-prs/results/flashinfer-pr-810/base-jit-workspace/generated/batch_mla_attention_dtype_q_f16_dtype_kv_f16_dtype_o_f16_dtype_idx_i32_head_dim_ckv_512_head_dim_kpe_64/batch_mla_run.cu
+
+/workspace/historical-prs/venvs/flashinfer-pr-810-base/lib/python3.12/site-packages/flashinfer/data/include/flashinfer/attention/mla_fa2.cuh(379): warning #177-D: variable "UPCAST_STRIDE_Q_NOPE" was declared but never referenced
+    constexpr uint32_t UPCAST_STRIDE_Q_NOPE = KTraits::UPCAST_STRIDE_Q_NOPE;
+                       ^
+          detected during:
+            instantiation of "void flashinfer::mla::BatchMLAPageAttentionKernel<KTraits,Params>(Params) [with KTraits=flashinfer::mla::KernelTraits<false, 2U, 512U, 64U, 64U, 64U, DTypeQ, DTypeKV, DTypeO, IdType>, Params=flashinfer::MLAParams<DTypeQ, DTypeKV, DTypeO, IdType>]" at line 779
+            instantiation of "cudaError_t flashinfer::mla::BatchMLAPageAttention<MASK_MODE,HEAD_DIM_CKV,HEAD_DIM_KPE,Params>(Params, uint32_t, uint32_t, cudaStream_t) [with MASK_MODE=flashinfer::MaskMode::kNone, HEAD_DIM_CKV=512U, HEAD_DIM_KPE=64U, Params=flashinfer::MLAParams<DTypeQ, DTypeKV, DTypeO, IdType>]" at line 64 of /workspace/historical-prs/results/flashinfer-pr-810/base-jit-workspace/generated/batch_mla_attention_dtype_q_f16_dtype_kv_f16_dtype_o_f16_dtype_idx_i32_head_dim_ckv_512_head_dim_kpe_64/batch_mla_run.cu
+
+/workspace/historical-prs/venvs/flashinfer-pr-810-base/lib/python3.12/site-packages/flashinfer/data/include/flashinfer/attention/mla_fa2.cuh(380): warning #177-D: variable "UPCAST_STRIDE_Q_PE" was declared but never referenced
+    constexpr uint32_t UPCAST_STRIDE_Q_PE = KTraits::UPCAST_STRIDE_Q_PE;
+                       ^
+          detected during:
+            instantiation of "void flashinfer::mla::BatchMLAPageAttentionKernel<KTraits,Params>(Params) [with KTraits=flashinfer::mla::KernelTraits<false, 2U, 512U, 64U, 64U, 64U, DTypeQ, DTypeKV, DTypeO, IdType>, Params=flashinfer::MLAParams<DTypeQ, DTypeKV, DTypeO, IdType>]" at line 779
+            instantiation of "cudaError_t flashinfer::mla::BatchMLAPageAttention<MASK_MODE,HEAD_DIM_CKV,HEAD_DIM_KPE,Params>(Params, uint32_t, uint32_t, cudaStream_t) [with MASK_MODE=flashinfer::MaskMode::kNone, HEAD_DIM_CKV=512U, HEAD_DIM_KPE=64U, Params=flashinfer::MLAParams<DTypeQ, DTypeKV, DTypeO, IdType>]" at line 64 of /workspace/historical-prs/results/flashinfer-pr-810/base-jit-workspace/generated/batch_mla_attention_dtype_q_f16_dtype_kv_f16_dtype_o_f16_dtype_idx_i32_head_dim_ckv_512_head_dim_kpe_64/batch_mla_run.cu
+
+/workspace/historical-prs/venvs/flashinfer-pr-810-base/lib/python3.12/site-packages/flashinfer/data/include/flashinfer/attention/mla_fa2.cuh(381): warning #177-D: variable "UPCAST_STRIDE_CKV" was declared but never referenced
+    constexpr uint32_t UPCAST_STRIDE_CKV = KTraits::UPCAST_STRIDE_CKV;
+                       ^
+          detected during:
+            instantiation of "void flashinfer::mla::BatchMLAPageAttentionKernel<KTraits,Params>(Params) [with KTraits=flashinfer::mla::KernelTraits<false, 2U, 512U, 64U, 64U, 64U, DTypeQ, DTypeKV, DTypeO, IdType>, Params=flashinfer::MLAParams<DTypeQ, DTypeKV, DTypeO, IdType>]" at line 779
+            instantiation of "cudaError_t flashinfer::mla::BatchMLAPageAttention<MASK_MODE,HEAD_DIM_CKV,HEAD_DIM_KPE,Params>(Params, uint32_t, uint32_t, cudaStream_t) [with MASK_MODE=flashinfer::MaskMode::kNone, HEAD_DIM_CKV=512U, HEAD_DIM_KPE=64U, Params=flashinfer::MLAParams<DTypeQ, DTypeKV, DTypeO, IdType>]" at line 64 of /workspace/historical-prs/results/flashinfer-pr-810/base-jit-workspace/generated/batch_mla_attention_dtype_q_f16_dtype_kv_f16_dtype_o_f16_dtype_idx_i32_head_dim_ckv_512_head_dim_kpe_64/batch_mla_run.cu
+
+/workspace/historical-prs/venvs/flashinfer-pr-810-base/lib/python3.12/site-packages/flashinfer/data/include/flashinfer/attention/mla_fa2.cuh(382): warning #177-D: variable "UPCAST_STRIDE_KPE" was declared but never referenced
+    constexpr uint32_t UPCAST_STRIDE_KPE = KTraits::UPCAST_STRIDE_KPE;
+                       ^
+          detected during:
+            instantiation of "void flashinfer::mla::BatchMLAPageAttentionKernel<KTraits,Params>(Params) [with KTraits=flashinfer::mla::KernelTraits<false, 2U, 512U, 64U, 64U, 64U, DTypeQ, DTypeKV, DTypeO, IdType>, Params=flashinfer::MLAParams<DTypeQ, DTypeKV, DTypeO, IdType>]" at line 779
+            instantiation of "cudaError_t flashinfer::mla::BatchMLAPageAttention<MASK_MODE,HEAD_DIM_CKV,HEAD_DIM_KPE,Params>(Params, uint32_t, uint32_t, cudaStream_t) [with MASK_MODE=flashinfer::MaskMode::kNone, HEAD_DIM_CKV=512U, HEAD_DIM_KPE=64U, Params=flashinfer::MLAParams<DTypeQ, DTypeKV, DTypeO, IdType>]" at line 64 of /workspace/historical-prs/results/flashinfer-pr-810/base-jit-workspace/generated/batch_mla_attention_dtype_q_f16_dtype_kv_f16_dtype_o_f16_dtype_idx_i32_head_dim_ckv_512_head_dim_kpe_64/batch_mla_run.cu
+
+/workspace/historical-prs/venvs/flashinfer-pr-810-base/lib/python3.12/site-packages/flashinfer/data/include/flashinfer/attention/mla_fa2.cuh(383): warning #177-D: variable "NUM_MMA_KV" was declared but never referenced
+    constexpr uint32_t NUM_MMA_KV = KTraits::NUM_MMA_KV;
+                       ^
+          detected during:
+            instantiation of "void flashinfer::mla::BatchMLAPageAttentionKernel<KTraits,Params>(Params) [with KTraits=flashinfer::mla::KernelTraits<false, 2U, 512U, 64U, 64U, 64U, DTypeQ, DTypeKV, DTypeO, IdType>, Params=flashinfer::MLAParams<DTypeQ, DTypeKV, DTypeO, IdType>]" at line 779
+            instantiation of "cudaError_t flashinfer::mla::BatchMLAPageAttention<MASK_MODE,HEAD_DIM_CKV,HEAD_DIM_KPE,Params>(Params, uint32_t, uint32_t, cudaStream_t) [with MASK_MODE=flashinfer::MaskMode::kNone, HEAD_DIM_CKV=512U, HEAD_DIM_KPE=64U, Params=flashinfer::MLAParams<DTypeQ, DTypeKV, DTypeO, IdType>]" at line 64 of /workspace/historical-prs/results/flashinfer-pr-810/base-jit-workspace/generated/batch_mla_attention_dtype_q_f16_dtype_kv_f16_dtype_o_f16_dtype_idx_i32_head_dim_ckv_512_head_dim_kpe_64/batch_mla_run.cu
+
+/workspace/historical-prs/venvs/flashinfer-pr-810-base/lib/python3.12/site-packages/flashinfer/data/include/flashinfer/attention/mla_fa2.cuh(388): warning #177-D: variable "lane_idx" was declared but never referenced
+    const uint32_t lane_idx = threadIdx.x, warpgroup_idx = threadIdx.z, warp_idx_in_wg = threadIdx.y;
+                   ^
+          detected during:
+            instantiation of "void flashinfer::mla::BatchMLAPageAttentionKernel<KTraits,Params>(Params) [with KTraits=flashinfer::mla::KernelTraits<false, 2U, 512U, 64U, 64U, 64U, DTypeQ, DTypeKV, DTypeO, IdType>, Params=flashinfer::MLAParams<DTypeQ, DTypeKV, DTypeO, IdType>]" at line 779
+            instantiation of "cudaError_t flashinfer::mla::BatchMLAPageAttention<MASK_MODE,HEAD_DIM_CKV,HEAD_DIM_KPE,Params>(Params, uint32_t, uint32_t, cudaStream_t) [with MASK_MODE=flashinfer::MaskMode::kNone, HEAD_DIM_CKV=512U, HEAD_DIM_KPE=64U, Params=flashinfer::MLAParams<DTypeQ, DTypeKV, DTypeO, IdType>]" at line 64 of /workspace/historical-prs/results/flashinfer-pr-810/base-jit-workspace/generated/batch_mla_attention_dtype_q_f16_dtype_kv_f16_dtype_o_f16_dtype_idx_i32_head_dim_ckv_512_head_dim_kpe_64/batch_mla_run.cu
+
+/workspace/historical-prs/venvs/flashinfer-pr-810-base/lib/python3.12/site-packages/flashinfer/data/include/flashinfer/attention/mla_fa2.cuh(388): warning #177-D: variable "warpgroup_idx" was declared but never referenced
+    const uint32_t lane_idx = threadIdx.x, warpgroup_idx = threadIdx.z, warp_idx_in_wg = threadIdx.y;
+                                           ^
+          detected during:
+            instantiation of "void flashinfer::mla::BatchMLAPageAttentionKernel<KTraits,Params>(Params) [with KTraits=flashinfer::mla::KernelTraits<false, 2U, 512U, 64U, 64U, 64U, DTypeQ, DTypeKV, DTypeO, IdType>, Params=flashinfer::MLAParams<DTypeQ, DTypeKV, DTypeO, IdType>]" at line 779
+            instantiation of "cudaError_t flashinfer::mla::BatchMLAPageAttention<MASK_MODE,HEAD_DIM_CKV,HEAD_DIM_KPE,Params>(Params, uint32_t, uint32_t, cudaStream_t) [with MASK_MODE=flashinfer::MaskMode::kNone, HEAD_DIM_CKV=512U, HEAD_DIM_KPE=64U, Params=flashinfer::MLAParams<DTypeQ, DTypeKV, DTypeO, IdType>]" at line 64 of /workspace/historical-prs/results/flashinfer-pr-810/base-jit-workspace/generated/batch_mla_attention_dtype_q_f16_dtype_kv_f16_dtype_o_f16_dtype_idx_i32_head_dim_ckv_512_head_dim_kpe_64/batch_mla_run.cu
+
+/workspace/historical-prs/venvs/flashinfer-pr-810-base/lib/python3.12/site-packages/flashinfer/data/include/flashinfer/attention/mla_fa2.cuh(388): warning #177-D: variable "warp_idx_in_wg" was declared but never referenced
+    const uint32_t lane_idx = threadIdx.x, warpgroup_idx = threadIdx.z, warp_idx_in_wg = threadIdx.y;
+                                                                        ^
+          detected during:
+            instantiation of "void flashinfer::mla::BatchMLAPageAttentionKernel<KTraits,Params>(Params) [with KTraits=flashinfer::mla::KernelTraits<false, 2U, 512U, 64U, 64U, 64U, DTypeQ, DTypeKV, DTypeO, IdType>, Params=flashinfer::MLAParams<DTypeQ, DTypeKV, DTypeO, IdType>]" at line 779
+            instantiation of "cudaError_t flashinfer::mla::BatchMLAPageAttention<MASK_MODE,HEAD_DIM_CKV,HEAD_DIM_KPE,Params>(Params, uint32_t, uint32_t, cudaStream_t) [with MASK_MODE=flashinfer::MaskMode::kNone, HEAD_DIM_CKV=512U, HEAD_DIM_KPE=64U, Params=flashinfer::MLAParams<DTypeQ, DTypeKV, DTypeO, IdType>]" at line 64 of /workspace/historical-prs/results/flashinfer-pr-810/base-jit-workspace/generated/batch_mla_attention_dtype_q_f16_dtype_kv_f16_dtype_o_f16_dtype_idx_i32_head_dim_ckv_512_head_dim_kpe_64/batch_mla_run.cu
+
+/workspace/historical-prs/venvs/flashinfer-pr-810-base/lib/python3.12/site-packages/flashinfer/data/include/flashinfer/attention/mla_fa2.cuh(370): error: static assertion failed with "Not implemented yet"
+      static_assert(false, "Not implemented yet");
+      ^
+          detected during:
+            instantiation of "void flashinfer::mla::BatchMLAPageAttentionKernel<KTraits,Params>(Params) [with KTraits=flashinfer::mla::KernelTraits<false, 2U, 512U, 64U, 64U, 64U, DTypeQ, DTypeKV, DTypeO, IdType>, Params=flashinfer::MLAParams<DTypeQ, DTypeKV, DTypeO, IdType>]" at line 779
+            instantiation of "cudaError_t flashinfer::mla::BatchMLAPageAttention<MASK_MODE,HEAD_DIM_CKV,HEAD_DIM_KPE,Params>(Params, uint32_t, uint32_t, cudaStream_t) [with MASK_MODE=flashinfer::MaskMode::kNone, HEAD_DIM_CKV=512U, HEAD_DIM_KPE=64U, Params=flashinfer::MLAParams<DTypeQ, DTypeKV, DTypeO, IdType>]" at line 64 of /workspace/historical-prs/results/flashinfer-pr-810/base-jit-workspace/generated/batch_mla_attention_dtype_q_f16_dtype_kv_f16_dtype_o_f16_dtype_idx_i32_head_dim_ckv_512_head_dim_kpe_64/batch_mla_run.cu
+
+/workspace/historical-prs/venvs/flashinfer-pr-810-base/lib/python3.12/site-packages/flashinfer/data/include/flashinfer/attention/mla_fa2.cuh(352): warning #177-D: variable "lane_idx" was declared but never referenced
+    const uint32_t lane_idx = threadIdx.x, warpgroup_idx = threadIdx.z, warp_idx_in_wg = threadIdx.y;
+                   ^
+          detected during:
+            instantiation of "void flashinfer::mla::BatchMLAPageAttentionKernel<KTraits,Params>(Params) [with KTraits=flashinfer::mla::KernelTraits<false, 2U, 512U, 64U, 64U, 64U, DTypeQ, DTypeKV, DTypeO, IdType>, Params=flashinfer::MLAParams<DTypeQ, DTypeKV, DTypeO, IdType>]" at line 779
+            instantiation of "cudaError_t flashinfer::mla::BatchMLAPageAttention<MASK_MODE,HEAD_DIM_CKV,HEAD_DIM_KPE,Params>(Params, uint32_t, uint32_t, cudaStream_t) [with MASK_MODE=flashinfer::MaskMode::kNone, HEAD_DIM_CKV=512U, HEAD_DIM_KPE=64U, Params=flashinfer::MLAParams<DTypeQ, DTypeKV, DTypeO, IdType>]" at line 64 of /workspace/historical-prs/results/flashinfer-pr-810/base-jit-workspace/generated/batch_mla_attention_dtype_q_f16_dtype_kv_f16_dtype_o_f16_dtype_idx_i32_head_dim_ckv_512_head_dim_kpe_64/batch_mla_run.cu
+
+/workspace/historical-prs/venvs/flashinfer-pr-810-base/lib/python3.12/site-packages/flashinfer/data/include/flashinfer/attention/mla_fa2.cuh(352): warning #177-D: variable "warpgroup_idx" was declared but never referenced
+    const uint32_t lane_idx = threadIdx.x, warpgroup_idx = threadIdx.z, warp_idx_in_wg = threadIdx.y;
+                                           ^
+          detected during:
+            instantiation of "void flashinfer::mla::BatchMLAPageAttentionKernel<KTraits,Params>(Params) [with KTraits=flashinfer::mla::KernelTraits<false, 2U, 512U, 64U, 64U, 64U, DTypeQ, DTypeKV, DTypeO, IdType>, Params=flashinfer::MLAParams<DTypeQ, DTypeKV, DTypeO, IdType>]" at line 779
+            instantiation of "cudaError_t flashinfer::mla::BatchMLAPageAttention<MASK_MODE,HEAD_DIM_CKV,HEAD_DIM_KPE,Params>(Params, uint32_t, uint32_t, cudaStream_t) [with MASK_MODE=flashinfer::MaskMode::kNone, HEAD_DIM_CKV=512U, HEAD_DIM_KPE=64U, Params=flashinfer::MLAParams<DTypeQ, DTypeKV, DTypeO, IdType>]" at line 64 of /workspace/historical-prs/results/flashinfer-pr-810/base-jit-workspace/generated/batch_mla_attention_dtype_q_f16_dtype_kv_f16_dtype_o_f16_dtype_idx_i32_head_dim_ckv_512_head_dim_kpe_64/batch_mla_run.cu
+
+/workspace/historical-prs/venvs/flashinfer-pr-810-base/lib/python3.12/site-packages/flashinfer/data/include/flashinfer/attention/mla_fa2.cuh(352): warning #177-D: variable "warp_idx_in_wg" was declared but never referenced
+    const uint32_t lane_idx = threadIdx.x, warpgroup_idx = threadIdx.z, warp_idx_in_wg = threadIdx.y;
+                                                                        ^
+          detected during:
+            instantiation of "void flashinfer::mla::BatchMLAPageAttentionKernel<KTraits,Params>(Params) [with KTraits=flashinfer::mla::KernelTraits<false, 2U, 512U, 64U, 64U, 64U, DTypeQ, DTypeKV, DTypeO, IdType>, Params=flashinfer::MLAParams<DTypeQ, DTypeKV, DTypeO, IdType>]" at line 779
+            instantiation of "cudaError_t flashinfer::mla::BatchMLAPageAttention<MASK_MODE,HEAD_DIM_CKV,HEAD_DIM_KPE,Params>(Params, uint32_t, uint32_t, cudaStream_t) [with MASK_MODE=flashinfer::MaskMode::kNone, HEAD_DIM_CKV=512U, HEAD_DIM_KPE=64U, Params=flashinfer::MLAParams<DTypeQ, DTypeKV, DTypeO, IdType>]" at line 64 of /workspace/historical-prs/results/flashinfer-pr-810/base-jit-workspace/generated/batch_mla_attention_dtype_q_f16_dtype_kv_f16_dtype_o_f16_dtype_idx_i32_head_dim_ckv_512_head_dim_kpe_64/batch_mla_run.cu
+
+1 error detected in the compilation of "/workspace/historical-prs/results/flashinfer-pr-810/base-jit-workspace/generated/batch_mla_attention_dtype_q_f16_dtype_kv_f16_dtype_o_f16_dtype_idx_i32_head_dim_ckv_512_head_dim_kpe_64/batch_mla_run.cu".
+[2/4] /usr/local/cuda/bin/nvcc --generate-dependencies-with-compile --dependency-output batch_mla_plan.cuda.o.d -DTORCH_EXTENSION_NAME=batch_mla_attention_dtype_q_f16_dtype_kv_f16_dtype_o_f16_dtype_idx_i32_head_dim_ckv_512_head_dim_kpe_64 -DTORCH_API_INCLUDE_EXTENSION_H -DPYBIND11_COMPILER_TYPE=\"_gcc\" -DPYBIND11_STDLIB=\"_libstdcpp\" -DPYBIND11_BUILD_ABI=\"_cxxabi1011\" -I/workspace/historical-prs/venvs/flashinfer-pr-810-base/lib/python3.12/site-packages/flashinfer/data/include -I/workspace/historical-prs/venvs/flashinfer-pr-810-base/lib/python3.12/site-packages/flashinfer/data/csrc -I/workspace/historical-prs/venvs/flashinfer-pr-810-base/lib/python3.12/site-packages/flashinfer/data/cutlass/include -I/workspace/historical-prs/venvs/flashinfer-pr-810-base/lib/python3.12/site-packages/flashinfer/data/cutlass/tools/util/include -isystem /venv/main/lib/python3.12/site-packages/torch/include -isystem /venv/main/lib/python3.12/site-packages/torch/include/torch/csrc/api/include -isystem /venv/main/lib/python3.12/site-packages/torch/include/TH -isystem /venv/main/lib/python3.12/site-packages/torch/include/THC -isystem /usr/local/cuda/include -isystem /venv/main/include/python3.12 -D_GLIBCXX_USE_CXX11_ABI=0 --expt-relaxed-constexpr -gencode=arch=compute_80,code=sm_80 --compiler-options '-fPIC' -O3 -std=c++17 --threads 4 -use_fast_math -DFLASHINFER_ENABLE_F16 -DFLASHINFER_ENABLE_BF16 -DFLASHINFER_ENABLE_FP8_E4M3 -DFLASHINFER_ENABLE_FP8_E5M2 -c /workspace/historical-prs/results/flashinfer-pr-810/base-jit-workspace/generated/batch_mla_attention_dtype_q_f16_dtype_kv_f16_dtype_o_f16_dtype_idx_i32_head_dim_ckv_512_head_dim_kpe_64/batch_mla_plan.cu -o batch_mla_plan.cuda.o 
+In file included from /workspace/historical-prs/results/flashinfer-pr-810/base-jit-workspace/generated/batch_mla_attention_dtype_q_f16_dtype_kv_f16_dtype_o_f16_dtype_idx_i32_head_dim_ckv_512_head_dim_kpe_64/batch_mla_plan.cu:19:
+/workspace/historical-prs/results/flashinfer-pr-810/base-jit-workspace/generated/batch_mla_attention_dtype_q_f16_dtype_kv_f16_dtype_o_f16_dtype_idx_i32_head_dim_ckv_512_head_dim_kpe_64/batch_mla_config.inc:20:111: warning: backslash-newline at end of file
+   20 | #define DISPATCH_context(DTypeQ, DTypeKV, DTypeO, IdType, MASK_MODE, HEAD_DIM_CKV, HEAD_DIM_KPE, Params, ...) \
+      |                                                                                                                
+In file included from /workspace/historical-prs/results/flashinfer-pr-810/base-jit-workspace/generated/batch_mla_attention_dtype_q_f16_dtype_kv_f16_dtype_o_f16_dtype_idx_i32_head_dim_ckv_512_head_dim_kpe_64/batch_mla_plan.cu:19:
+/workspace/historical-prs/results/flashinfer-pr-810/base-jit-workspace/generated/batch_mla_attention_dtype_q_f16_dtype_kv_f16_dtype_o_f16_dtype_idx_i32_head_dim_ckv_512_head_dim_kpe_64/batch_mla_config.inc:20:111: warning: backslash-newline at end of file
+   20 | #define DISPATCH_context(DTypeQ, DTypeKV, DTypeO, IdType, MASK_MODE, HEAD_DIM_CKV, HEAD_DIM_KPE, Params, ...) \
+      |                                                                                                                
+[3/4] /usr/local/cuda/bin/nvcc --generate-dependencies-with-compile --dependency-output batch_mla_pybind.cuda.o.d -DTORCH_EXTENSION_NAME=batch_mla_attention_dtype_q_f16_dtype_kv_f16_dtype_o_f16_dtype_idx_i32_head_dim_ckv_512_head_dim_kpe_64 -DTORCH_API_INCLUDE_EXTENSION_H -DPYBIND11_COMPILER_TYPE=\"_gcc\" -DPYBIND11_STDLIB=\"_libstdcpp\" -DPYBIND11_BUILD_ABI=\"_cxxabi1011\" -I/workspace/historical-prs/venvs/flashinfer-pr-810-base/lib/python3.12/site-packages/flashinfer/data/include -I/workspace/historical-prs/venvs/flashinfer-pr-810-base/lib/python3.12/site-packages/flashinfer/data/csrc -I/workspace/historical-prs/venvs/flashinfer-pr-810-base/lib/python3.12/site-packages/flashinfer/data/cutlass/include -I/workspace/historical-prs/venvs/flashinfer-pr-810-base/lib/python3.12/site-packages/flashinfer/data/cutlass/tools/util/include -isystem /venv/main/lib/python3.12/site-packages/torch/include -isystem /venv/main/lib/python3.12/site-packages/torch/include/torch/csrc/api/include -isystem /venv/main/lib/python3.12/site-packages/torch/include/TH -isystem /venv/main/lib/python3.12/site-packages/torch/include/THC -isystem /usr/local/cuda/include -isystem /venv/main/include/python3.12 -D_GLIBCXX_USE_CXX11_ABI=0 --expt-relaxed-constexpr -gencode=arch=compute_80,code=sm_80 --compiler-options '-fPIC' -O3 -std=c++17 --threads 4 -use_fast_math -DFLASHINFER_ENABLE_F16 -DFLASHINFER_ENABLE_BF16 -DFLASHINFER_ENABLE_FP8_E4M3 -DFLASHINFER_ENABLE_FP8_E5M2 -c /workspace/historical-prs/results/flashinfer-pr-810/base-jit-workspace/generated/batch_mla_attention_dtype_q_f16_dtype_kv_f16_dtype_o_f16_dtype_idx_i32_head_dim_ckv_512_head_dim_kpe_64/batch_mla_pybind.cu -o batch_mla_pybind.cuda.o 
+In file included from /workspace/historical-prs/results/flashinfer-pr-810/base-jit-workspace/generated/batch_mla_attention_dtype_q_f16_dtype_kv_f16_dtype_o_f16_dtype_idx_i32_head_dim_ckv_512_head_dim_kpe_64/batch_mla_pybind.cu:16:
+/workspace/historical-prs/results/flashinfer-pr-810/base-jit-workspace/generated/batch_mla_attention_dtype_q_f16_dtype_kv_f16_dtype_o_f16_dtype_idx_i32_head_dim_ckv_512_head_dim_kpe_64/batch_mla_config.inc:20:111: warning: backslash-newline at end of file
+   20 | #define DISPATCH_context(DTypeQ, DTypeKV, DTypeO, IdType, MASK_MODE, HEAD_DIM_CKV, HEAD_DIM_KPE, Params, ...) \
+      |                                                                                                                
+In file included from /workspace/historical-prs/results/flashinfer-pr-810/base-jit-workspace/generated/batch_mla_attention_dtype_q_f16_dtype_kv_f16_dtype_o_f16_dtype_idx_i32_head_dim_ckv_512_head_dim_kpe_64/batch_mla_pybind.cu:16:
+/workspace/historical-prs/results/flashinfer-pr-810/base-jit-workspace/generated/batch_mla_attention_dtype_q_f16_dtype_kv_f16_dtype_o_f16_dtype_idx_i32_head_dim_ckv_512_head_dim_kpe_64/batch_mla_config.inc:20:111: warning: backslash-newline at end of file
+   20 | #define DISPATCH_context(DTypeQ, DTypeKV, DTypeO, IdType, MASK_MODE, HEAD_DIM_CKV, HEAD_DIM_KPE, Params, ...) \
+      |                                                                                                                
+ninja: build stopped: subcommand failed.
+

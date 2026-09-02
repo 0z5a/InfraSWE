@@ -1,0 +1,88 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "cache_hits": {
+      "minimum": 0,
+      "title": "Cache Hits",
+      "type": "integer"
+    },
+    "calls": {
+      "minimum": 0,
+      "title": "Calls",
+      "type": "integer"
+    },
+    "candidate_score_effect": {
+      "const": false,
+      "default": false,
+      "title": "Candidate Score Effect",
+      "type": "boolean"
+    },
+    "estimated_cost_usd": {
+      "anyOf": [
+        {
+          "minimum": 0,
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Estimated Cost Usd"
+    },
+    "input_tokens": {
+      "minimum": 0,
+      "title": "Input Tokens",
+      "type": "integer"
+    },
+    "judge_cell_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Judge Cell Sha256",
+      "type": "string"
+    },
+    "output_tokens": {
+      "minimum": 0,
+      "title": "Output Tokens",
+      "type": "integer"
+    },
+    "provider_errors": {
+      "minimum": 0,
+      "title": "Provider Errors",
+      "type": "integer"
+    },
+    "retries": {
+      "minimum": 0,
+      "title": "Retries",
+      "type": "integer"
+    },
+    "schema_version": {
+      "const": "0.5.3",
+      "default": "0.5.3",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "wall_p50_seconds": {
+      "minimum": 0,
+      "title": "Wall P50 Seconds",
+      "type": "number"
+    },
+    "wall_p95_seconds": {
+      "minimum": 0,
+      "title": "Wall P95 Seconds",
+      "type": "number"
+    }
+  },
+  "required": [
+    "judge_cell_sha256",
+    "calls",
+    "input_tokens",
+    "output_tokens",
+    "cache_hits",
+    "wall_p50_seconds",
+    "wall_p95_seconds",
+    "provider_errors",
+    "retries"
+  ],
+  "title": "JudgeCostCard",
+  "type": "object"
+}

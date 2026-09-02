@@ -1,0 +1,103 @@
+{
+  "$defs": {
+    "CacheDeclaration": {
+      "additionalProperties": false,
+      "properties": {
+        "cache_id": {
+          "title": "Cache Id",
+          "type": "string"
+        },
+        "initial_state": {
+          "enum": [
+            "empty",
+            "sealed-read-only",
+            "prewarmed-profile",
+            "isolated-fresh"
+          ],
+          "title": "Initial State",
+          "type": "string"
+        },
+        "kind": {
+          "enum": [
+            "source",
+            "dependency",
+            "compiler",
+            "build",
+            "jit",
+            "runtime",
+            "page",
+            "device"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "owner": {
+          "enum": [
+            "candidate",
+            "builder",
+            "verifier",
+            "meter",
+            "runner"
+          ],
+          "title": "Owner",
+          "type": "string"
+        },
+        "reusable_across_candidates": {
+          "default": false,
+          "title": "Reusable Across Candidates",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "cache_id",
+        "kind",
+        "owner",
+        "initial_state"
+      ],
+      "title": "CacheDeclaration",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "declarations": {
+      "items": {
+        "$ref": "#/$defs/CacheDeclaration"
+      },
+      "minItems": 1,
+      "title": "Declarations",
+      "type": "array"
+    },
+    "paired_order": {
+      "enum": [
+        "counterbalanced",
+        "randomized-pre-registered"
+      ],
+      "title": "Paired Order",
+      "type": "string"
+    },
+    "policy_id": {
+      "title": "Policy Id",
+      "type": "string"
+    },
+    "policy_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Policy Sha256",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "0.1",
+      "default": "0.1",
+      "title": "Schema Version",
+      "type": "string"
+    }
+  },
+  "required": [
+    "policy_id",
+    "declarations",
+    "paired_order",
+    "policy_sha256"
+  ],
+  "title": "CachePolicy",
+  "type": "object"
+}

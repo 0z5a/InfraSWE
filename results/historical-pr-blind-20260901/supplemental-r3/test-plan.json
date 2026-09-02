@@ -1,0 +1,71 @@
+{
+  "schema_version": "0.5",
+  "protocol_id": "historical-reviewed-failure-alignment-v0.5-r3",
+  "selection_lock_sha256": "sha256:9b7f1e33b772b01d42f6b7d8c73c1d143d145aa4eb8636af9bf6d08aed77e949",
+  "review_text_requested": false,
+  "review_text_visible_to_machine_judge": false,
+  "compile_policy": {
+    "mode": "auto",
+    "precompile_before_timed_cases": true,
+    "steady_state_compilation_allowed": false,
+    "cache_reuse_required": true
+  },
+  "cases": [
+    {
+      "case_id": "sglang-pr-3136",
+      "repository": "sgl-project/sglang",
+      "pull_number": 3136,
+      "base_sha": "8e48ca8cc1c7409a66eaff61685cd4be40d93908",
+      "head_sha": "c244478aae0d7ce41a01837e0890148d4581ec52",
+      "paths": [
+        "sgl-kernel/3rdparty/flashinfer",
+        "sgl-kernel/tests/test_sampling.py"
+      ],
+      "claim": "Advance the FlashInfer submodule used by SGLang kernel tests and poke sampling CI.",
+      "predeclared_questions": [
+        "What exact code and build surface enters through the submodule pointer change?",
+        "Does the sampling test mutation add coverage or only perturb an error string?",
+        "Does the exact sampling test still pass at the pinned submodule commit?",
+        "Is any compilation kept entirely in precompile and absent from steady-state timing?"
+      ]
+    },
+    {
+      "case_id": "vllm-pr-11531",
+      "repository": "vllm-project/vllm",
+      "pull_number": 11531,
+      "base_sha": "2f7024987e582b85b280909b87287668cd97c92f",
+      "head_sha": "dac658cbebbe66ff7a5f52f07b56eea012d3b48f",
+      "paths": [
+        "csrc/cache_kernels.cu",
+        "tests/kernels/test_cache.py",
+        "vllm/worker/worker.py"
+      ],
+      "claim": "Replace per-page cudaMemcpyAsync calls with one CUDA paged-copy kernel backed by reusable pinned mapping buffers.",
+      "predeclared_questions": [
+        "Does the kernel preserve arbitrary tensor dtypes, alignment, page sizes, empty mappings, and both swap directions?",
+        "Can a reused pinned mapping buffer be overwritten before the asynchronous kernel consumes it?",
+        "Do base and head match a CPU oracle over adversarial mappings and dtypes?",
+        "After one precompile, is steady-state faster without any timed compilation?"
+      ]
+    },
+    {
+      "case_id": "vllm-pr-12111",
+      "repository": "vllm-project/vllm",
+      "pull_number": 12111,
+      "base_sha": "f8ef146f03da8993fb3bf5638b28bef6e931fc51",
+      "head_sha": "068ae2a692de14cb14330c90bd6f65b173a25f20",
+      "paths": [
+        "tests/lora/test_long_context.py",
+        "vllm/model_executor/layers/activation.py"
+      ],
+      "claim": "Avoid CUDA custom activation dispatch on CPU and clear a test-local CUDA visibility variable before LLM construction.",
+      "predeclared_questions": [
+        "Do FatreluAndMul and MulAndSilu preserve CPU outputs and dispatch without a missing op attribute?",
+        "Does the long-context test restore CUDA_VISIBLE_DEVICES after success and failure?",
+        "Is environment cleanup owned by a scoped fixture rather than a process-global deletion?",
+        "Can affected CPU tests run without CUDA compilation?"
+      ]
+    }
+  ],
+  "test_plan_sha256": "sha256:7d12140f7a4560b48e1d5436e64171e8a6947a2a32e3267b4ac293bcbd9952d0"
+}

@@ -1,0 +1,33 @@
+{
+  "schema_version": "0.4",
+  "feature_id": "ADA-TORCHCOMPILE-001",
+  "specialization_contract_id": "ada-sm89-torchcompile-v0.1",
+  "dynamic_dimensions": [
+    "batch",
+    "ragged_sequence_length",
+    "stride",
+    "optional_bias",
+    "optional_residual",
+    "lora_rank",
+    "dtype"
+  ],
+  "budget": {
+    "max_unique_graphs": 8,
+    "max_unique_kernels": 32,
+    "max_compile_seconds_cold": 120,
+    "max_generated_source_mib": 8
+  },
+  "required_evidence": [
+    "graph_break_count",
+    "recompile_count_and_reasons",
+    "generated_kernel_count",
+    "compile_cache_hits_and_misses",
+    "cold_first_request_latency",
+    "warm_request_latency",
+    "codegen_cache_key",
+    "board_tuning_cache_key"
+  ],
+  "online_unbounded_autotune": "hard_fail",
+  "cross_sku_codegen_cache": "shared",
+  "cross_sku_board_autotune_cache": "isolated"
+}

@@ -1,0 +1,10 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>InfraSWE 垃圾 Kernel 负控</title>
+<style>body{font:15px/1.55 system-ui;max-width:1200px;margin:40px auto;padding:0 24px;color:#172033}
+table{width:100%;border-collapse:collapse}th,td{padding:10px;border-bottom:1px solid #ccd5e3;text-align:left}
+th{background:#eef4fb}code{color:#075985}.pass{color:#067647;font-weight:700}</style></head>
+<body><h1>InfraSWE v0.3 垃圾 Kernel 负控</h1><p>负控总门禁：<span class="pass">PASS</span></p>
+<p>NVIDIA A100-SXM4-40GB / CC 8.0 / 39.5 GiB</p>
+<p>本报告与正式 FA1–FA4 排名隔离；每项均来自真实 A100 replay 与 profiler。</p>
+<table><thead><tr><th>Backend</th><th>故意缺陷</th><th>Cert</th><th>处置</th><th>Artifact-100</th><th>预期</th><th>Failure codes</th></tr></thead>
+<tbody><tr><td><code>garbage-slow-fa4-waste64</code></td><td>正确结果后追加 64 轮无用 Triton 显存流量</td><td>PASS</td><td>valid</td><td>58.28</td><td>PASS</td><td>—</td></tr><tr><td><code>garbage-zero-triton</code></td><td>原生 Triton kernel 始终写零</td><td>FAIL</td><td>valid</td><td>—</td><td>PASS</td><td>CORRECTNESS_MANDATORY_FAILED</td></tr><tr><td><code>garbage-cache-copy</code></td><td>按 shape 缓存第一次正确答案，之后只做 Triton copy</td><td>FAIL</td><td>valid</td><td>—</td><td>PASS</td><td>CORRECTNESS_MANDATORY_FAILED</td></tr><tr><td><code>fa-garbage-math-fallback</code></td><td>伪装成 FA backend，实际调用 PyTorch SDPA math</td><td>FAIL</td><td>invalid</td><td>—</td><td>PASS</td><td>FALLBACK_NATIVE_TRACE_MISSING</td></tr></tbody></table></body></html>

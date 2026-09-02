@@ -1,0 +1,186 @@
+{
+  "$defs": {
+    "HistoricalReviewFeedbackItem": {
+      "additionalProperties": false,
+      "properties": {
+        "author": {
+          "title": "Author",
+          "type": "string"
+        },
+        "author_association": {
+          "title": "Author Association",
+          "type": "string"
+        },
+        "body": {
+          "title": "Body",
+          "type": "string"
+        },
+        "created_at": {
+          "format": "date-time",
+          "title": "Created At",
+          "type": "string"
+        },
+        "feedback_id": {
+          "title": "Feedback Id",
+          "type": "string"
+        },
+        "html_url": {
+          "title": "Html Url",
+          "type": "string"
+        },
+        "is_bot": {
+          "title": "Is Bot",
+          "type": "boolean"
+        },
+        "line": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Line"
+        },
+        "path": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Path"
+        },
+        "review_state": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Review State"
+        },
+        "source": {
+          "enum": [
+            "review",
+            "review-comment",
+            "issue-comment"
+          ],
+          "title": "Source",
+          "type": "string"
+        }
+      },
+      "required": [
+        "feedback_id",
+        "source",
+        "author",
+        "author_association",
+        "is_bot",
+        "body",
+        "html_url",
+        "created_at"
+      ],
+      "title": "HistoricalReviewFeedbackItem",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "description": "Post-lock reviewer evidence for closed, unmerged historical PRs.",
+  "properties": {
+    "api_response_digests": {
+      "items": {
+        "pattern": "^sha256:[0-9a-f]{64}$",
+        "type": "string"
+      },
+      "minItems": 2,
+      "title": "Api Response Digests",
+      "type": "array"
+    },
+    "case_id": {
+      "title": "Case Id",
+      "type": "string"
+    },
+    "closed_unmerged": {
+      "const": true,
+      "default": true,
+      "title": "Closed Unmerged",
+      "type": "boolean"
+    },
+    "eligibility_reasons": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Eligibility Reasons",
+      "type": "array"
+    },
+    "feedback": {
+      "items": {
+        "$ref": "#/$defs/HistoricalReviewFeedbackItem"
+      },
+      "title": "Feedback",
+      "type": "array"
+    },
+    "ground_truth_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Ground Truth Sha256",
+      "type": "string"
+    },
+    "human_feedback_count": {
+      "minimum": 0,
+      "title": "Human Feedback Count",
+      "type": "integer"
+    },
+    "machine_eligible_for_feedback_audit": {
+      "title": "Machine Eligible For Feedback Audit",
+      "type": "boolean"
+    },
+    "observed_at": {
+      "format": "date-time",
+      "title": "Observed At",
+      "type": "string"
+    },
+    "prediction_lock_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Prediction Lock Sha256",
+      "type": "string"
+    },
+    "pull_number": {
+      "minimum": 1,
+      "title": "Pull Number",
+      "type": "integer"
+    },
+    "repository": {
+      "title": "Repository",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "0.5",
+      "default": "0.5",
+      "title": "Schema Version",
+      "type": "string"
+    }
+  },
+  "required": [
+    "case_id",
+    "repository",
+    "pull_number",
+    "prediction_lock_sha256",
+    "ground_truth_sha256",
+    "observed_at",
+    "feedback",
+    "human_feedback_count",
+    "machine_eligible_for_feedback_audit",
+    "api_response_digests"
+  ],
+  "title": "HistoricalReviewEvidence",
+  "type": "object"
+}

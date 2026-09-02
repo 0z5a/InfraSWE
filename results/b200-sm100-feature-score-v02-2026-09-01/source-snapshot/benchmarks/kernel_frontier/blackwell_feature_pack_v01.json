@@ -1,0 +1,64 @@
+{
+  "schema_version": "0.1",
+  "suite_id": "b200-sm100-compiler-features-v0.1",
+  "status": "initial_adapter",
+  "hardware_profile": "gpu-1x-sm100-b200-cuda133",
+  "stable_baseline": {
+    "cuda_series": "13.3",
+    "ptx_isa": "9.3"
+  },
+  "target_lanes": ["sm_100", "sm_100f", "sm_100a"],
+  "packs": [
+    {
+      "pack_id": "sm100-core-v0.1",
+      "namespace": "SM100-Core",
+      "runtime_scope": "single_gpu",
+      "feature_ids": ["BW-TMEM-001", "BW-TMA-001", "BW-TMEM-003", "BW-TMA-002"]
+    },
+    {
+      "pack_id": "sm100-scheduler-v0.1",
+      "namespace": "SM100-Scheduler",
+      "runtime_scope": "single_gpu",
+      "feature_ids": ["BW-CLC-001"]
+    },
+    {
+      "pack_id": "sm100-fabric-v0.1",
+      "namespace": "SM100-Fabric",
+      "runtime_scope": "multi_gpu",
+      "feature_ids": ["BW-FABRIC-001"],
+      "optional": true
+    },
+    {
+      "pack_id": "ptx-preview-v0.1",
+      "namespace": "PTX-Preview",
+      "runtime_scope": "compile_only",
+      "feature_ids": ["BW-PTX-PREVIEW-001"],
+      "disabled": true
+    }
+  ],
+  "mvp_feature_ids": [
+    "BW-TMEM-001",
+    "BW-CLC-001",
+    "BW-TMA-001",
+    "BW-TMEM-003",
+    "BW-TMA-002"
+  ],
+  "evidence_contract": {
+    "fresh_process_replays": 3,
+    "required_gates": [
+      "correctness",
+      "liveness_watchdog",
+      "reachable_ptx",
+      "native_cubin_sass",
+      "profiler",
+      "mutation",
+      "fallback_rejection",
+      "artifact_capability_binding"
+    ]
+  },
+  "scoring_contract": {
+    "certification_coverage_is_performance_score": false,
+    "leaderboard_score_100": null,
+    "performance_pack_status": "not_implemented"
+  }
+}

@@ -1,0 +1,85 @@
+{
+  "$defs": {
+    "TrainingEvidenceArtifact": {
+      "additionalProperties": false,
+      "properties": {
+        "category": {
+          "enum": [
+            "contract",
+            "framework",
+            "run",
+            "algorithm",
+            "checkpoint",
+            "kernel",
+            "profiler",
+            "fault",
+            "score"
+          ],
+          "title": "Category",
+          "type": "string"
+        },
+        "path": {
+          "title": "Path",
+          "type": "string"
+        },
+        "sha256": {
+          "pattern": "^sha256:[0-9a-fA-F]{8,64}$",
+          "title": "Sha256",
+          "type": "string"
+        },
+        "size_bytes": {
+          "minimum": 0,
+          "title": "Size Bytes",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "path",
+        "sha256",
+        "size_bytes",
+        "category"
+      ],
+      "title": "TrainingEvidenceArtifact",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "artifacts": {
+      "items": {
+        "$ref": "#/$defs/TrainingEvidenceArtifact"
+      },
+      "minItems": 1,
+      "title": "Artifacts",
+      "type": "array"
+    },
+    "required_categories": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Required Categories",
+      "type": "array"
+    },
+    "schema_version": {
+      "const": "0.1",
+      "default": "0.1",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "sealed": {
+      "title": "Sealed",
+      "type": "boolean"
+    },
+    "task_id": {
+      "title": "Task Id",
+      "type": "string"
+    }
+  },
+  "required": [
+    "task_id",
+    "sealed",
+    "artifacts"
+  ],
+  "title": "TrainingEvidencePackManifest",
+  "type": "object"
+}

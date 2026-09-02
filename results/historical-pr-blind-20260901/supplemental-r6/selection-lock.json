@@ -1,0 +1,229 @@
+{
+  "schema_version": "0.5",
+  "protocol_id": "historical-pr-blind-cross-project-v0.5-r6",
+  "selection_material": {
+    "frozen_at": "2026-09-02T10:18:27+08:00",
+    "selection_rule": "Select exactly one compact, source-visible historical pull request for each newly materialized default Draft profile: CUTLASS/CuTe, Liger Kernel, DeepGEMM, Megatron Core, TorchTitan, and verl. Prefer cases whose title and changed paths expose a testable kernel boundary, lifecycle, performance, or semantic-gating claim. Do not use merge outcome, review text, issue comments, reactions, labels, or CI conclusions to select cases.",
+    "profile_catalog": {
+      "path": "catalog/default-drafts-v0.5/catalog.json",
+      "catalog_version": "default-projects-v0.5-proposed.2",
+      "catalog_sha256": "sha256:af9213b8036b70fc4276f436c3fc02adb25c1c9b1ac1f8fbda7e250275f208ee",
+      "selected_profile_set_sha256": "sha256:4c340d91d3869b6fba8fda15a1910cabe2f9eb2a0daba5ae1ac58a0e5aad5029"
+    },
+    "acquisition": {
+      "provider": "GitHub GraphQL API",
+      "requested_fields": [
+        "number",
+        "title",
+        "createdAt",
+        "baseRefName",
+        "baseRefOid",
+        "headRefOid",
+        "changedFiles",
+        "additions",
+        "deletions",
+        "files.path",
+        "files.additions",
+        "files.deletions",
+        "commits.commit.oid",
+        "commits.commit.parents.oid"
+      ],
+      "eligibility_search_filter": "is:pr is:closed",
+      "outcome_fields_requested": false,
+      "review_fields_requested": false,
+      "issue_comment_fields_requested": false,
+      "ci_fields_requested": false
+    },
+    "review_text_visible_to_machine_judge": false,
+    "learned_model_used": false,
+    "weighted_score_used": false,
+    "preprobe_baseline_amendment": {
+      "amended_at": "2026-09-02T10:21:31+08:00",
+      "supersedes_selection_lock_sha256": "sha256:1702e56243e082b5471607ba3dec364e84fb28e8c297fbceac914735c2bef3ee",
+      "inspection_scope_before_amendment": "git diff --name-status only; no diff hunks, changed source content, tests, review text, comments, CI conclusions, or outcomes were inspected",
+      "rule": "When baseRefOid-to-head paths do not equal the frozen GraphQL file set, replace only base_sha with the first PR commit's first parent if and only if that diff has exact path parity.",
+      "corrected_cases": [
+        {
+          "case_id": "deepgemm-pr-55",
+          "api_base_ref_oid": "5e4badc5777ff1371358ec73e0aac91229181fec",
+          "corrected_base_sha": "6c5da03ba9a311b69aaeb3236ceb674e714950c1",
+          "expected_paths": [
+            "deep_gemm/jit/template.py"
+          ]
+        },
+        {
+          "case_id": "torchtitan-pr-2717",
+          "api_base_ref_oid": "d4dfa9eec95f5b8c99fb85e3280c77efe9624e8b",
+          "corrected_base_sha": "0fb79c51eee42264734f24be75f3aa66c9dc50e0",
+          "expected_paths": [
+            "torchtitan/models/common/moe/kernels.py",
+            "torchtitan/models/common/moe/moe.py"
+          ]
+        }
+      ]
+    },
+    "cases": [
+      {
+        "case_id": "cutlass-pr-2275",
+        "project": "cutlass-cute",
+        "default_profile_id": "cutlass-cute-kernel-library-v1",
+        "default_profile_sha256": "sha256:73939e67262a0b0c58ebeb1b686d8f10afa5e32ba14d056b7e951f8f81bf0fe0",
+        "repository": "NVIDIA/cutlass",
+        "pull_number": 2275,
+        "title": "Fix group scale gemm when K==128",
+        "created_at": "2025-05-02T19:40:18Z",
+        "base_ref": "main",
+        "base_tip_sha": "f535c33634b640a4c0bee131f2f6e9f81877a18c",
+        "base_sha": "f535c33634b640a4c0bee131f2f6e9f81877a18c",
+        "base_derivation": "base-ref-oid-path-parity",
+        "head_sha": "5e113b4ba1d145786c3d4ce56ca5db4dbc898708",
+        "pr_commit_shas": [
+          "5e113b4ba1d145786c3d4ce56ca5db4dbc898708"
+        ],
+        "changed_files": 1,
+        "additions": 1,
+        "deletions": 1,
+        "paths": [
+          "include/cutlass/gemm/collective/sm90_mma_tma_gmma_ss_warpspecialized_fp8_blockwise_scaling.hpp"
+        ]
+      },
+      {
+        "case_id": "liger-pr-804",
+        "project": "liger-kernel",
+        "default_profile_id": "liger-training-fused-kernel-v1",
+        "default_profile_sha256": "sha256:ed015cb169f3ec985107b0a47433558cb077204b51102c851740b9a5ddafd117",
+        "repository": "linkedin/Liger-Kernel",
+        "pull_number": 804,
+        "title": "Fix illegal memory access in Triton RMSNorm kernel by casting program_id to int64",
+        "created_at": "2025-07-12T05:35:24Z",
+        "base_ref": "main",
+        "base_tip_sha": "9cf2019a6c234be2102571dc35741ee844c7903d",
+        "base_sha": "9cf2019a6c234be2102571dc35741ee844c7903d",
+        "base_derivation": "base-ref-oid-path-parity",
+        "head_sha": "eaddff94798cc0b08d30afedd744600d9de3ec21",
+        "pr_commit_shas": [
+          "8a92ed153da0d8c1d375bcc2054a74e308584a68",
+          "09b20dcdc278afd32481d34688f0d57fb7bd21f1",
+          "9b7c1e01a7b4c2a55fe190103de1f72ddbf1a22d",
+          "54b5fa1698ca40ff6dc5b72efc866a1c8f591f84",
+          "62fdcc55a03eccef19e0395285595421da5fb2e1",
+          "7f2325b70c73c64732da232cb9166afbdf73ff25",
+          "d69a16ac24a0d78b24baeedff2d7c5e6c536a6df",
+          "cead73a5b0992376319323c976902232eb293ddb",
+          "07eebc080ffd4eebeb65be9e28ca8c413cc7dd91",
+          "2cd4f4ac0c07993963f7648dfe3e9c858536a74d",
+          "869a643b8f1495b0993f51205dcb3ea63ff17367",
+          "eaddff94798cc0b08d30afedd744600d9de3ec21"
+        ],
+        "changed_files": 2,
+        "additions": 3,
+        "deletions": 3,
+        "paths": [
+          "src/liger_kernel/ops/rms_norm.py",
+          "src/liger_kernel/ops/rope.py"
+        ]
+      },
+      {
+        "case_id": "deepgemm-pr-55",
+        "project": "deepgemm",
+        "default_profile_id": "deepgemm-moe-gemm-kernel-v1",
+        "default_profile_sha256": "sha256:6a935b10bc6b8f802e175efa01751d57ef980df1fc316e157cb1c24bbb03f11a",
+        "repository": "deepseek-ai/DeepGEMM",
+        "pull_number": 55,
+        "title": "fix cuda_graph rng check error",
+        "created_at": "2025-03-11T04:44:10Z",
+        "base_ref": "main",
+        "base_tip_sha": "5e4badc5777ff1371358ec73e0aac91229181fec",
+        "base_sha": "6c5da03ba9a311b69aaeb3236ceb674e714950c1",
+        "base_derivation": "first-pr-commit-first-parent-path-parity",
+        "head_sha": "723a00338e28068a09982bd651bd14d18257b93e",
+        "pr_commit_shas": [
+          "723a00338e28068a09982bd651bd14d18257b93e"
+        ],
+        "changed_files": 1,
+        "additions": 27,
+        "deletions": 9,
+        "paths": [
+          "deep_gemm/jit/template.py"
+        ]
+      },
+      {
+        "case_id": "megatron-pr-5608",
+        "project": "megatron-core",
+        "default_profile_id": "megatron-core-training-kernel-host-v1",
+        "default_profile_sha256": "sha256:8bc8e27b2f27eeb0543015397034d5acde4a98029ca95f4b4a36f1da92eecd80",
+        "repository": "NVIDIA/Megatron-LM",
+        "pull_number": 5608,
+        "title": "Triton kernels - avoid recompilation and autotuning in prod",
+        "created_at": "2026-07-01T19:45:02Z",
+        "base_ref": "main",
+        "base_tip_sha": "027fa4aabac5bfaec6633a04939205f7efb061ba",
+        "base_sha": "027fa4aabac5bfaec6633a04939205f7efb061ba",
+        "base_derivation": "base-ref-oid-path-parity",
+        "head_sha": "73e16b7b438f286d05bad2f754fbbdc2cad3c25b",
+        "pr_commit_shas": [
+          "0a1238faa0453a2afe15b42c75fbc9576180c229",
+          "4142d7f09d966dd61b52cb116d3dac6b9ba90cd4",
+          "73e16b7b438f286d05bad2f754fbbdc2cad3c25b"
+        ],
+        "changed_files": 1,
+        "additions": 4,
+        "deletions": 4,
+        "paths": [
+          "megatron/core/inference/contexts/attention_context/triton/tensor_ops.py"
+        ]
+      },
+      {
+        "case_id": "torchtitan-pr-2717",
+        "project": "torchtitan",
+        "default_profile_id": "torchtitan-pytorch-native-training-host-v1",
+        "default_profile_sha256": "sha256:494ec13ddc0fd0d3223f24339d105aeb45c713d1c987cf2dfd07f30eccbfbd66",
+        "repository": "pytorch/torchtitan",
+        "pull_number": 2717,
+        "title": "[Perf] Fusing router f32 bmm into a triton kernel",
+        "created_at": "2026-03-26T17:16:30Z",
+        "base_ref": "main",
+        "base_tip_sha": "d4dfa9eec95f5b8c99fb85e3280c77efe9624e8b",
+        "base_sha": "0fb79c51eee42264734f24be75f3aa66c9dc50e0",
+        "base_derivation": "first-pr-commit-first-parent-path-parity",
+        "head_sha": "73f8b90dedb9a8feb53a7b852110d5fe9ed35315",
+        "pr_commit_shas": [
+          "6e5eeb145f931805b8701141d7e0dba974a0bdce",
+          "73f8b90dedb9a8feb53a7b852110d5fe9ed35315"
+        ],
+        "changed_files": 2,
+        "additions": 236,
+        "deletions": 21,
+        "paths": [
+          "torchtitan/models/common/moe/kernels.py",
+          "torchtitan/models/common/moe/moe.py"
+        ]
+      },
+      {
+        "case_id": "verl-pr-1688",
+        "project": "verl",
+        "default_profile_id": "verl-posttraining-rollout-host-v1",
+        "default_profile_sha256": "sha256:4764f38710fca64eda59474a8d2e6bd09ee383df57dc521839253bb81d9a47ea",
+        "repository": "volcengine/verl",
+        "pull_number": 1688,
+        "title": "[fix] adding temperature only when fused kernels are used",
+        "created_at": "2025-05-26T06:24:53Z",
+        "base_ref": "main",
+        "base_tip_sha": "3d5f15fa9a51e13087c8c7579a2a0a56be9d5285",
+        "base_sha": "3d5f15fa9a51e13087c8c7579a2a0a56be9d5285",
+        "base_derivation": "base-ref-oid-path-parity",
+        "head_sha": "7ca0307e3847473c442cbffd7289ad95728d6cb4",
+        "pr_commit_shas": [
+          "7ca0307e3847473c442cbffd7289ad95728d6cb4"
+        ],
+        "changed_files": 1,
+        "additions": 6,
+        "deletions": 2,
+        "paths": [
+          "verl/workers/actor/dp_actor.py"
+        ]
+      }
+    ]
+  },
+  "selection_lock_sha256": "sha256:616346d23c6e35a120aa6daa004592dfe52795c63526e9ecdfbec6ff161ea7cb"
+}

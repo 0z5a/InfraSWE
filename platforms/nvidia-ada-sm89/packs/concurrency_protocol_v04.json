@@ -1,0 +1,46 @@
+{
+  "schema_version": "0.4",
+  "feature_id": "ADA-CONCURRENCY-001",
+  "concurrency_protocol_id": "ada-sm89-mixed-kernel-v0.4",
+  "score_authority": "infraswe-scoring-v0.4",
+  "fresh_process_replays": 7,
+  "minimum_official_replays": 5,
+  "clients": [1, 2, 4, 8, 16, 32],
+  "load_regimes": [
+    "light",
+    "normal",
+    "knee",
+    "saturation",
+    "overload",
+    "burst_or_soak"
+  ],
+  "phases": {
+    "warmup_seconds": 30,
+    "steady_seconds_min": 120,
+    "burst_count_min": 30,
+    "thermal_soak_seconds_publishable_min": 600
+  },
+  "request_samples_per_load_cell_min": 1000,
+  "p99_below_sample_min": "exploratory",
+  "required_metrics": [
+    "slo_goodput_ratio",
+    "tail_score",
+    "replay_jitter_score",
+    "resource_stability_score",
+    "fairness_score",
+    "wrong_answer_count",
+    "watchdog_count",
+    "silent_fallback_count",
+    "memory_high_water_bytes",
+    "thermal_drift"
+  ],
+  "hard_failures": [
+    "wrong_answer",
+    "deadlock",
+    "livelock",
+    "watchdog_timeout",
+    "unhandled_cuda_error",
+    "silent_request_drop",
+    "silent_fallback"
+  ]
+}

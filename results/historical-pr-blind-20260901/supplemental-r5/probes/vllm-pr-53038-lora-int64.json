@@ -1,0 +1,67 @@
+{
+  "boundary_arithmetic": {
+    "base_int32_result": -2147479552,
+    "base_matches": false,
+    "expected_int64": 2147487744,
+    "head_int64_result": 2147487744,
+    "head_matches": true,
+    "row": 174763,
+    "stride": 12288
+  },
+  "coverage": {
+    "changed_kernel_paths": [
+      "vllm/lora/ops/triton_ops/lora_expand_op.py",
+      "vllm/lora/ops/triton_ops/lora_expand_fp8_op.py",
+      "vllm/lora/ops/triton_ops/lora_shrink_op.py",
+      "vllm/lora/ops/triton_ops/lora_shrink_fp8_op.py"
+    ],
+    "fp8_path_directly_exercised": false,
+    "large_test_dtype": "bfloat16"
+  },
+  "environment": {
+    "compute_capability": [
+      9,
+      0
+    ],
+    "gpu": "NVIDIA H100 PCIe",
+    "torch": "2.8.0+cu128",
+    "triton": "3.4.0"
+  },
+  "precompile": {
+    "compile_seconds": 1.1593962659999875,
+    "new_cache_files": 34,
+    "steady_state_new_cache_files": 0
+  },
+  "probe": "vllm-lora-int64-pointer-width-r1",
+  "schema_version": "0.5",
+  "source_sha256": {
+    "base_expand": "sha256:2a45f9cf878bb2de86bee8d34f2714a6bc3a86e2074b0182d464a4fae8f59e9d",
+    "head_expand": "sha256:51239d4ea9d012c1e9ff3b8071ac382e68f2a29889c04a1867328827a9829444"
+  },
+  "steady_latency_ms": {
+    "base_median": 0.011522133350372315,
+    "base_samples": [
+      0.011076587041219076,
+      0.011546133359273274,
+      0.011526506741841634,
+      0.010867413679758707,
+      0.011447892983754477,
+      0.011540799935658774,
+      0.011522133350372315
+    ],
+    "elements": 1048576,
+    "head_median": 0.01090720017751058,
+    "head_samples": [
+      0.01090720017751058,
+      0.011576106548309326,
+      0.011476693153381347,
+      0.010700266361236572,
+      0.010642027060190837,
+      0.010820693174997965,
+      0.011304852962493896
+    ],
+    "head_to_base_ratio": 0.9466302676629007,
+    "launches_per_replay": 300,
+    "replays": 7
+  }
+}

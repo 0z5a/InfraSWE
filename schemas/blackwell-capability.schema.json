@@ -1,0 +1,158 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://infraswe.dev/schemas/blackwell-capability.schema.json",
+  "title": "InfraSWE B200 SM100 capability manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "generated_at",
+    "probe_version",
+    "profile_id",
+    "device_index",
+    "status",
+    "capability_fingerprint",
+    "hardware",
+    "toolchain",
+    "features",
+    "score_namespaces",
+    "contract_sha256",
+    "contract",
+    "failure_codes"
+  ],
+  "properties": {
+    "schema_version": { "const": "0.1" },
+    "generated_at": { "type": "string", "format": "date-time" },
+    "probe_version": { "const": "b200-sm100-capability-v1" },
+    "profile_id": { "type": "string", "minLength": 1 },
+    "device_index": { "type": "integer", "minimum": 0 },
+    "status": { "enum": ["ready", "not_ready"] },
+    "capability_fingerprint": { "$ref": "#/$defs/sha256" },
+    "hardware": {
+      "type": "object",
+      "required": [
+        "status",
+        "selected_gpu",
+        "visible_gpu_count",
+        "leased_gpu_count",
+        "all_gpus",
+        "query",
+        "driver_attributes",
+        "topology"
+      ],
+      "properties": {
+        "status": { "enum": ["supported", "unsupported", "unknown"] },
+        "selected_gpu": { "type": ["object", "null"] },
+        "visible_gpu_count": { "type": "integer", "minimum": 0 },
+        "leased_gpu_count": { "type": "integer", "minimum": 1 },
+        "all_gpus": { "type": "array", "items": { "type": "object" } },
+        "query": { "type": "object" },
+        "driver_attributes": { "type": "object" },
+        "topology": { "type": "object" }
+      },
+      "additionalProperties": false
+    },
+    "toolchain": {
+      "type": "object",
+      "required": [
+        "status",
+        "required_cuda_series",
+        "required_ptx_isa",
+        "detected_versions",
+        "commands",
+        "targets"
+      ],
+      "properties": {
+        "status": { "enum": ["supported", "misconfigured", "failed"] },
+        "required_cuda_series": { "const": "13.3" },
+        "required_ptx_isa": { "const": "9.3" },
+        "detected_versions": { "type": "object" },
+        "commands": { "type": "object" },
+        "targets": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["sm_100", "sm_100f", "sm_100a"],
+          "properties": {
+            "sm_100": { "$ref": "#/$defs/targetResult" },
+            "sm_100f": { "$ref": "#/$defs/targetResult" },
+            "sm_100a": { "$ref": "#/$defs/targetResult" }
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "features": {
+      "type": "object",
+      "minProperties": 5,
+      "additionalProperties": { "$ref": "#/$defs/featureCapability" }
+    },
+    "score_namespaces": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["SM100-Core", "SM100-Scheduler", "SM100-Fabric", "PTX-Preview"],
+      "properties": {
+        "SM100-Core": { "$ref": "#/$defs/scoreNamespace" },
+        "SM100-Scheduler": { "$ref": "#/$defs/scoreNamespace" },
+        "SM100-Fabric": { "$ref": "#/$defs/scoreNamespace" },
+        "PTX-Preview": { "$ref": "#/$defs/scoreNamespace" }
+      }
+    },
+    "contract_sha256": { "$ref": "#/$defs/sha256" },
+    "contract": { "type": "object" },
+    "failure_codes": { "type": "array", "items": { "type": "string" }, "uniqueItems": true }
+  },
+  "$defs": {
+    "sha256": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" },
+    "targetResult": {
+      "type": "object",
+      "required": ["status", "passed", "source_path", "source_sha256", "log_path", "log_sha256", "command"],
+      "properties": {
+        "status": { "enum": ["accepted", "rejected"] },
+        "passed": { "type": "boolean" },
+        "source_path": { "type": "string" },
+        "source_sha256": { "$ref": "#/$defs/sha256" },
+        "cubin_path": { "type": ["string", "null"] },
+        "cubin_sha256": { "anyOf": [{ "$ref": "#/$defs/sha256" }, { "type": "null" }] },
+        "log_path": { "type": "string" },
+        "log_sha256": { "$ref": "#/$defs/sha256" },
+        "command": { "type": "object" }
+      },
+      "additionalProperties": false
+    },
+    "featureCapability": {
+      "type": "object",
+      "required": [
+        "namespace",
+        "phase",
+        "required_target",
+        "runtime_scope",
+        "architecture_eligible",
+        "target_compiler_accepted",
+        "support_state",
+        "runtime_available",
+        "reason"
+      ],
+      "properties": {
+        "namespace": { "enum": ["SM100-Core", "SM100-Scheduler", "SM100-Fabric", "PTX-Preview"] },
+        "phase": { "type": "string" },
+        "required_target": { "enum": ["sm_100", "sm_100f", "sm_100a"] },
+        "runtime_scope": { "enum": ["single_gpu", "multi_gpu", "compile_only"] },
+        "architecture_eligible": { "type": ["boolean", "null"] },
+        "target_compiler_accepted": { "type": "boolean" },
+        "support_state": { "enum": ["supported", "unsupported", "misconfigured", "failed", "unknown"] },
+        "runtime_available": { "type": ["boolean", "null"] },
+        "reason": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "scoreNamespace": {
+      "type": "object",
+      "required": ["status", "leaderboard_score_100"],
+      "properties": {
+        "status": { "enum": ["pending_evidence", "disabled"] },
+        "leaderboard_score_100": { "type": "null" }
+      },
+      "additionalProperties": false
+    }
+  }
+}

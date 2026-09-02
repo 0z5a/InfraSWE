@@ -1,0 +1,12 @@
+{
+  "drainEndpoint": "",
+  "image": "example.invalid/inference:v1",
+  "lifecycle": {"preStopSeconds": 0},
+  "name": "inference-api",
+  "port": 8000,
+  "readinessProbe": {"failureThreshold": 1, "path": "/healthz", "periodSeconds": 10},
+  "replicas": 2,
+  "rollbackOnProbeFailure": false,
+  "strategy": {"maxSurge": 0, "maxUnavailable": 1},
+  "terminationGracePeriodSeconds": 1
+}

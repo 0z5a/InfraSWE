@@ -1,0 +1,179 @@
+{
+  "$defs": {
+    "JudgeCriterionAggregation": {
+      "additionalProperties": false,
+      "properties": {
+        "abstention_rate": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Abstention Rate",
+          "type": "number"
+        },
+        "criterion_id": {
+          "title": "Criterion Id",
+          "type": "string"
+        },
+        "cross_family_range": {
+          "anyOf": [
+            {
+              "maximum": 1,
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Cross Family Range"
+        },
+        "failure_codes": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Failure Codes",
+          "type": "array"
+        },
+        "normalized_value": {
+          "anyOf": [
+            {
+              "maximum": 1,
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Normalized Value"
+        },
+        "repeat_agreement": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Repeat Agreement",
+          "type": "number"
+        },
+        "status": {
+          "enum": [
+            "valid",
+            "unresolved",
+            "judge-disagreement",
+            "security-review-required"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "valid_family_count": {
+          "minimum": 0,
+          "title": "Valid Family Count",
+          "type": "integer"
+        },
+        "valid_member_count": {
+          "minimum": 0,
+          "title": "Valid Member Count",
+          "type": "integer"
+        },
+        "valid_vote_count": {
+          "minimum": 0,
+          "title": "Valid Vote Count",
+          "type": "integer"
+        },
+        "weighted_mad": {
+          "anyOf": [
+            {
+              "maximum": 1,
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Weighted Mad"
+        }
+      },
+      "required": [
+        "criterion_id",
+        "status",
+        "valid_vote_count",
+        "valid_member_count",
+        "valid_family_count",
+        "abstention_rate",
+        "repeat_agreement"
+      ],
+      "title": "JudgeCriterionAggregation",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "aggregation_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Aggregation Sha256",
+      "type": "string"
+    },
+    "criteria": {
+      "items": {
+        "$ref": "#/$defs/JudgeCriterionAggregation"
+      },
+      "minItems": 1,
+      "title": "Criteria",
+      "type": "array"
+    },
+    "input_pack_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Input Pack Sha256",
+      "type": "string"
+    },
+    "judge_cell_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Judge Cell Sha256",
+      "type": "string"
+    },
+    "policy_id": {
+      "const": "weighted-median-abstain-v1",
+      "title": "Policy Id",
+      "type": "string"
+    },
+    "rubric_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Rubric Sha256",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "0.5.3",
+      "default": "0.5.3",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "status": {
+      "enum": [
+        "official",
+        "unresolved-judge",
+        "judge-disagreement",
+        "security-review-required"
+      ],
+      "title": "Status",
+      "type": "string"
+    },
+    "top_level_score_status": {
+      "const": "not-a-score",
+      "default": "not-a-score",
+      "title": "Top Level Score Status",
+      "type": "string"
+    }
+  },
+  "required": [
+    "judge_cell_sha256",
+    "input_pack_sha256",
+    "rubric_sha256",
+    "policy_id",
+    "status",
+    "criteria",
+    "aggregation_sha256"
+  ],
+  "title": "JudgeAggregation",
+  "type": "object"
+}

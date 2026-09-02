@@ -1,0 +1,1559 @@
+{
+  "$defs": {
+    "CandidateFootprint": {
+      "additionalProperties": false,
+      "properties": {
+        "build_targets": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Build Targets",
+          "type": "array"
+        },
+        "callers": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Callers",
+          "type": "array"
+        },
+        "candidate_sha256": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Candidate Sha256",
+          "type": "string"
+        },
+        "communication": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/CommunicationFootprint"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "config_keys": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Config Keys",
+          "type": "array"
+        },
+        "dispatcher_points": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Dispatcher Points",
+          "type": "array"
+        },
+        "draft_id": {
+          "title": "Draft Id",
+          "type": "string"
+        },
+        "draft_revision": {
+          "minimum": 1,
+          "title": "Draft Revision",
+          "type": "integer"
+        },
+        "failure_signatures": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Failure Signatures",
+          "type": "array"
+        },
+        "files": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Files",
+          "type": "array"
+        },
+        "memory_tiering": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/MemoryTieringFootprint"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "resource_lifecycles": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Resource Lifecycles",
+          "type": "array"
+        },
+        "schema_version": {
+          "const": "0.5.1",
+          "default": "0.5.1",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "symbols": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Symbols",
+          "type": "array"
+        },
+        "tests": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Tests",
+          "type": "array"
+        },
+        "unresolved_surfaces": {
+          "items": {
+            "enum": [
+              "unresolved-dynamic-dispatch",
+              "unresolved-generated-source",
+              "unresolved-plugin-boundary",
+              "unresolved-runtime-symbol"
+            ],
+            "type": "string"
+          },
+          "title": "Unresolved Surfaces",
+          "type": "array"
+        },
+        "workload_cases": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Workload Cases",
+          "type": "array"
+        }
+      },
+      "required": [
+        "draft_id",
+        "draft_revision",
+        "candidate_sha256"
+      ],
+      "title": "CandidateFootprint",
+      "type": "object"
+    },
+    "ChannelHit": {
+      "additionalProperties": false,
+      "properties": {
+        "channel": {
+          "enum": [
+            "exact",
+            "graph",
+            "failure",
+            "lifecycle",
+            "lexical",
+            "semantic",
+            "negative"
+          ],
+          "title": "Channel",
+          "type": "string"
+        },
+        "matched_features": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Matched Features",
+          "type": "array"
+        },
+        "precedent_id": {
+          "title": "Precedent Id",
+          "type": "string"
+        },
+        "rank": {
+          "minimum": 1,
+          "title": "Rank",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "precedent_id",
+        "channel",
+        "rank"
+      ],
+      "title": "ChannelHit",
+      "type": "object"
+    },
+    "CommunicationFootprint": {
+      "additionalProperties": false,
+      "properties": {
+        "algorithms": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Algorithms",
+          "type": "array"
+        },
+        "collectives": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Collectives",
+          "type": "array"
+        },
+        "communicator_lifecycle": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Communicator Lifecycle",
+          "type": "array"
+        },
+        "concurrency_surfaces": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Concurrency Surfaces",
+          "type": "array"
+        },
+        "dtypes": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Dtypes",
+          "type": "array"
+        },
+        "failure_surfaces": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Failure Surfaces",
+          "type": "array"
+        },
+        "family": {
+          "title": "Family",
+          "type": "string"
+        },
+        "operations": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Operations",
+          "type": "array"
+        },
+        "protocols": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Protocols",
+          "type": "array"
+        },
+        "topology_features": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Topology Features",
+          "type": "array"
+        },
+        "transports": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Transports",
+          "type": "array"
+        }
+      },
+      "required": [
+        "family"
+      ],
+      "title": "CommunicationFootprint",
+      "type": "object"
+    },
+    "ConflictSet": {
+      "additionalProperties": false,
+      "properties": {
+        "conflict_id": {
+          "title": "Conflict Id",
+          "type": "string"
+        },
+        "disposition": {
+          "enum": [
+            "human-review-required",
+            "superseded-by-current-contract",
+            "unresolved"
+          ],
+          "title": "Disposition",
+          "type": "string"
+        },
+        "precedent_ids": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 2,
+          "title": "Precedent Ids",
+          "type": "array"
+        },
+        "reason": {
+          "title": "Reason",
+          "type": "string"
+        }
+      },
+      "required": [
+        "conflict_id",
+        "precedent_ids",
+        "disposition",
+        "reason"
+      ],
+      "title": "ConflictSet",
+      "type": "object"
+    },
+    "FusedHit": {
+      "additionalProperties": false,
+      "properties": {
+        "channel_ranks": {
+          "additionalProperties": {
+            "type": "integer"
+          },
+          "propertyNames": {
+            "enum": [
+              "exact",
+              "graph",
+              "failure",
+              "lifecycle",
+              "lexical",
+              "semantic",
+              "negative"
+            ]
+          },
+          "title": "Channel Ranks",
+          "type": "object"
+        },
+        "precedent_id": {
+          "title": "Precedent Id",
+          "type": "string"
+        },
+        "score": {
+          "exclusiveMinimum": 0,
+          "title": "Score",
+          "type": "number"
+        }
+      },
+      "required": [
+        "precedent_id",
+        "score",
+        "channel_ranks"
+      ],
+      "title": "FusedHit",
+      "type": "object"
+    },
+    "GraphExpansionBudget": {
+      "additionalProperties": false,
+      "properties": {
+        "edge_allowlist": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Edge Allowlist",
+          "type": "array"
+        },
+        "max_hops": {
+          "default": 2,
+          "maximum": 5,
+          "minimum": 0,
+          "title": "Max Hops",
+          "type": "integer"
+        },
+        "maximum_records": {
+          "default": 200,
+          "minimum": 1,
+          "title": "Maximum Records",
+          "type": "integer"
+        },
+        "per_node_fanout": {
+          "default": 20,
+          "minimum": 1,
+          "title": "Per Node Fanout",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "edge_allowlist"
+      ],
+      "title": "GraphExpansionBudget",
+      "type": "object"
+    },
+    "HumanRuleDecision": {
+      "additionalProperties": false,
+      "properties": {
+        "action": {
+          "enum": [
+            "accept",
+            "accept-with-edits",
+            "advisory-only",
+            "reject",
+            "conflict-unresolved"
+          ],
+          "title": "Action",
+          "type": "string"
+        },
+        "after_sha256": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "After Sha256",
+          "type": "string"
+        },
+        "before_sha256": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Before Sha256",
+          "type": "string"
+        },
+        "reason": {
+          "minLength": 1,
+          "title": "Reason",
+          "type": "string"
+        },
+        "reviewed_at": {
+          "format": "date-time",
+          "title": "Reviewed At",
+          "type": "string"
+        },
+        "reviewer": {
+          "minLength": 1,
+          "title": "Reviewer",
+          "type": "string"
+        },
+        "rule_id": {
+          "title": "Rule Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "rule_id",
+        "action",
+        "before_sha256",
+        "after_sha256",
+        "reviewer",
+        "reason",
+        "reviewed_at"
+      ],
+      "title": "HumanRuleDecision",
+      "type": "object"
+    },
+    "LeakageAudit": {
+      "additionalProperties": false,
+      "properties": {
+        "allowed_precedent_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Allowed Precedent Ids",
+          "type": "array"
+        },
+        "exclusions": {
+          "items": {
+            "$ref": "#/$defs/LeakageExclusion"
+          },
+          "title": "Exclusions",
+          "type": "array"
+        },
+        "failure_codes": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Failure Codes",
+          "type": "array"
+        },
+        "known_solution_leaked": {
+          "default": false,
+          "title": "Known Solution Leaked",
+          "type": "boolean"
+        },
+        "status": {
+          "enum": [
+            "pass",
+            "fail",
+            "unresolved"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "suspected_near_duplicate": {
+          "default": false,
+          "title": "Suspected Near Duplicate",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "status",
+        "allowed_precedent_ids"
+      ],
+      "title": "LeakageAudit",
+      "type": "object"
+    },
+    "LeakageExclusion": {
+      "additionalProperties": false,
+      "properties": {
+        "precedent_id": {
+          "title": "Precedent Id",
+          "type": "string"
+        },
+        "reason": {
+          "enum": [
+            "forbidden-source-id",
+            "after-corpus-cutoff",
+            "future-follow-up",
+            "known-solution-fingerprint",
+            "suspected-near-duplicate"
+          ],
+          "title": "Reason",
+          "type": "string"
+        }
+      },
+      "required": [
+        "precedent_id",
+        "reason"
+      ],
+      "title": "LeakageExclusion",
+      "type": "object"
+    },
+    "MemoryTieringFootprint": {
+      "additionalProperties": false,
+      "properties": {
+        "allocator_symbols": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Allocator Symbols",
+          "type": "array"
+        },
+        "budget_symbols": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Budget Symbols",
+          "type": "array"
+        },
+        "copy_stream_symbols": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Copy Stream Symbols",
+          "type": "array"
+        },
+        "destination_tier": {
+          "title": "Destination Tier",
+          "type": "string"
+        },
+        "event_order_symbols": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Event Order Symbols",
+          "type": "array"
+        },
+        "eviction_symbols": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Eviction Symbols",
+          "type": "array"
+        },
+        "mutability": {
+          "title": "Mutability",
+          "type": "string"
+        },
+        "numa_policy_symbols": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Numa Policy Symbols",
+          "type": "array"
+        },
+        "offload_object_kind": {
+          "title": "Offload Object Kind",
+          "type": "string"
+        },
+        "prefetch_symbols": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Prefetch Symbols",
+          "type": "array"
+        },
+        "residency_states": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Residency States",
+          "type": "array"
+        },
+        "source_tier": {
+          "title": "Source Tier",
+          "type": "string"
+        },
+        "transition_symbols": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Transition Symbols",
+          "type": "array"
+        },
+        "version_key_symbols": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Version Key Symbols",
+          "type": "array"
+        }
+      },
+      "required": [
+        "offload_object_kind",
+        "mutability",
+        "source_tier",
+        "destination_tier"
+      ],
+      "title": "MemoryTieringFootprint",
+      "type": "object"
+    },
+    "PrecedentGraphEdge": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "enum": [
+            "MODIFIES",
+            "CALLS",
+            "REGISTERS",
+            "TESTED_BY",
+            "BUILT_BY",
+            "CONFIGURED_BY",
+            "REVIEWED_IN",
+            "FAILED_BY",
+            "FIXES",
+            "REVERTS",
+            "SUPERSEDES",
+            "REGRESSES",
+            "DEPENDS_ON",
+            "OWNED_BY",
+            "TOUCHES_LIFECYCLE",
+            "TOUCHES_CAPABILITY",
+            "OBSERVED_IN_WORKLOAD"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "source_id": {
+          "title": "Source Id",
+          "type": "string"
+        },
+        "target_id": {
+          "title": "Target Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "source_id",
+        "target_id",
+        "kind"
+      ],
+      "title": "PrecedentGraphEdge",
+      "type": "object"
+    },
+    "PrecedentRecord": {
+      "additionalProperties": false,
+      "properties": {
+        "authority": {
+          "enum": [
+            "explicit-profile",
+            "explicit-test-or-build-rule",
+            "current-code-invariant",
+            "repeated-accepted-precedent",
+            "regression-or-revert-precedent",
+            "single-accepted-precedent",
+            "single-review-comment",
+            "advisory-cross-project",
+            "inferred",
+            "conflicting"
+          ],
+          "title": "Authority",
+          "type": "string"
+        },
+        "change_fingerprint": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Change Fingerprint"
+        },
+        "confidence": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Confidence",
+          "type": "number"
+        },
+        "kind": {
+          "enum": [
+            "accepted-pattern",
+            "rejected-pattern",
+            "regression-precedent",
+            "migration-precedent",
+            "explicit-contract",
+            "superseded-precedent",
+            "advisory-precedent",
+            "conflicting-precedent"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "observed_at": {
+          "format": "date-time",
+          "title": "Observed At",
+          "type": "string"
+        },
+        "precedent_id": {
+          "title": "Precedent Id",
+          "type": "string"
+        },
+        "proposed_rule_templates": {
+          "items": {
+            "enum": [
+              "required-integration-point",
+              "required-interface",
+              "forbidden-dependency",
+              "required-build-target",
+              "required-test-layer",
+              "explicit-unsupported",
+              "no-silent-fallback",
+              "bounded-resource",
+              "lifecycle-order",
+              "stream-event-happens-before",
+              "collective-order-consistency",
+              "residency-consistency",
+              "capacity-budget",
+              "failure-code-required",
+              "performance-regression-gate",
+              "concurrency-probe-required",
+              "maintenance-probe-required"
+            ],
+            "type": "string"
+          },
+          "title": "Proposed Rule Templates",
+          "type": "array"
+        },
+        "relations": {
+          "additionalProperties": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "title": "Relations",
+          "type": "object"
+        },
+        "schema_version": {
+          "const": "0.5.1",
+          "default": "0.5.1",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "scope": {
+          "$ref": "#/$defs/PrecedentScope"
+        },
+        "source_digest": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Source Digest",
+          "type": "string"
+        },
+        "source_event_id": {
+          "title": "Source Event Id",
+          "type": "string"
+        },
+        "source_kind": {
+          "enum": [
+            "code",
+            "test",
+            "build-rule",
+            "pull-request",
+            "review",
+            "issue",
+            "ci-failure",
+            "regression",
+            "revert",
+            "release-note",
+            "archived-trial"
+          ],
+          "title": "Source Kind",
+          "type": "string"
+        },
+        "source_locator": {
+          "title": "Source Locator",
+          "type": "string"
+        },
+        "target_authority": {
+          "title": "Target Authority",
+          "type": "boolean"
+        },
+        "text": {
+          "default": "",
+          "title": "Text",
+          "type": "string"
+        },
+        "validity": {
+          "$ref": "#/$defs/PrecedentValidity"
+        }
+      },
+      "required": [
+        "precedent_id",
+        "source_kind",
+        "source_locator",
+        "source_digest",
+        "source_event_id",
+        "observed_at",
+        "validity",
+        "kind",
+        "authority",
+        "target_authority",
+        "confidence",
+        "scope"
+      ],
+      "title": "PrecedentRecord",
+      "type": "object"
+    },
+    "PrecedentScope": {
+      "additionalProperties": false,
+      "properties": {
+        "build_targets": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Build Targets",
+          "type": "array"
+        },
+        "configs": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Configs",
+          "type": "array"
+        },
+        "domain_tags": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Domain Tags",
+          "type": "array"
+        },
+        "failure_signatures": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Failure Signatures",
+          "type": "array"
+        },
+        "files": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Files",
+          "type": "array"
+        },
+        "lifecycle_tags": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Lifecycle Tags",
+          "type": "array"
+        },
+        "symbols": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Symbols",
+          "type": "array"
+        },
+        "tests": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Tests",
+          "type": "array"
+        }
+      },
+      "title": "PrecedentScope",
+      "type": "object"
+    },
+    "PrecedentSet": {
+      "additionalProperties": false,
+      "properties": {
+        "conflict_sets": {
+          "items": {
+            "$ref": "#/$defs/ConflictSet"
+          },
+          "title": "Conflict Sets",
+          "type": "array"
+        },
+        "corpus_cutoff": {
+          "format": "date-time",
+          "title": "Corpus Cutoff",
+          "type": "string"
+        },
+        "digest": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Digest",
+          "type": "string"
+        },
+        "draft_id": {
+          "title": "Draft Id",
+          "type": "string"
+        },
+        "draft_revision": {
+          "minimum": 1,
+          "title": "Draft Revision",
+          "type": "integer"
+        },
+        "graph_edges": {
+          "items": {
+            "$ref": "#/$defs/PrecedentGraphEdge"
+          },
+          "title": "Graph Edges",
+          "type": "array"
+        },
+        "leakage_policy_id": {
+          "title": "Leakage Policy Id",
+          "type": "string"
+        },
+        "omitted_records_path": {
+          "title": "Omitted Records Path",
+          "type": "string"
+        },
+        "query_policy_id": {
+          "title": "Query Policy Id",
+          "type": "string"
+        },
+        "records": {
+          "items": {
+            "$ref": "#/$defs/PrecedentRecord"
+          },
+          "title": "Records",
+          "type": "array"
+        },
+        "schema_version": {
+          "const": "0.5.1",
+          "default": "0.5.1",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "target_snapshot_sha256": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Target Snapshot Sha256",
+          "type": "string"
+        }
+      },
+      "required": [
+        "draft_id",
+        "draft_revision",
+        "target_snapshot_sha256",
+        "corpus_cutoff",
+        "query_policy_id",
+        "leakage_policy_id",
+        "records",
+        "omitted_records_path",
+        "digest"
+      ],
+      "title": "PrecedentSet",
+      "type": "object"
+    },
+    "PrecedentValidity": {
+      "additionalProperties": false,
+      "properties": {
+        "corpus_cutoff_eligible": {
+          "default": true,
+          "title": "Corpus Cutoff Eligible",
+          "type": "boolean"
+        },
+        "first_revision": {
+          "title": "First Revision",
+          "type": "string"
+        },
+        "last_revision": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Last Revision"
+        },
+        "repository": {
+          "title": "Repository",
+          "type": "string"
+        }
+      },
+      "required": [
+        "repository",
+        "first_revision"
+      ],
+      "title": "PrecedentValidity",
+      "type": "object"
+    },
+    "QueryPass": {
+      "additionalProperties": false,
+      "properties": {
+        "budget": {
+          "minimum": 1,
+          "title": "Budget",
+          "type": "integer"
+        },
+        "features": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Features",
+          "type": "array"
+        },
+        "id": {
+          "enum": [
+            "exact",
+            "graph",
+            "failure",
+            "lifecycle",
+            "lexical",
+            "semantic",
+            "negative"
+          ],
+          "title": "Id",
+          "type": "string"
+        },
+        "required": {
+          "title": "Required",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "id",
+        "required",
+        "budget",
+        "features"
+      ],
+      "title": "QueryPass",
+      "type": "object"
+    },
+    "QueryPlan": {
+      "additionalProperties": false,
+      "properties": {
+        "candidate_footprint_sha256": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Candidate Footprint Sha256",
+          "type": "string"
+        },
+        "corpus_cutoff": {
+          "format": "date-time",
+          "title": "Corpus Cutoff",
+          "type": "string"
+        },
+        "forbidden_source_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Forbidden Source Ids",
+          "type": "array"
+        },
+        "graph": {
+          "$ref": "#/$defs/GraphExpansionBudget"
+        },
+        "leakage_policy_id": {
+          "title": "Leakage Policy Id",
+          "type": "string"
+        },
+        "passes": {
+          "items": {
+            "$ref": "#/$defs/QueryPass"
+          },
+          "minItems": 1,
+          "title": "Passes",
+          "type": "array"
+        },
+        "policy_id": {
+          "title": "Policy Id",
+          "type": "string"
+        },
+        "rrf": {
+          "$ref": "#/$defs/RRFPolicy"
+        },
+        "schema_version": {
+          "const": "0.5.1",
+          "default": "0.5.1",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "target_snapshot_sha256": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Target Snapshot Sha256",
+          "type": "string"
+        }
+      },
+      "required": [
+        "policy_id",
+        "target_snapshot_sha256",
+        "candidate_footprint_sha256",
+        "corpus_cutoff",
+        "leakage_policy_id",
+        "passes",
+        "rrf",
+        "graph"
+      ],
+      "title": "QueryPlan",
+      "type": "object"
+    },
+    "RRFPolicy": {
+      "additionalProperties": false,
+      "properties": {
+        "channel_weights": {
+          "additionalProperties": {
+            "type": "number"
+          },
+          "propertyNames": {
+            "enum": [
+              "exact",
+              "graph",
+              "failure",
+              "lifecycle",
+              "lexical",
+              "semantic",
+              "negative"
+            ]
+          },
+          "title": "Channel Weights",
+          "type": "object"
+        },
+        "k": {
+          "default": 60,
+          "minimum": 1,
+          "title": "K",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "channel_weights"
+      ],
+      "title": "RRFPolicy",
+      "type": "object"
+    },
+    "RepositorySnapshot": {
+      "additionalProperties": false,
+      "properties": {
+        "captured_at": {
+          "format": "date-time",
+          "title": "Captured At",
+          "type": "string"
+        },
+        "corpus_cutoff": {
+          "format": "date-time",
+          "title": "Corpus Cutoff",
+          "type": "string"
+        },
+        "parser_versions": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "title": "Parser Versions",
+          "type": "object"
+        },
+        "partial": {
+          "default": false,
+          "title": "Partial",
+          "type": "boolean"
+        },
+        "permission_snapshot_sha256": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Permission Snapshot Sha256",
+          "type": "string"
+        },
+        "repository": {
+          "title": "Repository",
+          "type": "string"
+        },
+        "repository_sha256": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Repository Sha256",
+          "type": "string"
+        },
+        "revision": {
+          "title": "Revision",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "0.5.1",
+          "default": "0.5.1",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "source_manifest_sha256": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Source Manifest Sha256",
+          "type": "string"
+        },
+        "unparsed_files": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Unparsed Files",
+          "type": "array"
+        }
+      },
+      "required": [
+        "repository",
+        "revision",
+        "repository_sha256",
+        "source_manifest_sha256",
+        "permission_snapshot_sha256",
+        "captured_at",
+        "corpus_cutoff"
+      ],
+      "title": "RepositorySnapshot",
+      "type": "object"
+    },
+    "RetrievalCoverage": {
+      "additionalProperties": false,
+      "properties": {
+        "known_blind_spots": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Known Blind Spots",
+          "type": "array"
+        },
+        "missing_sources": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Missing Sources",
+          "type": "array"
+        },
+        "required_passes_completed": {
+          "items": {
+            "enum": [
+              "exact",
+              "graph",
+              "failure",
+              "lifecycle",
+              "lexical",
+              "semantic",
+              "negative"
+            ],
+            "type": "string"
+          },
+          "title": "Required Passes Completed",
+          "type": "array"
+        },
+        "status": {
+          "enum": [
+            "complete",
+            "partial",
+            "blocked",
+            "stale",
+            "conflicting"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "unresolved_surfaces": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Unresolved Surfaces",
+          "type": "array"
+        }
+      },
+      "required": [
+        "status",
+        "required_passes_completed"
+      ],
+      "title": "RetrievalCoverage",
+      "type": "object"
+    },
+    "RetrievalTrustCard": {
+      "additionalProperties": false,
+      "properties": {
+        "anchor_coverage": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Anchor Coverage",
+          "type": "number"
+        },
+        "candidate_score_effect": {
+          "const": "none",
+          "default": "none",
+          "title": "Candidate Score Effect",
+          "type": "string"
+        },
+        "conflict_detection_status": {
+          "enum": [
+            "complete",
+            "partial",
+            "unresolved"
+          ],
+          "title": "Conflict Detection Status",
+          "type": "string"
+        },
+        "deterministic_replay": {
+          "enum": [
+            "pass",
+            "fail",
+            "unresolved"
+          ],
+          "title": "Deterministic Replay",
+          "type": "string"
+        },
+        "embedding_required": {
+          "const": false,
+          "default": false,
+          "title": "Embedding Required",
+          "type": "boolean"
+        },
+        "human_rule_acceptance_rate": {
+          "anyOf": [
+            {
+              "maximum": 1,
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Human Rule Acceptance Rate"
+        },
+        "leakage_audit": {
+          "enum": [
+            "pass",
+            "fail",
+            "unresolved"
+          ],
+          "title": "Leakage Audit",
+          "type": "string"
+        },
+        "parser_coverage": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Parser Coverage",
+          "type": "number"
+        },
+        "provenance_completeness": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Provenance Completeness",
+          "type": "number"
+        },
+        "snapshot_integrity": {
+          "enum": [
+            "pass",
+            "fail",
+            "unresolved"
+          ],
+          "title": "Snapshot Integrity",
+          "type": "string"
+        },
+        "unresolved_sources": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Unresolved Sources",
+          "type": "array"
+        }
+      },
+      "required": [
+        "snapshot_integrity",
+        "deterministic_replay",
+        "parser_coverage",
+        "anchor_coverage",
+        "provenance_completeness",
+        "conflict_detection_status",
+        "leakage_audit"
+      ],
+      "title": "RetrievalTrustCard",
+      "type": "object"
+    },
+    "RuleCandidate": {
+      "additionalProperties": false,
+      "properties": {
+        "arguments": {
+          "additionalProperties": true,
+          "title": "Arguments",
+          "type": "object"
+        },
+        "authority": {
+          "enum": [
+            "explicit-profile",
+            "explicit-test-or-build-rule",
+            "current-code-invariant",
+            "repeated-accepted-precedent",
+            "regression-or-revert-precedent",
+            "single-accepted-precedent",
+            "single-review-comment",
+            "advisory-cross-project",
+            "inferred",
+            "conflicting"
+          ],
+          "title": "Authority",
+          "type": "string"
+        },
+        "confidence": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Confidence",
+          "type": "number"
+        },
+        "modality": {
+          "enum": [
+            "MUST",
+            "SHOULD",
+            "MAY",
+            "FORBID"
+          ],
+          "title": "Modality",
+          "type": "string"
+        },
+        "rule_id": {
+          "title": "Rule Id",
+          "type": "string"
+        },
+        "source_precedents": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Source Precedents",
+          "type": "array"
+        },
+        "status": {
+          "default": "proposed",
+          "enum": [
+            "proposed",
+            "accepted",
+            "edited",
+            "advisory-only",
+            "rejected",
+            "conflicted"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "template": {
+          "enum": [
+            "required-integration-point",
+            "required-interface",
+            "forbidden-dependency",
+            "required-build-target",
+            "required-test-layer",
+            "explicit-unsupported",
+            "no-silent-fallback",
+            "bounded-resource",
+            "lifecycle-order",
+            "stream-event-happens-before",
+            "collective-order-consistency",
+            "residency-consistency",
+            "capacity-budget",
+            "failure-code-required",
+            "performance-regression-gate",
+            "concurrency-probe-required",
+            "maintenance-probe-required"
+          ],
+          "title": "Template",
+          "type": "string"
+        }
+      },
+      "required": [
+        "rule_id",
+        "modality",
+        "template",
+        "arguments",
+        "source_precedents",
+        "authority",
+        "confidence"
+      ],
+      "title": "RuleCandidate",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "bundle_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Bundle Sha256",
+      "type": "string"
+    },
+    "channel_hits": {
+      "items": {
+        "$ref": "#/$defs/ChannelHit"
+      },
+      "title": "Channel Hits",
+      "type": "array"
+    },
+    "coverage": {
+      "$ref": "#/$defs/RetrievalCoverage"
+    },
+    "footprint": {
+      "$ref": "#/$defs/CandidateFootprint"
+    },
+    "fused_ranking": {
+      "items": {
+        "$ref": "#/$defs/FusedHit"
+      },
+      "title": "Fused Ranking",
+      "type": "array"
+    },
+    "human_decisions": {
+      "items": {
+        "$ref": "#/$defs/HumanRuleDecision"
+      },
+      "title": "Human Decisions",
+      "type": "array"
+    },
+    "leakage_audit": {
+      "$ref": "#/$defs/LeakageAudit"
+    },
+    "precedent_set": {
+      "$ref": "#/$defs/PrecedentSet"
+    },
+    "query_plan": {
+      "$ref": "#/$defs/QueryPlan"
+    },
+    "rules": {
+      "items": {
+        "$ref": "#/$defs/RuleCandidate"
+      },
+      "title": "Rules",
+      "type": "array"
+    },
+    "schema_version": {
+      "const": "0.5.1",
+      "default": "0.5.1",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "snapshot": {
+      "$ref": "#/$defs/RepositorySnapshot"
+    },
+    "trust": {
+      "$ref": "#/$defs/RetrievalTrustCard"
+    }
+  },
+  "required": [
+    "snapshot",
+    "footprint",
+    "query_plan",
+    "channel_hits",
+    "fused_ranking",
+    "leakage_audit",
+    "coverage",
+    "rules",
+    "trust",
+    "precedent_set",
+    "bundle_sha256"
+  ],
+  "title": "RetrievalBundle",
+  "type": "object"
+}

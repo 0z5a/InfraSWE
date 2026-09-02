@@ -1,0 +1,22 @@
+{
+  "schema_version": "0.5",
+  "protocol_id": "sglang-graph-lora-addmm-paired-confirmation-v0.5-r1",
+  "frozen_before_paired_execution": true,
+  "trigger": "a source-identical slots<4 control exceeded the 3% sequential A/B drift gate",
+  "scope": "all six preregistered cases; no case selection change",
+  "fresh_processes": 7,
+  "samples_per_case_per_process": 5,
+  "cuda_graph_replays_per_sample": 300,
+  "pairing": "baseline and candidate captured in the same process from equal seeded tensors",
+  "order": "variant order alternates by process, case, and sample",
+  "authority": {
+    "absolute_latency": "original baseline and candidate runs remain authoritative",
+    "relative_latency": "paired interleaved ratios supersede sequential ratios",
+    "correctness": "original 7+7 fresh process checks remain authoritative"
+  },
+  "gates": {
+    "maximum_per_case_candidate_to_baseline_ratio": 1.03,
+    "optimized_cases": "slots >= 4",
+    "control_cases": "slots < 4"
+  }
+}

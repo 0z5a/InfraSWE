@@ -1,0 +1,139 @@
+{
+  "cases": [
+    {
+      "artifacts": [
+        {
+          "built_cuda": 126,
+          "cxx11_abi": 1,
+          "id": "sm90-first",
+          "kind": "sass",
+          "sms": [90]
+        },
+        {
+          "built_cuda": 126,
+          "cxx11_abi": 1,
+          "id": "sm80-z",
+          "kind": "sass",
+          "sms": [80]
+        },
+        {
+          "built_cuda": 125,
+          "cxx11_abi": 1,
+          "id": "sm80-a",
+          "kind": "sass",
+          "sms": [80]
+        }
+      ],
+      "expected_artifact_id": "sm80-a",
+      "expected_mechanism": "native_sass",
+      "expected_status": "ready",
+      "id": "native-precedence",
+      "request": {
+        "cxx11_abi": 1,
+        "device_sm": 80,
+        "driver_cuda": 126,
+        "runtime_cuda": 126
+      }
+    },
+    {
+      "artifacts": [
+        {
+          "built_cuda": 126,
+          "cxx11_abi": 1,
+          "id": "sm90-only",
+          "kind": "sass",
+          "sms": [90]
+        },
+        {
+          "compute": 80,
+          "cxx11_abi": 1,
+          "id": "compute80-ptx",
+          "kind": "ptx",
+          "requires_driver_cuda": 120
+        }
+      ],
+      "expected_artifact_id": "compute80-ptx",
+      "expected_mechanism": "ptx_jit",
+      "expected_status": "ready",
+      "id": "explicit-ptx-fallback",
+      "request": {
+        "cxx11_abi": 1,
+        "device_sm": 80,
+        "driver_cuda": 126,
+        "runtime_cuda": 126
+      }
+    },
+    {
+      "artifacts": [
+        {
+          "built_cuda": 126,
+          "cxx11_abi": 0,
+          "id": "wrong-abi-native",
+          "kind": "sass",
+          "sms": [80]
+        },
+        {
+          "compute": 80,
+          "cxx11_abi": 0,
+          "id": "wrong-abi-ptx",
+          "kind": "ptx",
+          "requires_driver_cuda": 120
+        }
+      ],
+      "expected_artifact_id": null,
+      "expected_mechanism": "none",
+      "expected_status": "blocked",
+      "id": "abi-mismatch-blocked",
+      "request": {
+        "cxx11_abi": 1,
+        "device_sm": 80,
+        "driver_cuda": 126,
+        "runtime_cuda": 126
+      }
+    },
+    {
+      "artifacts": [
+        {
+          "built_cuda": 120,
+          "cxx11_abi": 1,
+          "id": "runtime-too-new",
+          "kind": "sass",
+          "sms": [80]
+        }
+      ],
+      "expected_artifact_id": null,
+      "expected_mechanism": "none",
+      "expected_status": "blocked",
+      "id": "driver-runtime-mismatch-blocked",
+      "request": {
+        "cxx11_abi": 1,
+        "device_sm": 80,
+        "driver_cuda": 120,
+        "runtime_cuda": 126
+      }
+    },
+    {
+      "artifacts": [
+        {
+          "compute": 80,
+          "cxx11_abi": 1,
+          "id": "forward-compatible-ptx",
+          "kind": "ptx",
+          "requires_driver_cuda": 120
+        }
+      ],
+      "expected_artifact_id": "forward-compatible-ptx",
+      "expected_mechanism": "ptx_jit",
+      "expected_status": "ready",
+      "id": "forward-compatible-ptx",
+      "request": {
+        "cxx11_abi": 1,
+        "device_sm": 90,
+        "driver_cuda": 130,
+        "runtime_cuda": 126
+      }
+    }
+  ],
+  "maximum_selection_p95_ms": 5.0,
+  "schema_version": "1"
+}

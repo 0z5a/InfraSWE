@@ -1,0 +1,3023 @@
+{
+  "catalog_version": "default-projects-v0.5-proposed.2",
+  "default_order": [
+    "vllm",
+    "sglang",
+    "flash-attention",
+    "flashinfer",
+    "cutlass-cute",
+    "liger-kernel",
+    "deepgemm",
+    "megatron-core",
+    "torchtitan",
+    "verl"
+  ],
+  "entries": {
+    "cutlass-cute": {
+      "aliases": [
+        "cutlass-cute",
+        "nvidia/cutlass",
+        "cutlass"
+      ],
+      "artifacts": {
+        "api-abi": {
+          "artifact_kind": "api-abi",
+          "catalog_profile": "cutlass-cute-kernel-library-v1",
+          "extraction_status": "machine-proposed",
+          "probes": [
+            "template-instantiation",
+            "layout-contract",
+            "epilogue-contract",
+            "library-registration"
+          ],
+          "project": "cutlass-cute",
+          "requirements": [
+            "Preserve CUTLASS/CuTe template, layout, datatype, collective, epilogue, and library operation contracts across the declared architecture family."
+          ],
+          "schema_version": "0.5",
+          "source_repository": "https://github.com/NVIDIA/cutlass",
+          "source_revision": "dc45f979ae336a235da1676b311f35efeb30149a",
+          "source_urls": [
+            "https://github.com/NVIDIA/cutlass/blob/dc45f979ae336a235da1676b311f35efeb30149a/README.md",
+            "https://github.com/NVIDIA/cutlass/tree/dc45f979ae336a235da1676b311f35efeb30149a/docs",
+            "https://github.com/NVIDIA/cutlass/tree/dc45f979ae336a235da1676b311f35efeb30149a/test/unit"
+          ]
+        },
+        "build-test-matrix": {
+          "artifact_kind": "build-test-matrix",
+          "catalog_profile": "cutlass-cute-kernel-library-v1",
+          "extraction_status": "machine-proposed",
+          "probes": [
+            "unit-architecture",
+            "example-build",
+            "profiler-verification",
+            "compile-negative"
+          ],
+          "project": "cutlass-cute",
+          "requirements": [
+            "Run affected architecture unit tests plus examples and profiler verification for the changed operation, datatype, layout, and epilogue."
+          ],
+          "schema_version": "0.5",
+          "source_repository": "https://github.com/NVIDIA/cutlass",
+          "source_revision": "dc45f979ae336a235da1676b311f35efeb30149a",
+          "source_urls": [
+            "https://github.com/NVIDIA/cutlass/blob/dc45f979ae336a235da1676b311f35efeb30149a/README.md",
+            "https://github.com/NVIDIA/cutlass/tree/dc45f979ae336a235da1676b311f35efeb30149a/docs",
+            "https://github.com/NVIDIA/cutlass/tree/dc45f979ae336a235da1676b311f35efeb30149a/test/unit"
+          ]
+        },
+        "dependency-policy": {
+          "artifact_kind": "dependency-policy",
+          "catalog_profile": "cutlass-cute-kernel-library-v1",
+          "extraction_status": "machine-proposed",
+          "probes": [
+            "toolkit-compiler-matrix",
+            "submodule-state",
+            "clean-build",
+            "generated-source-identity"
+          ],
+          "project": "cutlass-cute",
+          "requirements": [
+            "Pin CUDA toolkit, host compiler, CMake, Python, submodule, and generated-source requirements without importing build-only dependencies at selection time."
+          ],
+          "schema_version": "0.5",
+          "source_repository": "https://github.com/NVIDIA/cutlass",
+          "source_revision": "dc45f979ae336a235da1676b311f35efeb30149a",
+          "source_urls": [
+            "https://github.com/NVIDIA/cutlass/blob/dc45f979ae336a235da1676b311f35efeb30149a/README.md",
+            "https://github.com/NVIDIA/cutlass/tree/dc45f979ae336a235da1676b311f35efeb30149a/docs",
+            "https://github.com/NVIDIA/cutlass/tree/dc45f979ae336a235da1676b311f35efeb30149a/test/unit"
+          ]
+        },
+        "deployment-workload-portfolio": {
+          "artifact_kind": "deployment-workload-portfolio",
+          "catalog_profile": "cutlass-cute-kernel-library-v1",
+          "extraction_status": "machine-proposed",
+          "probes": [
+            "dense-gemm",
+            "grouped-gemm",
+            "tiny-m",
+            "non-aligned-k",
+            "concurrent-streams"
+          ],
+          "project": "cutlass-cute",
+          "requirements": [
+            "Cover dense and grouped GEMM, tiny-M and skinny shapes, non-aligned K, mixed epilogues, grouped expert tails, and concurrent streams."
+          ],
+          "schema_version": "0.5",
+          "source_repository": "https://github.com/NVIDIA/cutlass",
+          "source_revision": "dc45f979ae336a235da1676b311f35efeb30149a",
+          "source_urls": [
+            "https://github.com/NVIDIA/cutlass/blob/dc45f979ae336a235da1676b311f35efeb30149a/README.md",
+            "https://github.com/NVIDIA/cutlass/tree/dc45f979ae336a235da1676b311f35efeb30149a/docs",
+            "https://github.com/NVIDIA/cutlass/tree/dc45f979ae336a235da1676b311f35efeb30149a/test/unit"
+          ]
+        },
+        "fallback-policy": {
+          "artifact_kind": "fallback-policy",
+          "catalog_profile": "cutlass-cute-kernel-library-v1",
+          "extraction_status": "machine-proposed",
+          "probes": [
+            "unsupported-architecture",
+            "alignment-boundary",
+            "can-implement",
+            "vendor-fallback"
+          ],
+          "project": "cutlass-cute",
+          "requirements": [
+            "Unsupported architectures, alignments, layouts, datatypes, and schedules must be rejected or routed to a declared library/vendor fallback."
+          ],
+          "schema_version": "0.5",
+          "source_repository": "https://github.com/NVIDIA/cutlass",
+          "source_revision": "dc45f979ae336a235da1676b311f35efeb30149a",
+          "source_urls": [
+            "https://github.com/NVIDIA/cutlass/blob/dc45f979ae336a235da1676b311f35efeb30149a/README.md",
+            "https://github.com/NVIDIA/cutlass/tree/dc45f979ae336a235da1676b311f35efeb30149a/docs",
+            "https://github.com/NVIDIA/cutlass/tree/dc45f979ae336a235da1676b311f35efeb30149a/test/unit"
+          ]
+        },
+        "lifecycle": {
+          "artifact_kind": "lifecycle",
+          "catalog_profile": "cutlass-cute-kernel-library-v1",
+          "extraction_status": "machine-proposed",
+          "probes": [
+            "cmake-configure",
+            "code-generation",
+            "compile-link",
+            "repeat-launch"
+          ],
+          "project": "cutlass-cute",
+          "requirements": [
+            "Preserve configure, code generation, compile, link, profiler discovery, first launch, repeated launch, and stream behavior."
+          ],
+          "schema_version": "0.5",
+          "source_repository": "https://github.com/NVIDIA/cutlass",
+          "source_revision": "dc45f979ae336a235da1676b311f35efeb30149a",
+          "source_urls": [
+            "https://github.com/NVIDIA/cutlass/blob/dc45f979ae336a235da1676b311f35efeb30149a/README.md",
+            "https://github.com/NVIDIA/cutlass/tree/dc45f979ae336a235da1676b311f35efeb30149a/docs",
+            "https://github.com/NVIDIA/cutlass/tree/dc45f979ae336a235da1676b311f35efeb30149a/test/unit"
+          ]
+        },
+        "maintainability-probes": {
+          "artifact_kind": "maintainability-probes",
+          "catalog_profile": "cutlass-cute-kernel-library-v1",
+          "extraction_status": "machine-proposed",
+          "probes": [
+            "architecture-locality",
+            "shared-abstraction",
+            "test-affinity",
+            "documentation-impact"
+          ],
+          "project": "cutlass-cute",
+          "requirements": [
+            "Localize generation-specific code, keep shared CuTe abstractions explicit, and bind new schedules to focused tests and documentation."
+          ],
+          "schema_version": "0.5",
+          "source_repository": "https://github.com/NVIDIA/cutlass",
+          "source_revision": "dc45f979ae336a235da1676b311f35efeb30149a",
+          "source_urls": [
+            "https://github.com/NVIDIA/cutlass/blob/dc45f979ae336a235da1676b311f35efeb30149a/README.md",
+            "https://github.com/NVIDIA/cutlass/tree/dc45f979ae336a235da1676b311f35efeb30149a/docs",
+            "https://github.com/NVIDIA/cutlass/tree/dc45f979ae336a235da1676b311f35efeb30149a/test/unit"
+          ]
+        },
+        "performance-acceptance-targets": {
+          "artifact_kind": "performance-acceptance-targets",
+          "catalog_profile": "cutlass-cute-kernel-library-v1",
+          "extraction_status": "machine-proposed",
+          "probes": [
+            "cutlass-profiler",
+            "cublaslt-local-baseline",
+            "workspace-peak",
+            "compile-cost"
+          ],
+          "project": "cutlass-cute",
+          "requirements": [
+            "Report local-cell latency, throughput, workspace, occupancy evidence, compile cost, and retention against pinned cuBLASLt and prior CUTLASS baselines."
+          ],
+          "schema_version": "0.5",
+          "source_repository": "https://github.com/NVIDIA/cutlass",
+          "source_revision": "dc45f979ae336a235da1676b311f35efeb30149a",
+          "source_urls": [
+            "https://github.com/NVIDIA/cutlass/blob/dc45f979ae336a235da1676b311f35efeb30149a/README.md",
+            "https://github.com/NVIDIA/cutlass/tree/dc45f979ae336a235da1676b311f35efeb30149a/docs",
+            "https://github.com/NVIDIA/cutlass/tree/dc45f979ae336a235da1676b311f35efeb30149a/test/unit"
+          ]
+        }
+      },
+      "profile": {
+        "allowed_integration_points": [
+          "include/cutlass",
+          "include/cute",
+          "examples",
+          "tools/library",
+          "test/unit",
+          "python/CuTeDSL"
+        ],
+        "api_abi_contract": {
+          "id": "cutlass-cute-kernel-library-v1:api-abi",
+          "path": "builtin://default-projects-v0.5-proposed.2/cutlass-cute/api-abi",
+          "sha256": "sha256:677d9af4249a107bf768a14d40e1b914935f0913c05d93e39986ecc369a9b894"
+        },
+        "build_test_matrix": {
+          "id": "cutlass-cute-kernel-library-v1:build-test-matrix",
+          "path": "builtin://default-projects-v0.5-proposed.2/cutlass-cute/build-test-matrix",
+          "sha256": "sha256:3b9fa9ea4e2ef3c620b7422e904592fac4275b795aa9f58ee2276b8c71f55557"
+        },
+        "component_ownership": {
+          "cute-and-cutedsl": [
+            "upstream-maintainer-review-required"
+          ],
+          "cutlass-cuda-kernels": [
+            "upstream-maintainer-review-required"
+          ]
+        },
+        "dependency_policy": {
+          "id": "cutlass-cute-kernel-library-v1:dependency-policy",
+          "path": "builtin://default-projects-v0.5-proposed.2/cutlass-cute/dependency-policy",
+          "sha256": "sha256:954babc94fc36aabe9b070ed71a9300093b1b5aa277cb7295657d6a0f73be108"
+        },
+        "deployment_workload_portfolio": {
+          "id": "cutlass-cute-kernel-library-v1:deployment-workload-portfolio",
+          "path": "builtin://default-projects-v0.5-proposed.2/cutlass-cute/deployment-workload-portfolio",
+          "sha256": "sha256:be46b048a95a797f238026a3670f62c8228d517d84e3482aee8e3d49509b8afd"
+        },
+        "fallback_policy": {
+          "id": "cutlass-cute-kernel-library-v1:fallback-policy",
+          "path": "builtin://default-projects-v0.5-proposed.2/cutlass-cute/fallback-policy",
+          "sha256": "sha256:8f2141941bee21d7dc7d2ea91e724effad57cf5c77129235f747b8e4aa642dfa"
+        },
+        "id": "cutlass-cute-kernel-library-v1",
+        "lifecycle_contract": {
+          "id": "cutlass-cute-kernel-library-v1:lifecycle",
+          "path": "builtin://default-projects-v0.5-proposed.2/cutlass-cute/lifecycle",
+          "sha256": "sha256:93e40d243a0e259f1cc5e4d9e2180617aa4fd42d67193a9a9f5b04b3b2e564aa"
+        },
+        "maintainability_probes": {
+          "id": "cutlass-cute-kernel-library-v1:maintainability-probes",
+          "path": "builtin://default-projects-v0.5-proposed.2/cutlass-cute/maintainability-probes",
+          "sha256": "sha256:96506906b9b2ae5cead0843c8c57c84902c581d34444d62982d2ee94da2871da"
+        },
+        "ownership": {
+          "last_reviewed_at": null,
+          "maintainers": [
+            "UNASSIGNED:infraswe-default-profile-maintainer"
+          ],
+          "review_required": 1,
+          "update_policy": "pull-request"
+        },
+        "performance_acceptance_targets": {
+          "id": "cutlass-cute-kernel-library-v1:performance-acceptance-targets",
+          "path": "builtin://default-projects-v0.5-proposed.2/cutlass-cute/performance-acceptance-targets",
+          "sha256": "sha256:9d515f62f6df697bd4cf9a78bbd219ba9fc4e9d8800bf98e2b30dd76e3238448"
+        },
+        "project_objectives": {
+          "edge_ecosystem": {
+            "owner": "UNASSIGNED:profile-maintainer",
+            "policy": "roadmap",
+            "profiles": [
+              {
+                "id": "cuda-sm120",
+                "required_for_release": false,
+                "status": "planned",
+                "target_release": null
+              },
+              {
+                "id": "windows",
+                "required_for_release": false,
+                "status": "planned",
+                "target_release": null
+              },
+              {
+                "id": "python-cutedsl",
+                "required_for_release": false,
+                "status": "planned",
+                "target_release": null
+              }
+            ]
+          }
+        },
+        "repository": "https://github.com/NVIDIA/cutlass",
+        "schema_version": "0.5",
+        "scoring_template_id": "project-fit-kernel-v0.5",
+        "status": "proposed",
+        "supported_revision_policy": "pinned:dc45f979ae336a235da1676b311f35efeb30149a; updates require a new human-reviewed profile version",
+        "triton_portability": {
+          "enabled": false,
+          "owner": null,
+          "profile_weights": {}
+        },
+        "version": "default-projects-v0.5-proposed.2"
+      },
+      "project": "cutlass-cute",
+      "source_revision": "dc45f979ae336a235da1676b311f35efeb30149a"
+    },
+    "deepgemm": {
+      "aliases": [
+        "deepgemm",
+        "deepseek-ai/deepgemm",
+        "deep_gemm"
+      ],
+      "artifacts": {
+        "api-abi": {
+          "artifact_kind": "api-abi",
+          "catalog_profile": "deepgemm-moe-gemm-kernel-v1",
+          "extraction_status": "machine-proposed",
+          "probes": [
+            "dense-api",
+            "grouped-api",
+            "scale-layout",
+            "expert-indexing"
+          ],
+          "project": "deepgemm",
+          "requirements": [
+            "Preserve dense/grouped GEMM tensor, scale, layout, alignment, accumulation, output, expert indexing, and tuning-key semantics."
+          ],
+          "schema_version": "0.5",
+          "source_repository": "https://github.com/deepseek-ai/DeepGEMM",
+          "source_revision": "559d79fb6994a58b8a15b4b93bf13ccc16edf247",
+          "source_urls": [
+            "https://github.com/deepseek-ai/DeepGEMM/blob/559d79fb6994a58b8a15b4b93bf13ccc16edf247/README.md",
+            "https://github.com/deepseek-ai/DeepGEMM/tree/559d79fb6994a58b8a15b4b93bf13ccc16edf247/deep_gemm",
+            "https://github.com/deepseek-ai/DeepGEMM/tree/559d79fb6994a58b8a15b4b93bf13ccc16edf247/tests"
+          ]
+        },
+        "build-test-matrix": {
+          "artifact_kind": "build-test-matrix",
+          "catalog_profile": "deepgemm-moe-gemm-kernel-v1",
+          "extraction_status": "machine-proposed",
+          "probes": [
+            "dense-correctness",
+            "grouped-masked",
+            "grouped-contiguous",
+            "alignment-boundary",
+            "architecture-matrix"
+          ],
+          "project": "deepgemm",
+          "requirements": [
+            "Run correctness and tuning coverage for dense, masked grouped, contiguous grouped, alignment-boundary, and architecture-specific variants."
+          ],
+          "schema_version": "0.5",
+          "source_repository": "https://github.com/deepseek-ai/DeepGEMM",
+          "source_revision": "559d79fb6994a58b8a15b4b93bf13ccc16edf247",
+          "source_urls": [
+            "https://github.com/deepseek-ai/DeepGEMM/blob/559d79fb6994a58b8a15b4b93bf13ccc16edf247/README.md",
+            "https://github.com/deepseek-ai/DeepGEMM/tree/559d79fb6994a58b8a15b4b93bf13ccc16edf247/deep_gemm",
+            "https://github.com/deepseek-ai/DeepGEMM/tree/559d79fb6994a58b8a15b4b93bf13ccc16edf247/tests"
+          ]
+        },
+        "dependency-policy": {
+          "artifact_kind": "dependency-policy",
+          "catalog_profile": "deepgemm-moe-gemm-kernel-v1",
+          "extraction_status": "machine-proposed",
+          "probes": [
+            "toolchain-identity",
+            "submodule-state",
+            "clean-build",
+            "cache-identity"
+          ],
+          "project": "deepgemm",
+          "requirements": [
+            "Pin toolkit, compiler, CUDA driver/runtime, Python extension, submodule, and JIT cache requirements as part of artifact identity."
+          ],
+          "schema_version": "0.5",
+          "source_repository": "https://github.com/deepseek-ai/DeepGEMM",
+          "source_revision": "559d79fb6994a58b8a15b4b93bf13ccc16edf247",
+          "source_urls": [
+            "https://github.com/deepseek-ai/DeepGEMM/blob/559d79fb6994a58b8a15b4b93bf13ccc16edf247/README.md",
+            "https://github.com/deepseek-ai/DeepGEMM/tree/559d79fb6994a58b8a15b4b93bf13ccc16edf247/deep_gemm",
+            "https://github.com/deepseek-ai/DeepGEMM/tree/559d79fb6994a58b8a15b4b93bf13ccc16edf247/tests"
+          ]
+        },
+        "deployment-workload-portfolio": {
+          "artifact_kind": "deployment-workload-portfolio",
+          "catalog_profile": "deepgemm-moe-gemm-kernel-v1",
+          "extraction_status": "machine-proposed",
+          "probes": [
+            "dense-fp8",
+            "grouped-moe",
+            "long-tail-experts",
+            "tiny-m",
+            "concurrent-streams"
+          ],
+          "project": "deepgemm",
+          "requirements": [
+            "Cover FP8/BF16 dense and grouped MoE GEMM, balanced and long-tail experts, tiny-M, non-aligned K, empty experts, and concurrent streams."
+          ],
+          "schema_version": "0.5",
+          "source_repository": "https://github.com/deepseek-ai/DeepGEMM",
+          "source_revision": "559d79fb6994a58b8a15b4b93bf13ccc16edf247",
+          "source_urls": [
+            "https://github.com/deepseek-ai/DeepGEMM/blob/559d79fb6994a58b8a15b4b93bf13ccc16edf247/README.md",
+            "https://github.com/deepseek-ai/DeepGEMM/tree/559d79fb6994a58b8a15b4b93bf13ccc16edf247/deep_gemm",
+            "https://github.com/deepseek-ai/DeepGEMM/tree/559d79fb6994a58b8a15b4b93bf13ccc16edf247/tests"
+          ]
+        },
+        "fallback-policy": {
+          "artifact_kind": "fallback-policy",
+          "catalog_profile": "deepgemm-moe-gemm-kernel-v1",
+          "extraction_status": "machine-proposed",
+          "probes": [
+            "architecture-gate",
+            "layout-gate",
+            "shape-gate",
+            "declared-fallback"
+          ],
+          "project": "deepgemm",
+          "requirements": [
+            "Unsupported architecture, dtype, alignment, scale layout, or expert shape must select a declared project/vendor path or fail explicitly."
+          ],
+          "schema_version": "0.5",
+          "source_repository": "https://github.com/deepseek-ai/DeepGEMM",
+          "source_revision": "559d79fb6994a58b8a15b4b93bf13ccc16edf247",
+          "source_urls": [
+            "https://github.com/deepseek-ai/DeepGEMM/blob/559d79fb6994a58b8a15b4b93bf13ccc16edf247/README.md",
+            "https://github.com/deepseek-ai/DeepGEMM/tree/559d79fb6994a58b8a15b4b93bf13ccc16edf247/deep_gemm",
+            "https://github.com/deepseek-ai/DeepGEMM/tree/559d79fb6994a58b8a15b4b93bf13ccc16edf247/tests"
+          ]
+        },
+        "lifecycle": {
+          "artifact_kind": "lifecycle",
+          "catalog_profile": "deepgemm-moe-gemm-kernel-v1",
+          "extraction_status": "machine-proposed",
+          "probes": [
+            "jit-generation",
+            "compile-cache",
+            "module-load",
+            "repeat-launch"
+          ],
+          "project": "deepgemm",
+          "requirements": [
+            "Preserve JIT source generation, compile, cache identity, module load, first launch, repeated launch, stream behavior, and teardown."
+          ],
+          "schema_version": "0.5",
+          "source_repository": "https://github.com/deepseek-ai/DeepGEMM",
+          "source_revision": "559d79fb6994a58b8a15b4b93bf13ccc16edf247",
+          "source_urls": [
+            "https://github.com/deepseek-ai/DeepGEMM/blob/559d79fb6994a58b8a15b4b93bf13ccc16edf247/README.md",
+            "https://github.com/deepseek-ai/DeepGEMM/tree/559d79fb6994a58b8a15b4b93bf13ccc16edf247/deep_gemm",
+            "https://github.com/deepseek-ai/DeepGEMM/tree/559d79fb6994a58b8a15b4b93bf13ccc16edf247/tests"
+          ]
+        },
+        "maintainability-probes": {
+          "artifact_kind": "maintainability-probes",
+          "catalog_profile": "deepgemm-moe-gemm-kernel-v1",
+          "extraction_status": "machine-proposed",
+          "probes": [
+            "generator-runtime-parity",
+            "tuning-key-contract",
+            "test-affinity",
+            "architecture-declaration"
+          ],
+          "project": "deepgemm",
+          "requirements": [
+            "Keep generated source, tuning keys, runtime dispatch, tests, and supported architecture declarations synchronized."
+          ],
+          "schema_version": "0.5",
+          "source_repository": "https://github.com/deepseek-ai/DeepGEMM",
+          "source_revision": "559d79fb6994a58b8a15b4b93bf13ccc16edf247",
+          "source_urls": [
+            "https://github.com/deepseek-ai/DeepGEMM/blob/559d79fb6994a58b8a15b4b93bf13ccc16edf247/README.md",
+            "https://github.com/deepseek-ai/DeepGEMM/tree/559d79fb6994a58b8a15b4b93bf13ccc16edf247/deep_gemm",
+            "https://github.com/deepseek-ai/DeepGEMM/tree/559d79fb6994a58b8a15b4b93bf13ccc16edf247/tests"
+          ]
+        },
+        "performance-acceptance-targets": {
+          "artifact_kind": "performance-acceptance-targets",
+          "catalog_profile": "deepgemm-moe-gemm-kernel-v1",
+          "extraction_status": "machine-proposed",
+          "probes": [
+            "latency",
+            "throughput",
+            "workspace",
+            "compile-cost",
+            "cache-reuse"
+          ],
+          "project": "deepgemm",
+          "requirements": [
+            "Report local-cell latency, throughput, workspace, compile cost, cache reuse, and retention against pinned project/vendor implementations."
+          ],
+          "schema_version": "0.5",
+          "source_repository": "https://github.com/deepseek-ai/DeepGEMM",
+          "source_revision": "559d79fb6994a58b8a15b4b93bf13ccc16edf247",
+          "source_urls": [
+            "https://github.com/deepseek-ai/DeepGEMM/blob/559d79fb6994a58b8a15b4b93bf13ccc16edf247/README.md",
+            "https://github.com/deepseek-ai/DeepGEMM/tree/559d79fb6994a58b8a15b4b93bf13ccc16edf247/deep_gemm",
+            "https://github.com/deepseek-ai/DeepGEMM/tree/559d79fb6994a58b8a15b4b93bf13ccc16edf247/tests"
+          ]
+        }
+      },
+      "profile": {
+        "allowed_integration_points": [
+          "deep_gemm",
+          "deep_gemm/jit",
+          "tests",
+          "bench.py"
+        ],
+        "api_abi_contract": {
+          "id": "deepgemm-moe-gemm-kernel-v1:api-abi",
+          "path": "builtin://default-projects-v0.5-proposed.2/deepgemm/api-abi",
+          "sha256": "sha256:d7e55712b4cd78bb0c33f8292bfcd6266168024ed7ff6e9e657deeb1ffac82d7"
+        },
+        "build_test_matrix": {
+          "id": "deepgemm-moe-gemm-kernel-v1:build-test-matrix",
+          "path": "builtin://default-projects-v0.5-proposed.2/deepgemm/build-test-matrix",
+          "sha256": "sha256:9270f64079611db831078fb106310b165c953fd47c90916c1447c71f6c8cc685"
+        },
+        "component_ownership": {
+          "jit-kernel-generation": [
+            "upstream-maintainer-review-required"
+          ],
+          "layout-and-runtime": [
+            "upstream-maintainer-review-required"
+          ]
+        },
+        "dependency_policy": {
+          "id": "deepgemm-moe-gemm-kernel-v1:dependency-policy",
+          "path": "builtin://default-projects-v0.5-proposed.2/deepgemm/dependency-policy",
+          "sha256": "sha256:36be5dec1792027f2cbec40488e8806a1e0b80eab3e02d6028e81339d98d0a3b"
+        },
+        "deployment_workload_portfolio": {
+          "id": "deepgemm-moe-gemm-kernel-v1:deployment-workload-portfolio",
+          "path": "builtin://default-projects-v0.5-proposed.2/deepgemm/deployment-workload-portfolio",
+          "sha256": "sha256:ffbfb3bfa124b749786790d4b9f6bc96ff0bebeb6f3df506cb09b74df99d2ed9"
+        },
+        "fallback_policy": {
+          "id": "deepgemm-moe-gemm-kernel-v1:fallback-policy",
+          "path": "builtin://default-projects-v0.5-proposed.2/deepgemm/fallback-policy",
+          "sha256": "sha256:3cc240a08364ef2a3a3d15f0ddd8377c9ed566f3c158eaf0991df9d4be406707"
+        },
+        "id": "deepgemm-moe-gemm-kernel-v1",
+        "lifecycle_contract": {
+          "id": "deepgemm-moe-gemm-kernel-v1:lifecycle",
+          "path": "builtin://default-projects-v0.5-proposed.2/deepgemm/lifecycle",
+          "sha256": "sha256:6711839ef23afb6f35ea02356b214b67918f7d6d71f1ed2995f349132b037482"
+        },
+        "maintainability_probes": {
+          "id": "deepgemm-moe-gemm-kernel-v1:maintainability-probes",
+          "path": "builtin://default-projects-v0.5-proposed.2/deepgemm/maintainability-probes",
+          "sha256": "sha256:c9695fb32f581e8f618b5dfd51f74c191cd54731994394e375e4d52b4542f48c"
+        },
+        "ownership": {
+          "last_reviewed_at": null,
+          "maintainers": [
+            "UNASSIGNED:infraswe-default-profile-maintainer"
+          ],
+          "review_required": 1,
+          "update_policy": "pull-request"
+        },
+        "performance_acceptance_targets": {
+          "id": "deepgemm-moe-gemm-kernel-v1:performance-acceptance-targets",
+          "path": "builtin://default-projects-v0.5-proposed.2/deepgemm/performance-acceptance-targets",
+          "sha256": "sha256:7b09b24b2a508746bb49b120816e5dfd8bf6428fa83010e9d911574e5f8dea19"
+        },
+        "project_objectives": {
+          "edge_ecosystem": {
+            "owner": "UNASSIGNED:profile-maintainer",
+            "policy": "roadmap",
+            "profiles": [
+              {
+                "id": "cuda-sm100",
+                "required_for_release": false,
+                "status": "planned",
+                "target_release": null
+              },
+              {
+                "id": "cuda-sm120",
+                "required_for_release": false,
+                "status": "planned",
+                "target_release": null
+              },
+              {
+                "id": "multi-node",
+                "required_for_release": false,
+                "status": "planned",
+                "target_release": null
+              }
+            ]
+          }
+        },
+        "repository": "https://github.com/deepseek-ai/DeepGEMM",
+        "schema_version": "0.5",
+        "scoring_template_id": "project-fit-kernel-v0.5",
+        "status": "proposed",
+        "supported_revision_policy": "pinned:559d79fb6994a58b8a15b4b93bf13ccc16edf247; updates require a new human-reviewed profile version",
+        "triton_portability": {
+          "enabled": false,
+          "owner": null,
+          "profile_weights": {}
+        },
+        "version": "default-projects-v0.5-proposed.2"
+      },
+      "project": "deepgemm",
+      "source_revision": "559d79fb6994a58b8a15b4b93bf13ccc16edf247"
+    },
+    "flash-attention": {
+      "aliases": [
+        "flash-attention",
+        "flashattention",
+        "flash_attn",
+        "dao-ailab/flash-attention"
+      ],
+      "artifacts": {
+        "api-abi": {
+          "artifact_kind": "api-abi",
+          "catalog_profile": "flash-attention-kernel-v1",
+          "extraction_status": "machine-proposed",
+          "probes": [
+            "forward",
+            "backward",
+            "packed-varlen",
+            "causal",
+            "mqa-gqa"
+          ],
+          "project": "flash-attention",
+          "requirements": [
+            "Preserve exact-attention forward/backward plus packed, varlen, causal, MQA/GQA, dtype, layout, device, and contiguity semantics."
+          ],
+          "schema_version": "0.5",
+          "source_repository": "https://github.com/Dao-AILab/flash-attention",
+          "source_revision": "ce088ab9ce0fc0434dcd8afa0a791da9fcc3a820",
+          "source_urls": [
+            "https://github.com/Dao-AILab/flash-attention/blob/ce088ab9ce0fc0434dcd8afa0a791da9fcc3a820/README.md",
+            "https://github.com/Dao-AILab/flash-attention/blob/ce088ab9ce0fc0434dcd8afa0a791da9fcc3a820/setup.py",
+            "https://github.com/Dao-AILab/flash-attention/tree/ce088ab9ce0fc0434dcd8afa0a791da9fcc3a820/tests"
+          ]
+        },
+        "build-test-matrix": {
+          "artifact_kind": "build-test-matrix",
+          "catalog_profile": "flash-attention-kernel-v1",
+          "extraction_status": "machine-proposed",
+          "probes": [
+            "reference-forward",
+            "reference-backward",
+            "boundary-shapes",
+            "dtype-matrix"
+          ],
+          "project": "flash-attention",
+          "requirements": [
+            "Run the affected generation/backend suite and compare outputs and gradients with a high-precision reference across boundary shapes and dtypes."
+          ],
+          "schema_version": "0.5",
+          "source_repository": "https://github.com/Dao-AILab/flash-attention",
+          "source_revision": "ce088ab9ce0fc0434dcd8afa0a791da9fcc3a820",
+          "source_urls": [
+            "https://github.com/Dao-AILab/flash-attention/blob/ce088ab9ce0fc0434dcd8afa0a791da9fcc3a820/README.md",
+            "https://github.com/Dao-AILab/flash-attention/blob/ce088ab9ce0fc0434dcd8afa0a791da9fcc3a820/setup.py",
+            "https://github.com/Dao-AILab/flash-attention/tree/ce088ab9ce0fc0434dcd8afa0a791da9fcc3a820/tests"
+          ]
+        },
+        "dependency-policy": {
+          "artifact_kind": "dependency-policy",
+          "catalog_profile": "flash-attention-kernel-v1",
+          "extraction_status": "machine-proposed",
+          "probes": [
+            "toolkit-version",
+            "submodule-state",
+            "backend-build-isolation"
+          ],
+          "project": "flash-attention",
+          "requirements": [
+            "Respect declared PyTorch, toolkit, compiler, ninja, platform, and backend-scoped CUDA, CK, Triton-AMD, Hopper, and CuTeDSL dependencies."
+          ],
+          "schema_version": "0.5",
+          "source_repository": "https://github.com/Dao-AILab/flash-attention",
+          "source_revision": "ce088ab9ce0fc0434dcd8afa0a791da9fcc3a820",
+          "source_urls": [
+            "https://github.com/Dao-AILab/flash-attention/blob/ce088ab9ce0fc0434dcd8afa0a791da9fcc3a820/README.md",
+            "https://github.com/Dao-AILab/flash-attention/blob/ce088ab9ce0fc0434dcd8afa0a791da9fcc3a820/setup.py",
+            "https://github.com/Dao-AILab/flash-attention/tree/ce088ab9ce0fc0434dcd8afa0a791da9fcc3a820/tests"
+          ]
+        },
+        "deployment-workload-portfolio": {
+          "artifact_kind": "deployment-workload-portfolio",
+          "catalog_profile": "flash-attention-kernel-v1",
+          "extraction_status": "machine-proposed",
+          "probes": [
+            "training-fwd-bwd",
+            "inference-fwd",
+            "varlen",
+            "long-sequence"
+          ],
+          "project": "flash-attention",
+          "requirements": [
+            "Cover forward/backward, causal/non-causal, varlen, long sequence, MQA/GQA, and representative training and inference shapes per hardware cell."
+          ],
+          "schema_version": "0.5",
+          "source_repository": "https://github.com/Dao-AILab/flash-attention",
+          "source_revision": "ce088ab9ce0fc0434dcd8afa0a791da9fcc3a820",
+          "source_urls": [
+            "https://github.com/Dao-AILab/flash-attention/blob/ce088ab9ce0fc0434dcd8afa0a791da9fcc3a820/README.md",
+            "https://github.com/Dao-AILab/flash-attention/blob/ce088ab9ce0fc0434dcd8afa0a791da9fcc3a820/setup.py",
+            "https://github.com/Dao-AILab/flash-attention/tree/ce088ab9ce0fc0434dcd8afa0a791da9fcc3a820/tests"
+          ]
+        },
+        "fallback-policy": {
+          "artifact_kind": "fallback-policy",
+          "catalog_profile": "flash-attention-kernel-v1",
+          "extraction_status": "machine-proposed",
+          "probes": [
+            "unsupported-arch",
+            "unsupported-dtype",
+            "head-dim-boundary"
+          ],
+          "project": "flash-attention",
+          "requirements": [
+            "Unsupported architectures, dtypes, dimensions, and feature combinations are explicit and never silently substitute different attention semantics."
+          ],
+          "schema_version": "0.5",
+          "source_repository": "https://github.com/Dao-AILab/flash-attention",
+          "source_revision": "ce088ab9ce0fc0434dcd8afa0a791da9fcc3a820",
+          "source_urls": [
+            "https://github.com/Dao-AILab/flash-attention/blob/ce088ab9ce0fc0434dcd8afa0a791da9fcc3a820/README.md",
+            "https://github.com/Dao-AILab/flash-attention/blob/ce088ab9ce0fc0434dcd8afa0a791da9fcc3a820/setup.py",
+            "https://github.com/Dao-AILab/flash-attention/tree/ce088ab9ce0fc0434dcd8afa0a791da9fcc3a820/tests"
+          ]
+        },
+        "lifecycle": {
+          "artifact_kind": "lifecycle",
+          "catalog_profile": "flash-attention-kernel-v1",
+          "extraction_status": "machine-proposed",
+          "probes": [
+            "source-build",
+            "wheel-build",
+            "import",
+            "first-call",
+            "repeat-call"
+          ],
+          "project": "flash-attention",
+          "requirements": [
+            "Source and wheel builds initialize backend submodules and preserve compile, import, first-call, repeated-call, and teardown behavior."
+          ],
+          "schema_version": "0.5",
+          "source_repository": "https://github.com/Dao-AILab/flash-attention",
+          "source_revision": "ce088ab9ce0fc0434dcd8afa0a791da9fcc3a820",
+          "source_urls": [
+            "https://github.com/Dao-AILab/flash-attention/blob/ce088ab9ce0fc0434dcd8afa0a791da9fcc3a820/README.md",
+            "https://github.com/Dao-AILab/flash-attention/blob/ce088ab9ce0fc0434dcd8afa0a791da9fcc3a820/setup.py",
+            "https://github.com/Dao-AILab/flash-attention/tree/ce088ab9ce0fc0434dcd8afa0a791da9fcc3a820/tests"
+          ]
+        },
+        "maintainability-probes": {
+          "artifact_kind": "maintainability-probes",
+          "catalog_profile": "flash-attention-kernel-v1",
+          "extraction_status": "machine-proposed",
+          "probes": [
+            "backend-locality",
+            "test-affinity",
+            "support-docs",
+            "review-record"
+          ],
+          "project": "flash-attention",
+          "requirements": [
+            "Localize backend-generation changes, bind tests to the affected implementation family, and document supported feature and architecture changes."
+          ],
+          "schema_version": "0.5",
+          "source_repository": "https://github.com/Dao-AILab/flash-attention",
+          "source_revision": "ce088ab9ce0fc0434dcd8afa0a791da9fcc3a820",
+          "source_urls": [
+            "https://github.com/Dao-AILab/flash-attention/blob/ce088ab9ce0fc0434dcd8afa0a791da9fcc3a820/README.md",
+            "https://github.com/Dao-AILab/flash-attention/blob/ce088ab9ce0fc0434dcd8afa0a791da9fcc3a820/setup.py",
+            "https://github.com/Dao-AILab/flash-attention/tree/ce088ab9ce0fc0434dcd8afa0a791da9fcc3a820/tests"
+          ]
+        },
+        "performance-acceptance-targets": {
+          "artifact_kind": "performance-acceptance-targets",
+          "catalog_profile": "flash-attention-kernel-v1",
+          "extraction_status": "machine-proposed",
+          "probes": [
+            "latency",
+            "memory",
+            "correctness-tolerance",
+            "compile-time"
+          ],
+          "project": "flash-attention",
+          "requirements": [
+            "Report local-cell latency, memory, exactness retention, and compile time against the pinned implementation/reference."
+          ],
+          "schema_version": "0.5",
+          "source_repository": "https://github.com/Dao-AILab/flash-attention",
+          "source_revision": "ce088ab9ce0fc0434dcd8afa0a791da9fcc3a820",
+          "source_urls": [
+            "https://github.com/Dao-AILab/flash-attention/blob/ce088ab9ce0fc0434dcd8afa0a791da9fcc3a820/README.md",
+            "https://github.com/Dao-AILab/flash-attention/blob/ce088ab9ce0fc0434dcd8afa0a791da9fcc3a820/setup.py",
+            "https://github.com/Dao-AILab/flash-attention/tree/ce088ab9ce0fc0434dcd8afa0a791da9fcc3a820/tests"
+          ]
+        }
+      },
+      "profile": {
+        "allowed_integration_points": [
+          "flash_attn",
+          "csrc",
+          "hopper",
+          "tests",
+          "benchmarks"
+        ],
+        "api_abi_contract": {
+          "id": "flash-attention-kernel-v1:api-abi",
+          "path": "builtin://default-projects-v0.5-proposed.2/flash-attention/api-abi",
+          "sha256": "sha256:5ad09486cdf8fe984f5dbe460b40f72b44fa382270e80980aca8e79255cd19a7"
+        },
+        "build_test_matrix": {
+          "id": "flash-attention-kernel-v1:build-test-matrix",
+          "path": "builtin://default-projects-v0.5-proposed.2/flash-attention/build-test-matrix",
+          "sha256": "sha256:19d36cae811f561c2d5ae88e6f8bb10537dc4f5c237f817290d35745667f081a"
+        },
+        "component_ownership": {
+          "cuda-rocm-kernels": [
+            "upstream-maintainer-review-required"
+          ],
+          "python-interface": [
+            "upstream-maintainer-review-required"
+          ]
+        },
+        "dependency_policy": {
+          "id": "flash-attention-kernel-v1:dependency-policy",
+          "path": "builtin://default-projects-v0.5-proposed.2/flash-attention/dependency-policy",
+          "sha256": "sha256:04bb90c5002227761d133935e42d4a4455774da9e7e79920f584da4caeeb7c5b"
+        },
+        "deployment_workload_portfolio": {
+          "id": "flash-attention-kernel-v1:deployment-workload-portfolio",
+          "path": "builtin://default-projects-v0.5-proposed.2/flash-attention/deployment-workload-portfolio",
+          "sha256": "sha256:593e61dff5ebbbd3c4f07274ef1c9cfa514bcbd2989d5ff8104861766e07b339"
+        },
+        "fallback_policy": {
+          "id": "flash-attention-kernel-v1:fallback-policy",
+          "path": "builtin://default-projects-v0.5-proposed.2/flash-attention/fallback-policy",
+          "sha256": "sha256:9c2e116a440e7d0553550dd5a48124b43c5a2937450ff02f11c9024c68934a34"
+        },
+        "id": "flash-attention-kernel-v1",
+        "lifecycle_contract": {
+          "id": "flash-attention-kernel-v1:lifecycle",
+          "path": "builtin://default-projects-v0.5-proposed.2/flash-attention/lifecycle",
+          "sha256": "sha256:09861dff9c0526edcfb0b0e75232d65626a1aa15c632153556a0fae67a712a8b"
+        },
+        "maintainability_probes": {
+          "id": "flash-attention-kernel-v1:maintainability-probes",
+          "path": "builtin://default-projects-v0.5-proposed.2/flash-attention/maintainability-probes",
+          "sha256": "sha256:34f90fc67aa2df06c2fce29f4d64039ebaf311cfd9ea205c99b8e4b48b13f493"
+        },
+        "ownership": {
+          "last_reviewed_at": null,
+          "maintainers": [
+            "UNASSIGNED:infraswe-default-profile-maintainer"
+          ],
+          "review_required": 1,
+          "update_policy": "pull-request"
+        },
+        "performance_acceptance_targets": {
+          "id": "flash-attention-kernel-v1:performance-acceptance-targets",
+          "path": "builtin://default-projects-v0.5-proposed.2/flash-attention/performance-acceptance-targets",
+          "sha256": "sha256:8b9965ca109b5b072265ff8917515d832480e7241824841f120d9d820c319285"
+        },
+        "project_objectives": {
+          "edge_ecosystem": {
+            "owner": "UNASSIGNED:profile-maintainer",
+            "policy": "roadmap",
+            "profiles": [
+              {
+                "id": "cuda-sm100",
+                "required_for_release": false,
+                "status": "planned",
+                "target_release": null
+              },
+              {
+                "id": "rocm-cdna",
+                "required_for_release": false,
+                "status": "planned",
+                "target_release": null
+              },
+              {
+                "id": "rocm-rdna",
+                "required_for_release": false,
+                "status": "planned",
+                "target_release": null
+              }
+            ]
+          }
+        },
+        "repository": "https://github.com/Dao-AILab/flash-attention",
+        "schema_version": "0.5",
+        "scoring_template_id": "project-fit-kernel-v0.5",
+        "status": "proposed",
+        "supported_revision_policy": "pinned:ce088ab9ce0fc0434dcd8afa0a791da9fcc3a820; updates require a new human-reviewed profile version",
+        "triton_portability": {
+          "enabled": false,
+          "owner": null,
+          "profile_weights": {}
+        },
+        "version": "default-projects-v0.5-proposed.2"
+      },
+      "project": "flash-attention",
+      "source_revision": "ce088ab9ce0fc0434dcd8afa0a791da9fcc3a820"
+    },
+    "flashinfer": {
+      "aliases": [
+        "flashinfer",
+        "flashinfer-ai/flashinfer"
+      ],
+      "artifacts": {
+        "api-abi": {
+          "artifact_kind": "api-abi",
+          "catalog_profile": "flashinfer-kernel-library-v1",
+          "extraction_status": "machine-proposed",
+          "probes": [
+            "raw-pointer-kernel",
+            "torch-registration",
+            "python-api"
+          ],
+          "project": "flashinfer",
+          "requirements": [
+            "Keep framework-agnostic kernels under include, PyTorch registration under csrc, user APIs under python, and released APIs backward-compatible."
+          ],
+          "schema_version": "0.5",
+          "source_repository": "https://github.com/flashinfer-ai/flashinfer",
+          "source_revision": "9d0e6f82ffa23d4271c08e0e0d4fc638b6b707ea",
+          "source_urls": [
+            "https://github.com/flashinfer-ai/flashinfer/blob/9d0e6f82ffa23d4271c08e0e0d4fc638b6b707ea/CONTRIBUTING.md",
+            "https://github.com/flashinfer-ai/flashinfer/blob/9d0e6f82ffa23d4271c08e0e0d4fc638b6b707ea/README.md",
+            "https://github.com/flashinfer-ai/flashinfer/tree/9d0e6f82ffa23d4271c08e0e0d4fc638b6b707ea/docs"
+          ]
+        },
+        "build-test-matrix": {
+          "artifact_kind": "build-test-matrix",
+          "catalog_profile": "flashinfer-kernel-library-v1",
+          "extraction_status": "machine-proposed",
+          "probes": [
+            "public-ci",
+            "gpu-unit",
+            "architecture-matrix",
+            "reproducible-benchmark"
+          ],
+          "project": "flashinfer",
+          "requirements": [
+            "Add Python unit tests and affected architecture lanes; optimization PRs include reproducible before/after results with GPU and exact problem sizes."
+          ],
+          "schema_version": "0.5",
+          "source_repository": "https://github.com/flashinfer-ai/flashinfer",
+          "source_revision": "9d0e6f82ffa23d4271c08e0e0d4fc638b6b707ea",
+          "source_urls": [
+            "https://github.com/flashinfer-ai/flashinfer/blob/9d0e6f82ffa23d4271c08e0e0d4fc638b6b707ea/CONTRIBUTING.md",
+            "https://github.com/flashinfer-ai/flashinfer/blob/9d0e6f82ffa23d4271c08e0e0d4fc638b6b707ea/README.md",
+            "https://github.com/flashinfer-ai/flashinfer/tree/9d0e6f82ffa23d4271c08e0e0d4fc638b6b707ea/docs"
+          ]
+        },
+        "dependency-policy": {
+          "artifact_kind": "dependency-policy",
+          "catalog_profile": "flashinfer-kernel-library-v1",
+          "extraction_status": "machine-proposed",
+          "probes": [
+            "header-boundary",
+            "clean-editable-install",
+            "submodule-state"
+          ],
+          "project": "flashinfer",
+          "requirements": [
+            "Keep Torch headers out of include and declare compatible toolkit, cubin, JIT-cache, CUTLASS, package, and build-isolation dependencies."
+          ],
+          "schema_version": "0.5",
+          "source_repository": "https://github.com/flashinfer-ai/flashinfer",
+          "source_revision": "9d0e6f82ffa23d4271c08e0e0d4fc638b6b707ea",
+          "source_urls": [
+            "https://github.com/flashinfer-ai/flashinfer/blob/9d0e6f82ffa23d4271c08e0e0d4fc638b6b707ea/CONTRIBUTING.md",
+            "https://github.com/flashinfer-ai/flashinfer/blob/9d0e6f82ffa23d4271c08e0e0d4fc638b6b707ea/README.md",
+            "https://github.com/flashinfer-ai/flashinfer/tree/9d0e6f82ffa23d4271c08e0e0d4fc638b6b707ea/docs"
+          ]
+        },
+        "deployment-workload-portfolio": {
+          "artifact_kind": "deployment-workload-portfolio",
+          "catalog_profile": "flashinfer-kernel-library-v1",
+          "extraction_status": "machine-proposed",
+          "probes": [
+            "prefill",
+            "decode",
+            "mixed-batch",
+            "paged-kv",
+            "moe"
+          ],
+          "project": "flashinfer",
+          "requirements": [
+            "Cover prefill, decode, append, mixed batching, paged/ragged KV, GEMM, MoE, sampling, communication claims, CUDA graph, and torch.compile."
+          ],
+          "schema_version": "0.5",
+          "source_repository": "https://github.com/flashinfer-ai/flashinfer",
+          "source_revision": "9d0e6f82ffa23d4271c08e0e0d4fc638b6b707ea",
+          "source_urls": [
+            "https://github.com/flashinfer-ai/flashinfer/blob/9d0e6f82ffa23d4271c08e0e0d4fc638b6b707ea/CONTRIBUTING.md",
+            "https://github.com/flashinfer-ai/flashinfer/blob/9d0e6f82ffa23d4271c08e0e0d4fc638b6b707ea/README.md",
+            "https://github.com/flashinfer-ai/flashinfer/tree/9d0e6f82ffa23d4271c08e0e0d4fc638b6b707ea/docs"
+          ]
+        },
+        "fallback-policy": {
+          "artifact_kind": "fallback-policy",
+          "catalog_profile": "flashinfer-kernel-library-v1",
+          "extraction_status": "machine-proposed",
+          "probes": [
+            "backend-selection",
+            "missing-cubin",
+            "empty-jit-cache"
+          ],
+          "project": "flashinfer",
+          "requirements": [
+            "Make unsupported backend/feature and missing precompiled/JIT artifact behavior explicit with a declared recovery or failure path."
+          ],
+          "schema_version": "0.5",
+          "source_repository": "https://github.com/flashinfer-ai/flashinfer",
+          "source_revision": "9d0e6f82ffa23d4271c08e0e0d4fc638b6b707ea",
+          "source_urls": [
+            "https://github.com/flashinfer-ai/flashinfer/blob/9d0e6f82ffa23d4271c08e0e0d4fc638b6b707ea/CONTRIBUTING.md",
+            "https://github.com/flashinfer-ai/flashinfer/blob/9d0e6f82ffa23d4271c08e0e0d4fc638b6b707ea/README.md",
+            "https://github.com/flashinfer-ai/flashinfer/tree/9d0e6f82ffa23d4271c08e0e0d4fc638b6b707ea/docs"
+          ]
+        },
+        "lifecycle": {
+          "artifact_kind": "lifecycle",
+          "catalog_profile": "flashinfer-kernel-library-v1",
+          "extraction_status": "machine-proposed",
+          "probes": [
+            "aot-build",
+            "jit-first-call",
+            "cache-hit",
+            "cuda-graph"
+          ],
+          "project": "flashinfer",
+          "requirements": [
+            "Preserve AOT, JIT, cubin, JIT-cache, first-use compilation, CUDA graph, and torch.compile behavior with observable cache/module selection."
+          ],
+          "schema_version": "0.5",
+          "source_repository": "https://github.com/flashinfer-ai/flashinfer",
+          "source_revision": "9d0e6f82ffa23d4271c08e0e0d4fc638b6b707ea",
+          "source_urls": [
+            "https://github.com/flashinfer-ai/flashinfer/blob/9d0e6f82ffa23d4271c08e0e0d4fc638b6b707ea/CONTRIBUTING.md",
+            "https://github.com/flashinfer-ai/flashinfer/blob/9d0e6f82ffa23d4271c08e0e0d4fc638b6b707ea/README.md",
+            "https://github.com/flashinfer-ai/flashinfer/tree/9d0e6f82ffa23d4271c08e0e0d4fc638b6b707ea/docs"
+          ]
+        },
+        "maintainability-probes": {
+          "artifact_kind": "maintainability-probes",
+          "catalog_profile": "flashinfer-kernel-library-v1",
+          "extraction_status": "machine-proposed",
+          "probes": [
+            "layer-boundary",
+            "utility-reuse",
+            "manifest-update",
+            "human-review"
+          ],
+          "project": "flashinfer",
+          "requirements": [
+            "Reuse project utilities and synchronize kernel, registration, Python, tests, benchmarks, docs, and module manifests under human review."
+          ],
+          "schema_version": "0.5",
+          "source_repository": "https://github.com/flashinfer-ai/flashinfer",
+          "source_revision": "9d0e6f82ffa23d4271c08e0e0d4fc638b6b707ea",
+          "source_urls": [
+            "https://github.com/flashinfer-ai/flashinfer/blob/9d0e6f82ffa23d4271c08e0e0d4fc638b6b707ea/CONTRIBUTING.md",
+            "https://github.com/flashinfer-ai/flashinfer/blob/9d0e6f82ffa23d4271c08e0e0d4fc638b6b707ea/README.md",
+            "https://github.com/flashinfer-ai/flashinfer/tree/9d0e6f82ffa23d4271c08e0e0d4fc638b6b707ea/docs"
+          ]
+        },
+        "performance-acceptance-targets": {
+          "artifact_kind": "performance-acceptance-targets",
+          "catalog_profile": "flashinfer-kernel-library-v1",
+          "extraction_status": "machine-proposed",
+          "probes": [
+            "latency",
+            "throughput",
+            "memory",
+            "compile-cost",
+            "cache-reuse"
+          ],
+          "project": "flashinfer",
+          "requirements": [
+            "Compare latency, throughput, memory, compile cost, and cache reuse against a pinned local baseline with GPU identity and exact sizes."
+          ],
+          "schema_version": "0.5",
+          "source_repository": "https://github.com/flashinfer-ai/flashinfer",
+          "source_revision": "9d0e6f82ffa23d4271c08e0e0d4fc638b6b707ea",
+          "source_urls": [
+            "https://github.com/flashinfer-ai/flashinfer/blob/9d0e6f82ffa23d4271c08e0e0d4fc638b6b707ea/CONTRIBUTING.md",
+            "https://github.com/flashinfer-ai/flashinfer/blob/9d0e6f82ffa23d4271c08e0e0d4fc638b6b707ea/README.md",
+            "https://github.com/flashinfer-ai/flashinfer/tree/9d0e6f82ffa23d4271c08e0e0d4fc638b6b707ea/docs"
+          ]
+        }
+      },
+      "profile": {
+        "allowed_integration_points": [
+          "include",
+          "csrc",
+          "python",
+          "tests",
+          "benchmarks"
+        ],
+        "api_abi_contract": {
+          "id": "flashinfer-kernel-library-v1:api-abi",
+          "path": "builtin://default-projects-v0.5-proposed.2/flashinfer/api-abi",
+          "sha256": "sha256:9e3d0b55ef671a8d43ce9ea7eb22af1f779ad503c065a9450369b68f9c2bb3d2"
+        },
+        "build_test_matrix": {
+          "id": "flashinfer-kernel-library-v1:build-test-matrix",
+          "path": "builtin://default-projects-v0.5-proposed.2/flashinfer/build-test-matrix",
+          "sha256": "sha256:ddf95f935454a4ec2d23e74981c8ef624f57a13cff6d11cc2cef40423bcfb97f"
+        },
+        "component_ownership": {
+          "framework-registration": [
+            "upstream-codeowner-review-required"
+          ],
+          "kernel-definition": [
+            "upstream-codeowner-review-required"
+          ],
+          "python-api": [
+            "upstream-codeowner-review-required"
+          ]
+        },
+        "dependency_policy": {
+          "id": "flashinfer-kernel-library-v1:dependency-policy",
+          "path": "builtin://default-projects-v0.5-proposed.2/flashinfer/dependency-policy",
+          "sha256": "sha256:72b78754b1fb4835243346fccc8427c850a23b2ea6ad209bc0a09a8debfc3e49"
+        },
+        "deployment_workload_portfolio": {
+          "id": "flashinfer-kernel-library-v1:deployment-workload-portfolio",
+          "path": "builtin://default-projects-v0.5-proposed.2/flashinfer/deployment-workload-portfolio",
+          "sha256": "sha256:132086d303c31dd47920bdcab7adf03e904b161776327134190cb60d590002f5"
+        },
+        "fallback_policy": {
+          "id": "flashinfer-kernel-library-v1:fallback-policy",
+          "path": "builtin://default-projects-v0.5-proposed.2/flashinfer/fallback-policy",
+          "sha256": "sha256:d8174189551ded80bd93a4eae1a0f21445dd4509d833f170e361fdfd6b0fbb77"
+        },
+        "id": "flashinfer-kernel-library-v1",
+        "lifecycle_contract": {
+          "id": "flashinfer-kernel-library-v1:lifecycle",
+          "path": "builtin://default-projects-v0.5-proposed.2/flashinfer/lifecycle",
+          "sha256": "sha256:a8a816cc4e75bedc01fbb1da166fae165c1b48241bdf2c18cffc8cdc44aa0929"
+        },
+        "maintainability_probes": {
+          "id": "flashinfer-kernel-library-v1:maintainability-probes",
+          "path": "builtin://default-projects-v0.5-proposed.2/flashinfer/maintainability-probes",
+          "sha256": "sha256:298ded3cb26f18e9d76bff0d70f503965e572e9affeba34f143ac2073ab0819e"
+        },
+        "ownership": {
+          "last_reviewed_at": null,
+          "maintainers": [
+            "UNASSIGNED:infraswe-default-profile-maintainer"
+          ],
+          "review_required": 1,
+          "update_policy": "pull-request"
+        },
+        "performance_acceptance_targets": {
+          "id": "flashinfer-kernel-library-v1:performance-acceptance-targets",
+          "path": "builtin://default-projects-v0.5-proposed.2/flashinfer/performance-acceptance-targets",
+          "sha256": "sha256:bbaae593a6c1e7fba000633a230613c45d2b6d9ede44d5c1e635142ed02bd2f5"
+        },
+        "project_objectives": {
+          "edge_ecosystem": {
+            "owner": "UNASSIGNED:profile-maintainer",
+            "policy": "roadmap",
+            "profiles": [
+              {
+                "id": "cuda-sm100",
+                "required_for_release": false,
+                "status": "planned",
+                "target_release": null
+              },
+              {
+                "id": "cuda-sm120",
+                "required_for_release": false,
+                "status": "planned",
+                "target_release": null
+              },
+              {
+                "id": "multi-gpu",
+                "required_for_release": false,
+                "status": "planned",
+                "target_release": null
+              }
+            ]
+          }
+        },
+        "repository": "https://github.com/flashinfer-ai/flashinfer",
+        "schema_version": "0.5",
+        "scoring_template_id": "project-fit-kernel-v0.5",
+        "status": "proposed",
+        "supported_revision_policy": "pinned:9d0e6f82ffa23d4271c08e0e0d4fc638b6b707ea; updates require a new human-reviewed profile version",
+        "triton_portability": {
+          "enabled": false,
+          "owner": null,
+          "profile_weights": {}
+        },
+        "version": "default-projects-v0.5-proposed.2"
+      },
+      "project": "flashinfer",
+      "source_revision": "9d0e6f82ffa23d4271c08e0e0d4fc638b6b707ea"
+    },
+    "liger-kernel": {
+      "aliases": [
+        "liger-kernel",
+        "linkedin/liger-kernel",
+        "liger_kernel"
+      ],
+      "artifacts": {
+        "api-abi": {
+          "artifact_kind": "api-abi",
+          "catalog_profile": "liger-training-fused-kernel-v1",
+          "extraction_status": "machine-proposed",
+          "probes": [
+            "forward-api",
+            "backward-api",
+            "autograd-contract",
+            "framework-replacement"
+          ],
+          "project": "liger-kernel",
+          "requirements": [
+            "Preserve forward, backward, autograd, reduction, ignore-index, dtype, shape, and framework replacement semantics for fused training operators."
+          ],
+          "schema_version": "0.5",
+          "source_repository": "https://github.com/linkedin/Liger-Kernel",
+          "source_revision": "e6a81bb0c34f31ca7806d0c2b72f6d66b0542694",
+          "source_urls": [
+            "https://github.com/linkedin/Liger-Kernel/blob/e6a81bb0c34f31ca7806d0c2b72f6d66b0542694/README.md",
+            "https://github.com/linkedin/Liger-Kernel/tree/e6a81bb0c34f31ca7806d0c2b72f6d66b0542694/test",
+            "https://github.com/linkedin/Liger-Kernel/blob/e6a81bb0c34f31ca7806d0c2b72f6d66b0542694/benchmark/BENCHMARK_GUIDELINES.md"
+          ]
+        },
+        "build-test-matrix": {
+          "artifact_kind": "build-test-matrix",
+          "catalog_profile": "liger-training-fused-kernel-v1",
+          "extraction_status": "machine-proposed",
+          "probes": [
+            "reference-forward",
+            "reference-backward",
+            "gradient-error",
+            "dtype-shape-matrix",
+            "integration-smoke"
+          ],
+          "project": "liger-kernel",
+          "requirements": [
+            "Compare forward and backward results and gradients with PyTorch across boundary shapes, dtypes, reductions, and supported framework integrations."
+          ],
+          "schema_version": "0.5",
+          "source_repository": "https://github.com/linkedin/Liger-Kernel",
+          "source_revision": "e6a81bb0c34f31ca7806d0c2b72f6d66b0542694",
+          "source_urls": [
+            "https://github.com/linkedin/Liger-Kernel/blob/e6a81bb0c34f31ca7806d0c2b72f6d66b0542694/README.md",
+            "https://github.com/linkedin/Liger-Kernel/tree/e6a81bb0c34f31ca7806d0c2b72f6d66b0542694/test",
+            "https://github.com/linkedin/Liger-Kernel/blob/e6a81bb0c34f31ca7806d0c2b72f6d66b0542694/benchmark/BENCHMARK_GUIDELINES.md"
+          ]
+        },
+        "dependency-policy": {
+          "artifact_kind": "dependency-policy",
+          "catalog_profile": "liger-training-fused-kernel-v1",
+          "extraction_status": "machine-proposed",
+          "probes": [
+            "dependency-matrix",
+            "optional-import-gate",
+            "clean-install",
+            "package-boundary"
+          ],
+          "project": "liger-kernel",
+          "requirements": [
+            "Declare PyTorch, Triton, transformers, optional framework, and architecture requirements while keeping optional integrations capability-gated."
+          ],
+          "schema_version": "0.5",
+          "source_repository": "https://github.com/linkedin/Liger-Kernel",
+          "source_revision": "e6a81bb0c34f31ca7806d0c2b72f6d66b0542694",
+          "source_urls": [
+            "https://github.com/linkedin/Liger-Kernel/blob/e6a81bb0c34f31ca7806d0c2b72f6d66b0542694/README.md",
+            "https://github.com/linkedin/Liger-Kernel/tree/e6a81bb0c34f31ca7806d0c2b72f6d66b0542694/test",
+            "https://github.com/linkedin/Liger-Kernel/blob/e6a81bb0c34f31ca7806d0c2b72f6d66b0542694/benchmark/BENCHMARK_GUIDELINES.md"
+          ]
+        },
+        "deployment-workload-portfolio": {
+          "artifact_kind": "deployment-workload-portfolio",
+          "catalog_profile": "liger-training-fused-kernel-v1",
+          "extraction_status": "machine-proposed",
+          "probes": [
+            "normalization",
+            "activation",
+            "cross-entropy",
+            "chunked-loss",
+            "long-sequence"
+          ],
+          "project": "liger-kernel",
+          "requirements": [
+            "Cover RMSNorm, RoPE, SwiGLU, cross entropy, fused linear loss, chunked loss, long sequences, and SFT/RL loss forward-backward paths."
+          ],
+          "schema_version": "0.5",
+          "source_repository": "https://github.com/linkedin/Liger-Kernel",
+          "source_revision": "e6a81bb0c34f31ca7806d0c2b72f6d66b0542694",
+          "source_urls": [
+            "https://github.com/linkedin/Liger-Kernel/blob/e6a81bb0c34f31ca7806d0c2b72f6d66b0542694/README.md",
+            "https://github.com/linkedin/Liger-Kernel/tree/e6a81bb0c34f31ca7806d0c2b72f6d66b0542694/test",
+            "https://github.com/linkedin/Liger-Kernel/blob/e6a81bb0c34f31ca7806d0c2b72f6d66b0542694/benchmark/BENCHMARK_GUIDELINES.md"
+          ]
+        },
+        "fallback-policy": {
+          "artifact_kind": "fallback-policy",
+          "catalog_profile": "liger-training-fused-kernel-v1",
+          "extraction_status": "machine-proposed",
+          "probes": [
+            "unsupported-shape",
+            "unsupported-dtype",
+            "compile-fallback",
+            "eager-fallback"
+          ],
+          "project": "liger-kernel",
+          "requirements": [
+            "Unsupported shape, dtype, backend, compile mode, or framework versions must use the declared eager composition or fail explicitly."
+          ],
+          "schema_version": "0.5",
+          "source_repository": "https://github.com/linkedin/Liger-Kernel",
+          "source_revision": "e6a81bb0c34f31ca7806d0c2b72f6d66b0542694",
+          "source_urls": [
+            "https://github.com/linkedin/Liger-Kernel/blob/e6a81bb0c34f31ca7806d0c2b72f6d66b0542694/README.md",
+            "https://github.com/linkedin/Liger-Kernel/tree/e6a81bb0c34f31ca7806d0c2b72f6d66b0542694/test",
+            "https://github.com/linkedin/Liger-Kernel/blob/e6a81bb0c34f31ca7806d0c2b72f6d66b0542694/benchmark/BENCHMARK_GUIDELINES.md"
+          ]
+        },
+        "lifecycle": {
+          "artifact_kind": "lifecycle",
+          "catalog_profile": "liger-training-fused-kernel-v1",
+          "extraction_status": "machine-proposed",
+          "probes": [
+            "clean-import",
+            "jit-first-call",
+            "cache-reuse",
+            "torch-compile",
+            "checkpointing"
+          ],
+          "project": "liger-kernel",
+          "requirements": [
+            "Preserve import, Triton JIT, torch.compile, first-call cache, repeated-call, autocast, checkpointing, and distributed training behavior."
+          ],
+          "schema_version": "0.5",
+          "source_repository": "https://github.com/linkedin/Liger-Kernel",
+          "source_revision": "e6a81bb0c34f31ca7806d0c2b72f6d66b0542694",
+          "source_urls": [
+            "https://github.com/linkedin/Liger-Kernel/blob/e6a81bb0c34f31ca7806d0c2b72f6d66b0542694/README.md",
+            "https://github.com/linkedin/Liger-Kernel/tree/e6a81bb0c34f31ca7806d0c2b72f6d66b0542694/test",
+            "https://github.com/linkedin/Liger-Kernel/blob/e6a81bb0c34f31ca7806d0c2b72f6d66b0542694/benchmark/BENCHMARK_GUIDELINES.md"
+          ]
+        },
+        "maintainability-probes": {
+          "artifact_kind": "maintainability-probes",
+          "catalog_profile": "liger-training-fused-kernel-v1",
+          "extraction_status": "machine-proposed",
+          "probes": [
+            "layer-parity",
+            "test-affinity",
+            "benchmark-update",
+            "owner-review"
+          ],
+          "project": "liger-kernel",
+          "requirements": [
+            "Keep math, kernel, autograd wrapper, framework integration, tests, and benchmark changes synchronized under focused owner review."
+          ],
+          "schema_version": "0.5",
+          "source_repository": "https://github.com/linkedin/Liger-Kernel",
+          "source_revision": "e6a81bb0c34f31ca7806d0c2b72f6d66b0542694",
+          "source_urls": [
+            "https://github.com/linkedin/Liger-Kernel/blob/e6a81bb0c34f31ca7806d0c2b72f6d66b0542694/README.md",
+            "https://github.com/linkedin/Liger-Kernel/tree/e6a81bb0c34f31ca7806d0c2b72f6d66b0542694/test",
+            "https://github.com/linkedin/Liger-Kernel/blob/e6a81bb0c34f31ca7806d0c2b72f6d66b0542694/benchmark/BENCHMARK_GUIDELINES.md"
+          ]
+        },
+        "performance-acceptance-targets": {
+          "artifact_kind": "performance-acceptance-targets",
+          "catalog_profile": "liger-training-fused-kernel-v1",
+          "extraction_status": "machine-proposed",
+          "probes": [
+            "step-latency",
+            "peak-memory",
+            "compile-cost",
+            "cache-reuse"
+          ],
+          "project": "liger-kernel",
+          "requirements": [
+            "Report training-step latency, peak memory, compile cost, cache reuse, and forward-backward speed against pinned eager and prior Liger baselines."
+          ],
+          "schema_version": "0.5",
+          "source_repository": "https://github.com/linkedin/Liger-Kernel",
+          "source_revision": "e6a81bb0c34f31ca7806d0c2b72f6d66b0542694",
+          "source_urls": [
+            "https://github.com/linkedin/Liger-Kernel/blob/e6a81bb0c34f31ca7806d0c2b72f6d66b0542694/README.md",
+            "https://github.com/linkedin/Liger-Kernel/tree/e6a81bb0c34f31ca7806d0c2b72f6d66b0542694/test",
+            "https://github.com/linkedin/Liger-Kernel/blob/e6a81bb0c34f31ca7806d0c2b72f6d66b0542694/benchmark/BENCHMARK_GUIDELINES.md"
+          ]
+        }
+      },
+      "profile": {
+        "allowed_integration_points": [
+          "src/liger_kernel/ops",
+          "src/liger_kernel/chunked_loss",
+          "src/liger_kernel/transformers",
+          "test",
+          "benchmark"
+        ],
+        "api_abi_contract": {
+          "id": "liger-training-fused-kernel-v1:api-abi",
+          "path": "builtin://default-projects-v0.5-proposed.2/liger-kernel/api-abi",
+          "sha256": "sha256:820adc183e427626440b285552c9254c5471ab7a3ba58f785a24d251c7f1dc8c"
+        },
+        "build_test_matrix": {
+          "id": "liger-training-fused-kernel-v1:build-test-matrix",
+          "path": "builtin://default-projects-v0.5-proposed.2/liger-kernel/build-test-matrix",
+          "sha256": "sha256:c5119c64564712ab6fd52071b02c210b1a587a6c297dcd0e6c683a48cf1c58b8"
+        },
+        "component_ownership": {
+          "framework-integration": [
+            "upstream-maintainer-review-required"
+          ],
+          "triton-training-ops": [
+            "upstream-kernel-maintainer-review-required"
+          ]
+        },
+        "dependency_policy": {
+          "id": "liger-training-fused-kernel-v1:dependency-policy",
+          "path": "builtin://default-projects-v0.5-proposed.2/liger-kernel/dependency-policy",
+          "sha256": "sha256:0c35bb3bb03bf44c6aebc74cc97d24682dc0bf87f7648c75ec8defd88c6024d0"
+        },
+        "deployment_workload_portfolio": {
+          "id": "liger-training-fused-kernel-v1:deployment-workload-portfolio",
+          "path": "builtin://default-projects-v0.5-proposed.2/liger-kernel/deployment-workload-portfolio",
+          "sha256": "sha256:ac89071d5947b729656b7914deadc8b449d769297e0e319d464f7a3815cd4935"
+        },
+        "fallback_policy": {
+          "id": "liger-training-fused-kernel-v1:fallback-policy",
+          "path": "builtin://default-projects-v0.5-proposed.2/liger-kernel/fallback-policy",
+          "sha256": "sha256:6772021a18f7f2f1282153305a3a38fab97e1ceab229a8208bf5a4a5480eac39"
+        },
+        "id": "liger-training-fused-kernel-v1",
+        "lifecycle_contract": {
+          "id": "liger-training-fused-kernel-v1:lifecycle",
+          "path": "builtin://default-projects-v0.5-proposed.2/liger-kernel/lifecycle",
+          "sha256": "sha256:a6617debf0249664d5b36d7cb3006dacc6a7e4b1e510b3a394670e6879fe3d32"
+        },
+        "maintainability_probes": {
+          "id": "liger-training-fused-kernel-v1:maintainability-probes",
+          "path": "builtin://default-projects-v0.5-proposed.2/liger-kernel/maintainability-probes",
+          "sha256": "sha256:3f8ed39070eed17188dc0974eec8f14d05ca319dccc379079f735936461aedca"
+        },
+        "ownership": {
+          "last_reviewed_at": null,
+          "maintainers": [
+            "UNASSIGNED:infraswe-default-profile-maintainer"
+          ],
+          "review_required": 1,
+          "update_policy": "pull-request"
+        },
+        "performance_acceptance_targets": {
+          "id": "liger-training-fused-kernel-v1:performance-acceptance-targets",
+          "path": "builtin://default-projects-v0.5-proposed.2/liger-kernel/performance-acceptance-targets",
+          "sha256": "sha256:a9a0332768260482ba95846e5d8fcb7cede46bb4ac55e2a8b4f18895d7a391bb"
+        },
+        "project_objectives": {
+          "edge_ecosystem": {
+            "owner": "UNASSIGNED:profile-maintainer",
+            "policy": "roadmap",
+            "profiles": [
+              {
+                "id": "cuda-sm100",
+                "required_for_release": false,
+                "status": "planned",
+                "target_release": null
+              },
+              {
+                "id": "rocm",
+                "required_for_release": false,
+                "status": "planned",
+                "target_release": null
+              },
+              {
+                "id": "cutedsl",
+                "required_for_release": false,
+                "status": "planned",
+                "target_release": null
+              }
+            ]
+          }
+        },
+        "repository": "https://github.com/linkedin/Liger-Kernel",
+        "schema_version": "0.5",
+        "scoring_template_id": "project-fit-kernel-v0.5",
+        "status": "proposed",
+        "supported_revision_policy": "pinned:e6a81bb0c34f31ca7806d0c2b72f6d66b0542694; updates require a new human-reviewed profile version",
+        "triton_portability": {
+          "enabled": false,
+          "owner": null,
+          "profile_weights": {}
+        },
+        "version": "default-projects-v0.5-proposed.2"
+      },
+      "project": "liger-kernel",
+      "source_revision": "e6a81bb0c34f31ca7806d0c2b72f6d66b0542694"
+    },
+    "megatron-core": {
+      "aliases": [
+        "megatron-core",
+        "nvidia/megatron-lm",
+        "megatron.core"
+      ],
+      "artifacts": {
+        "api-abi": {
+          "artifact_kind": "api-abi",
+          "catalog_profile": "megatron-core-training-kernel-host-v1",
+          "extraction_status": "machine-proposed",
+          "probes": [
+            "module-api",
+            "parallel-layout",
+            "config-contract",
+            "checkpoint-schema"
+          ],
+          "project": "megatron-core",
+          "requirements": [
+            "Preserve Megatron-Core module, tensor/sequence/context/expert parallel, distributed checkpoint, config, and extension interfaces."
+          ],
+          "schema_version": "0.5",
+          "source_repository": "https://github.com/NVIDIA/Megatron-LM",
+          "source_revision": "3c04d2bd2255c9652a687c3d5a5b9636467696db",
+          "source_urls": [
+            "https://github.com/NVIDIA/Megatron-LM/blob/3c04d2bd2255c9652a687c3d5a5b9636467696db/README.md",
+            "https://github.com/NVIDIA/Megatron-LM/tree/3c04d2bd2255c9652a687c3d5a5b9636467696db/megatron/core",
+            "https://github.com/NVIDIA/Megatron-LM/tree/3c04d2bd2255c9652a687c3d5a5b9636467696db/tests/unit_tests"
+          ]
+        },
+        "build-test-matrix": {
+          "artifact_kind": "build-test-matrix",
+          "catalog_profile": "megatron-core-training-kernel-host-v1",
+          "extraction_status": "machine-proposed",
+          "probes": [
+            "unit-focused",
+            "distributed-parallelism",
+            "forward-backward",
+            "checkpoint-restart"
+          ],
+          "project": "megatron-core",
+          "requirements": [
+            "Run focused unit tests and affected TP/PP/CP/EP distributed lanes with forward, backward, determinism, checkpoint, and restart checks."
+          ],
+          "schema_version": "0.5",
+          "source_repository": "https://github.com/NVIDIA/Megatron-LM",
+          "source_revision": "3c04d2bd2255c9652a687c3d5a5b9636467696db",
+          "source_urls": [
+            "https://github.com/NVIDIA/Megatron-LM/blob/3c04d2bd2255c9652a687c3d5a5b9636467696db/README.md",
+            "https://github.com/NVIDIA/Megatron-LM/tree/3c04d2bd2255c9652a687c3d5a5b9636467696db/megatron/core",
+            "https://github.com/NVIDIA/Megatron-LM/tree/3c04d2bd2255c9652a687c3d5a5b9636467696db/tests/unit_tests"
+          ]
+        },
+        "dependency-policy": {
+          "artifact_kind": "dependency-policy",
+          "catalog_profile": "megatron-core-training-kernel-host-v1",
+          "extraction_status": "machine-proposed",
+          "probes": [
+            "dependency-matrix",
+            "optional-import-gate",
+            "clean-install",
+            "extension-version"
+          ],
+          "project": "megatron-core",
+          "requirements": [
+            "Declare PyTorch, CUDA, Transformer Engine, communication, fused-kernel, and optional framework dependencies with capability-gated imports."
+          ],
+          "schema_version": "0.5",
+          "source_repository": "https://github.com/NVIDIA/Megatron-LM",
+          "source_revision": "3c04d2bd2255c9652a687c3d5a5b9636467696db",
+          "source_urls": [
+            "https://github.com/NVIDIA/Megatron-LM/blob/3c04d2bd2255c9652a687c3d5a5b9636467696db/README.md",
+            "https://github.com/NVIDIA/Megatron-LM/tree/3c04d2bd2255c9652a687c3d5a5b9636467696db/megatron/core",
+            "https://github.com/NVIDIA/Megatron-LM/tree/3c04d2bd2255c9652a687c3d5a5b9636467696db/tests/unit_tests"
+          ]
+        },
+        "deployment-workload-portfolio": {
+          "artifact_kind": "deployment-workload-portfolio",
+          "catalog_profile": "megatron-core-training-kernel-host-v1",
+          "extraction_status": "machine-proposed",
+          "probes": [
+            "tensor-parallel",
+            "pipeline-parallel",
+            "context-parallel",
+            "expert-parallel",
+            "checkpointing"
+          ],
+          "project": "megatron-core",
+          "requirements": [
+            "Cover representative TP, PP, CP, EP, distributed optimizer, mixed precision, checkpointing, microbatch, and long-sequence training cells."
+          ],
+          "schema_version": "0.5",
+          "source_repository": "https://github.com/NVIDIA/Megatron-LM",
+          "source_revision": "3c04d2bd2255c9652a687c3d5a5b9636467696db",
+          "source_urls": [
+            "https://github.com/NVIDIA/Megatron-LM/blob/3c04d2bd2255c9652a687c3d5a5b9636467696db/README.md",
+            "https://github.com/NVIDIA/Megatron-LM/tree/3c04d2bd2255c9652a687c3d5a5b9636467696db/megatron/core",
+            "https://github.com/NVIDIA/Megatron-LM/tree/3c04d2bd2255c9652a687c3d5a5b9636467696db/tests/unit_tests"
+          ]
+        },
+        "fallback-policy": {
+          "artifact_kind": "fallback-policy",
+          "catalog_profile": "megatron-core-training-kernel-host-v1",
+          "extraction_status": "machine-proposed",
+          "probes": [
+            "fused-op-fallback",
+            "precision-fallback",
+            "rank-consistency",
+            "explicit-failure"
+          ],
+          "project": "megatron-core",
+          "requirements": [
+            "Unavailable fused, low-precision, communication, or architecture paths must use the declared unfused/native path or fail before distributed divergence."
+          ],
+          "schema_version": "0.5",
+          "source_repository": "https://github.com/NVIDIA/Megatron-LM",
+          "source_revision": "3c04d2bd2255c9652a687c3d5a5b9636467696db",
+          "source_urls": [
+            "https://github.com/NVIDIA/Megatron-LM/blob/3c04d2bd2255c9652a687c3d5a5b9636467696db/README.md",
+            "https://github.com/NVIDIA/Megatron-LM/tree/3c04d2bd2255c9652a687c3d5a5b9636467696db/megatron/core",
+            "https://github.com/NVIDIA/Megatron-LM/tree/3c04d2bd2255c9652a687c3d5a5b9636467696db/tests/unit_tests"
+          ]
+        },
+        "lifecycle": {
+          "artifact_kind": "lifecycle",
+          "catalog_profile": "megatron-core-training-kernel-host-v1",
+          "extraction_status": "machine-proposed",
+          "probes": [
+            "parallel-init",
+            "train-step",
+            "checkpoint-restart",
+            "group-destroy"
+          ],
+          "project": "megatron-core",
+          "requirements": [
+            "Preserve process-group initialization, model construction, forward/backward, optimizer, checkpoint, restart, and process-group teardown."
+          ],
+          "schema_version": "0.5",
+          "source_repository": "https://github.com/NVIDIA/Megatron-LM",
+          "source_revision": "3c04d2bd2255c9652a687c3d5a5b9636467696db",
+          "source_urls": [
+            "https://github.com/NVIDIA/Megatron-LM/blob/3c04d2bd2255c9652a687c3d5a5b9636467696db/README.md",
+            "https://github.com/NVIDIA/Megatron-LM/tree/3c04d2bd2255c9652a687c3d5a5b9636467696db/megatron/core",
+            "https://github.com/NVIDIA/Megatron-LM/tree/3c04d2bd2255c9652a687c3d5a5b9636467696db/tests/unit_tests"
+          ]
+        },
+        "maintainability-probes": {
+          "artifact_kind": "maintainability-probes",
+          "catalog_profile": "megatron-core-training-kernel-host-v1",
+          "extraction_status": "machine-proposed",
+          "probes": [
+            "canonical-owner",
+            "config-locality",
+            "distributed-test-affinity",
+            "checkpoint-compatibility"
+          ],
+          "project": "megatron-core",
+          "requirements": [
+            "Keep parallel-state ownership, configuration, kernel integration, distributed tests, and checkpoint compatibility explicit under owner review."
+          ],
+          "schema_version": "0.5",
+          "source_repository": "https://github.com/NVIDIA/Megatron-LM",
+          "source_revision": "3c04d2bd2255c9652a687c3d5a5b9636467696db",
+          "source_urls": [
+            "https://github.com/NVIDIA/Megatron-LM/blob/3c04d2bd2255c9652a687c3d5a5b9636467696db/README.md",
+            "https://github.com/NVIDIA/Megatron-LM/tree/3c04d2bd2255c9652a687c3d5a5b9636467696db/megatron/core",
+            "https://github.com/NVIDIA/Megatron-LM/tree/3c04d2bd2255c9652a687c3d5a5b9636467696db/tests/unit_tests"
+          ]
+        },
+        "performance-acceptance-targets": {
+          "artifact_kind": "performance-acceptance-targets",
+          "catalog_profile": "megatron-core-training-kernel-host-v1",
+          "extraction_status": "machine-proposed",
+          "probes": [
+            "step-time",
+            "mfu",
+            "scaling-efficiency",
+            "communication-overlap",
+            "peak-memory"
+          ],
+          "project": "megatron-core",
+          "requirements": [
+            "Report step time, model FLOP utilization, scaling efficiency, communication overlap, memory, compile/startup cost, and checkpoint overhead."
+          ],
+          "schema_version": "0.5",
+          "source_repository": "https://github.com/NVIDIA/Megatron-LM",
+          "source_revision": "3c04d2bd2255c9652a687c3d5a5b9636467696db",
+          "source_urls": [
+            "https://github.com/NVIDIA/Megatron-LM/blob/3c04d2bd2255c9652a687c3d5a5b9636467696db/README.md",
+            "https://github.com/NVIDIA/Megatron-LM/tree/3c04d2bd2255c9652a687c3d5a5b9636467696db/megatron/core",
+            "https://github.com/NVIDIA/Megatron-LM/tree/3c04d2bd2255c9652a687c3d5a5b9636467696db/tests/unit_tests"
+          ]
+        }
+      },
+      "profile": {
+        "allowed_integration_points": [
+          "megatron/core",
+          "megatron/core/tensor_parallel",
+          "megatron/core/transformer",
+          "megatron/core/distributed",
+          "tests/unit_tests"
+        ],
+        "api_abi_contract": {
+          "id": "megatron-core-training-kernel-host-v1:api-abi",
+          "path": "builtin://default-projects-v0.5-proposed.2/megatron-core/api-abi",
+          "sha256": "sha256:378e0b6470acafe764a42fe4f61fff3e3c740bb610a9e3f18a8a85e4e6c082a5"
+        },
+        "build_test_matrix": {
+          "id": "megatron-core-training-kernel-host-v1:build-test-matrix",
+          "path": "builtin://default-projects-v0.5-proposed.2/megatron-core/build-test-matrix",
+          "sha256": "sha256:26d63e489a0fb8a245c256144848c626ebf52887ae2a8c75ac7c578c84f86036"
+        },
+        "component_ownership": {
+          "parallel-state-and-distributed": [
+            "upstream-maintainer-review-required"
+          ],
+          "transformer-and-fusions": [
+            "upstream-maintainer-review-required"
+          ]
+        },
+        "dependency_policy": {
+          "id": "megatron-core-training-kernel-host-v1:dependency-policy",
+          "path": "builtin://default-projects-v0.5-proposed.2/megatron-core/dependency-policy",
+          "sha256": "sha256:fdb7db44c503e54b0c2182868e3e4c2e7f620b05e724943757ec9bc811842174"
+        },
+        "deployment_workload_portfolio": {
+          "id": "megatron-core-training-kernel-host-v1:deployment-workload-portfolio",
+          "path": "builtin://default-projects-v0.5-proposed.2/megatron-core/deployment-workload-portfolio",
+          "sha256": "sha256:2f813368461cc5f11b9388e3f525ebc9977d3b98102d141325dcb0f28725e865"
+        },
+        "fallback_policy": {
+          "id": "megatron-core-training-kernel-host-v1:fallback-policy",
+          "path": "builtin://default-projects-v0.5-proposed.2/megatron-core/fallback-policy",
+          "sha256": "sha256:b73ff59dfd6cd5c5ec42d8a0a128e85040facf2ee2c28e65765c9b74ff5c8c37"
+        },
+        "id": "megatron-core-training-kernel-host-v1",
+        "lifecycle_contract": {
+          "id": "megatron-core-training-kernel-host-v1:lifecycle",
+          "path": "builtin://default-projects-v0.5-proposed.2/megatron-core/lifecycle",
+          "sha256": "sha256:0ff519d11ab3abe376fe8eff5a952c8e60142a275297916460d42f8265a25ad1"
+        },
+        "maintainability_probes": {
+          "id": "megatron-core-training-kernel-host-v1:maintainability-probes",
+          "path": "builtin://default-projects-v0.5-proposed.2/megatron-core/maintainability-probes",
+          "sha256": "sha256:3c6ea1bfcb338d2c733edc5965240148bc07b6f70f6c0dc25b278752b29a49bd"
+        },
+        "ownership": {
+          "last_reviewed_at": null,
+          "maintainers": [
+            "UNASSIGNED:infraswe-default-profile-maintainer"
+          ],
+          "review_required": 1,
+          "update_policy": "pull-request"
+        },
+        "performance_acceptance_targets": {
+          "id": "megatron-core-training-kernel-host-v1:performance-acceptance-targets",
+          "path": "builtin://default-projects-v0.5-proposed.2/megatron-core/performance-acceptance-targets",
+          "sha256": "sha256:fe1bde9d6c5c600d7a2e65283b89092b727c97260adf424ea3827cc714536dc4"
+        },
+        "project_objectives": {
+          "edge_ecosystem": {
+            "owner": "UNASSIGNED:profile-maintainer",
+            "policy": "roadmap",
+            "profiles": [
+              {
+                "id": "cuda-sm100",
+                "required_for_release": false,
+                "status": "planned",
+                "target_release": null
+              },
+              {
+                "id": "rocm",
+                "required_for_release": false,
+                "status": "planned",
+                "target_release": null
+              },
+              {
+                "id": "multi-node-rdma",
+                "required_for_release": false,
+                "status": "planned",
+                "target_release": null
+              }
+            ]
+          }
+        },
+        "repository": "https://github.com/NVIDIA/Megatron-LM",
+        "schema_version": "0.5",
+        "scoring_template_id": "project-fit-kernel-v0.5",
+        "status": "proposed",
+        "supported_revision_policy": "pinned:3c04d2bd2255c9652a687c3d5a5b9636467696db; updates require a new human-reviewed profile version",
+        "triton_portability": {
+          "enabled": false,
+          "owner": null,
+          "profile_weights": {}
+        },
+        "version": "default-projects-v0.5-proposed.2"
+      },
+      "project": "megatron-core",
+      "source_revision": "3c04d2bd2255c9652a687c3d5a5b9636467696db"
+    },
+    "sglang": {
+      "aliases": [
+        "sglang",
+        "sgl-project/sglang",
+        "sgl-kernel",
+        "sglang/srt"
+      ],
+      "artifacts": {
+        "api-abi": {
+          "artifact_kind": "api-abi",
+          "catalog_profile": "sglang-runtime-kernel-v1",
+          "extraction_status": "machine-proposed",
+          "probes": [
+            "runtime-import",
+            "request-contract",
+            "kernel-binding",
+            "server-api-smoke"
+          ],
+          "project": "sglang",
+          "requirements": [
+            "Preserve SRT call signatures, request semantics, registered server behavior, and project-owned kernel binding points."
+          ],
+          "schema_version": "0.5",
+          "source_repository": "https://github.com/sgl-project/sglang",
+          "source_revision": "4c2c169e6ba15aee5408b250ce25ff7e73388d9b",
+          "source_urls": [
+            "https://github.com/sgl-project/sglang/blob/4c2c169e6ba15aee5408b250ce25ff7e73388d9b/docs/developer_guide/contribution_guide.md",
+            "https://github.com/sgl-project/sglang/blob/4c2c169e6ba15aee5408b250ce25ff7e73388d9b/test/registered/README.md",
+            "https://github.com/sgl-project/sglang/blob/4c2c169e6ba15aee5408b250ce25ff7e73388d9b/.github/MAINTAINER.md"
+          ]
+        },
+        "build-test-matrix": {
+          "artifact_kind": "build-test-matrix",
+          "catalog_profile": "sglang-runtime-kernel-v1",
+          "extraction_status": "machine-proposed",
+          "probes": [
+            "pre-commit",
+            "registered-unit",
+            "registered-kernel",
+            "server-e2e"
+          ],
+          "project": "sglang",
+          "requirements": [
+            "Mirror changed SRT modules in registered unit tests and place CUDA, server, model, platform, accuracy, and benchmark coverage in designated suites."
+          ],
+          "schema_version": "0.5",
+          "source_repository": "https://github.com/sgl-project/sglang",
+          "source_revision": "4c2c169e6ba15aee5408b250ce25ff7e73388d9b",
+          "source_urls": [
+            "https://github.com/sgl-project/sglang/blob/4c2c169e6ba15aee5408b250ce25ff7e73388d9b/docs/developer_guide/contribution_guide.md",
+            "https://github.com/sgl-project/sglang/blob/4c2c169e6ba15aee5408b250ce25ff7e73388d9b/test/registered/README.md",
+            "https://github.com/sgl-project/sglang/blob/4c2c169e6ba15aee5408b250ce25ff7e73388d9b/.github/MAINTAINER.md"
+          ]
+        },
+        "dependency-policy": {
+          "artifact_kind": "dependency-policy",
+          "catalog_profile": "sglang-runtime-kernel-v1",
+          "extraction_status": "machine-proposed",
+          "probes": [
+            "package-boundary",
+            "kernel-version-pin",
+            "clean-install"
+          ],
+          "project": "sglang",
+          "requirements": [
+            "Treat sglang and sglang-kernel as separately released packages and follow the kernel-source, package-release, runtime-version multi-PR lifecycle."
+          ],
+          "schema_version": "0.5",
+          "source_repository": "https://github.com/sgl-project/sglang",
+          "source_revision": "4c2c169e6ba15aee5408b250ce25ff7e73388d9b",
+          "source_urls": [
+            "https://github.com/sgl-project/sglang/blob/4c2c169e6ba15aee5408b250ce25ff7e73388d9b/docs/developer_guide/contribution_guide.md",
+            "https://github.com/sgl-project/sglang/blob/4c2c169e6ba15aee5408b250ce25ff7e73388d9b/test/registered/README.md",
+            "https://github.com/sgl-project/sglang/blob/4c2c169e6ba15aee5408b250ce25ff7e73388d9b/.github/MAINTAINER.md"
+          ]
+        },
+        "deployment-workload-portfolio": {
+          "artifact_kind": "deployment-workload-portfolio",
+          "catalog_profile": "sglang-runtime-kernel-v1",
+          "extraction_status": "machine-proposed",
+          "probes": [
+            "prefill",
+            "decode",
+            "mixed-traffic",
+            "continuous-batching",
+            "tp-serving"
+          ],
+          "project": "sglang",
+          "requirements": [
+            "Cover server prefill/decode, mixed traffic, continuous batching, graph replay, and distributed serving using project benchmark tooling."
+          ],
+          "schema_version": "0.5",
+          "source_repository": "https://github.com/sgl-project/sglang",
+          "source_revision": "4c2c169e6ba15aee5408b250ce25ff7e73388d9b",
+          "source_urls": [
+            "https://github.com/sgl-project/sglang/blob/4c2c169e6ba15aee5408b250ce25ff7e73388d9b/docs/developer_guide/contribution_guide.md",
+            "https://github.com/sgl-project/sglang/blob/4c2c169e6ba15aee5408b250ce25ff7e73388d9b/test/registered/README.md",
+            "https://github.com/sgl-project/sglang/blob/4c2c169e6ba15aee5408b250ce25ff7e73388d9b/.github/MAINTAINER.md"
+          ]
+        },
+        "fallback-policy": {
+          "artifact_kind": "fallback-policy",
+          "catalog_profile": "sglang-runtime-kernel-v1",
+          "extraction_status": "machine-proposed",
+          "probes": [
+            "backend-selection",
+            "unsupported-shape",
+            "missing-kernel-package"
+          ],
+          "project": "sglang",
+          "requirements": [
+            "Unsupported hardware and workloads select a declared backend or fail explicitly without silently changing output semantics."
+          ],
+          "schema_version": "0.5",
+          "source_repository": "https://github.com/sgl-project/sglang",
+          "source_revision": "4c2c169e6ba15aee5408b250ce25ff7e73388d9b",
+          "source_urls": [
+            "https://github.com/sgl-project/sglang/blob/4c2c169e6ba15aee5408b250ce25ff7e73388d9b/docs/developer_guide/contribution_guide.md",
+            "https://github.com/sgl-project/sglang/blob/4c2c169e6ba15aee5408b250ce25ff7e73388d9b/test/registered/README.md",
+            "https://github.com/sgl-project/sglang/blob/4c2c169e6ba15aee5408b250ce25ff7e73388d9b/.github/MAINTAINER.md"
+          ]
+        },
+        "lifecycle": {
+          "artifact_kind": "lifecycle",
+          "catalog_profile": "sglang-runtime-kernel-v1",
+          "extraction_status": "machine-proposed",
+          "probes": [
+            "server-start",
+            "prefill-decode",
+            "cuda-graph",
+            "distributed-smoke"
+          ],
+          "project": "sglang",
+          "requirements": [
+            "Preserve server launch, scheduler, prefill/decode, graph capture, distributed execution, shutdown, and isolated hardware-specific paths."
+          ],
+          "schema_version": "0.5",
+          "source_repository": "https://github.com/sgl-project/sglang",
+          "source_revision": "4c2c169e6ba15aee5408b250ce25ff7e73388d9b",
+          "source_urls": [
+            "https://github.com/sgl-project/sglang/blob/4c2c169e6ba15aee5408b250ce25ff7e73388d9b/docs/developer_guide/contribution_guide.md",
+            "https://github.com/sgl-project/sglang/blob/4c2c169e6ba15aee5408b250ce25ff7e73388d9b/test/registered/README.md",
+            "https://github.com/sgl-project/sglang/blob/4c2c169e6ba15aee5408b250ce25ff7e73388d9b/.github/MAINTAINER.md"
+          ]
+        },
+        "maintainability-probes": {
+          "artifact_kind": "maintainability-probes",
+          "catalog_profile": "sglang-runtime-kernel-v1",
+          "extraction_status": "machine-proposed",
+          "probes": [
+            "diff-locality",
+            "hardware-isolation",
+            "test-runtime",
+            "owner-review"
+          ],
+          "project": "sglang",
+          "requirements": [
+            "Prefer new files for hardware components, keep the common path first, avoid drastic changes, and include fast focused tests and owner review."
+          ],
+          "schema_version": "0.5",
+          "source_repository": "https://github.com/sgl-project/sglang",
+          "source_revision": "4c2c169e6ba15aee5408b250ce25ff7e73388d9b",
+          "source_urls": [
+            "https://github.com/sgl-project/sglang/blob/4c2c169e6ba15aee5408b250ce25ff7e73388d9b/docs/developer_guide/contribution_guide.md",
+            "https://github.com/sgl-project/sglang/blob/4c2c169e6ba15aee5408b250ce25ff7e73388d9b/test/registered/README.md",
+            "https://github.com/sgl-project/sglang/blob/4c2c169e6ba15aee5408b250ce25ff7e73388d9b/.github/MAINTAINER.md"
+          ]
+        },
+        "performance-acceptance-targets": {
+          "artifact_kind": "performance-acceptance-targets",
+          "catalog_profile": "sglang-runtime-kernel-v1",
+          "extraction_status": "machine-proposed",
+          "probes": [
+            "latency",
+            "throughput",
+            "memory",
+            "graph-retention",
+            "variance"
+          ],
+          "project": "sglang",
+          "requirements": [
+            "Compare project-local latency, throughput, memory, graph retention, and variance; never infer speed from the GSM8K accuracy sanity test."
+          ],
+          "schema_version": "0.5",
+          "source_repository": "https://github.com/sgl-project/sglang",
+          "source_revision": "4c2c169e6ba15aee5408b250ce25ff7e73388d9b",
+          "source_urls": [
+            "https://github.com/sgl-project/sglang/blob/4c2c169e6ba15aee5408b250ce25ff7e73388d9b/docs/developer_guide/contribution_guide.md",
+            "https://github.com/sgl-project/sglang/blob/4c2c169e6ba15aee5408b250ce25ff7e73388d9b/test/registered/README.md",
+            "https://github.com/sgl-project/sglang/blob/4c2c169e6ba15aee5408b250ce25ff7e73388d9b/.github/MAINTAINER.md"
+          ]
+        }
+      },
+      "profile": {
+        "allowed_integration_points": [
+          "python/sglang/srt",
+          "python/sglang/kernels",
+          "sgl-kernel",
+          "test/registered/unit",
+          "test/registered/kernels"
+        ],
+        "api_abi_contract": {
+          "id": "sglang-runtime-kernel-v1:api-abi",
+          "path": "builtin://default-projects-v0.5-proposed.2/sglang/api-abi",
+          "sha256": "sha256:c10b008187676c3810d4d20072b36d517e7d60e672ec0e502be02afc0e806517"
+        },
+        "build_test_matrix": {
+          "id": "sglang-runtime-kernel-v1:build-test-matrix",
+          "path": "builtin://default-projects-v0.5-proposed.2/sglang/build-test-matrix",
+          "sha256": "sha256:fdee102274d10b9d7056c4003f63be4cb6c10eca19ef7fb7afe6bc45cb7d436a"
+        },
+        "component_ownership": {
+          "kernel": [
+            "upstream-kernel-maintainer-review-required"
+          ],
+          "runtime": [
+            "upstream-codeowner-review-required"
+          ]
+        },
+        "dependency_policy": {
+          "id": "sglang-runtime-kernel-v1:dependency-policy",
+          "path": "builtin://default-projects-v0.5-proposed.2/sglang/dependency-policy",
+          "sha256": "sha256:14121ac03a782c82cbfe9c435ac908bb34b1c462e1f10687168e577e8a845e25"
+        },
+        "deployment_workload_portfolio": {
+          "id": "sglang-runtime-kernel-v1:deployment-workload-portfolio",
+          "path": "builtin://default-projects-v0.5-proposed.2/sglang/deployment-workload-portfolio",
+          "sha256": "sha256:59733d7a5bd11ede4d0de043d821599bfca16f9413b5c4c0906ca25855f32322"
+        },
+        "fallback_policy": {
+          "id": "sglang-runtime-kernel-v1:fallback-policy",
+          "path": "builtin://default-projects-v0.5-proposed.2/sglang/fallback-policy",
+          "sha256": "sha256:40bebdb5a46299319eb3931c4f357eab2729130db6f28cef2abf500086479f31"
+        },
+        "id": "sglang-runtime-kernel-v1",
+        "lifecycle_contract": {
+          "id": "sglang-runtime-kernel-v1:lifecycle",
+          "path": "builtin://default-projects-v0.5-proposed.2/sglang/lifecycle",
+          "sha256": "sha256:dcfedfc2107fd276cf659485833011db3584efe0ef23deaf6fb41ab964b6dd56"
+        },
+        "maintainability_probes": {
+          "id": "sglang-runtime-kernel-v1:maintainability-probes",
+          "path": "builtin://default-projects-v0.5-proposed.2/sglang/maintainability-probes",
+          "sha256": "sha256:7df6ca8593c0d3c8c5c96922855751db41eac494bcdd46462e433b306ad11b1f"
+        },
+        "ownership": {
+          "last_reviewed_at": null,
+          "maintainers": [
+            "UNASSIGNED:infraswe-default-profile-maintainer"
+          ],
+          "review_required": 1,
+          "update_policy": "pull-request"
+        },
+        "performance_acceptance_targets": {
+          "id": "sglang-runtime-kernel-v1:performance-acceptance-targets",
+          "path": "builtin://default-projects-v0.5-proposed.2/sglang/performance-acceptance-targets",
+          "sha256": "sha256:ac968bbf7e019c4874f3ba66bf7a8907bdac9a8b00d28b273603cf2963763a27"
+        },
+        "project_objectives": {
+          "edge_ecosystem": {
+            "owner": "UNASSIGNED:profile-maintainer",
+            "policy": "roadmap",
+            "profiles": [
+              {
+                "id": "cuda-sm100",
+                "required_for_release": false,
+                "status": "planned",
+                "target_release": null
+              },
+              {
+                "id": "amd",
+                "required_for_release": false,
+                "status": "planned",
+                "target_release": null
+              },
+              {
+                "id": "ascend",
+                "required_for_release": false,
+                "status": "planned",
+                "target_release": null
+              }
+            ]
+          }
+        },
+        "repository": "https://github.com/sgl-project/sglang",
+        "schema_version": "0.5",
+        "scoring_template_id": "project-fit-kernel-v0.5",
+        "status": "proposed",
+        "supported_revision_policy": "pinned:4c2c169e6ba15aee5408b250ce25ff7e73388d9b; updates require a new human-reviewed profile version",
+        "triton_portability": {
+          "enabled": false,
+          "owner": null,
+          "profile_weights": {}
+        },
+        "version": "default-projects-v0.5-proposed.2"
+      },
+      "project": "sglang",
+      "source_revision": "4c2c169e6ba15aee5408b250ce25ff7e73388d9b"
+    },
+    "torchtitan": {
+      "aliases": [
+        "torchtitan",
+        "pytorch/torchtitan",
+        "torch-titan"
+      ],
+      "artifacts": {
+        "api-abi": {
+          "artifact_kind": "api-abi",
+          "catalog_profile": "torchtitan-pytorch-native-training-host-v1",
+          "extraction_status": "machine-proposed",
+          "probes": [
+            "job-config",
+            "model-protocol",
+            "parallelism-api",
+            "checkpoint-api"
+          ],
+          "project": "torchtitan",
+          "requirements": [
+            "Preserve job configuration, model protocol, parallelism, optimizer, checkpoint, dataset, metric, and extension interfaces."
+          ],
+          "schema_version": "0.5",
+          "source_repository": "https://github.com/pytorch/torchtitan",
+          "source_revision": "496b11d43860bb8d27b54568c76db6310ae7f55e",
+          "source_urls": [
+            "https://github.com/pytorch/torchtitan/blob/496b11d43860bb8d27b54568c76db6310ae7f55e/README.md",
+            "https://github.com/pytorch/torchtitan/tree/496b11d43860bb8d27b54568c76db6310ae7f55e/docs",
+            "https://github.com/pytorch/torchtitan/tree/496b11d43860bb8d27b54568c76db6310ae7f55e/tests"
+          ]
+        },
+        "build-test-matrix": {
+          "artifact_kind": "build-test-matrix",
+          "catalog_profile": "torchtitan-pytorch-native-training-host-v1",
+          "extraction_status": "machine-proposed",
+          "probes": [
+            "lint",
+            "unit-focused",
+            "fsdp2",
+            "torch-compile",
+            "checkpoint-restart"
+          ],
+          "project": "torchtitan",
+          "requirements": [
+            "Run lint, focused unit tests, single-GPU and distributed FSDP2/TP/PP lanes, torch.compile, checkpoint, and determinism checks."
+          ],
+          "schema_version": "0.5",
+          "source_repository": "https://github.com/pytorch/torchtitan",
+          "source_revision": "496b11d43860bb8d27b54568c76db6310ae7f55e",
+          "source_urls": [
+            "https://github.com/pytorch/torchtitan/blob/496b11d43860bb8d27b54568c76db6310ae7f55e/README.md",
+            "https://github.com/pytorch/torchtitan/tree/496b11d43860bb8d27b54568c76db6310ae7f55e/docs",
+            "https://github.com/pytorch/torchtitan/tree/496b11d43860bb8d27b54568c76db6310ae7f55e/tests"
+          ]
+        },
+        "dependency-policy": {
+          "artifact_kind": "dependency-policy",
+          "catalog_profile": "torchtitan-pytorch-native-training-host-v1",
+          "extraction_status": "machine-proposed",
+          "probes": [
+            "pytorch-version",
+            "optional-import-gate",
+            "clean-install",
+            "dependency-diff"
+          ],
+          "project": "torchtitan",
+          "requirements": [
+            "Use declared PyTorch-native APIs and capability-gate optional kernels, models, datasets, profilers, and distributed dependencies."
+          ],
+          "schema_version": "0.5",
+          "source_repository": "https://github.com/pytorch/torchtitan",
+          "source_revision": "496b11d43860bb8d27b54568c76db6310ae7f55e",
+          "source_urls": [
+            "https://github.com/pytorch/torchtitan/blob/496b11d43860bb8d27b54568c76db6310ae7f55e/README.md",
+            "https://github.com/pytorch/torchtitan/tree/496b11d43860bb8d27b54568c76db6310ae7f55e/docs",
+            "https://github.com/pytorch/torchtitan/tree/496b11d43860bb8d27b54568c76db6310ae7f55e/tests"
+          ]
+        },
+        "deployment-workload-portfolio": {
+          "artifact_kind": "deployment-workload-portfolio",
+          "catalog_profile": "torchtitan-pytorch-native-training-host-v1",
+          "extraction_status": "machine-proposed",
+          "probes": [
+            "single-gpu",
+            "fsdp2",
+            "tensor-parallel",
+            "pipeline-parallel",
+            "long-sequence"
+          ],
+          "project": "torchtitan",
+          "requirements": [
+            "Cover single-GPU, FSDP2, TP, PP, long sequence, mixed precision, activation checkpointing, compile, and checkpoint/restart training cells."
+          ],
+          "schema_version": "0.5",
+          "source_repository": "https://github.com/pytorch/torchtitan",
+          "source_revision": "496b11d43860bb8d27b54568c76db6310ae7f55e",
+          "source_urls": [
+            "https://github.com/pytorch/torchtitan/blob/496b11d43860bb8d27b54568c76db6310ae7f55e/README.md",
+            "https://github.com/pytorch/torchtitan/tree/496b11d43860bb8d27b54568c76db6310ae7f55e/docs",
+            "https://github.com/pytorch/torchtitan/tree/496b11d43860bb8d27b54568c76db6310ae7f55e/tests"
+          ]
+        },
+        "fallback-policy": {
+          "artifact_kind": "fallback-policy",
+          "catalog_profile": "torchtitan-pytorch-native-training-host-v1",
+          "extraction_status": "machine-proposed",
+          "probes": [
+            "compile-fallback",
+            "kernel-fallback",
+            "precision-fallback",
+            "rank-consistency"
+          ],
+          "project": "torchtitan",
+          "requirements": [
+            "Unsupported compile, fused-kernel, precision, or parallelism paths must select a declared PyTorch-native fallback or fail consistently on every rank."
+          ],
+          "schema_version": "0.5",
+          "source_repository": "https://github.com/pytorch/torchtitan",
+          "source_revision": "496b11d43860bb8d27b54568c76db6310ae7f55e",
+          "source_urls": [
+            "https://github.com/pytorch/torchtitan/blob/496b11d43860bb8d27b54568c76db6310ae7f55e/README.md",
+            "https://github.com/pytorch/torchtitan/tree/496b11d43860bb8d27b54568c76db6310ae7f55e/docs",
+            "https://github.com/pytorch/torchtitan/tree/496b11d43860bb8d27b54568c76db6310ae7f55e/tests"
+          ]
+        },
+        "lifecycle": {
+          "artifact_kind": "lifecycle",
+          "catalog_profile": "torchtitan-pytorch-native-training-host-v1",
+          "extraction_status": "machine-proposed",
+          "probes": [
+            "launch",
+            "device-mesh",
+            "compile-train-step",
+            "checkpoint-restart",
+            "shutdown"
+          ],
+          "project": "torchtitan",
+          "requirements": [
+            "Preserve launch, device mesh, model initialization, parallelization, compile, forward/backward, optimizer, checkpoint/restart, and shutdown."
+          ],
+          "schema_version": "0.5",
+          "source_repository": "https://github.com/pytorch/torchtitan",
+          "source_revision": "496b11d43860bb8d27b54568c76db6310ae7f55e",
+          "source_urls": [
+            "https://github.com/pytorch/torchtitan/blob/496b11d43860bb8d27b54568c76db6310ae7f55e/README.md",
+            "https://github.com/pytorch/torchtitan/tree/496b11d43860bb8d27b54568c76db6310ae7f55e/docs",
+            "https://github.com/pytorch/torchtitan/tree/496b11d43860bb8d27b54568c76db6310ae7f55e/tests"
+          ]
+        },
+        "maintainability-probes": {
+          "artifact_kind": "maintainability-probes",
+          "catalog_profile": "torchtitan-pytorch-native-training-host-v1",
+          "extraction_status": "machine-proposed",
+          "probes": [
+            "pytorch-native-surface",
+            "model-locality",
+            "test-affinity",
+            "docs-impact"
+          ],
+          "project": "torchtitan",
+          "requirements": [
+            "Prefer composable PyTorch-native changes, localize model-specific behavior, and bind parallelism or kernel changes to focused tests and docs."
+          ],
+          "schema_version": "0.5",
+          "source_repository": "https://github.com/pytorch/torchtitan",
+          "source_revision": "496b11d43860bb8d27b54568c76db6310ae7f55e",
+          "source_urls": [
+            "https://github.com/pytorch/torchtitan/blob/496b11d43860bb8d27b54568c76db6310ae7f55e/README.md",
+            "https://github.com/pytorch/torchtitan/tree/496b11d43860bb8d27b54568c76db6310ae7f55e/docs",
+            "https://github.com/pytorch/torchtitan/tree/496b11d43860bb8d27b54568c76db6310ae7f55e/tests"
+          ]
+        },
+        "performance-acceptance-targets": {
+          "artifact_kind": "performance-acceptance-targets",
+          "catalog_profile": "torchtitan-pytorch-native-training-host-v1",
+          "extraction_status": "machine-proposed",
+          "probes": [
+            "step-latency",
+            "throughput",
+            "peak-memory",
+            "compile-time",
+            "scaling-efficiency"
+          ],
+          "project": "torchtitan",
+          "requirements": [
+            "Report step latency, throughput, memory, compile time, scaling efficiency, and checkpoint overhead against a pinned local TorchTitan baseline."
+          ],
+          "schema_version": "0.5",
+          "source_repository": "https://github.com/pytorch/torchtitan",
+          "source_revision": "496b11d43860bb8d27b54568c76db6310ae7f55e",
+          "source_urls": [
+            "https://github.com/pytorch/torchtitan/blob/496b11d43860bb8d27b54568c76db6310ae7f55e/README.md",
+            "https://github.com/pytorch/torchtitan/tree/496b11d43860bb8d27b54568c76db6310ae7f55e/docs",
+            "https://github.com/pytorch/torchtitan/tree/496b11d43860bb8d27b54568c76db6310ae7f55e/tests"
+          ]
+        }
+      },
+      "profile": {
+        "allowed_integration_points": [
+          "torchtitan",
+          "torchtitan/parallelisms",
+          "tests",
+          "docs"
+        ],
+        "api_abi_contract": {
+          "id": "torchtitan-pytorch-native-training-host-v1:api-abi",
+          "path": "builtin://default-projects-v0.5-proposed.2/torchtitan/api-abi",
+          "sha256": "sha256:fb20aae9fdb6904308da66b8e032a386dd1ab8dc7f53278612723065ea2e0fc9"
+        },
+        "build_test_matrix": {
+          "id": "torchtitan-pytorch-native-training-host-v1:build-test-matrix",
+          "path": "builtin://default-projects-v0.5-proposed.2/torchtitan/build-test-matrix",
+          "sha256": "sha256:605cd413640f1f328f905f98f393e4f20800f71d8d548f00870eebda9cfd22e5"
+        },
+        "component_ownership": {
+          "parallelism-and-kernels": [
+            "upstream-maintainer-review-required"
+          ],
+          "training-runtime": [
+            "upstream-maintainer-review-required"
+          ]
+        },
+        "dependency_policy": {
+          "id": "torchtitan-pytorch-native-training-host-v1:dependency-policy",
+          "path": "builtin://default-projects-v0.5-proposed.2/torchtitan/dependency-policy",
+          "sha256": "sha256:ce0afb1cbe31b0f7f93833e88c49715d61b09fe615814297f1d51726c580d972"
+        },
+        "deployment_workload_portfolio": {
+          "id": "torchtitan-pytorch-native-training-host-v1:deployment-workload-portfolio",
+          "path": "builtin://default-projects-v0.5-proposed.2/torchtitan/deployment-workload-portfolio",
+          "sha256": "sha256:5ea56b31e12f5e093429d3ee6ce909bac31e709200a4774d7331ae1a96cd10f8"
+        },
+        "fallback_policy": {
+          "id": "torchtitan-pytorch-native-training-host-v1:fallback-policy",
+          "path": "builtin://default-projects-v0.5-proposed.2/torchtitan/fallback-policy",
+          "sha256": "sha256:393de9d609a4daaf1d6bfb9310ddc46f0a3d884c16c5c9e857b06a5f7d9ce9a5"
+        },
+        "id": "torchtitan-pytorch-native-training-host-v1",
+        "lifecycle_contract": {
+          "id": "torchtitan-pytorch-native-training-host-v1:lifecycle",
+          "path": "builtin://default-projects-v0.5-proposed.2/torchtitan/lifecycle",
+          "sha256": "sha256:4253408351200d5f2823f518dd675985f2e1404197b8c0b8eed60ee4a3d03d28"
+        },
+        "maintainability_probes": {
+          "id": "torchtitan-pytorch-native-training-host-v1:maintainability-probes",
+          "path": "builtin://default-projects-v0.5-proposed.2/torchtitan/maintainability-probes",
+          "sha256": "sha256:03ce2e0bb78fea3622ffb9f5a7911f251940b5f5210fa2cbbc5943f96665c839"
+        },
+        "ownership": {
+          "last_reviewed_at": null,
+          "maintainers": [
+            "UNASSIGNED:infraswe-default-profile-maintainer"
+          ],
+          "review_required": 1,
+          "update_policy": "pull-request"
+        },
+        "performance_acceptance_targets": {
+          "id": "torchtitan-pytorch-native-training-host-v1:performance-acceptance-targets",
+          "path": "builtin://default-projects-v0.5-proposed.2/torchtitan/performance-acceptance-targets",
+          "sha256": "sha256:b497b9135658e932164bd2f8327826f161ddfe9b4870d17136c204bf6ea93f30"
+        },
+        "project_objectives": {
+          "edge_ecosystem": {
+            "owner": "UNASSIGNED:profile-maintainer",
+            "policy": "roadmap",
+            "profiles": [
+              {
+                "id": "cuda-sm100",
+                "required_for_release": false,
+                "status": "planned",
+                "target_release": null
+              },
+              {
+                "id": "rocm",
+                "required_for_release": false,
+                "status": "planned",
+                "target_release": null
+              },
+              {
+                "id": "multi-node",
+                "required_for_release": false,
+                "status": "planned",
+                "target_release": null
+              }
+            ]
+          }
+        },
+        "repository": "https://github.com/pytorch/torchtitan",
+        "schema_version": "0.5",
+        "scoring_template_id": "project-fit-kernel-v0.5",
+        "status": "proposed",
+        "supported_revision_policy": "pinned:496b11d43860bb8d27b54568c76db6310ae7f55e; updates require a new human-reviewed profile version",
+        "triton_portability": {
+          "enabled": false,
+          "owner": null,
+          "profile_weights": {}
+        },
+        "version": "default-projects-v0.5-proposed.2"
+      },
+      "project": "torchtitan",
+      "source_revision": "496b11d43860bb8d27b54568c76db6310ae7f55e"
+    },
+    "verl": {
+      "aliases": [
+        "verl",
+        "volcengine/verl",
+        "verl-trainer"
+      ],
+      "artifacts": {
+        "api-abi": {
+          "artifact_kind": "api-abi",
+          "catalog_profile": "verl-posttraining-rollout-host-v1",
+          "extraction_status": "machine-proposed",
+          "probes": [
+            "trainer-config",
+            "worker-protocol",
+            "rollout-interface",
+            "checkpoint-schema"
+          ],
+          "project": "verl",
+          "requirements": [
+            "Preserve trainer, worker, rollout, reward, data, configuration, checkpoint, and distributed protocol semantics across supported backends."
+          ],
+          "schema_version": "0.5",
+          "source_repository": "https://github.com/volcengine/verl",
+          "source_revision": "c2429f29a25d573f63d9bcc29e7ceb690817dce9",
+          "source_urls": [
+            "https://github.com/volcengine/verl/blob/c2429f29a25d573f63d9bcc29e7ceb690817dce9/README.md",
+            "https://github.com/volcengine/verl/tree/c2429f29a25d573f63d9bcc29e7ceb690817dce9/docs",
+            "https://github.com/volcengine/verl/tree/c2429f29a25d573f63d9bcc29e7ceb690817dce9/tests"
+          ]
+        },
+        "build-test-matrix": {
+          "artifact_kind": "build-test-matrix",
+          "catalog_profile": "verl-posttraining-rollout-host-v1",
+          "extraction_status": "machine-proposed",
+          "probes": [
+            "unit-focused",
+            "sft-smoke",
+            "rl-smoke",
+            "rollout-backend-matrix",
+            "fault-recovery"
+          ],
+          "project": "verl",
+          "requirements": [
+            "Run focused unit and integration tests for SFT and RL algorithms, rollout backends, distributed workers, fault paths, checkpointing, and supported models."
+          ],
+          "schema_version": "0.5",
+          "source_repository": "https://github.com/volcengine/verl",
+          "source_revision": "c2429f29a25d573f63d9bcc29e7ceb690817dce9",
+          "source_urls": [
+            "https://github.com/volcengine/verl/blob/c2429f29a25d573f63d9bcc29e7ceb690817dce9/README.md",
+            "https://github.com/volcengine/verl/tree/c2429f29a25d573f63d9bcc29e7ceb690817dce9/docs",
+            "https://github.com/volcengine/verl/tree/c2429f29a25d573f63d9bcc29e7ceb690817dce9/tests"
+          ]
+        },
+        "dependency-policy": {
+          "artifact_kind": "dependency-policy",
+          "catalog_profile": "verl-posttraining-rollout-host-v1",
+          "extraction_status": "machine-proposed",
+          "probes": [
+            "optional-import-gate",
+            "backend-version",
+            "clean-install",
+            "dependency-diff"
+          ],
+          "project": "verl",
+          "requirements": [
+            "Capability-gate training, rollout, serving, distributed, data, and optional model dependencies and keep backend versions explicit."
+          ],
+          "schema_version": "0.5",
+          "source_repository": "https://github.com/volcengine/verl",
+          "source_revision": "c2429f29a25d573f63d9bcc29e7ceb690817dce9",
+          "source_urls": [
+            "https://github.com/volcengine/verl/blob/c2429f29a25d573f63d9bcc29e7ceb690817dce9/README.md",
+            "https://github.com/volcengine/verl/tree/c2429f29a25d573f63d9bcc29e7ceb690817dce9/docs",
+            "https://github.com/volcengine/verl/tree/c2429f29a25d573f63d9bcc29e7ceb690817dce9/tests"
+          ]
+        },
+        "deployment-workload-portfolio": {
+          "artifact_kind": "deployment-workload-portfolio",
+          "catalog_profile": "verl-posttraining-rollout-host-v1",
+          "extraction_status": "machine-proposed",
+          "probes": [
+            "sft",
+            "rl-update",
+            "rollout-training-cycle",
+            "variable-sequence",
+            "sleep-wake"
+          ],
+          "project": "verl",
+          "requirements": [
+            "Cover SFT, GRPO/DAPO-style RL, rollout-training cycles, variable sequence length, multi-turn generation, sleep/wake, and checkpoint/restart."
+          ],
+          "schema_version": "0.5",
+          "source_repository": "https://github.com/volcengine/verl",
+          "source_revision": "c2429f29a25d573f63d9bcc29e7ceb690817dce9",
+          "source_urls": [
+            "https://github.com/volcengine/verl/blob/c2429f29a25d573f63d9bcc29e7ceb690817dce9/README.md",
+            "https://github.com/volcengine/verl/tree/c2429f29a25d573f63d9bcc29e7ceb690817dce9/docs",
+            "https://github.com/volcengine/verl/tree/c2429f29a25d573f63d9bcc29e7ceb690817dce9/tests"
+          ]
+        },
+        "fallback-policy": {
+          "artifact_kind": "fallback-policy",
+          "catalog_profile": "verl-posttraining-rollout-host-v1",
+          "extraction_status": "machine-proposed",
+          "probes": [
+            "rollout-backend-fallback",
+            "capability-gate",
+            "worker-consistency",
+            "explicit-failure"
+          ],
+          "project": "verl",
+          "requirements": [
+            "Unavailable rollout engines, kernels, sleep/wake capabilities, or distributed features must use a declared backend or fail before partial worker progress."
+          ],
+          "schema_version": "0.5",
+          "source_repository": "https://github.com/volcengine/verl",
+          "source_revision": "c2429f29a25d573f63d9bcc29e7ceb690817dce9",
+          "source_urls": [
+            "https://github.com/volcengine/verl/blob/c2429f29a25d573f63d9bcc29e7ceb690817dce9/README.md",
+            "https://github.com/volcengine/verl/tree/c2429f29a25d573f63d9bcc29e7ceb690817dce9/docs",
+            "https://github.com/volcengine/verl/tree/c2429f29a25d573f63d9bcc29e7ceb690817dce9/tests"
+          ]
+        },
+        "lifecycle": {
+          "artifact_kind": "lifecycle",
+          "catalog_profile": "verl-posttraining-rollout-host-v1",
+          "extraction_status": "machine-proposed",
+          "probes": [
+            "cluster-start",
+            "worker-init",
+            "rollout-update-cycle",
+            "sleep-wake",
+            "checkpoint-restart"
+          ],
+          "project": "verl",
+          "requirements": [
+            "Preserve cluster startup, resource placement, worker initialization, rollout, training update, sleep/wake, checkpoint/restart, and shutdown."
+          ],
+          "schema_version": "0.5",
+          "source_repository": "https://github.com/volcengine/verl",
+          "source_revision": "c2429f29a25d573f63d9bcc29e7ceb690817dce9",
+          "source_urls": [
+            "https://github.com/volcengine/verl/blob/c2429f29a25d573f63d9bcc29e7ceb690817dce9/README.md",
+            "https://github.com/volcengine/verl/tree/c2429f29a25d573f63d9bcc29e7ceb690817dce9/docs",
+            "https://github.com/volcengine/verl/tree/c2429f29a25d573f63d9bcc29e7ceb690817dce9/tests"
+          ]
+        },
+        "maintainability-probes": {
+          "artifact_kind": "maintainability-probes",
+          "catalog_profile": "verl-posttraining-rollout-host-v1",
+          "extraction_status": "machine-proposed",
+          "probes": [
+            "policy-versioning",
+            "canonical-owner",
+            "adapter-capability",
+            "test-affinity",
+            "config-migration"
+          ],
+          "project": "verl",
+          "requirements": [
+            "Keep policy, worker ownership, rollout adapter, backend capability, tests, and configuration migrations explicit and synchronized."
+          ],
+          "schema_version": "0.5",
+          "source_repository": "https://github.com/volcengine/verl",
+          "source_revision": "c2429f29a25d573f63d9bcc29e7ceb690817dce9",
+          "source_urls": [
+            "https://github.com/volcengine/verl/blob/c2429f29a25d573f63d9bcc29e7ceb690817dce9/README.md",
+            "https://github.com/volcengine/verl/tree/c2429f29a25d573f63d9bcc29e7ceb690817dce9/docs",
+            "https://github.com/volcengine/verl/tree/c2429f29a25d573f63d9bcc29e7ceb690817dce9/tests"
+          ]
+        },
+        "performance-acceptance-targets": {
+          "artifact_kind": "performance-acceptance-targets",
+          "catalog_profile": "verl-posttraining-rollout-host-v1",
+          "extraction_status": "machine-proposed",
+          "probes": [
+            "step-throughput",
+            "rollout-throughput",
+            "generation-latency",
+            "peak-memory",
+            "worker-utilization"
+          ],
+          "project": "verl",
+          "requirements": [
+            "Report end-to-end step and rollout throughput, generation latency, GPU memory, worker utilization, restart overhead, and kernel-local gains separately."
+          ],
+          "schema_version": "0.5",
+          "source_repository": "https://github.com/volcengine/verl",
+          "source_revision": "c2429f29a25d573f63d9bcc29e7ceb690817dce9",
+          "source_urls": [
+            "https://github.com/volcengine/verl/blob/c2429f29a25d573f63d9bcc29e7ceb690817dce9/README.md",
+            "https://github.com/volcengine/verl/tree/c2429f29a25d573f63d9bcc29e7ceb690817dce9/docs",
+            "https://github.com/volcengine/verl/tree/c2429f29a25d573f63d9bcc29e7ceb690817dce9/tests"
+          ]
+        }
+      },
+      "profile": {
+        "allowed_integration_points": [
+          "verl",
+          "verl/trainer",
+          "verl/workers",
+          "verl/workers/rollout",
+          "tests"
+        ],
+        "api_abi_contract": {
+          "id": "verl-posttraining-rollout-host-v1:api-abi",
+          "path": "builtin://default-projects-v0.5-proposed.2/verl/api-abi",
+          "sha256": "sha256:a592b9ca6f31d3b172a320f8ff3f3bb9fadd2a53d7adadc6c8e2b168572e83bc"
+        },
+        "build_test_matrix": {
+          "id": "verl-posttraining-rollout-host-v1:build-test-matrix",
+          "path": "builtin://default-projects-v0.5-proposed.2/verl/build-test-matrix",
+          "sha256": "sha256:1cb49c293acce8a5d5d25115a3acebac0c1a680d97f30deb1d8ff4520a5d59d9"
+        },
+        "component_ownership": {
+          "rollout-and-inference-adapter": [
+            "upstream-maintainer-review-required"
+          ],
+          "trainer-and-worker-protocol": [
+            "upstream-maintainer-review-required"
+          ]
+        },
+        "dependency_policy": {
+          "id": "verl-posttraining-rollout-host-v1:dependency-policy",
+          "path": "builtin://default-projects-v0.5-proposed.2/verl/dependency-policy",
+          "sha256": "sha256:b817eb78cd8523c30ae7007274bb13540d95e61a5d721975f94ede039e70f82e"
+        },
+        "deployment_workload_portfolio": {
+          "id": "verl-posttraining-rollout-host-v1:deployment-workload-portfolio",
+          "path": "builtin://default-projects-v0.5-proposed.2/verl/deployment-workload-portfolio",
+          "sha256": "sha256:f207bd9646610fab7dd05680429c8b31afd7fd452c0af092ad07f4260a5aff5e"
+        },
+        "fallback_policy": {
+          "id": "verl-posttraining-rollout-host-v1:fallback-policy",
+          "path": "builtin://default-projects-v0.5-proposed.2/verl/fallback-policy",
+          "sha256": "sha256:cc0e31e014d0ba0473524386fced39532d5fbd95bdd1dda9a5d42fb497ca8862"
+        },
+        "id": "verl-posttraining-rollout-host-v1",
+        "lifecycle_contract": {
+          "id": "verl-posttraining-rollout-host-v1:lifecycle",
+          "path": "builtin://default-projects-v0.5-proposed.2/verl/lifecycle",
+          "sha256": "sha256:90791b7eac5879a9abf8256fabc3890ae1837a518f831f235e3e516b248d0528"
+        },
+        "maintainability_probes": {
+          "id": "verl-posttraining-rollout-host-v1:maintainability-probes",
+          "path": "builtin://default-projects-v0.5-proposed.2/verl/maintainability-probes",
+          "sha256": "sha256:06a4c5951baee3c12a72c24ebc84418d0effa8a49daa91161ada9a8355ba3c0b"
+        },
+        "ownership": {
+          "last_reviewed_at": null,
+          "maintainers": [
+            "UNASSIGNED:infraswe-default-profile-maintainer"
+          ],
+          "review_required": 1,
+          "update_policy": "pull-request"
+        },
+        "performance_acceptance_targets": {
+          "id": "verl-posttraining-rollout-host-v1:performance-acceptance-targets",
+          "path": "builtin://default-projects-v0.5-proposed.2/verl/performance-acceptance-targets",
+          "sha256": "sha256:2837b00597fab9f02688eb6194726ed2ef0187b471d9a7dc04f2735ca8aed1ae"
+        },
+        "project_objectives": {
+          "edge_ecosystem": {
+            "owner": "UNASSIGNED:profile-maintainer",
+            "policy": "roadmap",
+            "profiles": [
+              {
+                "id": "cuda-sm100",
+                "required_for_release": false,
+                "status": "planned",
+                "target_release": null
+              },
+              {
+                "id": "rocm",
+                "required_for_release": false,
+                "status": "planned",
+                "target_release": null
+              },
+              {
+                "id": "vllm-rollout",
+                "required_for_release": false,
+                "status": "planned",
+                "target_release": null
+              },
+              {
+                "id": "sglang-rollout",
+                "required_for_release": false,
+                "status": "planned",
+                "target_release": null
+              }
+            ]
+          }
+        },
+        "repository": "https://github.com/volcengine/verl",
+        "schema_version": "0.5",
+        "scoring_template_id": "project-fit-kernel-v0.5",
+        "status": "proposed",
+        "supported_revision_policy": "pinned:c2429f29a25d573f63d9bcc29e7ceb690817dce9; updates require a new human-reviewed profile version",
+        "triton_portability": {
+          "enabled": false,
+          "owner": null,
+          "profile_weights": {}
+        },
+        "version": "default-projects-v0.5-proposed.2"
+      },
+      "project": "verl",
+      "source_revision": "c2429f29a25d573f63d9bcc29e7ceb690817dce9"
+    },
+    "vllm": {
+      "aliases": [
+        "vllm",
+        "vllm-project/vllm"
+      ],
+      "artifacts": {
+        "api-abi": {
+          "artifact_kind": "api-abi",
+          "catalog_profile": "vllm-kernel-integration-v1",
+          "extraction_status": "machine-proposed",
+          "probes": [
+            "operator-schema",
+            "torch-library-opcheck",
+            "public-api-regression"
+          ],
+          "project": "vllm",
+          "requirements": [
+            "Register schemas, implementations, tensor meta functions, and public API changes through supported vLLM/PyTorch integration and deprecation paths."
+          ],
+          "schema_version": "0.5",
+          "source_repository": "https://github.com/vllm-project/vllm",
+          "source_revision": "40824284bcb2f50047a48307ed39ce441bb15b0b",
+          "source_urls": [
+            "https://github.com/vllm-project/vllm/blob/40824284bcb2f50047a48307ed39ce441bb15b0b/docs/contributing/README.md",
+            "https://github.com/vllm-project/vllm/blob/40824284bcb2f50047a48307ed39ce441bb15b0b/docs/design/custom_op.md",
+            "https://github.com/vllm-project/vllm/blob/40824284bcb2f50047a48307ed39ce441bb15b0b/docs/contributing/deprecation_policy.md"
+          ]
+        },
+        "build-test-matrix": {
+          "artifact_kind": "build-test-matrix",
+          "catalog_profile": "vllm-kernel-integration-v1",
+          "extraction_status": "machine-proposed",
+          "probes": [
+            "lint",
+            "pytest-focused",
+            "kernel-correctness",
+            "affected-model-smoke"
+          ],
+          "project": "vllm",
+          "requirements": [
+            "Pass lint plus focused unit, kernel, integration, and affected-model tests; signature changes update registered schemas."
+          ],
+          "schema_version": "0.5",
+          "source_repository": "https://github.com/vllm-project/vllm",
+          "source_revision": "40824284bcb2f50047a48307ed39ce441bb15b0b",
+          "source_urls": [
+            "https://github.com/vllm-project/vllm/blob/40824284bcb2f50047a48307ed39ce441bb15b0b/docs/contributing/README.md",
+            "https://github.com/vllm-project/vllm/blob/40824284bcb2f50047a48307ed39ce441bb15b0b/docs/design/custom_op.md",
+            "https://github.com/vllm-project/vllm/blob/40824284bcb2f50047a48307ed39ce441bb15b0b/docs/contributing/deprecation_policy.md"
+          ]
+        },
+        "dependency-policy": {
+          "artifact_kind": "dependency-policy",
+          "catalog_profile": "vllm-kernel-integration-v1",
+          "extraction_status": "machine-proposed",
+          "probes": [
+            "clean-build",
+            "dependency-diff",
+            "cpu-import"
+          ],
+          "project": "vllm",
+          "requirements": [
+            "Declare dependencies in project manifests and capability-gate platform-specific imports and build requirements."
+          ],
+          "schema_version": "0.5",
+          "source_repository": "https://github.com/vllm-project/vllm",
+          "source_revision": "40824284bcb2f50047a48307ed39ce441bb15b0b",
+          "source_urls": [
+            "https://github.com/vllm-project/vllm/blob/40824284bcb2f50047a48307ed39ce441bb15b0b/docs/contributing/README.md",
+            "https://github.com/vllm-project/vllm/blob/40824284bcb2f50047a48307ed39ce441bb15b0b/docs/design/custom_op.md",
+            "https://github.com/vllm-project/vllm/blob/40824284bcb2f50047a48307ed39ce441bb15b0b/docs/contributing/deprecation_policy.md"
+          ]
+        },
+        "deployment-workload-portfolio": {
+          "artifact_kind": "deployment-workload-portfolio",
+          "catalog_profile": "vllm-kernel-integration-v1",
+          "extraction_status": "machine-proposed",
+          "probes": [
+            "prefill",
+            "decode",
+            "mixed-batch",
+            "tp-serving",
+            "cold-start"
+          ],
+          "project": "vllm",
+          "requirements": [
+            "Cover prefill, decode, mixed batching, concurrency, representative tensor parallelism, and separate cold-start behavior."
+          ],
+          "schema_version": "0.5",
+          "source_repository": "https://github.com/vllm-project/vllm",
+          "source_revision": "40824284bcb2f50047a48307ed39ce441bb15b0b",
+          "source_urls": [
+            "https://github.com/vllm-project/vllm/blob/40824284bcb2f50047a48307ed39ce441bb15b0b/docs/contributing/README.md",
+            "https://github.com/vllm-project/vllm/blob/40824284bcb2f50047a48307ed39ce441bb15b0b/docs/design/custom_op.md",
+            "https://github.com/vllm-project/vllm/blob/40824284bcb2f50047a48307ed39ce441bb15b0b/docs/contributing/deprecation_policy.md"
+          ]
+        },
+        "fallback-policy": {
+          "artifact_kind": "fallback-policy",
+          "catalog_profile": "vllm-kernel-integration-v1",
+          "extraction_status": "machine-proposed",
+          "probes": [
+            "custom-op-disabled",
+            "unsupported-shape",
+            "dispatch-trace"
+          ],
+          "project": "vllm",
+          "requirements": [
+            "Unsupported or disabled custom ops use the declared native fallback or fail explicitly without changing semantics."
+          ],
+          "schema_version": "0.5",
+          "source_repository": "https://github.com/vllm-project/vllm",
+          "source_revision": "40824284bcb2f50047a48307ed39ce441bb15b0b",
+          "source_urls": [
+            "https://github.com/vllm-project/vllm/blob/40824284bcb2f50047a48307ed39ce441bb15b0b/docs/contributing/README.md",
+            "https://github.com/vllm-project/vllm/blob/40824284bcb2f50047a48307ed39ce441bb15b0b/docs/design/custom_op.md",
+            "https://github.com/vllm-project/vllm/blob/40824284bcb2f50047a48307ed39ce441bb15b0b/docs/contributing/deprecation_policy.md"
+          ]
+        },
+        "lifecycle": {
+          "artifact_kind": "lifecycle",
+          "catalog_profile": "vllm-kernel-integration-v1",
+          "extraction_status": "machine-proposed",
+          "probes": [
+            "engine-init",
+            "warmup",
+            "cuda-graph-replay",
+            "shutdown"
+          ],
+          "project": "vllm",
+          "requirements": [
+            "Preserve eager, compiled, warmup, CUDA-graph capture/replay, native fallback, and shutdown behavior."
+          ],
+          "schema_version": "0.5",
+          "source_repository": "https://github.com/vllm-project/vllm",
+          "source_revision": "40824284bcb2f50047a48307ed39ce441bb15b0b",
+          "source_urls": [
+            "https://github.com/vllm-project/vllm/blob/40824284bcb2f50047a48307ed39ce441bb15b0b/docs/contributing/README.md",
+            "https://github.com/vllm-project/vllm/blob/40824284bcb2f50047a48307ed39ce441bb15b0b/docs/design/custom_op.md",
+            "https://github.com/vllm-project/vllm/blob/40824284bcb2f50047a48307ed39ce441bb15b0b/docs/contributing/deprecation_policy.md"
+          ]
+        },
+        "maintainability-probes": {
+          "artifact_kind": "maintainability-probes",
+          "catalog_profile": "vllm-kernel-integration-v1",
+          "extraction_status": "machine-proposed",
+          "probes": [
+            "diff-locality",
+            "rfc-threshold",
+            "docs-impact",
+            "human-review-record"
+          ],
+          "project": "vllm",
+          "requirements": [
+            "Keep diffs concise, require an RFC for major architecture changes, document user behavior, and retain human review of AI-assisted code."
+          ],
+          "schema_version": "0.5",
+          "source_repository": "https://github.com/vllm-project/vllm",
+          "source_revision": "40824284bcb2f50047a48307ed39ce441bb15b0b",
+          "source_urls": [
+            "https://github.com/vllm-project/vllm/blob/40824284bcb2f50047a48307ed39ce441bb15b0b/docs/contributing/README.md",
+            "https://github.com/vllm-project/vllm/blob/40824284bcb2f50047a48307ed39ce441bb15b0b/docs/design/custom_op.md",
+            "https://github.com/vllm-project/vllm/blob/40824284bcb2f50047a48307ed39ce441bb15b0b/docs/contributing/deprecation_policy.md"
+          ]
+        },
+        "performance-acceptance-targets": {
+          "artifact_kind": "performance-acceptance-targets",
+          "catalog_profile": "vllm-kernel-integration-v1",
+          "extraction_status": "machine-proposed",
+          "probes": [
+            "throughput",
+            "ttft",
+            "tpot",
+            "peak-memory"
+          ],
+          "project": "vllm",
+          "requirements": [
+            "Report throughput, TTFT, TPOT, memory, and regressions against a pinned local baseline with exact workload and hardware identity."
+          ],
+          "schema_version": "0.5",
+          "source_repository": "https://github.com/vllm-project/vllm",
+          "source_revision": "40824284bcb2f50047a48307ed39ce441bb15b0b",
+          "source_urls": [
+            "https://github.com/vllm-project/vllm/blob/40824284bcb2f50047a48307ed39ce441bb15b0b/docs/contributing/README.md",
+            "https://github.com/vllm-project/vllm/blob/40824284bcb2f50047a48307ed39ce441bb15b0b/docs/design/custom_op.md",
+            "https://github.com/vllm-project/vllm/blob/40824284bcb2f50047a48307ed39ce441bb15b0b/docs/contributing/deprecation_policy.md"
+          ]
+        }
+      },
+      "profile": {
+        "allowed_integration_points": [
+          "vllm/kernels",
+          "vllm/model_executor/layers",
+          "vllm/model_executor/hw_agnostic/custom_op.py",
+          "csrc",
+          "tests/kernels"
+        ],
+        "api_abi_contract": {
+          "id": "vllm-kernel-integration-v1:api-abi",
+          "path": "builtin://default-projects-v0.5-proposed.2/vllm/api-abi",
+          "sha256": "sha256:9f673127caec6c201a8b4f67cc8e0590bd091b149f2aada7b23064108253aae2"
+        },
+        "build_test_matrix": {
+          "id": "vllm-kernel-integration-v1:build-test-matrix",
+          "path": "builtin://default-projects-v0.5-proposed.2/vllm/build-test-matrix",
+          "sha256": "sha256:8bc35c8ab27cfc24e28e7848835c1daf372ac010c587e266971c4e8481629c1a"
+        },
+        "component_ownership": {
+          "engine-integration": [
+            "upstream-codeowner-review-required"
+          ],
+          "kernel-and-custom-op": [
+            "upstream-codeowner-review-required"
+          ]
+        },
+        "dependency_policy": {
+          "id": "vllm-kernel-integration-v1:dependency-policy",
+          "path": "builtin://default-projects-v0.5-proposed.2/vllm/dependency-policy",
+          "sha256": "sha256:9a2e342bff0798a48c0ba637ac93d8403df1b7d15cad69135d9ed506f200083b"
+        },
+        "deployment_workload_portfolio": {
+          "id": "vllm-kernel-integration-v1:deployment-workload-portfolio",
+          "path": "builtin://default-projects-v0.5-proposed.2/vllm/deployment-workload-portfolio",
+          "sha256": "sha256:e2b68b84d5a34603b39b28b6ebe153c0ef96039d687fc8b136f95c54422e961c"
+        },
+        "fallback_policy": {
+          "id": "vllm-kernel-integration-v1:fallback-policy",
+          "path": "builtin://default-projects-v0.5-proposed.2/vllm/fallback-policy",
+          "sha256": "sha256:deeaf5931e56631de652c4a9698674a9e97e0bbfdc8cc44f3cd1bfab6951b60e"
+        },
+        "id": "vllm-kernel-integration-v1",
+        "lifecycle_contract": {
+          "id": "vllm-kernel-integration-v1:lifecycle",
+          "path": "builtin://default-projects-v0.5-proposed.2/vllm/lifecycle",
+          "sha256": "sha256:e5f3e589ca83a431ec371cf45b580fb907cec707cd6d8dbb1934044cc5512ef1"
+        },
+        "maintainability_probes": {
+          "id": "vllm-kernel-integration-v1:maintainability-probes",
+          "path": "builtin://default-projects-v0.5-proposed.2/vllm/maintainability-probes",
+          "sha256": "sha256:91b1fb3d6aea6f0772d0c1a09291f13d041b2f1c0b14a65b4ab9b0fa553ecaf3"
+        },
+        "ownership": {
+          "last_reviewed_at": null,
+          "maintainers": [
+            "UNASSIGNED:infraswe-default-profile-maintainer"
+          ],
+          "review_required": 1,
+          "update_policy": "pull-request"
+        },
+        "performance_acceptance_targets": {
+          "id": "vllm-kernel-integration-v1:performance-acceptance-targets",
+          "path": "builtin://default-projects-v0.5-proposed.2/vllm/performance-acceptance-targets",
+          "sha256": "sha256:d04f35c0283271beddd7c527d28e911e61bd140cad757db84391a4e321f51256"
+        },
+        "project_objectives": {
+          "edge_ecosystem": {
+            "owner": "UNASSIGNED:profile-maintainer",
+            "policy": "roadmap",
+            "profiles": [
+              {
+                "id": "cuda-sm100",
+                "required_for_release": false,
+                "status": "planned",
+                "target_release": null
+              },
+              {
+                "id": "rocm",
+                "required_for_release": false,
+                "status": "planned",
+                "target_release": null
+              },
+              {
+                "id": "cpu",
+                "required_for_release": false,
+                "status": "planned",
+                "target_release": null
+              }
+            ]
+          }
+        },
+        "repository": "https://github.com/vllm-project/vllm",
+        "schema_version": "0.5",
+        "scoring_template_id": "project-fit-kernel-v0.5",
+        "status": "proposed",
+        "supported_revision_policy": "pinned:40824284bcb2f50047a48307ed39ce441bb15b0b; updates require a new human-reviewed profile version",
+        "triton_portability": {
+          "enabled": false,
+          "owner": null,
+          "profile_weights": {}
+        },
+        "version": "default-projects-v0.5-proposed.2"
+      },
+      "project": "vllm",
+      "source_revision": "40824284bcb2f50047a48307ed39ce441bb15b0b"
+    }
+  },
+  "schema_version": "0.5",
+  "source_capture_date": "2026-09-02",
+  "status": "proposed"
+}

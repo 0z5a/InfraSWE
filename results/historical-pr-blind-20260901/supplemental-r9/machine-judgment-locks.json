@@ -1,0 +1,371 @@
+{
+  "evidence_bindings": {
+    "cutlass-pr-3332": {
+      "artifact_sha256": "sha256:c3f50c6685056e6b0004f7fa19346979dc96b2ecec5d979b2eca64cc94879e39",
+      "evidence_sha256": "sha256:eb089d208c5aeabd8defd03d51d8cb90aa25665b762475f16c1dcb1d6d465f36",
+      "path": "probes/cutlass-pr-3332.json"
+    },
+    "flashinfer-pr-3950": {
+      "artifact_sha256": "sha256:0854b1b67a53cfa20c362f4fde6d30b77d564e47073195478efa564499dc8e7c",
+      "evidence_sha256": "sha256:ddfb3a8d487a63073d91107793e5e74d2236410879efc442540209c614430b65",
+      "path": "probes/flashinfer-pr-3950.json"
+    },
+    "sglang-pr-31346": {
+      "artifact_sha256": "sha256:cac77cda80994f6ec5e56859ad258e6bf321c16efa202aa2ea5bffbf0366683b",
+      "evidence_sha256": "sha256:e56eb3429dfe02132ddb151d12f656ed77207785cc9bfabba88ef981deefe334",
+      "path": "probes/sglang-pr-31346.json"
+    },
+    "sglang-pr-31349": {
+      "artifact_sha256": "sha256:471884b9f79f41734148e2db3cb06f14ad0597aa45252830430862f25dd27483",
+      "evidence_sha256": "sha256:8a40e22ccd6a66450c3527aa80bd9dbe6004efb9be5a3a07f5f171612276dae4",
+      "path": "probes/sglang-pr-31349.json"
+    },
+    "vllm-pr-48695": {
+      "artifact_sha256": "sha256:d2883ac4afddbcf8ce2f9d8ad59b695581b22420f10deea4ca8cd5d3767a73d6",
+      "evidence_sha256": "sha256:1e3c52c3f0b29bbd7d2bed6e56fb610f920917e0dbcddf537252a316e70faf82",
+      "path": "probes/vllm-pr-48695.json"
+    }
+  },
+  "forced_polarization_used": false,
+  "frozen_at": "2026-09-02T06:57:01.750884+00:00",
+  "learned_model_used": false,
+  "lock_set_sha256": "sha256:e151dde8b60dd137f82a78e88b77c0b72308c90a0865d060dcb48e753cbaad4f",
+  "locks": [
+    {
+      "lock_sha256": "sha256:7bf75dcc95e7a471b13870e2ef2fa02141c0524b1eb250101b44db273d0b6bb5",
+      "material": {
+        "candidate_sha256": "sha256:0d1d541fc54fcdc5686d5bfba6482533a2b6ccd1d8db65aee56893bce558ff35",
+        "case_id": "cutlass-pr-3332",
+        "decision": "accept_with_scope",
+        "evidence_sha256": "sha256:11c0e73d0aae229d93a2dde2e2230e9a87c15fc087f6de6621253c6c6b093ae1",
+        "frozen_at": "2026-09-02T06:57:01.750884Z",
+        "narrative": "[uint64-boundaries-lower-with-exact-two-complement-values: pass] The exact head helper maps 2^63, 2^63+12345, and UINT64_MAX to the corresponding signed two's-complement MLIR values; the base lacks the helper. [neighbor-and-type-controls-are-preserved: pass] Exact source execution preserves all frozen neighboring and type controls. [direct-test-covers-conversion-and-binary-paths: pass] The changed test covers both direct conversion and binary-operation paths. [full-cutedsl-compiler-runtime: unresolved] The exact helper contract passed; the complete CuTeDSL stack was not installed.",
+        "observations": [
+          {
+            "blocking": true,
+            "conclusion": "The exact head helper maps 2^63, 2^63+12345, and UINT64_MAX to the corresponding signed two's-complement MLIR values; the base lacks the helper.",
+            "counterevidence": [],
+            "evidence": [
+              "sha256:eb089d208c5aeabd8defd03d51d8cb90aa25665b762475f16c1dcb1d6d465f36",
+              "sha256:c3f50c6685056e6b0004f7fa19346979dc96b2ecec5d979b2eca64cc94879e39"
+            ],
+            "failure_code": null,
+            "question": "Do 2^63 through UINT64_MAX lower without float conversion or lost bits?",
+            "rule_id": "uint64-boundaries-lower-with-exact-two-complement-values",
+            "status": "pass"
+          },
+          {
+            "blocking": true,
+            "conclusion": "Exact source execution preserves all frozen neighboring and type controls.",
+            "counterevidence": [],
+            "evidence": [
+              "sha256:eb089d208c5aeabd8defd03d51d8cb90aa25665b762475f16c1dcb1d6d465f36",
+              "sha256:c3f50c6685056e6b0004f7fa19346979dc96b2ecec5d979b2eca64cc94879e39"
+            ],
+            "failure_code": null,
+            "question": "Are neighboring, signed, bool, and wider-integer controls unchanged?",
+            "rule_id": "neighbor-and-type-controls-are-preserved",
+            "status": "pass"
+          },
+          {
+            "blocking": true,
+            "conclusion": "The changed test covers both direct conversion and binary-operation paths.",
+            "counterevidence": [],
+            "evidence": [
+              "sha256:eb089d208c5aeabd8defd03d51d8cb90aa25665b762475f16c1dcb1d6d465f36",
+              "sha256:c3f50c6685056e6b0004f7fa19346979dc96b2ecec5d979b2eca64cc94879e39"
+            ],
+            "failure_code": null,
+            "question": "Does the changed regression cover target boundaries and binary operations?",
+            "rule_id": "direct-test-covers-conversion-and-binary-paths",
+            "status": "pass"
+          },
+          {
+            "blocking": false,
+            "conclusion": "The exact helper contract passed; the complete CuTeDSL stack was not installed.",
+            "counterevidence": [],
+            "evidence": [
+              "sha256:eb089d208c5aeabd8defd03d51d8cb90aa25665b762475f16c1dcb1d6d465f36",
+              "sha256:c3f50c6685056e6b0004f7fa19346979dc96b2ecec5d979b2eca64cc94879e39"
+            ],
+            "failure_code": "CUTLASS_FULL_CUTEDSL_ENVIRONMENT_UNAVAILABLE",
+            "question": "Does the complete CuTeDSL compiler retain the same boundary behavior?",
+            "rule_id": "full-cutedsl-compiler-runtime",
+            "status": "unresolved"
+          }
+        ],
+        "policy_id": "historical-explainable-agent-v0.5-r4",
+        "rationale_codes": [],
+        "schema_version": "0.5",
+        "test_plan_sha256": "sha256:24b697af8d9d98246e4658ef79f4dcd817ccc1ed2bea4dd1e40e41a21bbc7302"
+      }
+    },
+    {
+      "lock_sha256": "sha256:1197f4ef9374c967f3a8188ed50ec896b9b50f6296460414a7cdd96871342684",
+      "material": {
+        "candidate_sha256": "sha256:e9d546338e04cfa5e97bef89bd8db83257d8500528d49ef817049fb179b29111",
+        "case_id": "flashinfer-pr-3950",
+        "decision": "accept_with_scope",
+        "evidence_sha256": "sha256:97c63721a5afbd815361ea53b45bcf01fd6c748b58850b9f1d086147b134b459",
+        "frozen_at": "2026-09-02T06:57:01.750884Z",
+        "narrative": "[checkpoint-restore-repairs-inference-tensor-flag-path: pass] On torch 2.8.0+cu128, base reproduces the inference-tensor in-place failure; the exact head checkpoint_restore path completes and restores the flag vector. [restore-preserves-ordinary-repeat-and-mode-lifecycle: pass] Ordinary base/head restore passes, repeated restore is a no-op, and the probe leaves global inference mode restored. [changed-and-existing-tests-cover-protocol-and-public-lifecycle: pass] The changed unit regression directly exercises _initialize_protocol, while the exact independent probe executes checkpoint_restore end to end. [real-two-gpu-mnnvl-transport: unresolved] The A100 cell validated PyTorch state transitions but cannot attest MNNVL transport.",
+        "observations": [
+          {
+            "blocking": true,
+            "conclusion": "On torch 2.8.0+cu128, base reproduces the inference-tensor in-place failure; the exact head checkpoint_restore path completes and restores the flag vector.",
+            "counterevidence": [],
+            "evidence": [
+              "sha256:ddfb3a8d487a63073d91107793e5e74d2236410879efc442540209c614430b65",
+              "sha256:0854b1b67a53cfa20c362f4fde6d30b77d564e47073195478efa564499dc8e7c"
+            ],
+            "failure_code": null,
+            "question": "Does the real checkpoint_restore path repair the inference-mode failure?",
+            "rule_id": "checkpoint-restore-repairs-inference-tensor-flag-path",
+            "status": "pass"
+          },
+          {
+            "blocking": true,
+            "conclusion": "Ordinary base/head restore passes, repeated restore is a no-op, and the probe leaves global inference mode restored.",
+            "counterevidence": [],
+            "evidence": [
+              "sha256:ddfb3a8d487a63073d91107793e5e74d2236410879efc442540209c614430b65",
+              "sha256:0854b1b67a53cfa20c362f4fde6d30b77d564e47073195478efa564499dc8e7c"
+            ],
+            "failure_code": null,
+            "question": "Are ordinary tensors, repeated restore, and global inference state preserved?",
+            "rule_id": "restore-preserves-ordinary-repeat-and-mode-lifecycle",
+            "status": "pass"
+          },
+          {
+            "blocking": true,
+            "conclusion": "The changed unit regression directly exercises _initialize_protocol, while the exact independent probe executes checkpoint_restore end to end.",
+            "counterevidence": [
+              "The newly changed test does not itself invoke checkpoint_restore; that path is covered by the frozen independent probe and retained multi-GPU integration test."
+            ],
+            "evidence": [
+              "sha256:ddfb3a8d487a63073d91107793e5e74d2236410879efc442540209c614430b65",
+              "sha256:0854b1b67a53cfa20c362f4fde6d30b77d564e47073195478efa564499dc8e7c"
+            ],
+            "failure_code": null,
+            "question": "Is the repaired protocol state exercised through a retained public lifecycle?",
+            "rule_id": "changed-and-existing-tests-cover-protocol-and-public-lifecycle",
+            "status": "pass"
+          },
+          {
+            "blocking": false,
+            "conclusion": "The A100 cell validated PyTorch state transitions but cannot attest MNNVL transport.",
+            "counterevidence": [],
+            "evidence": [
+              "sha256:ddfb3a8d487a63073d91107793e5e74d2236410879efc442540209c614430b65",
+              "sha256:0854b1b67a53cfa20c362f4fde6d30b77d564e47073195478efa564499dc8e7c"
+            ],
+            "failure_code": "FLASHINFER_MNNVL_TRANSPORT_CELL_UNAVAILABLE",
+            "question": "Does real two-GPU MNNVL transport restore and communicate correctly?",
+            "rule_id": "real-two-gpu-mnnvl-transport",
+            "status": "unresolved"
+          }
+        ],
+        "policy_id": "historical-explainable-agent-v0.5-r4",
+        "rationale_codes": [],
+        "schema_version": "0.5",
+        "test_plan_sha256": "sha256:24b697af8d9d98246e4658ef79f4dcd817ccc1ed2bea4dd1e40e41a21bbc7302"
+      }
+    },
+    {
+      "lock_sha256": "sha256:5d2a753a38735d8d910893be51f7e1a4d3282d171ce6c61eca7a637026520874",
+      "material": {
+        "candidate_sha256": "sha256:51a4aa6cfb4f102159605597abf23dcdeb2a06337f0745fbe78e28b237883790",
+        "case_id": "sglang-pr-31346",
+        "decision": "accept_with_scope",
+        "evidence_sha256": "sha256:04ba2675ee289960a56687550e63f245fb0d1ed6c75b3693614250dda4cbdc52",
+        "frozen_at": "2026-09-02T06:57:01.750884Z",
+        "narrative": "[tilelang-dsa-fp8-truth-table-is-exact: pass] All 96 frozen backend/dtype/platform combinations match the oracle, with 7 precise rejections. [validation-is-wired-once-into-normal-resolution: pass] The exact validator has one call in the normal backend-resolution lifecycle. [direct-tests-cover-invalid-and-valid-neighbors: pass] Five direct changed tests cover invalid and valid neighboring configurations.",
+        "observations": [
+          {
+            "blocking": true,
+            "conclusion": "All 96 frozen backend/dtype/platform combinations match the oracle, with 7 precise rejections.",
+            "counterevidence": [],
+            "evidence": [
+              "sha256:e56eb3429dfe02132ddb151d12f656ed77207785cc9bfabba88ef981deefe334",
+              "sha256:cac77cda80994f6ec5e56859ad258e6bf321c16efa202aa2ea5bffbf0366683b"
+            ],
+            "failure_code": null,
+            "question": "Is exactly the unsupported CUDA + TileLang DSA + fp8_e4m3 set rejected?",
+            "rule_id": "tilelang-dsa-fp8-truth-table-is-exact",
+            "status": "pass"
+          },
+          {
+            "blocking": true,
+            "conclusion": "The exact validator has one call in the normal backend-resolution lifecycle.",
+            "counterevidence": [],
+            "evidence": [
+              "sha256:e56eb3429dfe02132ddb151d12f656ed77207785cc9bfabba88ef981deefe334",
+              "sha256:cac77cda80994f6ec5e56859ad258e6bf321c16efa202aa2ea5bffbf0366683b"
+            ],
+            "failure_code": null,
+            "question": "Does fail-fast validation run exactly once in normal resolution?",
+            "rule_id": "validation-is-wired-once-into-normal-resolution",
+            "status": "pass"
+          },
+          {
+            "blocking": true,
+            "conclusion": "Five direct changed tests cover invalid and valid neighboring configurations.",
+            "counterevidence": [],
+            "evidence": [
+              "sha256:e56eb3429dfe02132ddb151d12f656ed77207785cc9bfabba88ef981deefe334",
+              "sha256:cac77cda80994f6ec5e56859ad258e6bf321c16efa202aa2ea5bffbf0366683b"
+            ],
+            "failure_code": null,
+            "question": "Do changed tests cover the rejection and supported neighbors?",
+            "rule_id": "direct-tests-cover-invalid-and-valid-neighbors",
+            "status": "pass"
+          }
+        ],
+        "policy_id": "historical-explainable-agent-v0.5-r4",
+        "rationale_codes": [],
+        "schema_version": "0.5",
+        "test_plan_sha256": "sha256:24b697af8d9d98246e4658ef79f4dcd817ccc1ed2bea4dd1e40e41a21bbc7302"
+      }
+    },
+    {
+      "lock_sha256": "sha256:3ca76a6138a56c8d936d541d11cfe198b46cfa500950935d63ae889c7736eb1f",
+      "material": {
+        "candidate_sha256": "sha256:4a399dda6e53d3ffd0517b9b4ade56f76dcdcfe8d2d9406eb7017965595cac39",
+        "case_id": "sglang-pr-31349",
+        "decision": "accept_with_scope",
+        "evidence_sha256": "sha256:c4b27c720108e653b9851d392ef3f75865e876ad1c438e949ba36601d6d615b4",
+        "frozen_at": "2026-09-02T06:57:01.750884Z",
+        "narrative": "[decode-launch-plan-is-deterministic-bounded-and-pure: pass] All 112 frozen matrices pass twice, the bound is exact, invalid controls fail, and the input plan is not mutated. [narrowing-is-confined-to-intended-cuda-graph-path: pass] The integration guard retains split-KV, CUDA-graph, tensor-core, and FA2 conditions. [direct-tests-cover-plan-boundaries: pass] The changed file contains 10 direct test methods, and all seven invalid controls are rejected. [actual-cuda-graph-replay: unresolved] The exact planning contract passed; this run did not execute CUDA graph replay.",
+        "observations": [
+          {
+            "blocking": true,
+            "conclusion": "All 112 frozen matrices pass twice, the bound is exact, invalid controls fail, and the input plan is not mutated.",
+            "counterevidence": [],
+            "evidence": [
+              "sha256:8a40e22ccd6a66450c3527aa80bd9dbe6004efb9be5a3a07f5f171612276dae4",
+              "sha256:471884b9f79f41734148e2db3cb06f14ad0597aa45252830430862f25dd27483"
+            ],
+            "failure_code": null,
+            "question": "Is the decode launch set deterministic, bounded, and input-preserving?",
+            "rule_id": "decode-launch-plan-is-deterministic-bounded-and-pure",
+            "status": "pass"
+          },
+          {
+            "blocking": true,
+            "conclusion": "The integration guard retains split-KV, CUDA-graph, tensor-core, and FA2 conditions.",
+            "counterevidence": [],
+            "evidence": [
+              "sha256:8a40e22ccd6a66450c3527aa80bd9dbe6004efb9be5a3a07f5f171612276dae4",
+              "sha256:471884b9f79f41734148e2db3cb06f14ad0597aa45252830430862f25dd27483"
+            ],
+            "failure_code": null,
+            "question": "Is narrowing guarded by the intended graph/backend conditions?",
+            "rule_id": "narrowing-is-confined-to-intended-cuda-graph-path",
+            "status": "pass"
+          },
+          {
+            "blocking": true,
+            "conclusion": "The changed file contains 10 direct test methods, and all seven invalid controls are rejected.",
+            "counterevidence": [],
+            "evidence": [
+              "sha256:8a40e22ccd6a66450c3527aa80bd9dbe6004efb9be5a3a07f5f171612276dae4",
+              "sha256:471884b9f79f41734148e2db3cb06f14ad0597aa45252830430862f25dd27483"
+            ],
+            "failure_code": null,
+            "question": "Do changed tests cover neighboring plan boundaries and invalid controls?",
+            "rule_id": "direct-tests-cover-plan-boundaries",
+            "status": "pass"
+          },
+          {
+            "blocking": false,
+            "conclusion": "The exact planning contract passed; this run did not execute CUDA graph replay.",
+            "counterevidence": [],
+            "evidence": [
+              "sha256:8a40e22ccd6a66450c3527aa80bd9dbe6004efb9be5a3a07f5f171612276dae4",
+              "sha256:471884b9f79f41734148e2db3cb06f14ad0597aa45252830430862f25dd27483"
+            ],
+            "failure_code": "SGLANG_FLASHINFER_CUDA_GRAPH_RUNTIME_UNAVAILABLE",
+            "question": "Does a real CUDA graph replay retain correctness and launch bounds?",
+            "rule_id": "actual-cuda-graph-replay",
+            "status": "unresolved"
+          }
+        ],
+        "policy_id": "historical-explainable-agent-v0.5-r4",
+        "rationale_codes": [],
+        "schema_version": "0.5",
+        "test_plan_sha256": "sha256:24b697af8d9d98246e4658ef79f4dcd817ccc1ed2bea4dd1e40e41a21bbc7302"
+      }
+    },
+    {
+      "lock_sha256": "sha256:bb7d074eb56ac970b03f974f718126768ff69560d873bf1b20c0abbb04b2df8c",
+      "material": {
+        "candidate_sha256": "sha256:9b3e7294ac180ba8f2c3a4caa5c89a49bdc0f3561a260e9fee8aa52c583d0e69",
+        "case_id": "vllm-pr-48695",
+        "decision": "revise",
+        "evidence_sha256": "sha256:fcfe953e3d3861ade987b981a7af93b8d68a45f60222778bfc58dd6c34a9ecb8",
+        "frozen_at": "2026-09-02T06:57:01.750884Z",
+        "narrative": "[capability-probe-handles-toolchain-failure-matrix: pass] The exact ten-scenario matrix passes; nvcc calls use check and timeout, and the quantization scheme consults the gate at both required sites. [artifact-proof-is-fp4-kernel-specific: fail] The head accepts generic FlashInfer cubin or JIT-cache presence as sufficient; neither proves that the required FP4 MoE kernel is available. [direct-tests-cover-present-missing-and-partial-capabilities: fail] The changed tests omit the base-capability-missing, JIT-cache, malformed nvcc, tool error, and timeout branches.",
+        "observations": [
+          {
+            "blocking": true,
+            "conclusion": "The exact ten-scenario matrix passes; nvcc calls use check and timeout, and the quantization scheme consults the gate at both required sites.",
+            "counterevidence": [],
+            "evidence": [
+              "sha256:1e3c52c3f0b29bbd7d2bed6e56fb610f920917e0dbcddf537252a316e70faf82",
+              "sha256:d2883ac4afddbcf8ce2f9d8ad59b695581b22420f10deea4ca8cd5d3767a73d6"
+            ],
+            "failure_code": null,
+            "question": "Does probing fail closed across absent, old, malformed, error, and timeout states?",
+            "rule_id": "capability-probe-handles-toolchain-failure-matrix",
+            "status": "pass"
+          },
+          {
+            "blocking": true,
+            "conclusion": "The head accepts generic FlashInfer cubin or JIT-cache presence as sufficient; neither proves that the required FP4 MoE kernel is available.",
+            "counterevidence": [
+              "Absent, old, malformed, error, and timeout nvcc paths fail closed correctly."
+            ],
+            "evidence": [
+              "sha256:1e3c52c3f0b29bbd7d2bed6e56fb610f920917e0dbcddf537252a316e70faf82",
+              "sha256:d2883ac4afddbcf8ce2f9d8ad59b695581b22420f10deea4ca8cd5d3767a73d6"
+            ],
+            "failure_code": "VLLM_FP4_KERNEL_SPECIFIC_ATTESTATION_MISSING",
+            "question": "Does an artifact hit prove the required FP4 kernel specifically?",
+            "rule_id": "artifact-proof-is-fp4-kernel-specific",
+            "status": "fail"
+          },
+          {
+            "blocking": true,
+            "conclusion": "The changed tests omit the base-capability-missing, JIT-cache, malformed nvcc, tool error, and timeout branches.",
+            "counterevidence": [],
+            "evidence": [
+              "sha256:1e3c52c3f0b29bbd7d2bed6e56fb610f920917e0dbcddf537252a316e70faf82",
+              "sha256:d2883ac4afddbcf8ce2f9d8ad59b695581b22420f10deea4ca8cd5d3767a73d6"
+            ],
+            "failure_code": "VLLM_FP4_CAPABILITY_BRANCH_TEST_MATRIX_INCOMPLETE",
+            "question": "Do direct tests cover present, missing, and partial installation states?",
+            "rule_id": "direct-tests-cover-present-missing-and-partial-capabilities",
+            "status": "fail"
+          }
+        ],
+        "policy_id": "historical-explainable-agent-v0.5-r4",
+        "rationale_codes": [
+          "VLLM_FP4_CAPABILITY_BRANCH_TEST_MATRIX_INCOMPLETE",
+          "VLLM_FP4_KERNEL_SPECIFIC_ATTESTATION_MISSING"
+        ],
+        "schema_version": "0.5",
+        "test_plan_sha256": "sha256:24b697af8d9d98246e4658ef79f4dcd817ccc1ed2bea4dd1e40e41a21bbc7302"
+      }
+    }
+  ],
+  "merge_outcomes_visible_during_machine_judgment": false,
+  "protocol_id": "historical-pr-blind-case-contract-v0.5.5-r9-5",
+  "review_text_visible_during_machine_judgment": false,
+  "schema_version": "0.5.5",
+  "selection_lock_file_sha256": "sha256:c75c205f016dd03a446dc6ddd546fac6b3dc531e79ec4b438a4787e377c1f62c",
+  "selection_lock_sha256": "sha256:e3e4ce43bba9f8e8552a82c670e81b3a20f2c4af7f9c855960da61297cb982eb",
+  "test_plan_file_sha256": "sha256:0e95ebe34f1f9a841ad155530c8a75e6e162af9763a218cfbf669b3973fffb23",
+  "test_plan_sha256": "sha256:24b697af8d9d98246e4658ef79f4dcd817ccc1ed2bea4dd1e40e41a21bbc7302",
+  "trained_weights_used": false,
+  "weighted_score_used": false
+}

@@ -1,0 +1,51 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "evidence_refs": {
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1,
+      "title": "Evidence Refs",
+      "type": "array"
+    },
+    "failure_codes": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Failure Codes",
+      "type": "array"
+    },
+    "phase": {
+      "enum": [
+        "pre-run",
+        "during-run",
+        "post-run"
+      ],
+      "title": "Phase",
+      "type": "string"
+    },
+    "result_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Result Sha256",
+      "type": "string"
+    },
+    "status": {
+      "enum": [
+        "PASS",
+        "INFRA_INVALID",
+        "BENCHMARK_DEFECT"
+      ],
+      "title": "Status",
+      "type": "string"
+    }
+  },
+  "required": [
+    "phase",
+    "status",
+    "evidence_refs",
+    "result_sha256"
+  ],
+  "title": "EnvironmentSentinelResult",
+  "type": "object"
+}

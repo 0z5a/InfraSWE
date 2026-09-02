@@ -1,0 +1,141 @@
+{
+  "case_id": "vllm-pr-11531",
+  "correctness": [
+    {
+      "bytes_per_page": 256,
+      "differing_elements": 0,
+      "dtype": "torch.float16",
+      "elements_per_page": 128,
+      "matches_oracle": true,
+      "source_device": "cuda",
+      "target_device": "cuda"
+    },
+    {
+      "bytes_per_page": 6,
+      "differing_elements": 8,
+      "dtype": "torch.float16",
+      "elements_per_page": 3,
+      "matches_oracle": false,
+      "source_device": "cuda",
+      "target_device": "cuda"
+    },
+    {
+      "bytes_per_page": 7,
+      "differing_elements": 20,
+      "dtype": "torch.uint8",
+      "elements_per_page": 7,
+      "matches_oracle": false,
+      "source_device": "cuda",
+      "target_device": "cuda"
+    },
+    {
+      "bytes_per_page": 512,
+      "differing_elements": 0,
+      "dtype": "torch.float32",
+      "elements_per_page": 128,
+      "matches_oracle": true,
+      "source_device": "cpu",
+      "target_device": "cuda"
+    },
+    {
+      "bytes_per_page": 512,
+      "differing_elements": 0,
+      "dtype": "torch.float32",
+      "elements_per_page": 128,
+      "matches_oracle": true,
+      "source_device": "cuda",
+      "target_device": "cpu"
+    }
+  ],
+  "created_at": "2026-09-01T16:43:52.597471+00:00",
+  "duration_seconds": 0.8746737360488623,
+  "environment": {
+    "compute_capability": [
+      8,
+      0
+    ],
+    "cuda_runtime": "12.4",
+    "device": "NVIDIA A100-SXM4-40GB",
+    "torch_version": "2.5.1+cu124"
+  },
+  "evidence_sha256": "sha256:41269860b72d3a3038b207add2e8a0a41f6e2a899db0cdc2b98fea09f12fe659",
+  "failure_codes": [
+    "PAGE_COPY_DROPS_NON_INT64_TAIL_BYTES",
+    "ASYNC_PINNED_MAPPING_BUFFER_LIFETIME_RACE",
+    "ZERO_BLOCK_KERNEL_LAUNCH_UNGUARDED"
+  ],
+  "mapping_lifetime": {
+    "delay_cycles": 200000000,
+    "fast_matches_intended_mapping": false,
+    "fast_matches_overwritten_mapping": true,
+    "reused_mapping_race_reproduced": true,
+    "slow_matches_intended_mapping": true
+  },
+  "performance": [
+    {
+      "bytes_per_page": 16384,
+      "fast_median_us": 25.599999353289604,
+      "fast_p95_us": 27.648000046610832,
+      "iterations": 100,
+      "mapping_count": 1,
+      "slow_median_us": 23.552000522613525,
+      "slow_p95_us": 24.57600086927414,
+      "speedup": 0.9200000436557468
+    },
+    {
+      "bytes_per_page": 16384,
+      "fast_median_us": 25.599999353289604,
+      "fast_p95_us": 27.648000046610832,
+      "iterations": 100,
+      "mapping_count": 8,
+      "slow_median_us": 55.296000093221664,
+      "slow_p95_us": 56.32000043988228,
+      "speedup": 2.1600000582076624
+    },
+    {
+      "bytes_per_page": 16384,
+      "fast_median_us": 25.599999353289604,
+      "fast_p95_us": 26.623999699950218,
+      "iterations": 100,
+      "mapping_count": 64,
+      "slow_median_us": 282.6240062713623,
+      "slow_p95_us": 291.83998703956604,
+      "speedup": 11.040000523868962
+    },
+    {
+      "bytes_per_page": 16384,
+      "fast_median_us": 25.599999353289604,
+      "fast_p95_us": 26.623999699950218,
+      "iterations": 100,
+      "mapping_count": 256,
+      "slow_median_us": 1058.8159561157227,
+      "slow_p95_us": 1087.488055229187,
+      "speedup": 41.359999330611885
+    }
+  ],
+  "phases": {
+    "cold_start": {
+      "extension_load": null,
+      "first_launch_seconds": 0.25246278499253094
+    },
+    "precompile": {
+      "build_directory": "/workspace/.cache/torch_extensions/infraswe_vllm_swap_pr11531_sm80_v1",
+      "cache_hit_before": true,
+      "seconds": 0.06833679392002523
+    },
+    "steady_state": {
+      "compile_seconds": 0.0,
+      "timed_iterations_per_case": 100
+    }
+  },
+  "probe": "vllm-swap-blocks-pr11531-v1",
+  "schema_version": "0.5",
+  "source_identity": {
+    "embedded_probe_cuda_sha256": "sha256:c823126bc3dfbe86f35f706b258bc46f3d183cf4608e60cc3bf5e0e49c83577a",
+    "head_cache_kernels_sha256": "sha256:7c4cb5e8df35e9bade1af6a9c8d87b0cb6b7fd188270989ff9fc7020fe71df6a"
+  },
+  "static_contracts": {
+    "empty_mapping_guard_present": false
+  },
+  "status": "fail"
+}

@@ -1,0 +1,20 @@
+{
+  "schema_version": "0.5",
+  "protocol_id": "historical-pr-blind-cross-project-v0.5-r6",
+  "incidents": [
+    {
+      "incident_id": "r6-base-ref-path-parity-20260902",
+      "observed_at": "2026-09-02T10:21:31+08:00",
+      "stage": "checkout-preflight",
+      "review_text_visible": false,
+      "source_diff_content_visible": false,
+      "symptom": "The GitHub baseRefOid-to-head diff contained paths outside the frozen GraphQL files list for DeepGEMM #55 and TorchTitan #2717.",
+      "impact": "The original base pair would have mixed unrelated base-branch changes into machine evidence.",
+      "correction": "Use the first PR commit's first parent only for the two cases where it exactly reproduces the frozen changed-path set; keep baseRefOid for the other four cases.",
+      "archived_selection_lock": "selection-lock-v1.json",
+      "archived_selection_lock_sha256": "sha256:1702e56243e082b5471607ba3dec364e84fb28e8c297fbceac914735c2bef3ee",
+      "archived_test_plan": "test-plan-v1.json",
+      "archived_test_plan_sha256": "sha256:cab4d8356c11d762aec5e9b24a6b8fc7e200356387164b54cdc03809e8e53f23"
+    }
+  ]
+}

@@ -1,0 +1,121 @@
+{
+  "generated_at": "2026-09-01T04:02:08.417327Z",
+  "hardware": {
+    "compute_capability": "9.0",
+    "cudnn_version": 91002,
+    "gpu_name": "NVIDIA H200 NVL",
+    "nvidia_smi": {
+      "clocks.mem": "3201",
+      "clocks.sm": "345",
+      "driver_version": "580.159.03",
+      "memory.total": "143771",
+      "memory.used": "5",
+      "name": "NVIDIA H200 NVL",
+      "pci.bus_id": "00000000:A8:00.0",
+      "power.draw": "70.58",
+      "power.limit": "500.00",
+      "pstate": "P0",
+      "temperature.gpu": "30",
+      "utilization.gpu": "0",
+      "uuid": "GPU-e756ae4d-6847-0c30-f1ca-4bf9ee20366e"
+    },
+    "platform": "Linux-6.8.0-124-generic-x86_64-with-glibc2.39",
+    "python": "3.12.14",
+    "sm_count": 132,
+    "torch_cuda": "12.8",
+    "torch_version": "2.8.0+cu128",
+    "total_memory_bytes": 150109880320
+  },
+  "multimem": {
+    "driver_fabric_handle_supported": {
+      "attribute_id": 128,
+      "returncode": 0,
+      "value": 1
+    },
+    "driver_multicast_supported": {
+      "attribute_id": 132,
+      "returncode": 0,
+      "value": 0
+    },
+    "execution_attempted": false,
+    "execution_reason": "CU_DEVICE_ATTRIBUTE_MULTICAST_SUPPORTED is 0; launching multimem.* against an ordinary pointer would be undefined behavior",
+    "instruction_gate_passed": true,
+    "sass_instruction_lines": [
+      "/*0020*/                   LDGMC.E.ADD.32.STRONG.SYS R5, [RZ.U32+UR4] ;  /* 0x00000000ff0579a4 */"
+    ],
+    "status": "topology_unavailable",
+    "toolchain_compile_passed": true,
+    "topology_stdout": "\t\u001b[4mGPU0\tCPU Affinity\tNUMA Affinity\tGPU NUMA ID\u001b[0m\nGPU0\t X \t64-95,192-223\t2\t\tN/A\n\nLegend:\n\n  X    = Self\n  SYS  = Connection traversing PCIe as well as the SMP interconnect between NUMA nodes (e.g., QPI/UPI)\n  NODE = Connection traversing PCIe as well as the interconnect between PCIe Host Bridges within a NUMA node\n  PHB  = Connection traversing PCIe as well as a PCIe Host Bridge (typically the CPU)\n  PXB  = Connection traversing multiple PCIe bridges (without traversing the PCIe Host Bridge)\n  PIX  = Connection traversing at most a single PCIe bridge\n  NV#  = Connection traversing a bonded set of # NVLinks\n",
+    "visible_cuda_device_count": 1
+  },
+  "raw_replays": [
+    "features/replay-1.json",
+    "features/replay-2.json",
+    "features/replay-3.json"
+  ],
+  "replay_count": 3,
+  "schema_version": "0.3",
+  "suite_id": "h200-sm90-feature-supplement-v1",
+  "tma": {
+    "candidate_latency_us": 27.851300956928625,
+    "candidate_latency_us_per_replay": [
+      28.580416890278315,
+      27.851300956928625,
+      27.833612565208384
+    ],
+    "candidate_over_reference": 1.428188366479435,
+    "correctness_passed": true,
+    "driver_tensor_map_access_supported": {
+      "attribute_id": 127,
+      "returncode": 0,
+      "value": 1
+    },
+    "instruction_gate_passed": true,
+    "profiler_captured": true,
+    "ptx_instruction_lines": [
+      "@%p2 tensormap.replace.tile.global_address.shared::cta.b1024.b64 [ %rd1 + 0 ], %rd2;",
+      "@%p2 tensormap.replace.tile.rank.shared::cta.b1024.b32 [ %rd1 + 0 ], 0x1;",
+      "@%p2 tensormap.replace.tile.box_dim.shared::cta.b1024.b32 [ %rd1 + 0 ], 0x0, %r3;",
+      "@%p2 tensormap.replace.tile.box_dim.shared::cta.b1024.b32 [ %rd1 + 0 ], 0x1, %r4;",
+      "@%p2 tensormap.replace.tile.global_dim.shared::cta.b1024.b32 [ %rd1 + 0 ], 0x0, %r5;",
+      "@%p2 tensormap.replace.tile.global_dim.shared::cta.b1024.b32 [ %rd1 + 0 ], 0x1, %r6;",
+      "@%p2 tensormap.replace.tile.global_stride.shared::cta.b1024.b64 [ %rd1 + 0 ], 0x0, %rd27;",
+      "@%p2 tensormap.replace.tile.element_stride.shared::cta.b1024.b32 [ %rd1 + 0 ], 0x0, %r7;",
+      "@%p2 tensormap.replace.tile.element_stride.shared::cta.b1024.b32 [ %rd1 + 0 ], 0x1, %r7;",
+      "@%p2 tensormap.replace.tile.elemtype.shared::cta.b1024.b32 [ %rd1 + 0 ], 0xa;",
+      "@%p2 tensormap.replace.tile.interleave_layout.shared::cta.b1024.b32 [ %rd1 + 0 ], 0x0;",
+      "@%p2 tensormap.replace.tile.swizzle_mode.shared::cta.b1024.b32 [ %rd1 + 0 ], 0x3;",
+      "@%p2 tensormap.replace.tile.fill_mode.shared::cta.b1024.b32 [ %rd1 + 0 ], 0x0;",
+      "@%p1 tensormap.cp_fenceproxy.global.shared::cta.tensormap::generic.release.gpu.sync.aligned [ %rd16 + 0 ], [ %rd1 + 0 ], 0x80;",
+      "@%p1 fence.proxy.tensormap::generic.acquire.gpu [ %rd16 + 0 ], 0x80;",
+      "@%p2 tensormap.replace.tile.global_address.shared::cta.b1024.b64 [ %rd1 + 0 ], %rd20;",
+      "@%p2 tensormap.replace.tile.rank.shared::cta.b1024.b32 [ %rd1 + 0 ], 0x1;",
+      "@%p2 tensormap.replace.tile.box_dim.shared::cta.b1024.b32 [ %rd1 + 0 ], 0x0, %r3;",
+      "@%p2 tensormap.replace.tile.box_dim.shared::cta.b1024.b32 [ %rd1 + 0 ], 0x1, %r4;",
+      "@%p2 tensormap.replace.tile.global_dim.shared::cta.b1024.b32 [ %rd1 + 0 ], 0x0, %r5;",
+      "@%p2 tensormap.replace.tile.global_dim.shared::cta.b1024.b32 [ %rd1 + 0 ], 0x1, %r6;",
+      "@%p2 tensormap.replace.tile.global_stride.shared::cta.b1024.b64 [ %rd1 + 0 ], 0x0, %rd27;",
+      "@%p2 tensormap.replace.tile.element_stride.shared::cta.b1024.b32 [ %rd1 + 0 ], 0x0, %r7;",
+      "@%p2 tensormap.replace.tile.element_stride.shared::cta.b1024.b32 [ %rd1 + 0 ], 0x1, %r7;",
+      "@%p2 tensormap.replace.tile.elemtype.shared::cta.b1024.b32 [ %rd1 + 0 ], 0xa;",
+      "@%p2 tensormap.replace.tile.interleave_layout.shared::cta.b1024.b32 [ %rd1 + 0 ], 0x0;",
+      "@%p2 tensormap.replace.tile.swizzle_mode.shared::cta.b1024.b32 [ %rd1 + 0 ], 0x3;",
+      "@%p2 tensormap.replace.tile.fill_mode.shared::cta.b1024.b32 [ %rd1 + 0 ], 0x0;",
+      "@%p1 tensormap.cp_fenceproxy.global.shared::cta.tensormap::generic.release.gpu.sync.aligned [ %rd34 + 0 ], [ %rd1 + 0 ], 0x80;",
+      "@%p1 fence.proxy.tensormap::generic.acquire.gpu [ %rd34 + 0 ], 0x80;",
+      "@%p35 cp.async.bulk.tensor.2d.shared::cluster.global.mbarrier::complete_tx::bytes [%r19], [%rd37, {%r20, %r21}], [%r17];",
+      "@%p37 cp.async.bulk.tensor.2d.global.shared::cta.bulk_group [%rd38, {%r20, %r21}], [%r19];"
+    ],
+    "reference_latency_us": 19.501139773028438,
+    "reference_latency_us_per_replay": [
+      19.78118083578475,
+      19.501139773028438,
+      19.48507332507475
+    ],
+    "sass_instruction_lines": [
+      "/*1070*/                   @UP0 UTMALDG.2D [UR12], [UR4] ;                        /* 0x0000000c040005b4 */",
+      "/*1fc0*/                   @UP1 UTMASTG.2D [UR16], [UR6] ;                        /* 0x00000010060013b5 */"
+    ],
+    "status": "passed"
+  }
+}

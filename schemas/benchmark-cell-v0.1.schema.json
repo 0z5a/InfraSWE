@@ -1,0 +1,80 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "benchmark": {
+      "additionalProperties": true,
+      "title": "Benchmark",
+      "type": "object"
+    },
+    "cell_id": {
+      "title": "Cell Id",
+      "type": "string"
+    },
+    "cell_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Cell Sha256",
+      "type": "string"
+    },
+    "comparison_cell_digest": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Comparison Cell Digest",
+      "type": "string"
+    },
+    "execution": {
+      "additionalProperties": true,
+      "title": "Execution",
+      "type": "object"
+    },
+    "full_environment_digest": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Full Environment Digest",
+      "type": "string"
+    },
+    "hardware": {
+      "additionalProperties": true,
+      "title": "Hardware",
+      "type": "object"
+    },
+    "policy_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Policy Sha256",
+      "type": "string"
+    },
+    "runner": {
+      "additionalProperties": true,
+      "title": "Runner",
+      "type": "object"
+    },
+    "schema_version": {
+      "const": "0.1",
+      "default": "0.1",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "software": {
+      "additionalProperties": true,
+      "title": "Software",
+      "type": "object"
+    },
+    "task": {
+      "additionalProperties": true,
+      "title": "Task",
+      "type": "object"
+    }
+  },
+  "required": [
+    "cell_id",
+    "policy_sha256",
+    "task",
+    "runner",
+    "hardware",
+    "software",
+    "execution",
+    "benchmark",
+    "full_environment_digest",
+    "comparison_cell_digest",
+    "cell_sha256"
+  ],
+  "title": "BenchmarkCellManifest",
+  "type": "object"
+}

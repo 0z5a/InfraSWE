@@ -1,0 +1,146 @@
+{
+  "additionalProperties": false,
+  "description": "Outcome-free PR metadata that is safe to expose to the evaluator.",
+  "properties": {
+    "acquisition_query": {
+      "title": "Acquisition Query",
+      "type": "string"
+    },
+    "additions": {
+      "minimum": 0,
+      "title": "Additions",
+      "type": "integer"
+    },
+    "base_derivation": {
+      "enum": [
+        "base-ref-oid-path-parity",
+        "first-pr-commit-first-parent-path-parity"
+      ],
+      "title": "Base Derivation",
+      "type": "string"
+    },
+    "base_ref": {
+      "title": "Base Ref",
+      "type": "string"
+    },
+    "base_sha": {
+      "pattern": "^[0-9a-f]{40}$",
+      "title": "Base Sha",
+      "type": "string"
+    },
+    "base_tip_sha": {
+      "pattern": "^[0-9a-f]{40}$",
+      "title": "Base Tip Sha",
+      "type": "string"
+    },
+    "case_id": {
+      "pattern": "^[a-z0-9][a-z0-9-]{2,99}$",
+      "title": "Case Id",
+      "type": "string"
+    },
+    "changed_files": {
+      "minimum": 1,
+      "title": "Changed Files",
+      "type": "integer"
+    },
+    "created_at": {
+      "format": "date-time",
+      "title": "Created At",
+      "type": "string"
+    },
+    "deletions": {
+      "minimum": 0,
+      "title": "Deletions",
+      "type": "integer"
+    },
+    "head_sha": {
+      "pattern": "^[0-9a-f]{40}$",
+      "title": "Head Sha",
+      "type": "string"
+    },
+    "outcome_fields_requested": {
+      "const": false,
+      "default": false,
+      "title": "Outcome Fields Requested",
+      "type": "boolean"
+    },
+    "paths": {
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1,
+      "title": "Paths",
+      "type": "array"
+    },
+    "pr_commit_shas": {
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1,
+      "title": "Pr Commit Shas",
+      "type": "array"
+    },
+    "project": {
+      "enum": [
+        "vllm",
+        "sglang",
+        "flash-attention",
+        "flashinfer",
+        "cutlass-cute",
+        "liger-kernel",
+        "deepgemm",
+        "megatron-core",
+        "torchtitan",
+        "verl"
+      ],
+      "title": "Project",
+      "type": "string"
+    },
+    "pull_number": {
+      "minimum": 1,
+      "title": "Pull Number",
+      "type": "integer"
+    },
+    "repository": {
+      "pattern": "^[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+$",
+      "title": "Repository",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "0.5",
+      "default": "0.5",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "selection_policy_id": {
+      "title": "Selection Policy Id",
+      "type": "string"
+    },
+    "title": {
+      "title": "Title",
+      "type": "string"
+    }
+  },
+  "required": [
+    "case_id",
+    "project",
+    "repository",
+    "pull_number",
+    "title",
+    "created_at",
+    "base_ref",
+    "base_tip_sha",
+    "base_sha",
+    "base_derivation",
+    "head_sha",
+    "pr_commit_shas",
+    "changed_files",
+    "additions",
+    "deletions",
+    "paths",
+    "acquisition_query",
+    "selection_policy_id"
+  ],
+  "title": "HistoricalPRCandidate",
+  "type": "object"
+}

@@ -1,0 +1,551 @@
+{
+  "$defs": {
+    "DefaultDraftCatalogEntry": {
+      "additionalProperties": false,
+      "properties": {
+        "aliases": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Aliases",
+          "type": "array"
+        },
+        "artifacts": {
+          "additionalProperties": {
+            "$ref": "#/$defs/DefaultProjectContractArtifact"
+          },
+          "propertyNames": {
+            "enum": [
+              "api-abi",
+              "lifecycle",
+              "build-test-matrix",
+              "dependency-policy",
+              "fallback-policy",
+              "deployment-workload-portfolio",
+              "performance-acceptance-targets",
+              "maintainability-probes"
+            ]
+          },
+          "title": "Artifacts",
+          "type": "object"
+        },
+        "profile": {
+          "$ref": "#/$defs/TargetProjectProfile"
+        },
+        "project": {
+          "enum": [
+            "vllm",
+            "sglang",
+            "flash-attention",
+            "flashinfer",
+            "cutlass-cute",
+            "liger-kernel",
+            "deepgemm",
+            "megatron-core",
+            "torchtitan",
+            "verl"
+          ],
+          "title": "Project",
+          "type": "string"
+        },
+        "source_revision": {
+          "pattern": "^[0-9a-f]{40,64}$",
+          "title": "Source Revision",
+          "type": "string"
+        }
+      },
+      "required": [
+        "project",
+        "aliases",
+        "source_revision",
+        "profile",
+        "artifacts"
+      ],
+      "title": "DefaultDraftCatalogEntry",
+      "type": "object"
+    },
+    "DefaultProjectContractArtifact": {
+      "additionalProperties": false,
+      "description": "A pinned, machine-proposed extraction from an upstream project snapshot.",
+      "properties": {
+        "artifact_kind": {
+          "enum": [
+            "api-abi",
+            "lifecycle",
+            "build-test-matrix",
+            "dependency-policy",
+            "fallback-policy",
+            "deployment-workload-portfolio",
+            "performance-acceptance-targets",
+            "maintainability-probes"
+          ],
+          "title": "Artifact Kind",
+          "type": "string"
+        },
+        "catalog_profile": {
+          "title": "Catalog Profile",
+          "type": "string"
+        },
+        "extraction_status": {
+          "const": "machine-proposed",
+          "default": "machine-proposed",
+          "title": "Extraction Status",
+          "type": "string"
+        },
+        "probes": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Probes",
+          "type": "array"
+        },
+        "project": {
+          "enum": [
+            "vllm",
+            "sglang",
+            "flash-attention",
+            "flashinfer",
+            "cutlass-cute",
+            "liger-kernel",
+            "deepgemm",
+            "megatron-core",
+            "torchtitan",
+            "verl"
+          ],
+          "title": "Project",
+          "type": "string"
+        },
+        "requirements": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Requirements",
+          "type": "array"
+        },
+        "schema_version": {
+          "const": "0.5",
+          "default": "0.5",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "source_repository": {
+          "title": "Source Repository",
+          "type": "string"
+        },
+        "source_revision": {
+          "pattern": "^[0-9a-f]{40,64}$",
+          "title": "Source Revision",
+          "type": "string"
+        },
+        "source_urls": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Source Urls",
+          "type": "array"
+        }
+      },
+      "required": [
+        "project",
+        "catalog_profile",
+        "artifact_kind",
+        "source_repository",
+        "source_revision",
+        "source_urls",
+        "requirements",
+        "probes"
+      ],
+      "title": "DefaultProjectContractArtifact",
+      "type": "object"
+    },
+    "EdgeEcosystemObjective": {
+      "additionalProperties": false,
+      "properties": {
+        "owner": {
+          "title": "Owner",
+          "type": "string"
+        },
+        "policy": {
+          "enum": [
+            "roadmap",
+            "release-gate",
+            "maintenance-only",
+            "experimental",
+            "out-of-scope"
+          ],
+          "title": "Policy",
+          "type": "string"
+        },
+        "profiles": {
+          "items": {
+            "$ref": "#/$defs/EdgeProfileObjective"
+          },
+          "title": "Profiles",
+          "type": "array"
+        }
+      },
+      "required": [
+        "owner",
+        "policy"
+      ],
+      "title": "EdgeEcosystemObjective",
+      "type": "object"
+    },
+    "EdgeProfileObjective": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "required_for_release": {
+          "default": false,
+          "title": "Required For Release",
+          "type": "boolean"
+        },
+        "status": {
+          "enum": [
+            "active",
+            "planned",
+            "maintenance-only",
+            "experimental",
+            "out-of-scope"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "target_release": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Target Release"
+        }
+      },
+      "required": [
+        "id",
+        "status"
+      ],
+      "title": "EdgeProfileObjective",
+      "type": "object"
+    },
+    "ProjectObjectives": {
+      "additionalProperties": false,
+      "properties": {
+        "edge_ecosystem": {
+          "$ref": "#/$defs/EdgeEcosystemObjective"
+        }
+      },
+      "required": [
+        "edge_ecosystem"
+      ],
+      "title": "ProjectObjectives",
+      "type": "object"
+    },
+    "ProjectOwnership": {
+      "additionalProperties": false,
+      "properties": {
+        "last_reviewed_at": {
+          "anyOf": [
+            {
+              "format": "date-time",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Last Reviewed At"
+        },
+        "maintainers": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Maintainers",
+          "type": "array"
+        },
+        "review_required": {
+          "default": 1,
+          "minimum": 1,
+          "title": "Review Required",
+          "type": "integer"
+        },
+        "update_policy": {
+          "const": "pull-request",
+          "default": "pull-request",
+          "title": "Update Policy",
+          "type": "string"
+        }
+      },
+      "required": [
+        "maintainers"
+      ],
+      "title": "ProjectOwnership",
+      "type": "object"
+    },
+    "TargetProjectProfile": {
+      "additionalProperties": false,
+      "properties": {
+        "allowed_integration_points": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Allowed Integration Points",
+          "type": "array"
+        },
+        "api_abi_contract": {
+          "$ref": "#/$defs/VersionedArtifactRef"
+        },
+        "build_test_matrix": {
+          "$ref": "#/$defs/VersionedArtifactRef"
+        },
+        "component_ownership": {
+          "additionalProperties": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "title": "Component Ownership",
+          "type": "object"
+        },
+        "dependency_policy": {
+          "$ref": "#/$defs/VersionedArtifactRef"
+        },
+        "deployment_workload_portfolio": {
+          "$ref": "#/$defs/VersionedArtifactRef"
+        },
+        "fallback_policy": {
+          "$ref": "#/$defs/VersionedArtifactRef"
+        },
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "lifecycle_contract": {
+          "$ref": "#/$defs/VersionedArtifactRef"
+        },
+        "maintainability_probes": {
+          "$ref": "#/$defs/VersionedArtifactRef"
+        },
+        "ownership": {
+          "$ref": "#/$defs/ProjectOwnership"
+        },
+        "performance_acceptance_targets": {
+          "$ref": "#/$defs/VersionedArtifactRef"
+        },
+        "project_objectives": {
+          "$ref": "#/$defs/ProjectObjectives"
+        },
+        "repository": {
+          "title": "Repository",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "0.5",
+          "default": "0.5",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "scoring_template_id": {
+          "enum": [
+            "project-fit-kernel-v0.5",
+            "project-fit-triton-pure-v0.5"
+          ],
+          "title": "Scoring Template Id",
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "proposed",
+            "human-reviewed"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "supported_revision_policy": {
+          "title": "Supported Revision Policy",
+          "type": "string"
+        },
+        "triton_portability": {
+          "$ref": "#/$defs/TritonPortabilityPolicy"
+        },
+        "version": {
+          "title": "Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "version",
+        "status",
+        "repository",
+        "supported_revision_policy",
+        "ownership",
+        "component_ownership",
+        "allowed_integration_points",
+        "api_abi_contract",
+        "lifecycle_contract",
+        "build_test_matrix",
+        "dependency_policy",
+        "fallback_policy",
+        "deployment_workload_portfolio",
+        "performance_acceptance_targets",
+        "maintainability_probes",
+        "project_objectives",
+        "scoring_template_id"
+      ],
+      "title": "TargetProjectProfile",
+      "type": "object"
+    },
+    "TritonPortabilityPolicy": {
+      "additionalProperties": false,
+      "properties": {
+        "enabled": {
+          "default": false,
+          "title": "Enabled",
+          "type": "boolean"
+        },
+        "owner": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Owner"
+        },
+        "profile_weights": {
+          "additionalProperties": {
+            "type": "number"
+          },
+          "title": "Profile Weights",
+          "type": "object"
+        }
+      },
+      "title": "TritonPortabilityPolicy",
+      "type": "object"
+    },
+    "VersionedArtifactRef": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "path": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Path"
+        },
+        "sha256": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Sha256",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "sha256"
+      ],
+      "title": "VersionedArtifactRef",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "catalog_version": {
+      "title": "Catalog Version",
+      "type": "string"
+    },
+    "default_order": {
+      "items": {
+        "enum": [
+          "vllm",
+          "sglang",
+          "flash-attention",
+          "flashinfer",
+          "cutlass-cute",
+          "liger-kernel",
+          "deepgemm",
+          "megatron-core",
+          "torchtitan",
+          "verl"
+        ],
+        "type": "string"
+      },
+      "title": "Default Order",
+      "type": "array"
+    },
+    "entries": {
+      "additionalProperties": {
+        "$ref": "#/$defs/DefaultDraftCatalogEntry"
+      },
+      "propertyNames": {
+        "enum": [
+          "vllm",
+          "sglang",
+          "flash-attention",
+          "flashinfer",
+          "cutlass-cute",
+          "liger-kernel",
+          "deepgemm",
+          "megatron-core",
+          "torchtitan",
+          "verl"
+        ]
+      },
+      "title": "Entries",
+      "type": "object"
+    },
+    "schema_version": {
+      "const": "0.5",
+      "default": "0.5",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "source_capture_date": {
+      "title": "Source Capture Date",
+      "type": "string"
+    },
+    "status": {
+      "enum": [
+        "proposed",
+        "human-reviewed"
+      ],
+      "title": "Status",
+      "type": "string"
+    }
+  },
+  "required": [
+    "catalog_version",
+    "status",
+    "source_capture_date",
+    "default_order",
+    "entries"
+  ],
+  "title": "DefaultDraftCatalog",
+  "type": "object"
+}

@@ -1,0 +1,364 @@
+{
+  "benchmark": "sglang-graph-lora-b-cuda-graph-v1",
+  "correctness": [
+    {
+      "case_id": "control-slots1-fp16",
+      "cuda_graph_dynamic_replay": {
+        "all_finite": true,
+        "atol": 0.025,
+        "max_abs_error": 3.7260353565216064e-05,
+        "mean_abs_error": 3.883178578689694e-06,
+        "passed": true,
+        "rtol": 0.015
+      },
+      "cuda_graph_first_replay": {
+        "all_finite": true,
+        "atol": 0.025,
+        "max_abs_error": 3.7610530853271484e-05,
+        "mean_abs_error": 3.673696255646064e-06,
+        "passed": true,
+        "rtol": 0.015
+      },
+      "eager": {
+        "all_finite": true,
+        "atol": 0.025,
+        "base_output_alias": true,
+        "max_abs_error": 3.7610530853271484e-05,
+        "mean_abs_error": 3.824173745670123e-06,
+        "passed": true,
+        "rtol": 0.015
+      }
+    },
+    {
+      "case_id": "control-slots3-bf16",
+      "cuda_graph_dynamic_replay": {
+        "all_finite": true,
+        "atol": 0.08,
+        "max_abs_error": 0.000461481511592865,
+        "mean_abs_error": 3.379432746442035e-05,
+        "passed": true,
+        "rtol": 0.04
+      },
+      "cuda_graph_first_replay": {
+        "all_finite": true,
+        "atol": 0.08,
+        "max_abs_error": 0.00035525858402252197,
+        "mean_abs_error": 3.3881246054079384e-05,
+        "passed": true,
+        "rtol": 0.04
+      },
+      "eager": {
+        "all_finite": true,
+        "atol": 0.08,
+        "base_output_alias": true,
+        "max_abs_error": 0.000363767147064209,
+        "mean_abs_error": 3.357937384862453e-05,
+        "passed": true,
+        "rtol": 0.04
+      }
+    },
+    {
+      "case_id": "decode-slots4-r16-fp16",
+      "cuda_graph_dynamic_replay": {
+        "all_finite": true,
+        "atol": 0.025,
+        "max_abs_error": 3.635883331298828e-05,
+        "mean_abs_error": 3.7652396258636145e-06,
+        "passed": true,
+        "rtol": 0.015
+      },
+      "cuda_graph_first_replay": {
+        "all_finite": true,
+        "atol": 0.025,
+        "max_abs_error": 4.334747791290283e-05,
+        "mean_abs_error": 3.6970686778659e-06,
+        "passed": true,
+        "rtol": 0.015
+      },
+      "eager": {
+        "all_finite": true,
+        "atol": 0.025,
+        "base_output_alias": true,
+        "max_abs_error": 3.656744956970215e-05,
+        "mean_abs_error": 3.651007773441961e-06,
+        "passed": true,
+        "rtol": 0.015
+      }
+    },
+    {
+      "case_id": "batch-slots4-r32-bf16",
+      "cuda_graph_dynamic_replay": {
+        "all_finite": true,
+        "atol": 0.08,
+        "max_abs_error": 0.00036425888538360596,
+        "mean_abs_error": 3.3902946597663686e-05,
+        "passed": true,
+        "rtol": 0.04
+      },
+      "cuda_graph_first_replay": {
+        "all_finite": true,
+        "atol": 0.08,
+        "max_abs_error": 0.00039653480052948,
+        "mean_abs_error": 3.427367119002156e-05,
+        "passed": true,
+        "rtol": 0.04
+      },
+      "eager": {
+        "all_finite": true,
+        "atol": 0.08,
+        "base_output_alias": true,
+        "max_abs_error": 0.0004149600863456726,
+        "mean_abs_error": 3.4826400224119425e-05,
+        "passed": true,
+        "rtol": 0.04
+      }
+    },
+    {
+      "case_id": "qkv-slots4-r32-fp16",
+      "cuda_graph_dynamic_replay": {
+        "all_finite": true,
+        "atol": 0.025,
+        "max_abs_error": 4.5105814933776855e-05,
+        "mean_abs_error": 4.297236955608241e-06,
+        "passed": true,
+        "rtol": 0.015
+      },
+      "cuda_graph_first_replay": {
+        "all_finite": true,
+        "atol": 0.025,
+        "max_abs_error": 4.5180320739746094e-05,
+        "mean_abs_error": 4.370310307422187e-06,
+        "passed": true,
+        "rtol": 0.015
+      },
+      "eager": {
+        "all_finite": true,
+        "atol": 0.025,
+        "base_output_alias": true,
+        "max_abs_error": 4.573166370391846e-05,
+        "mean_abs_error": 4.414191607793327e-06,
+        "passed": true,
+        "rtol": 0.015
+      }
+    },
+    {
+      "case_id": "wide-slots8-r64-bf16",
+      "cuda_graph_dynamic_replay": {
+        "all_finite": true,
+        "atol": 0.08,
+        "max_abs_error": 0.0005379766225814819,
+        "mean_abs_error": 4.213736247038469e-05,
+        "passed": true,
+        "rtol": 0.04
+      },
+      "cuda_graph_first_replay": {
+        "all_finite": true,
+        "atol": 0.08,
+        "max_abs_error": 0.000555083155632019,
+        "mean_abs_error": 4.222723509883508e-05,
+        "passed": true,
+        "rtol": 0.04
+      },
+      "eager": {
+        "all_finite": true,
+        "atol": 0.08,
+        "base_output_alias": true,
+        "max_abs_error": 0.0007176995277404785,
+        "mean_abs_error": 4.1897903429344296e-05,
+        "passed": true,
+        "rtol": 0.04
+      }
+    }
+  ],
+  "environment": {
+    "compute_capability": [
+      9,
+      0
+    ],
+    "cuda": "12.8",
+    "gpu": "NVIDIA H100 PCIe",
+    "python_cuda_graph": true,
+    "torch": "2.8.0+cu128"
+  },
+  "fresh_process": true,
+  "performance": [
+    {
+      "case_id": "control-slots1-fp16",
+      "eager_peak_temporary_bytes": 33792,
+      "iterations_per_sample": 300,
+      "max_us": 9.189439614613852,
+      "median_us": 9.146453539530436,
+      "min_us": 9.135680198669434,
+      "samples_us": [
+        9.189439614613852,
+        9.146453539530436,
+        9.143893718719482,
+        9.135680198669434,
+        9.146453539530436
+      ],
+      "shape": {
+        "dtype": "float16",
+        "rank": 16,
+        "slice_dims": [
+          4096
+        ],
+        "slots": 1,
+        "tokens": 4
+      },
+      "weight": 0.1
+    },
+    {
+      "case_id": "control-slots3-bf16",
+      "eager_peak_temporary_bytes": 132608,
+      "iterations_per_sample": 300,
+      "max_us": 28.155946731567383,
+      "median_us": 28.089494705200195,
+      "min_us": 28.08597246805827,
+      "samples_us": [
+        28.155946731567383,
+        28.094294865926106,
+        28.086827596028645,
+        28.08597246805827,
+        28.089494705200195
+      ],
+      "shape": {
+        "dtype": "bfloat16",
+        "rank": 32,
+        "slice_dims": [
+          4096
+        ],
+        "slots": 3,
+        "tokens": 16
+      },
+      "weight": 0.15
+    },
+    {
+      "case_id": "decode-slots4-r16-fp16",
+      "eager_peak_temporary_bytes": 33792,
+      "iterations_per_sample": 300,
+      "max_us": 32.92703946431478,
+      "median_us": 32.74517377217611,
+      "min_us": 32.64885266621908,
+      "samples_us": [
+        32.92703946431478,
+        32.856105168660484,
+        32.74517377217611,
+        32.65088081359863,
+        32.64885266621908
+      ],
+      "shape": {
+        "dtype": "float16",
+        "rank": 16,
+        "slice_dims": [
+          4096
+        ],
+        "slots": 4,
+        "tokens": 4
+      },
+      "weight": 0.2
+    },
+    {
+      "case_id": "batch-slots4-r32-bf16",
+      "eager_peak_temporary_bytes": 264704,
+      "iterations_per_sample": 300,
+      "max_us": 37.67146746317545,
+      "median_us": 37.53589312235514,
+      "min_us": 37.532052993774414,
+      "samples_us": [
+        37.67146746317545,
+        37.53589312235514,
+        37.532052993774414,
+        37.573652267456055,
+        37.532052993774414
+      ],
+      "shape": {
+        "dtype": "bfloat16",
+        "rank": 32,
+        "slice_dims": [
+          4096
+        ],
+        "slots": 4,
+        "tokens": 32
+      },
+      "weight": 0.2
+    },
+    {
+      "case_id": "qkv-slots4-r32-fp16",
+      "eager_peak_temporary_bytes": 134656,
+      "iterations_per_sample": 300,
+      "max_us": 82.49333063761394,
+      "median_us": 82.05685297648112,
+      "min_us": 82.01493581136067,
+      "samples_us": [
+        82.49333063761394,
+        82.3793093363444,
+        82.05685297648112,
+        82.01493581136067,
+        82.02389399210612
+      ],
+      "shape": {
+        "dtype": "float16",
+        "rank": 32,
+        "slice_dims": [
+          4096,
+          1024,
+          1024
+        ],
+        "slots": 4,
+        "tokens": 16
+      },
+      "weight": 0.15
+    },
+    {
+      "case_id": "wide-slots8-r64-bf16",
+      "eager_peak_temporary_bytes": 1057280,
+      "iterations_per_sample": 300,
+      "max_us": 79.07797495524089,
+      "median_us": 78.73738606770833,
+      "min_us": 78.64479700724284,
+      "samples_us": [
+        78.77322514851888,
+        78.64479700724284,
+        78.66165161132812,
+        78.73738606770833,
+        79.07797495524089
+      ],
+      "shape": {
+        "dtype": "bfloat16",
+        "rank": 64,
+        "slice_dims": [
+          8192
+        ],
+        "slots": 8,
+        "tokens": 64
+      },
+      "weight": 0.2
+    }
+  ],
+  "replay_index": 4,
+  "schema_version": "0.5",
+  "source_sha256": "sha256:390676cc38975095ba124d1932aa8c27dc2b4605e18c495c095ae852f4c96790",
+  "special_contracts": {
+    "empty_weights": {
+      "passed": true,
+      "shape": [
+        3,
+        128
+      ]
+    },
+    "gradient": {
+      "error": null,
+      "passed": true
+    },
+    "mixed_output_dtype": {
+      "all_finite": true,
+      "atol": 0.08,
+      "max_abs_error": 1.376122236251831e-05,
+      "mean_abs_error": 1.4875359966026735e-06,
+      "passed": true,
+      "rtol": 0.04
+    }
+  },
+  "variant": "existing-mm-plus-add",
+  "wall_time_seconds": 1.6385027499999296
+}

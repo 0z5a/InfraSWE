@@ -1,0 +1,135 @@
+{
+  "$defs": {
+    "HistoricalCalibrationCase": {
+      "additionalProperties": false,
+      "properties": {
+        "actual_outcome": {
+          "enum": [
+            "merged",
+            "not-merged"
+          ],
+          "title": "Actual Outcome",
+          "type": "string"
+        },
+        "case_id": {
+          "title": "Case Id",
+          "type": "string"
+        },
+        "correct": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Correct"
+        },
+        "ground_truth_sha256": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Ground Truth Sha256",
+          "type": "string"
+        },
+        "predicted_outcome": {
+          "enum": [
+            "merged",
+            "not-merged",
+            "abstain"
+          ],
+          "title": "Predicted Outcome",
+          "type": "string"
+        },
+        "prediction_lock_sha256": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Prediction Lock Sha256",
+          "type": "string"
+        }
+      },
+      "required": [
+        "case_id",
+        "predicted_outcome",
+        "actual_outcome",
+        "correct",
+        "prediction_lock_sha256",
+        "ground_truth_sha256"
+      ],
+      "title": "HistoricalCalibrationCase",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "abstained_cases": {
+      "minimum": 0,
+      "title": "Abstained Cases",
+      "type": "integer"
+    },
+    "accuracy": {
+      "anyOf": [
+        {
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Accuracy"
+    },
+    "cases": {
+      "items": {
+        "$ref": "#/$defs/HistoricalCalibrationCase"
+      },
+      "minItems": 1,
+      "title": "Cases",
+      "type": "array"
+    },
+    "confusion": {
+      "additionalProperties": {
+        "type": "integer"
+      },
+      "title": "Confusion",
+      "type": "object"
+    },
+    "correct_cases": {
+      "minimum": 0,
+      "title": "Correct Cases",
+      "type": "integer"
+    },
+    "covered_cases": {
+      "minimum": 0,
+      "title": "Covered Cases",
+      "type": "integer"
+    },
+    "protocol_id": {
+      "const": "historical-pr-blind-calibration-v0.5-r1",
+      "default": "historical-pr-blind-calibration-v0.5-r1",
+      "title": "Protocol Id",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "0.5",
+      "default": "0.5",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "total_cases": {
+      "minimum": 1,
+      "title": "Total Cases",
+      "type": "integer"
+    }
+  },
+  "required": [
+    "cases",
+    "total_cases",
+    "covered_cases",
+    "abstained_cases",
+    "correct_cases",
+    "confusion"
+  ],
+  "title": "HistoricalCalibrationReport",
+  "type": "object"
+}

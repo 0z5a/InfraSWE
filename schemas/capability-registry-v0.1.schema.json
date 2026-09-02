@@ -1,0 +1,226 @@
+{
+  "$defs": {
+    "CapabilityDefinition": {
+      "additionalProperties": false,
+      "properties": {
+        "capability_id": {
+          "pattern": "^[a-z0-9][a-z0-9._-]+$",
+          "title": "Capability Id",
+          "type": "string"
+        },
+        "description": {
+          "minLength": 12,
+          "title": "Description",
+          "type": "string"
+        },
+        "domain": {
+          "title": "Domain",
+          "type": "string"
+        },
+        "invalidation_keys": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Invalidation Keys",
+          "type": "array"
+        },
+        "kind": {
+          "enum": [
+            "semantic",
+            "mechanism",
+            "quantitative",
+            "policy",
+            "observability"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "parameters": {
+          "additionalProperties": {
+            "$ref": "#/$defs/CapabilityParameterDefinition"
+          },
+          "title": "Parameters",
+          "type": "object"
+        },
+        "probes": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "title": "Probes",
+          "type": "object"
+        },
+        "proof_policy": {
+          "$ref": "#/$defs/CapabilityProofPolicy"
+        },
+        "relationships": {
+          "$ref": "#/$defs/CapabilityRelationships"
+        },
+        "version": {
+          "minimum": 1,
+          "title": "Version",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "capability_id",
+        "version",
+        "domain",
+        "kind",
+        "description",
+        "proof_policy"
+      ],
+      "title": "CapabilityDefinition",
+      "type": "object"
+    },
+    "CapabilityParameterDefinition": {
+      "additionalProperties": false,
+      "properties": {
+        "allowed_values": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Allowed Values",
+          "type": "array"
+        },
+        "maximum": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Maximum"
+        },
+        "minimum": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Minimum"
+        },
+        "type": {
+          "enum": [
+            "enum-set",
+            "integer-range",
+            "number-range",
+            "boolean",
+            "string"
+          ],
+          "title": "Type",
+          "type": "string"
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "title": "CapabilityParameterDefinition",
+      "type": "object"
+    },
+    "CapabilityProofPolicy": {
+      "additionalProperties": false,
+      "properties": {
+        "minimum_default": {
+          "enum": [
+            "CP0-declared",
+            "CP1-inventory",
+            "CP2-compile",
+            "CP3-runtime",
+            "CP4-behavior",
+            "CP5-operational"
+          ],
+          "title": "Minimum Default",
+          "type": "string"
+        },
+        "native_claim_minimum": {
+          "default": "CP4-behavior",
+          "enum": [
+            "CP4-behavior",
+            "CP5-operational"
+          ],
+          "title": "Native Claim Minimum",
+          "type": "string"
+        }
+      },
+      "required": [
+        "minimum_default"
+      ],
+      "title": "CapabilityProofPolicy",
+      "type": "object"
+    },
+    "CapabilityRelationships": {
+      "additionalProperties": false,
+      "properties": {
+        "aliases": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Aliases",
+          "type": "array"
+        },
+        "conflicts": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Conflicts",
+          "type": "array"
+        },
+        "implies": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Implies",
+          "type": "array"
+        }
+      },
+      "title": "CapabilityRelationships",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "definitions": {
+      "items": {
+        "$ref": "#/$defs/CapabilityDefinition"
+      },
+      "minItems": 1,
+      "title": "Definitions",
+      "type": "array"
+    },
+    "registry_id": {
+      "title": "Registry Id",
+      "type": "string"
+    },
+    "registry_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Registry Sha256",
+      "type": "string"
+    },
+    "revision": {
+      "minimum": 1,
+      "title": "Revision",
+      "type": "integer"
+    },
+    "schema_version": {
+      "const": "0.1",
+      "default": "0.1",
+      "title": "Schema Version",
+      "type": "string"
+    }
+  },
+  "required": [
+    "registry_id",
+    "revision",
+    "definitions",
+    "registry_sha256"
+  ],
+  "title": "CapabilityRegistry",
+  "type": "object"
+}

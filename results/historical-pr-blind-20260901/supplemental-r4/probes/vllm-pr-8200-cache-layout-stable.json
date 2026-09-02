@@ -1,0 +1,191 @@
+{
+  "case_id": "vllm-pr-8200",
+  "correctness": [
+    {
+      "key_layout": "NHD",
+      "key_matches_oracle": true,
+      "key_strides": [
+        240,
+        30,
+        10,
+        1
+      ],
+      "matches_oracle": true,
+      "padded_slot_preserved": true,
+      "value_layout": "NHD",
+      "value_matches_oracle": true,
+      "value_strides": [
+        240,
+        30,
+        10,
+        1
+      ],
+      "variant": "base"
+    },
+    {
+      "key_layout": "NHD",
+      "key_matches_oracle": true,
+      "key_strides": [
+        240,
+        30,
+        10,
+        1
+      ],
+      "matches_oracle": true,
+      "padded_slot_preserved": true,
+      "value_layout": "NHD",
+      "value_matches_oracle": true,
+      "value_strides": [
+        240,
+        30,
+        10,
+        1
+      ],
+      "variant": "head"
+    },
+    {
+      "key_layout": "HND",
+      "key_matches_oracle": false,
+      "key_strides": [
+        240,
+        10,
+        80,
+        1
+      ],
+      "matches_oracle": false,
+      "padded_slot_preserved": true,
+      "value_layout": "HND",
+      "value_matches_oracle": false,
+      "value_strides": [
+        240,
+        10,
+        80,
+        1
+      ],
+      "variant": "base"
+    },
+    {
+      "key_layout": "HND",
+      "key_matches_oracle": true,
+      "key_strides": [
+        240,
+        10,
+        80,
+        1
+      ],
+      "matches_oracle": true,
+      "padded_slot_preserved": true,
+      "value_layout": "HND",
+      "value_matches_oracle": true,
+      "value_strides": [
+        240,
+        10,
+        80,
+        1
+      ],
+      "variant": "head"
+    },
+    {
+      "key_layout": "HND",
+      "key_matches_oracle": true,
+      "key_strides": [
+        240,
+        10,
+        80,
+        1
+      ],
+      "matches_oracle": false,
+      "padded_slot_preserved": true,
+      "value_layout": "NHD",
+      "value_matches_oracle": false,
+      "value_strides": [
+        240,
+        30,
+        10,
+        1
+      ],
+      "variant": "head"
+    },
+    {
+      "key_layout": "NHD",
+      "key_matches_oracle": true,
+      "key_strides": [
+        240,
+        30,
+        10,
+        1
+      ],
+      "matches_oracle": false,
+      "padded_slot_preserved": true,
+      "value_layout": "HND",
+      "value_matches_oracle": false,
+      "value_strides": [
+        240,
+        10,
+        80,
+        1
+      ],
+      "variant": "head"
+    }
+  ],
+  "created_at": "2026-09-01T16:57:28.138789+00:00",
+  "duration_seconds": 0.4466953088995069,
+  "environment": {
+    "compute_capability": [
+      8,
+      0
+    ],
+    "cuda_runtime": "12.4",
+    "device": "NVIDIA A100-SXM4-40GB",
+    "torch_version": "2.5.1+cu124"
+  },
+  "evidence_sha256": "sha256:1cb2f3eb0f5caad5323e1b952e02266d30b11deab894139e673d5f237e303d89",
+  "failure_codes": [
+    "KEY_VALUE_CACHE_STRIDES_NOT_INDEPENDENT_OR_VALIDATED"
+  ],
+  "performance": {
+    "head_size": 128,
+    "heads": 32,
+    "iterations": 200,
+    "nhd_head_over_base": 1.0,
+    "timings": {
+      "hnd_head": {
+        "median_us": 40.95999896526337,
+        "p95_us": 41.98399931192398
+      },
+      "nhd_base": {
+        "median_us": 39.93599861860275,
+        "p95_us": 40.95999896526337
+      },
+      "nhd_head": {
+        "median_us": 39.93599861860275,
+        "p95_us": 40.95999896526337
+      }
+    },
+    "tokens": 1024
+  },
+  "phases": {
+    "cold_start": {
+      "extension_load": null
+    },
+    "precompile": {
+      "build_directory": "/workspace/.cache/torch_extensions/infraswe_vllm_cache_layout_pr8200_sm80_v1",
+      "cache_hit_before": true,
+      "seconds": 0.07645638310350478
+    },
+    "steady_state": {
+      "compile_seconds": 0.0,
+      "timed_iterations_per_case": 200
+    }
+  },
+  "probe": "vllm-cache-layout-pr8200-v1",
+  "schema_version": "0.5",
+  "source_identity": {
+    "embedded_probe_cuda_sha256": "sha256:12a4cb92c157c5cb255b65b5dfe9cb730d224a45666750677399c766a56c956b",
+    "head_cache_kernels_sha256": "sha256:54e4debb6f7c3415e32ea79015946cd19f7f171b32b9e93f80eb39cb5e748a18"
+  },
+  "static_contracts": {
+    "independent_key_value_stride_guard_present": false
+  },
+  "status": "fail"
+}

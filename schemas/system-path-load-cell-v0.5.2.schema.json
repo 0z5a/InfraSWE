@@ -1,0 +1,128 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "completed_work": {
+      "minimum": 0,
+      "title": "Completed Work",
+      "type": "integer"
+    },
+    "domain": {
+      "enum": [
+        "distributed-communication",
+        "memory-tiering"
+      ],
+      "title": "Domain",
+      "type": "string"
+    },
+    "evidence_digests": {
+      "items": {
+        "pattern": "^sha256:[0-9a-f]{64}$",
+        "type": "string"
+      },
+      "minItems": 1,
+      "title": "Evidence Digests",
+      "type": "array"
+    },
+    "fairness_score": {
+      "maximum": 1,
+      "minimum": 0,
+      "title": "Fairness Score",
+      "type": "number"
+    },
+    "goodput_score": {
+      "maximum": 1,
+      "minimum": 0,
+      "title": "Goodput Score",
+      "type": "number"
+    },
+    "hard_gate_failure_codes": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Hard Gate Failure Codes",
+      "type": "array"
+    },
+    "jitter_score": {
+      "maximum": 1,
+      "minimum": 0,
+      "title": "Jitter Score",
+      "type": "number"
+    },
+    "load_ratio": {
+      "exclusiveMinimum": 0,
+      "title": "Load Ratio",
+      "type": "number"
+    },
+    "offered_work": {
+      "minimum": 1,
+      "title": "Offered Work",
+      "type": "integer"
+    },
+    "overlap_progress_score": {
+      "maximum": 1,
+      "minimum": 0,
+      "title": "Overlap Progress Score",
+      "type": "number"
+    },
+    "p99_status": {
+      "enum": [
+        "official",
+        "exploratory"
+      ],
+      "title": "P99 Status",
+      "type": "string"
+    },
+    "protocol_id": {
+      "title": "Protocol Id",
+      "type": "string"
+    },
+    "regime": {
+      "enum": [
+        "light",
+        "normal",
+        "knee",
+        "saturation",
+        "overload",
+        "soak"
+      ],
+      "title": "Regime",
+      "type": "string"
+    },
+    "resource_stability_score": {
+      "maximum": 1,
+      "minimum": 0,
+      "title": "Resource Stability Score",
+      "type": "number"
+    },
+    "schema_version": {
+      "const": "0.5.2",
+      "default": "0.5.2",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "tail_score": {
+      "maximum": 1,
+      "minimum": 0,
+      "title": "Tail Score",
+      "type": "number"
+    }
+  },
+  "required": [
+    "domain",
+    "protocol_id",
+    "regime",
+    "load_ratio",
+    "offered_work",
+    "completed_work",
+    "goodput_score",
+    "tail_score",
+    "jitter_score",
+    "overlap_progress_score",
+    "resource_stability_score",
+    "fairness_score",
+    "p99_status",
+    "evidence_digests"
+  ],
+  "title": "SystemPathLoadCell",
+  "type": "object"
+}

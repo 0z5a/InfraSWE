@@ -1,0 +1,62 @@
+{
+  "case_id": "verl-pr-1688",
+  "created_at": "2026-09-02T02:28:13.114038+00:00",
+  "duration_seconds": 0.004390999907627702,
+  "evidence_sha256": "sha256:6370eb8852031f1a02d01a33d7d3cbe27ebc976e8783ed075ed6cd1e18928a65",
+  "facts": {
+    "branch_results": {
+      "base_fused": {
+        "keywords": [
+          "attention_mask",
+          "input_ids",
+          "position_ids",
+          "temperature",
+          "use_cache"
+        ],
+        "status": "pass"
+      },
+      "base_nonfused": {
+        "error": "unexpected keyword arguments: ['temperature']",
+        "status": "fail"
+      },
+      "head_fused": {
+        "keywords": [
+          "attention_mask",
+          "input_ids",
+          "position_ids",
+          "temperature",
+          "use_cache"
+        ],
+        "status": "pass"
+      },
+      "head_nonfused": {
+        "keywords": [
+          "attention_mask",
+          "input_ids",
+          "position_ids",
+          "use_cache"
+        ],
+        "status": "pass"
+      }
+    },
+    "compilation_path": "python-ast-only",
+    "exact_gate_source": "def exact_gate(self, temperature):\n    extra_forward_kwargs = {}\n    if self.use_fused_kernels:\n        extra_forward_kwargs['temperature'] = temperature\n    return extra_forward_kwargs",
+    "fused_kwargs": {
+      "temperature": 0.37
+    },
+    "gate_is_per_call_local": true,
+    "nonfused_kwargs": {},
+    "other_keywords_preserved": true,
+    "steady_state_compile_seconds": 0.0,
+    "two_head_call_sites_expand_gate_kwargs": true
+  },
+  "failure_codes": [],
+  "probe": "verl-temperature-exact-ast-v1",
+  "protocol_id": "historical-pr-blind-cross-project-v0.5-r6",
+  "schema_version": "0.5",
+  "source_identity": {
+    "base_source_sha256": "sha256:1fd4e6d9f62d8e2ba62ee9fc26f482f2fdfa7c5918f6f8d5f32f4df2422bcba0",
+    "head_source_sha256": "sha256:d9388bbaac1687d044a5f7addab0a7f34141840e51591d3cb7cfb343cabcd041"
+  },
+  "status": "pass"
+}

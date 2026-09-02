@@ -1,0 +1,67 @@
+{
+  "case_id": "verl-pr-7220",
+  "created_at": "2026-09-02T03:33:46.533259+00:00",
+  "duration_seconds": 0.7495755001436919,
+  "evidence_sha256": "sha256:e43f80484a79d38201ba2952a17a3b7ad3d224559b43e3b339a8c0b9dba337fe",
+  "facts": {
+    "changed_paths": [
+      "verl/trainer/main_ppo_v0.py",
+      "verl/trainer/ppo/v1/trainer_base.py"
+    ],
+    "changed_test_file_count": 0,
+    "changed_test_paths": [],
+    "compilation_path": "not-required",
+    "existing_test_search_matches": [
+      "3b9fc9c71836325b62595e6044aa4f28f2f1c9dc:tests/experimental/agent_loop/test_audio_server_contract_on_cpu.py:51:    assert 'multimodal_kwargs[\"mm_processor_kwargs\"] = mm_processor_kwargs' in source",
+      "3b9fc9c71836325b62595e6044aa4f28f2f1c9dc:tests/models/test_engine.py:406:    model_config = HFModelConfig(path=model_path, load_tokenizer=False)",
+      "3b9fc9c71836325b62595e6044aa4f28f2f1c9dc:tests/utils/test_audio_input_support_on_cpu.py:21:from verl.utils.tokenizer import build_multimodal_processor_inputs",
+      "3b9fc9c71836325b62595e6044aa4f28f2f1c9dc:tests/utils/test_audio_input_support_on_cpu.py:51:def test_build_multimodal_processor_inputs_includes_audio_sampling_rate() -> None:",
+      "3b9fc9c71836325b62595e6044aa4f28f2f1c9dc:tests/utils/test_audio_input_support_on_cpu.py:63:    output = build_multimodal_processor_inputs(",
+      "3b9fc9c71836325b62595e6044aa4f28f2f1c9dc:tests/utils/test_audio_input_support_on_cpu.py:78:def test_build_multimodal_processor_inputs_skips_video_kwargs_when_no_videos() -> None:",
+      "3b9fc9c71836325b62595e6044aa4f28f2f1c9dc:tests/utils/test_audio_input_support_on_cpu.py:86:    build_multimodal_processor_inputs(",
+      "3b9fc9c71836325b62595e6044aa4f28f2f1c9dc:tests/utils/test_turn_separator_on_cpu.py:158:class MultimodalChatMLProcessor(ChatMLTokenizer):",
+      "3b9fc9c71836325b62595e6044aa4f28f2f1c9dc:tests/utils/test_turn_separator_on_cpu.py:159:    \"\"\"ChatML tokenizer that rejects bare-string ``content``, like a multimodal processor.",
+      "3b9fc9c71836325b62595e6044aa4f28f2f1c9dc:tests/utils/test_turn_separator_on_cpu.py:161:    Multimodal processors iterate ``content`` expecting a list of typed parts (``{\"type\": \"text\",",
+      "3b9fc9c71836325b62595e6044aa4f28f2f1c9dc:tests/utils/test_turn_separator_on_cpu.py:179:    proc = MultimodalChatMLProcessor()",
+      "3b9fc9c71836325b62595e6044aa4f28f2f1c9dc:tests/workers/rollout/rollout_trtllm/test_trtllm_rollout_utils.py:280:    def test_multimodal_generate_with_image(self, trtllm_vlm_replica, processor, tokenizer, prompt):",
+      "3b9fc9c71836325b62595e6044aa4f28f2f1c9dc:tests/workers/rollout/rollout_trtllm/test_trtllm_rollout_utils.py:338:    def test_multimodal_different_image_sizes(self, trtllm_vlm_replica, processor, tokenizer, image_size):"
+    ],
+    "path_parity": true,
+    "steady_state_compile_seconds": 0.0,
+    "target": {
+      "base_copy_to_local_call_count": 2,
+      "base_hf_tokenizer_call_count": 2,
+      "head_hf_model_config_annotation_count": 2,
+      "head_model_config_conversion_count": 6,
+      "head_processor_property_count": 2,
+      "head_tokenizer_property_count": 2,
+      "main_entry_uses_model_config": true,
+      "v1_entry_uses_model_config": true
+    }
+  },
+  "failure_codes": [],
+  "probe": "r7-cross-project-static-v1",
+  "project": "verl",
+  "protocol_id": "historical-pr-blind-cross-project-v0.5-r7",
+  "schema_version": "0.5",
+  "source_identity": {
+    "base_sha": "76324f1de4aabad06441a01fc17b605d9b3e564a",
+    "base_source_exists": {
+      "verl/trainer/main_ppo_v0.py": true,
+      "verl/trainer/ppo/v1/trainer_base.py": true
+    },
+    "base_source_sha256": {
+      "verl/trainer/main_ppo_v0.py": "sha256:eb110c232c1e56f8a916bd5851a1af0305e8aad48a9072cbea82fb75c7e750f1",
+      "verl/trainer/ppo/v1/trainer_base.py": "sha256:4d8fed372de2c0aa309c30172347e4dcc89b562f658e17d0ae13435181e82a7d"
+    },
+    "head_sha": "3b9fc9c71836325b62595e6044aa4f28f2f1c9dc",
+    "head_source_sha256": {
+      "verl/trainer/main_ppo_v0.py": "sha256:4df671828fe227ec92511230aed9a9943c45c8e1b49a8f0b0aeda3321cf5f12f",
+      "verl/trainer/ppo/v1/trainer_base.py": "sha256:2b0689ec1966d231bec6e3a8ae435027df86030bc1759d6e592ce31f9b522139"
+    },
+    "selection_lock_sha256": "sha256:e75d03448650ef7ff13f93729d151f99be652702f4971cb889dbb2c0de57716b",
+    "test_plan_sha256": "sha256:aa73f348b2d5ce4a19fa0c3a6e0159681f10254f5a878ad3cabbd8709f3bb888",
+    "unified_diff_sha256": "sha256:e76540cd5684c84c13e8ec8c4ae2402eb91a839e5cb62d3e719e540e06b2f10c"
+  },
+  "status": "pass"
+}

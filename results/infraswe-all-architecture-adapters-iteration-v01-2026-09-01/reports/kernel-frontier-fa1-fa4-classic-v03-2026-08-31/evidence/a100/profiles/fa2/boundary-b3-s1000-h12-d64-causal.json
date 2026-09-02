@@ -1,0 +1,77 @@
+{
+  "backend": "fa2",
+  "case_id": "boundary-b3-s1000-h12-d64-causal",
+  "evidence_kind": "per-case-profiler",
+  "fresh_process": true,
+  "generated_at": "2026-08-31T10:00:14.738013Z",
+  "hardware": {
+    "compute_capability": "8.0",
+    "cudnn_version": 91002,
+    "gpu_name": "NVIDIA A100-SXM4-80GB",
+    "nvidia_smi": {
+      "clocks.mem": "1593",
+      "clocks.sm": "765",
+      "driver_version": "580.65.06",
+      "memory.total": "81920",
+      "memory.used": "4",
+      "name": "NVIDIA A100-SXM4-80GB",
+      "pci.bus_id": "00000000:C8:00.0",
+      "power.draw": "58.68",
+      "power.limit": "500.00",
+      "pstate": "P0",
+      "temperature.gpu": "27",
+      "utilization.gpu": "0",
+      "uuid": "GPU-167e421f-d2fa-7d37-3c84-4758d0f6901a"
+    },
+    "platform": "Linux-5.15.0-119-generic-x86_64-with-glibc2.39",
+    "python": "3.12.14",
+    "sm_count": 108,
+    "torch_cuda": "12.8",
+    "torch_version": "2.8.0+cu128",
+    "total_memory_bytes": 85094825984
+  },
+  "implementation_provenance": [
+    {
+      "module": "flash_attn",
+      "path": "/workspace/infraswe/envs/fa2/flash_attn/__init__.py",
+      "sha256": "sha256:b26af89142495543726c13defd4913c43476accd46eb13f99375c96c9eb5e28c"
+    },
+    {
+      "module": "flash_attn_2_cuda",
+      "path": "/workspace/infraswe/envs/fa2/flash_attn_2_cuda.cpython-312-x86_64-linux-gnu.so",
+      "sha256": "sha256:3af5260fadfe23c68c9fce24b9802681fb6a4e74a768d084aafc86645e492944"
+    }
+  ],
+  "profiler": {
+    "captured": true,
+    "cuda_events": [
+      {
+        "count": 1,
+        "device_time_us": 157.1820000000007,
+        "name": "FlashAttnFunc",
+        "self_device_time_us": 0.0
+      },
+      {
+        "count": 1,
+        "device_time_us": 157.1820000000007,
+        "name": "flash_attn::_flash_attn_forward",
+        "self_device_time_us": 78.59100000000035
+      },
+      {
+        "count": 1,
+        "device_time_us": 78.59100000000035,
+        "name": "Activity Buffer Request",
+        "self_device_time_us": 78.59100000000035
+      },
+      {
+        "count": 1,
+        "device_time_us": 78.59100000000035,
+        "name": "void flash::flash_fwd_kernel<Flash_fwd_kernel_traits<64, 128, 128, 4, false, false, cutlass::bfloat16_t, Flash_kernel_traits<64, 128, 128, 4, cutlass::bfloat16_t> >, false, true, false, false, false, true, false, false>(flash::Flash_fwd_params)",
+        "self_device_time_us": 78.59100000000035
+      }
+    ]
+  },
+  "schema_version": "0.3",
+  "status": "passed",
+  "suite": "attention"
+}

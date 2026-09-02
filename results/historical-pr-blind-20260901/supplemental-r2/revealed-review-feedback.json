@@ -1,0 +1,345 @@
+{
+  "cases": [
+    {
+      "api_response_digests": [
+        "sha256:45680d0ff315c35cc6bbeedba711dccfebe53a252c28f20128864ab6e294bfcb",
+        "sha256:ffc9c8a21098529e7c393f4fcffc925f2b7291b4c53758f39d0fe087ad8c058a",
+        "sha256:8c24e1e35da5835bac10a9e734a62563488a921112c14b1d9fff4f38e5e218fd",
+        "sha256:cf1cbb66a638b4860a516671fb74850e6ccf787fe6c4c8d29e9c04efe880bd05"
+      ],
+      "case_id": "sglang-pr-3044",
+      "eligibility_reasons": [
+        "HUMAN_NON_AUTHOR_INLINE_TECHNICAL_FEEDBACK"
+      ],
+      "explicit_human_non_author_feedback_count": 1,
+      "feedback": [
+        {
+          "author": "merrymercy",
+          "author_association": "CONTRIBUTOR",
+          "body": "Move all of them into a folder `test/srt/kernel`.\r\nLater, we will organize the tests under `test/srt` with better structures.",
+          "created_at": "2025-01-22T22:18:50Z",
+          "feedback_id": "review-comment:1926053341",
+          "html_url": "https://github.com/sgl-project/sglang/pull/3044#discussion_r1926053341",
+          "is_bot": false,
+          "line": 56,
+          "path": "test/srt/run_suite.py",
+          "review_state": null,
+          "source": "review-comment"
+        }
+      ],
+      "human_non_author_review_count": 1,
+      "judgment_lock_sha256": "sha256:5769b643415d085bf4dc4242022635c3061ee85496e1ce98b6781bea22ecb3f4",
+      "merged": false,
+      "observed_at": "2026-09-01T16:22:20.760294Z",
+      "pr_author": "sleepcoo",
+      "pull_number": 3044,
+      "repository": "sgl-project/sglang",
+      "schema_version": "0.5",
+      "state": "closed",
+      "strict_feedback_audit_eligible": true
+    },
+    {
+      "api_response_digests": [
+        "sha256:17a7851689c9e74a3250f9e8e1aa2ecd6286e316c4196efc6decaafe06ddb696",
+        "sha256:231e278ba9c41bfbb9a377c774a4c87063029604c42fcedcf818cbd8671edbf2",
+        "sha256:cf1cbb66a638b4860a516671fb74850e6ccf787fe6c4c8d29e9c04efe880bd05",
+        "sha256:3046f50d1f6fb0b6ae8c70b7109c1aeb9121d34323d967d93cb26b00ceef75af"
+      ],
+      "case_id": "vllm-pr-13140",
+      "eligibility_reasons": [
+        "HUMAN_NON_AUTHOR_REVIEW_BODY"
+      ],
+      "explicit_human_non_author_feedback_count": 1,
+      "feedback": [
+        {
+          "author": "mgoin",
+          "author_association": "MEMBER",
+          "body": "We really need to rethink this kernel. I'm okay with landing this fix in the meantime to address the correctness issue. Would you happen to have a benchmark showing this doesn't regress performance by much?",
+          "created_at": "2025-02-12T18:08:15Z",
+          "feedback_id": "review:2612809843",
+          "html_url": "https://github.com/vllm-project/vllm/pull/13140#pullrequestreview-2612809843",
+          "is_bot": false,
+          "line": null,
+          "path": null,
+          "review_state": "APPROVED",
+          "source": "review"
+        },
+        {
+          "author": "github-actions[bot]",
+          "author_association": "NONE",
+          "body": "\ud83d\udc4b Hi! Thank you for contributing to the vLLM project.\n\n\ud83d\udcac Join our developer Slack at https://slack.vllm.ai to discuss your PR in #pr-reviews, coordinate on features in #feat- channels, or join special interest groups in #sig- channels.\n\nJust a reminder: PRs would not trigger full CI run by default. Instead, it would only run `fastcheck` CI which starts running only a small and essential subset of CI tests to quickly catch errors. You can run other CI tests on top of those by going to your `fastcheck` build on Buildkite UI (linked in the PR checks section) and unblock them. If you do not have permission to unblock, ping `simon-mo` or `khluu` to add you in our Buildkite org.\n\nOnce the PR is approved and ready to go, your PR reviewer(s) can run CI to test the changes comprehensively before merging.\n\nTo run CI, PR reviewers can either: Add `ready` label to the PR or enable auto-merge.\n\n\ud83d\ude80",
+          "created_at": "2025-02-12T08:40:10Z",
+          "feedback_id": "issue-comment:2653002897",
+          "html_url": "https://github.com/vllm-project/vllm/pull/13140#issuecomment-2653002897",
+          "is_bot": true,
+          "line": null,
+          "path": null,
+          "review_state": null,
+          "source": "issue-comment"
+        },
+        {
+          "author": "wchen61",
+          "author_association": "CONTRIBUTOR",
+          "body": "> We really need to rethink this kernel. I'm okay with landing this fix in the meantime to address the correctness issue. Would you happen to have a benchmark showing this doesn't regress performance by much?\r\n\r\n@mgoin ,  I tried running **benchmarks/kernels/benchmark_moe.py** on H20 (with deepseek config) , and the data shows that there is no performance loss in the kernel. Regarding end-to-end performance, I didn't conduct a comprehensive test, but it seems that there is no noticeable performance loss.\r\n\r\nWithout this patch:\r\n`Batch size: 1, config: {'BLOCK_SIZE_M': 16, 'BLOCK_SIZE_N': 32, 'BLOCK_SIZE_K': 64, 'GROUP_SIZE_M': 1}\r\nKernel time: 163.70 us\r\nBatch size: 2, config: {'BLOCK_SIZE_M': 16, 'BLOCK_SIZE_N': 32, 'BLOCK_SIZE_K': 64, 'GROUP_SIZE_M': 1}\r\nKernel time: 313.50 us\r\nBatch size: 4, config: {'BLOCK_SIZE_M': 16, 'BLOCK_SIZE_N': 32, 'BLOCK_SIZE_K': 64, 'GROUP_SIZE_M': 1}\r\nKernel time: 548.97 us\r\nBatch size: 8, config: {'BLOCK_SIZE_M': 16, 'BLOCK_SIZE_N': 32, 'BLOCK_SIZE_K': 64, 'GROUP_SIZE_M': 1}\r\nKernel time: 1027.51 us\r\nBatch size: 16, config: {'BLOCK_SIZE_M': 16, 'BLOCK_SIZE_N': 32, 'BLOCK_SIZE_K': 64, 'GROUP_SIZE_M': 1}\r\nKernel time: 1772.54 us\r\nBatch size: 24, config: {'BLOCK_SIZE_M': 16, 'BLOCK_SIZE_N': 32, 'BLOCK_SIZE_K': 64, 'GROUP_SIZE_M': 1}\r\nKernel time: 2439.51 us\r\nBatch size: 32, config: {'BLOCK_SIZE_M': 16, 'BLOCK_SIZE_N': 32, 'BLOCK_SIZE_K': 64, 'GROUP_SIZE_M': 1}\r\nKernel time: 2897.53 us\r\nBatch size: 48, config: {'BLOCK_SIZE_M': 16, 'BLOCK_SIZE_N': 32, 'BLOCK_SIZE_K': 64, 'GROUP_SIZE_M': 1}\r\nKernel time: 3569.33 us\r\nBatch size: 64, config: {'BLOCK_SIZE_M': 16, 'BLOCK_SIZE_N': 32, 'BLOCK_SIZE_K': 64, 'GROUP_SIZE_M': 1}\r\nKernel time: 3965.31 us\r\nBatch size: 96, config: {'BLOCK_SIZE_M': 16, 'BLOCK_SIZE_N': 32, 'BLOCK_SIZE_K': 64, 'GROUP_SIZE_M': 1}\r\nKernel time: 4340.38 us\r\nBatch size: 128, config: {'BLOCK_SIZE_M': 16, 'BLOCK_SIZE_N': 32, 'BLOCK_SIZE_K': 64, 'GROUP_SIZE_M': 1}\r\nKernel time: 4585.49 us\r\nBatch size: 256, config: {'BLOCK_SIZE_M': 16, 'BLOCK_SIZE_N': 32, 'BLOCK_SIZE_K': 64, 'GROUP_SIZE_M': 1}\r\nKernel time: 4664.86 u\r\nBatch size: 512, config: {'BLOCK_SIZE_M': 64, 'BLOCK_SIZE_N': 64, 'BLOCK_SIZE_K': 32, 'GROUP_SIZE_M': 8}\r\nKernel time: 5809.67 us\r\nBatch size: 1024, config: {'BLOCK_SIZE_M': 64, 'BLOCK_SIZE_N': 64, 'BLOCK_SIZE_K': 32, 'GROUP_SIZE_M': 8}\r\nKernel time: 6229.68 \r\nBatch size: 1536, config: {'BLOCK_SIZE_M': 64, 'BLOCK_SIZE_N': 64, 'BLOCK_SIZE_K': 32, 'GROUP_SIZE_M': 8}\r\nKernel time: 6482.85 us\r\nBatch size: 2048, config: {'BLOCK_SIZE_M': 64, 'BLOCK_SIZE_N': 64, 'BLOCK_SIZE_K': 32, 'GROUP_SIZE_M': 8}\r\nKernel time: 8706.55\r\nBatch size: 3072, config: {'BLOCK_SIZE_M': 64, 'BLOCK_SIZE_N': 64, 'BLOCK_SIZE_K': 32, 'GROUP_SIZE_M': 8}\r\nKernel time: 11302.57 us\r\nBatch size: 4096, config: {'BLOCK_SIZE_M': 64, 'BLOCK_SIZE_N': 64, 'BLOCK_SIZE_K': 32, 'GROUP_SIZE_M': 8}\r\nKernel time: 14003.`\r\n\r\nWith this patch:\r\n`Batch size: 1, config: {'BLOCK_SIZE_M': 16, 'BLOCK_SIZE_N': 32, 'BLOCK_SIZE_K': 64, 'GROUP_SIZE_M': 1}\r\nKernel time: 163.86 us\r\nBatch size: 2, config: {'BLOCK_SIZE_M': 16, 'BLOCK_SIZE_N': 32, 'BLOCK_SIZE_K': 64, 'GROUP_SIZE_M': 1}\r\nKernel time: 314.06 us\r\nBatch size: 4, config: {'BLOCK_SIZE_M': 16, 'BLOCK_SIZE_N': 32, 'BLOCK_SIZE_K': 64, 'GROUP_SIZE_M': 1}\r\nKernel time: 546.44 us\r\nBatch size: 8, config: {'BLOCK_SIZE_M': 16, 'BLOCK_SIZE_N': 32, 'BLOCK_SIZE_K': 64, 'GROUP_SIZE_M': 1}\r\nKernel time: 1031.83 us\r\nBatch size: 16, config: {'BLOCK_SIZE_M': 16, 'BLOCK_SIZE_N': 32, 'BLOCK_SIZE_K': 64, 'GROUP_SIZE_M': 1}\r\nKernel time: 1773.70 us\r\nBatch size: 24, config: {'BLOCK_SIZE_M': 16, 'BLOCK_SIZE_N': 32, 'BLOCK_SIZE_K': 64, 'GROUP_SIZE_M': 1}\r\nKernel time: 2444.03 us\r\nBatch size: 32, config: {'BLOCK_SIZE_M': 16, 'BLOCK_SIZE_N': 32, 'BLOCK_SIZE_K': 64, 'GROUP_SIZE_M': 1}\r\nKernel time: 2899.38 us\r\nBatch size: 48, config: {'BLOCK_SIZE_M': 16, 'BLOCK_SIZE_N': 32, 'BLOCK_SIZE_K': 64, 'GROUP_SIZE_M': 1}\r\nKernel time: 3561.69 us\r\nBatch size: 64, config: {'BLOCK_SIZE_M': 16, 'BLOCK_SIZE_N': 32, 'BLOCK_SIZE_K': 64, 'GROUP_SIZE_M': 1}\r\nKernel time: 3975.73 us\r\nBatch size: 96, config: {'BLOCK_SIZE_M': 16, 'BLOCK_SIZE_N': 32, 'BLOCK_SIZE_K': 64, 'GROUP_SIZE_M': 1}\r\nKernel time: 4339.04 us\r\nBatch size: 128, config: {'BLOCK_SIZE_M': 16, 'BLOCK_SIZE_N': 32, 'BLOCK_SIZE_K': 64, 'GROUP_SIZE_M': 1}\r\nKernel time: 4595.56 us\r\nBatch size: 256, config: {'BLOCK_SIZE_M': 16, 'BLOCK_SIZE_N': 32, 'BLOCK_SIZE_K': 64, 'GROUP_SIZE_M': 1}\r\nKernel time: 4686.70 us\r\nBatch size: 512, config: {'BLOCK_SIZE_M': 64, 'BLOCK_SIZE_N': 64, 'BLOCK_SIZE_K': 32, 'GROUP_SIZE_M': 8}\r\nKernel time: 5811.58 us\r\nBatch size: 1024, config: {'BLOCK_SIZE_M': 64, 'BLOCK_SIZE_N': 64, 'BLOCK_SIZE_K': 32, 'GROUP_SIZE_M': 8}\r\nKernel time: 6243.57 us\r\nBatch size: 1536, config: {'BLOCK_SIZE_M': 64, 'BLOCK_SIZE_N': 64, 'BLOCK_SIZE_K': 32, 'GROUP_SIZE_M': 8}\r\nKernel time: 6515.81 us\r\nBatch size: 2048, config: {'BLOCK_SIZE_M': 64, 'BLOCK_SIZE_N': 64, 'BLOCK_SIZE_K': 32, 'GROUP_SIZE_M': 8}\r\nKernel time: 8671.36\r\nBatch size: 3072, config: {'BLOCK_SIZE_M': 64, 'BLOCK_SIZE_N': 64, 'BLOCK_SIZE_K': 32, 'GROUP_SIZE_M': 8}\r\nKernel time: 11327.06 us\r\nBatch size: 4096, config: {'BLOCK_SIZE_M': 64, 'BLOCK_SIZE_N': 64, 'BLOCK_SIZE_K': 32, 'GROUP_SIZE_M': 8}\r\nKernel time: 14027.13 us`",
+          "created_at": "2025-02-13T08:03:00Z",
+          "feedback_id": "issue-comment:2655799507",
+          "html_url": "https://github.com/vllm-project/vllm/pull/13140#issuecomment-2655799507",
+          "is_bot": false,
+          "line": null,
+          "path": null,
+          "review_state": null,
+          "source": "issue-comment"
+        },
+        {
+          "author": "wchen61",
+          "author_association": "CONTRIBUTOR",
+          "body": "Hi, @mgoin. It seems there are some failures in the tests, but they shouldn't be related to my patch. Could you please take a look at it?",
+          "created_at": "2025-02-14T12:36:49Z",
+          "feedback_id": "issue-comment:2659229377",
+          "html_url": "https://github.com/vllm-project/vllm/pull/13140#issuecomment-2659229377",
+          "is_bot": false,
+          "line": null,
+          "path": null,
+          "review_state": null,
+          "source": "issue-comment"
+        }
+      ],
+      "human_non_author_review_count": 1,
+      "judgment_lock_sha256": "sha256:19f989a3933f19fd5aa60858556880fa1214e6219e2bd38a06039b3accdc343b",
+      "merged": false,
+      "observed_at": "2026-09-01T16:22:25.491699Z",
+      "pr_author": "wchen61",
+      "pull_number": 13140,
+      "repository": "vllm-project/vllm",
+      "schema_version": "0.5",
+      "state": "closed",
+      "strict_feedback_audit_eligible": true
+    },
+    {
+      "api_response_digests": [
+        "sha256:f915a8d55390d183c3da0dc0f303a389a6223b4beb4335a50e623ebc9a696470",
+        "sha256:02a4cd49e5d6d9e3d2454bf3deba5004ba360ffcac28f2e0aa35f53abf5cd597",
+        "sha256:211cbc598556307bee2a2386827c4c2fd61cee2d0a13464118bdd125d6e68a8f",
+        "sha256:9f8efbdcb33556740361aa33f2e3bcdc094fff74063a737f495dd14904c86c2d"
+      ],
+      "case_id": "vllm-pr-14027",
+      "eligibility_reasons": [
+        "HUMAN_NON_AUTHOR_INLINE_TECHNICAL_FEEDBACK",
+        "HUMAN_NON_AUTHOR_MAINTAINER_FEEDBACK"
+      ],
+      "explicit_human_non_author_feedback_count": 4,
+      "feedback": [
+        {
+          "author": "jikunshang",
+          "author_association": "MEMBER",
+          "body": "I feel bias should also initiate to fp32.",
+          "created_at": "2025-02-28T12:28:31Z",
+          "feedback_id": "review-comment:1975332689",
+          "html_url": "https://github.com/vllm-project/vllm/pull/14027#discussion_r1975332689",
+          "is_bot": false,
+          "line": 116,
+          "path": "vllm/model_executor/models/deepseek_v2.py",
+          "review_state": null,
+          "source": "review-comment"
+        },
+        {
+          "author": "DaizeDong",
+          "author_association": "NONE",
+          "body": "Seems not necessary for a change here?\r\nI found that the initialization method for router bias is the same in [vllm](https://github.com/vllm-project/vllm/blob/main/vllm/model_executor/models/deepseek_v2.py#L120) and [HF](https://huggingface.co/deepseek-ai/DeepSeek-V3/blob/main/modeling_deepseek.py#L412) for DS V3, using `nn.Parameter` that defaults as `FP32`. And there is no type conversion before calculation in the [original HF implementation](https://huggingface.co/deepseek-ai/DeepSeek-V3/blob/main/modeling_deepseek.py#L440).",
+          "created_at": "2025-03-01T12:25:07Z",
+          "feedback_id": "review-comment:1976398345",
+          "html_url": "https://github.com/vllm-project/vllm/pull/14027#discussion_r1976398345",
+          "is_bot": false,
+          "line": 116,
+          "path": "vllm/model_executor/models/deepseek_v2.py",
+          "review_state": null,
+          "source": "review-comment"
+        },
+        {
+          "author": "jikunshang",
+          "author_association": "MEMBER",
+          "body": "make sense! thanks.",
+          "created_at": "2025-03-03T01:10:50Z",
+          "feedback_id": "review-comment:1976772898",
+          "html_url": "https://github.com/vllm-project/vllm/pull/14027#discussion_r1976772898",
+          "is_bot": false,
+          "line": 116,
+          "path": "vllm/model_executor/models/deepseek_v2.py",
+          "review_state": null,
+          "source": "review-comment"
+        },
+        {
+          "author": "hgt312",
+          "author_association": "NONE",
+          "body": "can we make the linear layer store weight in bf16 but do computation in fp32? weight itself is bf16 and do not need extra memory",
+          "created_at": "2025-04-15T01:53:43Z",
+          "feedback_id": "review-comment:2043332053",
+          "html_url": "https://github.com/vllm-project/vllm/pull/14027#discussion_r2043332053",
+          "is_bot": false,
+          "line": 116,
+          "path": "vllm/model_executor/models/deepseek_v2.py",
+          "review_state": null,
+          "source": "review-comment"
+        },
+        {
+          "author": "DaizeDong",
+          "author_association": "NONE",
+          "body": "I think the best way to do this is to pass a `quant_config` that converts bf16 weights to fp32 on the fly. Do you think it is a good idea?",
+          "created_at": "2025-04-18T07:29:48Z",
+          "feedback_id": "review-comment:2050252073",
+          "html_url": "https://github.com/vllm-project/vllm/pull/14027#discussion_r2050252073",
+          "is_bot": false,
+          "line": 116,
+          "path": "vllm/model_executor/models/deepseek_v2.py",
+          "review_state": null,
+          "source": "review-comment"
+        },
+        {
+          "author": "github-actions[bot]",
+          "author_association": "NONE",
+          "body": "\ud83d\udc4b Hi! Thank you for contributing to the vLLM project.\n\n\ud83d\udcac Join our developer Slack at https://slack.vllm.ai to discuss your PR in #pr-reviews, coordinate on features in #feat- channels, or join special interest groups in #sig- channels.\n\nJust a reminder: PRs would not trigger full CI run by default. Instead, it would only run `fastcheck` CI which starts running only a small and essential subset of CI tests to quickly catch errors. You can run other CI tests on top of those by going to your `fastcheck` build on Buildkite UI (linked in the PR checks section) and unblock them. If you do not have permission to unblock, ping `simon-mo` or `khluu` to add you in our Buildkite org.\n\nOnce the PR is approved and ready to go, your PR reviewer(s) can run CI to test the changes comprehensively before merging.\n\nTo run CI, PR reviewers can either: Add `ready` label to the PR or enable auto-merge.\n\n\ud83d\ude80",
+          "created_at": "2025-02-28T08:38:29Z",
+          "feedback_id": "issue-comment:2690050518",
+          "html_url": "https://github.com/vllm-project/vllm/pull/14027#issuecomment-2690050518",
+          "is_bot": true,
+          "line": null,
+          "path": null,
+          "review_state": null,
+          "source": "issue-comment"
+        },
+        {
+          "author": "mgoin",
+          "author_association": "MEMBER",
+          "body": "We should run some performance benchmarks to ensure we aren't regressing cc @tlrmchlsmth",
+          "created_at": "2025-02-28T14:56:10Z",
+          "feedback_id": "issue-comment:2690849736",
+          "html_url": "https://github.com/vllm-project/vllm/pull/14027#issuecomment-2690849736",
+          "is_bot": false,
+          "line": null,
+          "path": null,
+          "review_state": null,
+          "source": "issue-comment"
+        },
+        {
+          "author": "DaizeDong",
+          "author_association": "NONE",
+          "body": "See if this version can be merged?",
+          "created_at": "2025-04-08T07:11:09Z",
+          "feedback_id": "issue-comment:2785458709",
+          "html_url": "https://github.com/vllm-project/vllm/pull/14027#issuecomment-2785458709",
+          "is_bot": false,
+          "line": null,
+          "path": null,
+          "review_state": null,
+          "source": "issue-comment"
+        },
+        {
+          "author": "hgt312",
+          "author_association": "NONE",
+          "body": "any update on this PR?",
+          "created_at": "2025-04-12T02:13:37Z",
+          "feedback_id": "issue-comment:2798388727",
+          "html_url": "https://github.com/vllm-project/vllm/pull/14027#issuecomment-2798388727",
+          "is_bot": false,
+          "line": null,
+          "path": null,
+          "review_state": null,
+          "source": "issue-comment"
+        },
+        {
+          "author": "DaizeDong",
+          "author_association": "NONE",
+          "body": "> any update on this PR?\r\n\r\nMerged the latest branch and resolved conflicts.",
+          "created_at": "2025-04-14T09:02:40Z",
+          "feedback_id": "issue-comment:2800959864",
+          "html_url": "https://github.com/vllm-project/vllm/pull/14027#issuecomment-2800959864",
+          "is_bot": false,
+          "line": null,
+          "path": null,
+          "review_state": null,
+          "source": "issue-comment"
+        },
+        {
+          "author": "hgt312",
+          "author_association": "NONE",
+          "body": "Oh what I'm asking is will there be reviews to check?",
+          "created_at": "2025-04-14T23:46:17Z",
+          "feedback_id": "issue-comment:2803331560",
+          "html_url": "https://github.com/vllm-project/vllm/pull/14027#issuecomment-2803331560",
+          "is_bot": false,
+          "line": null,
+          "path": null,
+          "review_state": null,
+          "source": "issue-comment"
+        },
+        {
+          "author": "hgt312",
+          "author_association": "NONE",
+          "body": "and bias should be inited in fp32. in config, `\"torch_dtype\": \"bfloat16\"`, default dtype is bf16, so that when not specified, bias will be bf16.\r\n\r\nI'm running some test and can post some results later",
+          "created_at": "2025-04-15T01:57:47Z",
+          "feedback_id": "issue-comment:2803539213",
+          "html_url": "https://github.com/vllm-project/vllm/pull/14027#issuecomment-2803539213",
+          "is_bot": false,
+          "line": null,
+          "path": null,
+          "review_state": null,
+          "source": "issue-comment"
+        },
+        {
+          "author": "hgt312",
+          "author_association": "NONE",
+          "body": "vllm v0.8.3\r\n\r\n| Task              | Version | Filter            | n-shot | Metric                     | Value   | Stderr   |\r\n|-------------------|---------|--------------------|--------|-----------------------------|---------|----------|\r\n| arc_challenge     | 1       | none               | 0      | acc                         | 0.6314  | 0.0141   |\r\n| arc_challenge     |         | none               | 0      | acc_norm                    | 0.6442  | 0.014    |\r\n| arc_easy          | 1       | none               | 0      | acc                         | 0.8607  | 0.0071   |\r\n| arc_easy          |         | none               | 0      | acc_norm                    | 0.8359  | 0.0076   |\r\n| gsm8k             | 3       | flexible-extract   | 5      | exact_match                 | 0.9515  | 0.0059   |\r\n| gsm8k             |         | strict-match       | 5      | exact_match                 | 0.9507  | 0.006    |\r\n| ifeval            | 4       | none               | 0      | inst_level_loose_acc        | 0.5444  | N/A      |\r\n| ifeval            |         | none               | 0      | inst_level_strict_acc       | 0.4700  | N/A      |\r\n| ifeval            |         | none               | 0      | prompt_level_loose_acc      | 0.4307  | 0.0213   |\r\n| ifeval            |         | none               | 0      | prompt_level_strict_acc     | 0.3401  | 0.0204   |\r\n| winogrande        | 1       | none               | 0      | acc                         | 0.7545  | 0.0121   |\r\n| mmlu              | 2       | none               |        | acc                         | 0.8546  | 0.0028   |\r\n| lambada_openai    | 1       | none               | 0      | acc                         | 0.5145  | 0.007    |\r\n| lambada_openai    |         | none               | 0      | perplexity                  | 8.5704  | 0.2438   |\r\n| lambada_standard  | 1       | none               | 0      | acc                         | 0.4859  | 0.007    |\r\n| lambada_standard  |         | none               | 0      | perplexity                  | 9.7722  | 0.2866   |\r\n\r\nvllm v0.8.3 with fp32 router weight and correction bias\r\n\r\n| Task              | Version | Filter            | n-shot | Metric                     | Value   | Stderr   |\r\n|-------------------|---------|--------------------|--------|-----------------------------|---------|----------|\r\n| arc_challenge     | 1       | none               | 0      | acc                         | 0.6305  | 0.0141   |\r\n| arc_challenge     |         | none               | 0      | acc_norm                    | 0.6399  | 0.014    |\r\n| arc_easy          | 1       | none               | 0      | acc                         | 0.8615  | 0.0071   |\r\n| arc_easy          |         | none               | 0      | acc_norm                    | 0.8388  | 0.0075   |\r\n| gsm8k             | 3       | flexible-extract   | 5      | exact_match                 | 0.9591  | 0.0055   |\r\n| gsm8k             |         | strict-match       | 5      | exact_match                 | 0.9583  | 0.0055   |\r\n| ifeval            | 4       | none               | 0      | inst_level_loose_acc        | 0.5204  | N/A      |\r\n| ifeval            |         | none               | 0      | inst_level_strict_acc       | 0.4496  | N/A      |\r\n| ifeval            |         | none               | 0      | prompt_level_loose_acc      | 0.4104  | 0.0212   |\r\n| ifeval            |         | none               | 0      | prompt_level_strict_acc     | 0.3327  | 0.0203   |\r\n| winogrande        | 1       | none               | 0      | acc                         | 0.7577  | 0.012    |\r\n| mmlu              | 2       | none               |        | acc                         | 0.8544  | 0.0028   |\r\n| lambada_openai    | 1       | none               | 0      | acc                         | 0.5112  | 0.007    |\r\n| lambada_openai    |         | none               | 0      | perplexity                  | 8.5911  | 0.2453   |\r\n| lambada_standard  | 1       | none               | 0      | acc                         | 0.4859  | 0.007    |\r\n| lambada_standard  |         | none               | 0      | perplexity                  | 9.7067  | 0.2842   |",
+          "created_at": "2025-04-16T22:46:55Z",
+          "feedback_id": "issue-comment:2811019420",
+          "html_url": "https://github.com/vllm-project/vllm/pull/14027#issuecomment-2811019420",
+          "is_bot": false,
+          "line": null,
+          "path": null,
+          "review_state": null,
+          "source": "issue-comment"
+        },
+        {
+          "author": "DaizeDong",
+          "author_association": "NONE",
+          "body": "Seems most benchmarks stay relatively stable, but `ifeval` regresses a lot. Is this reasonable?",
+          "created_at": "2025-04-18T07:46:28Z",
+          "feedback_id": "issue-comment:2814846618",
+          "html_url": "https://github.com/vllm-project/vllm/pull/14027#issuecomment-2814846618",
+          "is_bot": false,
+          "line": null,
+          "path": null,
+          "review_state": null,
+          "source": "issue-comment"
+        },
+        {
+          "author": "hgt312",
+          "author_association": "NONE",
+          "body": "no much idea about evaluation results. i dont know if lm-eval is the right to why to evaluate, as offical ifeval score is 80+\r\nsee https://huggingface.co/deepseek-ai/DeepSeek-R1",
+          "created_at": "2025-04-18T07:52:44Z",
+          "feedback_id": "issue-comment:2814855541",
+          "html_url": "https://github.com/vllm-project/vllm/pull/14027#issuecomment-2814855541",
+          "is_bot": false,
+          "line": null,
+          "path": null,
+          "review_state": null,
+          "source": "issue-comment"
+        }
+      ],
+      "human_non_author_review_count": 3,
+      "judgment_lock_sha256": "sha256:089b39d7662fc371e5bf4d1cc141a400f22fd0eb97e7080fc1259e87fb25aec7",
+      "merged": false,
+      "observed_at": "2026-09-01T16:22:29.559057Z",
+      "pr_author": "DaizeDong",
+      "pull_number": 14027,
+      "repository": "vllm-project/vllm",
+      "schema_version": "0.5",
+      "state": "closed",
+      "strict_feedback_audit_eligible": true
+    }
+  ],
+  "judgment_lock_set_sha256": "sha256:35dd69c9341a2712973f8274e7660ef475ee4d9abf01266eecb8f6d1e3761e0e",
+  "protocol_id": "historical-reviewed-failure-alignment-v0.5-r2",
+  "reveal_sha256": "sha256:df27adf28510c8d1f229b9d6ecaa27c1101ff3727073748bba5f7b70fa30ef35",
+  "revealed_after_lock": true,
+  "schema_version": "0.5"
+}

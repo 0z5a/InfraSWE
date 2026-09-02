@@ -1,0 +1,119 @@
+{
+  "case_id": "cutlass-pr-2275",
+  "created_at": "2026-09-02T02:42:43.043576+00:00",
+  "duration_seconds": 11.088441212999896,
+  "environment": {
+    "cmake": "/workspace/infraswe_eval/extended-r6/toolchain-venv/bin/cmake",
+    "cuda_visible_devices": null,
+    "nvcc": "/workspace/infraswe_eval/extended-r6/cuda-local/usr/local/cuda-12.8/bin/nvcc"
+  },
+  "evidence_sha256": "sha256:c92ba416d386ee649867253dab590e0304524701f0786f35c69675014b9e00c1",
+  "facts": {
+    "aot_compilation_completed_before_execution": false,
+    "builds": {
+      "base": {
+        "build": {
+          "command": [
+            "/workspace/infraswe_eval/extended-r6/toolchain-venv/bin/cmake",
+            "--build",
+            "/workspace/infraswe_eval/extended-r6/build/cutlass-v2/base",
+            "--target",
+            "68_hopper_fp8_warp_specialized_grouped_gemm_with_blockwise_scaling",
+            "-j",
+            "2"
+          ],
+          "duration_seconds": 1.2737886539998726,
+          "return_code": 1,
+          "stderr_sha256": "sha256:12ae32cb1ec02d01eda3581b127c1fee3b0dc53572ed6baf239721a03d82e126",
+          "stderr_tail": "",
+          "stdout_sha256": "sha256:d2ab423d9e84ed2a0fecd9591d7523c4471454b636f6c2fcdd7ffce6d3012add",
+          "stdout_tail": "[1/2] Building CUDA object examples/68_hopper_fp8_warp_specialized_grouped_gemm_with_blockwise_scaling/CMakeFiles/68_hopper_fp8_warp_specialized_grouped_gemm_with_blockwise_scaling.dir/68_hopper_fp8_warp_specialized_grouped_gemm_with_blockwise_scaling.cu.o\nFAILED: examples/68_hopper_fp8_warp_specialized_grouped_gemm_with_blockwise_scaling/CMakeFiles/68_hopper_fp8_warp_specialized_grouped_gemm_with_blockwise_scaling.dir/68_hopper_fp8_warp_specialized_grouped_gemm_with_blockwise_scaling.cu.o \n/workspace/infraswe_eval/extended-r6/cuda-local/usr/local/cuda-12.8/bin/nvcc -forward-unknown-to-host-compiler  -I/workspace/infraswe_eval/extended-r6/sources/cutlass/base/include -I/workspace/infraswe_eval/extended-r6/sources/cutlass/base/examples/common -I/workspace/infraswe_eval/extended-r6/build/cutlass-v2/base/include -I/workspace/infraswe_eval/extended-r6/sources/cutlass/base/tools/util/include -isystem /workspace/infraswe_eval/extended-r6/cuda-local/usr/local/cuda-12.8/include -isystem /workspace/infraswe_eval/extended-r6/cuda-local/usr/local/cuda-12.8/include/cccl -DCUTLASS_VERSIONS_GENERATED -O3 -DNDEBUG -std=c++17 \"--generate-code=arch=compute_90a,code=[sm_90a]\" \"--generate-code=arch=compute_90a,code=[compute_90a]\" -Xcompiler=-fPIE -DCUTLASS_ENABLE_TENSOR_CORE_MMA=1 -DCUTLASS_ENABLE_GDC_FOR_SM100=1 --expt-relaxed-constexpr -ftemplate-backtrace-limit=0 -DCUTLASS_TEST_LEVEL=0 -DCUTLASS_TEST_ENABLE_CACHED_RESULTS=1 -DCUTLASS_CONV_UNIT_TEST_RIGOROUS_SIZE_ENABLED=1 -DCUTLASS_DEBUG_TRACE_LEVEL=0 -Xcompiler=-Wconversion -Xcompiler=-fno-strict-aliasing -MD -MT examples/68_hopper_fp8_warp_specialized_grouped_gemm_with_blockwise_scaling/CMakeFiles/68_hopper_fp8_warp_specialized_grouped_gemm_with_blockwise_scaling.dir/68_hopper_fp8_warp_specialized_grouped_gemm_with_blockwise_scaling.cu.o -MF examples/68_hopper_fp8_warp_specialized_grouped_gemm_with_blockwise_scaling/CMakeFiles/68_hopper_fp8_warp_specialized_grouped_gemm_with_blockwise_scaling.dir/68_hopper_fp8_warp_specialized_grouped_gemm_with_blockwise_scaling.cu.o.d -x cu -c /workspace/infraswe_eval/extended-r6/sources/cutlass/base/examples/68_hopper_fp8_warp_specialized_grouped_gemm_with_blockwise_scaling/68_hopper_fp8_warp_specialized_grouped_gemm_with_blockwise_scaling.cu -o examples/68_hopper_fp8_warp_specialized_grouped_gemm_with_blockwise_scaling/CMakeFiles/68_hopper_fp8_warp_specialized_grouped_gemm_with_blockwise_scaling.dir/68_hopper_fp8_warp_specialized_grouped_gemm_with_blockwise_scaling.cu.o\nIn file included from /workspace/infraswe_eval/extended-r6/sources/cutlass/base/examples/68_hopper_fp8_warp_specialized_grouped_gemm_with_blockwise_scaling/68_hopper_fp8_warp_specialized_grouped_gemm_with_blockwise_scaling.cu:89:\n/workspace/infraswe_eval/extended-r6/sources/cutlass/base/tools/util/include/cutlass/util/reference/device/tensor_fill.h:52:10: fatal error: curand_kernel.h: No such file or directory\n   52 | #include <curand_kernel.h>\n      |          ^~~~~~~~~~~~~~~~~\ncompilation terminated.\nninja: build stopped: subcommand failed.\n",
+          "timed_out": false
+        },
+        "configure": {
+          "command": [
+            "/workspace/infraswe_eval/extended-r6/toolchain-venv/bin/cmake",
+            "-S",
+            "/workspace/infraswe_eval/extended-r6/sources/cutlass/base",
+            "-B",
+            "/workspace/infraswe_eval/extended-r6/build/cutlass-v2/base",
+            "-GNinja",
+            "-DCMAKE_CUDA_COMPILER=/workspace/infraswe_eval/extended-r6/cuda-local/usr/local/cuda-12.8/bin/nvcc",
+            "-DCUTLASS_NVCC_ARCHS=90a",
+            "-DCUTLASS_ENABLE_TESTS=OFF",
+            "-DCUTLASS_ENABLE_EXAMPLES=ON",
+            "-DCUTLASS_ENABLE_LIBRARY=OFF"
+          ],
+          "duration_seconds": 4.16900542500025,
+          "return_code": 0,
+          "stderr_sha256": "sha256:30fa13bdf9d4f122db2d3d9bc112bc64ebf6de518e0fc7601e8710b213f14e37",
+          "stderr_tail": "fatal: not a git repository (or any of the parent directories): .git\n",
+          "stdout_sha256": "sha256:f0533ec440d0e25a746c1f735d53c37b59b3d8dfaaa0549781d914d77865f3b7",
+          "stdout_tail": "-- CMake Version: 3.31.6\n-- CUTLASS 3.9.1\n-- The CXX compiler identification is GNU 12.3.0\n-- Detecting CXX compiler ABI info\n-- Detecting CXX compiler ABI info - done\n-- Check for working CXX compiler: /usr/bin/c++ - skipped\n-- Detecting CXX compile features\n-- Detecting CXX compile features - done\n-- The CUDA compiler identification is NVIDIA 12.8.93 with host compiler GNU 12.3.0\n-- Detecting CUDA compiler ABI info\n-- Detecting CUDA compiler ABI info - done\n-- Check for working CUDA compiler: /workspace/infraswe_eval/extended-r6/cuda-local/usr/local/cuda-12.8/bin/nvcc - skipped\n-- Detecting CUDA compile features\n-- Detecting CUDA compile features - done\n-- Found CUDAToolkit: /workspace/infraswe_eval/extended-r6/cuda-local/usr/local/cuda-12.8/targets/x86_64-linux/include (found version \"12.8.93\")\n-- Performing Test CMAKE_HAVE_LIBC_PTHREAD\n-- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Success\n-- Found Threads: TRUE\n-- CUDART: /workspace/infraswe_eval/extended-r6/cuda-local/usr/local/cuda-12.8/lib64/libcudart.so\n-- CUDA Driver: /workspace/infraswe_eval/extended-r6/cuda-local/usr/local/cuda-12.8/lib64/stubs/libcuda.so\n-- NVRTC: Not Found\n-- Default Install Location: install\n-- Found Python3: /usr/bin/python3.10 (found suitable version \"3.10.12\", minimum required is \"3.5\") found components: Interpreter\n-- CUDA Compilation Architectures: 90a\n-- Enable caching of reference results in conv unit tests\n-- Enable rigorous conv problem sizes in conv unit tests\n-- Grid Dependency Control (GDC) is enabled for SM100 kernels (required for programmatic dependent launches).\n-- Using the following NVCC flags: \n  --expt-relaxed-constexpr\n  -ftemplate-backtrace-limit=0\n  -DCUTLASS_TEST_LEVEL=0\n  -DCUTLASS_TEST_ENABLE_CACHED_RESULTS=1\n  -DCUTLASS_CONV_UNIT_TEST_RIGOROUS_SIZE_ENABLED=1\n  -DCUTLASS_DEBUG_TRACE_LEVEL=0\n  -Xcompiler=-Wconversion\n  -Xcompiler=-fno-strict-aliasing\n-- CUTLASS Revision: Unable to detect, Git returned code 128.\n-- Configuring cublas ...\n-- cuBLAS Disabled.\n-- Configuring cuBLAS ... done.\n-- Configuring done (3.7s)\n-- Generating done (0.2s)\n-- Build files have been written to: /workspace/infraswe_eval/extended-r6/build/cutlass-v2/base\n",
+          "timed_out": false
+        }
+      },
+      "head": {
+        "build": {
+          "command": [
+            "/workspace/infraswe_eval/extended-r6/toolchain-venv/bin/cmake",
+            "--build",
+            "/workspace/infraswe_eval/extended-r6/build/cutlass-v2/head",
+            "--target",
+            "68_hopper_fp8_warp_specialized_grouped_gemm_with_blockwise_scaling",
+            "-j",
+            "2"
+          ],
+          "duration_seconds": 1.2872808350002742,
+          "return_code": 1,
+          "stderr_sha256": "sha256:12ae32cb1ec02d01eda3581b127c1fee3b0dc53572ed6baf239721a03d82e126",
+          "stderr_tail": "",
+          "stdout_sha256": "sha256:42a517229627cc1c42d8591a39f4a339600141ec7e1ba530b0a7181e1f1d5cc9",
+          "stdout_tail": "[1/2] Building CUDA object examples/68_hopper_fp8_warp_specialized_grouped_gemm_with_blockwise_scaling/CMakeFiles/68_hopper_fp8_warp_specialized_grouped_gemm_with_blockwise_scaling.dir/68_hopper_fp8_warp_specialized_grouped_gemm_with_blockwise_scaling.cu.o\nFAILED: examples/68_hopper_fp8_warp_specialized_grouped_gemm_with_blockwise_scaling/CMakeFiles/68_hopper_fp8_warp_specialized_grouped_gemm_with_blockwise_scaling.dir/68_hopper_fp8_warp_specialized_grouped_gemm_with_blockwise_scaling.cu.o \n/workspace/infraswe_eval/extended-r6/cuda-local/usr/local/cuda-12.8/bin/nvcc -forward-unknown-to-host-compiler  -I/workspace/infraswe_eval/extended-r6/sources/cutlass/head/include -I/workspace/infraswe_eval/extended-r6/sources/cutlass/head/examples/common -I/workspace/infraswe_eval/extended-r6/build/cutlass-v2/head/include -I/workspace/infraswe_eval/extended-r6/sources/cutlass/head/tools/util/include -isystem /workspace/infraswe_eval/extended-r6/cuda-local/usr/local/cuda-12.8/include -isystem /workspace/infraswe_eval/extended-r6/cuda-local/usr/local/cuda-12.8/include/cccl -DCUTLASS_VERSIONS_GENERATED -O3 -DNDEBUG -std=c++17 \"--generate-code=arch=compute_90a,code=[sm_90a]\" \"--generate-code=arch=compute_90a,code=[compute_90a]\" -Xcompiler=-fPIE -DCUTLASS_ENABLE_TENSOR_CORE_MMA=1 -DCUTLASS_ENABLE_GDC_FOR_SM100=1 --expt-relaxed-constexpr -ftemplate-backtrace-limit=0 -DCUTLASS_TEST_LEVEL=0 -DCUTLASS_TEST_ENABLE_CACHED_RESULTS=1 -DCUTLASS_CONV_UNIT_TEST_RIGOROUS_SIZE_ENABLED=1 -DCUTLASS_DEBUG_TRACE_LEVEL=0 -Xcompiler=-Wconversion -Xcompiler=-fno-strict-aliasing -MD -MT examples/68_hopper_fp8_warp_specialized_grouped_gemm_with_blockwise_scaling/CMakeFiles/68_hopper_fp8_warp_specialized_grouped_gemm_with_blockwise_scaling.dir/68_hopper_fp8_warp_specialized_grouped_gemm_with_blockwise_scaling.cu.o -MF examples/68_hopper_fp8_warp_specialized_grouped_gemm_with_blockwise_scaling/CMakeFiles/68_hopper_fp8_warp_specialized_grouped_gemm_with_blockwise_scaling.dir/68_hopper_fp8_warp_specialized_grouped_gemm_with_blockwise_scaling.cu.o.d -x cu -c /workspace/infraswe_eval/extended-r6/sources/cutlass/head/examples/68_hopper_fp8_warp_specialized_grouped_gemm_with_blockwise_scaling/68_hopper_fp8_warp_specialized_grouped_gemm_with_blockwise_scaling.cu -o examples/68_hopper_fp8_warp_specialized_grouped_gemm_with_blockwise_scaling/CMakeFiles/68_hopper_fp8_warp_specialized_grouped_gemm_with_blockwise_scaling.dir/68_hopper_fp8_warp_specialized_grouped_gemm_with_blockwise_scaling.cu.o\nIn file included from /workspace/infraswe_eval/extended-r6/sources/cutlass/head/examples/68_hopper_fp8_warp_specialized_grouped_gemm_with_blockwise_scaling/68_hopper_fp8_warp_specialized_grouped_gemm_with_blockwise_scaling.cu:89:\n/workspace/infraswe_eval/extended-r6/sources/cutlass/head/tools/util/include/cutlass/util/reference/device/tensor_fill.h:52:10: fatal error: curand_kernel.h: No such file or directory\n   52 | #include <curand_kernel.h>\n      |          ^~~~~~~~~~~~~~~~~\ncompilation terminated.\nninja: build stopped: subcommand failed.\n",
+          "timed_out": false
+        },
+        "configure": {
+          "command": [
+            "/workspace/infraswe_eval/extended-r6/toolchain-venv/bin/cmake",
+            "-S",
+            "/workspace/infraswe_eval/extended-r6/sources/cutlass/head",
+            "-B",
+            "/workspace/infraswe_eval/extended-r6/build/cutlass-v2/head",
+            "-GNinja",
+            "-DCMAKE_CUDA_COMPILER=/workspace/infraswe_eval/extended-r6/cuda-local/usr/local/cuda-12.8/bin/nvcc",
+            "-DCUTLASS_NVCC_ARCHS=90a",
+            "-DCUTLASS_ENABLE_TESTS=OFF",
+            "-DCUTLASS_ENABLE_EXAMPLES=ON",
+            "-DCUTLASS_ENABLE_LIBRARY=OFF"
+          ],
+          "duration_seconds": 4.356040626999857,
+          "return_code": 0,
+          "stderr_sha256": "sha256:30fa13bdf9d4f122db2d3d9bc112bc64ebf6de518e0fc7601e8710b213f14e37",
+          "stderr_tail": "fatal: not a git repository (or any of the parent directories): .git\n",
+          "stdout_sha256": "sha256:e8e36851bb185f08f52b0fc51e4992b1692d63eb902fc2f1f5c2bdc2f5c43c8d",
+          "stdout_tail": "-- CMake Version: 3.31.6\n-- CUTLASS 3.9.1\n-- The CXX compiler identification is GNU 12.3.0\n-- Detecting CXX compiler ABI info\n-- Detecting CXX compiler ABI info - done\n-- Check for working CXX compiler: /usr/bin/c++ - skipped\n-- Detecting CXX compile features\n-- Detecting CXX compile features - done\n-- The CUDA compiler identification is NVIDIA 12.8.93 with host compiler GNU 12.3.0\n-- Detecting CUDA compiler ABI info\n-- Detecting CUDA compiler ABI info - done\n-- Check for working CUDA compiler: /workspace/infraswe_eval/extended-r6/cuda-local/usr/local/cuda-12.8/bin/nvcc - skipped\n-- Detecting CUDA compile features\n-- Detecting CUDA compile features - done\n-- Found CUDAToolkit: /workspace/infraswe_eval/extended-r6/cuda-local/usr/local/cuda-12.8/targets/x86_64-linux/include (found version \"12.8.93\")\n-- Performing Test CMAKE_HAVE_LIBC_PTHREAD\n-- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Success\n-- Found Threads: TRUE\n-- CUDART: /workspace/infraswe_eval/extended-r6/cuda-local/usr/local/cuda-12.8/lib64/libcudart.so\n-- CUDA Driver: /workspace/infraswe_eval/extended-r6/cuda-local/usr/local/cuda-12.8/lib64/stubs/libcuda.so\n-- NVRTC: Not Found\n-- Default Install Location: install\n-- Found Python3: /usr/bin/python3.10 (found suitable version \"3.10.12\", minimum required is \"3.5\") found components: Interpreter\n-- CUDA Compilation Architectures: 90a\n-- Enable caching of reference results in conv unit tests\n-- Enable rigorous conv problem sizes in conv unit tests\n-- Grid Dependency Control (GDC) is enabled for SM100 kernels (required for programmatic dependent launches).\n-- Using the following NVCC flags: \n  --expt-relaxed-constexpr\n  -ftemplate-backtrace-limit=0\n  -DCUTLASS_TEST_LEVEL=0\n  -DCUTLASS_TEST_ENABLE_CACHED_RESULTS=1\n  -DCUTLASS_CONV_UNIT_TEST_RIGOROUS_SIZE_ENABLED=1\n  -DCUTLASS_DEBUG_TRACE_LEVEL=0\n  -Xcompiler=-Wconversion\n  -Xcompiler=-fno-strict-aliasing\n-- CUTLASS Revision: Unable to detect, Git returned code 128.\n-- Configuring cublas ...\n-- cuBLAS Disabled.\n-- Configuring cuBLAS ... done.\n-- Configuring done (3.9s)\n-- Generating done (0.2s)\n-- Build files have been written to: /workspace/infraswe_eval/extended-r6/build/cutlass-v2/head\n",
+          "timed_out": false
+        }
+      }
+    },
+    "correctness": {},
+    "source_contract": {
+      "base_final_tile_guard_count": 0,
+      "head_final_tile_guard_count": 1
+    },
+    "steady_state_compile_seconds": null,
+    "timing": null
+  },
+  "failure_codes": [],
+  "infrastructure_codes": [
+    "CUTLASS_EXAMPLE_BUILD_FAILED"
+  ],
+  "probe": "cutlass-group-scale-k128-h100-v1",
+  "protocol_id": "historical-pr-blind-cross-project-v0.5-r6",
+  "schema_version": "0.5",
+  "source_identity": {
+    "base_source_sha256": "sha256:94215365c2163863020baf09e42c41de2faea047dca6b035987adbc8d574fdd9",
+    "head_source_sha256": "sha256:157e3e29c367f0afe5e4d208b3492c06d918ead16a097d2d214b2c29b639badf"
+  },
+  "status": "unresolved"
+}

@@ -1,0 +1,573 @@
+{
+  "evidence_bindings": {
+    "cutlass-pr-3427": {
+      "probes/cutlass-pr-3427-scaled-basis.json": "sha256:6bed2b827fef79e123009c0ee3fd9f5d91fa35a3d30cb2e23ac85a976339ca41",
+      "probes/cutlass-pr-3427-sm120-aot.json": "sha256:805df2963cb04bb74d77c2dc47bd0127ae49ed6a47aad7c107d2b7664b1ceb65",
+      "static/cutlass-pr-3427.json": "sha256:28794b8d38e08c7731e83a188470d97b59d533c014b22b5fceef17aaaa428c16"
+    },
+    "deepgemm-pr-389": {
+      "probes/deepgemm-pr-389-sm100-aot.json": "sha256:ca96e77a5d8c0dc79e21a26617b6fe8c09a740321949f7541497952d46f42533",
+      "static/deepgemm-pr-389.json": "sha256:0afaebabb7c286679381b6611dff494e930f1bc7ed3a06382d3e93db4c4d4af3"
+    },
+    "liger-pr-1328": {
+      "probes/liger-pr-1328-h100.json": "sha256:3aa3db44f002ab09c37804586adf6803981e3fc206e959193be1431f0f388c7d",
+      "static/liger-pr-1328.json": "sha256:08d6aa24d06a760bf6676346c3a4ccd4825a54d327ca6472a8998c86379dc82c"
+    },
+    "megatron-pr-6174": {
+      "probes/megatron-pr-6174.json": "sha256:567a7bbf931bf15f2be951a507ed73b4e872e6d411a69417c870102c32cc17fb",
+      "static/megatron-pr-6174.json": "sha256:e7869199d193629fefd9339a358c92cb22817387c72e81310490c9020ffea0c4"
+    },
+    "torchtitan-pr-4032": {
+      "probes/torchtitan-pr-4032.json": "sha256:af4659d8e889daedc86295d3e91ad3715a3e9a7b237d1b5668656550495e79c1",
+      "static/torchtitan-pr-4032.json": "sha256:67b96cc3dab1a6792d9e73e3a265d60451a66e8ea9d85be4c28a534aa2b82bf6"
+    },
+    "verl-pr-7220": {
+      "probes/verl-pr-7220.json": "sha256:6302d540ae60a88f5be24956b990c096a10b6a6fcb5d749b7033720ca6089059",
+      "static/verl-pr-7220.json": "sha256:23aee6bab37d1f556984b2bb073c07756365935fe5c078ccc4089fbd31f35e4e"
+    }
+  },
+  "frozen_at": "2026-09-02T03:56:11.106997+00:00",
+  "learned_model_used": false,
+  "lock_set_sha256": "sha256:c0422e6de0fd157036a738bd2c5ff6e5cddbd94af4857476901429314339ca50",
+  "locks": [
+    {
+      "lock_sha256": "sha256:9aa0e65bc99b5a1be447832a6d9615b55a2540e01a58ca1c3134317590a9738e",
+      "material": {
+        "candidate_sha256": "sha256:abb4622b4e2b3c18543cc8e15847ef0381712b9efc2361e3bc7669dbf97a775e",
+        "case_id": "cutlass-pr-3427",
+        "decision": "revise",
+        "evidence_sha256": "sha256:68d9d3576e587b61d63ecee6076f7fc8fdd3a15a45b3378df0b8798133529d74",
+        "frozen_at": "2026-09-02T03:56:11.106997Z",
+        "narrative": "[scaled-basis-equality-compiles-and-distinguishes-bases: pass] The extracted and full-header probes reproduce the base type-comparison failure; the exact head compiles, executes, retains equal-basis behavior, and returns false for mismatched comparable and uncomparable basis value types. [sm120-metadata-k-rejects-invalid-and-retains-valid-neighbor: pass] Exact SM120a AOT rejects head K=128 at the new metadata-atom assertion and both base and head instantiate the valid K=256 neighbor. [both-cutlass-changes-have-direct-regressions: fail] The PR changes no test file and the exact test search finds no retained direct regression for either ScaledBasis equality or metadata K. [sm120-runtime-performance-is-out-of-cell: unresolved] The available H100 is SM90; SM120 runtime and performance are not inferred from AOT.",
+        "observations": [
+          {
+            "blocking": true,
+            "conclusion": "The extracted and full-header probes reproduce the base type-comparison failure; the exact head compiles, executes, retains equal-basis behavior, and returns false for mismatched comparable and uncomparable basis value types.",
+            "counterevidence": [],
+            "evidence": [
+              "sha256:28794b8d38e08c7731e83a188470d97b59d533c014b22b5fceef17aaaa428c16",
+              "sha256:6bed2b827fef79e123009c0ee3fd9f5d91fa35a3d30cb2e23ac85a976339ca41",
+              "sha256:805df2963cb04bb74d77c2dc47bd0127ae49ed6a47aad7c107d2b7664b1ceb65"
+            ],
+            "failure_code": null,
+            "question": "Do equal ScaledBasis values remain equal while mismatched bases compare unequal?",
+            "rule_id": "scaled-basis-equality-compiles-and-distinguishes-bases",
+            "status": "pass"
+          },
+          {
+            "blocking": true,
+            "conclusion": "Exact SM120a AOT rejects head K=128 at the new metadata-atom assertion and both base and head instantiate the valid K=256 neighbor.",
+            "counterevidence": [
+              "Base K=128 also fails later at generic tile_to_shape divisibility; the head adds the intended earlier, domain-specific diagnostic."
+            ],
+            "evidence": [
+              "sha256:28794b8d38e08c7731e83a188470d97b59d533c014b22b5fceef17aaaa428c16",
+              "sha256:6bed2b827fef79e123009c0ee3fd9f5d91fa35a3d30cb2e23ac85a976339ca41",
+              "sha256:805df2963cb04bb74d77c2dc47bd0127ae49ed6a47aad7c107d2b7664b1ceb65"
+            ],
+            "failure_code": null,
+            "question": "Does invalid K fail at the intended boundary while a valid neighbor instantiates?",
+            "rule_id": "sm120-metadata-k-rejects-invalid-and-retains-valid-neighbor",
+            "status": "pass"
+          },
+          {
+            "blocking": true,
+            "conclusion": "The PR changes no test file and the exact test search finds no retained direct regression for either ScaledBasis equality or metadata K.",
+            "counterevidence": [
+              "Both offline compile contracts pass on the available toolchain."
+            ],
+            "evidence": [
+              "sha256:28794b8d38e08c7731e83a188470d97b59d533c014b22b5fceef17aaaa428c16",
+              "sha256:6bed2b827fef79e123009c0ee3fd9f5d91fa35a3d30cb2e23ac85a976339ca41",
+              "sha256:805df2963cb04bb74d77c2dc47bd0127ae49ed6a47aad7c107d2b7664b1ceb65"
+            ],
+            "failure_code": "CUTLASS_EQUALITY_AND_METADATA_K_DIRECT_TESTS_MISSING",
+            "question": "Are direct regression tests present for both changed behaviors?",
+            "rule_id": "both-cutlass-changes-have-direct-regressions",
+            "status": "fail"
+          },
+          {
+            "blocking": false,
+            "conclusion": "The available H100 is SM90; SM120 runtime and performance are not inferred from AOT.",
+            "counterevidence": [],
+            "evidence": [
+              "sha256:28794b8d38e08c7731e83a188470d97b59d533c014b22b5fceef17aaaa428c16",
+              "sha256:6bed2b827fef79e123009c0ee3fd9f5d91fa35a3d30cb2e23ac85a976339ca41",
+              "sha256:805df2963cb04bb74d77c2dc47bd0127ae49ed6a47aad7c107d2b7664b1ceb65"
+            ],
+            "failure_code": "CUTLASS_SM120_RUNTIME_HARDWARE_UNAVAILABLE",
+            "question": "Are SM120 runtime correctness and performance retained?",
+            "rule_id": "sm120-runtime-performance-is-out-of-cell",
+            "status": "unresolved"
+          }
+        ],
+        "policy_id": "historical-explainable-agent-v0.5-r4",
+        "rationale_codes": [
+          "CUTLASS_EQUALITY_AND_METADATA_K_DIRECT_TESTS_MISSING"
+        ],
+        "schema_version": "0.5",
+        "test_plan_sha256": "sha256:aa73f348b2d5ce4a19fa0c3a6e0159681f10254f5a878ad3cabbd8709f3bb888"
+      }
+    },
+    {
+      "lock_sha256": "sha256:008ca429f6a4a2cfb765fffabd4cd2d436d53659518f07b307e554aa779bd0c5",
+      "material": {
+        "candidate_sha256": "sha256:94012930e7b1ee2e7b317f162e1084ec0ea1acee4c7f5a667ae442668524a59f",
+        "case_id": "liger-pr-1328",
+        "decision": "revise",
+        "evidence_sha256": "sha256:d83bd547768a949de80473ac64facae8591465516ecb6304936744ada605e047",
+        "frozen_at": "2026-09-02T03:56:11.106997Z",
+        "narrative": "[dtype-out-failure-is-reproduced-and-fixed-under-fullgraph: fail] Base reproduces the targeted dtype_out lowering failure and head default compile passes, but head fullgraph stops at the existing Tensor.item graph break: Unsupported Tensor.item() call with capture_scalar_outputs=False [compiled-boundaries-match-independent-oracle: pass] Default and boundary BF16/FP16 loss, input gradients, and weight gradients match eager and an independent PyTorch linear-plus-cross-entropy oracle. [steady-compile-and-graph-break-contract: fail] The head records 3 Tensor.item graph breaks; repeated execution creates no new cache artifacts. [eager-common-path-latency-within-three-percent: pass] Seven paired H100 measurements give a head/base median ratio of 0.9753. [changed-test-directly-exercises-compile-failure: pass] The changed CUDA test compiles the public FLCE path with BF16 inputs and FP32 accumulation, then checks loss and both gradients against eager.",
+        "observations": [
+          {
+            "blocking": true,
+            "conclusion": "Base reproduces the targeted dtype_out lowering failure and head default compile passes, but head fullgraph stops at the existing Tensor.item graph break: Unsupported Tensor.item() call with capture_scalar_outputs=False",
+            "counterevidence": [
+              "The specific dtype_out failure is fixed in head default compile and all head correctness cases match the independent oracle."
+            ],
+            "evidence": [
+              "sha256:08d6aa24d06a760bf6676346c3a4ccd4825a54d327ca6472a8998c86379dc82c",
+              "sha256:3aa3db44f002ab09c37804586adf6803981e3fc206e959193be1431f0f388c7d"
+            ],
+            "failure_code": "LIGER_FULLGRAPH_TENSOR_ITEM_GRAPH_BREAK",
+            "question": "Does fullgraph compile complete after reproducing the base dtype_out failure?",
+            "rule_id": "dtype-out-failure-is-reproduced-and-fixed-under-fullgraph",
+            "status": "fail"
+          },
+          {
+            "blocking": true,
+            "conclusion": "Default and boundary BF16/FP16 loss, input gradients, and weight gradients match eager and an independent PyTorch linear-plus-cross-entropy oracle.",
+            "counterevidence": [],
+            "evidence": [
+              "sha256:08d6aa24d06a760bf6676346c3a4ccd4825a54d327ca6472a8998c86379dc82c",
+              "sha256:3aa3db44f002ab09c37804586adf6803981e3fc206e959193be1431f0f388c7d"
+            ],
+            "failure_code": null,
+            "question": "Do representative and boundary BF16/FP16 cases match an oracle?",
+            "rule_id": "compiled-boundaries-match-independent-oracle",
+            "status": "pass"
+          },
+          {
+            "blocking": true,
+            "conclusion": "The head records 3 Tensor.item graph breaks; repeated execution creates no new cache artifacts.",
+            "counterevidence": [],
+            "evidence": [
+              "sha256:08d6aa24d06a760bf6676346c3a4ccd4825a54d327ca6472a8998c86379dc82c",
+              "sha256:3aa3db44f002ab09c37804586adf6803981e3fc206e959193be1431f0f388c7d"
+            ],
+            "failure_code": "LIGER_STEADY_COMPILE_OR_GRAPH_BREAK_CONTRACT_FAILED",
+            "question": "After precompile, do repeated calls avoid graph breaks and compile artifacts?",
+            "rule_id": "steady-compile-and-graph-break-contract",
+            "status": "fail"
+          },
+          {
+            "blocking": true,
+            "conclusion": "Seven paired H100 measurements give a head/base median ratio of 0.9753.",
+            "counterevidence": [],
+            "evidence": [
+              "sha256:08d6aa24d06a760bf6676346c3a4ccd4825a54d327ca6472a8998c86379dc82c",
+              "sha256:3aa3db44f002ab09c37804586adf6803981e3fc206e959193be1431f0f388c7d"
+            ],
+            "failure_code": null,
+            "question": "Does eager/common-path steady latency remain within 3%?",
+            "rule_id": "eager-common-path-latency-within-three-percent",
+            "status": "pass"
+          },
+          {
+            "blocking": true,
+            "conclusion": "The changed CUDA test compiles the public FLCE path with BF16 inputs and FP32 accumulation, then checks loss and both gradients against eager.",
+            "counterevidence": [
+              "The repository test itself does not request fullgraph=True."
+            ],
+            "evidence": [
+              "sha256:08d6aa24d06a760bf6676346c3a4ccd4825a54d327ca6472a8998c86379dc82c",
+              "sha256:3aa3db44f002ab09c37804586adf6803981e3fc206e959193be1431f0f388c7d"
+            ],
+            "failure_code": null,
+            "question": "Does the changed test directly reproduce the compile failure?",
+            "rule_id": "changed-test-directly-exercises-compile-failure",
+            "status": "pass"
+          }
+        ],
+        "policy_id": "historical-explainable-agent-v0.5-r4",
+        "rationale_codes": [
+          "LIGER_FULLGRAPH_TENSOR_ITEM_GRAPH_BREAK",
+          "LIGER_STEADY_COMPILE_OR_GRAPH_BREAK_CONTRACT_FAILED"
+        ],
+        "schema_version": "0.5",
+        "test_plan_sha256": "sha256:aa73f348b2d5ce4a19fa0c3a6e0159681f10254f5a878ad3cabbd8709f3bb888"
+      }
+    },
+    {
+      "lock_sha256": "sha256:1b9dd2f1928580ddfa5e7d6dc6fc50cfa35c578c65a5a0b9b9f50b202adbfd2b",
+      "material": {
+        "candidate_sha256": "sha256:14e47fc58784c8506ebb9839d2a8ba890a6ea81a679c466e7bc372b93b8a07eb",
+        "case_id": "deepgemm-pr-389",
+        "decision": "unresolved",
+        "evidence_sha256": "sha256:42ecffaf8300df8ea98b348c7f3b743a90355955aadeb90a0c411a819cf18a7b",
+        "frozen_at": "2026-09-02T03:56:11.106997Z",
+        "narrative": "[both-mega-moe-combine-loops-use-intended-fence-before-reuse: pass] BF16 and FP8/FP4 each add one exact CTA shared async-proxy fence immediately before the combine-phase/load-stage transition. [exact-sm100-ptx-retains-both-fences: pass] Both exact mega-MoE templates compile for compute_100a. Total fence count rises from 6 to 8; only head has the two target fences directly before the phase XOR transitions. [sm100-dynamic-race-and-concurrency: unresolved] The available H100 is SM90, so SM100 dynamic race behavior is not inferred from PTX. [sm100-steady-performance: unresolved] No SM100 device is available for steady runtime and performance measurement. [mega-moe-reuse-race-has-direct-regression: fail] The PR changes no test file; the existing mega-MoE benchmark does not directly assert the affected combine-buffer reuse race.",
+        "observations": [
+          {
+            "blocking": true,
+            "conclusion": "BF16 and FP8/FP4 each add one exact CTA shared async-proxy fence immediately before the combine-phase/load-stage transition.",
+            "counterevidence": [],
+            "evidence": [
+              "sha256:0afaebabb7c286679381b6611dff494e930f1bc7ed3a06382d3e93db4c4d4af3",
+              "sha256:ca96e77a5d8c0dc79e21a26617b6fe8c09a740321949f7541497952d46f42533"
+            ],
+            "failure_code": null,
+            "question": "Are both affected implementations fenced before every reuse transition?",
+            "rule_id": "both-mega-moe-combine-loops-use-intended-fence-before-reuse",
+            "status": "pass"
+          },
+          {
+            "blocking": true,
+            "conclusion": "Both exact mega-MoE templates compile for compute_100a. Total fence count rises from 6 to 8; only head has the two target fences directly before the phase XOR transitions.",
+            "counterevidence": [],
+            "evidence": [
+              "sha256:0afaebabb7c286679381b6611dff494e930f1bc7ed3a06382d3e93db4c4d4af3",
+              "sha256:ca96e77a5d8c0dc79e21a26617b6fe8c09a740321949f7541497952d46f42533"
+            ],
+            "failure_code": null,
+            "question": "Does exact SM100 AOT retain the intended PTX ordering primitive?",
+            "rule_id": "exact-sm100-ptx-retains-both-fences",
+            "status": "pass"
+          },
+          {
+            "blocking": true,
+            "conclusion": "The available H100 is SM90, so SM100 dynamic race behavior is not inferred from PTX.",
+            "counterevidence": [],
+            "evidence": [
+              "sha256:0afaebabb7c286679381b6611dff494e930f1bc7ed3a06382d3e93db4c4d4af3",
+              "sha256:ca96e77a5d8c0dc79e21a26617b6fe8c09a740321949f7541497952d46f42533"
+            ],
+            "failure_code": "DEEPGEMM_SM100_DYNAMIC_HARDWARE_UNAVAILABLE",
+            "question": "Do repeated and concurrent SM100 Mega-MoE launches avoid stale data or races?",
+            "rule_id": "sm100-dynamic-race-and-concurrency",
+            "status": "unresolved"
+          },
+          {
+            "blocking": true,
+            "conclusion": "No SM100 device is available for steady runtime and performance measurement.",
+            "counterevidence": [],
+            "evidence": [
+              "sha256:0afaebabb7c286679381b6611dff494e930f1bc7ed3a06382d3e93db4c4d4af3",
+              "sha256:ca96e77a5d8c0dc79e21a26617b6fe8c09a740321949f7541497952d46f42533"
+            ],
+            "failure_code": "DEEPGEMM_SM100_PERFORMANCE_HARDWARE_UNAVAILABLE",
+            "question": "Does the valid SM100 common path remain within 3% with zero steady compile?",
+            "rule_id": "sm100-steady-performance",
+            "status": "unresolved"
+          },
+          {
+            "blocking": true,
+            "conclusion": "The PR changes no test file; the existing mega-MoE benchmark does not directly assert the affected combine-buffer reuse race.",
+            "counterevidence": [],
+            "evidence": [
+              "sha256:0afaebabb7c286679381b6611dff494e930f1bc7ed3a06382d3e93db4c4d4af3",
+              "sha256:ca96e77a5d8c0dc79e21a26617b6fe8c09a740321949f7541497952d46f42533"
+            ],
+            "failure_code": "DEEPGEMM_DIRECT_MEGA_MOE_REUSE_REGRESSION_MISSING",
+            "question": "Is direct race/reuse regression coverage included?",
+            "rule_id": "mega-moe-reuse-race-has-direct-regression",
+            "status": "fail"
+          }
+        ],
+        "policy_id": "historical-explainable-agent-v0.5-r4",
+        "rationale_codes": [
+          "DEEPGEMM_DIRECT_MEGA_MOE_REUSE_REGRESSION_MISSING",
+          "DEEPGEMM_SM100_DYNAMIC_HARDWARE_UNAVAILABLE",
+          "DEEPGEMM_SM100_PERFORMANCE_HARDWARE_UNAVAILABLE"
+        ],
+        "schema_version": "0.5",
+        "test_plan_sha256": "sha256:aa73f348b2d5ce4a19fa0c3a6e0159681f10254f5a878ad3cabbd8709f3bb888"
+      }
+    },
+    {
+      "lock_sha256": "sha256:b6f0542af7761f9ca968ba9b03a26d218a928d781fe0129c31dfff50d3737b70",
+      "material": {
+        "candidate_sha256": "sha256:5a9de59b73cf566944f12b10d2bd967e15296d2a2bf89fa704e455cc603c547c",
+        "case_id": "megatron-pr-6174",
+        "decision": "unresolved",
+        "evidence_sha256": "sha256:03c873af9e77cd713f14addbf545affa6e3a360f15ed2a768493dc80bb44f419",
+        "frozen_at": "2026-09-02T03:56:11.106997Z",
+        "narrative": "[combined-1f1b-prefetch-matches-schedule-oracle: pass] Exact extracted methods pass PRE_BACKWARD-only state transitions, forward-only, backward-only, same/different-layer overlap, and the 1-7-layer boundary matrix. [changed-test-exercises-genuine-combined-schedule-state: pass] The changed two-microbatch test invokes the production combined-1F1B schedule and asserts genuine forward-state transitions. [multirank-fsdp-correctness-and-liveness: unresolved] Only one H100 is available and Transformer Engine is absent, so the frozen multi-rank integration cell cannot run. [multirank-step-latency-and-memory: unresolved] The same missing multi-rank FSDP environment blocks the performance cell.",
+        "observations": [
+          {
+            "blocking": true,
+            "conclusion": "Exact extracted methods pass PRE_BACKWARD-only state transitions, forward-only, backward-only, same/different-layer overlap, and the 1-7-layer boundary matrix.",
+            "counterevidence": [],
+            "evidence": [
+              "sha256:e7869199d193629fefd9339a358c92cb22817387c72e81310490c9020ffea0c4",
+              "sha256:567a7bbf931bf15f2be951a507ed73b4e872e6d411a69417c870102c32cc17fb"
+            ],
+            "failure_code": null,
+            "question": "Do callback, state, overlap, and layer boundaries match the schedule oracle?",
+            "rule_id": "combined-1f1b-prefetch-matches-schedule-oracle",
+            "status": "pass"
+          },
+          {
+            "blocking": true,
+            "conclusion": "The changed two-microbatch test invokes the production combined-1F1B schedule and asserts genuine forward-state transitions.",
+            "counterevidence": [],
+            "evidence": [
+              "sha256:e7869199d193629fefd9339a358c92cb22817387c72e81310490c9020ffea0c4",
+              "sha256:567a7bbf931bf15f2be951a507ed73b4e872e6d411a69417c870102c32cc17fb"
+            ],
+            "failure_code": null,
+            "question": "Do changed tests directly exercise the failing combined schedule?",
+            "rule_id": "changed-test-exercises-genuine-combined-schedule-state",
+            "status": "pass"
+          },
+          {
+            "blocking": true,
+            "conclusion": "Only one H100 is available and Transformer Engine is absent, so the frozen multi-rank integration cell cannot run.",
+            "counterevidence": [],
+            "evidence": [
+              "sha256:e7869199d193629fefd9339a358c92cb22817387c72e81310490c9020ffea0c4",
+              "sha256:567a7bbf931bf15f2be951a507ed73b4e872e6d411a69417c870102c32cc17fb"
+            ],
+            "failure_code": "MEGATRON_MULTIRANK_FSDP_ENVIRONMENT_UNAVAILABLE",
+            "question": "Does multi-rank FSDP complete without hang and preserve outputs and gradients?",
+            "rule_id": "multirank-fsdp-correctness-and-liveness",
+            "status": "unresolved"
+          },
+          {
+            "blocking": true,
+            "conclusion": "The same missing multi-rank FSDP environment blocks the performance cell.",
+            "counterevidence": [],
+            "evidence": [
+              "sha256:e7869199d193629fefd9339a358c92cb22817387c72e81310490c9020ffea0c4",
+              "sha256:567a7bbf931bf15f2be951a507ed73b4e872e6d411a69417c870102c32cc17fb"
+            ],
+            "failure_code": "MEGATRON_MULTIRANK_PERFORMANCE_ENVIRONMENT_UNAVAILABLE",
+            "question": "Does prefetch retain step latency and peak memory after warmup?",
+            "rule_id": "multirank-step-latency-and-memory",
+            "status": "unresolved"
+          }
+        ],
+        "policy_id": "historical-explainable-agent-v0.5-r4",
+        "rationale_codes": [
+          "MEGATRON_MULTIRANK_FSDP_ENVIRONMENT_UNAVAILABLE",
+          "MEGATRON_MULTIRANK_PERFORMANCE_ENVIRONMENT_UNAVAILABLE"
+        ],
+        "schema_version": "0.5",
+        "test_plan_sha256": "sha256:aa73f348b2d5ce4a19fa0c3a6e0159681f10254f5a878ad3cabbd8709f3bb888"
+      }
+    },
+    {
+      "lock_sha256": "sha256:91d2b9974d89bf2318d62109d83a3d7be3cd6ac7c53216c173b6f5e7cb789512",
+      "material": {
+        "candidate_sha256": "sha256:2e3bbf6041cef27e0d9928d195fd3d162123bfb40fa3668def610649e45d470e",
+        "case_id": "torchtitan-pr-4032",
+        "decision": "revise",
+        "evidence_sha256": "sha256:0c44531c640348b3323d4d9916f71cbd37497ed7eef83c7f08527354d1d7b627",
+        "frozen_at": "2026-09-02T03:56:11.106997Z",
+        "narrative": "[queue-recommendation-math-matches-oracle: pass] All 192 configuration combinations match the independent power-of-two lane oracle, and the four repository tests pass. [rocm-only-application-contract: fail] The helper has no backend detection and does not mutate the environment; main unconditionally prints an export command, so evaluating it also changes CUDA/CPU. [explicit-user-value-is-preserved: fail] With GPU_MAX_HW_QUEUES=64, main emits a note and still prints export GPU_MAX_HW_QUEUES=2; shell eval would overwrite the explicit value. [tool-and-device-errors-are-explicit: fail] The implementation has no backend/tool/device validation branch, so the frozen error and unsupported-device contract is not represented. [recommendation-is-recomputed-per-launch: pass] Two distinct mocked launch configurations recompute distinct exports without stale state. [direct-tests-cover-main-noop-override-and-errors: fail] All four repository tests pass, but they only test lane arithmetic; none invokes main or covers backend no-op, explicit override, or error behavior. [real-rocm-scheduling-impact: unresolved] No ROCm device is available; real scheduling impact is not inferred from mocks.",
+        "observations": [
+          {
+            "blocking": true,
+            "conclusion": "All 192 configuration combinations match the independent power-of-two lane oracle, and the four repository tests pass.",
+            "counterevidence": [],
+            "evidence": [
+              "sha256:67b96cc3dab1a6792d9e73e3a265d60451a66e8ea9d85be4c28a534aa2b82bf6",
+              "sha256:af4659d8e889daedc86295d3e91ad3715a3e9a7b237d1b5668656550495e79c1"
+            ],
+            "failure_code": null,
+            "question": "Does the helper derive the intended power-of-two queue recommendation?",
+            "rule_id": "queue-recommendation-math-matches-oracle",
+            "status": "pass"
+          },
+          {
+            "blocking": true,
+            "conclusion": "The helper has no backend detection and does not mutate the environment; main unconditionally prints an export command, so evaluating it also changes CUDA/CPU.",
+            "counterevidence": [
+              "The queue recommendation arithmetic itself passes 192 cases."
+            ],
+            "evidence": [
+              "sha256:67b96cc3dab1a6792d9e73e3a265d60451a66e8ea9d85be4c28a534aa2b82bf6",
+              "sha256:af4659d8e889daedc86295d3e91ad3715a3e9a7b237d1b5668656550495e79c1"
+            ],
+            "failure_code": "TORCHTITAN_ROCM_ONLY_APPLICATION_CONTRACT_MISSING",
+            "question": "Does the helper set the value on ROCm while leaving CUDA and CPU unchanged?",
+            "rule_id": "rocm-only-application-contract",
+            "status": "fail"
+          },
+          {
+            "blocking": true,
+            "conclusion": "With GPU_MAX_HW_QUEUES=64, main emits a note and still prints export GPU_MAX_HW_QUEUES=2; shell eval would overwrite the explicit value.",
+            "counterevidence": [],
+            "evidence": [
+              "sha256:67b96cc3dab1a6792d9e73e3a265d60451a66e8ea9d85be4c28a534aa2b82bf6",
+              "sha256:af4659d8e889daedc86295d3e91ad3715a3e9a7b237d1b5668656550495e79c1"
+            ],
+            "failure_code": "TORCHTITAN_EXPLICIT_GPU_MAX_HW_QUEUES_OVERWRITTEN",
+            "question": "Is an explicit user GPU_MAX_HW_QUEUES value preserved?",
+            "rule_id": "explicit-user-value-is-preserved",
+            "status": "fail"
+          },
+          {
+            "blocking": true,
+            "conclusion": "The implementation has no backend/tool/device validation branch, so the frozen error and unsupported-device contract is not represented.",
+            "counterevidence": [],
+            "evidence": [
+              "sha256:67b96cc3dab1a6792d9e73e3a265d60451a66e8ea9d85be4c28a534aa2b82bf6",
+              "sha256:af4659d8e889daedc86295d3e91ad3715a3e9a7b237d1b5668656550495e79c1"
+            ],
+            "failure_code": "TORCHTITAN_BACKEND_TOOL_ERROR_POLICY_MISSING",
+            "question": "Do missing tools, malformed output, and unsupported devices fail or fall back explicitly?",
+            "rule_id": "tool-and-device-errors-are-explicit",
+            "status": "fail"
+          },
+          {
+            "blocking": true,
+            "conclusion": "Two distinct mocked launch configurations recompute distinct exports without stale state.",
+            "counterevidence": [],
+            "evidence": [
+              "sha256:67b96cc3dab1a6792d9e73e3a265d60451a66e8ea9d85be4c28a534aa2b82bf6",
+              "sha256:af4659d8e889daedc86295d3e91ad3715a3e9a7b237d1b5668656550495e79c1"
+            ],
+            "failure_code": null,
+            "question": "Is helper state evaluated per launch without leaking between invocations?",
+            "rule_id": "recommendation-is-recomputed-per-launch",
+            "status": "pass"
+          },
+          {
+            "blocking": true,
+            "conclusion": "All four repository tests pass, but they only test lane arithmetic; none invokes main or covers backend no-op, explicit override, or error behavior.",
+            "counterevidence": [],
+            "evidence": [
+              "sha256:67b96cc3dab1a6792d9e73e3a265d60451a66e8ea9d85be4c28a534aa2b82bf6",
+              "sha256:af4659d8e889daedc86295d3e91ad3715a3e9a7b237d1b5668656550495e79c1"
+            ],
+            "failure_code": "TORCHTITAN_DIRECT_BACKEND_OVERRIDE_ERROR_TESTS_MISSING",
+            "question": "Do direct tests cover ROCm, no-op, override, and error branches?",
+            "rule_id": "direct-tests-cover-main-noop-override-and-errors",
+            "status": "fail"
+          },
+          {
+            "blocking": false,
+            "conclusion": "No ROCm device is available; real scheduling impact is not inferred from mocks.",
+            "counterevidence": [],
+            "evidence": [
+              "sha256:67b96cc3dab1a6792d9e73e3a265d60451a66e8ea9d85be4c28a534aa2b82bf6",
+              "sha256:af4659d8e889daedc86295d3e91ad3715a3e9a7b237d1b5668656550495e79c1"
+            ],
+            "failure_code": "TORCHTITAN_ROCM_RUNTIME_HARDWARE_UNAVAILABLE",
+            "question": "Does the recommendation improve real ROCm graph scheduling?",
+            "rule_id": "real-rocm-scheduling-impact",
+            "status": "unresolved"
+          }
+        ],
+        "policy_id": "historical-explainable-agent-v0.5-r4",
+        "rationale_codes": [
+          "TORCHTITAN_BACKEND_TOOL_ERROR_POLICY_MISSING",
+          "TORCHTITAN_DIRECT_BACKEND_OVERRIDE_ERROR_TESTS_MISSING",
+          "TORCHTITAN_EXPLICIT_GPU_MAX_HW_QUEUES_OVERWRITTEN",
+          "TORCHTITAN_ROCM_ONLY_APPLICATION_CONTRACT_MISSING"
+        ],
+        "schema_version": "0.5",
+        "test_plan_sha256": "sha256:aa73f348b2d5ce4a19fa0c3a6e0159681f10254f5a878ad3cabbd8709f3bb888"
+      }
+    },
+    {
+      "lock_sha256": "sha256:8328edf4e8cf01b0861fafdb875b7045b136b48a88b2e1d59ec16bc3a7bf1002",
+      "material": {
+        "candidate_sha256": "sha256:bfa65e88d48e5b0b0bbff11049183f8d946f1be34894b411e50b0cc7d8f8250b",
+        "case_id": "verl-pr-7220",
+        "decision": "revise",
+        "evidence_sha256": "sha256:206c464f8d2a02e7bf39e1655630d762ac1b91313447a66b40b48be7a40b9b99",
+        "frozen_at": "2026-09-02T03:56:11.106997Z",
+        "narrative": "[both-entrypoints-match-for-text-and-multimodal: pass] Exact AST execution shows both entrypoints forwarding the same model config and producing matching tokenizer-only and tokenizer-plus-processor state. [model-config-propagates-all-frozen-loader-fields: fail] HFModelConfig carries trust_remote_code and tokenizer_path, but has neither a revision field nor processor_kwargs, so the full loader contract is not preserved. [repeated-init-replaces-tokenizer-and-processor-state: pass] A second exact initialization replaces both tokenizer and processor state. [legacy-trust-input-has-explicit-policy: fail] Base reads config.data.trust_remote_code; head stops reading it without a fallback, rejection, or compatibility warning. [direct-tests-cover-two-entrypoint-modality-matrix: fail] The PR changes no test file and no direct two-entrypoint text/multimodal initialization matrix was found.",
+        "observations": [
+          {
+            "blocking": true,
+            "conclusion": "Exact AST execution shows both entrypoints forwarding the same model config and producing matching tokenizer-only and tokenizer-plus-processor state.",
+            "counterevidence": [],
+            "evidence": [
+              "sha256:23aee6bab37d1f556984b2bb073c07756365935fe5c078ccc4089fbd31f35e4e",
+              "sha256:6302d540ae60a88f5be24956b990c096a10b6a6fcb5d749b7033720ca6089059"
+            ],
+            "failure_code": null,
+            "question": "Do both trainer entrypoints consume the same text and multimodal model contract?",
+            "rule_id": "both-entrypoints-match-for-text-and-multimodal",
+            "status": "pass"
+          },
+          {
+            "blocking": true,
+            "conclusion": "HFModelConfig carries trust_remote_code and tokenizer_path, but has neither a revision field nor processor_kwargs, so the full loader contract is not preserved.",
+            "counterevidence": [],
+            "evidence": [
+              "sha256:23aee6bab37d1f556984b2bb073c07756365935fe5c078ccc4089fbd31f35e4e",
+              "sha256:6302d540ae60a88f5be24956b990c096a10b6a6fcb5d749b7033720ca6089059"
+            ],
+            "failure_code": "VERL_HF_MODEL_CONFIG_LOADER_FIELDS_INCOMPLETE",
+            "question": "Are revision, trust, tokenizer path, and processor kwargs propagated?",
+            "rule_id": "model-config-propagates-all-frozen-loader-fields",
+            "status": "fail"
+          },
+          {
+            "blocking": true,
+            "conclusion": "A second exact initialization replaces both tokenizer and processor state.",
+            "counterevidence": [],
+            "evidence": [
+              "sha256:23aee6bab37d1f556984b2bb073c07756365935fe5c078ccc4089fbd31f35e4e",
+              "sha256:6302d540ae60a88f5be24956b990c096a10b6a6fcb5d749b7033720ca6089059"
+            ],
+            "failure_code": null,
+            "question": "Does repeated initialization avoid duplicate or stale cross-run state?",
+            "rule_id": "repeated-init-replaces-tokenizer-and-processor-state",
+            "status": "pass"
+          },
+          {
+            "blocking": true,
+            "conclusion": "Base reads config.data.trust_remote_code; head stops reading it without a fallback, rejection, or compatibility warning.",
+            "counterevidence": [],
+            "evidence": [
+              "sha256:23aee6bab37d1f556984b2bb073c07756365935fe5c078ccc4089fbd31f35e4e",
+              "sha256:6302d540ae60a88f5be24956b990c096a10b6a6fcb5d749b7033720ca6089059"
+            ],
+            "failure_code": "VERL_LEGACY_TRUST_REMOTE_CODE_POLICY_MISSING",
+            "question": "Are legacy configuration inputs compatible or rejected explicitly?",
+            "rule_id": "legacy-trust-input-has-explicit-policy",
+            "status": "fail"
+          },
+          {
+            "blocking": true,
+            "conclusion": "The PR changes no test file and no direct two-entrypoint text/multimodal initialization matrix was found.",
+            "counterevidence": [
+              "The exact mocked AST matrix passes offline."
+            ],
+            "evidence": [
+              "sha256:23aee6bab37d1f556984b2bb073c07756365935fe5c078ccc4089fbd31f35e4e",
+              "sha256:6302d540ae60a88f5be24956b990c096a10b6a6fcb5d749b7033720ca6089059"
+            ],
+            "failure_code": "VERL_DIRECT_TWO_ENTRYPOINT_MODALITY_TESTS_MISSING",
+            "question": "Do direct tests cover both entrypoints and both modality branches?",
+            "rule_id": "direct-tests-cover-two-entrypoint-modality-matrix",
+            "status": "fail"
+          }
+        ],
+        "policy_id": "historical-explainable-agent-v0.5-r4",
+        "rationale_codes": [
+          "VERL_DIRECT_TWO_ENTRYPOINT_MODALITY_TESTS_MISSING",
+          "VERL_HF_MODEL_CONFIG_LOADER_FIELDS_INCOMPLETE",
+          "VERL_LEGACY_TRUST_REMOTE_CODE_POLICY_MISSING"
+        ],
+        "schema_version": "0.5",
+        "test_plan_sha256": "sha256:aa73f348b2d5ce4a19fa0c3a6e0159681f10254f5a878ad3cabbd8709f3bb888"
+      }
+    }
+  ],
+  "merge_outcomes_visible_during_machine_judgment": false,
+  "protocol_id": "historical-pr-blind-cross-project-v0.5-r7",
+  "review_text_visible_during_machine_judgment": false,
+  "schema_version": "0.5",
+  "selection_lock_file_sha256": "sha256:d4c1645634e721793b97395b9c19ecc2b9fc893ede4b94b7436c104ff2745c3e",
+  "selection_lock_sha256": "sha256:e75d03448650ef7ff13f93729d151f99be652702f4971cb889dbb2c0de57716b",
+  "test_plan_file_sha256": "sha256:314ac6ad34cba5769707f8abe724bfce7b43ade17ba64a184381a00215ace703",
+  "test_plan_sha256": "sha256:aa73f348b2d5ce4a19fa0c3a6e0159681f10254f5a878ad3cabbd8709f3bb888",
+  "trained_weights_used": false,
+  "weighted_score_used": false
+}

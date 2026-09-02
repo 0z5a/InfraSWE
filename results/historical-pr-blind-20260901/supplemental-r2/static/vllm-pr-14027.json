@@ -1,0 +1,76 @@
+{
+  "case_id": "vllm-pr-14027",
+  "compilation_path": "not-required",
+  "created_at": "2026-09-01T16:02:02.379590+00:00",
+  "duration_seconds": 0.09954539616592228,
+  "evidence_sha256": "sha256:98cf719a1ccb5862873579c0143fe085b9f1f1f8477e2d012daf72478634427d",
+  "observations": [
+    {
+      "blocking": true,
+      "conclusion": "The patch keeps the public parameter(s) renormalize but removes all uses, so callers can request behavior that is silently ignored.",
+      "counterevidence": [],
+      "evidence": [
+        "vllm/model_executor/layers/fused_moe/fused_moe.py->vllm/model_executor/layers/fused_moe/fused_moe.py:fused_topk parameter=renormalize loads=1->0"
+      ],
+      "failure_code": "CALLER_CONTRACT_PARAMETER_IGNORED:renormalize",
+      "question": "Does every retained caller-facing parameter still affect behavior?",
+      "rule_id": "interface-parameter-use-preserved",
+      "status": "fail"
+    },
+    {
+      "blocking": true,
+      "conclusion": "No changed Python test file loses more than half of its explicit matrix.",
+      "counterevidence": [],
+      "evidence": [],
+      "failure_code": null,
+      "question": "Does a test move preserve at least half of its explicit input matrix?",
+      "rule_id": "test-matrix-not-silently-contracted",
+      "status": "pass"
+    },
+    {
+      "blocking": true,
+      "conclusion": "No new unscoped warnings.filterwarnings(ignore, UserWarning) call was found.",
+      "counterevidence": [],
+      "evidence": [],
+      "failure_code": null,
+      "question": "Does the patch avoid globally suppressing a broad warning category?",
+      "rule_id": "diagnostics-remain-specific",
+      "status": "pass"
+    },
+    {
+      "blocking": true,
+      "conclusion": "No substantive line is newly duplicated across three or more changed files.",
+      "counterevidence": [],
+      "evidence": [],
+      "failure_code": null,
+      "question": "Is a repeated cross-cutting fix implemented at one central owner?",
+      "rule_id": "cross-cutting-fix-owned-centrally",
+      "status": "pass"
+    }
+  ],
+  "protocol_id": "historical-explainable-static-v0.5-r2",
+  "schema_version": "0.5",
+  "source_identity": {
+    "after_source_sha256": {
+      "vllm/model_executor/layers/fused_moe/fused_moe.py": "sha256:417f39ed5b0f74aa54bb29ddbc366295d14b2c6e124d5397289fd9c7158c21b2",
+      "vllm/model_executor/models/deepseek_v2.py": "sha256:4cb2ca9e7fc14c79668b8cc308c0836fb2d219ccb4ce6e8afb1d317e808be267"
+    },
+    "base_sha": "8e5314a46859cdd089a71c0e27ce6dd5fe05b17f",
+    "before_source_sha256": {
+      "vllm/model_executor/layers/fused_moe/fused_moe.py": "sha256:b1ae377891294de4b21722f28a6162b75579da61855319a19129c6a597b43e4d",
+      "vllm/model_executor/models/deepseek_v2.py": "sha256:b6cb6aab99090a2834902e19bb1d80f15fc072b7d5a76901c865343aaad71d09"
+    },
+    "head_sha": "77a2831b545154d82d645da67e67757197bd4032",
+    "pairs": [
+      {
+        "after": "vllm/model_executor/layers/fused_moe/fused_moe.py",
+        "before": "vllm/model_executor/layers/fused_moe/fused_moe.py"
+      },
+      {
+        "after": "vllm/model_executor/models/deepseek_v2.py",
+        "before": "vllm/model_executor/models/deepseek_v2.py"
+      }
+    ],
+    "unified_diff_sha256": "sha256:7614831000ea3229690e9a866869f6e0e2a3f89e4864ac9166297fc4a0288f73"
+  }
+}

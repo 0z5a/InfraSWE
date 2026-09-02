@@ -1,0 +1,431 @@
+{
+  "$defs": {
+    "CandidateBuildPolicy": {
+      "additionalProperties": false,
+      "properties": {
+        "activation_scope": {
+          "const": "explicitly-activated-candidate-only",
+          "default": "explicitly-activated-candidate-only",
+          "title": "Activation Scope",
+          "type": "string"
+        },
+        "adapter_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Adapter Id"
+        },
+        "compilation_mode": {
+          "enum": [
+            "none",
+            "environment-provided",
+            "host-owned",
+            "adapter-aot",
+            "adapter-jit"
+          ],
+          "title": "Compilation Mode",
+          "type": "string"
+        },
+        "registry_load_compiles_candidate": {
+          "const": false,
+          "default": false,
+          "title": "Registry Load Compiles Candidate",
+          "type": "boolean"
+        },
+        "registry_load_imports_candidate": {
+          "const": false,
+          "default": false,
+          "title": "Registry Load Imports Candidate",
+          "type": "boolean"
+        },
+        "selection_action": {
+          "const": "metadata-only",
+          "default": "metadata-only",
+          "title": "Selection Action",
+          "type": "string"
+        }
+      },
+      "required": [
+        "compilation_mode"
+      ],
+      "title": "CandidateBuildPolicy",
+      "type": "object"
+    },
+    "CandidateSource": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "enum": [
+            "pinned-git",
+            "runtime-builtin",
+            "draft-relative"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "repository": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Repository"
+        },
+        "revision": {
+          "anyOf": [
+            {
+              "pattern": "^[0-9a-f]{40}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Revision"
+        }
+      },
+      "required": [
+        "kind"
+      ],
+      "title": "CandidateSource",
+      "type": "object"
+    },
+    "DefaultCandidateDefinition": {
+      "additionalProperties": false,
+      "properties": {
+        "backends": {
+          "items": {
+            "enum": [
+              "generic",
+              "cuda",
+              "rocm",
+              "triton"
+            ],
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Backends",
+          "type": "array"
+        },
+        "build": {
+          "$ref": "#/$defs/CandidateBuildPolicy"
+        },
+        "default_eligible": {
+          "default": true,
+          "title": "Default Eligible",
+          "type": "boolean"
+        },
+        "display_name": {
+          "title": "Display Name",
+          "type": "string"
+        },
+        "id": {
+          "pattern": "^[a-z0-9][a-z0-9_]{1,63}$",
+          "title": "Id",
+          "type": "string"
+        },
+        "license_status": {
+          "enum": [
+            "declared",
+            "runtime-provided",
+            "draft-owned"
+          ],
+          "title": "License Status",
+          "type": "string"
+        },
+        "operator_families": {
+          "items": {
+            "enum": [
+              "generic",
+              "attention-training",
+              "attention-inference-prefill",
+              "attention-inference-decode",
+              "paged-attention",
+              "dense-gemm",
+              "grouped-moe-gemm",
+              "training-fused-ops",
+              "quantization",
+              "communication-collective",
+              "moe-dispatch-combine",
+              "gpu-initiated-communication"
+            ],
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Operator Families",
+          "type": "array"
+        },
+        "phases": {
+          "items": {
+            "enum": [
+              "generic",
+              "training",
+              "inference",
+              "communication"
+            ],
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Phases",
+          "type": "array"
+        },
+        "roles": {
+          "items": {
+            "enum": [
+              "oracle",
+              "peer-impl",
+              "host-project",
+              "workload-source",
+              "coverage-target"
+            ],
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Roles",
+          "type": "array"
+        },
+        "source": {
+          "$ref": "#/$defs/CandidateSource"
+        },
+        "tier": {
+          "enum": [
+            "P0",
+            "P1",
+            "P2"
+          ],
+          "title": "Tier",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "display_name",
+        "roles",
+        "tier",
+        "operator_families",
+        "phases",
+        "backends",
+        "source",
+        "build",
+        "license_status"
+      ],
+      "title": "DefaultCandidateDefinition",
+      "type": "object"
+    },
+    "DefaultCandidateRule": {
+      "additionalProperties": false,
+      "properties": {
+        "backends": {
+          "items": {
+            "enum": [
+              "generic",
+              "cuda",
+              "rocm",
+              "triton"
+            ],
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Backends",
+          "type": "array"
+        },
+        "coverage_targets": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Coverage Targets",
+          "type": "array"
+        },
+        "hosts": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Hosts",
+          "type": "array"
+        },
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "operator_family": {
+          "enum": [
+            "generic",
+            "attention-training",
+            "attention-inference-prefill",
+            "attention-inference-decode",
+            "paged-attention",
+            "dense-gemm",
+            "grouped-moe-gemm",
+            "training-fused-ops",
+            "quantization",
+            "communication-collective",
+            "moe-dispatch-combine",
+            "gpu-initiated-communication"
+          ],
+          "title": "Operator Family",
+          "type": "string"
+        },
+        "oracles": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Oracles",
+          "type": "array"
+        },
+        "order": {
+          "minimum": 1,
+          "title": "Order",
+          "type": "integer"
+        },
+        "phases": {
+          "items": {
+            "enum": [
+              "generic",
+              "training",
+              "inference",
+              "communication"
+            ],
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Phases",
+          "type": "array"
+        },
+        "primary_peer_impl": {
+          "title": "Primary Peer Impl",
+          "type": "string"
+        },
+        "required_tests": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Required Tests",
+          "type": "array"
+        },
+        "secondary_peer_impls": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Secondary Peer Impls",
+          "type": "array"
+        },
+        "workload_sources": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Workload Sources",
+          "type": "array"
+        }
+      },
+      "required": [
+        "id",
+        "order",
+        "operator_family",
+        "phases",
+        "backends",
+        "oracles",
+        "primary_peer_impl",
+        "hosts",
+        "workload_sources",
+        "coverage_targets",
+        "required_tests"
+      ],
+      "title": "DefaultCandidateRule",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "candidates": {
+      "additionalProperties": {
+        "$ref": "#/$defs/DefaultCandidateDefinition"
+      },
+      "title": "Candidates",
+      "type": "object"
+    },
+    "fallback_chains": {
+      "additionalProperties": {
+        "items": {
+          "type": "string"
+        },
+        "type": "array"
+      },
+      "title": "Fallback Chains",
+      "type": "object"
+    },
+    "learned_model_used": {
+      "const": false,
+      "default": false,
+      "title": "Learned Model Used",
+      "type": "boolean"
+    },
+    "registry_version": {
+      "title": "Registry Version",
+      "type": "string"
+    },
+    "rules": {
+      "items": {
+        "$ref": "#/$defs/DefaultCandidateRule"
+      },
+      "minItems": 1,
+      "title": "Rules",
+      "type": "array"
+    },
+    "schema_version": {
+      "const": "0.5",
+      "default": "0.5",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "selection_policy_id": {
+      "const": "ordered-role-match-v0.5-r1",
+      "default": "ordered-role-match-v0.5-r1",
+      "title": "Selection Policy Id",
+      "type": "string"
+    },
+    "source_capture_date": {
+      "title": "Source Capture Date",
+      "type": "string"
+    },
+    "status": {
+      "default": "proposed",
+      "enum": [
+        "proposed",
+        "human-reviewed"
+      ],
+      "title": "Status",
+      "type": "string"
+    },
+    "weighted_score_used": {
+      "const": false,
+      "default": false,
+      "title": "Weighted Score Used",
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "registry_version",
+    "source_capture_date",
+    "candidates",
+    "rules",
+    "fallback_chains"
+  ],
+  "title": "DefaultCandidateRegistry",
+  "type": "object"
+}

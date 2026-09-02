@@ -1,0 +1,697 @@
+{
+  "$defs": {
+    "CommunicationCellIdentity": {
+      "additionalProperties": false,
+      "properties": {
+        "accelerator_model": {
+          "title": "Accelerator Model",
+          "type": "string"
+        },
+        "accelerators_per_node": {
+          "minimum": 1,
+          "title": "Accelerators Per Node",
+          "type": "integer"
+        },
+        "cell_id": {
+          "title": "Cell Id",
+          "type": "string"
+        },
+        "collective_mix_sha256": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Collective Mix Sha256",
+          "type": "string"
+        },
+        "concurrency_protocol_id": {
+          "title": "Concurrency Protocol Id",
+          "type": "string"
+        },
+        "message_size_portfolio_sha256": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Message Size Portfolio Sha256",
+          "type": "string"
+        },
+        "nic_profile": {
+          "title": "Nic Profile",
+          "type": "string"
+        },
+        "node_count": {
+          "minimum": 1,
+          "title": "Node Count",
+          "type": "integer"
+        },
+        "numa_binding": {
+          "title": "Numa Binding",
+          "type": "string"
+        },
+        "provider": {
+          "title": "Provider",
+          "type": "string"
+        },
+        "provider_version": {
+          "title": "Provider Version",
+          "type": "string"
+        },
+        "runtime_driver": {
+          "title": "Runtime Driver",
+          "type": "string"
+        },
+        "topology_sha256": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Topology Sha256",
+          "type": "string"
+        },
+        "transport": {
+          "title": "Transport",
+          "type": "string"
+        }
+      },
+      "required": [
+        "cell_id",
+        "node_count",
+        "accelerators_per_node",
+        "accelerator_model",
+        "topology_sha256",
+        "nic_profile",
+        "numa_binding",
+        "transport",
+        "provider",
+        "provider_version",
+        "runtime_driver",
+        "message_size_portfolio_sha256",
+        "collective_mix_sha256",
+        "concurrency_protocol_id"
+      ],
+      "title": "CommunicationCellIdentity",
+      "type": "object"
+    },
+    "CommunicationContract": {
+      "additionalProperties": false,
+      "properties": {
+        "concurrency_protocol_id": {
+          "enum": [
+            "communication-concurrency-core-v1",
+            "communication-concurrency-recovery-v1"
+          ],
+          "title": "Concurrency Protocol Id",
+          "type": "string"
+        },
+        "execution_scope": {
+          "enum": [
+            "library",
+            "integrated"
+          ],
+          "title": "Execution Scope",
+          "type": "string"
+        },
+        "layer": {
+          "enum": [
+            "collective-library",
+            "transport-runtime",
+            "framework-process-group",
+            "collective-scheduling",
+            "communication-lifecycle",
+            "one-sided-runtime"
+          ],
+          "title": "Layer",
+          "type": "string"
+        },
+        "lifecycle": {
+          "$ref": "#/$defs/CommunicationLifecycle"
+        },
+        "message_size_portfolio_sha256": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Message Size Portfolio Sha256",
+          "type": "string"
+        },
+        "operations": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Operations",
+          "type": "array"
+        },
+        "optional_cells": {
+          "items": {
+            "$ref": "#/$defs/CommunicationCellIdentity"
+          },
+          "title": "Optional Cells",
+          "type": "array"
+        },
+        "providers": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Providers",
+          "type": "array"
+        },
+        "required_cells": {
+          "items": {
+            "$ref": "#/$defs/CommunicationCellIdentity"
+          },
+          "minItems": 1,
+          "title": "Required Cells",
+          "type": "array"
+        },
+        "semantics": {
+          "$ref": "#/$defs/CommunicationSemantics"
+        }
+      },
+      "required": [
+        "layer",
+        "execution_scope",
+        "providers",
+        "operations",
+        "semantics",
+        "lifecycle",
+        "required_cells",
+        "message_size_portfolio_sha256",
+        "concurrency_protocol_id"
+      ],
+      "title": "CommunicationContract",
+      "type": "object"
+    },
+    "CommunicationLifecycle": {
+      "additionalProperties": false,
+      "properties": {
+        "bounded_resource_growth": {
+          "const": true,
+          "default": true,
+          "title": "Bounded Resource Growth",
+          "type": "boolean"
+        },
+        "cache_policy": {
+          "title": "Cache Policy",
+          "type": "string"
+        },
+        "communicator_owner": {
+          "title": "Communicator Owner",
+          "type": "string"
+        },
+        "no_silent_fallback": {
+          "const": true,
+          "default": true,
+          "title": "No Silent Fallback",
+          "type": "boolean"
+        },
+        "repeated_init_destroy": {
+          "const": "required",
+          "default": "required",
+          "title": "Repeated Init Destroy",
+          "type": "string"
+        },
+        "teardown_phase": {
+          "title": "Teardown Phase",
+          "type": "string"
+        }
+      },
+      "required": [
+        "communicator_owner",
+        "cache_policy",
+        "teardown_phase"
+      ],
+      "title": "CommunicationLifecycle",
+      "type": "object"
+    },
+    "CommunicationSemantics": {
+      "additionalProperties": false,
+      "properties": {
+        "async_completion": {
+          "enum": [
+            "event-backed",
+            "future-backed",
+            "blocking",
+            "profile-defined"
+          ],
+          "title": "Async Completion",
+          "type": "string"
+        },
+        "collective_order_consistency": {
+          "const": "required",
+          "default": "required",
+          "title": "Collective Order Consistency",
+          "type": "string"
+        },
+        "error_propagation": {
+          "const": "structured",
+          "default": "structured",
+          "title": "Error Propagation",
+          "type": "string"
+        },
+        "no_rank_local_divergence": {
+          "const": true,
+          "default": true,
+          "title": "No Rank Local Divergence",
+          "type": "boolean"
+        },
+        "ordering_scope": {
+          "title": "Ordering Scope",
+          "type": "string"
+        }
+      },
+      "required": [
+        "ordering_scope",
+        "async_completion"
+      ],
+      "title": "CommunicationSemantics",
+      "type": "object"
+    },
+    "DraftAcceptanceContract": {
+      "additionalProperties": false,
+      "properties": {
+        "hidden_probe_policy_sha256": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Hidden Probe Policy Sha256",
+          "type": "string"
+        },
+        "human_review_sha256": {
+          "anyOf": [
+            {
+              "pattern": "^sha256:[0-9a-f]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Human Review Sha256"
+        },
+        "path": {
+          "title": "Path",
+          "type": "string"
+        },
+        "probe_set_sha256": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Probe Set Sha256",
+          "type": "string"
+        },
+        "sha256": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Sha256",
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "proposed",
+            "human-reviewed",
+            "sealed"
+          ],
+          "title": "Status",
+          "type": "string"
+        }
+      },
+      "required": [
+        "status",
+        "path",
+        "sha256",
+        "probe_set_sha256",
+        "hidden_probe_policy_sha256"
+      ],
+      "title": "DraftAcceptanceContract",
+      "type": "object"
+    },
+    "DraftMetadata": {
+      "additionalProperties": false,
+      "properties": {
+        "created_by": {
+          "title": "Created By",
+          "type": "string"
+        },
+        "id": {
+          "pattern": "^[a-z0-9][a-z0-9-]{2,79}$",
+          "title": "Id",
+          "type": "string"
+        },
+        "revision": {
+          "minimum": 1,
+          "title": "Revision",
+          "type": "integer"
+        },
+        "state": {
+          "enum": [
+            "D0-created",
+            "D1-target-bound",
+            "D2-precedents-retrieved",
+            "D3-contract-proposed",
+            "D4-human-reviewed",
+            "D5-fast-loop",
+            "D6-sealed",
+            "D7-official-evaluation",
+            "D8-decided",
+            "D9-archived"
+          ],
+          "title": "State",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "revision",
+        "state",
+        "created_by"
+      ],
+      "title": "DraftMetadata",
+      "type": "object"
+    },
+    "DraftTarget": {
+      "additionalProperties": false,
+      "properties": {
+        "catalog_profile": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Catalog Profile"
+        },
+        "mode": {
+          "enum": [
+            "catalog",
+            "repository"
+          ],
+          "title": "Mode",
+          "type": "string"
+        },
+        "project_profile_sha256": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Project Profile Sha256",
+          "type": "string"
+        },
+        "repository": {
+          "title": "Repository",
+          "type": "string"
+        },
+        "revision": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Revision",
+          "type": "string"
+        }
+      },
+      "required": [
+        "mode",
+        "repository",
+        "revision",
+        "project_profile_sha256"
+      ],
+      "title": "DraftTarget",
+      "type": "object"
+    },
+    "SystemPathCandidate": {
+      "additionalProperties": false,
+      "properties": {
+        "domain": {
+          "enum": [
+            "distributed-communication",
+            "memory-tiering"
+          ],
+          "title": "Domain",
+          "type": "string"
+        },
+        "entrypoints": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Entrypoints",
+          "type": "array"
+        },
+        "implementation_kind": {
+          "enum": [
+            "communication-native",
+            "communication-plugin",
+            "communication-framework-integration",
+            "memory-tiering-runtime",
+            "framework-offload-integration",
+            "native-offload-extension",
+            "native-library",
+            "mixed-system"
+          ],
+          "title": "Implementation Kind",
+          "type": "string"
+        },
+        "intent": {
+          "title": "Intent",
+          "type": "string"
+        },
+        "kind": {
+          "enum": [
+            "git-diff",
+            "source-tree",
+            "package",
+            "generated"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "revision": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Revision",
+          "type": "string"
+        }
+      },
+      "required": [
+        "domain",
+        "kind",
+        "revision",
+        "intent",
+        "implementation_kind",
+        "entrypoints"
+      ],
+      "title": "SystemPathCandidate",
+      "type": "object"
+    },
+    "SystemPathScoringPolicy": {
+      "additionalProperties": false,
+      "properties": {
+        "backend_or_tier_count_score": {
+          "const": "forbidden",
+          "default": "forbidden",
+          "title": "Backend Or Tier Count Score",
+          "type": "string"
+        },
+        "communication_domain_score": {
+          "const": "forbidden",
+          "default": "forbidden",
+          "title": "Communication Domain Score",
+          "type": "string"
+        },
+        "concurrent_stability_source": {
+          "const": "system-path-load-cells-v1",
+          "default": "system-path-load-cells-v1",
+          "title": "Concurrent Stability Source",
+          "type": "string"
+        },
+        "deployability_template_id": {
+          "const": "deployability-v0.4",
+          "default": "deployability-v0.4",
+          "title": "Deployability Template Id",
+          "type": "string"
+        },
+        "generic_cross_platform_score": {
+          "const": "forbidden",
+          "default": "forbidden",
+          "title": "Generic Cross Platform Score",
+          "type": "string"
+        },
+        "offload_domain_score": {
+          "const": "forbidden",
+          "default": "forbidden",
+          "title": "Offload Domain Score",
+          "type": "string"
+        },
+        "operational_fit_source": {
+          "const": "concurrent-stability",
+          "default": "concurrent-stability",
+          "title": "Operational Fit Source",
+          "type": "string"
+        },
+        "operational_projection_policy": {
+          "const": "identity-v1",
+          "default": "identity-v1",
+          "title": "Operational Projection Policy",
+          "type": "string"
+        },
+        "parent_inherits_child_pure_triton_x": {
+          "const": false,
+          "default": false,
+          "title": "Parent Inherits Child Pure Triton X",
+          "type": "boolean"
+        },
+        "project_fit_template_id": {
+          "const": "project-fit-system-path-v0.5.1",
+          "default": "project-fit-system-path-v0.5.1",
+          "title": "Project Fit Template Id",
+          "type": "string"
+        }
+      },
+      "title": "SystemPathScoringPolicy",
+      "type": "object"
+    },
+    "SystemRetrievalBinding": {
+      "additionalProperties": false,
+      "properties": {
+        "anchor_plugin": {
+          "enum": [
+            "communication-v1",
+            "memory-tier-v1"
+          ],
+          "title": "Anchor Plugin",
+          "type": "string"
+        },
+        "corpus_cutoff": {
+          "format": "date-time",
+          "title": "Corpus Cutoff",
+          "type": "string"
+        },
+        "human_waiver_sha256": {
+          "anyOf": [
+            {
+              "pattern": "^sha256:[0-9a-f]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Human Waiver Sha256"
+        },
+        "leakage_audit_sha256": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Leakage Audit Sha256",
+          "type": "string"
+        },
+        "precedent_set_sha256": {
+          "anyOf": [
+            {
+              "pattern": "^sha256:[0-9a-f]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Precedent Set Sha256"
+        },
+        "query_plan_sha256": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Query Plan Sha256",
+          "type": "string"
+        },
+        "snapshot_sha256": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Snapshot Sha256",
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "complete",
+            "partial",
+            "blocked",
+            "stale",
+            "conflicting"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "trust_card_sha256": {
+          "anyOf": [
+            {
+              "pattern": "^sha256:[0-9a-f]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Trust Card Sha256"
+        }
+      },
+      "required": [
+        "status",
+        "anchor_plugin",
+        "corpus_cutoff",
+        "snapshot_sha256",
+        "query_plan_sha256",
+        "leakage_audit_sha256"
+      ],
+      "title": "SystemRetrievalBinding",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "acceptance_contract": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/DraftAcceptanceContract"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "candidate": {
+      "$ref": "#/$defs/SystemPathCandidate"
+    },
+    "communication": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/CommunicationContract"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "draft": {
+      "$ref": "#/$defs/DraftMetadata"
+    },
+    "retrieval": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/SystemRetrievalBinding"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "schema_version": {
+      "const": "0.5.1",
+      "default": "0.5.1",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "scoring": {
+      "$ref": "#/$defs/SystemPathScoringPolicy"
+    },
+    "target": {
+      "$ref": "#/$defs/DraftTarget"
+    },
+    "template_id": {
+      "const": "communication-path-integration-v1",
+      "default": "communication-path-integration-v1",
+      "title": "Template Id",
+      "type": "string"
+    }
+  },
+  "required": [
+    "draft",
+    "target",
+    "candidate"
+  ],
+  "title": "CommunicationDraftSpec",
+  "type": "object"
+}

@@ -1,0 +1,319 @@
+{
+  "evidence_bindings": {
+    "sglang-pr-3044": {
+      "supplemental-r2/probes/sglang-pr-3044-move.json": "sha256:e14d3e1c1144fd946c41142f1b31d3b2ed969d169c94f8c28e2f3141d87226ed",
+      "supplemental-r2/static/sglang-pr-3044.json": "sha256:25529e6ec5f02a3b884808e93285941fe93976544fb704f82a407138d43cf4d8"
+    },
+    "vllm-pr-13140": {
+      "supplemental-r2/probes/vllm-pr-13140-barrier.json": "sha256:c84452961ab5493a6fa66fc6a02748da23c726f3ef9c8bfd4dc91db4d7d910ac",
+      "supplemental-r2/probes/vllm-pr-13140-base-racecheck.log": "sha256:a5bf2fcf31e243a43f27e03f0a3d67b6ee00e3fa60eb724e6594a9e4b9085479",
+      "supplemental-r2/probes/vllm-pr-13140-head-racecheck.log": "sha256:a5bf2fcf31e243a43f27e03f0a3d67b6ee00e3fa60eb724e6594a9e4b9085479",
+      "supplemental-r2/probes/vllm-pr-13140-static.json": "sha256:8b1a77965e264ad0419cc809cbeabe8289b86a76266fe6cc08c6e27bf3a46f40"
+    },
+    "vllm-pr-14027": {
+      "supplemental-r2/probes/vllm-pr-14027-router.json": "sha256:dab6c5a18f8c51d697b76de0e84c9b3ae0f96a6b005df682d3acd65eac0bcddc",
+      "supplemental-r2/static/vllm-pr-14027.json": "sha256:da40ba73e99e0ded79c54567b7dede472c458ac43e2db38d519e83e8a061c77f"
+    }
+  },
+  "frozen_at": "2026-09-01T16:20:42.599370+00:00",
+  "learned_model_used": false,
+  "lock_set_sha256": "sha256:35dd69c9341a2712973f8274e7660ef475ee4d9abf01266eecb8f6d1e3761e0e",
+  "locks": [
+    {
+      "lock_sha256": "sha256:5769b643415d085bf4dc4242022635c3061ee85496e1ce98b6781bea22ecb3f4",
+      "material": {
+        "candidate_sha256": "sha256:704c74cfb23c8906f8e88c49962da8549387ec76243d4d7d189db96bf18a964e",
+        "case_id": "sglang-pr-3044",
+        "decision": "revise",
+        "evidence_sha256": "sha256:93beef4a02faf98615deb98a2a05cb14bd33f453f95cf1e7f69411025c2e459f",
+        "frozen_at": "2026-09-01T16:20:42.599370Z",
+        "narrative": "[exact-patch-identity: pass] All four expected paths are represented and their before/after source and diff digests are frozen. [interface-parameter-use-preserved: pass] No retained parameter changed from used to completely unused in changed Python code. [test-matrix-not-silently-contracted: fail] The explicit test matrix falls to 5.9% of its prior size. No compensating evidence is present in this source-level check. [diagnostics-remain-specific: fail] The patch adds an unscoped UserWarning suppression; unrelated diagnostics can disappear and make the moved suite less informative. [cross-cutting-fix-owned-centrally: pass] No substantive line is newly duplicated across three or more changed files. [moved-test-discovery-preserved: pass] All three AST inventories are unchanged and every moved filename occurs exactly once in run_suite. [early-exit-protects-benchmark-budget: pass] Two source-contract failures already require revision, so the expensive matrix is skipped without weakening that decision.",
+        "observations": [
+          {
+            "blocking": true,
+            "conclusion": "All four expected paths are represented and their before/after source and diff digests are frozen.",
+            "counterevidence": [],
+            "evidence": [
+              "sha256:a21ef1c59158e728dcb9d00c127c1f1107a4c959f724fba841ffb14d7d0189e2"
+            ],
+            "failure_code": null,
+            "question": "Are the reconstructed base/head sources bound to the locked PR commits?",
+            "rule_id": "exact-patch-identity",
+            "status": "pass"
+          },
+          {
+            "blocking": true,
+            "conclusion": "No retained parameter changed from used to completely unused in changed Python code.",
+            "counterevidence": [],
+            "evidence": [],
+            "failure_code": null,
+            "question": "Does every retained caller-facing parameter still affect behavior?",
+            "rule_id": "interface-parameter-use-preserved",
+            "status": "pass"
+          },
+          {
+            "blocking": true,
+            "conclusion": "The explicit test matrix falls to 5.9% of its prior size. No compensating evidence is present in this source-level check.",
+            "counterevidence": [],
+            "evidence": [
+              "python/sglang/test/test_block_fp8.py->test/srt/test_block_fp8.py explicit Cartesian upper bound 311040->18432 (5.9%); BLOCK_SIZE:4->1, DTYPES:3->2, K:3->2, M:5->4, N:3->2"
+            ],
+            "failure_code": "TEST_MATRIX_CONTRACTION_GT_50_PERCENT",
+            "question": "Does a test move preserve at least half of its explicit input matrix?",
+            "rule_id": "test-matrix-not-silently-contracted",
+            "status": "fail"
+          },
+          {
+            "blocking": true,
+            "conclusion": "The patch adds an unscoped UserWarning suppression; unrelated diagnostics can disappear and make the moved suite less informative.",
+            "counterevidence": [],
+            "evidence": [
+              "test/srt/test_block_fp8.py:14"
+            ],
+            "failure_code": "DIAGNOSTIC_SUPPRESSION_BROAD_USER_WARNING",
+            "question": "Does the patch avoid globally suppressing a broad warning category?",
+            "rule_id": "diagnostics-remain-specific",
+            "status": "fail"
+          },
+          {
+            "blocking": true,
+            "conclusion": "No substantive line is newly duplicated across three or more changed files.",
+            "counterevidence": [],
+            "evidence": [],
+            "failure_code": null,
+            "question": "Is a repeated cross-cutting fix implemented at one central owner?",
+            "rule_id": "cross-cutting-fix-owned-centrally",
+            "status": "pass"
+          },
+          {
+            "blocking": true,
+            "conclusion": "All three AST inventories are unchanged and every moved filename occurs exactly once in run_suite.",
+            "counterevidence": [],
+            "evidence": [
+              "sha256:e14d3e1c1144fd946c41142f1b31d3b2ed969d169c94f8c28e2f3141d87226ed"
+            ],
+            "failure_code": null,
+            "question": "Are all moved test definitions parseable and registered exactly once?",
+            "rule_id": "moved-test-discovery-preserved",
+            "status": "pass"
+          },
+          {
+            "blocking": true,
+            "conclusion": "Two source-contract failures already require revision, so the expensive matrix is skipped without weakening that decision.",
+            "counterevidence": [],
+            "evidence": [
+              "compile_seconds=0",
+              "probe_duration_seconds=0.018982304027304053"
+            ],
+            "failure_code": null,
+            "question": "Can the decision stop before executing the contracted full GPU matrix?",
+            "rule_id": "early-exit-protects-benchmark-budget",
+            "status": "pass"
+          }
+        ],
+        "policy_id": "historical-explainable-agent-v0.5-r2",
+        "rationale_codes": [
+          "DIAGNOSTIC_SUPPRESSION_BROAD_USER_WARNING",
+          "TEST_MATRIX_CONTRACTION_GT_50_PERCENT"
+        ],
+        "schema_version": "0.5",
+        "test_plan_sha256": "sha256:9a8fdb34753eded019dc318934e9691ed365b4f9c35afac619f724872e3b4bb5"
+      }
+    },
+    {
+      "lock_sha256": "sha256:19f989a3933f19fd5aa60858556880fa1214e6219e2bd38a06039b3accdc343b",
+      "material": {
+        "candidate_sha256": "sha256:1d7157969de0128aad135ededb64232832dca126fd02add84502bb07b7a6334d",
+        "case_id": "vllm-pr-13140",
+        "decision": "accept_with_scope",
+        "evidence_sha256": "sha256:97317be0be610cac6d4bb740c08531aae2619f5b167b01e230351b10e92691bc",
+        "frozen_at": "2026-09-01T16:20:42.599370Z",
+        "narrative": "[exact-patch-identity: pass] Pinned base/head sources differ in the affected kernel only by one unconditional block barrier. [shared-initialization-happens-before-cross-warp-atomic: pass] The new depth-1 barrier is reached by all 1024 threads and separates 32 warp-owned row initializers from input-directed cross-warp atomics. [affected-kernel-sm80-correctness: pass] Head passed 500/500; base also passed 500/500, so the ordinary scheduler did not expose the latent race. [compute-sanitizer-regression: pass] Head racecheck reported zero hazards. Base also reported zero, which is counterevidence against claiming dynamic reproduction, not against the static happens-before defect. [steady-state-regression-below-ten-percent: pass] Observed head/base time ratio was 0.9343; compilation was pre-run once and steady-state compilation was zero.",
+        "observations": [
+          {
+            "blocking": true,
+            "conclusion": "Pinned base/head sources differ in the affected kernel only by one unconditional block barrier.",
+            "counterevidence": [],
+            "evidence": [
+              "sha256:158ed3457ef16b2a143191845c9b20eb1753aba87df36187f74661d9ae6e7aa2"
+            ],
+            "failure_code": null,
+            "question": "Is the exact one-file patch bound before judgment?",
+            "rule_id": "exact-patch-identity",
+            "status": "pass"
+          },
+          {
+            "blocking": true,
+            "conclusion": "The new depth-1 barrier is reached by all 1024 threads and separates 32 warp-owned row initializers from input-directed cross-warp atomics.",
+            "counterevidence": [],
+            "evidence": [
+              "sha256:8b1a77965e264ad0419cc809cbeabe8289b86a76266fe6cc08c6e27bf3a46f40"
+            ],
+            "failure_code": null,
+            "question": "Does the patch order every shared-count initializer before any warp can update any row?",
+            "rule_id": "shared-initialization-happens-before-cross-warp-atomic",
+            "status": "pass"
+          },
+          {
+            "blocking": true,
+            "conclusion": "Head passed 500/500; base also passed 500/500, so the ordinary scheduler did not expose the latent race.",
+            "counterevidence": [],
+            "evidence": [
+              "sha256:c84452961ab5493a6fa66fc6a02748da23c726f3ef9c8bfd4dc91db4d7d910ac"
+            ],
+            "failure_code": null,
+            "question": "Does the compiled head kernel match CPU grouping and padding on adversarial SM80 cases?",
+            "rule_id": "affected-kernel-sm80-correctness",
+            "status": "pass"
+          },
+          {
+            "blocking": true,
+            "conclusion": "Head racecheck reported zero hazards. Base also reported zero, which is counterevidence against claiming dynamic reproduction, not against the static happens-before defect.",
+            "counterevidence": [],
+            "evidence": [
+              "sha256:a5bf2fcf31e243a43f27e03f0a3d67b6ee00e3fa60eb724e6594a9e4b9085479",
+              "sha256:a5bf2fcf31e243a43f27e03f0a3d67b6ee00e3fa60eb724e6594a9e4b9085479"
+            ],
+            "failure_code": null,
+            "question": "Is the head free of sanitizer-visible races in the instrumented launch?",
+            "rule_id": "compute-sanitizer-regression",
+            "status": "pass"
+          },
+          {
+            "blocking": true,
+            "conclusion": "Observed head/base time ratio was 0.9343; compilation was pre-run once and steady-state compilation was zero.",
+            "counterevidence": [],
+            "evidence": [
+              "sha256:b4ad3ac712d89474b5f7ab7f67271db6d722ccd13ed7ec970d6bb5fa67571f06"
+            ],
+            "failure_code": null,
+            "question": "Does the added barrier avoid a greater-than-10% hot-loop regression on this cell?",
+            "rule_id": "steady-state-regression-below-ten-percent",
+            "status": "pass"
+          }
+        ],
+        "policy_id": "historical-explainable-agent-v0.5-r2",
+        "rationale_codes": [],
+        "schema_version": "0.5",
+        "test_plan_sha256": "sha256:9a8fdb34753eded019dc318934e9691ed365b4f9c35afac619f724872e3b4bb5"
+      }
+    },
+    {
+      "lock_sha256": "sha256:089b39d7662fc371e5bf4d1cc141a400f22fd0eb97e7080fc1259e87fb25aec7",
+      "material": {
+        "candidate_sha256": "sha256:466cf65d87c65acdde33dab9033cac75af0f78e3728d5a8ce6835dd5b893c200",
+        "case_id": "vllm-pr-14027",
+        "decision": "revise",
+        "evidence_sha256": "sha256:292a173dd53c3f34269b0477b693a5c6663ed66703036bde6ca4cb6bf3a02f71",
+        "frozen_at": "2026-09-01T16:20:42.599370Z",
+        "narrative": "[exact-patch-identity: pass] Both changed source pairs and their unified diff have frozen digests. [interface-parameter-use-preserved: fail] The patch keeps the public parameter(s) renormalize but removes all uses, so callers can request behavior that is silently ignored. [test-matrix-not-silently-contracted: pass] No changed Python test file loses more than half of its explicit matrix. [diagnostics-remain-specific: pass] No new unscoped warnings.filterwarnings(ignore, UserWarning) call was found. [cross-cutting-fix-owned-centrally: pass] No substantive line is newly duplicated across three or more changed files. [renormalize-runtime-contract: fail] Base max sum error is 1.19e-07, while head error is 0.272; the retained flag is ignored at runtime. [fp32-routing-precision: pass] Both grouped routing probes passed; head error was no worse than base for softmax and sigmoid. [compile-free-minimal-probe: pass] Exact functions were extracted with compile_seconds=0; hot call time was 8.29713e-05s.",
+        "observations": [
+          {
+            "blocking": true,
+            "conclusion": "Both changed source pairs and their unified diff have frozen digests.",
+            "counterevidence": [],
+            "evidence": [
+              "sha256:98cf719a1ccb5862873579c0143fe085b9f1f1f8477e2d012daf72478634427d"
+            ],
+            "failure_code": null,
+            "question": "Are both changed sources and the exact diff bound to the locked PR commits?",
+            "rule_id": "exact-patch-identity",
+            "status": "pass"
+          },
+          {
+            "blocking": true,
+            "conclusion": "The patch keeps the public parameter(s) renormalize but removes all uses, so callers can request behavior that is silently ignored.",
+            "counterevidence": [],
+            "evidence": [
+              "vllm/model_executor/layers/fused_moe/fused_moe.py->vllm/model_executor/layers/fused_moe/fused_moe.py:fused_topk parameter=renormalize loads=1->0"
+            ],
+            "failure_code": "CALLER_CONTRACT_PARAMETER_IGNORED:renormalize",
+            "question": "Does every retained caller-facing parameter still affect behavior?",
+            "rule_id": "interface-parameter-use-preserved",
+            "status": "fail"
+          },
+          {
+            "blocking": true,
+            "conclusion": "No changed Python test file loses more than half of its explicit matrix.",
+            "counterevidence": [],
+            "evidence": [],
+            "failure_code": null,
+            "question": "Does a test move preserve at least half of its explicit input matrix?",
+            "rule_id": "test-matrix-not-silently-contracted",
+            "status": "pass"
+          },
+          {
+            "blocking": true,
+            "conclusion": "No new unscoped warnings.filterwarnings(ignore, UserWarning) call was found.",
+            "counterevidence": [],
+            "evidence": [],
+            "failure_code": null,
+            "question": "Does the patch avoid globally suppressing a broad warning category?",
+            "rule_id": "diagnostics-remain-specific",
+            "status": "pass"
+          },
+          {
+            "blocking": true,
+            "conclusion": "No substantive line is newly duplicated across three or more changed files.",
+            "counterevidence": [],
+            "evidence": [],
+            "failure_code": null,
+            "question": "Is a repeated cross-cutting fix implemented at one central owner?",
+            "rule_id": "cross-cutting-fix-owned-centrally",
+            "status": "pass"
+          },
+          {
+            "blocking": true,
+            "conclusion": "Base max sum error is 1.19e-07, while head error is 0.272; the retained flag is ignored at runtime.",
+            "counterevidence": [
+              "Base/head expert IDs are equal and renormalize=False behavior is unchanged."
+            ],
+            "evidence": [
+              "sha256:dab6c5a18f8c51d697b76de0e84c9b3ae0f96a6b005df682d3acd65eac0bcddc"
+            ],
+            "failure_code": "CALLER_CONTRACT_PARAMETER_IGNORED:renormalize",
+            "question": "Does fused_topk still make selected weights sum to one when renormalize=True?",
+            "rule_id": "renormalize-runtime-contract",
+            "status": "fail"
+          },
+          {
+            "blocking": true,
+            "conclusion": "Both grouped routing probes passed; head error was no worse than base for softmax and sigmoid.",
+            "counterevidence": [],
+            "evidence": [
+              "sha256:dab6c5a18f8c51d697b76de0e84c9b3ae0f96a6b005df682d3acd65eac0bcddc"
+            ],
+            "failure_code": null,
+            "question": "Do the changed softmax and sigmoid paths preserve or improve FP64 agreement?",
+            "rule_id": "fp32-routing-precision",
+            "status": "pass"
+          },
+          {
+            "blocking": true,
+            "conclusion": "Exact functions were extracted with compile_seconds=0; hot call time was 8.29713e-05s.",
+            "counterevidence": [],
+            "evidence": [
+              "steady_state_compile_seconds=0"
+            ],
+            "failure_code": null,
+            "question": "Can the contract failure be diagnosed without building the full host project?",
+            "rule_id": "compile-free-minimal-probe",
+            "status": "pass"
+          }
+        ],
+        "policy_id": "historical-explainable-agent-v0.5-r2",
+        "rationale_codes": [
+          "CALLER_CONTRACT_PARAMETER_IGNORED:renormalize"
+        ],
+        "schema_version": "0.5",
+        "test_plan_sha256": "sha256:9a8fdb34753eded019dc318934e9691ed365b4f9c35afac619f724872e3b4bb5"
+      }
+    }
+  ],
+  "protocol_id": "historical-reviewed-failure-alignment-v0.5-r2",
+  "review_text_visible_during_machine_judgment": false,
+  "schema_version": "0.5",
+  "test_plan_sha256": "sha256:9a8fdb34753eded019dc318934e9691ed365b4f9c35afac619f724872e3b4bb5",
+  "trained_weights_used": false,
+  "weighted_score_used": false
+}

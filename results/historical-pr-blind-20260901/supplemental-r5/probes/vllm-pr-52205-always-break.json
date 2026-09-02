@@ -1,0 +1,52 @@
+{
+  "behavior": {
+    "base_full_legacy": {
+      "eager_calls": 0,
+      "operation_calls": 1,
+      "result": 5
+    },
+    "base_piecewise_legacy": {
+      "eager_calls": 1,
+      "operation_calls": 1,
+      "result": 5
+    },
+    "head_full_always_break": {
+      "eager_calls": 1,
+      "operation_calls": 1,
+      "result": 5
+    },
+    "head_full_legacy": {
+      "eager_calls": 0,
+      "operation_calls": 1,
+      "result": 5
+    },
+    "head_piecewise_legacy": {
+      "eager_calls": 1,
+      "operation_calls": 1,
+      "result": 5
+    }
+  },
+  "behavior_findings": {
+    "always_break_routes_full_to_eager": true,
+    "legacy_full_behavior_preserved": true,
+    "legacy_piecewise_still_breaks": true
+  },
+  "integration": {
+    "amd_kda_opts_in": true,
+    "changed_files": [
+      "vllm/compilation/breakable_cudagraph.py",
+      "vllm/models/kimi_k3/amd/kda.py"
+    ],
+    "changed_test_files": [],
+    "nvidia_kda_opts_in": false,
+    "runtime_benchmark_added": false,
+    "tests_referencing_always_break": []
+  },
+  "probe": "vllm-always-break-contract-r1",
+  "schema_version": "0.5",
+  "source_sha256": {
+    "base_decorator": "sha256:722683b44b4461ffd9a6498741da18945cbaac231c3bb01f0b0443dafe9e053e",
+    "head_amd_kda": "sha256:e27e3e01de961ca5685977342bbd77986a428eb526d04838432ec8c97f2a0460",
+    "head_decorator": "sha256:2ba36b5eac3dab780286e32b0addf65419ec856b568b99d0927e7d7685fd2288"
+  }
+}

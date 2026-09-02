@@ -1,0 +1,68 @@
+{
+  "case_id": "megatron-pr-5608",
+  "created_at": "2026-09-02T02:26:10.313938+00:00",
+  "duration_seconds": 0.5896567078307271,
+  "evidence_sha256": "sha256:8705b9ed52268df8bcdfb48e998bb8ae01c7038ef7aa3cca21649cf2eabfce2a",
+  "facts": {
+    "changed_paths": [
+      "megatron/core/inference/contexts/attention_context/triton/tensor_ops.py"
+    ],
+    "changed_test_file_count": 0,
+    "changed_test_paths": [],
+    "compilation_path": "not-required",
+    "existing_test_search_matches": [
+      "73e16b7b438f286d05bad2f754fbbdc2cad3c25b:tests/unit_tests/inference/contexts/attention_metadata/test_tensor_ops.py:7:    tensor_get_slice_after,",
+      "73e16b7b438f286d05bad2f754fbbdc2cad3c25b:tests/unit_tests/inference/contexts/attention_metadata/test_tensor_ops.py:9:    tensor_merge,",
+      "73e16b7b438f286d05bad2f754fbbdc2cad3c25b:tests/unit_tests/inference/contexts/attention_metadata/test_tensor_ops.py:13:def tensor_get_slice_after_pytorch(",
+      "73e16b7b438f286d05bad2f754fbbdc2cad3c25b:tests/unit_tests/inference/contexts/attention_metadata/test_tensor_ops.py:16:    \"\"\"Reference PyTorch implementation of tensor_get_slice_after.\"\"\"",
+      "73e16b7b438f286d05bad2f754fbbdc2cad3c25b:tests/unit_tests/inference/contexts/attention_metadata/test_tensor_ops.py:30:def tensor_merge_pytorch(",
+      "73e16b7b438f286d05bad2f754fbbdc2cad3c25b:tests/unit_tests/inference/contexts/attention_metadata/test_tensor_ops.py:36:    \"\"\"Reference PyTorch implementation of tensor_merge.\"\"\"",
+      "73e16b7b438f286d05bad2f754fbbdc2cad3c25b:tests/unit_tests/inference/contexts/attention_metadata/test_tensor_ops.py:78:    tensor_get_slice_after_pytorch(input_tensor, output_ref, pos_on_device)",
+      "73e16b7b438f286d05bad2f754fbbdc2cad3c25b:tests/unit_tests/inference/contexts/attention_metadata/test_tensor_ops.py:79:    tensor_get_slice_after(input_tensor, output_triton, pos_on_device, check_bounds=True)",
+      "73e16b7b438f286d05bad2f754fbbdc2cad3c25b:tests/unit_tests/inference/contexts/attention_metadata/test_tensor_ops.py:93:    tensor_get_slice_after(",
+      "73e16b7b438f286d05bad2f754fbbdc2cad3c25b:tests/unit_tests/inference/contexts/attention_metadata/test_tensor_ops.py:107:    tensor_get_slice_after(",
+      "73e16b7b438f286d05bad2f754fbbdc2cad3c25b:tests/unit_tests/inference/contexts/attention_metadata/test_tensor_ops.py:121:    tensor_get_slice_after(input_tensor, output_tensor, torch.tensor([3], device=device))",
+      "73e16b7b438f286d05bad2f754fbbdc2cad3c25b:tests/unit_tests/inference/contexts/attention_metadata/test_tensor_ops.py:130:    tensor_get_slice_after(",
+      "73e16b7b438f286d05bad2f754fbbdc2cad3c25b:tests/unit_tests/inference/contexts/attention_metadata/test_tensor_ops.py:143:        tensor_get_slice_after(",
+      "73e16b7b438f286d05bad2f754fbbdc2cad3c25b:tests/unit_tests/inference/contexts/attention_metadata/test_tensor_ops.py:157:    tensor_get_slice_after_pytorch(input_tensor, output_ref, pos_on_device)",
+      "73e16b7b438f286d05bad2f754fbbdc2cad3c25b:tests/unit_tests/inference/contexts/attention_metadata/test_tensor_ops.py:158:    tensor_get_slice_after(input_tensor, output_triton, pos_on_device)",
+      "73e16b7b438f286d05bad2f754fbbdc2cad3c25b:tests/unit_tests/inference/contexts/attention_metadata/test_tensor_ops.py:169:def test_tensor_merge_basic(device, merge_params, in_place):",
+      "73e16b7b438f286d05bad2f754fbbdc2cad3c25b:tests/unit_tests/inference/contexts/attention_metadata/test_tensor_ops.py:181:        tensor_merge_pytorch(tensor_a, tensor_b, output_ref, pos_on_device)",
+      "73e16b7b438f286d05bad2f754fbbdc2cad3c25b:tests/unit_tests/inference/contexts/attention_metadata/test_tensor_ops.py:182:        tensor_merge(output_triton, tensor_b, pos_on_device, output_tensor=None, check_bounds=True)",
+      "73e16b7b438f286d05bad2f754fbbdc2cad3c25b:tests/unit_tests/inference/contexts/attention_metadata/test_tensor_ops.py:188:        tensor_merge_pytorch(tensor_a, tensor_b, output_ref, pos_on_device)",
+      "73e16b7b438f286d05bad2f754fbbdc2cad3c25b:tests/unit_tests/inference/contexts/attention_metadata/test_tensor_ops.py:189:        tensor_merge(",
+      "73e16b7b438f286d05bad2f754fbbdc2cad3c25b:tests/unit_tests/inference/contexts/attention_metadata/test_tensor_ops.py:198:def test_tensor_merge_pos_zero(device, merge_params):",
+      "73e16b7b438f286d05bad2f754fbbdc2cad3c25b:tests/unit_tests/inference/contexts/attention_metadata/test_tensor_ops.py:204:    tensor_merge(",
+      "73e16b7b438f286d05bad2f754fbbdc2cad3c25b:tests/unit_tests/inference/contexts/attention_metadata/test_tensor_ops.py:215:def test_tensor_merge_pos_full(device, merge_params):",
+      "73e16b7b438f286d05bad2f754fbbdc2cad3c25b:tests/unit_tests/inference/contexts/attention_metadata/test_tensor_ops.py:221:    tensor_merge(",
+      "73e16b7b438f286d05bad2f754fbbdc2cad3c25b:tests/unit_tests/inference/contexts/attention_metadata/test_tensor_ops.py:238:def test_tensor_merge_small(device):",
+      "73e16b7b438f286d05bad2f754fbbdc2cad3c25b:tests/unit_tests/inference/contexts/attention_metadata/test_tensor_ops.py:243:    tensor_merge(tensor_a, tensor_b, torch.tensor([2], device=device), output_tensor=output_tensor)"
+    ],
+    "path_parity": true,
+    "steady_state_compile_seconds": 0.0,
+    "target": {
+      "base_batch_size_constexpr_count": 4,
+      "head_batch_size_constexpr_count": 0,
+      "row_and_block_sizes_remain_constexpr": true
+    }
+  },
+  "failure_codes": [],
+  "probe": "r6-cross-project-static-v1",
+  "project": "megatron-core",
+  "protocol_id": "historical-pr-blind-cross-project-v0.5-r6",
+  "schema_version": "0.5",
+  "source_identity": {
+    "base_sha": "027fa4aabac5bfaec6633a04939205f7efb061ba",
+    "base_source_sha256": {
+      "megatron/core/inference/contexts/attention_context/triton/tensor_ops.py": "sha256:983681b8fe9e4d360cb3671344905f29a6a9518f1a34c0bbc306afc580dc1126"
+    },
+    "head_sha": "73e16b7b438f286d05bad2f754fbbdc2cad3c25b",
+    "head_source_sha256": {
+      "megatron/core/inference/contexts/attention_context/triton/tensor_ops.py": "sha256:2dbd227e25039f301021d8433eff74995e2bd0c505c2c6ef2d52df3ab2f813f4"
+    },
+    "selection_lock_sha256": "sha256:616346d23c6e35a120aa6daa004592dfe52795c63526e9ecdfbec6ff161ea7cb",
+    "test_plan_sha256": "sha256:187e71082f6b26a8913856be014fc6d2e6b1d4fb52db4b3dceea35a09b791982",
+    "unified_diff_sha256": "sha256:158425e8230101f49bc0d082a1f46472b0220585aad80704073926e444b36900"
+  },
+  "status": "pass"
+}

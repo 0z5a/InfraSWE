@@ -1,0 +1,219 @@
+{
+  "$defs": {
+    "SystemDraftProfile": {
+      "additionalProperties": false,
+      "properties": {
+        "abstract_parent_profile": {
+          "anyOf": [
+            {
+              "const": "memory-tiering-offload-runtime-v1",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Abstract Parent Profile"
+        },
+        "anchor_plugin": {
+          "enum": [
+            "communication-v1",
+            "memory-tier-v1"
+          ],
+          "title": "Anchor Plugin",
+          "type": "string"
+        },
+        "comparison_scope": {
+          "const": "profile-local",
+          "default": "profile-local",
+          "title": "Comparison Scope",
+          "type": "string"
+        },
+        "correctness_invariants": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Correctness Invariants",
+          "type": "array"
+        },
+        "domain": {
+          "enum": [
+            "distributed-communication",
+            "memory-tiering"
+          ],
+          "title": "Domain",
+          "type": "string"
+        },
+        "generic_domain_score": {
+          "const": "forbidden",
+          "default": "forbidden",
+          "title": "Generic Domain Score",
+          "type": "string"
+        },
+        "layer": {
+          "anyOf": [
+            {
+              "enum": [
+                "collective-library",
+                "transport-runtime",
+                "framework-process-group",
+                "collective-scheduling",
+                "communication-lifecycle",
+                "one-sided-runtime"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Layer"
+        },
+        "object_kind": {
+          "anyOf": [
+            {
+              "enum": [
+                "kv-cache",
+                "weight",
+                "training-state",
+                "activation",
+                "checkpoint-staging"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Object Kind"
+        },
+        "performance_objectives": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Performance Objectives",
+          "type": "array"
+        },
+        "profile_id": {
+          "pattern": "^[a-z0-9][a-z0-9-]+-v[0-9]+$",
+          "title": "Profile Id",
+          "type": "string"
+        },
+        "project_fit_template_id": {
+          "const": "project-fit-system-path-v0.5.1",
+          "default": "project-fit-system-path-v0.5.1",
+          "title": "Project Fit Template Id",
+          "type": "string"
+        },
+        "required_probes": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Required Probes",
+          "type": "array"
+        },
+        "sealable": {
+          "title": "Sealable",
+          "type": "boolean"
+        },
+        "status": {
+          "default": "proposed",
+          "enum": [
+            "proposed",
+            "human-reviewed"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "template_id": {
+          "enum": [
+            "communication-path-integration-v1",
+            "memory-tier-integration-v1"
+          ],
+          "title": "Template Id",
+          "type": "string"
+        },
+        "triton_portability_score": {
+          "const": "not-applicable",
+          "default": "not-applicable",
+          "title": "Triton Portability Score",
+          "type": "string"
+        }
+      },
+      "required": [
+        "profile_id",
+        "domain",
+        "template_id",
+        "sealable",
+        "anchor_plugin",
+        "performance_objectives",
+        "correctness_invariants",
+        "required_probes"
+      ],
+      "title": "SystemDraftProfile",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "catalog_version": {
+      "title": "Catalog Version",
+      "type": "string"
+    },
+    "cross_profile_ranking_allowed": {
+      "const": false,
+      "default": false,
+      "title": "Cross Profile Ranking Allowed",
+      "type": "boolean"
+    },
+    "default_memory_profile": {
+      "const": "kv-cache-cpu-offload-v1",
+      "default": "kv-cache-cpu-offload-v1",
+      "title": "Default Memory Profile",
+      "type": "string"
+    },
+    "profile_order": {
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1,
+      "title": "Profile Order",
+      "type": "array"
+    },
+    "profiles": {
+      "additionalProperties": {
+        "$ref": "#/$defs/SystemDraftProfile"
+      },
+      "title": "Profiles",
+      "type": "object"
+    },
+    "schema_version": {
+      "const": "0.5.2",
+      "default": "0.5.2",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "status": {
+      "default": "proposed",
+      "enum": [
+        "proposed",
+        "human-reviewed"
+      ],
+      "title": "Status",
+      "type": "string"
+    }
+  },
+  "required": [
+    "catalog_version",
+    "profile_order",
+    "profiles"
+  ],
+  "title": "SystemDraftProfileCatalog",
+  "type": "object"
+}

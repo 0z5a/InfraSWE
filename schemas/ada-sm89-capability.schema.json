@@ -1,0 +1,182 @@
+{
+  "$defs": {
+    "AdaSM89Gate": {
+      "additionalProperties": false,
+      "properties": {
+        "evidence": {
+          "additionalProperties": true,
+          "title": "Evidence",
+          "type": "object"
+        },
+        "failure_codes": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Failure Codes",
+          "type": "array"
+        },
+        "status": {
+          "enum": [
+            "pass",
+            "fail",
+            "unresolved",
+            "not_applicable"
+          ],
+          "title": "Status",
+          "type": "string"
+        }
+      },
+      "required": [
+        "status"
+      ],
+      "title": "AdaSM89Gate",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "description": "Fail-closed L40S/L20 capability record.\n\nBoard-varying values intentionally remain evidence dictionaries: their exact NVML/CUDA\navailability changes with driver and virtualization mode, while the top-level identity and\ngate semantics stay strict and schema checked.",
+  "properties": {
+    "calibration": {
+      "additionalProperties": true,
+      "title": "Calibration",
+      "type": "object"
+    },
+    "capability_fingerprint": {
+      "title": "Capability Fingerprint",
+      "type": "string"
+    },
+    "contract": {
+      "additionalProperties": true,
+      "title": "Contract",
+      "type": "object"
+    },
+    "contract_sha256": {
+      "title": "Contract Sha256",
+      "type": "string"
+    },
+    "failure_codes": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Failure Codes",
+      "type": "array"
+    },
+    "features": {
+      "additionalProperties": {
+        "additionalProperties": true,
+        "type": "object"
+      },
+      "title": "Features",
+      "type": "object"
+    },
+    "gates": {
+      "additionalProperties": {
+        "$ref": "#/$defs/AdaSM89Gate"
+      },
+      "title": "Gates",
+      "type": "object"
+    },
+    "generated_at": {
+      "title": "Generated At",
+      "type": "string"
+    },
+    "interconnect": {
+      "additionalProperties": true,
+      "title": "Interconnect",
+      "type": "object"
+    },
+    "memory": {
+      "additionalProperties": true,
+      "title": "Memory",
+      "type": "object"
+    },
+    "platform": {
+      "additionalProperties": true,
+      "title": "Platform",
+      "type": "object"
+    },
+    "platform_cell": {
+      "anyOf": [
+        {
+          "enum": [
+            "l40s-48gb-pcie",
+            "l20-48gb-pcie",
+            "generic-sm89"
+          ],
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Platform Cell"
+    },
+    "power_thermal": {
+      "additionalProperties": true,
+      "title": "Power Thermal",
+      "type": "object"
+    },
+    "probe_version": {
+      "title": "Probe Version",
+      "type": "string"
+    },
+    "profile_id": {
+      "title": "Profile Id",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "0.1",
+      "default": "0.1",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "software": {
+      "additionalProperties": true,
+      "title": "Software",
+      "type": "object"
+    },
+    "status": {
+      "enum": [
+        "ready",
+        "compile_only",
+        "partial",
+        "not_ready"
+      ],
+      "title": "Status",
+      "type": "string"
+    },
+    "virtualization": {
+      "additionalProperties": true,
+      "title": "Virtualization",
+      "type": "object"
+    },
+    "warnings": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Warnings",
+      "type": "array"
+    }
+  },
+  "required": [
+    "generated_at",
+    "probe_version",
+    "profile_id",
+    "status",
+    "platform_cell",
+    "capability_fingerprint",
+    "platform",
+    "memory",
+    "power_thermal",
+    "interconnect",
+    "virtualization",
+    "software",
+    "features",
+    "calibration",
+    "gates",
+    "contract_sha256",
+    "contract"
+  ],
+  "title": "AdaSM89CapabilityManifest",
+  "type": "object"
+}

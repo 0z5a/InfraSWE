@@ -1,0 +1,104 @@
+{
+  "schema_version": "0.5.5",
+  "protocol_id": "historical-pr-blind-cross-project-v0.5.5-r8-30",
+  "purpose": "Outcome-blind offline static supplementation across all ten default Draft projects.",
+  "frozen_before_discovery": true,
+  "review_text_visible_to_machine_judge": false,
+  "review_text_requested": false,
+  "merge_outcomes_visible_to_machine_judge": false,
+  "ci_fields_visible_to_machine_judge": false,
+  "learned_model_used": false,
+  "target_case_count": 30,
+  "created_at_window": {
+    "start": "2025-01-01T00:00:00Z",
+    "end": "2026-07-15T23:59:59Z"
+  },
+  "projects": {
+    "sglang": {
+      "repository": "sgl-project/sglang",
+      "count": 5,
+      "source_prefixes": ["python/sglang/", "sgl-kernel/", "benchmark/"] ,
+      "excluded": [3044, 3053, 3121, 3136, 3347]
+    },
+    "vllm": {
+      "repository": "vllm-project/vllm",
+      "count": 4,
+      "source_prefixes": ["vllm/", "csrc/"],
+      "excluded": [8200, 11531, 12111, 12450, 12789, 13043, 13140, 13996, 14027, 50423, 52205, 53038]
+    },
+    "flash-attention": {
+      "repository": "Dao-AILab/flash-attention",
+      "count": 3,
+      "source_prefixes": ["flash_attn/", "csrc/"],
+      "excluded": [1326, 1427, 1511]
+    },
+    "flashinfer": {
+      "repository": "flashinfer-ai/flashinfer",
+      "count": 3,
+      "source_prefixes": ["flashinfer/", "csrc/", "include/", "src/"],
+      "excluded": [624, 632, 810]
+    },
+    "cutlass-cute": {
+      "repository": "NVIDIA/cutlass",
+      "count": 3,
+      "source_prefixes": ["include/cutlass/", "include/cute/", "examples/", "python/CuTeDSL/"],
+      "excluded": [2275, 3427]
+    },
+    "liger-kernel": {
+      "repository": "linkedin/Liger-Kernel",
+      "count": 3,
+      "source_prefixes": ["src/liger_kernel/"],
+      "excluded": [804, 1328]
+    },
+    "deepgemm": {
+      "repository": "deepseek-ai/DeepGEMM",
+      "count": 3,
+      "source_prefixes": ["deep_gemm/"],
+      "excluded": [55, 389]
+    },
+    "megatron-core": {
+      "repository": "NVIDIA/Megatron-LM",
+      "count": 3,
+      "source_prefixes": ["megatron/core/"],
+      "excluded": [5608, 6174]
+    },
+    "torchtitan": {
+      "repository": "pytorch/torchtitan",
+      "count": 2,
+      "source_prefixes": ["torchtitan/"],
+      "excluded": [2717, 4032]
+    },
+    "verl": {
+      "repository": "verl-project/verl",
+      "count": 1,
+      "source_prefixes": ["verl/"],
+      "excluded": [1688, 7220]
+    }
+  },
+  "eligibility": {
+    "changed_files_min": 1,
+    "changed_files_max": 8,
+    "changed_lines_max": 600,
+    "require_title_signal": true,
+    "require_profile_source_path": true,
+    "exclude_docs_only": true,
+    "exclude_tests_only": true,
+    "exclude_dependency_or_generated_only": true,
+    "require_first_commit_parent": true,
+    "require_locked_head_sha": true
+  },
+  "title_tokens": [
+    "fix", "bug", "perf", "performance", "kernel", "triton", "cuda", "compile",
+    "graph", "dtype", "memory", "fuse", "optimize", "optimise", "support", "race",
+    "deadlock", "correct", "speed", "latency", "throughput"
+  ],
+  "ranking": [
+    "eligible candidates only",
+    "changed test path present first",
+    "newest createdAt",
+    "fewest changed files",
+    "fewest changed lines",
+    "lowest pull number"
+  ],
+  "failure_policy": "A locked case is retained as unresolved if exact evidence acquisition fails; no post-diff substitution is permitted."
+}

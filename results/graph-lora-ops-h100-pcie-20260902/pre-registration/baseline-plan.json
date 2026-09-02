@@ -1,0 +1,119 @@
+{
+  "schema_version": "0.5",
+  "protocol_id": "sglang-graph-lora-existing-baseline-v0.5-r1",
+  "frozen_before_execution": true,
+  "score_scope": "diagnostic-project-fit-single-cell",
+  "official_score_expected": false,
+  "official_score_blockers": [
+    "built-in SGLang Draft is proposed and not maintainer-sealed",
+    "operator evidence is E1-framework rather than E2-system-trace",
+    "hidden project probes are not available"
+  ],
+  "target": {
+    "project": "sglang",
+    "repository_commit": "ef7208d41d8e690f3f69dae3fed6b518334fa839",
+    "path": "python/sglang/srt/lora/torch_ops/graph_lora_ops.py",
+    "source_sha256": "sha256:390676cc38975095ba124d1932aa8c27dc2b4605e18c495c095ae852f4c96790",
+    "variant": "existing-mm-plus-add",
+    "candidate_patch_applied": false
+  },
+  "scoring_authority": {
+    "implementation": "checked-in InfraSWE project-fit-v0.5 scorer",
+    "formula_template_id": "project-fit-kernel-v0.5",
+    "target_profile_sha256": "sha256:13036f1ed3314e1c3de26b4570d76b1dcc98314428f2dc1fa347995c91761359",
+    "cross_project_ranking_allowed": false,
+    "absolute_latency_global_ranking": "forbidden"
+  },
+  "environment": {
+    "hardware_cell": "nvidia-h100-pcie-80gb-sm90",
+    "gpu_count": 1,
+    "exclusive_timing": true,
+    "torch": "2.8.0+cu128",
+    "triton": "3.4.0",
+    "python": "3.12.12"
+  },
+  "replay": {
+    "fresh_processes": 7,
+    "require_all": true,
+    "samples_per_case_per_process": 5,
+    "cuda_graph_replays_per_sample": 300,
+    "capture_and_warmup_outside_timing": true
+  },
+  "performance_cases": [
+    {
+      "id": "control-slots1-fp16",
+      "tokens": 4,
+      "slots": 1,
+      "rank": 16,
+      "slice_dims": [4096],
+      "dtype": "float16",
+      "weight": 0.1
+    },
+    {
+      "id": "control-slots3-bf16",
+      "tokens": 16,
+      "slots": 3,
+      "rank": 32,
+      "slice_dims": [4096],
+      "dtype": "bfloat16",
+      "weight": 0.15
+    },
+    {
+      "id": "decode-slots4-r16-fp16",
+      "tokens": 4,
+      "slots": 4,
+      "rank": 16,
+      "slice_dims": [4096],
+      "dtype": "float16",
+      "weight": 0.2
+    },
+    {
+      "id": "batch-slots4-r32-bf16",
+      "tokens": 32,
+      "slots": 4,
+      "rank": 32,
+      "slice_dims": [4096],
+      "dtype": "bfloat16",
+      "weight": 0.2
+    },
+    {
+      "id": "qkv-slots4-r32-fp16",
+      "tokens": 16,
+      "slots": 4,
+      "rank": 32,
+      "slice_dims": [4096, 1024, 1024],
+      "dtype": "float16",
+      "weight": 0.15
+    },
+    {
+      "id": "wide-slots8-r64-bf16",
+      "tokens": 64,
+      "slots": 8,
+      "rank": 64,
+      "slice_dims": [8192],
+      "dtype": "bfloat16",
+      "weight": 0.2
+    }
+  ],
+  "hard_gates": {
+    "eager_oracle_parity": "all cases",
+    "cuda_graph_capture": "all cases",
+    "cuda_graph_dynamic_replay": "representative fp16 and bfloat16 cases",
+    "base_output_alias_preserved": true,
+    "empty_weights_semantics_preserved": true,
+    "gradient_path_parity": true,
+    "nonfinite_outputs_allowed": false
+  },
+  "diagnostic_normalization": {
+    "existing_variant_performance_attainment": 1.0,
+    "existing_variant_retention": 1.0,
+    "subcomponent_values": "passed preregistered checks divided by check count",
+    "project_fit_weights": {
+      "evolutionary_maintainability": 0.4,
+      "project_contract_fit": 0.3,
+      "performance_reuse_utilization": 0.2,
+      "operational_fit": 0.1
+    },
+    "note": "The existing variant defines the same-cell latency normalization point for a later candidate comparison; absolute H100 latency is evidence, not a global rank."
+  }
+}

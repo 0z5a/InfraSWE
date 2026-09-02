@@ -1,0 +1,151 @@
+schema_version = "0.4"
+
+[task]
+id = "training-sft-cross-framework-v1"
+title = "Cross-framework SFT correctness and deployability"
+track = "training"
+repository = "infraswe-training-fixture"
+base_commit = "fixture-v1"
+kind = "training-workflow"
+implementation_level = "integrated"
+level = "L3"
+
+[environment]
+profile = "gpu-1x-sm89-l40s-48gb-cuda133"
+agent_mode = "docker"
+verifier_mode = "separate"
+network = "deny"
+agent_image = "python:3.12-slim"
+verifier_image = "python:3.12-slim"
+gpu_count = 1
+shm_size = "16g"
+exclusive_gpu_lease = true
+mps = "disabled"
+capability_probe = true
+
+[budget]
+agent_timeout_sec = 1800
+verifier_timeout_sec = 1800
+gpu_minutes = 180
+max_model_cost_usd = 0
+max_infra_cost_usd = 0
+
+[replay]
+count = 7
+require_all = true
+fresh_process = true
+
+[artifacts]
+config_paths = ["adapter_manifest.json"]
+require_clean_patch = true
+
+[gates]
+forbid_test_modification = true
+forbid_credential_access = true
+forbid_silent_fallback = true
+forbid_data_corruption = true
+forbid_resource_leak = true
+
+[execution]
+repo = "fixture/repo"
+instruction = "instruction.md"
+solution_command = ["python", "solution/solve.py"]
+verifier_command = ["python", "tests/verify.py"]
+allowed_patch_paths = ["adapter_manifest.json"]
+
+[scoring]
+reference_wall_time_sec = 60
+reference_cost_usd = 0
+slo_metric = "good_step_rate"
+resource_metric = "training_resource_stability"
+deployability_template = "deployability-v0.4"
+cell_artifact_template = "cell-artifact-mixed-v0.4"
+absolute_latency_global_ranking = "forbidden"
+raw_peak_performance_in_cross_cell_score = false
+
+[semantic_contract]
+path = "contracts/sft-v1.json"
+sha256 = "sha256:3d313b206039ca4d242331126fb8b7309884d75beaa643b4bdec17eaeb4ca123"
+
+[backend_profile]
+id = "gpu-1x-sm89-l40s-48gb-cuda133"
+adapter = "cuda-runtime-probed"
+benchmark_cell_id = "training-sm89-l40s-runtime-probed-v1"
+
+[certification]
+hidden_correctness_required = 1.0
+silent_fallback_rate_max = 0.0
+fresh_replays = 7
+require_all = true
+
+[concurrency]
+protocol_id = "training-step-load-ladder-v1"
+reference_saturation_anchor = "cell-local-reference"
+load_ratios = [0.25, 0.5, 0.8, 1.0, 1.2, 1.4]
+minimum_completed_requests_per_cell = 1000
+burst_or_soak = "required"
+request_mix_sha256 = "sha256:training-step-mix-v1"
+
+[reuse_contract]
+sha256 = "sha256:training-graph-kernel-reuse-v1"
+expected_variant_budget = 8
+max_variant_budget = 24
+specialization_dimensions = ["shape-bucket", "dtype", "layout", "graph-mode"]
+require_case_to_implementation_map = true
+compile_cache_observability = "required-if-applicable"
+
+[maintainability]
+probe_set_sha256 = "sha256:training-maintainability-probes-v1"
+require_capability_contract = true
+require_structured_failure_codes = true
+build_profiles = ["cpu-reference", "sm89-cell", "compatibility-cell"]
+
+[efficiency]
+work_model_id = "sft-packed-variable-v1"
+regime = "mixed"
+work_model_confidence_min = "high"
+calibration_manifest_sha256 = "sha256:runtime-cell-calibration-required"
+traffic_amplification_budget = 1.15
+
+[evidence]
+minimum_grade_for_deployability = "E2-system-trace"
+minimum_grade_for_cell_efficiency = "E3-kernel-counter"
+collectors = ["runtime", "framework", "system-trace", "kernel-counter-targeted"]
+
+[workload]
+family = "supervised"
+algorithm = "sft"
+optimizer = "muon-plus-adamw"
+certification_scope = "sft-contract"
+
+[workload.semantic_contract]
+path = "contracts/sft-v1.json"
+sha256 = "sha256:3d313b206039ca4d242331126fb8b7309884d75beaa643b4bdec17eaeb4ca123"
+
+[workload.work_model]
+path = "work-models/sft-packed-variable-v1.json"
+sha256 = "sha256:737f0460f2da9f94f3901d1e119e9c40f58cecf5df2edce334fb5048b91e19c5"
+
+[trainer]
+adapter = "matrix"
+required = ["native-pytorch", "trl"]
+optional = ["torchtune", "axolotl", "megatron-lm"]
+launcher = "torchrun"
+distributed = "single"
+rollout_engine = "none"
+
+[implementation]
+candidates = ["pytorch-eager", "pytorch-compile", "triton-custom", "cuda-extension"]
+graph_mode = "matrix"
+graph_compiler = "matrix"
+kernel_language = "matrix"
+device_runtime = "cuda"
+artifact_formats = ["shared-object", "ptx", "cubin"]
+forbid_silent_fallback = true
+
+[profiling]
+minimum_grade_for_deployability = "G3"
+concurrency_grade = "G3"
+cell_efficiency_grade = "G4"
+authoritative_timing = "separate-unprofiled-run"
+profiled_timing_authoritative = false

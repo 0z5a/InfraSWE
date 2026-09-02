@@ -1,0 +1,199 @@
+{
+  "$defs": {
+    "JudgeBlindnessManifest": {
+      "additionalProperties": false,
+      "properties": {
+        "aggregate_score_hidden": {
+          "const": true,
+          "default": true,
+          "title": "Aggregate Score Hidden",
+          "type": "boolean"
+        },
+        "candidate_agent_hidden": {
+          "const": true,
+          "default": true,
+          "title": "Candidate Agent Hidden",
+          "type": "boolean"
+        },
+        "candidate_author_hidden": {
+          "const": true,
+          "default": true,
+          "title": "Candidate Author Hidden",
+          "type": "boolean"
+        },
+        "human_final_decision_hidden": {
+          "const": true,
+          "default": true,
+          "title": "Human Final Decision Hidden",
+          "type": "boolean"
+        },
+        "leaderboard_rank_hidden": {
+          "const": true,
+          "default": true,
+          "title": "Leaderboard Rank Hidden",
+          "type": "boolean"
+        },
+        "organization_hidden": {
+          "const": true,
+          "default": true,
+          "title": "Organization Hidden",
+          "type": "boolean"
+        },
+        "other_judges_hidden": {
+          "const": true,
+          "default": true,
+          "title": "Other Judges Hidden",
+          "type": "boolean"
+        },
+        "review_popularity_hidden": {
+          "const": true,
+          "default": true,
+          "title": "Review Popularity Hidden",
+          "type": "boolean"
+        }
+      },
+      "title": "JudgeBlindnessManifest",
+      "type": "object"
+    },
+    "JudgeInputArtifact": {
+      "additionalProperties": false,
+      "properties": {
+        "authority": {
+          "enum": [
+            "target-authority",
+            "deterministic-evidence",
+            "human-reviewed-precedent",
+            "candidate-controlled",
+            "rubric",
+            "advisory"
+          ],
+          "title": "Authority",
+          "type": "string"
+        },
+        "boundary_encoding": {
+          "enum": [
+            "none",
+            "html-escaped-untrusted-v1"
+          ],
+          "title": "Boundary Encoding",
+          "type": "string"
+        },
+        "candidate_controlled": {
+          "title": "Candidate Controlled",
+          "type": "boolean"
+        },
+        "content_sha256": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Content Sha256",
+          "type": "string"
+        },
+        "evidence_type": {
+          "title": "Evidence Type",
+          "type": "string"
+        },
+        "pack_path": {
+          "title": "Pack Path",
+          "type": "string"
+        },
+        "ref_id": {
+          "title": "Ref Id",
+          "type": "string"
+        },
+        "source_sha256": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Source Sha256",
+          "type": "string"
+        }
+      },
+      "required": [
+        "ref_id",
+        "pack_path",
+        "evidence_type",
+        "authority",
+        "source_sha256",
+        "content_sha256",
+        "candidate_controlled",
+        "boundary_encoding"
+      ],
+      "title": "JudgeInputArtifact",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "artifacts": {
+      "items": {
+        "$ref": "#/$defs/JudgeInputArtifact"
+      },
+      "minItems": 1,
+      "title": "Artifacts",
+      "type": "array"
+    },
+    "blindness": {
+      "$ref": "#/$defs/JudgeBlindnessManifest"
+    },
+    "candidate_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Candidate Sha256",
+      "type": "string"
+    },
+    "data_egress": {
+      "enum": [
+        "local-only",
+        "approved-hosted",
+        "redacted-hosted"
+      ],
+      "title": "Data Egress",
+      "type": "string"
+    },
+    "draft_id": {
+      "title": "Draft Id",
+      "type": "string"
+    },
+    "draft_revision": {
+      "minimum": 1,
+      "title": "Draft Revision",
+      "type": "integer"
+    },
+    "pack_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Pack Sha256",
+      "type": "string"
+    },
+    "rubric_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Rubric Sha256",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "0.5.3",
+      "default": "0.5.3",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "secret_scan_status": {
+      "const": "pass",
+      "default": "pass",
+      "title": "Secret Scan Status",
+      "type": "string"
+    },
+    "target_revision_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Target Revision Sha256",
+      "type": "string"
+    }
+  },
+  "required": [
+    "draft_id",
+    "draft_revision",
+    "candidate_sha256",
+    "target_revision_sha256",
+    "rubric_sha256",
+    "blindness",
+    "data_egress",
+    "artifacts",
+    "pack_sha256"
+  ],
+  "title": "JudgeInputPackManifest",
+  "type": "object"
+}

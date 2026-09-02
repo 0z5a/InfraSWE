@@ -1,0 +1,194 @@
+{
+  "$defs": {
+    "ResourceAvailability": {
+      "additionalProperties": false,
+      "properties": {
+        "allocatable": {
+          "minimum": 0,
+          "title": "Allocatable",
+          "type": "number"
+        },
+        "available": {
+          "minimum": 0,
+          "title": "Available",
+          "type": "number"
+        },
+        "exclusive_available": {
+          "default": true,
+          "title": "Exclusive Available",
+          "type": "boolean"
+        },
+        "total": {
+          "minimum": 0,
+          "title": "Total",
+          "type": "number"
+        }
+      },
+      "required": [
+        "total",
+        "available",
+        "allocatable"
+      ],
+      "title": "ResourceAvailability",
+      "type": "object"
+    },
+    "RunnerDeviceSnapshot": {
+      "additionalProperties": false,
+      "properties": {
+        "device_id": {
+          "title": "Device Id",
+          "type": "string"
+        },
+        "free_memory_bytes": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Free Memory Bytes"
+        },
+        "kind": {
+          "enum": [
+            "accelerator",
+            "nic",
+            "storage"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "numa_node": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Numa Node"
+        },
+        "partition_mode": {
+          "default": "none",
+          "title": "Partition Mode",
+          "type": "string"
+        },
+        "pci_bdf": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Pci Bdf"
+        },
+        "persistence_mode": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Persistence Mode"
+        }
+      },
+      "required": [
+        "device_id",
+        "kind"
+      ],
+      "title": "RunnerDeviceSnapshot",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "availability": {
+      "enum": [
+        "available",
+        "busy",
+        "draining",
+        "quarantined"
+      ],
+      "title": "Availability",
+      "type": "string"
+    },
+    "captured_at": {
+      "format": "date-time",
+      "title": "Captured At",
+      "type": "string"
+    },
+    "devices": {
+      "items": {
+        "$ref": "#/$defs/RunnerDeviceSnapshot"
+      },
+      "title": "Devices",
+      "type": "array"
+    },
+    "dynamic": {
+      "additionalProperties": true,
+      "title": "Dynamic",
+      "type": "object"
+    },
+    "expires_at": {
+      "format": "date-time",
+      "title": "Expires At",
+      "type": "string"
+    },
+    "origin_trust": {
+      "const": "T4_INFRA_ATTESTED",
+      "default": "T4_INFRA_ATTESTED",
+      "title": "Origin Trust",
+      "type": "string"
+    },
+    "resources": {
+      "additionalProperties": {
+        "$ref": "#/$defs/ResourceAvailability"
+      },
+      "title": "Resources",
+      "type": "object"
+    },
+    "runner_manifest_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Runner Manifest Sha256",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "0.1",
+      "default": "0.1",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "snapshot_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Snapshot Sha256",
+      "type": "string"
+    },
+    "topology_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Topology Sha256",
+      "type": "string"
+    }
+  },
+  "required": [
+    "runner_manifest_sha256",
+    "captured_at",
+    "expires_at",
+    "availability",
+    "topology_sha256",
+    "snapshot_sha256"
+  ],
+  "title": "RunnerSnapshot",
+  "type": "object"
+}

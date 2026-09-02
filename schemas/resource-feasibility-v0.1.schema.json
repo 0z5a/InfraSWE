@@ -1,0 +1,84 @@
+{
+  "$defs": {
+    "ResourcePhaseResolution": {
+      "additionalProperties": false,
+      "properties": {
+        "busy_resources": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Busy Resources",
+          "type": "array"
+        },
+        "missing_resources": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Missing Resources",
+          "type": "array"
+        },
+        "phase": {
+          "enum": [
+            "agent",
+            "collect",
+            "build",
+            "verify",
+            "measure",
+            "profile",
+            "judge"
+          ],
+          "title": "Phase",
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "feasible",
+            "capacity-unavailable",
+            "unschedulable",
+            "unresolved"
+          ],
+          "title": "Status",
+          "type": "string"
+        }
+      },
+      "required": [
+        "phase",
+        "status"
+      ],
+      "title": "ResourcePhaseResolution",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "phases": {
+      "items": {
+        "$ref": "#/$defs/ResourcePhaseResolution"
+      },
+      "title": "Phases",
+      "type": "array"
+    },
+    "request_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Request Sha256",
+      "type": "string"
+    },
+    "status": {
+      "enum": [
+        "feasible",
+        "capacity-unavailable",
+        "unschedulable",
+        "unresolved"
+      ],
+      "title": "Status",
+      "type": "string"
+    }
+  },
+  "required": [
+    "status",
+    "phases",
+    "request_sha256"
+  ],
+  "title": "ResourceFeasibilityResult",
+  "type": "object"
+}

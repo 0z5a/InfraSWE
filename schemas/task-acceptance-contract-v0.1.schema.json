@@ -1,0 +1,216 @@
+{
+  "$defs": {
+    "AcceptanceObligation": {
+      "additionalProperties": false,
+      "properties": {
+        "bucket": {
+          "enum": [
+            "capability-obligation",
+            "regression-invariant",
+            "negative-boundary",
+            "mechanism-proof",
+            "safety-liveness",
+            "environment-sentinel",
+            "maintenance-probe"
+          ],
+          "title": "Bucket",
+          "type": "string"
+        },
+        "evidence_owner": {
+          "enum": [
+            "pristine-verifier",
+            "trusted-meter",
+            "environment-sentinel",
+            "deterministic-maintenance-probe"
+          ],
+          "title": "Evidence Owner",
+          "type": "string"
+        },
+        "failure_owner": {
+          "enum": [
+            "candidate",
+            "benchmark",
+            "infrastructure",
+            "task-author"
+          ],
+          "title": "Failure Owner",
+          "type": "string"
+        },
+        "obligation_id": {
+          "pattern": "^(CO|RI|NB|MP|SL|ES|MT)-[A-Z0-9][A-Z0-9_-]*$",
+          "title": "Obligation Id",
+          "type": "string"
+        },
+        "oracle": {
+          "$ref": "#/$defs/ObligationOracle"
+        },
+        "profile_provenance": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Profile Provenance",
+          "type": "array"
+        },
+        "provenance": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Provenance",
+          "type": "array"
+        },
+        "release_gate": {
+          "default": false,
+          "title": "Release Gate",
+          "type": "boolean"
+        },
+        "repeat": {
+          "$ref": "#/$defs/ObligationRepeatPolicy"
+        },
+        "scope": {
+          "additionalProperties": true,
+          "title": "Scope",
+          "type": "object"
+        },
+        "severity": {
+          "enum": [
+            "hard",
+            "quality",
+            "sentinel",
+            "advisory"
+          ],
+          "title": "Severity",
+          "type": "string"
+        },
+        "source_requirements": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Source Requirements",
+          "type": "array"
+        },
+        "visibility": {
+          "enum": [
+            "public",
+            "public-contract-hidden-cases",
+            "private-qualification"
+          ],
+          "title": "Visibility",
+          "type": "string"
+        }
+      },
+      "required": [
+        "obligation_id",
+        "bucket",
+        "severity",
+        "oracle",
+        "failure_owner",
+        "evidence_owner",
+        "visibility",
+        "provenance"
+      ],
+      "title": "AcceptanceObligation",
+      "type": "object"
+    },
+    "ObligationOracle": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "enum": [
+            "semantic",
+            "differential",
+            "property",
+            "mechanism",
+            "liveness",
+            "resource-meter",
+            "environment-sentinel",
+            "maintenance"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "reference_id": {
+          "title": "Reference Id",
+          "type": "string"
+        },
+        "tolerance_profile_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Tolerance Profile Id"
+        }
+      },
+      "required": [
+        "kind",
+        "reference_id"
+      ],
+      "title": "ObligationOracle",
+      "type": "object"
+    },
+    "ObligationRepeatPolicy": {
+      "additionalProperties": false,
+      "properties": {
+        "fresh_processes": {
+          "default": 1,
+          "minimum": 1,
+          "title": "Fresh Processes",
+          "type": "integer"
+        },
+        "seeds": {
+          "items": {
+            "type": "integer"
+          },
+          "title": "Seeds",
+          "type": "array"
+        }
+      },
+      "title": "ObligationRepeatPolicy",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "contract_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Contract Sha256",
+      "type": "string"
+    },
+    "obligations": {
+      "items": {
+        "$ref": "#/$defs/AcceptanceObligation"
+      },
+      "minItems": 1,
+      "title": "Obligations",
+      "type": "array"
+    },
+    "schema_version": {
+      "const": "0.1",
+      "default": "0.1",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "task_id": {
+      "title": "Task Id",
+      "type": "string"
+    },
+    "task_revision": {
+      "minimum": 1,
+      "title": "Task Revision",
+      "type": "integer"
+    }
+  },
+  "required": [
+    "task_id",
+    "task_revision",
+    "obligations",
+    "contract_sha256"
+  ],
+  "title": "TaskAcceptanceContract",
+  "type": "object"
+}

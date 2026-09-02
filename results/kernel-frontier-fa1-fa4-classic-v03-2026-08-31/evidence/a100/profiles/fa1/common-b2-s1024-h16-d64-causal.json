@@ -1,0 +1,71 @@
+{
+  "backend": "fa1",
+  "case_id": "common-b2-s1024-h16-d64-causal",
+  "evidence_kind": "per-case-profiler",
+  "fresh_process": true,
+  "generated_at": "2026-08-31T09:59:48.693679Z",
+  "hardware": {
+    "compute_capability": "8.0",
+    "cudnn_version": 91002,
+    "gpu_name": "NVIDIA A100-SXM4-80GB",
+    "nvidia_smi": {
+      "clocks.mem": "1593",
+      "clocks.sm": "660",
+      "driver_version": "580.65.06",
+      "memory.total": "81920",
+      "memory.used": "4",
+      "name": "NVIDIA A100-SXM4-80GB",
+      "pci.bus_id": "00000000:C8:00.0",
+      "power.draw": "56.99",
+      "power.limit": "500.00",
+      "pstate": "P0",
+      "temperature.gpu": "27",
+      "utilization.gpu": "0",
+      "uuid": "GPU-167e421f-d2fa-7d37-3c84-4758d0f6901a"
+    },
+    "platform": "Linux-5.15.0-119-generic-x86_64-with-glibc2.39",
+    "python": "3.12.14",
+    "sm_count": 108,
+    "torch_cuda": "12.8",
+    "torch_version": "2.8.0+cu128",
+    "total_memory_bytes": 85094825984
+  },
+  "implementation_provenance": [
+    {
+      "module": "flash_attn.flash_attn_interface",
+      "path": "/workspace/infraswe/envs/fa1/flash_attn/flash_attn_interface.py",
+      "sha256": "sha256:ece5cf669a71c130261175b205a3be4d015ad5543a554790b0399c81a51d9f12"
+    },
+    {
+      "module": "flash_attn_cuda",
+      "path": "/workspace/infraswe/envs/fa1/flash_attn_cuda.cpython-312-x86_64-linux-gnu.so",
+      "sha256": "sha256:1ebea78be32e044b5d0565870929167db8f81578f164c6ea78b2340c6a3ac251"
+    }
+  ],
+  "profiler": {
+    "captured": true,
+    "cuda_events": [
+      {
+        "count": 1,
+        "device_time_us": 194.17399999999998,
+        "name": "FlashAttnFunc",
+        "self_device_time_us": 97.08699999999999
+      },
+      {
+        "count": 1,
+        "device_time_us": 97.08699999999999,
+        "name": "Activity Buffer Request",
+        "self_device_time_us": 97.08699999999999
+      },
+      {
+        "count": 1,
+        "device_time_us": 97.08699999999999,
+        "name": "void fmha_fwd_loop_kernel<FMHA_kernel_traits<256, 64, 16, 1, 4, 8u, __nv_bfloat16>, false, true, false>(FMHA_fprop_params)",
+        "self_device_time_us": 97.08699999999999
+      }
+    ]
+  },
+  "schema_version": "0.3",
+  "status": "passed",
+  "suite": "attention"
+}

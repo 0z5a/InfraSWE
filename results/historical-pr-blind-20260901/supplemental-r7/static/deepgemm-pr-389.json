@@ -1,0 +1,56 @@
+{
+  "case_id": "deepgemm-pr-389",
+  "created_at": "2026-09-02T03:33:45.012693+00:00",
+  "duration_seconds": 0.08984512486495078,
+  "evidence_sha256": "sha256:8dce02d4ac803755fb0d1e5cdacd6067ee622de6738bef4ce20a6c8da36b9b2a",
+  "facts": {
+    "changed_paths": [
+      "deep_gemm/include/deep_gemm/impls/sm100_bf16_mega_moe.cuh",
+      "deep_gemm/include/deep_gemm/impls/sm100_fp8_fp4_mega_moe.cuh",
+      "deep_gemm/include/deep_gemm/ptx/utils.cuh"
+    ],
+    "changed_test_file_count": 0,
+    "changed_test_paths": [],
+    "compilation_path": "not-required",
+    "existing_test_search_matches": [
+      "bbbf8e4535a42f40d68e113e628add0317c4fa9b:tests/test_mega_moe.py:342:    t_fused = bench_kineto(run_fused, 'mega_moe', barrier=barrier_fn, trace_path=trace_path)"
+    ],
+    "path_parity": true,
+    "steady_state_compile_seconds": 0.0,
+    "target": {
+      "base_fence_call_count": 0,
+      "head_bf16_fence_call_count": 1,
+      "head_fences_precede_phase_flip": true,
+      "head_fp8_fp4_fence_call_count": 1,
+      "head_helper_uses_exact_ptx": true
+    }
+  },
+  "failure_codes": [],
+  "probe": "r7-cross-project-static-v1",
+  "project": "deepgemm",
+  "protocol_id": "historical-pr-blind-cross-project-v0.5-r7",
+  "schema_version": "0.5",
+  "source_identity": {
+    "base_sha": "559d79fb6994a58b8a15b4b93bf13ccc16edf247",
+    "base_source_exists": {
+      "deep_gemm/include/deep_gemm/impls/sm100_bf16_mega_moe.cuh": true,
+      "deep_gemm/include/deep_gemm/impls/sm100_fp8_fp4_mega_moe.cuh": true,
+      "deep_gemm/include/deep_gemm/ptx/utils.cuh": true
+    },
+    "base_source_sha256": {
+      "deep_gemm/include/deep_gemm/impls/sm100_bf16_mega_moe.cuh": "sha256:e0628a9bb6222435b87f7062975fd938f44c7231a28e7f72dc66140be95ad285",
+      "deep_gemm/include/deep_gemm/impls/sm100_fp8_fp4_mega_moe.cuh": "sha256:b670b4f6d808607fea0426f135c4302193e047ccce1a1c93aaa36a02fc7b40fd",
+      "deep_gemm/include/deep_gemm/ptx/utils.cuh": "sha256:bdf479778e02c678c6a94ad992908cff113e0ff4ab41c7b27ce47394ae226636"
+    },
+    "head_sha": "bbbf8e4535a42f40d68e113e628add0317c4fa9b",
+    "head_source_sha256": {
+      "deep_gemm/include/deep_gemm/impls/sm100_bf16_mega_moe.cuh": "sha256:b4ada61f4eaa40a86eaed83c4268bffe87f4d21eb942d99db12d607a2ed80ced",
+      "deep_gemm/include/deep_gemm/impls/sm100_fp8_fp4_mega_moe.cuh": "sha256:ddb3490265b28e52b0c08222b16142b3286dfe1d0b2f80d3d88d05c03fe6bc31",
+      "deep_gemm/include/deep_gemm/ptx/utils.cuh": "sha256:c77025170cddc899c7d2c7d81980f16090faabf53c04476eb66faf17cf9687d2"
+    },
+    "selection_lock_sha256": "sha256:e75d03448650ef7ff13f93729d151f99be652702f4971cb889dbb2c0de57716b",
+    "test_plan_sha256": "sha256:aa73f348b2d5ce4a19fa0c3a6e0159681f10254f5a878ad3cabbd8709f3bb888",
+    "unified_diff_sha256": "sha256:df011260b1a96c598dc8b176026950edf0eafee18d3182a068768339f96f31e7"
+  },
+  "status": "pass"
+}

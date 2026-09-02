@@ -1,0 +1,42 @@
+{
+  "case_id": "vllm-pr-13996",
+  "created_at": "2026-09-01T16:54:45.528340+00:00",
+  "duration_seconds": 0.2915992271155119,
+  "environment": {
+    "cuda_runtime": "12.4",
+    "device": "NVIDIA A100-SXM4-40GB",
+    "torch_version": "2.5.1+cu124"
+  },
+  "evidence_sha256": "sha256:2c4131461f400cedaaa9996fbf7663b66ba5906249dc7fc535daaabae06acc0a",
+  "facts": {
+    "architecture_gate_present": false,
+    "column_major_tma_scale_requested": false,
+    "compilation_path": "not-required-after-capability-failure",
+    "deepgemm_installed": false,
+    "device_compute_capability": [
+      8,
+      0
+    ],
+    "device_supported_by_historical_deepgemm": false,
+    "early_exit_before_backend_import_or_jit": true,
+    "imports_deepgemm_directly": true,
+    "optional_dependency_availability_gate_present": false,
+    "runtime_jit_precompile_contract_present": false,
+    "selection_condition": "envs.VLLM_USE_DEEPGEMM and block_size == [128, 128]",
+    "steady_state_compile_seconds": 0.0
+  },
+  "failure_codes": [
+    "DEEPGEMM_HOPPER_CAPABILITY_GATE_MISSING",
+    "DEEPGEMM_OPTIONAL_DEPENDENCY_FALLBACK_MISSING",
+    "DEEPGEMM_LHS_SCALE_LAYOUT_CONTRACT_VIOLATED",
+    "DEEPGEMM_RUNTIME_JIT_PRECOMPILE_CONTRACT_MISSING"
+  ],
+  "probe": "vllm-deepgemm-capability-layout-v1",
+  "schema_version": "0.5",
+  "source_identity": {
+    "head_fp8_utils_sha256": "sha256:fd0ac08473911f2674aac24e3a0d744b340865a409882126d040c798257ec1ef",
+    "oracle_commit_sha": "fbec9e5eeeaab0f73c2dd86550f6468e737fc1cf",
+    "oracle_sha256": "sha256:7013c23f394f39ac4457b65dc9073f1f77c3cf361147b2fa372878b8fb706bca"
+  },
+  "status": "fail"
+}

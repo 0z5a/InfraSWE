@@ -1,0 +1,140 @@
+{
+  "$defs": {
+    "TrainingAdapterCapability": {
+      "additionalProperties": false,
+      "properties": {
+        "adapter_id": {
+          "title": "Adapter Id",
+          "type": "string"
+        },
+        "algorithms": {
+          "additionalProperties": {
+            "enum": [
+              "unsupported",
+              "protocol-supported",
+              "adapter-implemented",
+              "cell-certified"
+            ],
+            "type": "string"
+          },
+          "title": "Algorithms",
+          "type": "object"
+        },
+        "capability_level": {
+          "enum": [
+            "unsupported",
+            "protocol-supported",
+            "adapter-implemented",
+            "cell-certified"
+          ],
+          "title": "Capability Level",
+          "type": "string"
+        },
+        "evidence": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Evidence",
+          "type": "array"
+        },
+        "framework_version": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Framework Version"
+        },
+        "missing_dependencies": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Missing Dependencies",
+          "type": "array"
+        },
+        "runtime_available": {
+          "title": "Runtime Available",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "adapter_id",
+        "capability_level",
+        "runtime_available"
+      ],
+      "title": "TrainingAdapterCapability",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "adapters": {
+      "additionalProperties": {
+        "$ref": "#/$defs/TrainingAdapterCapability"
+      },
+      "title": "Adapters",
+      "type": "object"
+    },
+    "failure_codes": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Failure Codes",
+      "type": "array"
+    },
+    "generated_at": {
+      "title": "Generated At",
+      "type": "string"
+    },
+    "missing_evidence_policy": {
+      "const": "unresolved-not-zero",
+      "default": "unresolved-not-zero",
+      "title": "Missing Evidence Policy",
+      "type": "string"
+    },
+    "platform": {
+      "additionalProperties": true,
+      "title": "Platform",
+      "type": "object"
+    },
+    "probe_version": {
+      "title": "Probe Version",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "0.1",
+      "default": "0.1",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "scoring_authority": {
+      "const": "infraswe-scoring-v0.4",
+      "default": "infraswe-scoring-v0.4",
+      "title": "Scoring Authority",
+      "type": "string"
+    },
+    "status": {
+      "enum": [
+        "ready",
+        "partial",
+        "protocol_only",
+        "not_ready"
+      ],
+      "title": "Status",
+      "type": "string"
+    }
+  },
+  "required": [
+    "generated_at",
+    "probe_version",
+    "status",
+    "adapters",
+    "platform"
+  ],
+  "title": "TrainingCapabilityManifest",
+  "type": "object"
+}

@@ -1,0 +1,46 @@
+{
+  "base_sha": "f94ec46f4f63f96003d6cfdf2014731e7672c281",
+  "case_id": "cutlass-pr-3427",
+  "created_at": "2026-09-02T03:29:58.501826+00:00",
+  "evidence_sha256": "sha256:67781c128ad889a7c70fe007316f9faff3ead42306beda4c34e31141e61e4cd5",
+  "facts": {
+    "base": {
+      "duration_seconds": 0.15531408414244652,
+      "return_code": 1,
+      "run_return_code": null,
+      "stderr_sha256": "sha256:841157f62e55901d317b2d103536c5d34fa1479d2b3c59c7216579304e8ba7cb",
+      "stderr_tail": "/var/folders/12/3pb2615n5wddcr6spjcz8_pw0000gn/T/infraswe-r7-cutlass-2_ep52r2/base.cpp:24:62: error: invalid operands to binary expression ('const LeftValue' and 'const RightValue')\n   24 |     return bool_constant<((Ns == Ms) && ...)>{} && t.value() == u.value();\n      |                                                    ~~~~~~~~~ ^  ~~~~~~~~~\n/var/folders/12/3pb2615n5wddcr6spjcz8_pw0000gn/T/infraswe-r7-cutlass-2_ep52r2/base.cpp:51:26: note: in instantiation of function template specialization 'cute::operator==<LeftValue, 0, RightValue, 1>' requested here\n   51 | static_assert(!(left_one == other_basis_uncomparable_type));\n      |                          ^\n/var/folders/12/3pb2615n5wddcr6spjcz8_pw0000gn/T/infraswe-r7-cutlass-2_ep52r2/base.cpp:36:16: note: candidate function not viable: no known conversion from 'const RightValue' to 'LeftValue' for 2nd argument\n   36 | constexpr bool operator==(LeftValue lhs, LeftValue rhs) { return lhs.value == rhs.value; }\n      |                ^                         ~~~~~~~~~~~~~\n/var/folders/12/3pb2615n5wddcr6spjcz8_pw0000gn/T/infraswe-r7-cutlass-2_ep52r2/base.cpp:37:16: note: candidate function not viable: no known conversion from 'const LeftValue' to 'RightValue' for 1st argument\n   37 | constexpr bool operator==(RightValue lhs, RightValue rhs) { return lhs.value == rhs.value; }\n      |                ^          ~~~~~~~~~~~~~~\n/var/folders/12/3pb2615n5wddcr6spjcz8_pw0000gn/T/infraswe-r7-cutlass-2_ep52r2/base.cpp:22:1: note: candidate template ignored: could not match 'const ScaledBasis<T, Ns...>' against 'const LeftValue'\n   22 | operator==(ScaledBasis<T,Ns...> const& t, ScaledBasis<U,Ms...> const& u) {\n      | ^\n1 error generated.\n",
+      "stdout_sha256": "sha256:12ae32cb1ec02d01eda3581b127c1fee3b0dc53572ed6baf239721a03d82e126",
+      "translation_unit_sha256": "sha256:f0a1156cf5e8e372240a5a32f1e1ecfdb94432d9b28c796c360e0877b3a07e1b"
+    },
+    "base_reproduces_uncomparable_value_compile_failure": true,
+    "equal_basis_behavior_retained": true,
+    "exact_operator_extraction": {
+      "base_header_sha256": "sha256:23b07b3baa944d7eef765e409e9863f01b56279894ceca171707fcde13925fe4",
+      "base_sha256": "sha256:6813eb2047ff9b72facc46d2811210ea1ffe0d0f5789d397557cbd928e1dac9f",
+      "head_header_sha256": "sha256:2021b7350b7f4a3bba56632f5607e26d27ffa34daa1e073beaf4239a8f607686",
+      "head_sha256": "sha256:8b9fb120010b94d31158e55badec0410445330d4fb212631f99cc25e16cca7c3"
+    },
+    "head": {
+      "duration_seconds": 0.7231453750282526,
+      "return_code": 0,
+      "run_return_code": 0,
+      "stderr_sha256": "sha256:12ae32cb1ec02d01eda3581b127c1fee3b0dc53572ed6baf239721a03d82e126",
+      "stderr_tail": "",
+      "stdout_sha256": "sha256:12ae32cb1ec02d01eda3581b127c1fee3b0dc53572ed6baf239721a03d82e126",
+      "translation_unit_sha256": "sha256:e6b42af565d8847e254561218fa97755a2aeab2f29f9a708305f7be081f65eef"
+    },
+    "head_compiles_and_executes": true,
+    "sm120_metadata_aot": "reported-by-separate-exact-sm120-aot-probe",
+    "steady_state_compile_seconds": 0.0
+  },
+  "failure_codes": [],
+  "head_sha": "32034108164bb9ebc2b9042164ed23217a494c99",
+  "probe": "r7-cutlass-scaled-basis-exact-extraction-v1",
+  "project": "cutlass-cute",
+  "protocol_id": "historical-pr-blind-cross-project-v0.5-r7",
+  "schema_version": "0.5",
+  "selection_lock_sha256": "sha256:e75d03448650ef7ff13f93729d151f99be652702f4971cb889dbb2c0de57716b",
+  "status": "pass",
+  "test_plan_sha256": "sha256:aa73f348b2d5ce4a19fa0c3a6e0159681f10254f5a878ad3cabbd8709f3bb888"
+}

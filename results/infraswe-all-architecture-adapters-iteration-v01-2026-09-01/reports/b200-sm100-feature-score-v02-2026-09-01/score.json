@@ -1,0 +1,457 @@
+{
+  "generated_at": "2026-09-01T06:14:43.313564Z",
+  "hardware": {
+    "compute_capability": "10.0",
+    "cuda_runtime": "13.0",
+    "gpu_name": "NVIDIA B200",
+    "nvidia_smi_query": {
+      "argv": [
+        "nvidia-smi",
+        "--query-gpu=name,uuid,driver_version,memory.total,compute_cap,clocks.sm,clocks.mem,temperature.gpu,power.draw",
+        "--format=csv,noheader,nounits",
+        "--id=0"
+      ],
+      "error": null,
+      "returncode": 0,
+      "stderr": "",
+      "stdout": "NVIDIA B200, GPU-e5eb9962-a19e-f7b4-85d1-f4510e408752, 580.126.20, 183359, 10.0, 562, 3996, 39, 194.00\n",
+      "wall_seconds": 0.06583792809396982
+    },
+    "sm_count": 148,
+    "torch_version": "2.11.0+cu130",
+    "total_memory_bytes": 191503007744
+  },
+  "methodology": {
+    "performance_normalization": "RFC logarithmic latency interpolation from portable baseline to the best valid native replay; BW-TMEM-003 uses an explicit no-regression ratio when anchors do not separate",
+    "public_scores_capped_at_100": true,
+    "task_formula_bugfix": {
+      "B": 0.05,
+      "C": 0.55,
+      "N": 0.15,
+      "P": 0.1,
+      "R": 0.15
+    },
+    "task_formula_performance_migration": {
+      "B": 0.02,
+      "C": 0.35,
+      "N": 0.25,
+      "P": 0.35,
+      "R": 0.03
+    },
+    "uncapped_task_scores_retained": true
+  },
+  "raw_replays": [
+    "replay-1.json",
+    "replay-2.json",
+    "replay-3.json"
+  ],
+  "replay_count": 3,
+  "schema_version": "0.2",
+  "score_namespaces": {
+    "PTX-Preview": {
+      "reason": "stable lane is CUDA 13.3 / PTX 9.3",
+      "score_100": null,
+      "status": "disabled"
+    },
+    "SM100-Core": {
+      "aggregation": "weighted geometric mean",
+      "phase1_task_weights": {
+        "BW-TMA-001": 0.2,
+        "BW-TMA-002": 0.15,
+        "BW-TMEM-001": 0.4,
+        "BW-TMEM-003": 0.25
+      },
+      "score_100": 95.94780619037104,
+      "status": "scored"
+    },
+    "SM100-Fabric": {
+      "reason": "single visible B200 has no evaluator-owned multi-GPU multicast mapping",
+      "score_100": null,
+      "status": "not_applicable"
+    },
+    "SM100-Scheduler": {
+      "aggregation": "70% CLC task score + 30% measured robustness/liveness",
+      "score_100": 75.69009243344155,
+      "status": "scored"
+    }
+  },
+  "status": "scored",
+  "suite_id": "b200-sm100-feature-score-v0.2",
+  "tasks": {
+    "BW-CLC-001": {
+      "build_evidence": {
+        "artifact_and_disassembly_passed_per_replay": [
+          true,
+          true,
+          true
+        ]
+      },
+      "components": {
+        "B": 1.0,
+        "C": 1.0,
+        "N": 1.0,
+        "P": 0.007758874834348846,
+        "R": 1.0
+      },
+      "correctness_evidence": {
+        "passed_cases": 9,
+        "total_cases": 9
+      },
+      "feature_id": "BW-CLC-001",
+      "hard_gate": true,
+      "performance_evidence": {
+        "candidate_latency_us": 95.08320093154907,
+        "candidate_over_portable": 0.9996075255831074,
+        "method": "RFC latency log interpolation: portable baseline to best valid native replay",
+        "native_reference_latency_us": 90.42773246765137,
+        "pairs": [
+          {
+            "baseline_us": 92.71039962768555,
+            "candidate_us": 90.42773246765137,
+            "label": "4096x4096x4096"
+          },
+          {
+            "baseline_us": 97.68746693929037,
+            "candidate_us": 99.71199830373129,
+            "label": "4224x4096x4096"
+          },
+          {
+            "baseline_us": 92.71252950032552,
+            "candidate_us": 90.59306780497232,
+            "label": "4096x4096x4096"
+          },
+          {
+            "baseline_us": 97.49120076497395,
+            "candidate_us": 99.57333405812581,
+            "label": "4224x4096x4096"
+          },
+          {
+            "baseline_us": 92.74986584981283,
+            "candidate_us": 90.46400388081868,
+            "label": "4096x4096x4096"
+          },
+          {
+            "baseline_us": 97.59466648101807,
+            "candidate_us": 99.64160124460857,
+            "label": "4224x4096x4096"
+          }
+        ],
+        "portable_latency_us": 95.1205333073934,
+        "raw_score": 0.007758874834348846,
+        "score": 0.007758874834348846,
+        "speedup_over_portable": 1.0003926285135394
+      },
+      "replay_statuses": [
+        "passed",
+        "passed",
+        "passed"
+      ],
+      "robustness_evidence": {
+        "fresh_process_pass_fraction": 1.0,
+        "profiler_capture_fraction": 1.0,
+        "uniform_and_tail_workload_fraction": 1.0
+      },
+      "score_100": 65.2715606192022,
+      "status": "scored",
+      "uncapped_score_100": 65.2715606192022,
+      "weights": {
+        "B": 0.02,
+        "C": 0.35,
+        "N": 0.25,
+        "P": 0.35,
+        "R": 0.03
+      }
+    },
+    "BW-TMA-001": {
+      "build_evidence": {
+        "artifact_and_disassembly_passed_per_replay": [
+          true,
+          true,
+          true
+        ]
+      },
+      "components": {
+        "B": 1.0,
+        "C": 1.0,
+        "N": 1.0,
+        "P": 0.5052660992964122,
+        "R": 1.0
+      },
+      "correctness_evidence": {
+        "passed_cases": 15,
+        "total_cases": 15
+      },
+      "feature_id": "BW-TMA-001",
+      "hard_gate": true,
+      "performance_evidence": {
+        "candidate_latency_us": 3.047931,
+        "candidate_over_portable": 0.8430683236874785,
+        "method": "RFC latency log interpolation: portable baseline to best valid native replay",
+        "native_reference_latency_us": 2.578774,
+        "pairs": [
+          {
+            "baseline_us": 4.094275,
+            "candidate_us": 3.071702,
+            "label": "gather4 vs scalar gather"
+          },
+          {
+            "baseline_us": 3.07239,
+            "candidate_us": 2.579866,
+            "label": "scatter4 vs scalar scatter"
+          },
+          {
+            "baseline_us": 4.094205,
+            "candidate_us": 3.07175,
+            "label": "gather4 vs scalar gather"
+          },
+          {
+            "baseline_us": 3.072192,
+            "candidate_us": 2.578774,
+            "label": "scatter4 vs scalar scatter"
+          },
+          {
+            "baseline_us": 4.094317,
+            "candidate_us": 3.071353,
+            "label": "gather4 vs scalar gather"
+          },
+          {
+            "baseline_us": 3.136362,
+            "candidate_us": 3.024509,
+            "label": "scatter4 vs scalar scatter"
+          }
+        ],
+        "portable_latency_us": 3.6152835,
+        "raw_score": 0.5052660992964122,
+        "score": 0.5052660992964122,
+        "speedup_over_portable": 1.1861434855316606
+      },
+      "replay_statuses": [
+        "passed",
+        "passed",
+        "passed"
+      ],
+      "robustness_evidence": {
+        "five_case_irregular_row_fraction": 1.0,
+        "fresh_process_pass_fraction": 1.0
+      },
+      "score_100": 82.68431347537442,
+      "status": "scored",
+      "uncapped_score_100": 82.68431347537442,
+      "weights": {
+        "B": 0.02,
+        "C": 0.35,
+        "N": 0.25,
+        "P": 0.35,
+        "R": 0.03
+      }
+    },
+    "BW-TMA-002": {
+      "build_evidence": {
+        "artifact_and_disassembly_passed_per_replay": [
+          true,
+          true,
+          true
+        ]
+      },
+      "components": {
+        "B": 1.0,
+        "C": 1.0,
+        "N": 1.0,
+        "P": 0.9944816752588107,
+        "R": 1.0
+      },
+      "correctness_evidence": {
+        "passed_cases": 6,
+        "total_cases": 6
+      },
+      "feature_id": "BW-TMA-002",
+      "hard_gate": true,
+      "performance_evidence": {
+        "candidate_latency_us": 79.71093654632568,
+        "candidate_over_portable": 0.8610621723893349,
+        "method": "RFC latency log interpolation: portable baseline to best valid native replay",
+        "native_reference_latency_us": 79.64479923248291,
+        "pairs": [
+          {
+            "baseline_us": 92.71360238393147,
+            "candidate_us": 79.7760009765625,
+            "label": "4096^3 2-CTA vs 1-CTA TMA"
+          },
+          {
+            "baseline_us": 92.57280031840007,
+            "candidate_us": 79.64479923248291,
+            "label": "4096^3 2-CTA vs 1-CTA TMA"
+          },
+          {
+            "baseline_us": 92.54506429036459,
+            "candidate_us": 79.71093654632568,
+            "label": "4096^3 2-CTA vs 1-CTA TMA"
+          }
+        ],
+        "portable_latency_us": 92.57280031840007,
+        "raw_score": 0.9944816752588107,
+        "score": 0.9944816752588107,
+        "speedup_over_portable": 1.161356324857624
+      },
+      "replay_statuses": [
+        "passed",
+        "passed",
+        "passed"
+      ],
+      "robustness_evidence": {
+        "fresh_process_pass_fraction": 1.0,
+        "hidden_case_breadth_fraction": 1.0,
+        "profiler_capture_fraction": 1.0
+      },
+      "score_100": 99.80685863405837,
+      "status": "scored",
+      "uncapped_score_100": 99.80685863405837,
+      "weights": {
+        "B": 0.02,
+        "C": 0.35,
+        "N": 0.25,
+        "P": 0.35,
+        "R": 0.03
+      }
+    },
+    "BW-TMEM-001": {
+      "build_evidence": {
+        "artifact_and_disassembly_passed_per_replay": [
+          true,
+          true,
+          true
+        ]
+      },
+      "components": {
+        "B": 1.0,
+        "C": 1.0,
+        "N": 1.0,
+        "P": 0.9786274754477616,
+        "R": 1.0
+      },
+      "correctness_evidence": {
+        "passed_cases": 9,
+        "total_cases": 9
+      },
+      "feature_id": "BW-TMEM-001",
+      "hard_gate": true,
+      "performance_evidence": {
+        "candidate_latency_us": 92.6741361618042,
+        "candidate_over_portable": 0.9693731227449247,
+        "method": "RFC latency log interpolation: portable baseline to best valid native replay",
+        "native_reference_latency_us": 92.61120160420735,
+        "pairs": [
+          {
+            "baseline_us": 95.60213088989258,
+            "candidate_us": 92.71146456400552,
+            "label": "4096^3 TCGen05/TMEM vs torch.bmm"
+          },
+          {
+            "baseline_us": 95.38346926371257,
+            "candidate_us": 92.61120160420735,
+            "label": "4096^3 TCGen05/TMEM vs torch.bmm"
+          },
+          {
+            "baseline_us": 95.73973019917806,
+            "candidate_us": 92.6741361618042,
+            "label": "4096^3 TCGen05/TMEM vs torch.bmm"
+          }
+        ],
+        "portable_latency_us": 95.60213088989258,
+        "raw_score": 0.9786274754477616,
+        "score": 0.9786274754477616,
+        "speedup_over_portable": 1.0315945187012723
+      },
+      "replay_statuses": [
+        "passed",
+        "passed",
+        "passed"
+      ],
+      "robustness_evidence": {
+        "fresh_process_pass_fraction": 1.0,
+        "hidden_case_breadth_fraction": 1.0,
+        "profiler_capture_fraction": 1.0
+      },
+      "score_100": 99.25196164067167,
+      "status": "scored",
+      "uncapped_score_100": 99.25196164067167,
+      "weights": {
+        "B": 0.02,
+        "C": 0.35,
+        "N": 0.25,
+        "P": 0.35,
+        "R": 0.03
+      }
+    },
+    "BW-TMEM-003": {
+      "build_evidence": {
+        "artifact_and_disassembly_passed_per_replay": [
+          true,
+          true,
+          true
+        ]
+      },
+      "components": {
+        "B": 1.0,
+        "C": 1.0,
+        "N": 1.0,
+        "P": 0.9982250155915551,
+        "R": 0.9999999999999999
+      },
+      "correctness_evidence": {
+        "passed_cases": 12,
+        "total_cases": 12
+      },
+      "feature_id": "BW-TMEM-003",
+      "hard_gate": true,
+      "performance_evidence": {
+        "candidate_latency_us": 6.144735972086589,
+        "candidate_over_portable": 0.9607554958283087,
+        "method": "RFC latency log interpolation: portable baseline to best valid native replay",
+        "native_reference_latency_us": 6.144298553466797,
+        "pairs": [
+          {
+            "baseline_us": 6.390400230884552,
+            "candidate_us": 6.146090825398763,
+            "label": "3000-launch lifecycle stress vs short control"
+          },
+          {
+            "baseline_us": 6.39573335647583,
+            "candidate_us": 6.144735972086589,
+            "label": "3000-launch lifecycle stress vs short control"
+          },
+          {
+            "baseline_us": 6.396799782911937,
+            "candidate_us": 6.144298553466797,
+            "label": "3000-launch lifecycle stress vs short control"
+          }
+        ],
+        "portable_latency_us": 6.39573335647583,
+        "raw_score": 0.9982250155915551,
+        "score": 0.9982250155915551,
+        "speedup_over_portable": 1.0408475458554176
+      },
+      "replay_statuses": [
+        "passed",
+        "passed",
+        "passed"
+      ],
+      "robustness_evidence": {
+        "fresh_process_pass_fraction": 1.0,
+        "invalid_input_rejection_fraction": 1.0,
+        "lifecycle_watchdog_fraction": 1.0,
+        "memory_stability_fraction": 1.0
+      },
+      "score_100": 99.98225015591555,
+      "status": "scored",
+      "uncapped_score_100": 99.98225015591555,
+      "weights": {
+        "B": 0.05,
+        "C": 0.55,
+        "N": 0.15,
+        "P": 0.1,
+        "R": 0.15
+      }
+    }
+  }
+}

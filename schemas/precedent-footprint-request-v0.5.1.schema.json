@@ -1,0 +1,51 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "candidate_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Candidate Sha256",
+      "type": "string"
+    },
+    "domain": {
+      "default": "auto",
+      "enum": [
+        "auto",
+        "distributed-communication",
+        "memory-tiering"
+      ],
+      "title": "Domain",
+      "type": "string"
+    },
+    "draft_id": {
+      "title": "Draft Id",
+      "type": "string"
+    },
+    "draft_revision": {
+      "minimum": 1,
+      "title": "Draft Revision",
+      "type": "integer"
+    },
+    "files": {
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1,
+      "title": "Files",
+      "type": "array"
+    },
+    "schema_version": {
+      "const": "0.5.1",
+      "default": "0.5.1",
+      "title": "Schema Version",
+      "type": "string"
+    }
+  },
+  "required": [
+    "draft_id",
+    "draft_revision",
+    "candidate_sha256",
+    "files"
+  ],
+  "title": "FootprintExtractionRequest",
+  "type": "object"
+}

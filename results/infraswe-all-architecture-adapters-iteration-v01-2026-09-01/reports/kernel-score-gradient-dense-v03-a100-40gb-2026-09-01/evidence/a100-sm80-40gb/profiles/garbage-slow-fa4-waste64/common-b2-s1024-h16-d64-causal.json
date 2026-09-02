@@ -1,0 +1,77 @@
+{
+  "backend": "garbage-slow-fa4-waste64",
+  "case_id": "common-b2-s1024-h16-d64-causal",
+  "evidence_kind": "per-case-profiler",
+  "fresh_process": true,
+  "generated_at": "2026-09-01T01:47:43.599177Z",
+  "hardware": {
+    "compute_capability": "8.0",
+    "cudnn_version": 91002,
+    "gpu_name": "NVIDIA A100-SXM4-40GB",
+    "nvidia_smi": {
+      "clocks.mem": "1215",
+      "clocks.sm": "1095",
+      "driver_version": "580.105.08",
+      "memory.total": "40960",
+      "memory.used": "691",
+      "name": "NVIDIA A100-SXM4-40GB",
+      "pci.bus_id": "00000000:00:07.0",
+      "power.draw": "37.85",
+      "power.limit": "400.00",
+      "pstate": "P0",
+      "temperature.gpu": "35",
+      "utilization.gpu": "0",
+      "uuid": "GPU-9a113097-4751-cb05-0560-dbd9159f2dfa"
+    },
+    "platform": "Linux-6.8.0-87-generic-x86_64-with-glibc2.35",
+    "python": "3.12.12",
+    "sm_count": 108,
+    "torch_cuda": "12.8",
+    "torch_version": "2.8.0+cu128",
+    "total_memory_bytes": 42405855232
+  },
+  "implementation_provenance": [
+    {
+      "module": "garbage_kernels",
+      "path": "/root/infraswe/benchmarks/kernel_frontier/garbage_kernels.py",
+      "sha256": "sha256:6561d8769f155017e969e78db1af3739cfa1d78758548ed2cec2689841a9258b"
+    },
+    {
+      "module": "flash_attn.cute",
+      "path": "/root/infraswe/envs/fa4/flash_attn/cute",
+      "sha256": "sha256:9935fb3cfbd6ea7294858299cac85c03c76bb3e7f6fb2a79f6a4fe32b77bdc7b"
+    }
+  ],
+  "profiler": {
+    "captured": true,
+    "cuda_events": [
+      {
+        "count": 64,
+        "device_time_us": 2590.151000000001,
+        "name": "_stream_waste_kernel",
+        "self_device_time_us": 2590.151000000001
+      },
+      {
+        "count": 1,
+        "device_time_us": 132.73999999999978,
+        "name": "FlashAttnFunc",
+        "self_device_time_us": 66.36999999999989
+      },
+      {
+        "count": 1,
+        "device_time_us": 66.36999999999989,
+        "name": "Activity Buffer Request",
+        "self_device_time_us": 66.36999999999989
+      },
+      {
+        "count": 1,
+        "device_time_us": 66.36999999999989,
+        "name": "kernel_cutlass_kernel_flash_attncuteflash_fwdFlashAttentionForwardSm80_object_at__tensorptrbf16gmemalign16oi64div81i64div8i64div8_tensorptrbf16gmemalign16oi64div81i64div8i64div8_tensorptr_0",
+        "self_device_time_us": 66.36999999999989
+      }
+    ]
+  },
+  "schema_version": "0.3",
+  "status": "passed",
+  "suite": "attention"
+}

@@ -1,0 +1,114 @@
+{
+  "$defs": {
+    "TransportPayloadEntry": {
+      "additionalProperties": false,
+      "properties": {
+        "logical_name": {
+          "title": "Logical Name",
+          "type": "string"
+        },
+        "sha256": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Sha256",
+          "type": "string"
+        },
+        "size_bytes": {
+          "minimum": 0,
+          "title": "Size Bytes",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "logical_name",
+        "sha256",
+        "size_bytes"
+      ],
+      "title": "TransportPayloadEntry",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "base_revision": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Base Revision",
+      "type": "string"
+    },
+    "candidate_artifact_manifest_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Candidate Artifact Manifest Sha256",
+      "type": "string"
+    },
+    "controller_signature": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Controller Signature"
+    },
+    "created_at": {
+      "format": "date-time",
+      "title": "Created At",
+      "type": "string"
+    },
+    "destination_policy_id": {
+      "title": "Destination Policy Id",
+      "type": "string"
+    },
+    "encryption": {
+      "enum": [
+        "provider-managed",
+        "controller-managed",
+        "none"
+      ],
+      "title": "Encryption",
+      "type": "string"
+    },
+    "envelope_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Envelope Sha256",
+      "type": "string"
+    },
+    "payload": {
+      "items": {
+        "$ref": "#/$defs/TransportPayloadEntry"
+      },
+      "minItems": 1,
+      "title": "Payload",
+      "type": "array"
+    },
+    "schema_version": {
+      "const": "0.1",
+      "default": "0.1",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "source_environment_id": {
+      "title": "Source Environment Id",
+      "type": "string"
+    },
+    "task_seal_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Task Seal Sha256",
+      "type": "string"
+    }
+  },
+  "required": [
+    "task_seal_sha256",
+    "candidate_artifact_manifest_sha256",
+    "base_revision",
+    "created_at",
+    "payload",
+    "source_environment_id",
+    "destination_policy_id",
+    "encryption",
+    "envelope_sha256"
+  ],
+  "title": "TransportEnvelope",
+  "type": "object"
+}

@@ -1,0 +1,32 @@
+{
+  "schema_version": "0.5",
+  "protocol_id": "sglang-graph-lora-addmm-comparison-v0.5-r1",
+  "frozen_before_candidate_execution": true,
+  "primary_project": "sglang",
+  "formula_template_id": "project-fit-kernel-v0.5",
+  "baseline_plan_file_sha256": "sha256:041366a8f87ef8ed986019c401090b4bd86d3c8f46bac5d138f86d16bc4e5365",
+  "baseline_source_sha256": "sha256:390676cc38975095ba124d1932aa8c27dc2b4605e18c495c095ae852f4c96790",
+  "candidate_source_sha256": "sha256:e4c9b3bdf5a5488f85a17abcb2ad3089d4d7b2b2024845bd2752f97067bc0b76",
+  "case_policy": "reuse baseline-plan cases, weights, process count, samples, iterations, seeds, tolerances, and ordering without change",
+  "optimized_case_selector": "slots >= 4",
+  "hard_gates": [
+    "all eager and CUDA Graph oracle checks pass",
+    "dynamic replay changes output and remains correct",
+    "base_output alias, empty weights, mixed output dtype, and gradient fallback pass",
+    "no candidate case regresses by more than 3% at the cross-process median"
+  ],
+  "performance_normalization": {
+    "speedup": "baseline_median_us / candidate_median_us",
+    "attainment": "weighted geometric mean over optimized cases of min(1, speedup / 1.05)",
+    "retention": "weighted geometric mean over all cases of min(1, speedup)",
+    "coverage": "fraction of optimized cases measured in both FP16 and BF16",
+    "compile": "1 because the framework path requires no JIT compilation"
+  },
+  "project_evidence_limits": [
+    "the attachment contains no registered SGLang test",
+    "the existing manual test uses three slots and does not exercise the new slots >= 4 branch",
+    "operator evidence is E1-framework, not an integrated E2 server trace",
+    "the SGLang Draft is D3-contract-proposed and unsealed"
+  ],
+  "cross_project_ranking_allowed": false
+}

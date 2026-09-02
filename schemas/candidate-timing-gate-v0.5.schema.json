@@ -1,0 +1,75 @@
+{
+  "additionalProperties": false,
+  "description": "Auditable boundary between candidate preparation and benchmark timing.",
+  "properties": {
+    "activated_candidate_ids": {
+      "items": {
+        "type": "string"
+      },
+      "maxItems": 1,
+      "minItems": 1,
+      "title": "Activated Candidate Ids",
+      "type": "array"
+    },
+    "activation_plan_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Activation Plan Sha256",
+      "type": "string"
+    },
+    "blockers": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Blockers",
+      "type": "array"
+    },
+    "prepared_candidate_ids": {
+      "items": {
+        "type": "string"
+      },
+      "maxItems": 1,
+      "title": "Prepared Candidate Ids",
+      "type": "array"
+    },
+    "schema_version": {
+      "const": "0.5",
+      "default": "0.5",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "steady_state_compile_allowed": {
+      "const": false,
+      "default": false,
+      "title": "Steady State Compile Allowed",
+      "type": "boolean"
+    },
+    "timed_benchmark_allowed": {
+      "title": "Timed Benchmark Allowed",
+      "type": "boolean"
+    },
+    "timing_eligibility": {
+      "enum": [
+        "blocked",
+        "diagnostic-only",
+        "official"
+      ],
+      "title": "Timing Eligibility",
+      "type": "string"
+    },
+    "warnings": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Warnings",
+      "type": "array"
+    }
+  },
+  "required": [
+    "activation_plan_sha256",
+    "activated_candidate_ids",
+    "timed_benchmark_allowed",
+    "timing_eligibility"
+  ],
+  "title": "CandidateTimingGate",
+  "type": "object"
+}

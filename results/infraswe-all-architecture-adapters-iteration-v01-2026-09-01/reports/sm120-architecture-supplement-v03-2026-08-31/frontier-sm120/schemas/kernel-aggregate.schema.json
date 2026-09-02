@@ -1,0 +1,71 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "artifact_100": {
+      "anyOf": [
+        {
+          "maximum": 100,
+          "minimum": 0,
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Artifact 100"
+    },
+    "artifact_status": {
+      "title": "Artifact Status",
+      "type": "string"
+    },
+    "certified": {
+      "title": "Certified",
+      "type": "boolean"
+    },
+    "components": {
+      "additionalProperties": {
+        "type": "number"
+      },
+      "title": "Components",
+      "type": "object"
+    },
+    "disposition": {
+      "title": "Disposition",
+      "type": "string"
+    },
+    "failure_codes": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Failure Codes",
+      "type": "array"
+    },
+    "leaderboard_effective_artifact_100": {
+      "anyOf": [
+        {
+          "maximum": 100,
+          "minimum": 0,
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Leaderboard Effective Artifact 100"
+    },
+    "verdict": {
+      "title": "Verdict",
+      "type": "string"
+    }
+  },
+  "required": [
+    "certified",
+    "verdict",
+    "disposition",
+    "artifact_status"
+  ],
+  "title": "KernelAggregate",
+  "type": "object"
+}

@@ -1,0 +1,155 @@
+{
+  "cases": [
+    {
+      "case_id": "sglang-pr-3044",
+      "judgment_lock_sha256": "sha256:5769b643415d085bf4dc4242022635c3061ee85496e1ce98b6781bea22ecb3f4",
+      "machine_decision": "revise",
+      "machine_only_concepts": [
+        "TEST_MATRIX_CONTRACTION_GT_50_PERCENT",
+        "DIAGNOSTIC_SUPPRESSION_BROAD_USER_WARNING"
+      ],
+      "reviewer_concepts": [
+        {
+          "concept_id": "TEST_DIRECTORY_TAXONOMY",
+          "correspondence": "missed",
+          "explanation": "The r2 rules checked discoverability, matrix size, and diagnostics but did not ask whether the destination matched project test taxonomy.",
+          "feedback_ids": [
+            "review-comment:1926053341"
+          ],
+          "machine_rule_ids": [],
+          "reviewer_concern": "Kernel tests should live under test/srt/kernel rather than directly under the broad test/srt root."
+        }
+      ],
+      "verdict_correspondence": "exact",
+      "verdict_explanation": "The reviewer requested a placement change before merge; the machine also required revision, but for different reasons."
+    },
+    {
+      "case_id": "vllm-pr-13140",
+      "judgment_lock_sha256": "sha256:19f989a3933f19fd5aa60858556880fa1214e6219e2bd38a06039b3accdc343b",
+      "machine_decision": "accept_with_scope",
+      "machine_only_concepts": [],
+      "reviewer_concepts": [
+        {
+          "concept_id": "INTERIM_CORRECTNESS_FIX",
+          "correspondence": "exact",
+          "explanation": "The machine independently proved the happens-before gap and verified the patched SM80 kernel.",
+          "feedback_ids": [
+            "review:2612809843"
+          ],
+          "machine_rule_ids": [
+            "shared-initialization-happens-before-cross-warp-atomic",
+            "affected-kernel-sm80-correctness"
+          ],
+          "reviewer_concern": "Land the barrier as an interim correctness repair."
+        },
+        {
+          "concept_id": "BARRIER_PERFORMANCE_REGRESSION",
+          "correspondence": "exact",
+          "explanation": "The frozen check separated precompile from steady state and observed a 0.9343 head/base time ratio on A100.",
+          "feedback_ids": [
+            "review:2612809843"
+          ],
+          "machine_rule_ids": [
+            "steady-state-regression-below-ten-percent"
+          ],
+          "reviewer_concern": "Show that the added barrier does not materially regress performance."
+        },
+        {
+          "concept_id": "KERNEL_ARCHITECTURE_RETHINK",
+          "correspondence": "partial",
+          "explanation": "accept_with_scope encoded limited approval, but r2 did not surface the nearby source TODO or name the follow-up ownership debt.",
+          "feedback_ids": [
+            "review:2612809843"
+          ],
+          "machine_rule_ids": [
+            "shared-initialization-happens-before-cross-warp-atomic"
+          ],
+          "reviewer_concern": "The kernel needs a broader architectural rethink after the interim fix."
+        }
+      ],
+      "verdict_correspondence": "exact",
+      "verdict_explanation": "The reviewer approved an interim correctness fix conditional on acceptable performance; the frozen machine decision had the same scope."
+    },
+    {
+      "case_id": "vllm-pr-14027",
+      "judgment_lock_sha256": "sha256:089b39d7662fc371e5bf4d1cc141a400f22fd0eb97e7080fc1259e87fb25aec7",
+      "machine_decision": "revise",
+      "machine_only_concepts": [
+        "CALLER_CONTRACT_PARAMETER_IGNORED:renormalize"
+      ],
+      "reviewer_concepts": [
+        {
+          "concept_id": "ROUTER_BIAS_DTYPE_CONSISTENCY",
+          "correspondence": "missed",
+          "explanation": "r2 did not trace dtype consistency across weight, bias, and state dict.",
+          "feedback_ids": [
+            "review-comment:1975332689",
+            "issue-comment:2803539213"
+          ],
+          "machine_rule_ids": [],
+          "reviewer_concern": "Router correction bias initialization must have the intended FP32 dtype."
+        },
+        {
+          "concept_id": "STORAGE_DTYPE_VS_COMPUTE_DTYPE",
+          "correspondence": "missed",
+          "explanation": "r2 tested numerical behavior but did not audit parameter storage growth.",
+          "feedback_ids": [
+            "review-comment:2043332053"
+          ],
+          "machine_rule_ids": [],
+          "reviewer_concern": "Keep stored weights in BF16 where possible and perform only computation in FP32 to avoid extra memory."
+        },
+        {
+          "concept_id": "ROUTER_PERFORMANCE_REGRESSION",
+          "correspondence": "partial",
+          "explanation": "r2 measured the extracted fused_topk hot call, but not the widened gate linear layer or an end-to-end workload.",
+          "feedback_ids": [
+            "issue-comment:2690849736"
+          ],
+          "machine_rule_ids": [
+            "compile-free-minimal-probe"
+          ],
+          "reviewer_concern": "Run performance benchmarks for the widened router path."
+        },
+        {
+          "concept_id": "MODEL_QUALITY_REGRESSION",
+          "correspondence": "missed",
+          "explanation": "r2 stopped at operator numerics and did not run model-level quality cases.",
+          "feedback_ids": [
+            "issue-comment:2811019420"
+          ],
+          "machine_rule_ids": [],
+          "reviewer_concern": "Check task-level quality after changing router precision."
+        }
+      ],
+      "verdict_correspondence": "partial",
+      "verdict_explanation": "Both sides found unresolved work, but reviewers did not identify the frozen renormalize regression that drove the machine verdict."
+    }
+  ],
+  "comparison_sha256": "sha256:52ed777f605871495185d97b3f5f3d6e1aac628a502cbef9f87ac9dd42704eb8",
+  "judgment_lock_set_sha256": "sha256:35dd69c9341a2712973f8274e7660ef475ee4d9abf01266eecb8f6d1e3761e0e",
+  "learned_model_used": false,
+  "post_lock_only": true,
+  "protocol_id": "historical-human-concept-comparison-v0.5-r2",
+  "rescore_machine_locks": false,
+  "review_reveal_sha256": "sha256:df27adf28510c8d1f229b9d6ecaa27c1101ff3727073748bba5f7b70fa30ef35",
+  "schema_version": "0.5",
+  "summary": {
+    "cases": 3,
+    "concept_correspondence": {
+      "exact": 2,
+      "missed": 4,
+      "partial": 2
+    },
+    "exact_concept_coverage": 0.25,
+    "exact_or_partial_concept_coverage": 0.5,
+    "machine_only_concepts": 3,
+    "reviewer_concepts": 8,
+    "verdict_correspondence": {
+      "exact": 2,
+      "missed": 0,
+      "partial": 1
+    }
+  },
+  "weighted_score_used": false
+}

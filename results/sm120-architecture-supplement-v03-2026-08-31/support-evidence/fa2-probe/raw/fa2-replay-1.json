@@ -1,0 +1,621 @@
+{
+  "all_correct": true,
+  "backend": "fa2",
+  "backend_version": "2.8.4",
+  "benchmark": "flash-attention-forward-portfolio-v1",
+  "benchmark_kind": "kernel-library",
+  "case_count": 5,
+  "cases": [
+    {
+      "case_group": "common",
+      "case_id": "common-b4-s512-h16-d64-noncausal",
+      "causal": false,
+      "correctness": {
+        "cosine_similarity": 0.9999971985816956,
+        "dynamic_input_changes_output": true,
+        "max_abs_error": 0.001953125,
+        "mean_abs_error": 8.361096115550026e-05,
+        "passed": true,
+        "relative_l2_error": 0.002363160951063037
+      },
+      "dtype": "bfloat16",
+      "measurement": {
+        "blocks": [
+          {
+            "block_index": 1,
+            "candidate_latency_us": 40.92423455054019,
+            "candidate_positions_us": [
+              41.982923235212056,
+              39.86554586586832
+            ],
+            "order": "ABBA",
+            "reference_latency_us": 558.5101071526022,
+            "reference_positions_us": [
+              563.0211549646714,
+              553.9990593405331
+            ]
+          },
+          {
+            "block_index": 2,
+            "candidate_latency_us": 41.4166049796994,
+            "candidate_positions_us": [
+              43.25620266569763,
+              39.57700729370117
+            ],
+            "order": "ABBA",
+            "reference_latency_us": 553.2395418952493,
+            "reference_positions_us": [
+              551.8155378453872,
+              554.6635459451114
+            ]
+          },
+          {
+            "block_index": 3,
+            "candidate_latency_us": 40.24726002156234,
+            "candidate_positions_us": [
+              41.081276260504204,
+              39.41324378262047
+            ],
+            "order": "ABBA",
+            "reference_latency_us": 553.5472982070025,
+            "reference_positions_us": [
+              552.6268341962029,
+              554.4677622178021
+            ]
+          }
+        ],
+        "candidate": "fa2",
+        "candidate_pilot_us": 84.48000252246857,
+        "candidate_repetitions": 119,
+        "reference": "torch-sdpa-math",
+        "reference_pilot_us": 599.9040007591248,
+        "reference_repetitions": 17
+      },
+      "profiler": {
+        "captured": true,
+        "cuda_events": [
+          {
+            "count": 1,
+            "device_time_us": 68.99200000000019,
+            "name": "FlashAttnFunc",
+            "self_device_time_us": 0.0
+          },
+          {
+            "count": 1,
+            "device_time_us": 68.99200000000019,
+            "name": "flash_attn::_flash_attn_forward",
+            "self_device_time_us": 34.496000000000095
+          },
+          {
+            "count": 1,
+            "device_time_us": 34.496000000000095,
+            "name": "Activity Buffer Request",
+            "self_device_time_us": 34.496000000000095
+          },
+          {
+            "count": 1,
+            "device_time_us": 34.496000000000095,
+            "name": "void flash::flash_fwd_kernel<Flash_fwd_kernel_traits<64, 128, 128, 4, false, false, cutlass::bfloat16_t, Flash_kernel_traits<64, 128, 128, 4, cutlass::bfloat16_t> >, false, false, false, false, true, true, false, false>(flash::Flash_fwd_params)",
+            "self_device_time_us": 34.496000000000095
+          }
+        ]
+      },
+      "shape": {
+        "batch": 4,
+        "head_dim": 64,
+        "heads": 16,
+        "seqlen": 512
+      },
+      "weight": 0.2,
+      "work_model": {
+        "known_omissions": [
+          "softmax scalar operations",
+          "scheduler and launch floors"
+        ],
+        "minimum_external_bytes": 16777216,
+        "semantic_flops": 4294967296,
+        "version": "attention-fwd-semantic-v1"
+      }
+    },
+    {
+      "case_group": "common",
+      "case_id": "common-b2-s1024-h16-d64-causal",
+      "causal": true,
+      "correctness": {
+        "cosine_similarity": 0.9999978542327881,
+        "dynamic_input_changes_output": true,
+        "max_abs_error": 0.015625,
+        "mean_abs_error": 0.00010276932152919471,
+        "passed": true,
+        "relative_l2_error": 0.002076631411910057
+      },
+      "dtype": "bfloat16",
+      "measurement": {
+        "blocks": [
+          {
+            "block_index": 1,
+            "candidate_latency_us": 50.5633139395499,
+            "candidate_positions_us": [
+              49.42097105421462,
+              51.70565682488519
+            ],
+            "order": "ABBA",
+            "reference_latency_us": 1524.2697170802526,
+            "reference_positions_us": [
+              1520.8365576607841,
+              1527.702876499721
+            ]
+          },
+          {
+            "block_index": 2,
+            "candidate_latency_us": 49.190052994736675,
+            "candidate_positions_us": [
+              49.1295118589659,
+              49.25059413050746
+            ],
+            "order": "BAAB",
+            "reference_latency_us": 1524.3246214730398,
+            "reference_positions_us": [
+              1525.87890625,
+              1522.7703366960798
+            ]
+          },
+          {
+            "block_index": 3,
+            "candidate_latency_us": 48.33282865919509,
+            "candidate_positions_us": [
+              48.779242747538795,
+              47.88641457085137
+            ],
+            "order": "ABBA",
+            "reference_latency_us": 1525.8970941816058,
+            "reference_positions_us": [
+              1524.310793195452,
+              1527.4833951677595
+            ]
+          }
+        ],
+        "candidate": "fa2",
+        "candidate_pilot_us": 90.46400338411331,
+        "candidate_repetitions": 111,
+        "reference": "torch-sdpa-math",
+        "reference_pilot_us": 1584.4160318374634,
+        "reference_repetitions": 7
+      },
+      "profiler": {
+        "captured": true,
+        "cuda_events": [
+          {
+            "count": 1,
+            "device_time_us": 89.2159999999999,
+            "name": "FlashAttnFunc",
+            "self_device_time_us": 0.0
+          },
+          {
+            "count": 1,
+            "device_time_us": 89.2159999999999,
+            "name": "flash_attn::_flash_attn_forward",
+            "self_device_time_us": 44.60799999999995
+          },
+          {
+            "count": 1,
+            "device_time_us": 44.60799999999995,
+            "name": "Activity Buffer Request",
+            "self_device_time_us": 44.60799999999995
+          },
+          {
+            "count": 1,
+            "device_time_us": 44.60799999999995,
+            "name": "void flash::flash_fwd_kernel<Flash_fwd_kernel_traits<64, 128, 128, 4, false, false, cutlass::bfloat16_t, Flash_kernel_traits<64, 128, 128, 4, cutlass::bfloat16_t> >, false, true, false, false, true, true, false, false>(flash::Flash_fwd_params)",
+            "self_device_time_us": 44.60799999999995
+          }
+        ]
+      },
+      "shape": {
+        "batch": 2,
+        "head_dim": 64,
+        "heads": 16,
+        "seqlen": 1024
+      },
+      "weight": 0.2,
+      "work_model": {
+        "known_omissions": [
+          "softmax scalar operations",
+          "scheduler and launch floors"
+        ],
+        "minimum_external_bytes": 16777216,
+        "semantic_flops": 4294967296,
+        "version": "attention-fwd-semantic-v1"
+      }
+    },
+    {
+      "case_group": "common",
+      "case_id": "common-b1-s2048-h16-d128-causal",
+      "causal": true,
+      "correctness": {
+        "cosine_similarity": 0.9999978542327881,
+        "dynamic_input_changes_output": true,
+        "max_abs_error": 0.015625,
+        "mean_abs_error": 7.620587712153792e-05,
+        "passed": true,
+        "relative_l2_error": 0.002099572913721204
+      },
+      "dtype": "bfloat16",
+      "measurement": {
+        "blocks": [
+          {
+            "block_index": 1,
+            "candidate_latency_us": 134.31592854586515,
+            "candidate_positions_us": [
+              133.48189267245206,
+              135.14996441927823
+            ],
+            "order": "BAAB",
+            "reference_latency_us": 3864.458719889323,
+            "reference_positions_us": [
+              3867.2641118367515,
+              3861.6533279418945
+            ]
+          },
+          {
+            "block_index": 2,
+            "candidate_latency_us": 134.46225686506793,
+            "candidate_positions_us": [
+              134.8229841752486,
+              134.10152955488726
+            ],
+            "order": "ABBA",
+            "reference_latency_us": 3876.4425913492837,
+            "reference_positions_us": [
+              3872.661272684733,
+              3880.2239100138345
+            ]
+          },
+          {
+            "block_index": 3,
+            "candidate_latency_us": 134.49047262018377,
+            "candidate_positions_us": [
+              135.13483567671344,
+              133.84610956365412
+            ],
+            "order": "ABBA",
+            "reference_latency_us": 3873.189290364583,
+            "reference_positions_us": [
+              3860.213279724121,
+              3886.1653010050454
+            ]
+          }
+        ],
+        "candidate": "fa2",
+        "candidate_pilot_us": 182.65600502490997,
+        "candidate_repetitions": 55,
+        "reference": "torch-sdpa-math",
+        "reference_pilot_us": 3944.767951965332,
+        "reference_repetitions": 3
+      },
+      "profiler": {
+        "captured": true,
+        "cuda_events": [
+          {
+            "count": 1,
+            "device_time_us": 275.1959999999999,
+            "name": "FlashAttnFunc",
+            "self_device_time_us": 0.0
+          },
+          {
+            "count": 1,
+            "device_time_us": 275.1959999999999,
+            "name": "flash_attn::_flash_attn_forward",
+            "self_device_time_us": 137.59799999999996
+          },
+          {
+            "count": 1,
+            "device_time_us": 137.59799999999996,
+            "name": "Activity Buffer Request",
+            "self_device_time_us": 137.59799999999996
+          },
+          {
+            "count": 1,
+            "device_time_us": 137.59799999999996,
+            "name": "void flash::flash_fwd_kernel<Flash_fwd_kernel_traits<128, 128, 64, 4, false, false, cutlass::bfloat16_t, Flash_kernel_traits<128, 128, 64, 4, cutlass::bfloat16_t> >, false, true, false, false, true, true, false, false>(flash::Flash_fwd_params)",
+            "self_device_time_us": 137.59799999999996
+          }
+        ]
+      },
+      "shape": {
+        "batch": 1,
+        "head_dim": 128,
+        "heads": 16,
+        "seqlen": 2048
+      },
+      "weight": 0.2,
+      "work_model": {
+        "known_omissions": [
+          "softmax scalar operations",
+          "scheduler and launch floors"
+        ],
+        "minimum_external_bytes": 33554432,
+        "semantic_flops": 17179869184,
+        "version": "attention-fwd-semantic-v1"
+      }
+    },
+    {
+      "case_group": "boundary_tail",
+      "case_id": "boundary-b3-s1000-h12-d64-causal",
+      "causal": true,
+      "correctness": {
+        "cosine_similarity": 0.9999979138374329,
+        "dynamic_input_changes_output": true,
+        "max_abs_error": 0.015625,
+        "mean_abs_error": 0.00010384562483523041,
+        "passed": true,
+        "relative_l2_error": 0.002083052881062031
+      },
+      "dtype": "bfloat16",
+      "measurement": {
+        "blocks": [
+          {
+            "block_index": 1,
+            "candidate_latency_us": 49.92130581213503,
+            "candidate_positions_us": [
+              51.01485641635194,
+              48.82775520791813
+            ],
+            "order": "ABBA",
+            "reference_latency_us": 1703.2586733500164,
+            "reference_positions_us": [
+              1698.5279719034831,
+              1707.9893747965496
+            ]
+          },
+          {
+            "block_index": 2,
+            "candidate_latency_us": 48.96114310439752,
+            "candidate_positions_us": [
+              48.923103176817605,
+              48.99918303197744
+            ],
+            "order": "BAAB",
+            "reference_latency_us": 1702.2559642791748,
+            "reference_positions_us": [
+              1704.261302947998,
+              1700.2506256103516
+            ]
+          },
+          {
+            "block_index": 3,
+            "candidate_latency_us": 48.114285177114056,
+            "candidate_positions_us": [
+              48.695510747481364,
+              47.533059606746754
+            ],
+            "order": "ABBA",
+            "reference_latency_us": 1704.7253449757895,
+            "reference_positions_us": [
+              1704.0640513102214,
+              1705.3866386413574
+            ]
+          }
+        ],
+        "candidate": "fa2",
+        "candidate_pilot_us": 102.62399911880493,
+        "candidate_repetitions": 98,
+        "reference": "torch-sdpa-math",
+        "reference_pilot_us": 1765.9200429916382,
+        "reference_repetitions": 6
+      },
+      "profiler": {
+        "captured": true,
+        "cuda_events": [
+          {
+            "count": 1,
+            "device_time_us": 109.2460000000001,
+            "name": "FlashAttnFunc",
+            "self_device_time_us": 0.0
+          },
+          {
+            "count": 1,
+            "device_time_us": 109.2460000000001,
+            "name": "flash_attn::_flash_attn_forward",
+            "self_device_time_us": 54.62300000000005
+          },
+          {
+            "count": 1,
+            "device_time_us": 54.62300000000005,
+            "name": "Activity Buffer Request",
+            "self_device_time_us": 54.62300000000005
+          },
+          {
+            "count": 1,
+            "device_time_us": 54.62300000000005,
+            "name": "void flash::flash_fwd_kernel<Flash_fwd_kernel_traits<64, 128, 128, 4, false, false, cutlass::bfloat16_t, Flash_kernel_traits<64, 128, 128, 4, cutlass::bfloat16_t> >, false, true, false, false, false, true, false, false>(flash::Flash_fwd_params)",
+            "self_device_time_us": 54.62300000000005
+          }
+        ]
+      },
+      "shape": {
+        "batch": 3,
+        "head_dim": 64,
+        "heads": 12,
+        "seqlen": 1000
+      },
+      "weight": 0.2,
+      "work_model": {
+        "known_omissions": [
+          "softmax scalar operations",
+          "scheduler and launch floors"
+        ],
+        "minimum_external_bytes": 18432000,
+        "semantic_flops": 4608000000,
+        "version": "attention-fwd-semantic-v1"
+      }
+    },
+    {
+      "case_group": "stress_large",
+      "case_id": "stress-b1-s4096-h8-d128-causal",
+      "causal": true,
+      "correctness": {
+        "cosine_similarity": 0.9999977350234985,
+        "dynamic_input_changes_output": true,
+        "max_abs_error": 0.0078125,
+        "mean_abs_error": 5.663936462951824e-05,
+        "passed": true,
+        "relative_l2_error": 0.002132544293999672
+      },
+      "dtype": "bfloat16",
+      "measurement": {
+        "blocks": [
+          {
+            "block_index": 1,
+            "candidate_latency_us": 252.67054817893288,
+            "candidate_positions_us": [
+              253.25962991425484,
+              252.0814664436109
+            ],
+            "order": "ABBA",
+            "reference_latency_us": 8098.095893859863,
+            "reference_positions_us": [
+              8082.799911499023,
+              8113.391876220703
+            ]
+          },
+          {
+            "block_index": 2,
+            "candidate_latency_us": 253.98497147993606,
+            "candidate_positions_us": [
+              253.6193963253137,
+              254.35054663455847
+            ],
+            "order": "BAAB",
+            "reference_latency_us": 8112.951755523682,
+            "reference_positions_us": [
+              8108.799934387207,
+              8117.103576660156
+            ]
+          },
+          {
+            "block_index": 3,
+            "candidate_latency_us": 253.21745150017017,
+            "candidate_positions_us": [
+              252.0135821718158,
+              254.4213208285245
+            ],
+            "order": "BAAB",
+            "reference_latency_us": 8119.848251342773,
+            "reference_positions_us": [
+              8131.216049194336,
+              8108.480453491211
+            ]
+          }
+        ],
+        "candidate": "fa2",
+        "candidate_pilot_us": 303.16799879074097,
+        "candidate_repetitions": 33,
+        "reference": "torch-sdpa-math",
+        "reference_pilot_us": 8185.759544372559,
+        "reference_repetitions": 2
+      },
+      "profiler": {
+        "captured": true,
+        "cuda_events": [
+          {
+            "count": 1,
+            "device_time_us": 495.93600000000015,
+            "name": "FlashAttnFunc",
+            "self_device_time_us": 0.0
+          },
+          {
+            "count": 1,
+            "device_time_us": 495.93600000000015,
+            "name": "flash_attn::_flash_attn_forward",
+            "self_device_time_us": 247.96800000000007
+          },
+          {
+            "count": 1,
+            "device_time_us": 247.96800000000007,
+            "name": "Activity Buffer Request",
+            "self_device_time_us": 247.96800000000007
+          },
+          {
+            "count": 1,
+            "device_time_us": 247.96800000000007,
+            "name": "void flash::flash_fwd_kernel<Flash_fwd_kernel_traits<128, 128, 64, 4, false, false, cutlass::bfloat16_t, Flash_kernel_traits<128, 128, 64, 4, cutlass::bfloat16_t> >, false, true, false, false, true, true, false, false>(flash::Flash_fwd_params)",
+            "self_device_time_us": 247.96800000000007
+          }
+        ]
+      },
+      "shape": {
+        "batch": 1,
+        "head_dim": 128,
+        "heads": 8,
+        "seqlen": 4096
+      },
+      "weight": 0.2,
+      "work_model": {
+        "known_omissions": [
+          "softmax scalar operations",
+          "scheduler and launch floors"
+        ],
+        "minimum_external_bytes": 33554432,
+        "semantic_flops": 34359738368,
+        "version": "attention-fwd-semantic-v1"
+      }
+    }
+  ],
+  "finished_at": "2026-08-31T13:42:15.678519Z",
+  "hardware": {
+    "compute_capability": "12.0",
+    "cudnn_version": 91002,
+    "gpu_name": "NVIDIA RTX PRO 5000 Blackwell",
+    "nvidia_smi": {
+      "clocks.mem": "14001",
+      "clocks.sm": "2370",
+      "driver_version": "580.173.02",
+      "memory.total": "48935",
+      "memory.used": "4",
+      "name": "NVIDIA RTX PRO 5000 Blackwell",
+      "pci.bus_id": "00000000:01:00.0",
+      "power.draw": "51.85",
+      "power.limit": "300.00",
+      "pstate": "P0",
+      "temperature.gpu": "35",
+      "utilization.gpu": "0",
+      "uuid": "GPU-a7167b7d-4efb-aa43-d9a5-bc2807b925b7"
+    },
+    "platform": "Linux-5.15.0-179-generic-x86_64-with-glibc2.39",
+    "python": "3.12.14",
+    "sm_count": 110,
+    "torch_cuda": "12.8",
+    "torch_version": "2.8.0+cu128",
+    "total_memory_bytes": 50752258048
+  },
+  "implementation_commit": "ce088ab9ce0fc0434dcd8afa0a791da9fcc3a820",
+  "implementation_provenance": [
+    {
+      "module": "flash_attn",
+      "path": "/workspace/infraswe/envs/fa2/flash_attn/__init__.py",
+      "sha256": "sha256:b26af89142495543726c13defd4913c43476accd46eb13f99375c96c9eb5e28c"
+    },
+    {
+      "module": "flash_attn_2_cuda",
+      "path": "/workspace/infraswe/envs/fa2/flash_attn_2_cuda.cpython-312-x86_64-linux-gnu.so",
+      "sha256": "sha256:8b63fc85dde1dce533f712bdfadbc499a8d1f478c57fcb0ae6fe9dc86ba37d45"
+    }
+  ],
+  "peak_memory_bytes": 1417839104,
+  "protocol": {
+    "blocks": 3,
+    "completion_fence": "end-event-synchronize",
+    "fresh_allocator_per_replay": true,
+    "fresh_process": true,
+    "min_timed_span_ms": 10.0,
+    "paired_order": "randomized-ABBA-or-BAAB",
+    "profiler_separate_from_official_timing": true,
+    "timer": "evaluator-owned-cuda-events",
+    "warmup_calls": 5
+  },
+  "replay_index": 1,
+  "schema_version": "0.3",
+  "started_at": "2026-08-31T13:42:13.408937Z",
+  "status": "passed"
+}

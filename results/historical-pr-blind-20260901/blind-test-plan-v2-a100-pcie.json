@@ -1,0 +1,133 @@
+{
+  "attribution": {
+    "head-fail-base-fail": "infrastructure-or-historical-environment-unresolved",
+    "head-fail-base-pass": "candidate-failure",
+    "head-pass": "machine-check-pass",
+    "target-architecture-not-executable": "infrastructure-unresolved"
+  },
+  "cases": [
+    {
+      "candidate_sha256": "sha256:deb745549341fb0cad0f2320837a4a3d7de44af28b3c8eb318d71f290abbc9e9",
+      "case_id": "vllm-pr-12450",
+      "strategies": [
+        "changed-pytest:tests/kernels/test_mha_attn.py",
+        "a100-sm80-gpu"
+      ]
+    },
+    {
+      "candidate_sha256": "sha256:b580a0f41f17de64da52cc7f8dcdcaaa93cad10d822807147be0d862552a4b30",
+      "case_id": "vllm-pr-13043",
+      "strategies": [
+        "hidden-two-gpu-device-context-probe",
+        "python-ast"
+      ]
+    },
+    {
+      "candidate_sha256": "sha256:bf91d68c8401b8e9d8ec8f198aaa764b023219737fd7c55a189af81dd03582fc",
+      "case_id": "vllm-pr-12789",
+      "strategies": [
+        "cuda-build-sm80",
+        "non32-warp-runtime-unavailable"
+      ]
+    },
+    {
+      "candidate_sha256": "sha256:dd027d6cb5610a9819f120b79ab23b243dc64f8d41b4a5b0f9033745562b75c0",
+      "case_id": "sglang-pr-3121",
+      "strategies": [
+        "build-sgl-kernel-sm80",
+        "changed-pytest:test_sampling_scaling_penalties"
+      ]
+    },
+    {
+      "candidate_sha256": "sha256:c63827a0a5fa5b671f12d9556de8ca7efba084a7f987aa99c0c43d33d754900d",
+      "case_id": "sglang-pr-3347",
+      "strategies": [
+        "build-sgl-kernel-sm80",
+        "hidden-moe-correctness-smoke"
+      ]
+    },
+    {
+      "candidate_sha256": "sha256:781b2666ac8c91c7db4dd653f991a7c9355b096ab0c46b0bd075ec10cfa9829e",
+      "case_id": "sglang-pr-3053",
+      "strategies": [
+        "build-sgl-kernel-sm80",
+        "changed-activation-gpu-smoke"
+      ]
+    },
+    {
+      "candidate_sha256": "sha256:4af6ebf6017bd9c0ae50d67f8b8731272e56fb8f4336bd844cccbfb72289350f",
+      "case_id": "flashattention-pr-1427",
+      "strategies": [
+        "build-flash-attn-sm80",
+        "affected-attention-gpu-smoke"
+      ]
+    },
+    {
+      "candidate_sha256": "sha256:365433f3ccaa26f8cb972304c5156a8844cadb81fae9e6dd622876ab9e534d09",
+      "case_id": "flashattention-pr-1511",
+      "strategies": [
+        "compile-sm90-header",
+        "sm90-runtime-unavailable"
+      ]
+    },
+    {
+      "candidate_sha256": "sha256:47a5f22f5924d8caa5f5a5c587cac0b301d4ddc1fb6defb0f3657bf7a44dff90",
+      "case_id": "flashattention-pr-1326",
+      "strategies": [
+        "setup-wheel-url-probe",
+        "workflow-yaml-parse"
+      ]
+    },
+    {
+      "candidate_sha256": "sha256:052578f1fa1c38afba1951464083ff720b4308b3b414be424a551eea8b1f64df",
+      "case_id": "flashinfer-pr-624",
+      "strategies": [
+        "aot-uri-uniqueness-probe",
+        "python-ast"
+      ]
+    },
+    {
+      "candidate_sha256": "sha256:8f78b407f273293bfeb0d259a630d6ee6c6fa3a6ceffb081dfb02d3c34f8108a",
+      "case_id": "flashinfer-pr-632",
+      "strategies": [
+        "jit-template-render-probe",
+        "python-ast"
+      ]
+    },
+    {
+      "candidate_sha256": "sha256:90c8e666d2543181a9027d35c1c991590f02de2092144019a32fb9e2fbc68a2d",
+      "case_id": "flashinfer-pr-810",
+      "strategies": [
+        "compile-mla-fa2-sm80",
+        "affected-page-size-probe-if-buildable"
+      ]
+    }
+  ],
+  "common_checks": [
+    "exact-base-head-sha",
+    "graphql-vs-git-path-parity",
+    "git-diff-check",
+    "changed-python-ast",
+    "changed-json-yaml-parse"
+  ],
+  "environment": {
+    "accelerator_cell": "2xnvidia-a100-pcie-40gb-sm80",
+    "base_head_pairing": true,
+    "cuda_toolkit": "12.8",
+    "host": "47.160.150.235:41106",
+    "python": "/venv/main/bin/python"
+  },
+  "prediction_mapping": {
+    "candidate-failure": "not-merged",
+    "infrastructure-unresolved": "abstain",
+    "required-machine-checks-pass": "merged"
+  },
+  "prediction_policy_id": "historical-merge-prediction-v0.5-r1",
+  "protocol_id": "historical-pr-blind-calibration-v0.5-r1",
+  "review_or_ci_signals_used_for_prediction": false,
+  "revision_reason": "user supplied a replacement SSH instance whose accelerator cell is A100 SM80",
+  "schema_version": "0.5",
+  "supersedes_test_plan_sha256": "sha256:1fefba12d871ed677d8e29f53cf1529c38204cd053f14a8673a20db83d800f91",
+  "test_plan_revision": 2,
+  "textual_signals_used_for_prediction": false
+}

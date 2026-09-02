@@ -1,0 +1,144 @@
+{
+  "$defs": {
+    "SealMaterial": {
+      "additionalProperties": false,
+      "properties": {
+        "acceptance_contract_sha256": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Acceptance Contract Sha256",
+          "type": "string"
+        },
+        "benchmark_budget_policy_id": {
+          "title": "Benchmark Budget Policy Id",
+          "type": "string"
+        },
+        "candidate_sha256": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Candidate Sha256",
+          "type": "string"
+        },
+        "evidence_policy_id": {
+          "title": "Evidence Policy Id",
+          "type": "string"
+        },
+        "formula_template_id": {
+          "title": "Formula Template Id",
+          "type": "string"
+        },
+        "performance_target_sha256": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Performance Target Sha256",
+          "type": "string"
+        },
+        "precedent_set_sha256": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Precedent Set Sha256",
+          "type": "string"
+        },
+        "probe_set_sha256": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Probe Set Sha256",
+          "type": "string"
+        },
+        "project_season": {
+          "title": "Project Season",
+          "type": "string"
+        },
+        "required_deployment_cell_set_sha256": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Required Deployment Cell Set Sha256",
+          "type": "string"
+        },
+        "target_profile_sha256": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Target Profile Sha256",
+          "type": "string"
+        },
+        "target_repository_sha256": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Target Repository Sha256",
+          "type": "string"
+        },
+        "workload_portfolio_sha256": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Workload Portfolio Sha256",
+          "type": "string"
+        }
+      },
+      "required": [
+        "target_profile_sha256",
+        "target_repository_sha256",
+        "candidate_sha256",
+        "precedent_set_sha256",
+        "acceptance_contract_sha256",
+        "probe_set_sha256",
+        "workload_portfolio_sha256",
+        "performance_target_sha256",
+        "required_deployment_cell_set_sha256",
+        "formula_template_id",
+        "benchmark_budget_policy_id",
+        "evidence_policy_id",
+        "project_season"
+      ],
+      "title": "SealMaterial",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "draft_id": {
+      "title": "Draft Id",
+      "type": "string"
+    },
+    "draft_revision": {
+      "minimum": 1,
+      "title": "Draft Revision",
+      "type": "integer"
+    },
+    "human_review_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Human Review Sha256",
+      "type": "string"
+    },
+    "material": {
+      "$ref": "#/$defs/SealMaterial"
+    },
+    "schema_version": {
+      "const": "0.5",
+      "default": "0.5",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "seal_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Seal Sha256",
+      "type": "string"
+    },
+    "sealed_at": {
+      "format": "date-time",
+      "title": "Sealed At",
+      "type": "string"
+    },
+    "sealed_by": {
+      "title": "Sealed By",
+      "type": "string"
+    },
+    "state": {
+      "const": "D6-sealed",
+      "default": "D6-sealed",
+      "title": "State",
+      "type": "string"
+    }
+  },
+  "required": [
+    "draft_id",
+    "draft_revision",
+    "sealed_at",
+    "sealed_by",
+    "human_review_sha256",
+    "material",
+    "seal_sha256"
+  ],
+  "title": "SealedDraft",
+  "type": "object"
+}

@@ -1,0 +1,17 @@
+{
+  "maximum_collective_ms": 1000.0,
+  "rank_steps": [
+    [
+      {"elements": 1024, "id": "reduce-a", "kind": "all_reduce"},
+      {"elements": 2048, "id": "reduce-b", "kind": "all_reduce"},
+      {"elements": 4096, "id": "reduce-c", "kind": "all_reduce"}
+    ],
+    [
+      {"elements": 4096, "id": "reduce-c", "kind": "all_reduce"},
+      {"elements": 1024, "id": "reduce-a", "kind": "all_reduce"},
+      {"elements": 2048, "id": "reduce-b", "kind": "all_reduce"}
+    ]
+  ],
+  "schema_version": "1",
+  "world_size": 2
+}

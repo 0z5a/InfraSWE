@@ -1,0 +1,95 @@
+{
+  "schema_version": "0.5",
+  "protocol_id": "historical-reviewed-failure-alignment-v0.5-r2",
+  "purpose": "Compare frozen, explainable machine judgments with later-revealed human technical review feedback. This known-failure supplement is not included in blind merge-outcome accuracy.",
+  "review_text_visible_during_machine_judgment": false,
+  "selection_contract": {
+    "required": [
+      "closed and unmerged",
+      "at least one non-bot human PR review",
+      "at least one explicit human technical feedback item",
+      "exact head commit available",
+      "PR diff path parity reconstructable"
+    ],
+    "excluded": [
+      "bot-only feedback",
+      "closed without human review",
+      "ambiguous patch reconstruction",
+      "review text revealed before the machine lock"
+    ]
+  },
+  "decision_policy": {
+    "kind": "ordered-human-readable-heuristics",
+    "learned_model": false,
+    "trained_weights": false,
+    "weighted_score": false,
+    "order": [
+      "verify exact patch identity and expected path set",
+      "state the patch claim and caller-visible invariants",
+      "look for removed or silently ignored interface semantics",
+      "look for test coverage contraction or broad diagnostic suppression",
+      "run the smallest affected static, build, and runtime checks",
+      "search for a more central ownership point when the same fix is repeated across leaf modules",
+      "freeze accept-with-scope, revise, reject, or unresolved with explicit evidence and counterchecks",
+      "only then reveal reviewer feedback and compare concepts without rescoring"
+    ]
+  },
+  "cases": [
+    {
+      "case_id": "sglang-pr-3044",
+      "repository": "sgl-project/sglang",
+      "pull_number": 3044,
+      "base_sha": "3d8f1c9bcf50b4d41fcf4ad2dfc430230276b4ab",
+      "head_sha": "33ffb9bbda1e97083eac96ce8ad6fe056bd4d053",
+      "expected_paths": [
+        "python/sglang/test/test_activation.py -> test/srt/test_activation.py",
+        "python/sglang/test/test_block_fp8.py -> test/srt/test_block_fp8.py",
+        "python/sglang/test/test_layernorm.py -> test/srt/test_layernorm.py",
+        "test/srt/run_suite.py"
+      ],
+      "claim": "Move three kernel tests into the runtime test suite and add them to CI.",
+      "predeclared_questions": [
+        "Are all moved tests still discoverable from their new paths?",
+        "Did the move preserve the previous case matrix and diagnostic visibility?",
+        "Does run_suite reference every moved file exactly once?",
+        "Do the affected test modules still parse and collect?"
+      ]
+    },
+    {
+      "case_id": "vllm-pr-13140",
+      "repository": "vllm-project/vllm",
+      "pull_number": 13140,
+      "base_sha": "e92694b6fe264a85371317295bca6643508034ef",
+      "head_sha": "ee94ec0076b00625981cd80c86602b0e9112b084",
+      "expected_paths": [
+        "csrc/moe/moe_align_sum_kernels.cu"
+      ],
+      "claim": "Add a block barrier before token threads consume shared local offsets.",
+      "predeclared_questions": [
+        "Can every thread in the block reach the new barrier?",
+        "Does the barrier separate a shared-memory write phase from a read/atomic phase?",
+        "Does the exact affected kernel compile for SM80?",
+        "Do repeated adversarial routing cases match a CPU reference with and without the patch?"
+      ]
+    },
+    {
+      "case_id": "vllm-pr-14027",
+      "repository": "vllm-project/vllm",
+      "pull_number": 14027,
+      "base_sha": "8e5314a46859cdd089a71c0e27ce6dd5fe05b17f",
+      "head_sha": "77a2831b545154d82d645da67e67757197bd4032",
+      "expected_paths": [
+        "vllm/model_executor/layers/fused_moe/fused_moe.py",
+        "vllm/model_executor/models/deepseek_v2.py"
+      ],
+      "claim": "Compute DeepSeek router logits and routing probabilities in FP32.",
+      "predeclared_questions": [
+        "Does FP32 routing improve or preserve numerical agreement?",
+        "Is the public renormalize argument still honored on every changed top-k path?",
+        "Are softmax and sigmoid paths covered?",
+        "Does changing gate parameter dtype preserve checkpoint loading and surrounding module contracts?"
+      ]
+    }
+  ],
+  "created_at": "2026-09-01T15:41:30Z"
+}

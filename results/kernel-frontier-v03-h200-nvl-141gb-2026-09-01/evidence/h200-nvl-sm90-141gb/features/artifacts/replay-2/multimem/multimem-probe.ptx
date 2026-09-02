@@ -1,0 +1,18 @@
+.version 8.7
+.target sm_90
+.address_size 64
+
+.visible .entry multimem_load_reduce_probe(
+    .param .u64 multimem_address,
+    .param .u64 output_address
+)
+{
+    .reg .b64 address;
+    .reg .b64 output;
+    .reg .b32 value;
+    ld.param.u64 address, [multimem_address];
+    ld.param.u64 output, [output_address];
+    multimem.ld_reduce.relaxed.sys.global.add.u32 value, [address];
+    st.global.u32 [output], value;
+    ret;
+}

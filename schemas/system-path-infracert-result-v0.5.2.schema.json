@@ -1,0 +1,64 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "domain": {
+      "enum": [
+        "distributed-communication",
+        "memory-tiering"
+      ],
+      "title": "Domain",
+      "type": "string"
+    },
+    "evidence_digests": {
+      "items": {
+        "pattern": "^sha256:[0-9a-f]{64}$",
+        "type": "string"
+      },
+      "minItems": 1,
+      "title": "Evidence Digests",
+      "type": "array"
+    },
+    "failure_codes": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Failure Codes",
+      "type": "array"
+    },
+    "hard_gate": {
+      "const": true,
+      "default": true,
+      "title": "Hard Gate",
+      "type": "boolean"
+    },
+    "missing_checks": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Missing Checks",
+      "type": "array"
+    },
+    "schema_version": {
+      "const": "0.5.2",
+      "default": "0.5.2",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "status": {
+      "enum": [
+        "pass",
+        "fail",
+        "unresolved"
+      ],
+      "title": "Status",
+      "type": "string"
+    }
+  },
+  "required": [
+    "domain",
+    "status",
+    "evidence_digests"
+  ],
+  "title": "SystemPathInfraCertResult",
+  "type": "object"
+}

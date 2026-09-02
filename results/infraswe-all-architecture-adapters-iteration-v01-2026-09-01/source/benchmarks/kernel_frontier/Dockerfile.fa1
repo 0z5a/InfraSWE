@@ -1,0 +1,16 @@
+FROM pytorch/pytorch@sha256:a7103283ea7113e10ae5d014bd2342acebda0bc53164b2f7b1dd6eb7a766bdb6
+
+ARG FLASH_ATTENTION_COMMIT=6d48e14a6c2f551db96f0badc658a6279a929df3
+ENV MAX_JOBS=8 \
+    NVCC_THREADS=2 \
+    PYTHONUNBUFFERED=1 \
+    TORCH_CUDA_ARCH_LIST=8.0
+
+RUN python -m pip install --no-cache-dir einops ninja packaging && \
+    git clone --filter=blob:none https://github.com/Dao-AILab/flash-attention.git /opt/flash-attention && \
+    cd /opt/flash-attention && \
+    git checkout "$FLASH_ATTENTION_COMMIT" && \
+    git submodule update --init --depth 1 csrc/flash_attn/cutlass && \
+    python -m pip install --no-cache-dir --no-build-isolation .
+
+WORKDIR /workspace

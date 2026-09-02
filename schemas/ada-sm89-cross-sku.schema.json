@@ -1,0 +1,174 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "cell_aggregates": {
+      "anyOf": [
+        {
+          "additionalProperties": {
+            "type": "number"
+          },
+          "type": "object"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Cell Aggregates"
+    },
+    "cross_cell_ranking_allowed": {
+      "const": false,
+      "default": false,
+      "title": "Cross Cell Ranking Allowed",
+      "type": "boolean"
+    },
+    "deployability_100": {
+      "default": null,
+      "title": "Deployability 100",
+      "type": "null"
+    },
+    "failure_codes": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Failure Codes",
+      "type": "array"
+    },
+    "formula": {
+      "const": "ada-sm89-cross-sku-diagnostic-v0.1",
+      "title": "Formula",
+      "type": "string"
+    },
+    "geometric_mean": {
+      "anyOf": [
+        {
+          "minimum": 0,
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Geometric Mean"
+    },
+    "production_ratio_floor": {
+      "anyOf": [
+        {
+          "minimum": 0,
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Production Ratio Floor"
+    },
+    "production_regressions": {
+      "anyOf": [
+        {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Production Regressions"
+    },
+    "realized_ratios": {
+      "anyOf": [
+        {
+          "additionalProperties": {
+            "additionalProperties": {
+              "type": "number"
+            },
+            "type": "object"
+          },
+          "type": "object"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Realized Ratios"
+    },
+    "reason": {
+      "title": "Reason",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "0.1",
+      "default": "0.1",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "score_100": {
+      "anyOf": [
+        {
+          "maximum": 100,
+          "minimum": 0,
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Score 100"
+    },
+    "scoring_authority": {
+      "const": "infraswe-scoring-v0.4",
+      "default": "infraswe-scoring-v0.4",
+      "title": "Scoring Authority",
+      "type": "string"
+    },
+    "status": {
+      "enum": [
+        "unresolved",
+        "diagnostic",
+        "not_deployable"
+      ],
+      "title": "Status",
+      "type": "string"
+    },
+    "unclamped_realized_ratio": {
+      "anyOf": [
+        {
+          "minimum": 0,
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Unclamped Realized Ratio"
+    },
+    "worst_cell": {
+      "anyOf": [
+        {
+          "minimum": 0,
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Worst Cell"
+    }
+  },
+  "required": [
+    "status",
+    "formula",
+    "reason"
+  ],
+  "title": "AdaSM89CrossSKUResult",
+  "type": "object"
+}

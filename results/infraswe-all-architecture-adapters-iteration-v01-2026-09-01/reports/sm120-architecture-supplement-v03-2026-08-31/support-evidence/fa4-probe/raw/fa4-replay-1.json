@@ -1,0 +1,586 @@
+{
+  "all_correct": true,
+  "backend": "fa4",
+  "backend_version": "4.0.0b28",
+  "benchmark": "flash-attention-forward-portfolio-v1",
+  "benchmark_kind": "kernel-library",
+  "case_count": 5,
+  "cases": [
+    {
+      "case_group": "common",
+      "case_id": "common-b4-s512-h16-d64-noncausal",
+      "causal": false,
+      "correctness": {
+        "cosine_similarity": 0.9999972581863403,
+        "dynamic_input_changes_output": true,
+        "max_abs_error": 0.001953125,
+        "mean_abs_error": 8.361002983292565e-05,
+        "passed": true,
+        "relative_l2_error": 0.0023631358053535223
+      },
+      "dtype": "bfloat16",
+      "measurement": {
+        "blocks": [
+          {
+            "block_index": 1,
+            "candidate_latency_us": 33.66443165787705,
+            "candidate_positions_us": [
+              34.937368856894004,
+              32.3914944588601
+            ],
+            "order": "ABBA",
+            "reference_latency_us": 559.2432863572064,
+            "reference_positions_us": [
+              563.7665916891659,
+              554.719981025247
+            ]
+          },
+          {
+            "block_index": 2,
+            "candidate_latency_us": 37.71675706983686,
+            "candidate_positions_us": [
+              33.68014473098892,
+              41.753369408684804
+            ],
+            "order": "ABBA",
+            "reference_latency_us": 553.8305955774644,
+            "reference_positions_us": [
+              552.7115429148954,
+              554.9496482400333
+            ]
+          },
+          {
+            "block_index": 3,
+            "candidate_latency_us": 32.747675706674386,
+            "candidate_positions_us": [
+              33.70493596738523,
+              31.790415445963543
+            ],
+            "order": "ABBA",
+            "reference_latency_us": 552.8489281149471,
+            "reference_positions_us": [
+              552.3934083826401,
+              553.3044478472541
+            ]
+          }
+        ],
+        "candidate": "fa4",
+        "candidate_pilot_us": 90.62399715185165,
+        "candidate_repetitions": 111,
+        "reference": "torch-sdpa-math",
+        "reference_pilot_us": 588.5760188102722,
+        "reference_repetitions": 17
+      },
+      "profiler": {
+        "captured": true,
+        "cuda_events": [
+          {
+            "count": 1,
+            "device_time_us": 67.83999999999969,
+            "name": "FlashAttnFunc",
+            "self_device_time_us": 33.919999999999845
+          },
+          {
+            "count": 1,
+            "device_time_us": 33.919999999999845,
+            "name": "Activity Buffer Request",
+            "self_device_time_us": 33.919999999999845
+          },
+          {
+            "count": 1,
+            "device_time_us": 33.919999999999845,
+            "name": "kernel_cutlass_kernel_flash_attncuteflash_fwd_sm120FlashAttentionForwardSm120_object_at__tensorptrbf16gmemalign16oi64div81i64div8i64div8_tensorptrbf16gmemalign16oi64div81i64div8i64div8_te_0",
+            "self_device_time_us": 33.919999999999845
+          }
+        ]
+      },
+      "shape": {
+        "batch": 4,
+        "head_dim": 64,
+        "heads": 16,
+        "seqlen": 512
+      },
+      "weight": 0.2,
+      "work_model": {
+        "known_omissions": [
+          "softmax scalar operations",
+          "scheduler and launch floors"
+        ],
+        "minimum_external_bytes": 16777216,
+        "semantic_flops": 4294967296,
+        "version": "attention-fwd-semantic-v1"
+      }
+    },
+    {
+      "case_group": "common",
+      "case_id": "common-b2-s1024-h16-d64-causal",
+      "causal": true,
+      "correctness": {
+        "cosine_similarity": 0.9999978542327881,
+        "dynamic_input_changes_output": true,
+        "max_abs_error": 0.015625,
+        "mean_abs_error": 0.00010276716784574091,
+        "passed": true,
+        "relative_l2_error": 0.0020765133667737246
+      },
+      "dtype": "bfloat16",
+      "measurement": {
+        "blocks": [
+          {
+            "block_index": 1,
+            "candidate_latency_us": 44.185050810226286,
+            "candidate_positions_us": [
+              44.78706976380011,
+              43.58303185665246
+            ],
+            "order": "ABBA",
+            "reference_latency_us": 1523.787430354527,
+            "reference_positions_us": [
+              1520.2057702200752,
+              1527.3690904889788
+            ]
+          },
+          {
+            "block_index": 2,
+            "candidate_latency_us": 44.51959542553834,
+            "candidate_positions_us": [
+              44.37397947215071,
+              44.66521137892598
+            ],
+            "order": "BAAB",
+            "reference_latency_us": 1525.4400117056712,
+            "reference_positions_us": [
+              1525.9291785103935,
+              1524.9508449009486
+            ]
+          },
+          {
+            "block_index": 3,
+            "candidate_latency_us": 44.96808244724466,
+            "candidate_positions_us": [
+              44.402748647362294,
+              45.53341624712703
+            ],
+            "order": "ABBA",
+            "reference_latency_us": 1529.2502811976842,
+            "reference_positions_us": [
+              1528.1188147408623,
+              1530.3817476545062
+            ]
+          }
+        ],
+        "candidate": "fa4",
+        "candidate_pilot_us": 101.34399682283401,
+        "candidate_repetitions": 99,
+        "reference": "torch-sdpa-math",
+        "reference_pilot_us": 1591.7760133743286,
+        "reference_repetitions": 7
+      },
+      "profiler": {
+        "captured": true,
+        "cuda_events": [
+          {
+            "count": 1,
+            "device_time_us": 103.74200000000008,
+            "name": "FlashAttnFunc",
+            "self_device_time_us": 51.87100000000004
+          },
+          {
+            "count": 1,
+            "device_time_us": 51.87100000000004,
+            "name": "Activity Buffer Request",
+            "self_device_time_us": 51.87100000000004
+          },
+          {
+            "count": 1,
+            "device_time_us": 51.87100000000004,
+            "name": "kernel_cutlass_kernel_flash_attncuteflash_fwd_sm120FlashAttentionForwardSm120_object_at__tensorptrbf16gmemalign16oi64div81i64div8i64div8_tensorptrbf16gmemalign16oi64div81i64div8i64div8_te_0",
+            "self_device_time_us": 51.87100000000004
+          }
+        ]
+      },
+      "shape": {
+        "batch": 2,
+        "head_dim": 64,
+        "heads": 16,
+        "seqlen": 1024
+      },
+      "weight": 0.2,
+      "work_model": {
+        "known_omissions": [
+          "softmax scalar operations",
+          "scheduler and launch floors"
+        ],
+        "minimum_external_bytes": 16777216,
+        "semantic_flops": 4294967296,
+        "version": "attention-fwd-semantic-v1"
+      }
+    },
+    {
+      "case_group": "common",
+      "case_id": "common-b1-s2048-h16-d128-causal",
+      "causal": true,
+      "correctness": {
+        "cosine_similarity": 0.9999978542327881,
+        "dynamic_input_changes_output": true,
+        "max_abs_error": 0.015625,
+        "mean_abs_error": 7.620585529366508e-05,
+        "passed": true,
+        "relative_l2_error": 0.0020995652303099632
+      },
+      "dtype": "bfloat16",
+      "measurement": {
+        "blocks": [
+          {
+            "block_index": 1,
+            "candidate_latency_us": 145.76653071812223,
+            "candidate_positions_us": [
+              144.98938346395687,
+              146.54367797228755
+            ],
+            "order": "BAAB",
+            "reference_latency_us": 3861.685276031494,
+            "reference_positions_us": [
+              3859.765370686849,
+              3863.605181376139
+            ]
+          },
+          {
+            "block_index": 2,
+            "candidate_latency_us": 145.35249009424325,
+            "candidate_positions_us": [
+              146.02906363351005,
+              144.67591655497648
+            ],
+            "order": "ABBA",
+            "reference_latency_us": 3881.7920684814453,
+            "reference_positions_us": [
+              3875.6160736083984,
+              3887.968063354492
+            ]
+          },
+          {
+            "block_index": 3,
+            "candidate_latency_us": 145.55428466018367,
+            "candidate_positions_us": [
+              146.32359329535038,
+              144.78497602501693
+            ],
+            "order": "ABBA",
+            "reference_latency_us": 3874.490737915039,
+            "reference_positions_us": [
+              3864.341417948405,
+              3884.6400578816733
+            ]
+          }
+        ],
+        "candidate": "fa4",
+        "candidate_pilot_us": 207.42399990558624,
+        "candidate_repetitions": 49,
+        "reference": "torch-sdpa-math",
+        "reference_pilot_us": 3936.000108718872,
+        "reference_repetitions": 3
+      },
+      "profiler": {
+        "captured": true,
+        "cuda_events": [
+          {
+            "count": 1,
+            "device_time_us": 300.3480000000002,
+            "name": "FlashAttnFunc",
+            "self_device_time_us": 150.1740000000001
+          },
+          {
+            "count": 1,
+            "device_time_us": 150.1740000000001,
+            "name": "Activity Buffer Request",
+            "self_device_time_us": 150.1740000000001
+          },
+          {
+            "count": 1,
+            "device_time_us": 150.1740000000001,
+            "name": "kernel_cutlass_kernel_flash_attncuteflash_fwd_sm120FlashAttentionForwardSm120_object_at__tensorptrbf16gmemalign16oi64div81i64div8i64div8_tensorptrbf16gmemalign16oi64div81i64div8i64div8_te_0",
+            "self_device_time_us": 150.1740000000001
+          }
+        ]
+      },
+      "shape": {
+        "batch": 1,
+        "head_dim": 128,
+        "heads": 16,
+        "seqlen": 2048
+      },
+      "weight": 0.2,
+      "work_model": {
+        "known_omissions": [
+          "softmax scalar operations",
+          "scheduler and launch floors"
+        ],
+        "minimum_external_bytes": 33554432,
+        "semantic_flops": 17179869184,
+        "version": "attention-fwd-semantic-v1"
+      }
+    },
+    {
+      "case_group": "boundary_tail",
+      "case_id": "boundary-b3-s1000-h12-d64-causal",
+      "causal": true,
+      "correctness": {
+        "cosine_similarity": 0.9999979734420776,
+        "dynamic_input_changes_output": true,
+        "max_abs_error": 0.015625,
+        "mean_abs_error": 0.00010384468623669818,
+        "passed": true,
+        "relative_l2_error": 0.002083044033497572
+      },
+      "dtype": "bfloat16",
+      "measurement": {
+        "blocks": [
+          {
+            "block_index": 1,
+            "candidate_latency_us": 46.336943028019924,
+            "candidate_positions_us": [
+              47.05600177540499,
+              45.61788428063486
+            ],
+            "order": "ABBA",
+            "reference_latency_us": 1703.3653259277344,
+            "reference_positions_us": [
+              1698.5012690226238,
+              1708.229382832845
+            ]
+          },
+          {
+            "block_index": 2,
+            "candidate_latency_us": 49.693960769503725,
+            "candidate_positions_us": [
+              51.51654692257152,
+              47.87137461643593
+            ],
+            "order": "BAAB",
+            "reference_latency_us": 1719.4213072458901,
+            "reference_positions_us": [
+              1709.3599637349446,
+              1729.482650756836
+            ]
+          },
+          {
+            "block_index": 3,
+            "candidate_latency_us": 46.540234603133854,
+            "candidate_positions_us": [
+              47.04093933105469,
+              46.03952987521303
+            ],
+            "order": "ABBA",
+            "reference_latency_us": 1707.698663075765,
+            "reference_positions_us": [
+              1708.0853780110676,
+              1707.3119481404622
+            ]
+          }
+        ],
+        "candidate": "fa4",
+        "candidate_pilot_us": 98.78399968147278,
+        "candidate_repetitions": 102,
+        "reference": "torch-sdpa-math",
+        "reference_pilot_us": 1767.807960510254,
+        "reference_repetitions": 6
+      },
+      "profiler": {
+        "captured": true,
+        "cuda_events": [
+          {
+            "count": 1,
+            "device_time_us": 106.88000000000011,
+            "name": "FlashAttnFunc",
+            "self_device_time_us": 53.440000000000055
+          },
+          {
+            "count": 1,
+            "device_time_us": 53.440000000000055,
+            "name": "Activity Buffer Request",
+            "self_device_time_us": 53.440000000000055
+          },
+          {
+            "count": 1,
+            "device_time_us": 53.440000000000055,
+            "name": "kernel_cutlass_kernel_flash_attncuteflash_fwd_sm120FlashAttentionForwardSm120_object_at__tensorptrbf16gmemalign16oi64div81i64div8i64div8_tensorptrbf16gmemalign16oi64div81i64div8i64div8_te_0",
+            "self_device_time_us": 53.440000000000055
+          }
+        ]
+      },
+      "shape": {
+        "batch": 3,
+        "head_dim": 64,
+        "heads": 12,
+        "seqlen": 1000
+      },
+      "weight": 0.2,
+      "work_model": {
+        "known_omissions": [
+          "softmax scalar operations",
+          "scheduler and launch floors"
+        ],
+        "minimum_external_bytes": 18432000,
+        "semantic_flops": 4608000000,
+        "version": "attention-fwd-semantic-v1"
+      }
+    },
+    {
+      "case_group": "stress_large",
+      "case_id": "stress-b1-s4096-h8-d128-causal",
+      "causal": true,
+      "correctness": {
+        "cosine_similarity": 0.9999977350234985,
+        "dynamic_input_changes_output": true,
+        "max_abs_error": 0.0078125,
+        "mean_abs_error": 5.663936462951824e-05,
+        "passed": true,
+        "relative_l2_error": 0.002132544992491603
+      },
+      "dtype": "bfloat16",
+      "measurement": {
+        "blocks": [
+          {
+            "block_index": 1,
+            "candidate_latency_us": 275.3682597990959,
+            "candidate_positions_us": [
+              276.3850304388231,
+              274.3514891593687
+            ],
+            "order": "ABBA",
+            "reference_latency_us": 8104.239940643311,
+            "reference_positions_us": [
+              8086.879730224609,
+              8121.600151062012
+            ]
+          },
+          {
+            "block_index": 2,
+            "candidate_latency_us": 277.343996109501,
+            "candidate_positions_us": [
+              277.0683842320596,
+              277.6196079869424
+            ],
+            "order": "BAAB",
+            "reference_latency_us": 8100.8477210998535,
+            "reference_positions_us": [
+              8096.5118408203125,
+              8105.1836013793945
+            ]
+          },
+          {
+            "block_index": 3,
+            "candidate_latency_us": 275.8245160502772,
+            "candidate_positions_us": [
+              274.44439549599923,
+              277.2046366045552
+            ],
+            "order": "BAAB",
+            "reference_latency_us": 8109.584331512451,
+            "reference_positions_us": [
+              8120.832443237305,
+              8098.336219787598
+            ]
+          }
+        ],
+        "candidate": "fa4",
+        "candidate_pilot_us": 329.9520015716553,
+        "candidate_repetitions": 31,
+        "reference": "torch-sdpa-math",
+        "reference_pilot_us": 8177.663803100586,
+        "reference_repetitions": 2
+      },
+      "profiler": {
+        "captured": true,
+        "cuda_events": [
+          {
+            "count": 1,
+            "device_time_us": 540.79,
+            "name": "FlashAttnFunc",
+            "self_device_time_us": 270.395
+          },
+          {
+            "count": 1,
+            "device_time_us": 270.395,
+            "name": "Activity Buffer Request",
+            "self_device_time_us": 270.395
+          },
+          {
+            "count": 1,
+            "device_time_us": 270.395,
+            "name": "kernel_cutlass_kernel_flash_attncuteflash_fwd_sm120FlashAttentionForwardSm120_object_at__tensorptrbf16gmemalign16oi64div81i64div8i64div8_tensorptrbf16gmemalign16oi64div81i64div8i64div8_te_0",
+            "self_device_time_us": 270.395
+          }
+        ]
+      },
+      "shape": {
+        "batch": 1,
+        "head_dim": 128,
+        "heads": 8,
+        "seqlen": 4096
+      },
+      "weight": 0.2,
+      "work_model": {
+        "known_omissions": [
+          "softmax scalar operations",
+          "scheduler and launch floors"
+        ],
+        "minimum_external_bytes": 33554432,
+        "semantic_flops": 34359738368,
+        "version": "attention-fwd-semantic-v1"
+      }
+    }
+  ],
+  "finished_at": "2026-08-31T13:10:41.525729Z",
+  "hardware": {
+    "compute_capability": "12.0",
+    "cudnn_version": 91002,
+    "gpu_name": "NVIDIA RTX PRO 5000 Blackwell",
+    "nvidia_smi": {
+      "clocks.mem": "14001",
+      "clocks.sm": "2370",
+      "driver_version": "580.173.02",
+      "memory.total": "48935",
+      "memory.used": "4",
+      "name": "NVIDIA RTX PRO 5000 Blackwell",
+      "pci.bus_id": "00000000:01:00.0",
+      "power.draw": "51.13",
+      "power.limit": "300.00",
+      "pstate": "P5",
+      "temperature.gpu": "34",
+      "utilization.gpu": "0",
+      "uuid": "GPU-a7167b7d-4efb-aa43-d9a5-bc2807b925b7"
+    },
+    "platform": "Linux-5.15.0-179-generic-x86_64-with-glibc2.39",
+    "python": "3.12.14",
+    "sm_count": 110,
+    "torch_cuda": "12.8",
+    "torch_version": "2.8.0+cu128",
+    "total_memory_bytes": 50752258048
+  },
+  "implementation_commit": "pypi-flash-attn-4-4.0.0b28",
+  "implementation_provenance": [
+    {
+      "module": "flash_attn.cute",
+      "path": "/workspace/infraswe/envs/fa4/flash_attn/cute",
+      "sha256": "sha256:9935fb3cfbd6ea7294858299cac85c03c76bb3e7f6fb2a79f6a4fe32b77bdc7b"
+    }
+  ],
+  "peak_memory_bytes": 1417839104,
+  "protocol": {
+    "blocks": 3,
+    "completion_fence": "end-event-synchronize",
+    "fresh_allocator_per_replay": true,
+    "fresh_process": true,
+    "min_timed_span_ms": 10.0,
+    "paired_order": "randomized-ABBA-or-BAAB",
+    "profiler_separate_from_official_timing": true,
+    "timer": "evaluator-owned-cuda-events",
+    "warmup_calls": 5
+  },
+  "replay_index": 1,
+  "schema_version": "0.3",
+  "started_at": "2026-08-31T13:10:32.722568Z",
+  "status": "passed"
+}

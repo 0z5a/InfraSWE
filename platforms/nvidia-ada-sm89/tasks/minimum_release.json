@@ -1,0 +1,40 @@
+{
+  "schema_version": "0.4",
+  "track": "nvidia-ada-sm89",
+  "score_authority": "infraswe-scoring-v0.4",
+  "fresh_process_replays": 7,
+  "minimum_official_replays": 5,
+  "deployability_components": {
+    "concurrent_stability": 0.45,
+    "kernel_reuse": 0.30,
+    "maintainability": 0.25
+  },
+  "architecture_overlay": {
+    "status": "diagnostic_only",
+    "cross_cell_ranking_allowed": false,
+    "may_replace_deployability": false
+  },
+  "supported_cells": [
+    "l40s-48gb-pcie",
+    "l20-48gb-pcie"
+  ],
+  "tasks": [
+    "SM89-TARGET-001",
+    "SM89-FP8-MMA-001",
+    "SM89-FP8-CVT-001",
+    "SM89-CPASYNC-001",
+    "SM89-L2-001",
+    "ADA-CONCURRENCY-001",
+    "ADA-CROSS-SKU-001",
+    "ADA-TORCHCOMPILE-001"
+  ],
+  "evidence_tiers": {
+    "required": ["E0-runtime", "E1-framework"],
+    "publishable_deployability_min": "E2-system-trace",
+    "targeted_efficiency": "E3-kernel-counter"
+  },
+  "missing_evidence_policy": "unresolved_not_zero",
+  "absolute_latency_global_ranking": "forbidden",
+  "pcie_multigpu_mixed_into_single_gpu": false,
+  "vgpu_mixed_into_bare_metal": false
+}

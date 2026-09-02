@@ -1,0 +1,157 @@
+{
+  "base_sha": "c76ff610bfa064d4af3035daa594d8c41ca7fce6",
+  "case_id": "megatron-pr-6174",
+  "created_at": "2026-09-02T03:36:00.061854+00:00",
+  "duration_seconds": 0.006376874865964055,
+  "evidence_sha256": "sha256:925f5c0f2158b0cc2081530a4310714093db0bbfbe966d5c68dae4b2a51a2706",
+  "facts": {
+    "all_layer_boundaries_match_oracle": true,
+    "available_gpu_count": 1,
+    "direct_test_present": true,
+    "direct_test_uses_two_microbatches": true,
+    "layer_boundary_matrix": [
+      {
+        "expected_prepare_calls": 0,
+        "layer_count": 1,
+        "matches_oracle": true,
+        "observed_prepare_calls": 0
+      },
+      {
+        "expected_prepare_calls": 2,
+        "layer_count": 2,
+        "matches_oracle": true,
+        "observed_prepare_calls": 2
+      },
+      {
+        "expected_prepare_calls": 2,
+        "layer_count": 3,
+        "matches_oracle": true,
+        "observed_prepare_calls": 2
+      },
+      {
+        "expected_prepare_calls": 4,
+        "layer_count": 4,
+        "matches_oracle": true,
+        "observed_prepare_calls": 4
+      },
+      {
+        "expected_prepare_calls": 4,
+        "layer_count": 5,
+        "matches_oracle": true,
+        "observed_prepare_calls": 4
+      },
+      {
+        "expected_prepare_calls": 6,
+        "layer_count": 6,
+        "matches_oracle": true,
+        "observed_prepare_calls": 6
+      },
+      {
+        "expected_prepare_calls": 6,
+        "layer_count": 7,
+        "matches_oracle": true,
+        "observed_prepare_calls": 6
+      }
+    ],
+    "multi_rank_runtime": "unresolved-single-h100-and-transformer-engine-unavailable",
+    "performance_and_peak_memory": "unresolved-single-h100-and-transformer-engine-unavailable",
+    "run_scenarios": {
+      "backward_only": {
+        "backward_events": [
+          "b.mtp.backward",
+          "b.combine.backward",
+          "b.mlp.backward",
+          "b.mlp.backward_dw",
+          "b.dispatch.backward",
+          "b.attn.backward",
+          "b.attn.backward_dw"
+        ],
+        "forward_events": [],
+        "forward_prepare_calls": 0
+      },
+      "different_layer_overlap": {
+        "backward_events": [
+          "b.mtp.backward",
+          "b.combine.backward",
+          "b.mlp.backward",
+          "b.mlp.backward_dw",
+          "b.dispatch.backward",
+          "b.attn.backward",
+          "b.attn.backward_dw"
+        ],
+        "forward_events": [
+          "prepare",
+          "f.attn.forward",
+          "f.dispatch.forward",
+          "f.mlp.forward",
+          "f.combine.forward",
+          "f.mtp.forward"
+        ],
+        "forward_prepare_calls": 1
+      },
+      "forward_only": {
+        "backward_events": [],
+        "forward_events": [
+          "prepare",
+          "f.attn.forward",
+          "f.dispatch.forward",
+          "f.mlp.forward",
+          "f.combine.forward",
+          "f.mtp.forward"
+        ],
+        "forward_prepare_calls": 1
+      },
+      "same_underlying_layer_overlap": {
+        "backward_events": [
+          "b.mtp.backward",
+          "b.combine.backward",
+          "b.mlp.backward",
+          "b.mlp.backward_dw",
+          "b.dispatch.backward",
+          "b.attn.backward",
+          "b.attn.backward_dw"
+        ],
+        "forward_events": [
+          "f.attn.forward",
+          "f.dispatch.forward",
+          "f.mlp.forward",
+          "f.combine.forward",
+          "f.mtp.forward"
+        ],
+        "forward_prepare_calls": 0
+      }
+    },
+    "state_transition": {
+      "after": [
+        "idle",
+        "idle",
+        "forward",
+        "idle"
+      ],
+      "before": [
+        "pre_backward",
+        "idle",
+        "forward",
+        "pre_backward"
+      ],
+      "only_pre_backward_changed_to_idle": true
+    },
+    "steady_state_compile_seconds": 0.0,
+    "wrapper_callback_wired": true
+  },
+  "failure_codes": [],
+  "head_sha": "426c2db0461f62ebba5064df4837c1146f24ef61",
+  "probe": "r7-megatron-fsdp-schedule-contract-v1",
+  "project": "megatron-core",
+  "protocol_id": "historical-pr-blind-cross-project-v0.5-r7",
+  "schema_version": "0.5",
+  "selection_lock_sha256": "sha256:e75d03448650ef7ff13f93729d151f99be652702f4971cb889dbb2c0de57716b",
+  "source_identity": {
+    "/tmp/infraswe-r7-20260902/worktrees/megatron-head/megatron/core/distributed/fsdp/src/megatron_fsdp/megatron_fsdp.py": "sha256:5f553add6357de80547408839e42862b3fc0b5659d2c373cb6262536878bb17f",
+    "/tmp/infraswe-r7-20260902/worktrees/megatron-head/megatron/core/models/common/model_chunk_schedule_plan.py": "sha256:94f6e75e866f47e27771a184a040e24c7d2b0737e48d6f0290fbc2fc5cabbc7e",
+    "/tmp/infraswe-r7-20260902/worktrees/megatron-head/megatron/core/pipeline_parallel/combined_1f1b.py": "sha256:6a177fb82f29e5b92e796cca3b8c40c5a648c73650dbc9bb4763244d72a3324e",
+    "/tmp/infraswe-r7-20260902/worktrees/megatron-head/tests/unit_tests/a2a_overlap/test_fsdp_1f1b_overlap.py": "sha256:d4a3d65a560d20f1920d4252b2bf43fdfba6aab0739105304325de6d9b56c663"
+  },
+  "status": "pass",
+  "test_plan_sha256": "sha256:aa73f348b2d5ce4a19fa0c3a6e0159681f10254f5a878ad3cabbd8709f3bb888"
+}

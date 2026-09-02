@@ -1,0 +1,268 @@
+{
+  "$defs": {
+    "VerifierCoverageReport": {
+      "additionalProperties": false,
+      "properties": {
+        "alternative_valid_accepted": {
+          "minimum": 0,
+          "title": "Alternative Valid Accepted",
+          "type": "integer"
+        },
+        "alternative_valid_total": {
+          "minimum": 0,
+          "title": "Alternative Valid Total",
+          "type": "integer"
+        },
+        "critical_mutants_killed": {
+          "minimum": 0,
+          "title": "Critical Mutants Killed",
+          "type": "integer"
+        },
+        "critical_mutants_total": {
+          "minimum": 0,
+          "title": "Critical Mutants Total",
+          "type": "integer"
+        },
+        "failure_codes": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Failure Codes",
+          "type": "array"
+        },
+        "hard_obligations": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Hard Obligations",
+          "type": "array"
+        },
+        "negative_controls_rejected": {
+          "minimum": 0,
+          "title": "Negative Controls Rejected",
+          "type": "integer"
+        },
+        "negative_controls_total": {
+          "minimum": 0,
+          "title": "Negative Controls Total",
+          "type": "integer"
+        },
+        "requirement_to_obligations": {
+          "additionalProperties": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "title": "Requirement To Obligations",
+          "type": "object"
+        },
+        "status": {
+          "enum": [
+            "pass",
+            "fail",
+            "unresolved"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "weighted_mutation_adequacy": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Weighted Mutation Adequacy",
+          "type": "number"
+        },
+        "witness_covered_hard_obligations": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Witness Covered Hard Obligations",
+          "type": "array"
+        }
+      },
+      "required": [
+        "requirement_to_obligations",
+        "hard_obligations",
+        "witness_covered_hard_obligations",
+        "critical_mutants_total",
+        "critical_mutants_killed",
+        "weighted_mutation_adequacy",
+        "negative_controls_total",
+        "negative_controls_rejected",
+        "alternative_valid_total",
+        "alternative_valid_accepted",
+        "status"
+      ],
+      "title": "VerifierCoverageReport",
+      "type": "object"
+    },
+    "VerifierTrustCard": {
+      "additionalProperties": false,
+      "properties": {
+        "alternative_solution_breadth_valid": {
+          "title": "Alternative Solution Breadth Valid",
+          "type": "boolean"
+        },
+        "baseline_differential_valid": {
+          "title": "Baseline Differential Valid",
+          "type": "boolean"
+        },
+        "candidate_score_effect": {
+          "const": false,
+          "default": false,
+          "title": "Candidate Score Effect",
+          "type": "boolean"
+        },
+        "environment_sentinel_valid": {
+          "title": "Environment Sentinel Valid",
+          "type": "boolean"
+        },
+        "failure_codes": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Failure Codes",
+          "type": "array"
+        },
+        "fresh_replay_stable": {
+          "title": "Fresh Replay Stable",
+          "type": "boolean"
+        },
+        "leakage_valid": {
+          "title": "Leakage Valid",
+          "type": "boolean"
+        },
+        "mutation_adequacy": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Mutation Adequacy",
+          "type": "number"
+        },
+        "negative_controls_valid": {
+          "title": "Negative Controls Valid",
+          "type": "boolean"
+        },
+        "status": {
+          "enum": [
+            "pass",
+            "fail",
+            "unresolved",
+            "legacy-unknown"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "witness_replay_valid": {
+          "title": "Witness Replay Valid",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "status",
+        "baseline_differential_valid",
+        "witness_replay_valid",
+        "mutation_adequacy",
+        "negative_controls_valid",
+        "alternative_solution_breadth_valid",
+        "fresh_replay_stable",
+        "environment_sentinel_valid",
+        "leakage_valid"
+      ],
+      "title": "VerifierTrustCard",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "alternative_solution_set_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Alternative Solution Set Sha256",
+      "type": "string"
+    },
+    "candidate_score_effect": {
+      "const": false,
+      "default": false,
+      "title": "Candidate Score Effect",
+      "type": "boolean"
+    },
+    "contract_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Contract Sha256",
+      "type": "string"
+    },
+    "coverage": {
+      "$ref": "#/$defs/VerifierCoverageReport"
+    },
+    "failure_codes": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Failure Codes",
+      "type": "array"
+    },
+    "mutation_suite_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Mutation Suite Sha256",
+      "type": "string"
+    },
+    "report_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Report Sha256",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "0.1",
+      "default": "0.1",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "specification_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Specification Sha256",
+      "type": "string"
+    },
+    "status": {
+      "enum": [
+        "QUALIFIED",
+        "QUALIFIED_WITH_SCOPE",
+        "REVIEW_REQUIRED",
+        "INELIGIBLE",
+        "REVOKED"
+      ],
+      "title": "Status",
+      "type": "string"
+    },
+    "task_id": {
+      "title": "Task Id",
+      "type": "string"
+    },
+    "task_revision": {
+      "minimum": 1,
+      "title": "Task Revision",
+      "type": "integer"
+    },
+    "trust": {
+      "$ref": "#/$defs/VerifierTrustCard"
+    },
+    "witness_set_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Witness Set Sha256",
+      "type": "string"
+    }
+  },
+  "required": [
+    "task_id",
+    "task_revision",
+    "status",
+    "specification_sha256",
+    "contract_sha256",
+    "witness_set_sha256",
+    "mutation_suite_sha256",
+    "alternative_solution_set_sha256",
+    "coverage",
+    "trust",
+    "report_sha256"
+  ],
+  "title": "TaskQualificationReport",
+  "type": "object"
+}

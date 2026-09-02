@@ -1,0 +1,24 @@
+Generating SQLite file /workspace/evidence/gb10-uma-v04-score-final/profilers/system-trace/uma-normal.sqlite from /workspace/evidence/gb10-uma-v04-score-final/profilers/system-trace/uma-normal.nsys-rep
+Processing [/workspace/evidence/gb10-uma-v04-score-final/profilers/system-trace/uma-normal.sqlite] with [/opt/nvidia/nsight-systems/2025.3.2/host-linux-armv8/reports/cuda_gpu_kern_sum.py]... 
+
+ ** CUDA GPU Kernel Summary (cuda_gpu_kern_sum):
+
+ Time (%)  Total Time (ns)  Instances  Avg (ns)  Med (ns)  Min (ns)  Max (ns)  StdDev (ns)          Name        
+ --------  ---------------  ---------  --------  --------  --------  --------  -----------  --------------------
+    100.0          1961216        260    7543.1    1184.0      1088   1603360      99354.4  uma_transform_kernel
+
+Processing [/workspace/evidence/gb10-uma-v04-score-final/profilers/system-trace/uma-normal.sqlite] with [/opt/nvidia/nsight-systems/2025.3.2/host-linux-armv8/reports/cuda_api_sum.py]... 
+
+ ** CUDA API Summary (cuda_api_sum):
+
+ Time (%)  Total Time (ns)  Num Calls   Avg (ns)   Med (ns)  Min (ns)  Max (ns)   StdDev (ns)            Name           
+ --------  ---------------  ---------  ----------  --------  --------  ---------  -----------  -------------------------
+     97.9        188011168          4  47002792.0    2512.0      2016  188004128   94000890.7  cudaStreamCreateWithFlags
+      1.4          2706656        260     10410.2    4064.0       992    1610048      99597.0  cudaStreamSynchronize    
+      0.6          1204752        260      4633.7    4280.0      2016      60944       4358.5  cudaLaunchKernel         
+      0.0            38768          1     38768.0   38768.0     38768      38768          0.0  cuLibraryLoadData        
+      0.0            32320        260       124.3     112.0        32       1936        169.6  cuKernelGetName          
+      0.0            15120          4      3780.0    2888.0      2368       6976       2149.1  cudaStreamDestroy        
+      0.0              672          1       672.0     672.0       672        672          0.0  cuModuleGetLoadingMode   
+      0.0              256          1       256.0     256.0       256        256          0.0  cuLibraryGetKernel       
+

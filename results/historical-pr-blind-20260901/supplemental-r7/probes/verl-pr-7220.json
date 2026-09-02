@@ -1,0 +1,137 @@
+{
+  "base_sha": "76324f1de4aabad06441a01fc17b605d9b3e564a",
+  "case_id": "verl-pr-7220",
+  "created_at": "2026-09-02T03:36:00.064306+00:00",
+  "duration_seconds": 0.009599000215530396,
+  "evidence_sha256": "sha256:acc17d36d5c4755b49ff933a587f8fc513ea90579459b4366b8e5c2006744e29",
+  "facts": {
+    "base_reads_data_trust_remote_code": true,
+    "both_entrypoints_match_text_and_multimodal": true,
+    "direct_two_entrypoint_tests_in_changed_paths": false,
+    "head_has_legacy_trust_fallback_or_warning": false,
+    "head_reads_data_trust_remote_code": false,
+    "hf_model_config_semantics": {
+      "fields": [
+        "architectures",
+        "custom_chat_template",
+        "enable_activation_offload",
+        "enable_gradient_checkpointing",
+        "exclude_modules",
+        "external_lib",
+        "fused_kernel_options",
+        "generation_config",
+        "hf_config",
+        "hf_config_path",
+        "load_tokenizer",
+        "local_hf_config_path",
+        "local_path",
+        "local_tokenizer_path",
+        "lora",
+        "lora_adapter_path",
+        "lora_alpha",
+        "lora_rank",
+        "model_type",
+        "mtp",
+        "override_config",
+        "path",
+        "processor",
+        "target_modules",
+        "target_parameters",
+        "tiled_mlp",
+        "tokenizer",
+        "tokenizer_path",
+        "trust_remote_code",
+        "use_fused_kernels",
+        "use_liger",
+        "use_remove_padding",
+        "use_shm"
+      ],
+      "has_path": true,
+      "has_processor_kwargs": false,
+      "has_revision": false,
+      "has_tokenizer_path": true,
+      "has_trust_remote_code": true,
+      "has_use_shm": true,
+      "loader_calls": [
+        {
+          "keywords": [
+            "use_shm"
+          ],
+          "name": "copy_to_local",
+          "source": "copy_to_local(self.path, use_shm=self.use_shm)"
+        },
+        {
+          "keywords": [
+            "use_shm"
+          ],
+          "name": "copy_to_local",
+          "source": "copy_to_local(self.hf_config_path, use_shm=self.use_shm)"
+        },
+        {
+          "keywords": [
+            "use_shm"
+          ],
+          "name": "copy_to_local",
+          "source": "copy_to_local(self.tokenizer_path, use_shm=self.use_shm)"
+        },
+        {
+          "keywords": [
+            "trust_remote_code"
+          ],
+          "name": "hf_tokenizer",
+          "source": "hf_tokenizer(self.local_tokenizer_path, trust_remote_code=self.trust_remote_code)"
+        },
+        {
+          "keywords": [
+            "trust_remote_code"
+          ],
+          "name": "hf_processor",
+          "source": "hf_processor(self.local_tokenizer_path, trust_remote_code=self.trust_remote_code)"
+        }
+      ],
+      "processor_use_fast_explicit": false
+    },
+    "main_entry": {
+      "conversion_call_count": 2,
+      "exact_model_config_object_forwarded": true,
+      "multimodal_result": [
+        "multi-tokenizer",
+        "vision-processor"
+      ],
+      "text_result": [
+        "text-tokenizer",
+        null
+      ]
+    },
+    "repeated_init_replaces_stale_state": true,
+    "steady_state_compile_seconds": 0.0,
+    "v1_entry": {
+      "conversion_call_count": 2,
+      "exact_model_config_object_forwarded": true,
+      "multimodal_result": [
+        "multi-tokenizer",
+        "vision-processor"
+      ],
+      "text_result": [
+        "text-tokenizer",
+        null
+      ]
+    }
+  },
+  "failure_codes": [],
+  "head_sha": "3b9fc9c71836325b62595e6044aa4f28f2f1c9dc",
+  "probe": "r7-verl-hf-model-config-contract-v1",
+  "project": "verl",
+  "protocol_id": "historical-pr-blind-cross-project-v0.5-r7",
+  "schema_version": "0.5",
+  "selection_lock_sha256": "sha256:e75d03448650ef7ff13f93729d151f99be652702f4971cb889dbb2c0de57716b",
+  "source_identity": {
+    "/tmp/infraswe-r7-20260902/worktrees/verl-base/verl/trainer/main_ppo_v0.py": "sha256:eb110c232c1e56f8a916bd5851a1af0305e8aad48a9072cbea82fb75c7e750f1",
+    "/tmp/infraswe-r7-20260902/worktrees/verl-base/verl/trainer/ppo/v1/trainer_base.py": "sha256:4d8fed372de2c0aa309c30172347e4dcc89b562f658e17d0ae13435181e82a7d",
+    "/tmp/infraswe-r7-20260902/worktrees/verl-head/verl/trainer/main_ppo_v0.py": "sha256:4df671828fe227ec92511230aed9a9943c45c8e1b49a8f0b0aeda3321cf5f12f",
+    "/tmp/infraswe-r7-20260902/worktrees/verl-head/verl/trainer/ppo/v1/trainer_base.py": "sha256:2b0689ec1966d231bec6e3a8ae435027df86030bc1759d6e592ce31f9b522139",
+    "/tmp/infraswe-r7-20260902/worktrees/verl-head/verl/workers/config/model.py": "sha256:e9112f6ae26a14d3d5c0318480d51b10957757e77d8c46f2464f048712477e4e"
+  },
+  "status": "pass",
+  "test_plan_sha256": "sha256:aa73f348b2d5ce4a19fa0c3a6e0159681f10254f5a878ad3cabbd8709f3bb888"
+}

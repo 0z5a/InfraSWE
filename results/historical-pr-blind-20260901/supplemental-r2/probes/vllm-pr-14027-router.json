@@ -1,0 +1,49 @@
+{
+  "candidate_failure_codes": [
+    "CALLER_CONTRACT_PARAMETER_IGNORED:renormalize"
+  ],
+  "case_id": "vllm-pr-14027",
+  "cold_start_seconds": 0.00043570902198553085,
+  "compilation_path": "not-required",
+  "compile_seconds": 0.0,
+  "device": "NVIDIA A100-SXM4-40GB",
+  "fused_topk_cases": [
+    {
+      "base_head_ids_equal": true,
+      "base_sum_to_one_max_error": 0.2719801664352417,
+      "head_sum_to_one_max_error": 0.2719801664352417,
+      "renormalize": false,
+      "status": "pass"
+    },
+    {
+      "base_head_ids_equal": true,
+      "base_sum_to_one_max_error": 1.1920928955078125e-07,
+      "head_sum_to_one_max_error": 0.2719801664352417,
+      "renormalize": true,
+      "status": "fail"
+    }
+  ],
+  "grouped_topk_cases": [
+    {
+      "base_first_row_max_error_vs_fp64": 0.00014740506979826762,
+      "head_first_row_max_error_vs_fp64": 5.68213760487879e-08,
+      "head_not_worse": true,
+      "scoring_func": "softmax",
+      "status": "pass"
+    },
+    {
+      "base_first_row_max_error_vs_fp64": 0.2500465605634029,
+      "head_first_row_max_error_vs_fp64": 2.283534786262642e-08,
+      "head_not_worse": true,
+      "scoring_func": "sigmoid",
+      "status": "pass"
+    }
+  ],
+  "precompile_seconds": 0.0,
+  "probe": "vllm-deepseek-router-contract-v1",
+  "schema_version": "0.5",
+  "status": "fail",
+  "steady_state_compile_seconds": 0.0,
+  "steady_state_seconds_per_call": 8.297132374718785e-05,
+  "torch": "2.5.1+cu124"
+}

@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://infraswe.dev/schemas/blackwell-feature-replay.schema.json",
+  "title": "InfraSWE B200 compiler-feature replay",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "generated_at",
+    "suite_id",
+    "replay_index",
+    "capability_path",
+    "capability_manifest_sha256",
+    "capability_fingerprint",
+    "hardware",
+    "toolchain",
+    "status",
+    "all_certified",
+    "features"
+  ],
+  "properties": {
+    "schema_version": { "const": "0.1" },
+    "generated_at": { "type": "string", "format": "date-time" },
+    "suite_id": { "const": "b200-sm100-compiler-features-v0.1" },
+    "replay_index": { "type": "integer", "minimum": 1, "maximum": 3 },
+    "capability_path": { "type": "string" },
+    "capability_manifest_sha256": { "$ref": "#/$defs/sha256" },
+    "capability_fingerprint": { "$ref": "#/$defs/sha256" },
+    "hardware": { "type": ["object", "null"] },
+    "toolchain": { "type": "object" },
+    "status": { "enum": ["certified", "pending", "failed"] },
+    "all_certified": { "type": "boolean" },
+    "features": {
+      "type": "array",
+      "minItems": 5,
+      "items": {
+        "type": "object",
+        "required": ["feature_id", "namespace", "status", "certified"],
+        "properties": {
+          "feature_id": { "type": "string" },
+          "namespace": { "enum": ["SM100-Core", "SM100-Scheduler", "SM100-Fabric", "PTX-Preview"] },
+          "status": { "enum": ["certified", "static_only", "pending", "failed", "blocked", "not_applicable"] },
+          "certified": { "type": "boolean" }
+        },
+        "additionalProperties": true
+      }
+    }
+  },
+  "$defs": {
+    "sha256": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" }
+  }
+}

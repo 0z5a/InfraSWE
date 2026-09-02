@@ -1,0 +1,78 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "algorithmic_bandwidth": {
+      "additionalProperties": true,
+      "title": "Algorithmic Bandwidth",
+      "type": "object"
+    },
+    "bus_bandwidth": {
+      "additionalProperties": true,
+      "title": "Bus Bandwidth",
+      "type": "object"
+    },
+    "cell_identity_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Cell Identity Sha256",
+      "type": "string"
+    },
+    "cross_cell_ranking_allowed": {
+      "const": false,
+      "default": false,
+      "title": "Cross Cell Ranking Allowed",
+      "type": "boolean"
+    },
+    "latency": {
+      "additionalProperties": true,
+      "title": "Latency",
+      "type": "object"
+    },
+    "lifecycle": {
+      "additionalProperties": true,
+      "title": "Lifecycle",
+      "type": "object"
+    },
+    "overlap": {
+      "additionalProperties": true,
+      "title": "Overlap",
+      "type": "object"
+    },
+    "rank_skew": {
+      "additionalProperties": true,
+      "title": "Rank Skew",
+      "type": "object"
+    },
+    "raw_evidence_digests": {
+      "items": {
+        "pattern": "^sha256:[0-9a-f]{64}$",
+        "type": "string"
+      },
+      "title": "Raw Evidence Digests",
+      "type": "array"
+    },
+    "schema_version": {
+      "const": "0.5.1",
+      "default": "0.5.1",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "score_status": {
+      "const": "not-a-score",
+      "default": "not-a-score",
+      "title": "Score Status",
+      "type": "string"
+    }
+  },
+  "required": [
+    "cell_identity_sha256",
+    "latency",
+    "algorithmic_bandwidth",
+    "bus_bandwidth",
+    "overlap",
+    "rank_skew",
+    "lifecycle",
+    "raw_evidence_digests"
+  ],
+  "title": "CommunicationEfficiencyCard",
+  "type": "object"
+}

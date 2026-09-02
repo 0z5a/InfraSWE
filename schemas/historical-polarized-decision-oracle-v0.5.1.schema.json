@@ -1,0 +1,110 @@
+{
+  "additionalProperties": false,
+  "description": "Post-reveal decision label and merged-score calibration invariant.",
+  "properties": {
+    "case_id": {
+      "title": "Case Id",
+      "type": "string"
+    },
+    "decision": {
+      "enum": [
+        "accept",
+        "revise",
+        "reject"
+      ],
+      "title": "Decision",
+      "type": "string"
+    },
+    "ground_truth_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Ground Truth Sha256",
+      "type": "string"
+    },
+    "machine_score_100": {
+      "anyOf": [
+        {
+          "maximum": 100,
+          "minimum": 0,
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Machine Score 100"
+    },
+    "merged_score_floor_100": {
+      "default": 85,
+      "maximum": 85,
+      "minimum": 85,
+      "title": "Merged Score Floor 100",
+      "type": "number"
+    },
+    "merged_score_floor_satisfied": {
+      "anyOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Merged Score Floor Satisfied"
+    },
+    "policy_id": {
+      "const": "historical-polarized-oracle-v0.5.1",
+      "default": "historical-polarized-oracle-v0.5.1",
+      "title": "Policy Id",
+      "type": "string"
+    },
+    "pr_age_days": {
+      "minimum": 0,
+      "title": "Pr Age Days",
+      "type": "number"
+    },
+    "rationale_codes": {
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1,
+      "title": "Rationale Codes",
+      "type": "array"
+    },
+    "review_activity_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Review Activity Sha256",
+      "type": "string"
+    },
+    "review_idle_days": {
+      "anyOf": [
+        {
+          "minimum": 0,
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Review Idle Days"
+    },
+    "schema_version": {
+      "const": "0.5.1",
+      "default": "0.5.1",
+      "title": "Schema Version",
+      "type": "string"
+    }
+  },
+  "required": [
+    "case_id",
+    "decision",
+    "pr_age_days",
+    "ground_truth_sha256",
+    "review_activity_sha256",
+    "rationale_codes"
+  ],
+  "title": "HistoricalPolarizedDecisionOracle",
+  "type": "object"
+}

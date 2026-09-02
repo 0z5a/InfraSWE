@@ -1,0 +1,152 @@
+{
+  "calibration": {
+    "argv": [
+      "nvcc",
+      "-O3",
+      "-std=c++20",
+      "-Xcompiler=-Wall,-Wextra,-pthread",
+      "-arch=sm_121",
+      "/workspace/evidence/gb10-uma-v04-score-final/artifacts/memory_calibration.cu",
+      "-o",
+      "/workspace/evidence/gb10-uma-v04-score-final/artifacts/memory-calibration"
+    ],
+    "duration_seconds": 1.2386317253112793,
+    "env_overrides": {},
+    "returncode": 0,
+    "stderr": "",
+    "stdout": "",
+    "timed_out": false
+  },
+  "ldd": {
+    "argv": [
+      "ldd",
+      "/workspace/evidence/gb10-uma-v04-score-final/artifacts/uma-score-workload"
+    ],
+    "duration_seconds": 0.0047986507415771484,
+    "env_overrides": {},
+    "returncode": 0,
+    "stderr": "",
+    "stdout": "\tlinux-vdso.so.1 (0x0000fb792b199000)\n\tlibstdc++.so.6 => /lib/aarch64-linux-gnu/libstdc++.so.6 (0x0000fb792adf0000)\n\tlibgcc_s.so.1 => /lib/aarch64-linux-gnu/libgcc_s.so.1 (0x0000fb792adb0000)\n\tlibc.so.6 => /lib/aarch64-linux-gnu/libc.so.6 (0x0000fb792abf0000)\n\t/lib/ld-linux-aarch64.so.1 (0x0000fb792b150000)\n\tlibm.so.6 => /lib/aarch64-linux-gnu/libm.so.6 (0x0000fb792ab40000)\n",
+    "timed_out": false
+  },
+  "readelf": {
+    "argv": [
+      "readelf",
+      "-h",
+      "/workspace/evidence/gb10-uma-v04-score-final/artifacts/uma-score-workload"
+    ],
+    "duration_seconds": 0.001422882080078125,
+    "env_overrides": {},
+    "returncode": 0,
+    "stderr": "",
+    "stdout": "ELF Header:\n  Magic:   7f 45 4c 46 02 01 01 00 00 00 00 00 00 00 00 00 \n  Class:                             ELF64\n  Data:                              2's complement, little endian\n  Version:                           1 (current)\n  OS/ABI:                            UNIX - System V\n  ABI Version:                       0\n  Type:                              DYN (Position-Independent Executable file)\n  Machine:                           AArch64\n  Version:                           0x1\n  Entry point address:               0xc6c0\n  Start of program headers:          64 (bytes into file)\n  Start of section headers:          1052296 (bytes into file)\n  Flags:                             0x0\n  Size of this header:               64 (bytes)\n  Size of program headers:           56 (bytes)\n  Number of program headers:         10\n  Size of section headers:           64 (bytes)\n  Number of section headers:         33\n  Section header string table index: 32\n",
+    "timed_out": false
+  },
+  "sass": {
+    "argv": [
+      "cuobjdump",
+      "--dump-sass",
+      "/workspace/evidence/gb10-uma-v04-score-final/artifacts/uma-score-workload"
+    ],
+    "duration_seconds": 0.5554943084716797,
+    "env_overrides": {},
+    "returncode": 0,
+    "stderr": "",
+    "stdout": "\nFatbin elf code:\n================\narch = sm_121\ncode version = [1,8]\nhost = linux\ncompile_size = 64bit\n\n\tcode for sm_121\n\t.target\tsm_121\n\n\nFatbin elf code:\n================\narch = sm_121\ncode version = [1,8]\nhost = linux\ncompile_size = 64bit\n\n\tcode for sm_121\n\t.target\tsm_121\n\n\t\tFunction : _ZN50_GLOBAL__N__97f3d791_21_uma_score_workload_cu_main17initialize_kernelEPfi\n\t.headerflags\t@\"EF_CUDA_SM121 EF_CUDA_VIRTUAL_SM(EF_CUDA_SM121)\"\n        /*0000*/                   LDC R1, c[0x0][0x37c] ;                             /* 0x0000df00ff017b82 */\n                                                                                       /* 0x000fe20000000800 */\n        /*0010*/                   S2R R5, SR_TID.X ;                                  /* 0x0000000000057919 */\n                                                                                       /* 0x000e2e0000002100 */\n        /*0020*/                   S2UR UR4, SR_CTAID.X ;                              /* 0x00000000000479c3 */\n                                                                                       /* 0x000e220000002500 */\n        /*0030*/                   LDCU UR5, c[0x0][0x388] ;                           /* 0x00007100ff0577ac */\n                                                                                       /* 0x000e6e0008000800 */\n        /*0040*/                   LDC R4, c[0x0][0x360] ;                             /* 0x0000d800ff047b82 */\n                                                                                       /* 0x000e240000000800 */\n        /*0050*/                   IMAD R5, R4, UR4, R5 ;                              /* 0x0000000404057c24 */\n                                                                                       /* 0x001fca000f8e0205 */\n        /*0060*/                   ISETP.GE.AND P0, PT, R5, UR5, PT ;                  /* 0x0000000505007c0c */\n                                                                                       /* 0x002fda000bf06270 */\n        /*0070*/               @P0 EXIT ;                                              /* 0x000000000000094d */\n                                                                                       /* 0x000fea0003800000 */\n        /*0080*/                   HFMA2 R4, -RZ, RZ, 0, 0 ;                           /* 0x00000000ff047431 */\n                                                                                       /* 0x000fe200000001ff */\n        /*0090*/                   LDC.64 R2, c[0x0][0x380] ;                          /* 0x0000e000ff027b82 */\n                                                                                       /* 0x000e220000000a00 */\n        /*00a0*/                   LDCU.64 UR4, c[0x0][0x358] ;                        /* 0x00006b00ff0477ac */\n                                                                                       /* 0x000e660008000a00 */\n        /*00b0*/                   IMAD.HI R0, R5, -0x7d734041, R4 ;                   /* 0x828cbfbf05007827 */\n                                                                                       /* 0x000fca00078e0204 */\n        /*00c0*/                   SHF.R.U32.HI R7, RZ, 0x1f, R0 ;                     /* 0x0000001fff077819 */\n                                                                                       /* 0x000fc80000011600 */\n        /*00d0*/                   LEA.HI.SX32 R7, R0, R7, 0x19 ;                      /* 0x0000000700077211 */\n                                                                                       /* 0x000fca00078fcaff */\n        /*00e0*/                   IMAD R7, R7, -0xfb, R5 ;                            /* 0xffffff0507077824 */\n                                                                                       /* 0x000fca00078e0205 */\n        /*00f0*/                   I2FP.F32.S32 R7, R7 ;                               /* 0x0000000700077245 */\n                                                                                       /* 0x000fe20000201400 */\n        /*0100*/                   IMAD.WIDE R2, R5, 0x4, R2 ;                         /* 0x0000000405027825 */\n                                                                                       /* 0x001fc800078e0202 */\n        /*0110*/                   FMUL R7, R7, 0.0010000000474974513054 ;             /* 0x3a83126f07077820 */\n                                                                                       /* 0x000fca0000400000 */\n        /*0120*/                   STG.E desc[UR4][R2.64], R7 ;                        /* 0x0000000702007986 */\n                                                                                       /* 0x002fe2000c101904 */\n        /*0130*/                   EXIT ;                                              /* 0x000000000000794d */\n                                                                                       /* 0x000fea0003800000 */\n        /*0140*/                   BRA 0x140;                                          /* 0xfffffffc00fc7947 */\n                                                                                       /* 0x000fc0000383ffff */\n        /*0150*/                   NOP;                                                /* 0x0000000000007918 */\n                                                                                       /* 0x000fc00000000000 */\n        /*0160*/                   NOP;                                                /* 0x0000000000007918 */\n                                                                                       /* 0x000fc00000000000 */\n        /*0170*/                   NOP;                                                /* 0x0000000000007918 */\n                                                                                       /* 0x000fc00000000000 */\n        /*0180*/                   NOP;                                                /* 0x0000000000007918 */\n                                                                                       /* 0x000fc00000000000 */\n        /*0190*/                   NOP;                                                /* 0x0000000000007918 */\n                                                                                       /* 0x000fc00000000000 */\n        /*01a0*/                   NOP;                                                /* 0x0000000000007918 */\n                                                                                       /* 0x000fc00000000000 */\n        /*01b0*/                   NOP;                                                /* 0x0000000000007918 */\n                                                                                       /* 0x000fc00000000000 */\n        /*01c0*/                   NOP;                                                /* 0x0000000000007918 */\n                                                                                       /* 0x000fc00000000000 */\n        /*01d0*/                   NOP;                                                /* 0x0000000000007918 */\n                                                                                       /* 0x000fc00000000000 */\n        /*01e0*/                   NOP;                                                /* 0x0000000000007918 */\n                                                                                       /* 0x000fc00000000000 */\n        /*01f0*/                   NOP;                                                /* 0x0000000000007918 */\n                                                                                       /* 0x000fc00000000000 */\n\t\t..........\n\n\n\t\tFunction : uma_transform_kernel\n\t.headerflags\t@\"EF_CUDA_SM121 EF_CUDA_VIRTUAL_SM(EF_CUDA_SM121)\"\n        /*0000*/                   LDC R1, c[0x0][0x37c] ;                             /* 0x0000df00ff017b82 */\n                                                                                       /* 0x000fe20000000800 */\n        /*0010*/                   S2R R0, SR_TID.X ;                                  /* 0x0000000000007919 */\n                                                                                       /* 0x000e2e0000002100 */\n        /*0020*/                   S2UR UR4, SR_CTAID.X ;                              /* 0x00000000000479c3 */\n                                                                                       /* 0x000e220000002500 */\n        /*0030*/                   LDCU UR5, c[0x0][0x390] ;                           /* 0x00007200ff0577ac */\n                                                                                       /* 0x000e6e0008000800 */\n        /*0040*/                   LDC R5, c[0x0][0x360] ;                             /* 0x0000d800ff057b82 */\n                                                                                       /* 0x000e240000000800 */\n        /*0050*/                   IMAD R5, R5, UR4, R0 ;                              /* 0x0000000405057c24 */\n                                                                                       /* 0x001fca000f8e0200 */\n        /*0060*/                   ISETP.GE.AND P0, PT, R5, UR5, PT ;                  /* 0x0000000505007c0c */\n                                                                                       /* 0x002fda000bf06270 */\n        /*0070*/               @P0 EXIT ;                                              /* 0x000000000000094d */\n                                                                                       /* 0x000fea0003800000 */\n        /*0080*/                   LDC.64 R2, c[0x0][0x380] ;                          /* 0x0000e000ff027b82 */\n                                                                                       /* 0x000e220000000a00 */\n        /*0090*/                   LDCU.64 UR14, c[0x0][0x358] ;                       /* 0x00006b00ff0e77ac */\n                                                                                       /* 0x000e620008000a00 */\n        /*00a0*/                   LDCU.64 UR12, c[0x0][0x398] ;                       /* 0x00007300ff0c77ac */\n                                                                                       /* 0x000ea20008000a00 */\n        /*00b0*/                   LDCU.64 UR10, c[0x0][0x398] ;                       /* 0x00007300ff0a77ac */\n                                                                                       /* 0x000ee20008000a00 */\n        /*00c0*/                   IMAD.WIDE R2, R5, 0x4, R2 ;                         /* 0x0000000405027825 */\n                                                                                       /* 0x001fca00078e0202 */\n        /*00d0*/                   LDG.E R7, desc[UR14][R2.64] ;                       /* 0x0000000e02077981 */\n                                                                                       /* 0x002122000c1e1900 */\n        /*00e0*/                   UIMAD.WIDE.U32 UR4, UR13, -0xf0f0f0f, URZ ;         /* 0xf0f0f0f10d0478a5 */\n                                                                                       /* 0x004fc8000f8e00ff */\n        /*00f0*/                   UIMAD.WIDE.U32 UR6, UP0, UR12, -0xf0f0f10, UR4 ;    /* 0xf0f0f0f00c0678a5 */\n                                                                                       /* 0x000fe2000f800004 */\n        /*0100*/                   UIMAD.WIDE.U32 UR4, UR12, -0xf0f0f0f, URZ ;         /* 0xf0f0f0f10c0478a5 */\n                                                                                       /* 0x000fc6000f8e00ff */\n        /*0110*/                   UIADD3.X UR9, UPT, UPT, URZ, URZ, URZ, UP0, !UPT ;  /* 0x000000ffff097290 */\n                                                                                       /* 0x000fe200087fe4ff */\n        /*0120*/                   UIADD3 URZ, UP0, UPT, UR5, UR6, URZ ;               /* 0x0000000605ff7290 */\n                                                                                       /* 0x000fe2000ff1e0ff */\n        /*0130*/                   LDC.64 R2, c[0x0][0x388] ;                          /* 0x0000e200ff027b82 */\n                                                                                       /* 0x001e220000000a00 */\n        /*0140*/                   UMOV UR8, UR7 ;                                     /* 0x0000000700087c82 */\n                                                                                       /* 0x000fe40008000000 */\n        /*0150*/                   UIMAD.WIDE.U32.X UR4, UR13, -0xf0f0f10, UR8, UP0 ;  /* 0xf0f0f0f00d0478a5 */\n                                                                                       /* 0x000fc800080e0408 */\n        /*0160*/                   USHF.R.U64 UR6, UR4, 0x4, UR5 ;                     /* 0x0000000404067899 */\n                                                                                       /* 0x000fe20008001205 */\n        /*0170*/                   USHF.R.U32.HI UR7, URZ, 0x4, UR5 ;                  /* 0x00000004ff077899 */\n                                                                                       /* 0x000fc60008011605 */\n        /*0180*/                   UIMAD.WIDE.U32 UR4, UR6, -0x11, UR10 ;              /* 0xffffffef060478a5 */\n                                                                                       /* 0x008fe2000f8e000a */\n        /*0190*/                   UIMAD UR7, UR7, -0x11, URZ ;                        /* 0xffffffef070778a4 */\n                                                                                       /* 0x000fc8000f8e02ff */\n        /*01a0*/                   UIADD3 UR5, UPT, UPT, UR5, -UR6, UR7 ;              /* 0x8000000605057290 */\n                                                                                       /* 0x000fe2000fffe007 */\n        /*01b0*/                   IMAD.WIDE R2, R5, 0x4, R2 ;                         /* 0x0000000405027825 */\n                                                                                       /* 0x001fd000078e0202 */\n        /*01c0*/                   I2F.U64 R0, UR4 ;                                   /* 0x0000000400007d12 */\n                                                                                       /* 0x000e240008301000 */\n        /*01d0*/                   FMUL R0, R0, 9.9999997473787516356e-05 ;            /* 0x38d1b71700007820 */\n                                                                                       /* 0x001fc80000400000 */\n        /*01e0*/                   FFMA R7, R7, 1.25, R0 ;                             /* 0x3fa0000007077823 */\n                                                                                       /* 0x010fca0000000000 */\n        /*01f0*/                   STG.E desc[UR14][R2.64], R7 ;                       /* 0x0000000702007986 */\n                                                                                       /* 0x000fe2000c10190e */\n        /*0200*/                   EXIT ;                                              /* 0x000000000000794d */\n                                                                                       /* 0x000fea0003800000 */\n        /*0210*/                   BRA 0x210;                                          /* 0xfffffffc00fc7947 */\n                                                                                       /* 0x000fc0000383ffff */\n        /*0220*/                   NOP;                                                /* 0x0000000000007918 */\n                                                                                       /* 0x000fc00000000000 */\n        /*0230*/                   NOP;                                                /* 0x0000000000007918 */\n                                                                                       /* 0x000fc00000000000 */\n        /*0240*/                   NOP;                                                /* 0x0000000000007918 */\n                                                                                       /* 0x000fc00000000000 */\n        /*0250*/                   NOP;                                                /* 0x0000000000007918 */\n                                                                                       /* 0x000fc00000000000 */\n        /*0260*/                   NOP;                                                /* 0x0000000000007918 */\n                                                                                       /* 0x000fc00000000000 */\n        /*0270*/                   NOP;                                                /* 0x0000000000007918 */\n                                                                                       /* 0x000fc00000000000 */\n        /*0280*/                   NOP;                                                /* 0x0000000000007918 */\n                                                                                       /* 0x000fc00000000000 */\n        /*0290*/                   NOP;                                                /* 0x0000000000007918 */\n                                                                                       /* 0x000fc00000000000 */\n        /*02a0*/                   NOP;                                                /* 0x0000000000007918 */\n                                                                                       /* 0x000fc00000000000 */\n        /*02b0*/                   NOP;                                                /* 0x0000000000007918 */\n                                                                                       /* 0x000fc00000000000 */\n        /*02c0*/                   NOP;                                                /* 0x0000000000007918 */\n                                                                                       /* 0x000fc00000000000 */\n        /*02d0*/                   NOP;                                                /* 0x0000000000007918 */\n                                                                                       /* 0x000fc00000000000 */\n        /*02e0*/                   NOP;                                                /* 0x0000000000007918 */\n                                                                                       /* 0x000fc00000000000 */\n        /*02f0*/                   NOP;                                                /* 0x0000000000007918 */\n                                                                                       /* 0x000fc00000000000 */\n\t\t..........\n\n\n\nFatbin ptx code:\n================\narch = sm_121\ncode version = [9,0]\nhost = linux\ncompile_size = 64bit\ncompressed\nptxasOptions = \n",
+    "timed_out": false
+  },
+  "sm_121_executable": {
+    "argv": [
+      "nvcc",
+      "-O3",
+      "-std=c++20",
+      "-Xcompiler=-Wall,-Wextra,-pthread",
+      "-arch=sm_121",
+      "/workspace/evidence/gb10-uma-v04-score-final/artifacts/uma_score_workload.cu",
+      "-o",
+      "/workspace/evidence/gb10-uma-v04-score-final/artifacts/uma-score-workload"
+    ],
+    "duration_seconds": 2.42480206489563,
+    "env_overrides": {},
+    "returncode": 0,
+    "stderr": "",
+    "stdout": "",
+    "timed_out": false
+  },
+  "sm_121_ptx_a": {
+    "argv": [
+      "nvcc",
+      "-O3",
+      "-std=c++20",
+      "-Xcompiler=-Wall,-Wextra,-pthread",
+      "-arch=compute_121",
+      "-ptx",
+      "/workspace/evidence/gb10-uma-v04-score-final/artifacts/uma_score_workload.cu",
+      "-o",
+      "/workspace/evidence/gb10-uma-v04-score-final/artifacts/uma-score-a.ptx"
+    ],
+    "duration_seconds": 0.6675777435302734,
+    "env_overrides": {},
+    "returncode": 0,
+    "stderr": "",
+    "stdout": "",
+    "timed_out": false
+  },
+  "sm_121_ptx_b": {
+    "argv": [
+      "nvcc",
+      "-O3",
+      "-std=c++20",
+      "-Xcompiler=-Wall,-Wextra,-pthread",
+      "-arch=compute_121",
+      "-ptx",
+      "/workspace/evidence/gb10-uma-v04-score-final/artifacts/uma_score_workload.cu",
+      "-o",
+      "/workspace/evidence/gb10-uma-v04-score-final/artifacts/uma-score-b.ptx"
+    ],
+    "duration_seconds": 0.6622264385223389,
+    "env_overrides": {},
+    "returncode": 0,
+    "stderr": "",
+    "stdout": "",
+    "timed_out": false
+  },
+  "sm_121a_cubin": {
+    "argv": [
+      "nvcc",
+      "-O3",
+      "-std=c++20",
+      "-Xcompiler=-Wall,-Wextra,-pthread",
+      "-arch=sm_121a",
+      "-cubin",
+      "/workspace/evidence/gb10-uma-v04-score-final/artifacts/uma_score_workload.cu",
+      "-o",
+      "/workspace/evidence/gb10-uma-v04-score-final/artifacts/uma-score-sm121a.cubin"
+    ],
+    "duration_seconds": 0.6805508136749268,
+    "env_overrides": {},
+    "returncode": 0,
+    "stderr": "",
+    "stdout": "",
+    "timed_out": false
+  },
+  "sm_121f_cubin": {
+    "argv": [
+      "nvcc",
+      "-O3",
+      "-std=c++20",
+      "-Xcompiler=-Wall,-Wextra,-pthread",
+      "-arch=sm_121f",
+      "-cubin",
+      "/workspace/evidence/gb10-uma-v04-score-final/artifacts/uma_score_workload.cu",
+      "-o",
+      "/workspace/evidence/gb10-uma-v04-score-final/artifacts/uma-score-sm121f.cubin"
+    ],
+    "duration_seconds": 0.6625380516052246,
+    "env_overrides": {},
+    "returncode": 0,
+    "stderr": "",
+    "stdout": "",
+    "timed_out": false
+  }
+}

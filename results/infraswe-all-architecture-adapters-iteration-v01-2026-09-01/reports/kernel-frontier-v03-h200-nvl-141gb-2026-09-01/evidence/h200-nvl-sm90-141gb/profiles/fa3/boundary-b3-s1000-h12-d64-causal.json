@@ -1,0 +1,106 @@
+{
+  "backend": "fa3",
+  "case_id": "boundary-b3-s1000-h12-d64-causal",
+  "evidence_kind": "per-case-profiler",
+  "fresh_process": true,
+  "generated_at": "2026-09-01T03:53:21.283292Z",
+  "hardware": {
+    "compute_capability": "9.0",
+    "cudnn_version": 91002,
+    "gpu_name": "NVIDIA H200 NVL",
+    "nvidia_smi": {
+      "clocks.mem": "3201",
+      "clocks.sm": "345",
+      "driver_version": "580.159.03",
+      "memory.total": "143771",
+      "memory.used": "5",
+      "name": "NVIDIA H200 NVL",
+      "pci.bus_id": "00000000:A8:00.0",
+      "power.draw": "86.65",
+      "power.limit": "500.00",
+      "pstate": "P0",
+      "temperature.gpu": "41",
+      "utilization.gpu": "0",
+      "uuid": "GPU-e756ae4d-6847-0c30-f1ca-4bf9ee20366e"
+    },
+    "platform": "Linux-6.8.0-124-generic-x86_64-with-glibc2.39",
+    "python": "3.12.14",
+    "sm_count": 132,
+    "torch_cuda": "12.8",
+    "torch_version": "2.8.0+cu128",
+    "total_memory_bytes": 150109880320
+  },
+  "implementation_provenance": [
+    {
+      "module": "flash_attn_3",
+      "path": "/workspace/infraswe/envs/fa3/flash_attn_3/__init__.py",
+      "sha256": "sha256:a988f598f245bcf9ef199daa37c9e8e58b58fa9277c48c1e1608868c29047f2b"
+    },
+    {
+      "module": "flash_attn_3.flash_attn_interface",
+      "path": "/workspace/infraswe/envs/fa3/flash_attn_3/flash_attn_interface.py",
+      "sha256": "sha256:39f173452b4906d0ba7371e4c21947be7c7156d06825ec058364fd3fa4b0de49"
+    },
+    {
+      "module": "flash_attn_3._C",
+      "path": "/workspace/infraswe/envs/fa3/flash_attn_3/_C.abi3.so",
+      "sha256": "sha256:4cca8035063703a90d6f55cb4abc13850699d3b837988119155d088518f38176"
+    }
+  ],
+  "profiler": {
+    "captured": true,
+    "cuda_events": [
+      {
+        "count": 1,
+        "device_time_us": 27.231999999999516,
+        "name": "FlashAttnFunc",
+        "self_device_time_us": 0.0
+      },
+      {
+        "count": 1,
+        "device_time_us": 27.231999999999516,
+        "name": "flash_attn_3::_flash_attn_forward",
+        "self_device_time_us": 0.0
+      },
+      {
+        "count": 1,
+        "device_time_us": 27.231999999999516,
+        "name": "flash_attn_3::fwd",
+        "self_device_time_us": 25.567999999999756
+      },
+      {
+        "count": 1,
+        "device_time_us": 25.567999999999756,
+        "name": "void cutlass::device_kernel<flash::enable_sm90<flash::FlashAttnFwdSm90<flash::CollectiveMainloopFwdSm90<2, cute::tuple<cute::C<1>, cute::C<1>, cute::C<1> >, cute::tuple<cute::C<192>, cute::C<128>, cute::C<64> >, 64, cutlass::bfloat16_t, float, cutlass::arch::Sm90, true, false, false, false, false, false, false, true, true, false, false, false>, flash::CollectiveEpilogueFwd<cute::tuple<cute::C<192>, cute::C<64>, cute::C<128> >, cute::tuple<cute::C<1>, cute::C<1>, cute::C<1> >, cutlass::bfloat16_t, cutlass::arch::Sm90, 384, false, false, false, false>, flash::DynamicPersistentTileScheduler<384, 32, false, false, true> > > >(flash::enable_sm90<flash::FlashAttnFwdSm90<flash::CollectiveMainloopFwdSm90<2, cute::tuple<cute::C<1>, cute::C<1>, cute::C<1> >, cute::tuple<cute::C<192>, cute::C<128>, cute::C<64> >, 64, cutlass::bfloat16_t, float, cutlass::arch::Sm90, true, false, false, false, false, false, false, true, true, false, false, false>, flash::CollectiveEpilogueFwd<cute::tuple<cute::C<192>, cute::C<64>, cute::C<128> >, cute::tuple<cute::C<1>, cute::C<1>, cute::C<1> >, cutlass::bfloat16_t, cutlass::arch::Sm90, 384, false, false, false, false>, flash::DynamicPersistentTileScheduler<384, 32, false, false, true> > >::Params)",
+        "self_device_time_us": 25.567999999999756
+      },
+      {
+        "count": 1,
+        "device_time_us": 1.66399999999976,
+        "name": "aten::zero_",
+        "self_device_time_us": 0.0
+      },
+      {
+        "count": 1,
+        "device_time_us": 1.66399999999976,
+        "name": "aten::fill_",
+        "self_device_time_us": 0.83199999999988
+      },
+      {
+        "count": 1,
+        "device_time_us": 0.83199999999988,
+        "name": "Activity Buffer Request",
+        "self_device_time_us": 0.83199999999988
+      },
+      {
+        "count": 1,
+        "device_time_us": 0.83199999999988,
+        "name": "void at::native::vectorized_elementwise_kernel<4, at::native::FillFunctor<int>, std::array<char*, 1ul> >(int, at::native::FillFunctor<int>, std::array<char*, 1ul>)",
+        "self_device_time_us": 0.83199999999988
+      }
+    ]
+  },
+  "schema_version": "0.3",
+  "status": "passed",
+  "suite": "attention"
+}

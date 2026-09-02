@@ -1,0 +1,514 @@
+{
+  "benchmark_cost": {
+    "accelerator_seconds": 43.55179551523179,
+    "cache_hit_ratio": null,
+    "compile_seconds": 0.0,
+    "executed_cases": 8,
+    "failure_codes": [
+      "COMPILE_CACHE_NOT_APPLICABLE_EAGER",
+      "SERIALIZATION_COMPATIBILITY_NOT_PROBED",
+      "DRAFT_STAGE_TIMING_NOT_INSTRUMENTED"
+    ],
+    "fast_stage_resolution_rate": null,
+    "profiler_seconds": 0.07884509023278952,
+    "serialization_config_compatibility": "unresolved",
+    "skipped_cases": 0,
+    "status": "partial",
+    "time_to_actionable_decision_seconds": 37.21163328271359,
+    "time_to_first_diagnostic_seconds": null,
+    "wall_time_seconds": 37.21163328271359
+  },
+  "cross_replay_result_digest_count": 1,
+  "ddp_nccl_probe": {
+    "ranks": [
+      {
+        "all_reduce_value": 3.0,
+        "device_name": "NVIDIA L40S",
+        "local_rank": 0,
+        "rank": 0,
+        "status": "pass",
+        "world_size": 2
+      },
+      {
+        "all_reduce_value": 3.0,
+        "device_name": "NVIDIA L40S",
+        "local_rank": 1,
+        "rank": 1,
+        "status": "pass",
+        "world_size": 2
+      }
+    ],
+    "returncode": 0,
+    "status": "pass",
+    "stderr_tail": "\n*****************************************\nSetting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. \n*****************************************\n/venv/main/lib/python3.12/site-packages/torch/distributed/c10d_logger.py:83: UserWarning: barrier(): using the device under current context. You can specify `device_id` in `init_process_group` to mute this warning.\n  return func(*args, **kwargs)\n",
+    "stdout_tail": "",
+    "wall_time_seconds": 6.402619540691376
+  },
+  "framework_profiler_grade": "G2",
+  "fresh_process_replays": 7,
+  "fresh_processes_verified": true,
+  "gpu_inventory": [
+    {
+      "compute_capability": [
+        8,
+        9
+      ],
+      "index": 0,
+      "name": "NVIDIA L40S"
+    },
+    {
+      "compute_capability": [
+        8,
+        9
+      ],
+      "index": 1,
+      "name": "NVIDIA L40S"
+    }
+  ],
+  "hardware_cell": "2xl40s-sm89-cuda128-torch211",
+  "kernel_counter_grade": "separate-diagnostic-required",
+  "official_score_blockers": [
+    "DRAFT_NOT_HUMAN_REVIEWED_OR_SEALED",
+    "G3_SYSTEM_TRACE_UNAVAILABLE"
+  ],
+  "official_score_published": false,
+  "replays": [
+    {
+      "cuda_visible_devices": "0",
+      "fallback_calls": 0,
+      "gpu": {
+        "compute_capability": [
+          8,
+          9
+        ],
+        "name": "NVIDIA L40S",
+        "torch": "2.11.0+cu128",
+        "torch_cuda": "12.8"
+      },
+      "losses": [
+        4.7267022132873535,
+        4.620082855224609,
+        4.513753890991211,
+        4.40773344039917,
+        4.302038192749023,
+        4.196686744689941,
+        4.091701507568359,
+        3.987104892730713,
+        3.882922649383545,
+        3.7791831493377686
+      ],
+      "memory": {
+        "allocated_bytes": 17569792,
+        "max_allocated_bytes": 18289152,
+        "max_reserved_bytes": 23068672,
+        "reserved_bytes": 23068672,
+        "status": "captured"
+      },
+      "pid": 3949,
+      "profiler_trace": "results/v05-l40s-training-20260901/gpu-replays/torch-profiler-replay-0.json",
+      "profiler_wall_time_seconds": 0.07884509023278952,
+      "replay_index": 0,
+      "result_digest": "sha256:0199eb5fafb9b12ea3dee61ee1357d397a40e71a65ed56a06005d0d2b403a802",
+      "returncode": 0,
+      "schema_version": "0.1",
+      "semantic_max_abs_error": {
+        "gradients": 0.0,
+        "logits": 0.0,
+        "loss": 0.0,
+        "parameters": 0.0
+      },
+      "status": "pass",
+      "stderr_tail": "/venv/main/lib/python3.12/site-packages/torch/profiler/profiler.py:224: UserWarning: Warning: Profiler clears events at the end of each cycle.Only events from the current cycle will be reported.To keep events across cycles, set acc_events=True.\n  _warn_once(\n",
+      "stdout_tail": "",
+      "step_times_ms": [
+        3.957377,
+        6.647301,
+        4.780516,
+        4.660788,
+        4.710009,
+        4.490058,
+        4.396322,
+        4.471224,
+        4.890536,
+        5.351953
+      ],
+      "wall_time_seconds": 4.5988391526043415
+    },
+    {
+      "cuda_visible_devices": "1",
+      "fallback_calls": 0,
+      "gpu": {
+        "compute_capability": [
+          8,
+          9
+        ],
+        "name": "NVIDIA L40S",
+        "torch": "2.11.0+cu128",
+        "torch_cuda": "12.8"
+      },
+      "losses": [
+        4.7267022132873535,
+        4.620082855224609,
+        4.513753890991211,
+        4.40773344039917,
+        4.302038192749023,
+        4.196686744689941,
+        4.091701507568359,
+        3.987104892730713,
+        3.882922649383545,
+        3.7791831493377686
+      ],
+      "memory": {
+        "allocated_bytes": 17569792,
+        "max_allocated_bytes": 18289152,
+        "max_reserved_bytes": 23068672,
+        "reserved_bytes": 23068672,
+        "status": "captured"
+      },
+      "pid": 4019,
+      "profiler_trace": null,
+      "profiler_wall_time_seconds": 0.0,
+      "replay_index": 1,
+      "result_digest": "sha256:0199eb5fafb9b12ea3dee61ee1357d397a40e71a65ed56a06005d0d2b403a802",
+      "returncode": 0,
+      "schema_version": "0.1",
+      "semantic_max_abs_error": {
+        "gradients": 0.0,
+        "logits": 0.0,
+        "loss": 0.0,
+        "parameters": 0.0
+      },
+      "status": "pass",
+      "stderr_tail": "",
+      "stdout_tail": "",
+      "step_times_ms": [
+        3.072271,
+        5.361088,
+        3.592176,
+        3.758429,
+        3.740251,
+        4.003475,
+        4.070305,
+        4.083821,
+        4.28783,
+        4.285794
+      ],
+      "wall_time_seconds": 4.236782435327768
+    },
+    {
+      "cuda_visible_devices": "0",
+      "fallback_calls": 0,
+      "gpu": {
+        "compute_capability": [
+          8,
+          9
+        ],
+        "name": "NVIDIA L40S",
+        "torch": "2.11.0+cu128",
+        "torch_cuda": "12.8"
+      },
+      "losses": [
+        4.7267022132873535,
+        4.620082855224609,
+        4.513753890991211,
+        4.40773344039917,
+        4.302038192749023,
+        4.196686744689941,
+        4.091701507568359,
+        3.987104892730713,
+        3.882922649383545,
+        3.7791831493377686
+      ],
+      "memory": {
+        "allocated_bytes": 17569792,
+        "max_allocated_bytes": 18289152,
+        "max_reserved_bytes": 23068672,
+        "reserved_bytes": 23068672,
+        "status": "captured"
+      },
+      "pid": 4086,
+      "profiler_trace": null,
+      "profiler_wall_time_seconds": 0.0,
+      "replay_index": 2,
+      "result_digest": "sha256:0199eb5fafb9b12ea3dee61ee1357d397a40e71a65ed56a06005d0d2b403a802",
+      "returncode": 0,
+      "schema_version": "0.1",
+      "semantic_max_abs_error": {
+        "gradients": 0.0,
+        "logits": 0.0,
+        "loss": 0.0,
+        "parameters": 0.0
+      },
+      "status": "pass",
+      "stderr_tail": "",
+      "stdout_tail": "",
+      "step_times_ms": [
+        4.046927,
+        6.701056,
+        4.727879,
+        4.215228,
+        4.393782,
+        4.450122,
+        4.475552,
+        4.703565,
+        5.079281,
+        5.425496
+      ],
+      "wall_time_seconds": 4.540667105466127
+    },
+    {
+      "cuda_visible_devices": "1",
+      "fallback_calls": 0,
+      "gpu": {
+        "compute_capability": [
+          8,
+          9
+        ],
+        "name": "NVIDIA L40S",
+        "torch": "2.11.0+cu128",
+        "torch_cuda": "12.8"
+      },
+      "losses": [
+        4.7267022132873535,
+        4.620082855224609,
+        4.513753890991211,
+        4.40773344039917,
+        4.302038192749023,
+        4.196686744689941,
+        4.091701507568359,
+        3.987104892730713,
+        3.882922649383545,
+        3.7791831493377686
+      ],
+      "memory": {
+        "allocated_bytes": 17569792,
+        "max_allocated_bytes": 18289152,
+        "max_reserved_bytes": 23068672,
+        "reserved_bytes": 23068672,
+        "status": "captured"
+      },
+      "pid": 4153,
+      "profiler_trace": null,
+      "profiler_wall_time_seconds": 0.0,
+      "replay_index": 3,
+      "result_digest": "sha256:0199eb5fafb9b12ea3dee61ee1357d397a40e71a65ed56a06005d0d2b403a802",
+      "returncode": 0,
+      "schema_version": "0.1",
+      "semantic_max_abs_error": {
+        "gradients": 0.0,
+        "logits": 0.0,
+        "loss": 0.0,
+        "parameters": 0.0
+      },
+      "status": "pass",
+      "stderr_tail": "",
+      "stdout_tail": "",
+      "step_times_ms": [
+        3.0201,
+        5.297777,
+        3.806721,
+        3.613769,
+        3.363834,
+        3.558691,
+        3.60052,
+        3.870707,
+        4.306098,
+        4.291634
+      ],
+      "wall_time_seconds": 4.176032806746662
+    },
+    {
+      "cuda_visible_devices": "0",
+      "fallback_calls": 0,
+      "gpu": {
+        "compute_capability": [
+          8,
+          9
+        ],
+        "name": "NVIDIA L40S",
+        "torch": "2.11.0+cu128",
+        "torch_cuda": "12.8"
+      },
+      "losses": [
+        4.7267022132873535,
+        4.620082855224609,
+        4.513753890991211,
+        4.40773344039917,
+        4.302038192749023,
+        4.196686744689941,
+        4.091701507568359,
+        3.987104892730713,
+        3.882922649383545,
+        3.7791831493377686
+      ],
+      "memory": {
+        "allocated_bytes": 17569792,
+        "max_allocated_bytes": 18289152,
+        "max_reserved_bytes": 23068672,
+        "reserved_bytes": 23068672,
+        "status": "captured"
+      },
+      "pid": 4220,
+      "profiler_trace": null,
+      "profiler_wall_time_seconds": 0.0,
+      "replay_index": 4,
+      "result_digest": "sha256:0199eb5fafb9b12ea3dee61ee1357d397a40e71a65ed56a06005d0d2b403a802",
+      "returncode": 0,
+      "schema_version": "0.1",
+      "semantic_max_abs_error": {
+        "gradients": 0.0,
+        "logits": 0.0,
+        "loss": 0.0,
+        "parameters": 0.0
+      },
+      "status": "pass",
+      "stderr_tail": "",
+      "stdout_tail": "",
+      "step_times_ms": [
+        3.561317,
+        6.431733,
+        4.645345,
+        4.292356,
+        4.49731,
+        4.718249,
+        4.672841,
+        4.874687,
+        4.916647,
+        5.140041
+      ],
+      "wall_time_seconds": 4.391418578103185
+    },
+    {
+      "cuda_visible_devices": "1",
+      "fallback_calls": 0,
+      "gpu": {
+        "compute_capability": [
+          8,
+          9
+        ],
+        "name": "NVIDIA L40S",
+        "torch": "2.11.0+cu128",
+        "torch_cuda": "12.8"
+      },
+      "losses": [
+        4.7267022132873535,
+        4.620082855224609,
+        4.513753890991211,
+        4.40773344039917,
+        4.302038192749023,
+        4.196686744689941,
+        4.091701507568359,
+        3.987104892730713,
+        3.882922649383545,
+        3.7791831493377686
+      ],
+      "memory": {
+        "allocated_bytes": 17569792,
+        "max_allocated_bytes": 18289152,
+        "max_reserved_bytes": 23068672,
+        "reserved_bytes": 23068672,
+        "status": "captured"
+      },
+      "pid": 4287,
+      "profiler_trace": null,
+      "profiler_wall_time_seconds": 0.0,
+      "replay_index": 5,
+      "result_digest": "sha256:0199eb5fafb9b12ea3dee61ee1357d397a40e71a65ed56a06005d0d2b403a802",
+      "returncode": 0,
+      "schema_version": "0.1",
+      "semantic_max_abs_error": {
+        "gradients": 0.0,
+        "logits": 0.0,
+        "loss": 0.0,
+        "parameters": 0.0
+      },
+      "status": "pass",
+      "stderr_tail": "",
+      "stdout_tail": "",
+      "step_times_ms": [
+        2.952476,
+        5.524158,
+        3.781702,
+        3.648129,
+        3.517178,
+        3.469157,
+        3.617814,
+        3.781496,
+        4.092047,
+        4.319348
+      ],
+      "wall_time_seconds": 4.210083341225982
+    },
+    {
+      "cuda_visible_devices": "0",
+      "fallback_calls": 0,
+      "gpu": {
+        "compute_capability": [
+          8,
+          9
+        ],
+        "name": "NVIDIA L40S",
+        "torch": "2.11.0+cu128",
+        "torch_cuda": "12.8"
+      },
+      "losses": [
+        4.7267022132873535,
+        4.620082855224609,
+        4.513753890991211,
+        4.40773344039917,
+        4.302038192749023,
+        4.196686744689941,
+        4.091701507568359,
+        3.987104892730713,
+        3.882922649383545,
+        3.7791831493377686
+      ],
+      "memory": {
+        "allocated_bytes": 17569792,
+        "max_allocated_bytes": 18289152,
+        "max_reserved_bytes": 23068672,
+        "reserved_bytes": 23068672,
+        "status": "captured"
+      },
+      "pid": 4354,
+      "profiler_trace": null,
+      "profiler_wall_time_seconds": 0.0,
+      "replay_index": 6,
+      "result_digest": "sha256:0199eb5fafb9b12ea3dee61ee1357d397a40e71a65ed56a06005d0d2b403a802",
+      "returncode": 0,
+      "schema_version": "0.1",
+      "semantic_max_abs_error": {
+        "gradients": 0.0,
+        "logits": 0.0,
+        "loss": 0.0,
+        "parameters": 0.0
+      },
+      "status": "pass",
+      "stderr_tail": "",
+      "stdout_tail": "",
+      "step_times_ms": [
+        3.80688,
+        6.696027,
+        4.623147,
+        4.161643,
+        3.969432,
+        3.955174,
+        4.170165,
+        4.652534,
+        4.544065,
+        5.059686
+      ],
+      "wall_time_seconds": 4.592733014374971
+    }
+  ],
+  "schema_version": "0.1",
+  "status": "pass",
+  "step_time_ms": {
+    "count": 70,
+    "maximum": 6.701056,
+    "median": 4.299227,
+    "minimum": 2.952476,
+    "p95": 6.431733
+  },
+  "system_trace_grade": "unresolved"
+}

@@ -1,0 +1,197 @@
+{
+  "$defs": {
+    "HistoricalReviewFeedbackItem": {
+      "additionalProperties": false,
+      "properties": {
+        "author": {
+          "title": "Author",
+          "type": "string"
+        },
+        "author_association": {
+          "title": "Author Association",
+          "type": "string"
+        },
+        "body": {
+          "title": "Body",
+          "type": "string"
+        },
+        "created_at": {
+          "format": "date-time",
+          "title": "Created At",
+          "type": "string"
+        },
+        "feedback_id": {
+          "title": "Feedback Id",
+          "type": "string"
+        },
+        "html_url": {
+          "title": "Html Url",
+          "type": "string"
+        },
+        "is_bot": {
+          "title": "Is Bot",
+          "type": "boolean"
+        },
+        "line": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Line"
+        },
+        "path": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Path"
+        },
+        "review_state": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Review State"
+        },
+        "source": {
+          "enum": [
+            "review",
+            "review-comment",
+            "issue-comment"
+          ],
+          "title": "Source",
+          "type": "string"
+        }
+      },
+      "required": [
+        "feedback_id",
+        "source",
+        "author",
+        "author_association",
+        "is_bot",
+        "body",
+        "html_url",
+        "created_at"
+      ],
+      "title": "HistoricalReviewFeedbackItem",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "description": "Reviewer evidence revealed only after an explainable judgment lock.",
+  "properties": {
+    "api_response_digests": {
+      "items": {
+        "pattern": "^sha256:[0-9a-f]{64}$",
+        "type": "string"
+      },
+      "minItems": 4,
+      "title": "Api Response Digests",
+      "type": "array"
+    },
+    "case_id": {
+      "title": "Case Id",
+      "type": "string"
+    },
+    "eligibility_reasons": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Eligibility Reasons",
+      "type": "array"
+    },
+    "explicit_human_non_author_feedback_count": {
+      "minimum": 0,
+      "title": "Explicit Human Non Author Feedback Count",
+      "type": "integer"
+    },
+    "feedback": {
+      "items": {
+        "$ref": "#/$defs/HistoricalReviewFeedbackItem"
+      },
+      "title": "Feedback",
+      "type": "array"
+    },
+    "human_non_author_review_count": {
+      "minimum": 0,
+      "title": "Human Non Author Review Count",
+      "type": "integer"
+    },
+    "judgment_lock_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Judgment Lock Sha256",
+      "type": "string"
+    },
+    "merged": {
+      "const": false,
+      "default": false,
+      "title": "Merged",
+      "type": "boolean"
+    },
+    "observed_at": {
+      "format": "date-time",
+      "title": "Observed At",
+      "type": "string"
+    },
+    "pr_author": {
+      "title": "Pr Author",
+      "type": "string"
+    },
+    "pull_number": {
+      "minimum": 1,
+      "title": "Pull Number",
+      "type": "integer"
+    },
+    "repository": {
+      "title": "Repository",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "0.5",
+      "default": "0.5",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "state": {
+      "const": "closed",
+      "default": "closed",
+      "title": "State",
+      "type": "string"
+    },
+    "strict_feedback_audit_eligible": {
+      "title": "Strict Feedback Audit Eligible",
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "case_id",
+    "repository",
+    "pull_number",
+    "judgment_lock_sha256",
+    "observed_at",
+    "pr_author",
+    "feedback",
+    "human_non_author_review_count",
+    "explicit_human_non_author_feedback_count",
+    "strict_feedback_audit_eligible",
+    "api_response_digests"
+  ],
+  "title": "HistoricalJudgmentReviewEvidence",
+  "type": "object"
+}

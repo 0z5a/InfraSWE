@@ -1,0 +1,222 @@
+{
+  "$defs": {
+    "CandidateSelectionRequest": {
+      "additionalProperties": false,
+      "properties": {
+        "backend": {
+          "default": "cuda",
+          "enum": [
+            "generic",
+            "cuda",
+            "rocm",
+            "triton"
+          ],
+          "title": "Backend",
+          "type": "string"
+        },
+        "operator_family": {
+          "default": "generic",
+          "enum": [
+            "generic",
+            "attention-training",
+            "attention-inference-prefill",
+            "attention-inference-decode",
+            "paged-attention",
+            "dense-gemm",
+            "grouped-moe-gemm",
+            "training-fused-ops",
+            "quantization",
+            "communication-collective",
+            "moe-dispatch-combine",
+            "gpu-initiated-communication"
+          ],
+          "title": "Operator Family",
+          "type": "string"
+        },
+        "phase": {
+          "default": "generic",
+          "enum": [
+            "generic",
+            "training",
+            "inference",
+            "communication"
+          ],
+          "title": "Phase",
+          "type": "string"
+        },
+        "requested_primary_host": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Requested Primary Host"
+        }
+      },
+      "title": "CandidateSelectionRequest",
+      "type": "object"
+    },
+    "CandidateSelectionTrace": {
+      "additionalProperties": false,
+      "properties": {
+        "explanation": {
+          "title": "Explanation",
+          "type": "string"
+        },
+        "question": {
+          "title": "Question",
+          "type": "string"
+        },
+        "result": {
+          "enum": [
+            "matched",
+            "not-matched",
+            "selected",
+            "fallback",
+            "preserved"
+          ],
+          "title": "Result",
+          "type": "string"
+        },
+        "step": {
+          "minimum": 1,
+          "title": "Step",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "step",
+        "question",
+        "result",
+        "explanation"
+      ],
+      "title": "CandidateSelectionTrace",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "compilation_started": {
+      "const": false,
+      "default": false,
+      "title": "Compilation Started",
+      "type": "boolean"
+    },
+    "coverage_targets": {
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1,
+      "title": "Coverage Targets",
+      "type": "array"
+    },
+    "learned_model_used": {
+      "const": false,
+      "default": false,
+      "title": "Learned Model Used",
+      "type": "boolean"
+    },
+    "matched_rule_id": {
+      "title": "Matched Rule Id",
+      "type": "string"
+    },
+    "oracles": {
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1,
+      "title": "Oracles",
+      "type": "array"
+    },
+    "primary_host": {
+      "title": "Primary Host",
+      "type": "string"
+    },
+    "primary_peer_impl": {
+      "title": "Primary Peer Impl",
+      "type": "string"
+    },
+    "registry_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Registry Sha256",
+      "type": "string"
+    },
+    "request": {
+      "$ref": "#/$defs/CandidateSelectionRequest"
+    },
+    "required_tests": {
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1,
+      "title": "Required Tests",
+      "type": "array"
+    },
+    "schema_version": {
+      "const": "0.5",
+      "default": "0.5",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "secondary_hosts": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Secondary Hosts",
+      "type": "array"
+    },
+    "secondary_peer_impls": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Secondary Peer Impls",
+      "type": "array"
+    },
+    "selection_side_effects": {
+      "const": "metadata-only-no-import-no-build",
+      "default": "metadata-only-no-import-no-build",
+      "title": "Selection Side Effects",
+      "type": "string"
+    },
+    "trace": {
+      "items": {
+        "$ref": "#/$defs/CandidateSelectionTrace"
+      },
+      "minItems": 1,
+      "title": "Trace",
+      "type": "array"
+    },
+    "weighted_score_used": {
+      "const": false,
+      "default": false,
+      "title": "Weighted Score Used",
+      "type": "boolean"
+    },
+    "workload_sources": {
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1,
+      "title": "Workload Sources",
+      "type": "array"
+    }
+  },
+  "required": [
+    "registry_sha256",
+    "request",
+    "matched_rule_id",
+    "oracles",
+    "primary_peer_impl",
+    "primary_host",
+    "workload_sources",
+    "coverage_targets",
+    "required_tests",
+    "trace"
+  ],
+  "title": "DefaultCandidateResolution",
+  "type": "object"
+}

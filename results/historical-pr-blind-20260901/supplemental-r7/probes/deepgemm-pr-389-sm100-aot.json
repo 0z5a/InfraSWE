@@ -1,0 +1,81 @@
+{
+  "base_sha": "559d79fb6994a58b8a15b4b93bf13ccc16edf247",
+  "case_id": "deepgemm-pr-389",
+  "created_at": "2026-09-02T03:52:06.136111+00:00",
+  "evidence_sha256": "sha256:1909eb78eec4eb5bb7c87eb5c448b35b9281d8dc8014f1c5dad6ebbec8cabbfb",
+  "facts": {
+    "added_fence_instruction_count": 2,
+    "base_exact_sm100_ptx_pass": true,
+    "base_fence_before_phase_xor_count": 0,
+    "base_fence_instruction_count": 6,
+    "base_ptx_sha256": "sha256:b291f54e0822277eb8101ccbe2023fc2f15c52a4c98437b3bf2d7614b1206a19",
+    "builds": {
+      "base": {
+        "command": [
+          "/usr/local/cuda/bin/nvcc",
+          "-std=c++20",
+          "--generate-code=arch=compute_100a,code=compute_100a",
+          "--expt-relaxed-constexpr",
+          "--expt-extended-lambda",
+          "-I",
+          "/workspace/infraswe_eval/extended-r7/sources/deepgemm-base/deep_gemm/include",
+          "-I",
+          "/workspace/infraswe_eval/extended-r7/sources/deepgemm-cutlass/include",
+          "-ptx",
+          "/workspace/infraswe_eval/extended-r7/fixtures/r7_deepgemm_sm100_mega_moe.cu",
+          "-o",
+          "/workspace/infraswe_eval/extended-r7/build/deepgemm-mega-moe-base.ptx"
+        ],
+        "duration_seconds": 2.3120526779966895,
+        "return_code": 0,
+        "stderr_head": "/workspace/infraswe_eval/extended-r7/fixtures/r7_deepgemm_sm100_mega_moe.cu(7): warning #550-D: variable \"ptr\" was set but never used\n    auto ptr = reinterpret_cast<void*>(&sm100_bf16_mega_moe_impl<\n         ^\n\nRemark: The warnings can be suppressed with \"-diag-suppress <warning-number>\"\n\n/workspace/infraswe_eval/extended-r7/fixtures/r7_deepgemm_sm100_mega_moe.cu(25): warning #550-D: variable \"ptr\" was set but never used\n    auto ptr = reinterpret_cast<void*>(&sm100_fp8_fp4_mega_moe_impl<\n         ^\n\n",
+        "stderr_sha256": "sha256:b41881c051c1d09ee2750f63680bf2608915e22be810eadc4b37401cb0e3d47e",
+        "stderr_tail": "/workspace/infraswe_eval/extended-r7/fixtures/r7_deepgemm_sm100_mega_moe.cu(7): warning #550-D: variable \"ptr\" was set but never used\n    auto ptr = reinterpret_cast<void*>(&sm100_bf16_mega_moe_impl<\n         ^\n\nRemark: The warnings can be suppressed with \"-diag-suppress <warning-number>\"\n\n/workspace/infraswe_eval/extended-r7/fixtures/r7_deepgemm_sm100_mega_moe.cu(25): warning #550-D: variable \"ptr\" was set but never used\n    auto ptr = reinterpret_cast<void*>(&sm100_fp8_fp4_mega_moe_impl<\n         ^\n\n",
+        "stdout_sha256": "sha256:12ae32cb1ec02d01eda3581b127c1fee3b0dc53572ed6baf239721a03d82e126",
+        "stdout_tail": "",
+        "timed_out": false
+      },
+      "head": {
+        "command": [
+          "/usr/local/cuda/bin/nvcc",
+          "-std=c++20",
+          "--generate-code=arch=compute_100a,code=compute_100a",
+          "--expt-relaxed-constexpr",
+          "--expt-extended-lambda",
+          "-I",
+          "/workspace/infraswe_eval/extended-r7/sources/deepgemm-head/deep_gemm/include",
+          "-I",
+          "/workspace/infraswe_eval/extended-r7/sources/deepgemm-cutlass/include",
+          "-ptx",
+          "/workspace/infraswe_eval/extended-r7/fixtures/r7_deepgemm_sm100_mega_moe.cu",
+          "-o",
+          "/workspace/infraswe_eval/extended-r7/build/deepgemm-mega-moe-head.ptx"
+        ],
+        "duration_seconds": 2.3179902590054553,
+        "return_code": 0,
+        "stderr_head": "/workspace/infraswe_eval/extended-r7/fixtures/r7_deepgemm_sm100_mega_moe.cu(7): warning #550-D: variable \"ptr\" was set but never used\n    auto ptr = reinterpret_cast<void*>(&sm100_bf16_mega_moe_impl<\n         ^\n\nRemark: The warnings can be suppressed with \"-diag-suppress <warning-number>\"\n\n/workspace/infraswe_eval/extended-r7/fixtures/r7_deepgemm_sm100_mega_moe.cu(25): warning #550-D: variable \"ptr\" was set but never used\n    auto ptr = reinterpret_cast<void*>(&sm100_fp8_fp4_mega_moe_impl<\n         ^\n\n",
+        "stderr_sha256": "sha256:b41881c051c1d09ee2750f63680bf2608915e22be810eadc4b37401cb0e3d47e",
+        "stderr_tail": "/workspace/infraswe_eval/extended-r7/fixtures/r7_deepgemm_sm100_mega_moe.cu(7): warning #550-D: variable \"ptr\" was set but never used\n    auto ptr = reinterpret_cast<void*>(&sm100_bf16_mega_moe_impl<\n         ^\n\nRemark: The warnings can be suppressed with \"-diag-suppress <warning-number>\"\n\n/workspace/infraswe_eval/extended-r7/fixtures/r7_deepgemm_sm100_mega_moe.cu(25): warning #550-D: variable \"ptr\" was set but never used\n    auto ptr = reinterpret_cast<void*>(&sm100_fp8_fp4_mega_moe_impl<\n         ^\n\n",
+        "stdout_sha256": "sha256:12ae32cb1ec02d01eda3581b127c1fee3b0dc53572ed6baf239721a03d82e126",
+        "stdout_tail": "",
+        "timed_out": false
+      }
+    },
+    "dynamic_sm100_race_and_concurrency": "unresolved-no-sm100-device",
+    "head_exact_sm100_ptx_pass": true,
+    "head_fence_before_phase_xor_count": 2,
+    "head_fence_instruction_count": 8,
+    "head_ptx_contains_fence_instruction": true,
+    "head_ptx_sha256": "sha256:658c83d750f8e24b4b26ef58da5b5b6bde8f758001da974d58a7d189da6c4ef1",
+    "performance_sm100": "unresolved-no-sm100-device"
+  },
+  "failure_codes": [],
+  "head_sha": "bbbf8e4535a42f40d68e113e628add0317c4fa9b",
+  "probe": "r7-deepgemm-exact-sm100-ptx-v1",
+  "project": "deepgemm",
+  "protocol_id": "historical-pr-blind-cross-project-v0.5-r7",
+  "schema_version": "0.5",
+  "selection_lock_sha256": "sha256:e75d03448650ef7ff13f93729d151f99be652702f4971cb889dbb2c0de57716b",
+  "status": "pass",
+  "test_plan_sha256": "sha256:aa73f348b2d5ce4a19fa0c3a6e0159681f10254f5a878ad3cabbd8709f3bb888"
+}

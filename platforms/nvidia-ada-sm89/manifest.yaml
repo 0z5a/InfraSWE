@@ -1,0 +1,53 @@
+platform_id: nvidia-ada-sm89
+revision: "0.1"
+
+required:
+  accelerator_vendor: NVIDIA
+  cuda_compute_capability: "8.9"
+  canonical_products: [NVIDIA L40S, NVIDIA L20]
+  framebuffer_gb: 48
+  min_cuda_toolkit: "11.8"
+
+canonical_runner:
+  cuda_toolkit: "13.3"
+  ptx_isa: "9.3"
+  os: ubuntu-24.04-x86_64
+
+compile_targets:
+  native_cubin: sm_89
+  ptx_fallback: compute_89
+
+architecture_core:
+  shared_backend: ada_sm89
+  board_cells: [l40s-48gb-pcie, l20-48gb-pcie]
+  source_fork_by_product_name: forbidden
+  codegen_cache_cross_sku: shared
+  board_autotune_cache_cross_sku: isolated
+
+features:
+  required:
+    - fp8_e4m3_e5m2_mma
+    - fp8_e4m3_e5m2_convert
+    - cp_async
+    - l2_persisting_access
+  explicitly_forbidden:
+    - tma
+    - cp_async_bulk_tensor
+    - wgmma
+    - cta_cluster
+    - distributed_shared_memory
+    - tmem
+    - tcgen05
+    - native_fp4_e2m1
+    - multimem
+    - fabric_cft
+
+scoring:
+  authority: infraswe-scoring-v0.4
+  deployability_formula: "100*C^0.45*U^0.30*M^0.25"
+  fresh_process_replays: 7
+  architecture_overlay: diagnostic_only
+  missing_evidence: unresolved_not_zero
+  absolute_cross_device_ranking: forbidden
+  pcie_multigpu_cell: separate_optional
+  vgpu_timeslice_cell: separate_optional

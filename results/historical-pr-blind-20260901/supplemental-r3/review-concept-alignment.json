@@ -1,0 +1,147 @@
+{
+  "cases": [
+    {
+      "case_id": "sglang-pr-3136",
+      "judgment_lock_sha256": "sha256:1dc38bec6f5726467e1941d3cdbb8e34c9b865f6f9b5716fe2606286ccff6a17",
+      "machine_decision": "revise",
+      "machine_only_concepts": [],
+      "reviewer_concepts": [
+        {
+          "concept_id": "SUBMODULE_POINTER_SHOULD_NOT_CHANGE",
+          "correspondence": "exact",
+          "explanation": "The machine independently proved that the proposed pointer is four commits behind and quantified its 44-file hidden surface.",
+          "feedback_ids": [
+            "review-comment:1929654943"
+          ],
+          "machine_rule_ids": [
+            "submodule-pointer-does-not-move-backward"
+          ],
+          "reviewer_concern": "The base already points at the intended latest FlashInfer commit; the proposed pointer change must be reverted."
+        },
+        {
+          "concept_id": "TEST_POKE_REQUIRES_PURPOSE",
+          "correspondence": "exact",
+          "explanation": "The machine found that the edit adds no case or assertion and makes the error text less precise.",
+          "feedback_ids": [
+            "review-comment:1929654999"
+          ],
+          "machine_rule_ids": [
+            "test-poke-adds-observable-coverage"
+          ],
+          "reviewer_concern": "The error-string-only test change needs a legitimate purpose."
+        }
+      ],
+      "verdict_correspondence": "exact",
+      "verdict_explanation": "The reviewer requested reverting the submodule change and challenged the test poke; both are frozen machine blockers."
+    },
+    {
+      "case_id": "vllm-pr-11531",
+      "judgment_lock_sha256": "sha256:64bd6a3a17e50c76f7287b3aefdfac95fed42b0b59d5c11415d28d5eda02b01c",
+      "machine_decision": "revise",
+      "machine_only_concepts": [
+        "PAGE_COPY_DROPS_NON_INT64_TAIL_BYTES",
+        "ASYNC_PINNED_MAPPING_BUFFER_LIFETIME_RACE",
+        "ZERO_BLOCK_KERNEL_LAUNCH_UNGUARDED"
+      ],
+      "reviewer_concepts": [
+        {
+          "concept_id": "PINNED_MEMORY_AND_UVA_CAPABILITY_GATE",
+          "correspondence": "missed",
+          "explanation": "The machine exercised pinned CPU mappings on A100 but did not inspect the unsupported-platform fallback contract.",
+          "feedback_ids": [
+            "review-comment:1907497549",
+            "review-comment:1907500113"
+          ],
+          "machine_rule_ids": [],
+          "reviewer_concern": "Systems such as WSL lack pinned-memory/UVA support, so the optimized path must be capability-gated."
+        },
+        {
+          "concept_id": "PERFORMANCE_CLAIM_IS_REPRODUCIBLE",
+          "correspondence": "partial",
+          "explanation": "The machine independently swept 1/8/64/256 mappings with precompile separation, but did not reproduce the author's exact 1250-page claim.",
+          "feedback_ids": [
+            "issue-comment:2609089960",
+            "issue-comment:2658719439"
+          ],
+          "machine_rule_ids": [
+            "performance-direction-is-measured-not-assumed",
+            "compilation-is-outside-steady-state"
+          ],
+          "reviewer_concern": "The reported 1250-page result and page/block terminology need a reproducible benchmark method."
+        },
+        {
+          "concept_id": "ENGINE_GENERATION_OWNS_OPTIMIZATION",
+          "correspondence": "missed",
+          "explanation": "The machine tested the changed code but did not map it to V0/V1 architectural ownership.",
+          "feedback_ids": [
+            "issue-comment:2773681751"
+          ],
+          "machine_rule_ids": [],
+          "reviewer_concern": "The patch only optimizes the retired V0 engine while corresponding V1 work is already in progress."
+        }
+      ],
+      "verdict_correspondence": "exact",
+      "verdict_explanation": "The frozen machine and final maintainer outcome both reject the current PR shape, although their reasons are complementary."
+    },
+    {
+      "case_id": "vllm-pr-12111",
+      "judgment_lock_sha256": "sha256:2b27042931700e1cbd39d6a7f36940040838c7bae1ba96cfa7f35d61be5d0590",
+      "machine_decision": "revise",
+      "machine_only_concepts": [
+        "CPU_CUSTOM_OP_ATTRIBUTE_UNINITIALIZED"
+      ],
+      "reviewer_concepts": [
+        {
+          "concept_id": "COMPETING_PR_IS_CANONICAL_FIX",
+          "correspondence": "missed",
+          "explanation": "The machine did not search open/nearby PR ownership before testing.",
+          "feedback_ids": [
+            "review-comment:1919871986"
+          ],
+          "machine_rule_ids": [],
+          "reviewer_concern": "CPU CI is already addressed by PR 12150, which is the preferred fix."
+        },
+        {
+          "concept_id": "DISTRIBUTED_TEST_LIFECYCLE_CLEANUP",
+          "correspondence": "partial",
+          "explanation": "The machine caught one leaked process-global environment mutation, but did not name the broader distributed cleanup helper.",
+          "feedback_ids": [
+            "issue-comment:2598381043"
+          ],
+          "machine_rule_ids": [
+            "test-process-environment-is-restored"
+          ],
+          "reviewer_concern": "Sequential LLM initialization requires explicit distributed environment and memory cleanup."
+        }
+      ],
+      "verdict_correspondence": "exact",
+      "verdict_explanation": "The reviewer prefers the established competing fix; the machine independently found blockers in the current patch."
+    }
+  ],
+  "comparison_sha256": "sha256:292a51ae3ebff020478dee41d6da3272c7882808e696d41fc10d0b0f127d9242",
+  "judgment_lock_set_sha256": "sha256:b2dc2cdb9fb40fff3a23caa8a6f4a17e9dda185e9acc9ba1130e7ec003cc4dcf",
+  "learned_model_used": false,
+  "post_lock_only": true,
+  "protocol_id": "historical-human-concept-comparison-v0.5-r3",
+  "rescore_machine_locks": false,
+  "review_reveal_sha256": "sha256:a0257368ed9f7fb652f512156abb2f5f1503572769810e1420afd202245b15df",
+  "schema_version": "0.5",
+  "summary": {
+    "cases": 3,
+    "concept_correspondence": {
+      "exact": 2,
+      "missed": 3,
+      "partial": 2
+    },
+    "exact_concept_coverage": 0.2857142857142857,
+    "exact_or_partial_concept_coverage": 0.5714285714285714,
+    "machine_only_concepts": 4,
+    "reviewer_concepts": 7,
+    "verdict_correspondence": {
+      "exact": 3,
+      "missed": 0,
+      "partial": 0
+    }
+  },
+  "weighted_score_used": false
+}

@@ -1,0 +1,45 @@
+{
+  "incidents": [
+    {
+      "affected_cases": [
+        "vllm-pr-13043",
+        "flashinfer-pr-632"
+      ],
+      "candidate_attribution": false,
+      "classification": "harness-failure",
+      "details": "Initial static preflight used baseRefOid directly. GitHub PR files are relative to the PR commit ancestry, so unrelated branch-tip changes entered two diffs.",
+      "failure_code": "HISTORICAL_BASE_TIP_NOT_REPLAY_BASE",
+      "incident_id": "blind-base-acquisition-001",
+      "observed_at": "2026-09-01T13:32:28.555763+00:00",
+      "prediction_frozen": false,
+      "remediation": "derive replay base from the first PR commit first parent and rerun all checks"
+    },
+    {
+      "affected_cases": [
+        "flashattention-pr-1511"
+      ],
+      "candidate_attribution": false,
+      "classification": "harness-failure",
+      "details": "The first direct nvcc command omitted the relaxed-constexpr flags normally supplied by the PyTorch CUDA extension build chain.",
+      "failure_code": "CUDA_EXTENSION_STANDARD_FLAGS_OMITTED",
+      "incident_id": "blind-sm90-compile-flags-002",
+      "observed_at": "2026-09-01T14:50:00+00:00",
+      "prediction_frozen": false,
+      "remediation": "preserve the failed log and rerun the identical translation unit with --expt-relaxed-constexpr and --expt-extended-lambda; the retry passed"
+    },
+    {
+      "affected_cases": [
+        "flashattention-pr-1427"
+      ],
+      "candidate_attribution": false,
+      "classification": "harness-failure",
+      "details": "The historical public Python wrapper raises UnboundLocalError for local variable out under PyTorch 2.5.1. The identical failure was reproduced from both base and head Python sources before any prediction was frozen.",
+      "failure_code": "HISTORICAL_WRAPPER_TORCH25_GRAD_MODE_INCOMPATIBLE",
+      "incident_id": "blind-flashattention-wrapper-003",
+      "observed_at": "2026-09-01T15:31:00+00:00",
+      "prediction_frozen": false,
+      "remediation": "preserve both wrapper failure logs and run the predeclared fixed, varlen, backward, and KV-cache checks directly through the compiled CUDA extension entry points changed by the PR"
+    }
+  ],
+  "schema_version": "0.5"
+}

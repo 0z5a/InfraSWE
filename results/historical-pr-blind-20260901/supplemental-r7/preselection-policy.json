@@ -1,0 +1,105 @@
+{
+  "schema_version": "0.5",
+  "protocol_id": "historical-pr-blind-cross-project-v0.5-r7",
+  "frozen_at": "2026-09-02T11:03:46+08:00",
+  "purpose": "Select one additional outcome-blind implementation PR for each R6 target project.",
+  "review_text_visible_to_machine_judge": false,
+  "review_text_requested": false,
+  "merge_outcomes_visible_to_machine_judge": false,
+  "learned_model_used": false,
+  "weighted_score_used": false,
+  "projects_in_order": [
+    "cutlass-cute",
+    "liger-kernel",
+    "deepgemm",
+    "megatron-core",
+    "torchtitan",
+    "verl"
+  ],
+  "repository_by_project": {
+    "cutlass-cute": "NVIDIA/cutlass",
+    "liger-kernel": "linkedin/Liger-Kernel",
+    "deepgemm": "deepseek-ai/DeepGEMM",
+    "megatron-core": "NVIDIA/Megatron-LM",
+    "torchtitan": "pytorch/torchtitan",
+    "verl": "verl-project/verl"
+  },
+  "excluded_pull_numbers": {
+    "cutlass-cute": [2275],
+    "liger-kernel": [804],
+    "deepgemm": [55],
+    "megatron-core": [5608],
+    "torchtitan": [2717],
+    "verl": [1688]
+  },
+  "time_window": {
+    "created_at_or_after": "2024-01-01T00:00:00Z",
+    "created_at_or_before": "2026-07-31T23:59:59Z"
+  },
+  "metadata_only_discovery_fields": [
+    "number",
+    "title",
+    "createdAt",
+    "author.login",
+    "baseRefName",
+    "baseRefOid",
+    "headRefOid",
+    "changedFiles",
+    "additions",
+    "deletions",
+    "files.path",
+    "commits.commit.oid",
+    "commits.commit.parents.oid"
+  ],
+  "forbidden_before_machine_judgment_lock": [
+    "state",
+    "merged",
+    "mergedAt",
+    "closedAt",
+    "reviews",
+    "reviewDecision",
+    "comments",
+    "timelineItems",
+    "diff content",
+    "commit messages"
+  ],
+  "eligibility": {
+    "changed_files_min": 1,
+    "changed_files_max": 6,
+    "changed_lines_max": 400,
+    "require_source_path_in_profile_integration_points": true,
+    "exclude_docs_only": true,
+    "exclude_tests_only": true,
+    "exclude_dependency_only": true,
+    "exclude_generated_only": true,
+    "title_tokens_any": [
+      "fix",
+      "bug",
+      "perf",
+      "performance",
+      "kernel",
+      "triton",
+      "cuda",
+      "compile",
+      "graph",
+      "dtype",
+      "memory",
+      "fuse",
+      "optimize",
+      "optimise"
+    ]
+  },
+  "ranking": [
+    "eligible candidates only",
+    "newest createdAt",
+    "fewest changed files",
+    "fewest additions plus deletions",
+    "lowest pull number as final tie break"
+  ],
+  "selection_count_per_project": 1,
+  "base_derivation": "Use the first PR commit's first parent, then require exact changed-path parity with base..head before inspecting diff content.",
+  "failure_policy": "If the selected case cannot be instantiated after the test plan is frozen, retain it as unresolved; do not substitute a new PR after source inspection.",
+  "pre_discovery_amendments": [
+    "Repository search identity for verl was changed from volcengine/verl to verl-project/verl after the former returned zero search results; no pull-request metadata, outcome, diff, review, or comment was observed from the failed lookup."
+  ]
+}

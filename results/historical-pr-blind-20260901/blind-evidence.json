@@ -1,0 +1,1123 @@
+[
+  {
+    "candidate_failure_codes": [],
+    "candidate_sha256": "sha256:47a5f22f5924d8caa5f5a5c587cac0b301d4ddc1fb6defb0f3657bf7a44dff90",
+    "case_id": "flashattention-pr-1326",
+    "checks": [
+      {
+        "category": "checkout",
+        "command": [
+          "git",
+          "rev-parse",
+          "HEAD"
+        ],
+        "details": "exact head SHA 8cd81a8d8c5e5d2bd34d598bb7648e50c2cbd06c",
+        "duration_seconds": 0.004103815881535411,
+        "failure_code": null,
+        "name": "exact-head-checkout",
+        "return_code": 0,
+        "status": "pass",
+        "stderr_sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_sha256": "sha256:c16baa8a8f548f9fa639c1690a0e8018d83b8fea65cfd0e44fb5ad059da36c0d"
+      },
+      {
+        "category": "static",
+        "command": [
+          "git",
+          "diff",
+          "--check",
+          "2f6c6331792dd20002a2e551959e172617a1bfbc",
+          "8cd81a8d8c5e5d2bd34d598bb7648e50c2cbd06c"
+        ],
+        "details": "path_parity=True; head_parse=pass; base_parse=pass",
+        "duration_seconds": 0.005987514974549413,
+        "failure_code": null,
+        "name": "diff-path-and-parse-contract",
+        "return_code": 0,
+        "status": "pass",
+        "stderr_sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "category": "unit",
+        "command": [
+          "python",
+          "flashattention_wheel_matrix_probe.py",
+          "--worktree",
+          "flashattention-pr-1326-head"
+        ],
+        "details": "CUDA 12.4 and 12.5 both resolve to the cu124 wheel family; workflow YAML parses",
+        "duration_seconds": null,
+        "failure_code": null,
+        "name": "head-wheel-cuda-matrix",
+        "return_code": 0,
+        "status": "pass",
+        "stderr_sha256": null,
+        "stdout_sha256": "sha256:2806d3676ac668fa1a61f1951f6a6d90ea2998dbce93b70ec4d7fc37c6821807"
+      },
+      {
+        "category": "unit",
+        "command": [
+          "python",
+          "flashattention_wheel_matrix_probe.py",
+          "--worktree",
+          "flashattention-pr-1326-base"
+        ],
+        "details": "negative control confirmed: the base resolves CUDA 12.x to cu123",
+        "duration_seconds": null,
+        "failure_code": null,
+        "name": "base-negative-control",
+        "return_code": 1,
+        "status": "pass",
+        "stderr_sha256": null,
+        "stdout_sha256": "sha256:b05e8e2488163f11ca3c9d65788bdbbfbdf8ec54b38cb504bf3c1e8151918004"
+      }
+    ],
+    "environment_sha256": "sha256:389538b7e4b4b618e16f13890ae53754a9c7ca89625012b309698eb531dce8cf",
+    "finished_at": "2026-09-01T15:29:54.459704Z",
+    "infrastructure_failure_codes": [],
+    "raw_evidence_digests": [
+      "sha256:2806d3676ac668fa1a61f1951f6a6d90ea2998dbce93b70ec4d7fc37c6821807",
+      "sha256:44887bd0158b8c75e3c1836de317e5f89f08c691114875dfec84f68876097235",
+      "sha256:af9df5a913ff7a4c65706f02e80082919e28b099e2cd48d77a33f9e955a86008",
+      "sha256:b05e8e2488163f11ca3c9d65788bdbbfbdf8ec54b38cb504bf3c1e8151918004",
+      "sha256:c6913be50e93f223199803388abfc0668f0b4079f99b2571dc5735449bd7ef32",
+      "sha256:df594995344b4200faa794fe83e5c437e31316e13f4f7af2a8eccb49a18372ba"
+    ],
+    "schema_version": "0.5",
+    "stage": "F2-affected",
+    "started_at": "2026-09-01T14:26:08Z",
+    "test_plan_sha256": "sha256:70619e6ce4d132a25e20daadacfbb675b20b93a52041e4de2e12fab78b14a924"
+  },
+  {
+    "candidate_failure_codes": [],
+    "candidate_sha256": "sha256:4af6ebf6017bd9c0ae50d67f8b8731272e56fb8f4336bd844cccbfb72289350f",
+    "case_id": "flashattention-pr-1427",
+    "checks": [
+      {
+        "category": "checkout",
+        "command": [
+          "git",
+          "rev-parse",
+          "HEAD"
+        ],
+        "details": "exact head SHA 915275035da5ed535887dbbbbff0525a769ed011",
+        "duration_seconds": 0.004148446023464203,
+        "failure_code": null,
+        "name": "exact-head-checkout",
+        "return_code": 0,
+        "status": "pass",
+        "stderr_sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_sha256": "sha256:f3cecdaa03ee19bcc364d6efb871c1cbd84843a1485d973fbd58ea329600b8b4"
+      },
+      {
+        "category": "static",
+        "command": [
+          "git",
+          "diff",
+          "--check",
+          "9b0f19cc5c62da14346193c8985d06f7419c45a6",
+          "915275035da5ed535887dbbbbff0525a769ed011"
+        ],
+        "details": "path_parity=True; head_parse=pass; base_parse=pass",
+        "duration_seconds": 0.006558242021128535,
+        "failure_code": null,
+        "name": "diff-path-and-parse-contract",
+        "return_code": 0,
+        "status": "pass",
+        "stderr_sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "category": "build",
+        "command": [
+          "uv",
+          "pip",
+          "install",
+          "--no-build-isolation",
+          "--no-deps",
+          "flashattention-pr-1427-head"
+        ],
+        "details": "source wheel built for the historical head with CUDA 12.8 and SM80/SM90 objects",
+        "duration_seconds": null,
+        "failure_code": null,
+        "name": "head-source-build",
+        "return_code": 0,
+        "status": "pass",
+        "stderr_sha256": null,
+        "stdout_sha256": "sha256:bf7b5e18081fc4f828f49cb99d0aefaadd70e24643e8ff9af367dc87e57426fb"
+      },
+      {
+        "category": "gpu",
+        "command": [
+          "python",
+          "flashattention_sm80_smoke.py"
+        ],
+        "details": "fixed forward/backward, varlen, and KV-cache compiled CUDA extension entry points compared with a PyTorch reference",
+        "duration_seconds": null,
+        "failure_code": null,
+        "name": "head-sm80-entrypoint-smoke",
+        "return_code": 0,
+        "status": "pass",
+        "stderr_sha256": null,
+        "stdout_sha256": "sha256:1a63df615382754d2e5452c454022e5b93918007f34fd6f26d9ed6006b40afd2"
+      },
+      {
+        "category": "policy",
+        "command": [
+          "base-head-wrapper-parity",
+          "then-direct-cuda-entrypoint-probe"
+        ],
+        "details": "the PyTorch 2.5 wrapper failure reproduced identically on base and head; it was excluded from candidate attribution before the direct affected-entrypoint probe",
+        "duration_seconds": null,
+        "failure_code": null,
+        "name": "base-head-wrapper-harness-attribution",
+        "return_code": 0,
+        "status": "pass",
+        "stderr_sha256": null,
+        "stdout_sha256": null
+      }
+    ],
+    "environment_sha256": "sha256:389538b7e4b4b618e16f13890ae53754a9c7ca89625012b309698eb531dce8cf",
+    "finished_at": "2026-09-01T15:29:54.459704Z",
+    "infrastructure_failure_codes": [],
+    "raw_evidence_digests": [
+      "sha256:1a63df615382754d2e5452c454022e5b93918007f34fd6f26d9ed6006b40afd2",
+      "sha256:331ef9de538bb6e19ef6aa9d1d20008ff5c47752d0750e7b8be1692fc341cdaa",
+      "sha256:44887bd0158b8c75e3c1836de317e5f89f08c691114875dfec84f68876097235",
+      "sha256:af9df5a913ff7a4c65706f02e80082919e28b099e2cd48d77a33f9e955a86008",
+      "sha256:bf7b5e18081fc4f828f49cb99d0aefaadd70e24643e8ff9af367dc87e57426fb",
+      "sha256:c6913be50e93f223199803388abfc0668f0b4079f99b2571dc5735449bd7ef32",
+      "sha256:df594995344b4200faa794fe83e5c437e31316e13f4f7af2a8eccb49a18372ba"
+    ],
+    "schema_version": "0.5",
+    "stage": "F2-affected",
+    "started_at": "2026-09-01T14:26:08Z",
+    "test_plan_sha256": "sha256:70619e6ce4d132a25e20daadacfbb675b20b93a52041e4de2e12fab78b14a924"
+  },
+  {
+    "candidate_failure_codes": [],
+    "candidate_sha256": "sha256:365433f3ccaa26f8cb972304c5156a8844cadb81fae9e6dd622876ab9e534d09",
+    "case_id": "flashattention-pr-1511",
+    "checks": [
+      {
+        "category": "checkout",
+        "command": [
+          "git",
+          "rev-parse",
+          "HEAD"
+        ],
+        "details": "exact head SHA 49f0924022b9feb29e01cee31587371f414c55f0",
+        "duration_seconds": 0.004164154874160886,
+        "failure_code": null,
+        "name": "exact-head-checkout",
+        "return_code": 0,
+        "status": "pass",
+        "stderr_sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_sha256": "sha256:ba990126b9aeaaa573b7119a5657e031dbf5af2dd323a804aa17def22ca206e6"
+      },
+      {
+        "category": "static",
+        "command": [
+          "git",
+          "diff",
+          "--check",
+          "3b5047d2ce742848f45d44b143d511f211eba2d2",
+          "49f0924022b9feb29e01cee31587371f414c55f0"
+        ],
+        "details": "path_parity=True; head_parse=pass; base_parse=pass",
+        "duration_seconds": 0.007221478037536144,
+        "failure_code": null,
+        "name": "diff-path-and-parse-contract",
+        "return_code": 0,
+        "status": "pass",
+        "stderr_sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "category": "build",
+        "command": [
+          "nvcc",
+          "--expt-relaxed-constexpr",
+          "--expt-extended-lambda",
+          "-gencode",
+          "arch=compute_90a,code=sm_90a",
+          "flash_fwd_hdim64_fp16_sm90.cu"
+        ],
+        "details": "the affected Hopper translation unit instantiated successfully",
+        "duration_seconds": null,
+        "failure_code": null,
+        "name": "head-sm90-header-instantiation",
+        "return_code": 0,
+        "status": "pass",
+        "stderr_sha256": null,
+        "stdout_sha256": null
+      },
+      {
+        "category": "gpu",
+        "command": [],
+        "details": "the A100 cell cannot execute an SM90a kernel",
+        "duration_seconds": null,
+        "failure_code": "TARGET_SM90_RUNTIME_UNAVAILABLE",
+        "name": "target-sm90-runtime",
+        "return_code": null,
+        "status": "unresolved",
+        "stderr_sha256": null,
+        "stdout_sha256": null
+      },
+      {
+        "category": "policy",
+        "command": [],
+        "details": "the first missing-flag compile was isolated as a harness incident and excluded from candidate attribution",
+        "duration_seconds": null,
+        "failure_code": null,
+        "name": "harness-attribution-audit",
+        "return_code": 0,
+        "status": "pass",
+        "stderr_sha256": null,
+        "stdout_sha256": null
+      }
+    ],
+    "environment_sha256": "sha256:389538b7e4b4b618e16f13890ae53754a9c7ca89625012b309698eb531dce8cf",
+    "finished_at": "2026-09-01T15:29:54.459704Z",
+    "infrastructure_failure_codes": [
+      "TARGET_SM90_RUNTIME_UNAVAILABLE"
+    ],
+    "raw_evidence_digests": [
+      "sha256:331ef9de538bb6e19ef6aa9d1d20008ff5c47752d0750e7b8be1692fc341cdaa",
+      "sha256:44887bd0158b8c75e3c1836de317e5f89f08c691114875dfec84f68876097235",
+      "sha256:a7dc019cf8335460a29e40e54fc16495c0fb0759ef79ca487f9b2020d3fc7d65",
+      "sha256:af9df5a913ff7a4c65706f02e80082919e28b099e2cd48d77a33f9e955a86008",
+      "sha256:c6913be50e93f223199803388abfc0668f0b4079f99b2571dc5735449bd7ef32",
+      "sha256:df594995344b4200faa794fe83e5c437e31316e13f4f7af2a8eccb49a18372ba"
+    ],
+    "schema_version": "0.5",
+    "stage": "F2-affected",
+    "started_at": "2026-09-01T14:26:08Z",
+    "test_plan_sha256": "sha256:70619e6ce4d132a25e20daadacfbb675b20b93a52041e4de2e12fab78b14a924"
+  },
+  {
+    "candidate_failure_codes": [],
+    "candidate_sha256": "sha256:052578f1fa1c38afba1951464083ff720b4308b3b414be424a551eea8b1f64df",
+    "case_id": "flashinfer-pr-624",
+    "checks": [
+      {
+        "category": "checkout",
+        "command": [
+          "git",
+          "rev-parse",
+          "HEAD"
+        ],
+        "details": "exact head SHA c2caeea9143e9849bb36c8a1f4ea4f52d2f25cfc",
+        "duration_seconds": 0.004197374917566776,
+        "failure_code": null,
+        "name": "exact-head-checkout",
+        "return_code": 0,
+        "status": "pass",
+        "stderr_sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_sha256": "sha256:ca3731f23604f47fdd92773ad8d0e8acb0b6e5866dc41ed41f058016eaedf117"
+      },
+      {
+        "category": "static",
+        "command": [
+          "git",
+          "diff",
+          "--check",
+          "3ed9a8be2223a112ac2ef868db414ea1f5091630",
+          "c2caeea9143e9849bb36c8a1f4ea4f52d2f25cfc"
+        ],
+        "details": "path_parity=True; head_parse=pass; base_parse=pass",
+        "duration_seconds": 0.005347238853573799,
+        "failure_code": null,
+        "name": "diff-path-and-parse-contract",
+        "return_code": 0,
+        "status": "pass",
+        "stderr_sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "category": "unit",
+        "command": [
+          "python",
+          "flashinfer_aot_uri_probe.py",
+          "--worktree",
+          "flashinfer-pr-624-head"
+        ],
+        "details": "336 total URIs, including 144 prefill URIs, were unique and no prefill URI encoded the mask mode",
+        "duration_seconds": null,
+        "failure_code": null,
+        "name": "head-aot-uri-uniqueness",
+        "return_code": 0,
+        "status": "pass",
+        "stderr_sha256": null,
+        "stdout_sha256": "sha256:dc2fcc16d914c546c86199c69c622ce89fa27eef435b02659639907e9305d678"
+      },
+      {
+        "category": "unit",
+        "command": [
+          "python",
+          "flashinfer_aot_uri_probe.py",
+          "--worktree",
+          "flashinfer-pr-624-base"
+        ],
+        "details": "negative control confirmed: all 432 base prefill URIs encoded the mask mode",
+        "duration_seconds": null,
+        "failure_code": null,
+        "name": "base-negative-control",
+        "return_code": 1,
+        "status": "pass",
+        "stderr_sha256": null,
+        "stdout_sha256": "sha256:62774ec0783e2a9922a641e92f1fc96c63e04d4ffaa154eccbd80619ce4e893d"
+      }
+    ],
+    "environment_sha256": "sha256:389538b7e4b4b618e16f13890ae53754a9c7ca89625012b309698eb531dce8cf",
+    "finished_at": "2026-09-01T15:29:54.459704Z",
+    "infrastructure_failure_codes": [],
+    "raw_evidence_digests": [
+      "sha256:44887bd0158b8c75e3c1836de317e5f89f08c691114875dfec84f68876097235",
+      "sha256:62774ec0783e2a9922a641e92f1fc96c63e04d4ffaa154eccbd80619ce4e893d",
+      "sha256:af9df5a913ff7a4c65706f02e80082919e28b099e2cd48d77a33f9e955a86008",
+      "sha256:c6913be50e93f223199803388abfc0668f0b4079f99b2571dc5735449bd7ef32",
+      "sha256:dc2fcc16d914c546c86199c69c622ce89fa27eef435b02659639907e9305d678",
+      "sha256:df594995344b4200faa794fe83e5c437e31316e13f4f7af2a8eccb49a18372ba"
+    ],
+    "schema_version": "0.5",
+    "stage": "F2-affected",
+    "started_at": "2026-09-01T14:26:08Z",
+    "test_plan_sha256": "sha256:70619e6ce4d132a25e20daadacfbb675b20b93a52041e4de2e12fab78b14a924"
+  },
+  {
+    "candidate_failure_codes": [],
+    "candidate_sha256": "sha256:8f78b407f273293bfeb0d259a630d6ee6c6fa3a6ceffb081dfb02d3c34f8108a",
+    "case_id": "flashinfer-pr-632",
+    "checks": [
+      {
+        "category": "checkout",
+        "command": [
+          "git",
+          "rev-parse",
+          "HEAD"
+        ],
+        "details": "exact head SHA 792a0b9732798184ca46d6b7481aadb874158e8d",
+        "duration_seconds": 0.004881871165707707,
+        "failure_code": null,
+        "name": "exact-head-checkout",
+        "return_code": 0,
+        "status": "pass",
+        "stderr_sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_sha256": "sha256:8e753a088ef74dc768e88f7b7ce963271a9503dde63b4337c8d1b613093bce42"
+      },
+      {
+        "category": "static",
+        "command": [
+          "git",
+          "diff",
+          "--check",
+          "6ec4db344cbcacc559fcd6fa9b5de83f7e25b5eb",
+          "792a0b9732798184ca46d6b7481aadb874158e8d"
+        ],
+        "details": "path_parity=True; head_parse=pass; base_parse=pass",
+        "duration_seconds": 0.005521357990801334,
+        "failure_code": null,
+        "name": "diff-path-and-parse-contract",
+        "return_code": 0,
+        "status": "pass",
+        "stderr_sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "category": "unit",
+        "command": [
+          "python",
+          "flashinfer_jit_template_probe.py",
+          "--worktree",
+          "flashinfer-pr-632-head"
+        ],
+        "details": "all 20 batch, single, and customizable templates rendered strictly with every mask split suffix",
+        "duration_seconds": null,
+        "failure_code": null,
+        "name": "head-jit-template-render",
+        "return_code": 0,
+        "status": "pass",
+        "stderr_sha256": null,
+        "stdout_sha256": "sha256:87593bfb60e7a89a78458f339117935455bc3c21bb1d4a0b987728f332a0f881"
+      },
+      {
+        "category": "unit",
+        "command": [
+          "python",
+          "flashinfer_jit_template_probe.py",
+          "--worktree",
+          "flashinfer-pr-632-base"
+        ],
+        "details": "negative control confirmed: nine required mask split suffixes are absent in the base",
+        "duration_seconds": null,
+        "failure_code": null,
+        "name": "base-negative-control",
+        "return_code": 1,
+        "status": "pass",
+        "stderr_sha256": null,
+        "stdout_sha256": "sha256:b7e6463ad366668fe05d05966c895468d92d0bf37f81bab6124b9e7d0f2f889e"
+      }
+    ],
+    "environment_sha256": "sha256:389538b7e4b4b618e16f13890ae53754a9c7ca89625012b309698eb531dce8cf",
+    "finished_at": "2026-09-01T15:29:54.459704Z",
+    "infrastructure_failure_codes": [],
+    "raw_evidence_digests": [
+      "sha256:44887bd0158b8c75e3c1836de317e5f89f08c691114875dfec84f68876097235",
+      "sha256:87593bfb60e7a89a78458f339117935455bc3c21bb1d4a0b987728f332a0f881",
+      "sha256:af9df5a913ff7a4c65706f02e80082919e28b099e2cd48d77a33f9e955a86008",
+      "sha256:b7e6463ad366668fe05d05966c895468d92d0bf37f81bab6124b9e7d0f2f889e",
+      "sha256:c6913be50e93f223199803388abfc0668f0b4079f99b2571dc5735449bd7ef32",
+      "sha256:df594995344b4200faa794fe83e5c437e31316e13f4f7af2a8eccb49a18372ba"
+    ],
+    "schema_version": "0.5",
+    "stage": "F2-affected",
+    "started_at": "2026-09-01T14:26:08Z",
+    "test_plan_sha256": "sha256:70619e6ce4d132a25e20daadacfbb675b20b93a52041e4de2e12fab78b14a924"
+  },
+  {
+    "candidate_failure_codes": [],
+    "candidate_sha256": "sha256:90c8e666d2543181a9027d35c1c991590f02de2092144019a32fb9e2fbc68a2d",
+    "case_id": "flashinfer-pr-810",
+    "checks": [
+      {
+        "category": "checkout",
+        "command": [
+          "git",
+          "rev-parse",
+          "HEAD"
+        ],
+        "details": "exact head SHA 63e100a26cdaa3454c3a7859918a5b2688411a46",
+        "duration_seconds": 0.004068376030772924,
+        "failure_code": null,
+        "name": "exact-head-checkout",
+        "return_code": 0,
+        "status": "pass",
+        "stderr_sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_sha256": "sha256:fc6b6843197a63264789ef7d258c46d9e8d02e74d5f6f581461556474f94bbcf"
+      },
+      {
+        "category": "static",
+        "command": [
+          "git",
+          "diff",
+          "--check",
+          "106e6fc24a80ee2aa534dfd29274bb67091dce65",
+          "63e100a26cdaa3454c3a7859918a5b2688411a46"
+        ],
+        "details": "path_parity=True; head_parse=pass; base_parse=pass",
+        "duration_seconds": 0.006287232972681522,
+        "failure_code": null,
+        "name": "diff-path-and-parse-contract",
+        "return_code": 0,
+        "status": "pass",
+        "stderr_sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "category": "build",
+        "command": [
+          "uv",
+          "pip",
+          "install",
+          "--no-build-isolation",
+          "--no-deps",
+          "flashinfer-pr-810-head"
+        ],
+        "details": "the historical head package installed successfully without AOT kernels",
+        "duration_seconds": null,
+        "failure_code": null,
+        "name": "head-package-install",
+        "return_code": 0,
+        "status": "pass",
+        "stderr_sha256": null,
+        "stdout_sha256": "sha256:1110450e29f415386f217f8bda6733f1e537f2151838a579471fcbcddcadbe41"
+      },
+      {
+        "category": "gpu",
+        "command": [
+          "python",
+          "flashinfer_mla_page_size_probe.py",
+          "--page-size",
+          "16"
+        ],
+        "details": "SM80 JIT compilation reaches an explicit stmatrix/SM90 static assertion before the page-size probe can run",
+        "duration_seconds": null,
+        "failure_code": "TARGET_SM90_STMATRIX_RUNTIME_UNAVAILABLE",
+        "name": "head-page-size-runtime",
+        "return_code": 1,
+        "status": "unresolved",
+        "stderr_sha256": "sha256:8a700929011179ccc78a8f6efc36663753354ba68c9ab5618cb1c1219bc9a518",
+        "stdout_sha256": null
+      },
+      {
+        "category": "build",
+        "command": [
+          "python",
+          "flashinfer_mla_page_size_probe.py",
+          "--worktree",
+          "flashinfer-pr-810-base"
+        ],
+        "details": "negative control confirmed: the base reaches the identical SM90-only static assertion",
+        "duration_seconds": null,
+        "failure_code": null,
+        "name": "base-infrastructure-negative-control",
+        "return_code": 1,
+        "status": "pass",
+        "stderr_sha256": "sha256:65120b82a49b93881d7a95baba8bbb8e35a41f8e212146b4bbeced9eff3096ab",
+        "stdout_sha256": null
+      }
+    ],
+    "environment_sha256": "sha256:389538b7e4b4b618e16f13890ae53754a9c7ca89625012b309698eb531dce8cf",
+    "finished_at": "2026-09-01T15:29:54.459704Z",
+    "infrastructure_failure_codes": [
+      "TARGET_SM90_STMATRIX_RUNTIME_UNAVAILABLE"
+    ],
+    "raw_evidence_digests": [
+      "sha256:1110450e29f415386f217f8bda6733f1e537f2151838a579471fcbcddcadbe41",
+      "sha256:44887bd0158b8c75e3c1836de317e5f89f08c691114875dfec84f68876097235",
+      "sha256:65120b82a49b93881d7a95baba8bbb8e35a41f8e212146b4bbeced9eff3096ab",
+      "sha256:8a700929011179ccc78a8f6efc36663753354ba68c9ab5618cb1c1219bc9a518",
+      "sha256:af9df5a913ff7a4c65706f02e80082919e28b099e2cd48d77a33f9e955a86008",
+      "sha256:c6913be50e93f223199803388abfc0668f0b4079f99b2571dc5735449bd7ef32",
+      "sha256:df594995344b4200faa794fe83e5c437e31316e13f4f7af2a8eccb49a18372ba"
+    ],
+    "schema_version": "0.5",
+    "stage": "F2-affected",
+    "started_at": "2026-09-01T14:26:08Z",
+    "test_plan_sha256": "sha256:70619e6ce4d132a25e20daadacfbb675b20b93a52041e4de2e12fab78b14a924"
+  },
+  {
+    "candidate_failure_codes": [],
+    "candidate_sha256": "sha256:781b2666ac8c91c7db4dd653f991a7c9355b096ab0c46b0bd075ec10cfa9829e",
+    "case_id": "sglang-pr-3053",
+    "checks": [
+      {
+        "category": "checkout",
+        "command": [
+          "git",
+          "rev-parse",
+          "HEAD"
+        ],
+        "details": "exact head SHA 4ad34c249361aee9ced16bd1c297ea831f5763b0",
+        "duration_seconds": 0.00390449701808393,
+        "failure_code": null,
+        "name": "exact-head-checkout",
+        "return_code": 0,
+        "status": "pass",
+        "stderr_sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_sha256": "sha256:fd8ae05964e589726d63f4f6497400f153bebfcd2d820021c449ba31f6749fee"
+      },
+      {
+        "category": "static",
+        "command": [
+          "git",
+          "diff",
+          "--check",
+          "7353fb9b97705c89d205aa3477b446759fcb86b7",
+          "4ad34c249361aee9ced16bd1c297ea831f5763b0"
+        ],
+        "details": "path_parity=True; head_parse=pass; base_parse=pass",
+        "duration_seconds": 0.003994356840848923,
+        "failure_code": null,
+        "name": "diff-path-and-parse-contract",
+        "return_code": 0,
+        "status": "pass",
+        "stderr_sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "category": "build",
+        "command": [
+          "uv",
+          "pip",
+          "install",
+          "sgl-kernel"
+        ],
+        "details": "the exact historical head sgl-kernel built successfully",
+        "duration_seconds": null,
+        "failure_code": null,
+        "name": "head-sgl-kernel-build",
+        "return_code": 0,
+        "status": "pass",
+        "stderr_sha256": null,
+        "stdout_sha256": "sha256:3b4e22eb0251ffc78d6ebe5cd84c0b06a9cee805035705d5fc1f09284db5760a"
+      },
+      {
+        "category": "gpu",
+        "command": [
+          "pytest",
+          "-q",
+          "tests/test_activation.py"
+        ],
+        "details": "945 activation GPU parametrizations passed",
+        "duration_seconds": null,
+        "failure_code": null,
+        "name": "head-activation-tests",
+        "return_code": 0,
+        "status": "pass",
+        "stderr_sha256": null,
+        "stdout_sha256": "sha256:3440bb85b5430ec8351e4267dea15fb65144dc929a28ef12d6f69e7a4c9b74c4"
+      }
+    ],
+    "environment_sha256": "sha256:389538b7e4b4b618e16f13890ae53754a9c7ca89625012b309698eb531dce8cf",
+    "finished_at": "2026-09-01T15:29:54.459704Z",
+    "infrastructure_failure_codes": [],
+    "raw_evidence_digests": [
+      "sha256:3440bb85b5430ec8351e4267dea15fb65144dc929a28ef12d6f69e7a4c9b74c4",
+      "sha256:3b4e22eb0251ffc78d6ebe5cd84c0b06a9cee805035705d5fc1f09284db5760a",
+      "sha256:44887bd0158b8c75e3c1836de317e5f89f08c691114875dfec84f68876097235",
+      "sha256:af9df5a913ff7a4c65706f02e80082919e28b099e2cd48d77a33f9e955a86008",
+      "sha256:c6913be50e93f223199803388abfc0668f0b4079f99b2571dc5735449bd7ef32",
+      "sha256:df594995344b4200faa794fe83e5c437e31316e13f4f7af2a8eccb49a18372ba"
+    ],
+    "schema_version": "0.5",
+    "stage": "F2-affected",
+    "started_at": "2026-09-01T14:26:08Z",
+    "test_plan_sha256": "sha256:70619e6ce4d132a25e20daadacfbb675b20b93a52041e4de2e12fab78b14a924"
+  },
+  {
+    "candidate_failure_codes": [],
+    "candidate_sha256": "sha256:dd027d6cb5610a9819f120b79ab23b243dc64f8d41b4a5b0f9033745562b75c0",
+    "case_id": "sglang-pr-3121",
+    "checks": [
+      {
+        "category": "checkout",
+        "command": [
+          "git",
+          "rev-parse",
+          "HEAD"
+        ],
+        "details": "exact head SHA 20988995b93b1161a5e8ed07ada5256c6cdba955",
+        "duration_seconds": 0.003710157936438918,
+        "failure_code": null,
+        "name": "exact-head-checkout",
+        "return_code": 0,
+        "status": "pass",
+        "stderr_sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_sha256": "sha256:c1cd3141a72e751ef3f33e8a73d96dbd4071c0c79de33541c2b6deeb3691f4eb"
+      },
+      {
+        "category": "static",
+        "command": [
+          "git",
+          "diff",
+          "--check",
+          "665e5e85f6d7a3a153d852cf11f73ba2f892fdff",
+          "20988995b93b1161a5e8ed07ada5256c6cdba955"
+        ],
+        "details": "path_parity=True; head_parse=pass; base_parse=pass",
+        "duration_seconds": 0.0068139201030135155,
+        "failure_code": null,
+        "name": "diff-path-and-parse-contract",
+        "return_code": 0,
+        "status": "pass",
+        "stderr_sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "category": "build",
+        "command": [
+          "uv",
+          "pip",
+          "install",
+          "sgl-kernel"
+        ],
+        "details": "the exact historical head sgl-kernel built successfully",
+        "duration_seconds": null,
+        "failure_code": null,
+        "name": "head-sgl-kernel-build",
+        "return_code": 0,
+        "status": "pass",
+        "stderr_sha256": null,
+        "stdout_sha256": "sha256:6667c89d21a9dcb061dd210983b54a46712adce663e5b769b6715bbbffe6e87d"
+      },
+      {
+        "category": "gpu",
+        "command": [
+          "pytest",
+          "-q",
+          "tests/test_sampling_scaling_penalties.py"
+        ],
+        "details": "144 scaling-penalties GPU parametrizations passed",
+        "duration_seconds": null,
+        "failure_code": null,
+        "name": "head-scaling-penalties-tests",
+        "return_code": 0,
+        "status": "pass",
+        "stderr_sha256": null,
+        "stdout_sha256": "sha256:c4b3799b0133612e248d0ec7c185d8b87ec5a1663e86e34476f9209cce5bd234"
+      }
+    ],
+    "environment_sha256": "sha256:389538b7e4b4b618e16f13890ae53754a9c7ca89625012b309698eb531dce8cf",
+    "finished_at": "2026-09-01T15:29:54.459704Z",
+    "infrastructure_failure_codes": [],
+    "raw_evidence_digests": [
+      "sha256:44887bd0158b8c75e3c1836de317e5f89f08c691114875dfec84f68876097235",
+      "sha256:6667c89d21a9dcb061dd210983b54a46712adce663e5b769b6715bbbffe6e87d",
+      "sha256:af9df5a913ff7a4c65706f02e80082919e28b099e2cd48d77a33f9e955a86008",
+      "sha256:c4b3799b0133612e248d0ec7c185d8b87ec5a1663e86e34476f9209cce5bd234",
+      "sha256:c6913be50e93f223199803388abfc0668f0b4079f99b2571dc5735449bd7ef32",
+      "sha256:df594995344b4200faa794fe83e5c437e31316e13f4f7af2a8eccb49a18372ba"
+    ],
+    "schema_version": "0.5",
+    "stage": "F2-affected",
+    "started_at": "2026-09-01T14:26:08Z",
+    "test_plan_sha256": "sha256:70619e6ce4d132a25e20daadacfbb675b20b93a52041e4de2e12fab78b14a924"
+  },
+  {
+    "candidate_failure_codes": [],
+    "candidate_sha256": "sha256:c63827a0a5fa5b671f12d9556de8ca7efba084a7f987aa99c0c43d33d754900d",
+    "case_id": "sglang-pr-3347",
+    "checks": [
+      {
+        "category": "checkout",
+        "command": [
+          "git",
+          "rev-parse",
+          "HEAD"
+        ],
+        "details": "exact head SHA 85bd2fe6b0684d29ea97f58fa46288db45dc6b10",
+        "duration_seconds": 0.003998226951807737,
+        "failure_code": null,
+        "name": "exact-head-checkout",
+        "return_code": 0,
+        "status": "pass",
+        "stderr_sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_sha256": "sha256:ebc75d9ad1f2801d34a1c1606e1e02104356cf3d2aef2da9ddc51f15e0c07b3a"
+      },
+      {
+        "category": "static",
+        "command": [
+          "git",
+          "diff",
+          "--check",
+          "adeee15204a364559b20b0cfe1314f3090a97516",
+          "85bd2fe6b0684d29ea97f58fa46288db45dc6b10"
+        ],
+        "details": "path_parity=True; head_parse=pass; base_parse=pass",
+        "duration_seconds": 0.008256722008809447,
+        "failure_code": null,
+        "name": "diff-path-and-parse-contract",
+        "return_code": 0,
+        "status": "pass",
+        "stderr_sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "category": "build",
+        "command": [
+          "uv",
+          "pip",
+          "install",
+          "sgl-kernel"
+        ],
+        "details": "the exact historical head sgl-kernel built successfully",
+        "duration_seconds": null,
+        "failure_code": null,
+        "name": "head-sgl-kernel-build",
+        "return_code": 0,
+        "status": "pass",
+        "stderr_sha256": null,
+        "stdout_sha256": "sha256:ea5ddd6e326d1568606b33ba62a0eb125585cc9b6d01b74f20fb54623da0c05c"
+      },
+      {
+        "category": "gpu",
+        "command": [
+          "python",
+          "sglang_moe_align_correctness_probe.py"
+        ],
+        "details": "five correctness cases passed, including 32,768 random routes and 65,536 same-expert atomic updates",
+        "duration_seconds": null,
+        "failure_code": null,
+        "name": "head-moe-align-hidden-probe",
+        "return_code": 0,
+        "status": "pass",
+        "stderr_sha256": null,
+        "stdout_sha256": "sha256:704908c4ec6902cb420c9a496bb31811f4aca55fce1cb9c2227eec34f1c7ccdc"
+      }
+    ],
+    "environment_sha256": "sha256:389538b7e4b4b618e16f13890ae53754a9c7ca89625012b309698eb531dce8cf",
+    "finished_at": "2026-09-01T15:29:54.459704Z",
+    "infrastructure_failure_codes": [],
+    "raw_evidence_digests": [
+      "sha256:44887bd0158b8c75e3c1836de317e5f89f08c691114875dfec84f68876097235",
+      "sha256:704908c4ec6902cb420c9a496bb31811f4aca55fce1cb9c2227eec34f1c7ccdc",
+      "sha256:af9df5a913ff7a4c65706f02e80082919e28b099e2cd48d77a33f9e955a86008",
+      "sha256:c6913be50e93f223199803388abfc0668f0b4079f99b2571dc5735449bd7ef32",
+      "sha256:df594995344b4200faa794fe83e5c437e31316e13f4f7af2a8eccb49a18372ba",
+      "sha256:ea5ddd6e326d1568606b33ba62a0eb125585cc9b6d01b74f20fb54623da0c05c"
+    ],
+    "schema_version": "0.5",
+    "stage": "F2-affected",
+    "started_at": "2026-09-01T14:26:08Z",
+    "test_plan_sha256": "sha256:70619e6ce4d132a25e20daadacfbb675b20b93a52041e4de2e12fab78b14a924"
+  },
+  {
+    "candidate_failure_codes": [],
+    "candidate_sha256": "sha256:deb745549341fb0cad0f2320837a4a3d7de44af28b3c8eb318d71f290abbc9e9",
+    "case_id": "vllm-pr-12450",
+    "checks": [
+      {
+        "category": "checkout",
+        "command": [
+          "git",
+          "rev-parse",
+          "HEAD"
+        ],
+        "details": "exact head SHA dabdae56083e82ccf6e5d530b35bd7d30b376097",
+        "duration_seconds": 0.005551527952775359,
+        "failure_code": null,
+        "name": "exact-head-checkout",
+        "return_code": 0,
+        "status": "pass",
+        "stderr_sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_sha256": "sha256:4fb9653ffe6318e94e736c09563d44b1d18bd264a18c163906904b9ae548d0b7"
+      },
+      {
+        "category": "static",
+        "command": [
+          "git",
+          "diff",
+          "--check",
+          "aa2cd2c43d1d19ece0f3b36ad716c3a9b8a2def0",
+          "dabdae56083e82ccf6e5d530b35bd7d30b376097"
+        ],
+        "details": "path_parity=True; head_parse=pass; base_parse=pass",
+        "duration_seconds": 0.007670274935662746,
+        "failure_code": null,
+        "name": "diff-path-and-parse-contract",
+        "return_code": 0,
+        "status": "pass",
+        "stderr_sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "category": "gpu",
+        "command": [
+          "python",
+          "vllm_mha_gqa_probe.py",
+          "--worktree",
+          "vllm-pr-12450-head"
+        ],
+        "details": "GQA/MQA output exactly matched the PyTorch reference and the invalid head-ratio contract was enforced",
+        "duration_seconds": null,
+        "failure_code": null,
+        "name": "head-mha-gqa-contract",
+        "return_code": 0,
+        "status": "pass",
+        "stderr_sha256": null,
+        "stdout_sha256": "sha256:29f607602268de88524bfca190788e7c7b886155f48df4d0c95a9c1511160a26"
+      },
+      {
+        "category": "gpu",
+        "command": [
+          "python",
+          "vllm_mha_gqa_probe.py",
+          "--worktree",
+          "vllm-pr-12450-base"
+        ],
+        "details": "negative control confirmed: the base raises a Q/KV head dimension mismatch",
+        "duration_seconds": null,
+        "failure_code": null,
+        "name": "base-negative-control",
+        "return_code": 1,
+        "status": "pass",
+        "stderr_sha256": null,
+        "stdout_sha256": "sha256:98e6f8d8e103c00426847a950ee39cc36857b2e7ea0e176221d954303a83f17b"
+      }
+    ],
+    "environment_sha256": "sha256:389538b7e4b4b618e16f13890ae53754a9c7ca89625012b309698eb531dce8cf",
+    "finished_at": "2026-09-01T15:29:54.459704Z",
+    "infrastructure_failure_codes": [],
+    "raw_evidence_digests": [
+      "sha256:29f607602268de88524bfca190788e7c7b886155f48df4d0c95a9c1511160a26",
+      "sha256:44887bd0158b8c75e3c1836de317e5f89f08c691114875dfec84f68876097235",
+      "sha256:98e6f8d8e103c00426847a950ee39cc36857b2e7ea0e176221d954303a83f17b",
+      "sha256:af9df5a913ff7a4c65706f02e80082919e28b099e2cd48d77a33f9e955a86008",
+      "sha256:c6913be50e93f223199803388abfc0668f0b4079f99b2571dc5735449bd7ef32",
+      "sha256:df594995344b4200faa794fe83e5c437e31316e13f4f7af2a8eccb49a18372ba"
+    ],
+    "schema_version": "0.5",
+    "stage": "F2-affected",
+    "started_at": "2026-09-01T14:26:08Z",
+    "test_plan_sha256": "sha256:70619e6ce4d132a25e20daadacfbb675b20b93a52041e4de2e12fab78b14a924"
+  },
+  {
+    "candidate_failure_codes": [],
+    "candidate_sha256": "sha256:bf91d68c8401b8e9d8ec8f198aaa764b023219737fd7c55a189af81dd03582fc",
+    "case_id": "vllm-pr-12789",
+    "checks": [
+      {
+        "category": "checkout",
+        "command": [
+          "git",
+          "rev-parse",
+          "HEAD"
+        ],
+        "details": "exact head SHA 00c24c1a56eb1737990cf60ab3c7e54db267aa3b",
+        "duration_seconds": 0.005699517205357552,
+        "failure_code": null,
+        "name": "exact-head-checkout",
+        "return_code": 0,
+        "status": "pass",
+        "stderr_sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_sha256": "sha256:a84a5fefd3e36cd59e5b526ca95d99f66e845a935172843d5b8ca0a71db50c5d"
+      },
+      {
+        "category": "static",
+        "command": [
+          "git",
+          "diff",
+          "--check",
+          "bc1bdecebf76cca0dfafe4924d529b30c8a24795",
+          "00c24c1a56eb1737990cf60ab3c7e54db267aa3b"
+        ],
+        "details": "path_parity=True; head_parse=pass; base_parse=pass",
+        "duration_seconds": 0.006741891149431467,
+        "failure_code": null,
+        "name": "diff-path-and-parse-contract",
+        "return_code": 0,
+        "status": "pass",
+        "stderr_sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "category": "build",
+        "command": [
+          "nvcc",
+          "-gencode",
+          "arch=compute_80,code=sm_80",
+          "moe_align_sum_kernels.cu"
+        ],
+        "details": "the affected translation unit compiled successfully for SM80",
+        "duration_seconds": null,
+        "failure_code": null,
+        "name": "head-sm80-translation-unit",
+        "return_code": 0,
+        "status": "pass",
+        "stderr_sha256": null,
+        "stdout_sha256": "sha256:71e499569cc16b7dfcfe3600cf4148700333551b2d8b32983be3b8ad6d4a2bf7"
+      },
+      {
+        "category": "gpu",
+        "command": [],
+        "details": "the behavioral target is a non-32-lane warp architecture, which A100 cannot execute",
+        "duration_seconds": null,
+        "failure_code": "TARGET_NON32_WARP_RUNTIME_UNAVAILABLE",
+        "name": "target-non32-warp-runtime",
+        "return_code": null,
+        "status": "unresolved",
+        "stderr_sha256": null,
+        "stdout_sha256": null
+      }
+    ],
+    "environment_sha256": "sha256:389538b7e4b4b618e16f13890ae53754a9c7ca89625012b309698eb531dce8cf",
+    "finished_at": "2026-09-01T15:29:54.459704Z",
+    "infrastructure_failure_codes": [
+      "TARGET_NON32_WARP_RUNTIME_UNAVAILABLE"
+    ],
+    "raw_evidence_digests": [
+      "sha256:44887bd0158b8c75e3c1836de317e5f89f08c691114875dfec84f68876097235",
+      "sha256:71e499569cc16b7dfcfe3600cf4148700333551b2d8b32983be3b8ad6d4a2bf7",
+      "sha256:af9df5a913ff7a4c65706f02e80082919e28b099e2cd48d77a33f9e955a86008",
+      "sha256:c6913be50e93f223199803388abfc0668f0b4079f99b2571dc5735449bd7ef32",
+      "sha256:df594995344b4200faa794fe83e5c437e31316e13f4f7af2a8eccb49a18372ba"
+    ],
+    "schema_version": "0.5",
+    "stage": "F2-affected",
+    "started_at": "2026-09-01T14:26:08Z",
+    "test_plan_sha256": "sha256:70619e6ce4d132a25e20daadacfbb675b20b93a52041e4de2e12fab78b14a924"
+  },
+  {
+    "candidate_failure_codes": [],
+    "candidate_sha256": "sha256:b580a0f41f17de64da52cc7f8dcdcaaa93cad10d822807147be0d862552a4b30",
+    "case_id": "vllm-pr-13043",
+    "checks": [
+      {
+        "category": "checkout",
+        "command": [
+          "git",
+          "rev-parse",
+          "HEAD"
+        ],
+        "details": "exact head SHA 2216d5953926d56b72aba5f794210ba5f00b3196",
+        "duration_seconds": 0.004304765025153756,
+        "failure_code": null,
+        "name": "exact-head-checkout",
+        "return_code": 0,
+        "status": "pass",
+        "stderr_sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_sha256": "sha256:dc7fc83cab6fe092e59b81dd119e633aab9e71eeb0680c84cd076dc733173913"
+      },
+      {
+        "category": "static",
+        "command": [
+          "git",
+          "diff",
+          "--check",
+          "aa0ca5ebb7936587b4acde66cc466495b358be04",
+          "2216d5953926d56b72aba5f794210ba5f00b3196"
+        ],
+        "details": "path_parity=True; head_parse=pass; base_parse=pass",
+        "duration_seconds": 0.005511638009920716,
+        "failure_code": null,
+        "name": "diff-path-and-parse-contract",
+        "return_code": 0,
+        "status": "pass",
+        "stderr_sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "category": "gpu",
+        "command": [
+          "python",
+          "vllm_lora_device_context_probe.py",
+          "--worktree",
+          "vllm-pr-13043-head"
+        ],
+        "details": "both GPUs were exercised in reverse order and all five Triton launchers set the CUDA device before launch",
+        "duration_seconds": null,
+        "failure_code": null,
+        "name": "head-two-gpu-device-context",
+        "return_code": 0,
+        "status": "pass",
+        "stderr_sha256": null,
+        "stdout_sha256": "sha256:2b23cc12e77140f352bff92f9dcc54bc6ff2555e6ab5e876341279e2fedc5337"
+      },
+      {
+        "category": "gpu",
+        "command": [
+          "python",
+          "vllm_lora_device_context_probe.py",
+          "--worktree",
+          "vllm-pr-13043-base"
+        ],
+        "details": "negative control confirmed: the helper and all launcher guards are absent in the base",
+        "duration_seconds": null,
+        "failure_code": null,
+        "name": "base-negative-control",
+        "return_code": 1,
+        "status": "pass",
+        "stderr_sha256": null,
+        "stdout_sha256": "sha256:2fd65b4efa6c995fd7d7e60ea77cbddf088817fc4f485a2597fd63416d394190"
+      }
+    ],
+    "environment_sha256": "sha256:389538b7e4b4b618e16f13890ae53754a9c7ca89625012b309698eb531dce8cf",
+    "finished_at": "2026-09-01T15:29:54.459704Z",
+    "infrastructure_failure_codes": [],
+    "raw_evidence_digests": [
+      "sha256:2b23cc12e77140f352bff92f9dcc54bc6ff2555e6ab5e876341279e2fedc5337",
+      "sha256:2fd65b4efa6c995fd7d7e60ea77cbddf088817fc4f485a2597fd63416d394190",
+      "sha256:44887bd0158b8c75e3c1836de317e5f89f08c691114875dfec84f68876097235",
+      "sha256:af9df5a913ff7a4c65706f02e80082919e28b099e2cd48d77a33f9e955a86008",
+      "sha256:c6913be50e93f223199803388abfc0668f0b4079f99b2571dc5735449bd7ef32",
+      "sha256:df594995344b4200faa794fe83e5c437e31316e13f4f7af2a8eccb49a18372ba"
+    ],
+    "schema_version": "0.5",
+    "stage": "F2-affected",
+    "started_at": "2026-09-01T14:26:08Z",
+    "test_plan_sha256": "sha256:70619e6ce4d132a25e20daadacfbb675b20b93a52041e4de2e12fab78b14a924"
+  }
+]

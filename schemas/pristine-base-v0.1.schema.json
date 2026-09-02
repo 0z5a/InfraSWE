@@ -1,0 +1,84 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "base_revision": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Base Revision",
+      "type": "string"
+    },
+    "build_script_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Build Script Sha256",
+      "type": "string"
+    },
+    "dependency_lock_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Dependency Lock Sha256",
+      "type": "string"
+    },
+    "environment_allowlist_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Environment Allowlist Sha256",
+      "type": "string"
+    },
+    "image_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Image Sha256",
+      "type": "string"
+    },
+    "lfs_object_digests": {
+      "items": {
+        "pattern": "^sha256:[0-9a-f]{64}$",
+        "type": "string"
+      },
+      "title": "Lfs Object Digests",
+      "type": "array"
+    },
+    "network_policy_id": {
+      "title": "Network Policy Id",
+      "type": "string"
+    },
+    "pristine_base_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Pristine Base Sha256",
+      "type": "string"
+    },
+    "repository_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Repository Sha256",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "0.1",
+      "default": "0.1",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "submodule_revisions": {
+      "additionalProperties": {
+        "pattern": "^sha256:[0-9a-f]{64}$",
+        "type": "string"
+      },
+      "title": "Submodule Revisions",
+      "type": "object"
+    },
+    "toolchain_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Toolchain Sha256",
+      "type": "string"
+    }
+  },
+  "required": [
+    "repository_sha256",
+    "base_revision",
+    "image_sha256",
+    "toolchain_sha256",
+    "dependency_lock_sha256",
+    "build_script_sha256",
+    "environment_allowlist_sha256",
+    "network_policy_id",
+    "pristine_base_sha256"
+  ],
+  "title": "PristineBase",
+  "type": "object"
+}

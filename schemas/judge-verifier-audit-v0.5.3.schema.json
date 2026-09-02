@@ -1,0 +1,52 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "candidate_score_affected": {
+      "const": false,
+      "default": false,
+      "title": "Candidate Score Affected",
+      "type": "boolean"
+    },
+    "evidence_refs": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Evidence Refs",
+      "type": "array"
+    },
+    "recommended_actions": {
+      "items": {
+        "enum": [
+          "human-review",
+          "add-deterministic-probe",
+          "version-and-rerun"
+        ],
+        "type": "string"
+      },
+      "title": "Recommended Actions",
+      "type": "array"
+    },
+    "schema_version": {
+      "const": "0.5.3",
+      "default": "0.5.3",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "status": {
+      "enum": [
+        "agree",
+        "possible-false-positive",
+        "possible-false-negative",
+        "verifier-scope-gap",
+        "insufficient-evidence"
+      ],
+      "title": "Status",
+      "type": "string"
+    }
+  },
+  "required": [
+    "status"
+  ],
+  "title": "JudgeVerifierAuditResult",
+  "type": "object"
+}

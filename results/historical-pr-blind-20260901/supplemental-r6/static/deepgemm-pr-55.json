@@ -1,0 +1,52 @@
+{
+  "case_id": "deepgemm-pr-55",
+  "created_at": "2026-09-02T02:26:09.723443+00:00",
+  "duration_seconds": 0.11039358307607472,
+  "evidence_sha256": "sha256:f53cbb365e9f102550d7ec3ed72b81d7f5e4b731431ea696598fd629896324e7",
+  "facts": {
+    "changed_paths": [
+      "deep_gemm/jit/template.py"
+    ],
+    "changed_test_file_count": 0,
+    "changed_test_paths": [],
+    "compilation_path": "not-required",
+    "existing_test_search_matches": [
+      "723a00338e28068a09982bd651bd14d18257b93e:tests/test_jit.py:8:class Capture:",
+      "723a00338e28068a09982bd651bd14d18257b93e:tests/test_jit.py:13:        self.captured = None",
+      "723a00338e28068a09982bd651bd14d18257b93e:tests/test_jit.py:25:            self.captured = f.read()",
+      "723a00338e28068a09982bd651bd14d18257b93e:tests/test_jit.py:27:    def capture(self) -> str:",
+      "723a00338e28068a09982bd651bd14d18257b93e:tests/test_jit.py:28:        return self.captured",
+      "723a00338e28068a09982bd651bd14d18257b93e:tests/test_jit.py:58:    with Capture() as capture:",
+      "723a00338e28068a09982bd651bd14d18257b93e:tests/test_jit.py:60:    output = capture.capture()"
+    ],
+    "path_parity": true,
+    "steady_state_compile_seconds": 0.0,
+    "target": {
+      "base_uses_tensor_isinstance": true,
+      "head_has_explicit_float16_pointer_branch": true,
+      "head_unknown_tensor_dtype_returns_void_pointer": true,
+      "head_uses_cuda_stream_capability": true,
+      "head_uses_data_ptr_capability": true,
+      "head_uses_tensor_isinstance": false
+    }
+  },
+  "failure_codes": [],
+  "probe": "r6-cross-project-static-v1",
+  "project": "deepgemm",
+  "protocol_id": "historical-pr-blind-cross-project-v0.5-r6",
+  "schema_version": "0.5",
+  "source_identity": {
+    "base_sha": "6c5da03ba9a311b69aaeb3236ceb674e714950c1",
+    "base_source_sha256": {
+      "deep_gemm/jit/template.py": "sha256:bad1ccba2b3168a83aad978a0006ffdf0c4a1247e61c1363db6747a9d0ac34bf"
+    },
+    "head_sha": "723a00338e28068a09982bd651bd14d18257b93e",
+    "head_source_sha256": {
+      "deep_gemm/jit/template.py": "sha256:91b10e24d33709f76c72ed798c8bd54efd4cdec56b62cb6cda75cd0125486b58"
+    },
+    "selection_lock_sha256": "sha256:616346d23c6e35a120aa6daa004592dfe52795c63526e9ecdfbec6ff161ea7cb",
+    "test_plan_sha256": "sha256:187e71082f6b26a8913856be014fc6d2e6b1d4fb52db4b3dceea35a09b791982",
+    "unified_diff_sha256": "sha256:3d6d70d1ce016cfaecf6a59f3d1c20f4777740cc5fdba08427b7df2acd558af5"
+  },
+  "status": "pass"
+}

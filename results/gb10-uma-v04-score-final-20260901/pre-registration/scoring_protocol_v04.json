@@ -1,0 +1,137 @@
+{
+  "schema_version": "0.4",
+  "protocol_id": "gb10-uma-load-normalized-v0.4-r1",
+  "task_id": "gb10-uma-cpu-gpu-pipeline-v04",
+  "score_authority": "infraswe-scoring-v0.4",
+  "leaderboard_season": "gb10-sm121-2026q3",
+  "formula_template_id": "deployability-v0.4",
+  "cell_artifact_template_id": "cell-artifact-memory-v0.4",
+  "semantic_contract": {
+    "operation": "output[i] = fma(input[i], 1.25, (request_id % 17) * 0.0001)",
+    "dtype": "float32",
+    "default_elements_per_request": 65536,
+    "minimum_external_bytes_per_element": 8,
+    "allocation_paths": [
+      "pageable-system-direct",
+      "managed-direct",
+      "mapped-pinned-direct",
+      "gpu-private-reference-via-copy"
+    ],
+    "forbid_cpu_dereference_of_cuda_malloc": true
+  },
+  "reference": {
+    "implementation": "pageable host -> cudaMemcpy H2D -> kernel -> cudaMemcpy D2H",
+    "closed_loop_requests": 1200,
+    "low_load_requests": 600,
+    "anchor_replays": 3,
+    "slo_formula": "max(0.002 seconds, 4 * reference_low_load_p95)",
+    "anchor_sweep_closed_loop_ratios": [0.50, 0.70, 0.85, 1.00, 1.10],
+    "anchor_acceptance": {
+      "minimum_slo_goodput_ratio": 0.99,
+      "maximum_queue_fraction_at_offer_end": 0.02
+    }
+  },
+  "concurrency": {
+    "fresh_process_replays": 7,
+    "baseline_candidate_interleaving": "odd replays reference-before-candidate; even replays reference-after-candidate",
+    "candidate_cell_order": "odd replays forward; even replays reverse",
+    "reference_drift_gate": "one saturation-anchor reference process per replay; all must retain >=0.99 SLO goodput and <=2% queue at offer end",
+    "minimum_completed_requests_per_cell": 1000,
+    "requests_per_replay": 1200,
+    "streams": 4,
+    "tenants": 4,
+    "load_cells": {
+      "light": 0.25,
+      "normal": 0.50,
+      "knee": 0.80,
+      "saturation": 1.00,
+      "overload": 1.20,
+      "burst_or_soak": 1.00
+    },
+    "burst_pattern": "20 requests at 10x average instantaneous rate followed by an idle gap",
+    "load_cell_component_formulas": {
+      "slo_goodput_ratio": "arithmetic mean across fresh processes",
+      "tail_score": "geometric mean of min(1, slo_seconds / p99_seconds)",
+      "replay_jitter_score": "1 / (1 + 4 * CV(replay p95_seconds))",
+      "resource_stability_score": "minimum max(0, 1 - positive_rss_growth_bytes / 67108864)",
+      "fairness_score": "geometric mean of per-replay tenant SLO-goodput Jain index"
+    },
+    "hard_failures": {
+      "error_drop_rate_max": 0,
+      "memory_growth_bytes_max": 67108864,
+      "queue_unbounded": "at or below saturation: queue at offer end > max(32, 10% requests) and drain > 10*SLO",
+      "silent_fallback_rate_max": 0
+    }
+  },
+  "reuse": {
+    "expected_variant_budget": 4,
+    "max_variant_budget": 12,
+    "coverage_cases": [
+      {"id": "system-cpu-first", "weight": 0.25},
+      {"id": "system-gpu-first", "weight": 0.15},
+      {"id": "managed-cpu-first", "weight": 0.15},
+      {"id": "managed-gpu-first", "weight": 0.10},
+      {"id": "pinned-cpu-first", "weight": 0.10},
+      {"id": "odd-tail-shape", "weight": 0.10},
+      {"id": "single-stream", "weight": 0.075},
+      {"id": "eight-stream", "weight": 0.075}
+    ],
+    "compile_reuse_formula": "1 when JIT/recompile/cache-rebuild counts are zero; otherwise 1/(1+events)",
+    "port_reuse_profiles": [
+      {"id": "sm_121-runtime", "weight": 0.50},
+      {"id": "sm_121f-build", "weight": 0.25},
+      {"id": "sm_121a-build", "weight": 0.25}
+    ]
+  },
+  "maintainability": {
+    "contract_checks": [
+      "capability declaration and fail-closed rejection",
+      "runtime version declaration and rejection",
+      "workspace budget declaration and rejection",
+      "explicit fallback policy",
+      "RAII lifecycle cleanup"
+    ],
+    "locality_checks": [
+      "single semantic implementation entrypoint",
+      "backend logic confined to the GB10 UMA task subtree",
+      "case extensions require configuration only",
+      "runtime dependency fan-out does not exceed eight libraries"
+    ],
+    "maintenance_probes": [
+      "odd tail shape",
+      "managed allocation",
+      "mapped pinned allocation",
+      "GPU-first system-memory touch",
+      "workspace budget rejection",
+      "capability-off rejection",
+      "allocation-failure rejection",
+      "runtime-minor rejection"
+    ],
+    "build_checks": [
+      "sm_121 executable",
+      "sm_121 PTX",
+      "sm_121f cubin",
+      "sm_121a cubin",
+      "warning-free host build",
+      "deterministic repeated PTX"
+    ],
+    "component_normalization": "passed checks / preregistered checks"
+  },
+  "efficiency": {
+    "work_model_id": "gb10-uma-f32-transform-v1",
+    "regime": "memory-bound",
+    "work_model_confidence": "high",
+    "traffic_amplification_budget": 1.10,
+    "calibration": "same-cell pageable-system copy kernel and empty launch floor",
+    "official_timing": "separate unprofiled light-load candidate p50",
+    "counter_evidence": "Nsight Compute final representative kernel",
+    "cross_cell_ranking_allowed": false
+  },
+  "evidence": {
+    "minimum_grade_for_deployability": "E2-system-trace",
+    "minimum_grade_for_cell_efficiency": "E3-kernel-counter",
+    "profiled_timing_authoritative": false,
+    "request_samples_preserved": true
+  },
+  "absolute_latency_global_ranking": "forbidden"
+}

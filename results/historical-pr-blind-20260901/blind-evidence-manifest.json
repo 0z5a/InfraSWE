@@ -1,0 +1,443 @@
+{
+  "cases": {
+    "flashattention-pr-1326": {
+      "checks": [
+        {
+          "artifact": "remote-a100-sxm4-23.127.144.217/probes/flashattention-pr-1326-head-wheel-matrix.json",
+          "category": "unit",
+          "command": [
+            "python",
+            "flashattention_wheel_matrix_probe.py",
+            "--worktree",
+            "flashattention-pr-1326-head"
+          ],
+          "details": "CUDA 12.4 and 12.5 both resolve to the cu124 wheel family; workflow YAML parses",
+          "name": "head-wheel-cuda-matrix",
+          "return_code": 0,
+          "status": "pass"
+        },
+        {
+          "artifact": "remote-a100-sxm4-23.127.144.217/probes/flashattention-pr-1326-base-wheel-matrix.json",
+          "category": "unit",
+          "command": [
+            "python",
+            "flashattention_wheel_matrix_probe.py",
+            "--worktree",
+            "flashattention-pr-1326-base"
+          ],
+          "details": "negative control confirmed: the base resolves CUDA 12.x to cu123",
+          "name": "base-negative-control",
+          "return_code": 1,
+          "status": "pass"
+        }
+      ],
+      "stage": "F2-affected"
+    },
+    "flashattention-pr-1427": {
+      "checks": [
+        {
+          "artifact": "remote-a100-sxm4-23.127.144.217/probes/flashattention-pr-1427/head-build.log",
+          "category": "build",
+          "command": [
+            "uv",
+            "pip",
+            "install",
+            "--no-build-isolation",
+            "--no-deps",
+            "flashattention-pr-1427-head"
+          ],
+          "details": "source wheel built for the historical head with CUDA 12.8 and SM80/SM90 objects",
+          "name": "head-source-build",
+          "return_code": 0,
+          "status": "pass"
+        },
+      {
+        "artifact": "remote-a100-sxm4-23.127.144.217/probes/flashattention-pr-1427/head-probe.json",
+        "category": "gpu",
+          "command": [
+            "python",
+            "flashattention_sm80_smoke.py"
+          ],
+        "details": "fixed forward/backward, varlen, and KV-cache compiled CUDA extension entry points compared with a PyTorch reference",
+        "name": "head-sm80-entrypoint-smoke",
+        "return_code": 0,
+        "status": "pass"
+      },
+      {
+        "artifact": "harness-incidents.json",
+        "artifact_stream": "raw",
+        "category": "policy",
+        "command": [
+          "base-head-wrapper-parity",
+          "then-direct-cuda-entrypoint-probe"
+        ],
+        "details": "the PyTorch 2.5 wrapper failure reproduced identically on base and head; it was excluded from candidate attribution before the direct affected-entrypoint probe",
+        "name": "base-head-wrapper-harness-attribution",
+        "return_code": 0,
+        "status": "pass"
+      }
+      ],
+      "stage": "F2-affected"
+    },
+    "flashattention-pr-1511": {
+      "checks": [
+        {
+          "artifact": "remote-a100-sxm4-23.127.144.217/probes/flashattention-pr-1511/head-sm90-hdim64.o",
+          "artifact_stream": "raw",
+          "category": "build",
+          "command": [
+            "nvcc",
+            "--expt-relaxed-constexpr",
+            "--expt-extended-lambda",
+            "-gencode",
+            "arch=compute_90a,code=sm_90a",
+            "flash_fwd_hdim64_fp16_sm90.cu"
+          ],
+          "details": "the affected Hopper translation unit instantiated successfully",
+          "name": "head-sm90-header-instantiation",
+          "return_code": 0,
+          "status": "pass"
+        },
+        {
+          "artifact": "remote-a100-sxm4-23.127.144.217/probes/flashattention-pr-1511/head-sm90-hdim64.o",
+          "artifact_stream": "raw",
+          "category": "gpu",
+          "command": [],
+          "details": "the A100 cell cannot execute an SM90a kernel",
+          "failure_code": "TARGET_SM90_RUNTIME_UNAVAILABLE",
+          "name": "target-sm90-runtime",
+          "status": "unresolved"
+        },
+        {
+          "artifact": "harness-incidents.json",
+          "artifact_stream": "raw",
+          "category": "policy",
+          "command": [],
+          "details": "the first missing-flag compile was isolated as a harness incident and excluded from candidate attribution",
+          "name": "harness-attribution-audit",
+          "return_code": 0,
+          "status": "pass"
+        }
+      ],
+      "infrastructure_failure_codes": [
+        "TARGET_SM90_RUNTIME_UNAVAILABLE"
+      ],
+      "stage": "F2-affected"
+    },
+    "flashinfer-pr-624": {
+      "checks": [
+        {
+          "artifact": "remote-a100-sxm4-23.127.144.217/probes/flashinfer-pr-624-head-aot-uri.json",
+          "category": "unit",
+          "command": [
+            "python",
+            "flashinfer_aot_uri_probe.py",
+            "--worktree",
+            "flashinfer-pr-624-head"
+          ],
+          "details": "336 total URIs, including 144 prefill URIs, were unique and no prefill URI encoded the mask mode",
+          "name": "head-aot-uri-uniqueness",
+          "return_code": 0,
+          "status": "pass"
+        },
+        {
+          "artifact": "remote-a100-sxm4-23.127.144.217/probes/flashinfer-pr-624-base-aot-uri.json",
+          "category": "unit",
+          "command": [
+            "python",
+            "flashinfer_aot_uri_probe.py",
+            "--worktree",
+            "flashinfer-pr-624-base"
+          ],
+          "details": "negative control confirmed: all 432 base prefill URIs encoded the mask mode",
+          "name": "base-negative-control",
+          "return_code": 1,
+          "status": "pass"
+        }
+      ],
+      "stage": "F2-affected"
+    },
+    "flashinfer-pr-632": {
+      "checks": [
+        {
+          "artifact": "remote-a100-sxm4-23.127.144.217/probes/flashinfer-pr-632-head-jit-template.json",
+          "category": "unit",
+          "command": [
+            "python",
+            "flashinfer_jit_template_probe.py",
+            "--worktree",
+            "flashinfer-pr-632-head"
+          ],
+          "details": "all 20 batch, single, and customizable templates rendered strictly with every mask split suffix",
+          "name": "head-jit-template-render",
+          "return_code": 0,
+          "status": "pass"
+        },
+        {
+          "artifact": "remote-a100-sxm4-23.127.144.217/probes/flashinfer-pr-632-base-jit-template.json",
+          "category": "unit",
+          "command": [
+            "python",
+            "flashinfer_jit_template_probe.py",
+            "--worktree",
+            "flashinfer-pr-632-base"
+          ],
+          "details": "negative control confirmed: nine required mask split suffixes are absent in the base",
+          "name": "base-negative-control",
+          "return_code": 1,
+          "status": "pass"
+        }
+      ],
+      "stage": "F2-affected"
+    },
+    "flashinfer-pr-810": {
+      "checks": [
+        {
+          "artifact": "remote-a100-sxm4-23.127.144.217/probes/flashinfer-pr-810/head-install.log",
+          "category": "build",
+          "command": [
+            "uv",
+            "pip",
+            "install",
+            "--no-build-isolation",
+            "--no-deps",
+            "flashinfer-pr-810-head"
+          ],
+          "details": "the historical head package installed successfully without AOT kernels",
+          "name": "head-package-install",
+          "return_code": 0,
+          "status": "pass"
+        },
+        {
+          "artifact": "remote-a100-sxm4-23.127.144.217/probes/flashinfer-pr-810/head-probe.log",
+          "artifact_stream": "stderr",
+          "category": "gpu",
+          "command": [
+            "python",
+            "flashinfer_mla_page_size_probe.py",
+            "--page-size",
+            "16"
+          ],
+          "details": "SM80 JIT compilation reaches an explicit stmatrix/SM90 static assertion before the page-size probe can run",
+          "failure_code": "TARGET_SM90_STMATRIX_RUNTIME_UNAVAILABLE",
+          "name": "head-page-size-runtime",
+          "return_code": 1,
+          "status": "unresolved"
+        },
+        {
+          "artifact": "remote-a100-sxm4-23.127.144.217/probes/flashinfer-pr-810/base-probe.log",
+          "artifact_stream": "stderr",
+          "category": "build",
+          "command": [
+            "python",
+            "flashinfer_mla_page_size_probe.py",
+            "--worktree",
+            "flashinfer-pr-810-base"
+          ],
+          "details": "negative control confirmed: the base reaches the identical SM90-only static assertion",
+          "name": "base-infrastructure-negative-control",
+          "return_code": 1,
+          "status": "pass"
+        }
+      ],
+      "infrastructure_failure_codes": [
+        "TARGET_SM90_STMATRIX_RUNTIME_UNAVAILABLE"
+      ],
+      "stage": "F2-affected"
+    },
+    "sglang-pr-3053": {
+      "checks": [
+        {
+          "artifact": "remote-a100-sxm4-23.127.144.217/probes/sglang-pr-3053/head-build.log",
+          "category": "build",
+          "command": [
+            "uv",
+            "pip",
+            "install",
+            "sgl-kernel"
+          ],
+          "details": "the exact historical head sgl-kernel built successfully",
+          "name": "head-sgl-kernel-build",
+          "return_code": 0,
+          "status": "pass"
+        },
+        {
+          "artifact": "remote-a100-sxm4-23.127.144.217/probes/sglang-pr-3053/head-test.log",
+          "category": "gpu",
+          "command": [
+            "pytest",
+            "-q",
+            "tests/test_activation.py"
+          ],
+          "details": "945 activation GPU parametrizations passed",
+          "name": "head-activation-tests",
+          "return_code": 0,
+          "status": "pass"
+        }
+      ],
+      "stage": "F2-affected"
+    },
+    "sglang-pr-3121": {
+      "checks": [
+        {
+          "artifact": "remote-a100-sxm4-23.127.144.217/probes/sglang-pr-3121/head-build.log",
+          "category": "build",
+          "command": [
+            "uv",
+            "pip",
+            "install",
+            "sgl-kernel"
+          ],
+          "details": "the exact historical head sgl-kernel built successfully",
+          "name": "head-sgl-kernel-build",
+          "return_code": 0,
+          "status": "pass"
+        },
+        {
+          "artifact": "remote-a100-sxm4-23.127.144.217/probes/sglang-pr-3121/head-test.log",
+          "category": "gpu",
+          "command": [
+            "pytest",
+            "-q",
+            "tests/test_sampling_scaling_penalties.py"
+          ],
+          "details": "144 scaling-penalties GPU parametrizations passed",
+          "name": "head-scaling-penalties-tests",
+          "return_code": 0,
+          "status": "pass"
+        }
+      ],
+      "stage": "F2-affected"
+    },
+    "sglang-pr-3347": {
+      "checks": [
+        {
+          "artifact": "remote-a100-sxm4-23.127.144.217/probes/sglang-pr-3347/head-build.log",
+          "category": "build",
+          "command": [
+            "uv",
+            "pip",
+            "install",
+            "sgl-kernel"
+          ],
+          "details": "the exact historical head sgl-kernel built successfully",
+          "name": "head-sgl-kernel-build",
+          "return_code": 0,
+          "status": "pass"
+        },
+        {
+          "artifact": "remote-a100-sxm4-23.127.144.217/probes/sglang-pr-3347/head-probe.json",
+          "category": "gpu",
+          "command": [
+            "python",
+            "sglang_moe_align_correctness_probe.py"
+          ],
+          "details": "five correctness cases passed, including 32,768 random routes and 65,536 same-expert atomic updates",
+          "name": "head-moe-align-hidden-probe",
+          "return_code": 0,
+          "status": "pass"
+        }
+      ],
+      "stage": "F2-affected"
+    },
+    "vllm-pr-12450": {
+      "checks": [
+        {
+          "artifact": "remote-a100-sxm4-23.127.144.217/probes/vllm-pr-12450-head-mha-gqa.json",
+          "category": "gpu",
+          "command": [
+            "python",
+            "vllm_mha_gqa_probe.py",
+            "--worktree",
+            "vllm-pr-12450-head"
+          ],
+          "details": "GQA/MQA output exactly matched the PyTorch reference and the invalid head-ratio contract was enforced",
+          "name": "head-mha-gqa-contract",
+          "return_code": 0,
+          "status": "pass"
+        },
+        {
+          "artifact": "remote-a100-sxm4-23.127.144.217/probes/vllm-pr-12450-base-mha-gqa.json",
+          "category": "gpu",
+          "command": [
+            "python",
+            "vllm_mha_gqa_probe.py",
+            "--worktree",
+            "vllm-pr-12450-base"
+          ],
+          "details": "negative control confirmed: the base raises a Q/KV head dimension mismatch",
+          "name": "base-negative-control",
+          "return_code": 1,
+          "status": "pass"
+        }
+      ],
+      "stage": "F2-affected"
+    },
+    "vllm-pr-12789": {
+      "checks": [
+        {
+          "artifact": "remote-a100-sxm4-23.127.144.217/probes/vllm-pr-12789/head-build.log",
+          "category": "build",
+          "command": [
+            "nvcc",
+            "-gencode",
+            "arch=compute_80,code=sm_80",
+            "moe_align_sum_kernels.cu"
+          ],
+          "details": "the affected translation unit compiled successfully for SM80",
+          "name": "head-sm80-translation-unit",
+          "return_code": 0,
+          "status": "pass"
+        },
+        {
+          "artifact": "remote-a100-sxm4-23.127.144.217/probes/vllm-pr-12789/head-build.log",
+          "artifact_stream": "raw",
+          "category": "gpu",
+          "command": [],
+          "details": "the behavioral target is a non-32-lane warp architecture, which A100 cannot execute",
+          "failure_code": "TARGET_NON32_WARP_RUNTIME_UNAVAILABLE",
+          "name": "target-non32-warp-runtime",
+          "status": "unresolved"
+        }
+      ],
+      "infrastructure_failure_codes": [
+        "TARGET_NON32_WARP_RUNTIME_UNAVAILABLE"
+      ],
+      "stage": "F2-affected"
+    },
+    "vllm-pr-13043": {
+      "checks": [
+        {
+          "artifact": "remote-a100-sxm4-23.127.144.217/probes/vllm-pr-13043-head-device-context.json",
+          "category": "gpu",
+          "command": [
+            "python",
+            "vllm_lora_device_context_probe.py",
+            "--worktree",
+            "vllm-pr-13043-head"
+          ],
+          "details": "both GPUs were exercised in reverse order and all five Triton launchers set the CUDA device before launch",
+          "name": "head-two-gpu-device-context",
+          "return_code": 0,
+          "status": "pass"
+        },
+        {
+          "artifact": "remote-a100-sxm4-23.127.144.217/probes/vllm-pr-13043-base-device-context.json",
+          "category": "gpu",
+          "command": [
+            "python",
+            "vllm_lora_device_context_probe.py",
+            "--worktree",
+            "vllm-pr-13043-base"
+          ],
+          "details": "negative control confirmed: the helper and all launcher guards are absent in the base",
+          "name": "base-negative-control",
+          "return_code": 1,
+          "status": "pass"
+        }
+      ],
+      "stage": "F2-affected"
+    }
+  },
+  "schema_version": "0.5"
+}

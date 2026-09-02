@@ -1,0 +1,212 @@
+{
+  "evidence_bindings": {
+    "vllm#50423": {
+      "supplemental-r5/probes/vllm-pr-50423-dequeue-lock.json": "sha256:f9288396dad62c621f2b34f3b104e9979d289a49eaa8c8818e8d5f3b7d01295d"
+    },
+    "vllm#52205": {
+      "supplemental-r5/probes/vllm-pr-52205-always-break.json": "sha256:af0790b1049399dd509d6c940512473584c5f7b858d7b44c148c8d6ab66d30ae"
+    },
+    "vllm#53038": {
+      "supplemental-r5/probes/vllm-pr-53038-lora-int64.json": "sha256:62b8f38b0f1388fa9b0d89bb4d07d0f421b838ea345db90ddf8be3a8e67c2022"
+    }
+  },
+  "frozen_at": "2026-09-02T01:37:05.939263+00:00",
+  "learned_model_used": false,
+  "lock_set_sha256": "sha256:832c73b13100938cf49a868935f875dbdebd6a0eaca439d8d02b099dfe5b37ba",
+  "locks": [
+    {
+      "lock_sha256": "sha256:96c6c050c82bb6ddab846cacf21fc4091727c4c725fc2f34c292e2eacad8a865",
+      "material": {
+        "candidate_sha256": "sha256:5348e8a50b563f54985035f7b351e9a2b9667e57b13f9e4ab022c211e2c5fa07",
+        "case_id": "vllm#53038",
+        "decision": "revise",
+        "evidence_sha256": "sha256:17fb0e0efa37e0fa0b26ab9505aa0576c7b1150ab68675aa49466a7aa336dd81",
+        "frozen_at": "2026-09-02T01:37:05.939263Z",
+        "narrative": "[int64-offset-crosses-int32-boundary: pass] At row 174763 and stride 12288 the base wraps to -2147479552, while the head produces the expected 2147487744. [timed-shapes-are-precompiled: pass] Precompile created 34 cache files and steady timing created zero additional files. [common-range-latency-within-three-percent: pass] The seven-pair median head/base latency ratio is 0.9466. [each-changed-kernel-family-has-direct-large-offset-coverage: fail] Four ordinary/FP8 expand/shrink files change, but the new large test is BF16 and the FP8 path is not directly exercised.",
+        "observations": [
+          {
+            "blocking": true,
+            "conclusion": "At row 174763 and stride 12288 the base wraps to -2147479552, while the head produces the expected 2147487744.",
+            "counterevidence": [],
+            "evidence": [
+              "sha256:62b8f38b0f1388fa9b0d89bb4d07d0f421b838ea345db90ddf8be3a8e67c2022"
+            ],
+            "failure_code": null,
+            "question": "Does the int64 change fix pointer arithmetic beyond 2**31 elements?",
+            "rule_id": "int64-offset-crosses-int32-boundary",
+            "status": "pass"
+          },
+          {
+            "blocking": true,
+            "conclusion": "Precompile created 34 cache files and steady timing created zero additional files.",
+            "counterevidence": [],
+            "evidence": [
+              "sha256:62b8f38b0f1388fa9b0d89bb4d07d0f421b838ea345db90ddf8be3a8e67c2022"
+            ],
+            "failure_code": null,
+            "question": "Are both boundary and common-range variants compiled before steady timing?",
+            "rule_id": "timed-shapes-are-precompiled",
+            "status": "pass"
+          },
+          {
+            "blocking": true,
+            "conclusion": "The seven-pair median head/base latency ratio is 0.9466.",
+            "counterevidence": [],
+            "evidence": [
+              "sha256:62b8f38b0f1388fa9b0d89bb4d07d0f421b838ea345db90ddf8be3a8e67c2022"
+            ],
+            "failure_code": null,
+            "question": "Does common-range steady latency avoid a regression greater than 3%?",
+            "rule_id": "common-range-latency-within-three-percent",
+            "status": "pass"
+          },
+          {
+            "blocking": true,
+            "conclusion": "Four ordinary/FP8 expand/shrink files change, but the new large test is BF16 and the FP8 path is not directly exercised.",
+            "counterevidence": [
+              "Standalone arithmetic proves the int64 mechanism and common-range timing passes."
+            ],
+            "evidence": [
+              "sha256:62b8f38b0f1388fa9b0d89bb4d07d0f421b838ea345db90ddf8be3a8e67c2022"
+            ],
+            "failure_code": "FP8_LORA_INT64_DIRECT_TEST_MISSING",
+            "question": "Does every changed ordinary and FP8 kernel family have a direct large-offset test?",
+            "rule_id": "each-changed-kernel-family-has-direct-large-offset-coverage",
+            "status": "fail"
+          }
+        ],
+        "policy_id": "historical-explainable-agent-v0.5-r4",
+        "rationale_codes": [
+          "FP8_LORA_INT64_DIRECT_TEST_MISSING"
+        ],
+        "schema_version": "0.5",
+        "test_plan_sha256": "sha256:aa62c12d7046cdc308450423e336ec878371f64cc7858e97676da6c44530d0fd"
+      }
+    },
+    {
+      "lock_sha256": "sha256:3d106eb75e6bb11e7166abb3c253e406f157e7b4afb7e1f9cd8d38c42e23d132",
+      "material": {
+        "candidate_sha256": "sha256:dba74e32753c0b903f42841688ba3e81e8fef36dd8df63581c1a659c9b64dc7c",
+        "case_id": "vllm#50423",
+        "decision": "revise",
+        "evidence_sha256": "sha256:476cd608156727a1995c007f2b50629df1083e040d68f02d5738875071899c58",
+        "frozen_at": "2026-09-02T01:37:05.939263Z",
+        "narrative": "[dequeue-receive-is-serialized: pass] The exact extracted head reaches at most one concurrent recv while the base reaches two, so the intended serialization is effective. [lock-wait-consumes-caller-timeout-budget: fail] With an 80 ms lock hold and a 100 ms caller timeout, the head takes 180.21 ms because recv receives a fresh timeout after lock acquisition. The added test does not cover the total deadline. [uncontended-overhead-remains-sub-microsecond: pass] The median rises from 172.4 ns to 397.2 ns; the relative ratio is large but the absolute increase remains below one microsecond.",
+        "observations": [
+          {
+            "blocking": true,
+            "conclusion": "The exact extracted head reaches at most one concurrent recv while the base reaches two, so the intended serialization is effective.",
+            "counterevidence": [],
+            "evidence": [
+              "sha256:f9288396dad62c621f2b34f3b104e9979d289a49eaa8c8818e8d5f3b7d01295d"
+            ],
+            "failure_code": null,
+            "question": "Does the new lock prevent concurrent reader-cursor/socket receives?",
+            "rule_id": "dequeue-receive-is-serialized",
+            "status": "pass"
+          },
+          {
+            "blocking": true,
+            "conclusion": "With an 80 ms lock hold and a 100 ms caller timeout, the head takes 180.21 ms because recv receives a fresh timeout after lock acquisition. The added test does not cover the total deadline.",
+            "counterevidence": [
+              "The serialization race itself is fixed."
+            ],
+            "evidence": [
+              "sha256:f9288396dad62c621f2b34f3b104e9979d289a49eaa8c8818e8d5f3b7d01295d"
+            ],
+            "failure_code": "DEQUEUE_TIMEOUT_BUDGET_RESTARTED_AFTER_LOCK_WAIT",
+            "question": "Does lock acquisition consume the same end-to-end timeout budget as recv?",
+            "rule_id": "lock-wait-consumes-caller-timeout-budget",
+            "status": "fail"
+          },
+          {
+            "blocking": true,
+            "conclusion": "The median rises from 172.4 ns to 397.2 ns; the relative ratio is large but the absolute increase remains below one microsecond.",
+            "counterevidence": [
+              "head/base ratio=2.305"
+            ],
+            "evidence": [
+              "sha256:f9288396dad62c621f2b34f3b104e9979d289a49eaa8c8818e8d5f3b7d01295d"
+            ],
+            "failure_code": null,
+            "question": "Is the uncontended absolute lock overhead small enough to retain the approach?",
+            "rule_id": "uncontended-overhead-remains-sub-microsecond",
+            "status": "pass"
+          }
+        ],
+        "policy_id": "historical-explainable-agent-v0.5-r4",
+        "rationale_codes": [
+          "DEQUEUE_TIMEOUT_BUDGET_RESTARTED_AFTER_LOCK_WAIT"
+        ],
+        "schema_version": "0.5",
+        "test_plan_sha256": "sha256:aa62c12d7046cdc308450423e336ec878371f64cc7858e97676da6c44530d0fd"
+      }
+    },
+    {
+      "lock_sha256": "sha256:34e77ce35ac6683a06bb1de575d5977a9d8d378adc287bf314394494fb773864",
+      "material": {
+        "candidate_sha256": "sha256:e8864a93d54179c4595d2f608150f7ebc2c3e367b7f37de1425181b86298136b",
+        "case_id": "vllm#52205",
+        "decision": "revise",
+        "evidence_sha256": "sha256:08b6a2a82471154c0c1f68a4a2ee36b6b1a0ce714176949c137b67c1c8aceda5",
+        "frozen_at": "2026-09-02T01:37:05.939263Z",
+        "narrative": "[always-break-routes-full-capture-to-eager: pass] Extracted decorator behavior shows the new opt-in breaks FULL capture while legacy FULL and PIECEWISE behavior remains unchanged. [amd-kda-opt-in-is-scoped: pass] Only the AMD Kimi-K3 KDA call site opts in; the NVIDIA path does not. [amd-full-cudagraph-path-has-direct-evidence: fail] The patch changes no test, no test references always_break, and no runtime benchmark is included, so extracted decorator semantics cannot establish AMD FULL capture/replay correctness or performance.",
+        "observations": [
+          {
+            "blocking": true,
+            "conclusion": "Extracted decorator behavior shows the new opt-in breaks FULL capture while legacy FULL and PIECEWISE behavior remains unchanged.",
+            "counterevidence": [],
+            "evidence": [
+              "sha256:af0790b1049399dd509d6c940512473584c5f7b858d7b44c148c8d6ab66d30ae"
+            ],
+            "failure_code": null,
+            "question": "Does always_break route FULL capture through an eager segment?",
+            "rule_id": "always-break-routes-full-capture-to-eager",
+            "status": "pass"
+          },
+          {
+            "blocking": true,
+            "conclusion": "Only the AMD Kimi-K3 KDA call site opts in; the NVIDIA path does not.",
+            "counterevidence": [],
+            "evidence": [
+              "sha256:af0790b1049399dd509d6c940512473584c5f7b858d7b44c148c8d6ab66d30ae"
+            ],
+            "failure_code": null,
+            "question": "Is the new behavior limited to the intended AMD KDA call site?",
+            "rule_id": "amd-kda-opt-in-is-scoped",
+            "status": "pass"
+          },
+          {
+            "blocking": true,
+            "conclusion": "The patch changes no test, no test references always_break, and no runtime benchmark is included, so extracted decorator semantics cannot establish AMD FULL capture/replay correctness or performance.",
+            "counterevidence": [
+              "The isolated routing semantics and backend scope are correct."
+            ],
+            "evidence": [
+              "sha256:af0790b1049399dd509d6c940512473584c5f7b858d7b44c148c8d6ab66d30ae"
+            ],
+            "failure_code": "AMD_FULL_CUDAGRAPH_CORRECTNESS_AND_PERFORMANCE_EVIDENCE_MISSING",
+            "question": "Does the changed AMD FULL capture/replay path have direct tests and performance evidence?",
+            "rule_id": "amd-full-cudagraph-path-has-direct-evidence",
+            "status": "fail"
+          }
+        ],
+        "policy_id": "historical-explainable-agent-v0.5-r4",
+        "rationale_codes": [
+          "AMD_FULL_CUDAGRAPH_CORRECTNESS_AND_PERFORMANCE_EVIDENCE_MISSING"
+        ],
+        "schema_version": "0.5",
+        "test_plan_sha256": "sha256:aa62c12d7046cdc308450423e336ec878371f64cc7858e97676da6c44530d0fd"
+      }
+    }
+  ],
+  "protocol_id": "historical-reviewed-failure-alignment-v0.5-r5",
+  "review_text_visible_during_machine_judgment": false,
+  "schema_version": "0.5",
+  "selection_lock_file_sha256": "sha256:b4d3bef64cd61f8500124d94acfb75ab12f07ec27670d2805b37481bc1c8603e",
+  "selection_lock_sha256": "sha256:8fe8d03ec09effe04b9ea2930d7bf8c880ecf8ada7683d3f84fbe927dbc5a1ed",
+  "test_plan_file_sha256": "sha256:c313c1c28bae1ce55861e453457db7841e70c5a5651df9748235d3068e43ba99",
+  "test_plan_sha256": "sha256:aa62c12d7046cdc308450423e336ec878371f64cc7858e97676da6c44530d0fd",
+  "trained_weights_used": false,
+  "weighted_score_used": false
+}

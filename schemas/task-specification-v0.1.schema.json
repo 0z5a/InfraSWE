@@ -1,0 +1,183 @@
+{
+  "$defs": {
+    "TaskRequirement": {
+      "additionalProperties": false,
+      "properties": {
+        "disposition": {
+          "default": "scoring",
+          "enum": [
+            "scoring",
+            "non-scoring-informational"
+          ],
+          "title": "Disposition",
+          "type": "string"
+        },
+        "requirement_id": {
+          "pattern": "^REQ-[A-Z0-9][A-Z0-9_-]*$",
+          "title": "Requirement Id",
+          "type": "string"
+        },
+        "statement": {
+          "minLength": 12,
+          "title": "Statement",
+          "type": "string"
+        },
+        "visibility": {
+          "enum": [
+            "public",
+            "public-contract-hidden-instance",
+            "private-qualification"
+          ],
+          "title": "Visibility",
+          "type": "string"
+        }
+      },
+      "required": [
+        "requirement_id",
+        "statement",
+        "visibility"
+      ],
+      "title": "TaskRequirement",
+      "type": "object"
+    },
+    "TaskTarget": {
+      "additionalProperties": false,
+      "properties": {
+        "repository": {
+          "title": "Repository",
+          "type": "string"
+        },
+        "revision": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Revision",
+          "type": "string"
+        }
+      },
+      "required": [
+        "repository",
+        "revision"
+      ],
+      "title": "TaskTarget",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "allowed_changes": {
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1,
+      "title": "Allowed Changes",
+      "type": "array"
+    },
+    "artifact_policy_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Artifact Policy Sha256",
+      "type": "string"
+    },
+    "capability_contract_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Capability Contract Sha256",
+      "type": "string"
+    },
+    "change_intent": {
+      "minLength": 12,
+      "title": "Change Intent",
+      "type": "string"
+    },
+    "change_kind": {
+      "enum": [
+        "repair",
+        "feature",
+        "optimization",
+        "conformance"
+      ],
+      "title": "Change Kind",
+      "type": "string"
+    },
+    "correctness_tolerance_policy_id": {
+      "title": "Correctness Tolerance Policy Id",
+      "type": "string"
+    },
+    "forbidden_changes": {
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1,
+      "title": "Forbidden Changes",
+      "type": "array"
+    },
+    "public_validation_interface": {
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1,
+      "title": "Public Validation Interface",
+      "type": "array"
+    },
+    "requirements": {
+      "items": {
+        "$ref": "#/$defs/TaskRequirement"
+      },
+      "minItems": 1,
+      "title": "Requirements",
+      "type": "array"
+    },
+    "resource_expectation_id": {
+      "title": "Resource Expectation Id",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "0.1",
+      "default": "0.1",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "supported_behavior": {
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1,
+      "title": "Supported Behavior",
+      "type": "array"
+    },
+    "target": {
+      "$ref": "#/$defs/TaskTarget"
+    },
+    "task_id": {
+      "title": "Task Id",
+      "type": "string"
+    },
+    "task_revision": {
+      "minimum": 1,
+      "title": "Task Revision",
+      "type": "integer"
+    },
+    "unsupported_behavior": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Unsupported Behavior",
+      "type": "array"
+    }
+  },
+  "required": [
+    "task_id",
+    "task_revision",
+    "change_kind",
+    "target",
+    "change_intent",
+    "requirements",
+    "allowed_changes",
+    "forbidden_changes",
+    "supported_behavior",
+    "correctness_tolerance_policy_id",
+    "resource_expectation_id",
+    "public_validation_interface",
+    "artifact_policy_sha256",
+    "capability_contract_sha256"
+  ],
+  "title": "TaskSpecification",
+  "type": "object"
+}

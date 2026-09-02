@@ -1,0 +1,20 @@
+Traceback (most recent call last):
+  File "/workspace/infraswe/benchmarks/historical_prs/probes/flashattention_sm80_smoke.py", line 180, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "/workspace/infraswe/benchmarks/historical_prs/probes/flashattention_sm80_smoke.py", line 156, in main
+    _fixed_forward_backward("fp16_noncausal_hdim64", torch.float16, False, 64),
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/infraswe/benchmarks/historical_prs/probes/flashattention_sm80_smoke.py", line 47, in _fixed_forward_backward
+    output = flash_attn_func(q, k, v, dropout_p=0.0, causal=causal)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/historical-prs/worktrees/flashattention-pr-1427-base/flash_attn/flash_attn_interface.py", line 1189, in flash_attn_func
+    return FlashAttnFunc.apply(
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/venv/main/lib/python3.12/site-packages/torch/autograd/function.py", line 575, in apply
+    return super().apply(*args, **kwargs)  # type: ignore[misc]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/historical-prs/worktrees/flashattention-pr-1427-base/flash_attn/flash_attn_interface.py", line 853, in forward
+    return out if not return_softmax else (out, softmax_lse, S_dmask)
+           ^^^
+UnboundLocalError: cannot access local variable 'out' where it is not associated with a value

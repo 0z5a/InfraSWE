@@ -1,0 +1,140 @@
+{
+  "$defs": {
+    "ResourceLimit": {
+      "additionalProperties": false,
+      "properties": {
+        "candidate_limit": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Candidate Limit"
+        },
+        "exclusive": {
+          "default": false,
+          "title": "Exclusive",
+          "type": "boolean"
+        },
+        "measurement_reserve": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Measurement Reserve",
+          "type": "number"
+        },
+        "minimum_required": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Minimum Required",
+          "type": "number"
+        },
+        "reserved": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Reserved",
+          "type": "number"
+        },
+        "unit": {
+          "enum": [
+            "count",
+            "bytes",
+            "seconds",
+            "watts",
+            "bps",
+            "iops"
+          ],
+          "title": "Unit",
+          "type": "string"
+        }
+      },
+      "required": [
+        "unit"
+      ],
+      "title": "ResourceLimit",
+      "type": "object"
+    },
+    "ResourcePhaseEnvelope": {
+      "additionalProperties": false,
+      "properties": {
+        "official_repetitions": {
+          "default": 1,
+          "minimum": 1,
+          "title": "Official Repetitions",
+          "type": "integer"
+        },
+        "resources": {
+          "additionalProperties": {
+            "$ref": "#/$defs/ResourceLimit"
+          },
+          "minProperties": 1,
+          "title": "Resources",
+          "type": "object"
+        },
+        "wall_time_s": {
+          "exclusiveMinimum": 0,
+          "title": "Wall Time S",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "resources",
+        "wall_time_s"
+      ],
+      "title": "ResourcePhaseEnvelope",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "envelope_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Envelope Sha256",
+      "type": "string"
+    },
+    "overprovision_isolation_required": {
+      "default": true,
+      "title": "Overprovision Isolation Required",
+      "type": "boolean"
+    },
+    "phases": {
+      "additionalProperties": {
+        "$ref": "#/$defs/ResourcePhaseEnvelope"
+      },
+      "propertyNames": {
+        "enum": [
+          "agent",
+          "collect",
+          "build",
+          "verify",
+          "measure",
+          "profile",
+          "judge"
+        ]
+      },
+      "title": "Phases",
+      "type": "object"
+    },
+    "policy_id": {
+      "title": "Policy Id",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "0.1",
+      "default": "0.1",
+      "title": "Schema Version",
+      "type": "string"
+    }
+  },
+  "required": [
+    "policy_id",
+    "phases",
+    "envelope_sha256"
+  ],
+  "title": "ResourceEnvelope",
+  "type": "object"
+}

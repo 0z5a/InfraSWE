@@ -1,0 +1,149 @@
+{
+  "$defs": {
+    "JudgeCriterion": {
+      "additionalProperties": false,
+      "properties": {
+        "abstain_when": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Abstain When",
+          "type": "array"
+        },
+        "criterion_id": {
+          "title": "Criterion Id",
+          "type": "string"
+        },
+        "forbidden_inferences": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Forbidden Inferences",
+          "type": "array"
+        },
+        "owner_component": {
+          "enum": [
+            "U",
+            "M",
+            "P"
+          ],
+          "title": "Owner Component",
+          "type": "string"
+        },
+        "owner_type": {
+          "enum": [
+            "deterministic",
+            "semantic-judge"
+          ],
+          "title": "Owner Type",
+          "type": "string"
+        },
+        "question": {
+          "title": "Question",
+          "type": "string"
+        },
+        "required": {
+          "default": true,
+          "title": "Required",
+          "type": "boolean"
+        },
+        "required_evidence_types": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Required Evidence Types",
+          "type": "array"
+        },
+        "scale": {
+          "$ref": "#/$defs/JudgeCriterionScale"
+        },
+        "weight_within_component": {
+          "exclusiveMinimum": 0,
+          "maximum": 1,
+          "title": "Weight Within Component",
+          "type": "number"
+        }
+      },
+      "required": [
+        "criterion_id",
+        "owner_component",
+        "owner_type",
+        "weight_within_component",
+        "question"
+      ],
+      "title": "JudgeCriterion",
+      "type": "object"
+    },
+    "JudgeCriterionScale": {
+      "additionalProperties": false,
+      "properties": {
+        "anchors": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "title": "Anchors",
+          "type": "object"
+        },
+        "type": {
+          "const": "anchored-ordinal-5",
+          "default": "anchored-ordinal-5",
+          "title": "Type",
+          "type": "string"
+        }
+      },
+      "title": "JudgeCriterionScale",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "criteria": {
+      "items": {
+        "$ref": "#/$defs/JudgeCriterion"
+      },
+      "minItems": 1,
+      "title": "Criteria",
+      "type": "array"
+    },
+    "domain": {
+      "enum": [
+        "kernel",
+        "distributed-communication",
+        "memory-tiering",
+        "training-integration",
+        "inference-runtime"
+      ],
+      "title": "Domain",
+      "type": "string"
+    },
+    "human_review_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Human Review Sha256",
+      "type": "string"
+    },
+    "review_status": {
+      "const": "human-reviewed",
+      "default": "human-reviewed",
+      "title": "Review Status",
+      "type": "string"
+    },
+    "rubric_id": {
+      "title": "Rubric Id",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "0.5.3",
+      "default": "0.5.3",
+      "title": "Schema Version",
+      "type": "string"
+    }
+  },
+  "required": [
+    "rubric_id",
+    "domain",
+    "human_review_sha256",
+    "criteria"
+  ],
+  "title": "JudgeRubric",
+  "type": "object"
+}

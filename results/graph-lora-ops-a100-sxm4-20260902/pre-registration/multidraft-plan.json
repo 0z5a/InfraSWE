@@ -1,0 +1,57 @@
+{
+  "schema_version": "0.5",
+  "status": "frozen-before-execution",
+  "benchmark": "sglang-graph-lora-multidraft-v1",
+  "purpose": "Add an SM80 deployment cell for the current revised candidate; do not rewrite prior H100 or SM120 evidence.",
+  "execution_cell": {
+    "host": "38.49.42.120",
+    "ssh_port": 54270,
+    "gpu_index": 0,
+    "gpu_model": "NVIDIA A100-SXM4-40GB",
+    "compute_capability": [
+      8,
+      0
+    ],
+    "gpu_count_used": 1,
+    "available_gpu_count": 2,
+    "workspace_is_volume": false
+  },
+  "source_identity": {
+    "baseline_sha256": "sha256:390676cc38975095ba124d1932aa8c27dc2b4605e18c495c095ae852f4c96790",
+    "candidate_sha256": "sha256:8842d8b62f766265142e341e5acc59492ccb41756237bcd9a217568311a76402",
+    "original_attachment_sha256_not_under_test": "sha256:e4c9b3bdf5a5488f85a17abcb2ad3089d4d7b2b2024845bd2752f97067bc0b76"
+  },
+  "harness_identity": {
+    "benchmark_sha256": "sha256:a3ebf7b19f883ab6b5d9ad67fcc4ee76c405d155244db2094fbcc6f057fe9dfd",
+    "summarizer_sha256": "sha256:14c9a7c130d8758766b66e9f18eecb405834babee7d99317e16f4359c3481fcc"
+  },
+  "protocol": {
+    "fresh_process_replays": 7,
+    "paired_samples_per_case_per_process": 5,
+    "cuda_graph_replays_per_sample": 300,
+    "case_count": 21,
+    "capture_order": "counterbalanced",
+    "sample_order": "counterbalanced",
+    "compile_phase": "module-load-before-timed-cases"
+  },
+  "gates": {
+    "candidate_correctness_all_replays": true,
+    "candidate_contracts_all_replays": true,
+    "maximum_per_case_candidate_to_baseline_ratio": 1.03,
+    "source_identity_constant": true,
+    "environment_identity_constant": true,
+    "fresh_process_identity_complete": true
+  },
+  "authority": {
+    "native_target_profile": "sglang-runtime-kernel-v1",
+    "proxy_profiles": [
+      "cutlass-cute-kernel-library-v1",
+      "vllm-kernel-integration-v1",
+      "megatron-core-training-kernel-host-v1",
+      "deepgemm-moe-gemm-kernel-v1"
+    ],
+    "proxy_native_projectfit_allowed": false,
+    "cross_cell_absolute_ranking_allowed": false,
+    "official_projectfit_allowed": false
+  }
+}

@@ -1,0 +1,209 @@
+{
+  "case_id": "deepgemm-pr-55",
+  "created_at": "2026-09-02T02:34:00.415430+00:00",
+  "duration_seconds": 0.5029988579999554,
+  "environment": {
+    "cuda_version": "12.8"
+  },
+  "evidence_sha256": "sha256:3f1e66b3b41f19617fa7ee6ef173fd7d5e6c83b497e7b8eaa8e7d2b2566ad3e3",
+  "facts": {
+    "common_mapping_ok": true,
+    "compilation_path": "not-required",
+    "compute_capability": [
+      9,
+      0
+    ],
+    "cuda_graph": {
+      "base": {
+        "capture_output": [
+          2.0,
+          3.0
+        ],
+        "capture_values": {
+          "stream": 508552480,
+          "tensor": 127298743307264
+        },
+        "replay_changed_output": true,
+        "replay_output": [
+          4.0,
+          6.0
+        ],
+        "status": "pass",
+        "tensor_pointer_matches": true
+      },
+      "head": {
+        "capture_output": [
+          2.0,
+          3.0
+        ],
+        "capture_values": {
+          "stream": 508552480,
+          "tensor": 127298743307776
+        },
+        "replay_changed_output": true,
+        "replay_output": [
+          4.0,
+          6.0
+        ],
+        "status": "pass",
+        "tensor_pointer_matches": true
+      }
+    },
+    "cuda_graph_capture_and_replay_ok": true,
+    "device": "NVIDIA H100 PCIe",
+    "head_accepts_float16_while_generator_lacks_float16": true,
+    "head_accepts_unregistered_int8_pointer": true,
+    "scalar_mapping": {
+      "bool": {
+        "base": {
+          "ctype": "c_bool",
+          "status": "mapped",
+          "value": true
+        },
+        "head": {
+          "ctype": "c_bool",
+          "status": "mapped",
+          "value": true
+        }
+      },
+      "float": {
+        "base": {
+          "ctype": "c_float",
+          "status": "mapped",
+          "value": 0.25
+        },
+        "head": {
+          "ctype": "c_float",
+          "status": "mapped",
+          "value": 0.25
+        }
+      },
+      "int": {
+        "base": {
+          "ctype": "c_int",
+          "status": "mapped",
+          "value": 7
+        },
+        "head": {
+          "ctype": "c_int",
+          "status": "mapped",
+          "value": 7
+        }
+      },
+      "stream": {
+        "base": {
+          "ctype": "c_void_p",
+          "status": "mapped",
+          "value": null
+        },
+        "head": {
+          "ctype": "c_void_p",
+          "status": "mapped",
+          "value": null
+        }
+      }
+    },
+    "scalar_mapping_ok": true,
+    "source_contract": {
+      "base_uses_tensor_isinstance": true,
+      "head_generator_supports_float16": false,
+      "head_has_float16_pointer_branch": true,
+      "head_uses_data_ptr_capability": true,
+      "runtime_retains_tensor_dtype_assertion": true,
+      "runtime_source_unchanged": true
+    },
+    "steady_state_compile_seconds": 0.0,
+    "tensor_mapping": {
+      "bfloat16": {
+        "base": {
+          "ctype": "c_void_p",
+          "status": "mapped",
+          "value": 127298743304704
+        },
+        "data_ptr": 127298743304704,
+        "head": {
+          "ctype": "c_void_p",
+          "status": "mapped",
+          "value": 127298743304704
+        }
+      },
+      "float16": {
+        "base": {
+          "error": "torch.float16",
+          "error_type": "KeyError",
+          "status": "rejected"
+        },
+        "data_ptr": 127298743305216,
+        "head": {
+          "ctype": "c_void_p",
+          "status": "mapped",
+          "value": 127298743305216
+        }
+      },
+      "float32": {
+        "base": {
+          "ctype": "c_void_p",
+          "status": "mapped",
+          "value": 127298743304192
+        },
+        "data_ptr": 127298743304192,
+        "head": {
+          "ctype": "c_void_p",
+          "status": "mapped",
+          "value": 127298743304192
+        }
+      },
+      "float8_e4m3fn": {
+        "base": {
+          "ctype": "c_void_p",
+          "status": "mapped",
+          "value": 127298743305728
+        },
+        "data_ptr": 127298743305728,
+        "head": {
+          "ctype": "c_void_p",
+          "status": "mapped",
+          "value": 127298743305728
+        }
+      },
+      "int32": {
+        "base": {
+          "ctype": "c_void_p",
+          "status": "mapped",
+          "value": 127298743306240
+        },
+        "data_ptr": 127298743306240,
+        "head": {
+          "ctype": "c_void_p",
+          "status": "mapped",
+          "value": 127298743306240
+        }
+      },
+      "int8": {
+        "base": {
+          "error": "torch.int8",
+          "error_type": "KeyError",
+          "status": "rejected"
+        },
+        "data_ptr": 127298743306752,
+        "head": {
+          "ctype": "c_void_p",
+          "status": "mapped",
+          "value": 127298743306752
+        }
+      }
+    },
+    "torch_version": "2.8.0+cu128"
+  },
+  "failure_codes": [],
+  "probe": "deepgemm-map-ctype-cuda-graph-h100-v1",
+  "protocol_id": "historical-pr-blind-cross-project-v0.5-r6",
+  "schema_version": "0.5",
+  "source_identity": {
+    "base_runtime": "sha256:7b943b1d86301ecdb6c0344507ccc4a7738ac01d2c561c67c8efb5d2dcf72652",
+    "base_template": "sha256:bad1ccba2b3168a83aad978a0006ffdf0c4a1247e61c1363db6747a9d0ac34bf",
+    "head_runtime": "sha256:7b943b1d86301ecdb6c0344507ccc4a7738ac01d2c561c67c8efb5d2dcf72652",
+    "head_template": "sha256:91b10e24d33709f76c72ed798c8bd54efd4cdec56b62cb6cda75cd0125486b58"
+  },
+  "status": "pass"
+}

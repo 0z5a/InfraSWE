@@ -1,0 +1,75 @@
+{
+  "schema_version": "0.1",
+  "snapshot_date": "2026-09-01",
+  "cross_cell_scores_comparable": false,
+  "architectures": [
+    {
+      "id": "nvidia-sm80-a100",
+      "vendor": "nvidia",
+      "architecture": "sm80",
+      "hardware": ["A100-SXM4-80GB", "A100-SXM4-40GB"],
+      "status": ["hardware_scored", "negative_controls_passed", "score_gradient_passed"],
+      "attention_support": {"fa1": "scored", "fa2": "scored", "fa3": "scored", "fa4": "scored", "torch_sdpa_flash": "scored"},
+      "attention_scores_a100_80gb": {"fa1": 96.63, "fa2": 96.91, "fa3": 95.92, "fa4": 96.83, "torch_sdpa_flash": 97.74},
+      "profiles": ["gpu-1x-sm80", "gpu-2x-sm80-pcie", "gpu-4x-sm80-pcie", "gpu-4x-sm80-nvlink"],
+      "report_roots": [
+        "reports/kernel-frontier-fa1-fa4-classic-v03-2026-08-31",
+        "reports/kernel-negative-controls-v03-a100-40gb-2026-08-31",
+        "reports/kernel-score-gradient-v03-a100-40gb-2026-08-31",
+        "reports/kernel-score-gradient-dense-v03-a100-40gb-2026-09-01"
+      ]
+    },
+    {
+      "id": "nvidia-sm90-h200-nvl",
+      "vendor": "nvidia",
+      "architecture": "sm90",
+      "hardware": ["H200 NVL 141GB"],
+      "status": ["hardware_scored", "tma_runtime_passed", "multimem_compile_passed", "multimem_topology_unavailable"],
+      "attention_scores": {"fa1": 94.93, "fa2": 96.12, "fa3": 94.81, "fa4": 96.38, "torch_sdpa_flash": 96.49},
+      "profile_gap": "no dedicated 1x SM90/H200 TOML profile in current source",
+      "report_roots": ["reports/kernel-frontier-v03-h200-nvl-141gb-2026-09-01"]
+    },
+    {
+      "id": "nvidia-sm100-b200",
+      "vendor": "nvidia",
+      "architecture": "sm100",
+      "hardware": ["B200 183GB"],
+      "status": ["feature_tested", "hardware_scored", "fabric_not_applicable_single_gpu", "ptx_preview_disabled"],
+      "namespace_scores": {"SM100-Core": 95.95, "SM100-Scheduler": 75.69, "SM100-Fabric": null, "PTX-Preview": null},
+      "task_scores": {"BW-TMEM-001": 99.25, "BW-CLC-001": 65.27, "BW-TMA-001": 82.68, "BW-TMEM-003": 99.98, "BW-TMA-002": 99.81},
+      "profiles": ["gpu-1x-sm100-b200-cuda133"],
+      "report_roots": [
+        "reports/b200-sm100-compiler-adapter-v01-2026-09-01",
+        "reports/b200-sm100-feature-score-v02-2026-09-01"
+      ]
+    },
+    {
+      "id": "nvidia-sm120-rtx-pro-5000",
+      "vendor": "nvidia",
+      "architecture": "sm120",
+      "hardware": ["RTX PRO 5000 Blackwell 48GB"],
+      "status": ["hardware_scored", "score_gradient_passed"],
+      "attention_support": {"fa1": "not_applicable", "fa2": "scored", "fa3": "not_applicable", "fa4": "scored", "torch_sdpa_flash": "scored"},
+      "attention_scores": {"fa2": 98.61, "fa4": 98.73, "torch_sdpa_flash": 98.86},
+      "profile_gap": "current formal result is 1x SM120; source profile is 2x SM120 PCIe",
+      "report_roots": [
+        "reports/kernel-frontier-v03-sm120-48gb-2026-08-31",
+        "reports/kernel-score-gradient-v03-sm120-48gb-2026-08-31",
+        "reports/sm120-architecture-supplement-v03-2026-08-31",
+        "reports/sm120-architecture-support-evidence-v03-2026-08-31"
+      ]
+    },
+    {
+      "id": "amd-gfx942-mi300x-rocm61",
+      "vendor": "amd",
+      "architecture": "gfx942",
+      "hardware": ["MI300X"],
+      "framework_contract": "PyTorch 2.4.0 / ROCm 6.1.x",
+      "status": ["adapter_ready", "hardware_evidence_pending"],
+      "attention_support": {"fa1": "not_applicable", "fa2": "not_applicable", "fa3": "not_applicable", "fa4": "not_applicable", "torch_sdpa_aotriton": "eligible_pending_hardware"},
+      "profiles": ["gpu-1x-gfx942-mi300x-rocm61"],
+      "report_roots": []
+    }
+  ]
+}
+

@@ -1,0 +1,209 @@
+{
+  "$defs": {
+    "ObligationObservation": {
+      "additionalProperties": false,
+      "properties": {
+        "bucket": {
+          "enum": [
+            "capability-obligation",
+            "regression-invariant",
+            "negative-boundary",
+            "mechanism-proof",
+            "safety-liveness",
+            "environment-sentinel",
+            "maintenance-probe"
+          ],
+          "title": "Bucket",
+          "type": "string"
+        },
+        "evidence_refs": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Evidence Refs",
+          "type": "array"
+        },
+        "failure_code": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Failure Code"
+        },
+        "obligation_id": {
+          "title": "Obligation Id",
+          "type": "string"
+        },
+        "severity": {
+          "enum": [
+            "hard",
+            "quality",
+            "sentinel",
+            "advisory"
+          ],
+          "title": "Severity",
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "PASS",
+            "FAIL",
+            "INFRA_INVALID",
+            "BENCHMARK_DEFECT",
+            "UNRESOLVED",
+            "NOT_APPLICABLE"
+          ],
+          "title": "Status",
+          "type": "string"
+        }
+      },
+      "required": [
+        "obligation_id",
+        "bucket",
+        "severity",
+        "status"
+      ],
+      "title": "ObligationObservation",
+      "type": "object"
+    },
+    "VerifierResultDiagnostics": {
+      "additionalProperties": false,
+      "properties": {
+        "all_failures": {
+          "items": {
+            "type": "string"
+          },
+          "title": "All Failures",
+          "type": "array"
+        },
+        "bucket_pass_fractions": {
+          "additionalProperties": {
+            "type": "number"
+          },
+          "propertyNames": {
+            "enum": [
+              "capability-obligation",
+              "regression-invariant",
+              "negative-boundary",
+              "mechanism-proof",
+              "safety-liveness",
+              "environment-sentinel",
+              "maintenance-probe"
+            ]
+          },
+          "title": "Bucket Pass Fractions",
+          "type": "object"
+        },
+        "first_failure": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "First Failure"
+        }
+      },
+      "required": [
+        "bucket_pass_fractions"
+      ],
+      "title": "VerifierResultDiagnostics",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "candidate_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Candidate Sha256",
+      "type": "string"
+    },
+    "diagnostics": {
+      "$ref": "#/$defs/VerifierResultDiagnostics"
+    },
+    "environment_status": {
+      "enum": [
+        "PASS",
+        "INFRA_INVALID",
+        "BENCHMARK_DEFECT"
+      ],
+      "title": "Environment Status",
+      "type": "string"
+    },
+    "infra_cert": {
+      "anyOf": [
+        {
+          "enum": [
+            0,
+            1
+          ],
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Infra Cert"
+    },
+    "obligations": {
+      "items": {
+        "$ref": "#/$defs/ObligationObservation"
+      },
+      "title": "Obligations",
+      "type": "array"
+    },
+    "result_status": {
+      "enum": [
+        "VALID_PASS",
+        "VALID_FAIL",
+        "INFRA_INVALID",
+        "BENCHMARK_DEFECT",
+        "NOT_APPLICABLE",
+        "UNRESOLVED"
+      ],
+      "title": "Result Status",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "0.1",
+      "default": "0.1",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "task_id": {
+      "title": "Task Id",
+      "type": "string"
+    },
+    "task_seal_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Task Seal Sha256",
+      "type": "string"
+    },
+    "verifier_result_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Verifier Result Sha256",
+      "type": "string"
+    }
+  },
+  "required": [
+    "task_id",
+    "task_seal_sha256",
+    "candidate_sha256",
+    "environment_status",
+    "obligations",
+    "infra_cert",
+    "result_status",
+    "diagnostics",
+    "verifier_result_sha256"
+  ],
+  "title": "VerifierResult",
+  "type": "object"
+}

@@ -1,0 +1,486 @@
+{
+  "evidence_bindings": {
+    "cutlass-pr-2275": {
+      "probes/cutlass-pr-2275-k128-v3.json": "sha256:e409defd675d63c8d01e9cf40a9d601dbd56d619cadf45da661dd0f5eb7d236c",
+      "probes/cutlass-pr-2275-mixed-k.json": "sha256:01e69adef7b64a2a479504628315a1ca8d982f174d6f7e1e33bc899c8e4a0cbf",
+      "static/cutlass-pr-2275.json": "sha256:551b0b4fd6dce9564cea3d071980ddbe6d347873e284e562f08692cfa23f8713"
+    },
+    "deepgemm-pr-55": {
+      "probes/deepgemm-pr-55-cuda-graph.json": "sha256:8f8384e5b5ef3ef188523b4c11563d6ae133f49e2f912ee1742b022043c9e47a",
+      "static/deepgemm-pr-55.json": "sha256:5763100ec616356161c41a397a7d6db6402c857c91fd09dc815a88e576e500c1"
+    },
+    "liger-pr-804": {
+      "probes/liger-pr-804-int64.json": "sha256:f1ad1d6b4f995b6ac4ab42269b22abfbbb669efb8fc46a730d24969be58ad199",
+      "static/liger-pr-804.json": "sha256:ac18eb5fde721ea56f7c09fc59eba011d28a6108840babc1d48c10ee8cbc67cb"
+    },
+    "megatron-pr-5608": {
+      "probes/megatron-pr-5608-runtime-shapes-confirm.json": "sha256:d5bb3baa6dcd7d23283b9e6ca1e6efecc5c719a61a5c0a8156b167144eb4b3ef",
+      "static/megatron-pr-5608.json": "sha256:3d16d290198bec685c32ac50e9b6bd01fe4e53a9a7257b2a27998963f05fd3ee"
+    },
+    "torchtitan-pr-2717": {
+      "probes/torchtitan-pr-2717-router.json": "sha256:66bcfb009b22b1df1a7ed2c8eff9c56104ccce10ad517488b580d5d5469fc0bc",
+      "static/torchtitan-pr-2717.json": "sha256:52d134496bc13d827aaf66825e6cb129506318bb3ce4dee5ecb95c8a8fabe18c"
+    },
+    "verl-pr-1688": {
+      "probes/verl-pr-1688-temperature.json": "sha256:85260b9fa28040f9dad0d854d74cbf5493dde934c0c5b3533ee52af6fb08b6a5",
+      "static/verl-pr-1688.json": "sha256:62c32d0267850093899540cc5e8d98188110793e9d67fcd2840446b6735f509c"
+    }
+  },
+  "frozen_at": "2026-09-02T02:56:08.385880+00:00",
+  "learned_model_used": false,
+  "lock_set_sha256": "sha256:9be598d9ad309af1e0401cfb7ecb6fc0e116b44515c1fc1d93b1b65f57d9bbde",
+  "locks": [
+    {
+      "lock_sha256": "sha256:20e48e01665c01e601d4932154796e2ce081b1ac20452a78131da35d43a6e35a",
+      "material": {
+        "candidate_sha256": "sha256:e1a4e63ea5a6cedcc226b25e9b4981d6fcbcee986d030bc4eaf3e3eb158de935",
+        "case_id": "cutlass-pr-2275",
+        "decision": "revise",
+        "evidence_sha256": "sha256:fe52a6ac90f2bb1c3f31769006c62f2c871fa78d29738431956ca23d50056c30",
+        "frozen_at": "2026-09-02T02:56:08.385880Z",
+        "narrative": "[k128-final-scale-tile-is-guarded: pass] The exact SM90 FP8 blockwise collective changes from zero to one k_tile_count == 1 guard, and both exact base and head AOT builds completed. [head-k128-and-neighbor-execute-correctly: pass] Head K=128, head K=256, and the documented mixed set with four K=128 problems all report Disposition: Passed. [neighbor-latency-within-three-percent: pass] The seven-pair K=256 median head/base ratio is 1.0070, with no JIT path. [changed-collective-has-direct-k128-regression: fail] The PR changes no test file. K=128 appears in example documentation, but the changed collective has no new direct regression that would retain this fix.",
+        "observations": [
+          {
+            "blocking": true,
+            "conclusion": "The exact SM90 FP8 blockwise collective changes from zero to one k_tile_count == 1 guard, and both exact base and head AOT builds completed.",
+            "counterevidence": [],
+            "evidence": [
+              "sha256:551b0b4fd6dce9564cea3d071980ddbe6d347873e284e562f08692cfa23f8713",
+              "sha256:e409defd675d63c8d01e9cf40a9d601dbd56d619cadf45da661dd0f5eb7d236c",
+              "sha256:01e69adef7b64a2a479504628315a1ca8d982f174d6f7e1e33bc899c8e4a0cbf"
+            ],
+            "failure_code": null,
+            "question": "Does the head guard the final scale load for a one-tile K dimension?",
+            "rule_id": "k128-final-scale-tile-is-guarded",
+            "status": "pass"
+          },
+          {
+            "blocking": true,
+            "conclusion": "Head K=128, head K=256, and the documented mixed set with four K=128 problems all report Disposition: Passed.",
+            "counterevidence": [
+              "Both the uniform and mixed base controls also pass on this H100, so this environment does not dynamically distinguish the claimed defect."
+            ],
+            "evidence": [
+              "sha256:551b0b4fd6dce9564cea3d071980ddbe6d347873e284e562f08692cfa23f8713",
+              "sha256:e409defd675d63c8d01e9cf40a9d601dbd56d619cadf45da661dd0f5eb7d236c",
+              "sha256:01e69adef7b64a2a479504628315a1ca8d982f174d6f7e1e33bc899c8e4a0cbf"
+            ],
+            "failure_code": null,
+            "question": "Do head K=128 and neighboring K=256 runs match the CUTLASS reference?",
+            "rule_id": "head-k128-and-neighbor-execute-correctly",
+            "status": "pass"
+          },
+          {
+            "blocking": true,
+            "conclusion": "The seven-pair K=256 median head/base ratio is 1.0070, with no JIT path.",
+            "counterevidence": [],
+            "evidence": [
+              "sha256:551b0b4fd6dce9564cea3d071980ddbe6d347873e284e562f08692cfa23f8713",
+              "sha256:e409defd675d63c8d01e9cf40a9d601dbd56d619cadf45da661dd0f5eb7d236c",
+              "sha256:01e69adef7b64a2a479504628315a1ca8d982f174d6f7e1e33bc899c8e4a0cbf"
+            ],
+            "failure_code": null,
+            "question": "Does K=256 retain steady latency after AOT compilation?",
+            "rule_id": "neighbor-latency-within-three-percent",
+            "status": "pass"
+          },
+          {
+            "blocking": true,
+            "conclusion": "The PR changes no test file. K=128 appears in example documentation, but the changed collective has no new direct regression that would retain this fix.",
+            "counterevidence": [
+              "The offline H100 head run passes; changed_test_file_count=0."
+            ],
+            "evidence": [
+              "sha256:551b0b4fd6dce9564cea3d071980ddbe6d347873e284e562f08692cfa23f8713",
+              "sha256:e409defd675d63c8d01e9cf40a9d601dbd56d619cadf45da661dd0f5eb7d236c",
+              "sha256:01e69adef7b64a2a479504628315a1ca8d982f174d6f7e1e33bc899c8e4a0cbf"
+            ],
+            "failure_code": "CUTLASS_DIRECT_K128_REGRESSION_TEST_MISSING",
+            "question": "Is the exact changed collective protected by a direct K=128 regression test?",
+            "rule_id": "changed-collective-has-direct-k128-regression",
+            "status": "fail"
+          }
+        ],
+        "policy_id": "historical-explainable-agent-v0.5-r4",
+        "rationale_codes": [
+          "CUTLASS_DIRECT_K128_REGRESSION_TEST_MISSING"
+        ],
+        "schema_version": "0.5",
+        "test_plan_sha256": "sha256:187e71082f6b26a8913856be014fc6d2e6b1d4fb52db4b3dceea35a09b791982"
+      }
+    },
+    {
+      "lock_sha256": "sha256:58adb71801320116a3001f1de7f44737a65bbdc8f5048788f457427a61f9182d",
+      "material": {
+        "candidate_sha256": "sha256:4d1dc11fcbfcdde5f9b8b1e89f93030bff166a36386aedf3a3801b5be3c1abe2",
+        "case_id": "liger-pr-804",
+        "decision": "revise",
+        "evidence_sha256": "sha256:cf82480f4ee188659c9bafc11297d7d37cd7df97f8939feae2307db1a434e2fd",
+        "frozen_at": "2026-09-02T02:56:08.385880Z",
+        "narrative": "[all-changed-offsets-widen-program-id-before-multiplication: pass] The exact head contains two RMSNorm and one RoPE int64 program-ID casts. [large-offset-arithmetic-crosses-int32-boundary: pass] At program 174763 the base wraps to -2147479552, while both head paths produce the expected 2147487744. [ordinary-range-behavior-and-latency-are-retained: pass] Common outputs are equal, the seven-pair head/base ratio is 0.9998, and steady timing creates zero cache files. [both-kernel-families-have-direct-large-offset-tests: fail] The PR changes no test file and the exact head has no existing large-offset RMSNorm or RoPE match, so both changed families lack retained boundary coverage.",
+        "observations": [
+          {
+            "blocking": true,
+            "conclusion": "The exact head contains two RMSNorm and one RoPE int64 program-ID casts.",
+            "counterevidence": [],
+            "evidence": [
+              "sha256:ac18eb5fde721ea56f7c09fc59eba011d28a6108840babc1d48c10ee8cbc67cb",
+              "sha256:f1ad1d6b4f995b6ac4ab42269b22abfbbb669efb8fc46a730d24969be58ad199"
+            ],
+            "failure_code": null,
+            "question": "Are all changed RMSNorm and RoPE offsets widened before multiplication?",
+            "rule_id": "all-changed-offsets-widen-program-id-before-multiplication",
+            "status": "pass"
+          },
+          {
+            "blocking": true,
+            "conclusion": "At program 174763 the base wraps to -2147479552, while both head paths produce the expected 2147487744.",
+            "counterevidence": [],
+            "evidence": [
+              "sha256:ac18eb5fde721ea56f7c09fc59eba011d28a6108840babc1d48c10ee8cbc67cb",
+              "sha256:f1ad1d6b4f995b6ac4ab42269b22abfbbb669efb8fc46a730d24969be58ad199"
+            ],
+            "failure_code": null,
+            "question": "Do forward/RoPE and RMSNorm-backward offsets avoid int32 wraparound?",
+            "rule_id": "large-offset-arithmetic-crosses-int32-boundary",
+            "status": "pass"
+          },
+          {
+            "blocking": true,
+            "conclusion": "Common outputs are equal, the seven-pair head/base ratio is 0.9998, and steady timing creates zero cache files.",
+            "counterevidence": [],
+            "evidence": [
+              "sha256:ac18eb5fde721ea56f7c09fc59eba011d28a6108840babc1d48c10ee8cbc67cb",
+              "sha256:f1ad1d6b4f995b6ac4ab42269b22abfbbb669efb8fc46a730d24969be58ad199"
+            ],
+            "failure_code": null,
+            "question": "Are common-range outputs and steady latency retained after precompile?",
+            "rule_id": "ordinary-range-behavior-and-latency-are-retained",
+            "status": "pass"
+          },
+          {
+            "blocking": true,
+            "conclusion": "The PR changes no test file and the exact head has no existing large-offset RMSNorm or RoPE match, so both changed families lack retained boundary coverage.",
+            "counterevidence": [
+              "Offline arithmetic and common-range timing pass; changed_test_file_count=0."
+            ],
+            "evidence": [
+              "sha256:ac18eb5fde721ea56f7c09fc59eba011d28a6108840babc1d48c10ee8cbc67cb",
+              "sha256:f1ad1d6b4f995b6ac4ab42269b22abfbbb669efb8fc46a730d24969be58ad199"
+            ],
+            "failure_code": "LIGER_RMSNORM_AND_ROPE_LARGE_OFFSET_TESTS_MISSING",
+            "question": "Do direct tests cover large-offset RMSNorm and RoPE?",
+            "rule_id": "both-kernel-families-have-direct-large-offset-tests",
+            "status": "fail"
+          }
+        ],
+        "policy_id": "historical-explainable-agent-v0.5-r4",
+        "rationale_codes": [
+          "LIGER_RMSNORM_AND_ROPE_LARGE_OFFSET_TESTS_MISSING"
+        ],
+        "schema_version": "0.5",
+        "test_plan_sha256": "sha256:187e71082f6b26a8913856be014fc6d2e6b1d4fb52db4b3dceea35a09b791982"
+      }
+    },
+    {
+      "lock_sha256": "sha256:d3dbac37b98ff8b232cbd7c53054e0304ed948e6b38e78e41b561a194a4f6995",
+      "material": {
+        "candidate_sha256": "sha256:5ec39f0f60259677a69de121c239e2468b332c5b4cbe6d821b3aada3811155bb",
+        "case_id": "deepgemm-pr-55",
+        "decision": "revise",
+        "evidence_sha256": "sha256:9be87c26378d076bbf418e9b5f9d1bae1867e6a4980172f0659570c442f06931",
+        "frozen_at": "2026-09-02T02:56:08.385880Z",
+        "narrative": "[head-cuda-graph-capture-and-replay-completes: pass] Head capture and replay pass with the expected changed replay output and an unchanged tensor pointer. [common-ctype-and-stream-mapping-is-retained: pass] Common tensor/scalar mappings pass, the generated runtime source is unchanged, and the runtime dtype assertion remains present. [map-ctype-retains-unsupported-dtype-rejection: fail] Head map_ctype accepts an unregistered int8 pointer and float16 even though the generator map lacks float16, broadening the base mapping contract without a direct validation test. [changed-template-has-direct-cuda-graph-test: fail] The PR changes no test file; existing Capture tests capture stdout rather than a CUDA graph, so the changed lifecycle has no direct retained coverage.",
+        "observations": [
+          {
+            "blocking": true,
+            "conclusion": "Head capture and replay pass with the expected changed replay output and an unchanged tensor pointer.",
+            "counterevidence": [
+              "The base control also reports pass, so the target failure is not reproduced in this environment."
+            ],
+            "evidence": [
+              "sha256:5763100ec616356161c41a397a7d6db6402c857c91fd09dc815a88e576e500c1",
+              "sha256:8f8384e5b5ef3ef188523b4c11563d6ae133f49e2f912ee1742b022043c9e47a"
+            ],
+            "failure_code": null,
+            "question": "Can the exact changed template mapping capture once and replay repeatedly?",
+            "rule_id": "head-cuda-graph-capture-and-replay-completes",
+            "status": "pass"
+          },
+          {
+            "blocking": true,
+            "conclusion": "Common tensor/scalar mappings pass, the generated runtime source is unchanged, and the runtime dtype assertion remains present.",
+            "counterevidence": [],
+            "evidence": [
+              "sha256:5763100ec616356161c41a397a7d6db6402c857c91fd09dc815a88e576e500c1",
+              "sha256:8f8384e5b5ef3ef188523b4c11563d6ae133f49e2f912ee1742b022043c9e47a"
+            ],
+            "failure_code": null,
+            "question": "Are supported tensors, scalars, and CUDA streams still mapped correctly?",
+            "rule_id": "common-ctype-and-stream-mapping-is-retained",
+            "status": "pass"
+          },
+          {
+            "blocking": true,
+            "conclusion": "Head map_ctype accepts an unregistered int8 pointer and float16 even though the generator map lacks float16, broadening the base mapping contract without a direct validation test.",
+            "counterevidence": [
+              "The unchanged generated runtime still contains a dtype assertion."
+            ],
+            "evidence": [
+              "sha256:5763100ec616356161c41a397a7d6db6402c857c91fd09dc815a88e576e500c1",
+              "sha256:8f8384e5b5ef3ef188523b4c11563d6ae133f49e2f912ee1742b022043c9e47a"
+            ],
+            "failure_code": "DEEPGEMM_UNSUPPORTED_POINTER_DTYPE_VALIDATION_BROADENED",
+            "question": "Does the new capability mapping preserve ordinary unsupported-dtype validation?",
+            "rule_id": "map-ctype-retains-unsupported-dtype-rejection",
+            "status": "fail"
+          },
+          {
+            "blocking": true,
+            "conclusion": "The PR changes no test file; existing Capture tests capture stdout rather than a CUDA graph, so the changed lifecycle has no direct retained coverage.",
+            "counterevidence": [
+              "The offline graph probe passes; changed_test_file_count=0."
+            ],
+            "evidence": [
+              "sha256:5763100ec616356161c41a397a7d6db6402c857c91fd09dc815a88e576e500c1",
+              "sha256:8f8384e5b5ef3ef188523b4c11563d6ae133f49e2f912ee1742b022043c9e47a"
+            ],
+            "failure_code": "DEEPGEMM_DIRECT_CUDA_GRAPH_REGRESSION_TEST_MISSING",
+            "question": "Is capture/replay protected by a direct lifecycle regression?",
+            "rule_id": "changed-template-has-direct-cuda-graph-test",
+            "status": "fail"
+          }
+        ],
+        "policy_id": "historical-explainable-agent-v0.5-r4",
+        "rationale_codes": [
+          "DEEPGEMM_DIRECT_CUDA_GRAPH_REGRESSION_TEST_MISSING",
+          "DEEPGEMM_UNSUPPORTED_POINTER_DTYPE_VALIDATION_BROADENED"
+        ],
+        "schema_version": "0.5",
+        "test_plan_sha256": "sha256:187e71082f6b26a8913856be014fc6d2e6b1d4fb52db4b3dceea35a09b791982"
+      }
+    },
+    {
+      "lock_sha256": "sha256:c715f65d996260f9c7bd7a5a57f16d12c992a97d87486f703dbc078da00de270",
+      "material": {
+        "candidate_sha256": "sha256:9aa617855a38d9ad5cf4f3cfe2e61b4589edb52302cedbee341026b9e7161267",
+        "case_id": "megatron-pr-5608",
+        "decision": "revise",
+        "evidence_sha256": "sha256:dd2d18aeafa1f664ebb94d8124db9dcfe68f0fe3cf5036c094dadc70dd4d817f",
+        "frozen_at": "2026-09-02T02:56:08.385880Z",
+        "narrative": "[runtime-batch-specialization-is-reduced: pass] All tested outputs match and runtime-shape variation drops new cubins from 6 to 2. [stable-shape-launches-create-zero-cache-files: pass] The confirmed stable-shape timing phase creates zero new Triton cache artifacts. [steady-latency-is-within-three-percent: fail] The confirmed seven-pair medians are 19.439 us base and 20.393 us head, ratio 1.0490. [production-lifecycle-has-direct-test: fail] Existing tests check tensor-operation outputs, but the PR changes no test file and no direct cache/compile lifecycle assertion was found.",
+        "observations": [
+          {
+            "blocking": true,
+            "conclusion": "All tested outputs match and runtime-shape variation drops new cubins from 6 to 2.",
+            "counterevidence": [],
+            "evidence": [
+              "sha256:3d16d290198bec685c32ac50e9b6bd01fe4e53a9a7257b2a27998963f05fd3ee",
+              "sha256:d5bb3baa6dcd7d23283b9e6ca1e6efecc5c719a61a5c0a8156b167144eb4b3ef"
+            ],
+            "failure_code": null,
+            "question": "Does the head reduce compilation caused by runtime batch-size variation?",
+            "rule_id": "runtime-batch-specialization-is-reduced",
+            "status": "pass"
+          },
+          {
+            "blocking": true,
+            "conclusion": "The confirmed stable-shape timing phase creates zero new Triton cache artifacts.",
+            "counterevidence": [],
+            "evidence": [
+              "sha256:3d16d290198bec685c32ac50e9b6bd01fe4e53a9a7257b2a27998963f05fd3ee",
+              "sha256:d5bb3baa6dcd7d23283b9e6ca1e6efecc5c719a61a5c0a8156b167144eb4b3ef"
+            ],
+            "failure_code": null,
+            "question": "After precompile, do stable launches avoid steady compilation?",
+            "rule_id": "stable-shape-launches-create-zero-cache-files",
+            "status": "pass"
+          },
+          {
+            "blocking": true,
+            "conclusion": "The confirmed seven-pair medians are 19.439 us base and 20.393 us head, ratio 1.0490.",
+            "counterevidence": [
+              "The patch reduces runtime-shape compilation variants by two thirds."
+            ],
+            "evidence": [
+              "sha256:3d16d290198bec685c32ac50e9b6bd01fe4e53a9a7257b2a27998963f05fd3ee",
+              "sha256:d5bb3baa6dcd7d23283b9e6ca1e6efecc5c719a61a5c0a8156b167144eb4b3ef"
+            ],
+            "failure_code": "MEGATRON_STEADY_LATENCY_REGRESSION_GT_3PCT",
+            "question": "Does the common stable-shape path stay within the frozen 3% latency limit?",
+            "rule_id": "steady-latency-is-within-three-percent",
+            "status": "fail"
+          },
+          {
+            "blocking": true,
+            "conclusion": "Existing tests check tensor-operation outputs, but the PR changes no test file and no direct cache/compile lifecycle assertion was found.",
+            "counterevidence": [
+              "Offline cache accounting passes; changed_test_file_count=0."
+            ],
+            "evidence": [
+              "sha256:3d16d290198bec685c32ac50e9b6bd01fe4e53a9a7257b2a27998963f05fd3ee",
+              "sha256:d5bb3baa6dcd7d23283b9e6ca1e6efecc5c719a61a5c0a8156b167144eb4b3ef"
+            ],
+            "failure_code": "MEGATRON_DIRECT_COMPILE_LIFECYCLE_TEST_MISSING",
+            "question": "Is compile/autotune lifecycle behavior directly covered?",
+            "rule_id": "production-lifecycle-has-direct-test",
+            "status": "fail"
+          }
+        ],
+        "policy_id": "historical-explainable-agent-v0.5-r4",
+        "rationale_codes": [
+          "MEGATRON_DIRECT_COMPILE_LIFECYCLE_TEST_MISSING",
+          "MEGATRON_STEADY_LATENCY_REGRESSION_GT_3PCT"
+        ],
+        "schema_version": "0.5",
+        "test_plan_sha256": "sha256:187e71082f6b26a8913856be014fc6d2e6b1d4fb52db4b3dceea35a09b791982"
+      }
+    },
+    {
+      "lock_sha256": "sha256:c8c6f3ff4183b1c6bd258aa9d3ef4fb395b314b7e5dcb124d59551301ccc4e67",
+      "material": {
+        "candidate_sha256": "sha256:aa36c5fd63ace6666b86e5b75f28466f0065cc8249efd754044a3dce192f984e",
+        "case_id": "torchtitan-pr-2717",
+        "decision": "revise",
+        "evidence_sha256": "sha256:c99c2d1759a080876f70c24d440070572605651e99eba5cd11d5b9b31fb98862",
+        "frozen_at": "2026-09-02T02:56:08.385880Z",
+        "narrative": "[bf16-forward-and-training-gradients-match-oracle: pass] All representative and non-power-of-two BF16 cases pass forward, routed-input gradient, and score-gradient tolerances. [fused-router-improves-h100-latency-and-memory: pass] Median latency falls from 486.623 us to 58.411 us (ratio 0.1200), peak allocation falls, and steady compilation is zero. [layout-assumption-is-explicitly-gated: fail] The head has no contiguity gate and silently executes a noncontiguous BF16 input with max absolute error 6.375. [fused-router-and-call-gate-have-direct-tests: fail] The PR changes no test file and no direct fused-router test was found.",
+        "observations": [
+          {
+            "blocking": true,
+            "conclusion": "All representative and non-power-of-two BF16 cases pass forward, routed-input gradient, and score-gradient tolerances.",
+            "counterevidence": [],
+            "evidence": [
+              "sha256:52d134496bc13d827aaf66825e6cb129506318bb3ce4dee5ecb95c8a8fabe18c",
+              "sha256:66bcfb009b22b1df1a7ed2c8eff9c56104ccce10ad517488b580d5d5469fc0bc"
+            ],
+            "failure_code": null,
+            "question": "Do BF16 forward outputs and required gradients match the eager oracle?",
+            "rule_id": "bf16-forward-and-training-gradients-match-oracle",
+            "status": "pass"
+          },
+          {
+            "blocking": true,
+            "conclusion": "Median latency falls from 486.623 us to 58.411 us (ratio 0.1200), peak allocation falls, and steady compilation is zero.",
+            "counterevidence": [],
+            "evidence": [
+              "sha256:52d134496bc13d827aaf66825e6cb129506318bb3ce4dee5ecb95c8a8fabe18c",
+              "sha256:66bcfb009b22b1df1a7ed2c8eff9c56104ccce10ad517488b580d5d5469fc0bc"
+            ],
+            "failure_code": null,
+            "question": "Does the fused path improve steady H100 performance after precompile?",
+            "rule_id": "fused-router-improves-h100-latency-and-memory",
+            "status": "pass"
+          },
+          {
+            "blocking": true,
+            "conclusion": "The head has no contiguity gate and silently executes a noncontiguous BF16 input with max absolute error 6.375.",
+            "counterevidence": [
+              "Contiguous BF16 forward and gradient cases pass."
+            ],
+            "evidence": [
+              "sha256:52d134496bc13d827aaf66825e6cb129506318bb3ce4dee5ecb95c8a8fabe18c",
+              "sha256:66bcfb009b22b1df1a7ed2c8eff9c56104ccce10ad517488b580d5d5469fc0bc"
+            ],
+            "failure_code": "TORCHTITAN_ROUTER_CONTIGUITY_GATE_MISSING",
+            "question": "Are unsupported layouts rejected or routed to a safe fallback?",
+            "rule_id": "layout-assumption-is-explicitly-gated",
+            "status": "fail"
+          },
+          {
+            "blocking": true,
+            "conclusion": "The PR changes no test file and no direct fused-router test was found.",
+            "counterevidence": [
+              "Offline correctness and performance pass; changed_test_file_count=0."
+            ],
+            "evidence": [
+              "sha256:52d134496bc13d827aaf66825e6cb129506318bb3ce4dee5ecb95c8a8fabe18c",
+              "sha256:66bcfb009b22b1df1a7ed2c8eff9c56104ccce10ad517488b580d5d5469fc0bc"
+            ],
+            "failure_code": "TORCHTITAN_DIRECT_FUSED_ROUTER_TESTS_MISSING",
+            "question": "Are the fused kernel and its call-site gate protected by direct tests?",
+            "rule_id": "fused-router-and-call-gate-have-direct-tests",
+            "status": "fail"
+          }
+        ],
+        "policy_id": "historical-explainable-agent-v0.5-r4",
+        "rationale_codes": [
+          "TORCHTITAN_DIRECT_FUSED_ROUTER_TESTS_MISSING",
+          "TORCHTITAN_ROUTER_CONTIGUITY_GATE_MISSING"
+        ],
+        "schema_version": "0.5",
+        "test_plan_sha256": "sha256:187e71082f6b26a8913856be014fc6d2e6b1d4fb52db4b3dceea35a09b791982"
+      }
+    },
+    {
+      "lock_sha256": "sha256:5f4815ac63f42f7190634105154d5de732b2a8106d09341830d7848ea5b72a33",
+      "material": {
+        "candidate_sha256": "sha256:dd49a49487fec97e4bb168601aedfaa4290486b574befaaaa162bcdeda725c74",
+        "case_id": "verl-pr-1688",
+        "decision": "revise",
+        "evidence_sha256": "sha256:094d91a243f27beeb0f191d4a5e44fb55d0b6769b214991220e215509b4b2a87",
+        "frozen_at": "2026-09-02T02:56:08.385880Z",
+        "narrative": "[temperature-keyword-is-capability-gated: pass] Head fused is pass with temperature and head non-fused is pass without it; the base non-fused control rejects the unexpected keyword. [other-keywords-and-per-call-locality-are-retained: pass] All other keywords are preserved, both exact head call sites expand the gate, and the gate dictionary is created per call. [both-call-signature-branches-have-direct-tests: fail] The PR changes no test file and no exact two-branch signature test was found, so the one-sided keyword regression is not retained in the repository suite.",
+        "observations": [
+          {
+            "blocking": true,
+            "conclusion": "Head fused is pass with temperature and head non-fused is pass without it; the base non-fused control rejects the unexpected keyword.",
+            "counterevidence": [],
+            "evidence": [
+              "sha256:62c32d0267850093899540cc5e8d98188110793e9d67fcd2840446b6735f509c",
+              "sha256:85260b9fa28040f9dad0d854d74cbf5493dde934c0c5b3533ee52af6fb08b6a5"
+            ],
+            "failure_code": null,
+            "question": "Does head pass temperature only on the fused path?",
+            "rule_id": "temperature-keyword-is-capability-gated",
+            "status": "pass"
+          },
+          {
+            "blocking": true,
+            "conclusion": "All other keywords are preserved, both exact head call sites expand the gate, and the gate dictionary is created per call.",
+            "counterevidence": [],
+            "evidence": [
+              "sha256:62c32d0267850093899540cc5e8d98188110793e9d67fcd2840446b6735f509c",
+              "sha256:85260b9fa28040f9dad0d854d74cbf5493dde934c0c5b3533ee52af6fb08b6a5"
+            ],
+            "failure_code": null,
+            "question": "Are other call semantics preserved without stale capability state?",
+            "rule_id": "other-keywords-and-per-call-locality-are-retained",
+            "status": "pass"
+          },
+          {
+            "blocking": true,
+            "conclusion": "The PR changes no test file and no exact two-branch signature test was found, so the one-sided keyword regression is not retained in the repository suite.",
+            "counterevidence": [
+              "The exact AST offline probe passes both head branches; changed_test_file_count=0."
+            ],
+            "evidence": [
+              "sha256:62c32d0267850093899540cc5e8d98188110793e9d67fcd2840446b6735f509c",
+              "sha256:85260b9fa28040f9dad0d854d74cbf5493dde934c0c5b3533ee52af6fb08b6a5"
+            ],
+            "failure_code": "VERL_DIRECT_TWO_BRANCH_CALL_SIGNATURE_TEST_MISSING",
+            "question": "Are fused and non-fused signatures both protected by direct tests?",
+            "rule_id": "both-call-signature-branches-have-direct-tests",
+            "status": "fail"
+          }
+        ],
+        "policy_id": "historical-explainable-agent-v0.5-r4",
+        "rationale_codes": [
+          "VERL_DIRECT_TWO_BRANCH_CALL_SIGNATURE_TEST_MISSING"
+        ],
+        "schema_version": "0.5",
+        "test_plan_sha256": "sha256:187e71082f6b26a8913856be014fc6d2e6b1d4fb52db4b3dceea35a09b791982"
+      }
+    }
+  ],
+  "merge_outcomes_visible_during_machine_judgment": false,
+  "protocol_id": "historical-pr-blind-cross-project-v0.5-r6",
+  "review_text_visible_during_machine_judgment": false,
+  "schema_version": "0.5",
+  "selection_lock_file_sha256": "sha256:a9f3647c23d32a5a55097548e5fa69f6ecc292aa57c767413a9de951e817419d",
+  "selection_lock_sha256": "sha256:616346d23c6e35a120aa6daa004592dfe52795c63526e9ecdfbec6ff161ea7cb",
+  "test_plan_file_sha256": "sha256:2844b23b3075f062d01dbe7cad9cc0d898102a47460779802fc96fde572d223c",
+  "test_plan_sha256": "sha256:187e71082f6b26a8913856be014fc6d2e6b1d4fb52db4b3dceea35a09b791982",
+  "trained_weights_used": false,
+  "weighted_score_used": false
+}

@@ -1,0 +1,114 @@
+{
+  "$defs": {
+    "Authority": {
+      "enum": [
+        "gate",
+        "metric",
+        "score",
+        "audit",
+        "advisory"
+      ],
+      "title": "Authority",
+      "type": "string"
+    },
+    "RoleNode": {
+      "additionalProperties": false,
+      "properties": {
+        "authority": {
+          "$ref": "#/$defs/Authority"
+        },
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "image_digest": {
+          "title": "Image Digest",
+          "type": "string"
+        },
+        "needs": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Needs",
+          "type": "array"
+        },
+        "on_error": {
+          "title": "On Error",
+          "type": "string"
+        },
+        "on_fail": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "On Fail"
+        },
+        "scope": {
+          "$ref": "#/$defs/Scope"
+        },
+        "timeout_sec": {
+          "exclusiveMinimum": 0,
+          "title": "Timeout Sec",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "id",
+        "authority",
+        "scope",
+        "image_digest",
+        "timeout_sec",
+        "on_error"
+      ],
+      "title": "RoleNode",
+      "type": "object"
+    },
+    "Scope": {
+      "enum": [
+        "trial",
+        "replay",
+        "case",
+        "replay-case",
+        "search"
+      ],
+      "title": "Scope",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "edges_digest": {
+      "title": "Edges Digest",
+      "type": "string"
+    },
+    "graph_id": {
+      "title": "Graph Id",
+      "type": "string"
+    },
+    "nodes": {
+      "items": {
+        "$ref": "#/$defs/RoleNode"
+      },
+      "title": "Nodes",
+      "type": "array"
+    },
+    "schema_version": {
+      "default": "0.3",
+      "pattern": "^0\\.3$",
+      "title": "Schema Version",
+      "type": "string"
+    }
+  },
+  "required": [
+    "graph_id",
+    "nodes",
+    "edges_digest"
+  ],
+  "title": "RoleGraph",
+  "type": "object"
+}

@@ -1,0 +1,503 @@
+{
+  "base_sha": "91ae44ae659ebaf40d4a851777f4f02515e9ba65",
+  "case_id": "liger-pr-1328",
+  "created_at": "2026-09-02T03:53:52.353438+00:00",
+  "evidence_sha256": "sha256:97e07382875e8bb70f427fa8fe043720c5f3be6053cece65c303f23249f13dbe",
+  "facts": {
+    "base_eager_matches_oracle": true,
+    "base_failure_mentions_addmm_dtype_out": true,
+    "base_target_failure_reproduced": true,
+    "compile_results": {
+      "base_default": {
+        "dtype": "torch.bfloat16",
+        "duration_seconds": 1.3636309209978208,
+        "dynamo_counters": {
+          "aot_autograd": {
+            "autograd_cache_miss": 1,
+            "autograd_cache_saved": 1,
+            "ok": 1,
+            "total": 1
+          },
+          "frames": {
+            "ok": 4,
+            "total": 5
+          },
+          "graph_break": {
+            "Unsupported Tensor.item() call with capture_scalar_outputs=False\n  Explanation: Dynamo does not support tracing `Tensor.item()` with config.capture_scalar_outputs=False.\n  Hint: Set `torch._dynamo.config.capture_scalar_outputs = True` or `export TORCHDYNAMO_CAPTURE_SCALAR_OUTPUTS=1` to include these operations in the captured graph.\n\n  Developer debug context: call_method TensorVariable() item () {}\n": 3
+          },
+          "inductor": {
+            "async_compile_cache_miss": 4,
+            "benchmarking.InductorBenchmarker.benchmark_gpu": 2,
+            "fxgraph_cache_miss": 1,
+            "triton_bundler_save_kernel": 40,
+            "triton_bundler_save_static_autotuner": 1
+          },
+          "inline_call": {
+            "Unsupported Tensor.item() call with capture_scalar_outputs=False\n  Explanation: Dynamo does not support tracing `Tensor.item()` with config.capture_scalar_outputs=False.\n  Hint: Set `torch._dynamo.config.capture_scalar_outputs = True` or `export TORCHDYNAMO_CAPTURE_SCALAR_OUTPUTS=1` to include these operations in the captured graph.\n\n  Developer debug context: call_method TensorVariable() item () {}\n": 2
+          },
+          "stats": {
+            "calls_captured": 5,
+            "unique_graphs": 1
+          }
+        },
+        "eager_vs_oracle": {
+          "all_pass": true,
+          "input_grad_allclose": true,
+          "input_grad_max_abs": 0.0,
+          "loss_abs": 9.5367431640625e-07,
+          "weight_grad_allclose": true,
+          "weight_grad_max_abs": 0.0
+        },
+        "error": "Dynamo failed to run FX node with fake tensors: call_function <built-in method addmm of type object at 0x7ff51b6c94a0>(*(FakeTensor(..., device='cuda:0', size=(32, 16)), FakeTensor(..., device='cuda:0', size=(32, 4), dtype=torch.bfloat16), FakeTensor(..., device='cuda:0', size=(4, 16), dtype=torch.bfloat16,\n           requires_grad=True)), **{'out_dtype': torch.float32, 'out': FakeTensor(..., device='cuda:0', size=(32, 16))}): got TypeError(\"unsupported operand type(s) for *: 'torch.dtype' and 'FakeTensor'\")\n\nfrom user code:\n   File \"/workspace/infraswe_eval/extended-r7/sources/liger-base/src/liger_kernel/ops/fused_linear_cross_entropy.py\", line 249, in torch_dynamo_resume_in_fused_linear_cross_entropy_forward_at_93\n    torch.addmm(\n\nSet TORCHDYNAMO_VERBOSE=1 for the internal stack trace (please do this especially if you're reporting a bug to PyTorch). For even more developer context, set TORCH_LOGS=\"+dynamo\"\n",
+        "error_type": "TorchRuntimeError",
+        "fullgraph": false,
+        "shape": [
+          8,
+          16,
+          32
+        ],
+        "status": "fail"
+      },
+      "head_boundary_bf16": {
+        "compiled_vs_oracle": {
+          "all_pass": true,
+          "input_grad_allclose": true,
+          "input_grad_max_abs": 0.0,
+          "loss_abs": 9.5367431640625e-07,
+          "weight_grad_allclose": true,
+          "weight_grad_max_abs": 0.0
+        },
+        "dtype": "torch.bfloat16",
+        "dynamo_counters_after_first": {
+          "aot_autograd": {
+            "autograd_cache_miss": 3,
+            "autograd_cache_saved": 2,
+            "ok": 3,
+            "total": 3
+          },
+          "aten_mm_info": {
+            "aten.mm_1_17_33": 1,
+            "aten.mm_1_33_17": 1,
+            "aten.mm_33_17_1": 1
+          },
+          "frames": {
+            "ok": 6,
+            "total": 6
+          },
+          "graph_break": {
+            "Unsupported Tensor.item() call with capture_scalar_outputs=False\n  Explanation: Dynamo does not support tracing `Tensor.item()` with config.capture_scalar_outputs=False.\n  Hint: Set `torch._dynamo.config.capture_scalar_outputs = True` or `export TORCHDYNAMO_CAPTURE_SCALAR_OUTPUTS=1` to include these operations in the captured graph.\n\n  Developer debug context: call_method TensorVariable() item () {}\n": 3
+          },
+          "inductor": {
+            "async_compile_cache_hit": 7,
+            "async_compile_cache_miss": 15,
+            "benchmarking.InductorBenchmarker.benchmark_gpu": 10,
+            "extern_calls": 4,
+            "fxgraph_cache_miss": 2,
+            "pattern_matcher_count": 1,
+            "pattern_matcher_nodes": 1,
+            "triton_bundler_save_kernel": 80,
+            "triton_bundler_save_static_autotuner": 2
+          },
+          "inline_call": {
+            "Unsupported Tensor.item() call with capture_scalar_outputs=False\n  Explanation: Dynamo does not support tracing `Tensor.item()` with config.capture_scalar_outputs=False.\n  Hint: Set `torch._dynamo.config.capture_scalar_outputs = True` or `export TORCHDYNAMO_CAPTURE_SCALAR_OUTPUTS=1` to include these operations in the captured graph.\n\n  Developer debug context: call_method TensorVariable() item () {}\n": 2
+          },
+          "stats": {
+            "calls_captured": 25,
+            "unique_graphs": 3
+          }
+        },
+        "dynamo_counters_after_steady": {
+          "aot_autograd": {
+            "autograd_cache_miss": 3,
+            "autograd_cache_saved": 2,
+            "ok": 3,
+            "total": 3
+          },
+          "aten_mm_info": {
+            "aten.mm_1_17_33": 1,
+            "aten.mm_1_33_17": 1,
+            "aten.mm_33_17_1": 1
+          },
+          "frames": {
+            "ok": 6,
+            "total": 6
+          },
+          "graph_break": {
+            "Unsupported Tensor.item() call with capture_scalar_outputs=False\n  Explanation: Dynamo does not support tracing `Tensor.item()` with config.capture_scalar_outputs=False.\n  Hint: Set `torch._dynamo.config.capture_scalar_outputs = True` or `export TORCHDYNAMO_CAPTURE_SCALAR_OUTPUTS=1` to include these operations in the captured graph.\n\n  Developer debug context: call_method TensorVariable() item () {}\n": 3
+          },
+          "inductor": {
+            "async_compile_cache_hit": 7,
+            "async_compile_cache_miss": 15,
+            "benchmarking.InductorBenchmarker.benchmark_gpu": 10,
+            "extern_calls": 4,
+            "fxgraph_cache_miss": 2,
+            "pattern_matcher_count": 1,
+            "pattern_matcher_nodes": 1,
+            "triton_bundler_save_kernel": 80,
+            "triton_bundler_save_static_autotuner": 2
+          },
+          "inline_call": {
+            "Unsupported Tensor.item() call with capture_scalar_outputs=False\n  Explanation: Dynamo does not support tracing `Tensor.item()` with config.capture_scalar_outputs=False.\n  Hint: Set `torch._dynamo.config.capture_scalar_outputs = True` or `export TORCHDYNAMO_CAPTURE_SCALAR_OUTPUTS=1` to include these operations in the captured graph.\n\n  Developer debug context: call_method TensorVariable() item () {}\n": 2
+          },
+          "stats": {
+            "calls_captured": 25,
+            "unique_graphs": 3
+          }
+        },
+        "eager_vs_oracle": {
+          "all_pass": true,
+          "input_grad_allclose": true,
+          "input_grad_max_abs": 0.0,
+          "loss_abs": 9.5367431640625e-07,
+          "weight_grad_allclose": true,
+          "weight_grad_max_abs": 0.0
+        },
+        "error": {
+          "all_pass": true,
+          "input_grad_allclose": true,
+          "input_grad_max_abs": 0.0,
+          "loss_abs": 0.0,
+          "weight_grad_allclose": true,
+          "weight_grad_max_abs": 0.0
+        },
+        "first_compile_and_run_seconds": 1.572372605005512,
+        "fullgraph": false,
+        "new_cache_files_during_steady": [],
+        "shape": [
+          1,
+          17,
+          33
+        ],
+        "status": "pass",
+        "steady_new_cache_file_count": 0
+      },
+      "head_boundary_fp16": {
+        "compiled_vs_oracle": {
+          "all_pass": true,
+          "input_grad_allclose": true,
+          "input_grad_max_abs": 0.0,
+          "loss_abs": 9.5367431640625e-07,
+          "weight_grad_allclose": true,
+          "weight_grad_max_abs": 0.000244140625
+        },
+        "dtype": "torch.float16",
+        "dynamo_counters_after_first": {
+          "aot_autograd": {
+            "autograd_cache_miss": 3,
+            "autograd_cache_saved": 2,
+            "ok": 3,
+            "total": 3
+          },
+          "aten_mm_info": {
+            "aten.mm_1_31_65": 1,
+            "aten.mm_1_65_31": 1,
+            "aten.mm_4_31_65": 2,
+            "aten.mm_4_65_31": 2,
+            "aten.mm_65_31_1": 1,
+            "aten.mm_65_31_4": 2
+          },
+          "frames": {
+            "ok": 6,
+            "total": 6
+          },
+          "graph_break": {
+            "Unsupported Tensor.item() call with capture_scalar_outputs=False\n  Explanation: Dynamo does not support tracing `Tensor.item()` with config.capture_scalar_outputs=False.\n  Hint: Set `torch._dynamo.config.capture_scalar_outputs = True` or `export TORCHDYNAMO_CAPTURE_SCALAR_OUTPUTS=1` to include these operations in the captured graph.\n\n  Developer debug context: call_method TensorVariable() item () {}\n": 3
+          },
+          "inductor": {
+            "async_compile_cache_hit": 14,
+            "async_compile_cache_miss": 29,
+            "benchmarking.InductorBenchmarker.benchmark_gpu": 20,
+            "extern_calls": 12,
+            "fxgraph_cache_miss": 2,
+            "pattern_matcher_count": 3,
+            "pattern_matcher_nodes": 3,
+            "triton_bundler_save_kernel": 152,
+            "triton_bundler_save_static_autotuner": 2
+          },
+          "inline_call": {
+            "Unsupported Tensor.item() call with capture_scalar_outputs=False\n  Explanation: Dynamo does not support tracing `Tensor.item()` with config.capture_scalar_outputs=False.\n  Hint: Set `torch._dynamo.config.capture_scalar_outputs = True` or `export TORCHDYNAMO_CAPTURE_SCALAR_OUTPUTS=1` to include these operations in the captured graph.\n\n  Developer debug context: call_method TensorVariable() item () {}\n": 2
+          },
+          "stats": {
+            "calls_captured": 57,
+            "unique_graphs": 3
+          }
+        },
+        "dynamo_counters_after_steady": {
+          "aot_autograd": {
+            "autograd_cache_miss": 3,
+            "autograd_cache_saved": 2,
+            "ok": 3,
+            "total": 3
+          },
+          "aten_mm_info": {
+            "aten.mm_1_31_65": 1,
+            "aten.mm_1_65_31": 1,
+            "aten.mm_4_31_65": 2,
+            "aten.mm_4_65_31": 2,
+            "aten.mm_65_31_1": 1,
+            "aten.mm_65_31_4": 2
+          },
+          "frames": {
+            "ok": 6,
+            "total": 6
+          },
+          "graph_break": {
+            "Unsupported Tensor.item() call with capture_scalar_outputs=False\n  Explanation: Dynamo does not support tracing `Tensor.item()` with config.capture_scalar_outputs=False.\n  Hint: Set `torch._dynamo.config.capture_scalar_outputs = True` or `export TORCHDYNAMO_CAPTURE_SCALAR_OUTPUTS=1` to include these operations in the captured graph.\n\n  Developer debug context: call_method TensorVariable() item () {}\n": 3
+          },
+          "inductor": {
+            "async_compile_cache_hit": 14,
+            "async_compile_cache_miss": 29,
+            "benchmarking.InductorBenchmarker.benchmark_gpu": 20,
+            "extern_calls": 12,
+            "fxgraph_cache_miss": 2,
+            "pattern_matcher_count": 3,
+            "pattern_matcher_nodes": 3,
+            "triton_bundler_save_kernel": 152,
+            "triton_bundler_save_static_autotuner": 2
+          },
+          "inline_call": {
+            "Unsupported Tensor.item() call with capture_scalar_outputs=False\n  Explanation: Dynamo does not support tracing `Tensor.item()` with config.capture_scalar_outputs=False.\n  Hint: Set `torch._dynamo.config.capture_scalar_outputs = True` or `export TORCHDYNAMO_CAPTURE_SCALAR_OUTPUTS=1` to include these operations in the captured graph.\n\n  Developer debug context: call_method TensorVariable() item () {}\n": 2
+          },
+          "stats": {
+            "calls_captured": 57,
+            "unique_graphs": 3
+          }
+        },
+        "eager_vs_oracle": {
+          "all_pass": true,
+          "input_grad_allclose": true,
+          "input_grad_max_abs": 0.0,
+          "loss_abs": 0.0,
+          "weight_grad_allclose": true,
+          "weight_grad_max_abs": 0.0
+        },
+        "error": {
+          "all_pass": true,
+          "input_grad_allclose": true,
+          "input_grad_max_abs": 0.0,
+          "loss_abs": 9.5367431640625e-07,
+          "weight_grad_allclose": true,
+          "weight_grad_max_abs": 0.000244140625
+        },
+        "first_compile_and_run_seconds": 2.2525281220005127,
+        "fullgraph": false,
+        "new_cache_files_during_steady": [],
+        "shape": [
+          9,
+          31,
+          65
+        ],
+        "status": "pass",
+        "steady_new_cache_file_count": 0
+      },
+      "head_default": {
+        "compiled_vs_oracle": {
+          "all_pass": true,
+          "input_grad_allclose": true,
+          "input_grad_max_abs": 0.0,
+          "loss_abs": 0.0,
+          "weight_grad_allclose": true,
+          "weight_grad_max_abs": 0.001953125
+        },
+        "dtype": "torch.bfloat16",
+        "dynamo_counters_after_first": {
+          "aot_autograd": {
+            "autograd_cache_hit": 1,
+            "autograd_cache_miss": 2,
+            "autograd_cache_saved": 1,
+            "ok": 3,
+            "total": 3
+          },
+          "aten_mm_info": {
+            "aten.mm_32_16_4": 2,
+            "aten.mm_4_16_32": 2,
+            "aten.mm_4_32_16": 2
+          },
+          "frames": {
+            "ok": 6,
+            "total": 6
+          },
+          "graph_break": {
+            "Unsupported Tensor.item() call with capture_scalar_outputs=False\n  Explanation: Dynamo does not support tracing `Tensor.item()` with config.capture_scalar_outputs=False.\n  Hint: Set `torch._dynamo.config.capture_scalar_outputs = True` or `export TORCHDYNAMO_CAPTURE_SCALAR_OUTPUTS=1` to include these operations in the captured graph.\n\n  Developer debug context: call_method TensorVariable() item () {}\n": 3
+          },
+          "inductor": {
+            "async_compile_cache_hit": 11,
+            "async_compile_cache_miss": 23,
+            "benchmarking.InductorBenchmarker.benchmark_gpu": 8,
+            "extern_calls": 8,
+            "fxgraph_cache_hit": 1,
+            "fxgraph_cache_miss": 1,
+            "pattern_matcher_count": 2,
+            "pattern_matcher_nodes": 2,
+            "triton_bundler_load_static_autotuner": 4,
+            "triton_bundler_save_kernel": 72,
+            "triton_bundler_save_static_autotuner": 1
+          },
+          "inline_call": {
+            "Unsupported Tensor.item() call with capture_scalar_outputs=False\n  Explanation: Dynamo does not support tracing `Tensor.item()` with config.capture_scalar_outputs=False.\n  Hint: Set `torch._dynamo.config.capture_scalar_outputs = True` or `export TORCHDYNAMO_CAPTURE_SCALAR_OUTPUTS=1` to include these operations in the captured graph.\n\n  Developer debug context: call_method TensorVariable() item () {}\n": 2
+          },
+          "stats": {
+            "calls_captured": 41,
+            "unique_graphs": 3
+          }
+        },
+        "dynamo_counters_after_steady": {
+          "aot_autograd": {
+            "autograd_cache_hit": 1,
+            "autograd_cache_miss": 2,
+            "autograd_cache_saved": 1,
+            "ok": 3,
+            "total": 3
+          },
+          "aten_mm_info": {
+            "aten.mm_32_16_4": 2,
+            "aten.mm_4_16_32": 2,
+            "aten.mm_4_32_16": 2
+          },
+          "frames": {
+            "ok": 6,
+            "total": 6
+          },
+          "graph_break": {
+            "Unsupported Tensor.item() call with capture_scalar_outputs=False\n  Explanation: Dynamo does not support tracing `Tensor.item()` with config.capture_scalar_outputs=False.\n  Hint: Set `torch._dynamo.config.capture_scalar_outputs = True` or `export TORCHDYNAMO_CAPTURE_SCALAR_OUTPUTS=1` to include these operations in the captured graph.\n\n  Developer debug context: call_method TensorVariable() item () {}\n": 3
+          },
+          "inductor": {
+            "async_compile_cache_hit": 11,
+            "async_compile_cache_miss": 23,
+            "benchmarking.InductorBenchmarker.benchmark_gpu": 8,
+            "extern_calls": 8,
+            "fxgraph_cache_hit": 1,
+            "fxgraph_cache_miss": 1,
+            "pattern_matcher_count": 2,
+            "pattern_matcher_nodes": 2,
+            "triton_bundler_load_static_autotuner": 4,
+            "triton_bundler_save_kernel": 72,
+            "triton_bundler_save_static_autotuner": 1
+          },
+          "inline_call": {
+            "Unsupported Tensor.item() call with capture_scalar_outputs=False\n  Explanation: Dynamo does not support tracing `Tensor.item()` with config.capture_scalar_outputs=False.\n  Hint: Set `torch._dynamo.config.capture_scalar_outputs = True` or `export TORCHDYNAMO_CAPTURE_SCALAR_OUTPUTS=1` to include these operations in the captured graph.\n\n  Developer debug context: call_method TensorVariable() item () {}\n": 2
+          },
+          "stats": {
+            "calls_captured": 41,
+            "unique_graphs": 3
+          }
+        },
+        "eager_vs_oracle": {
+          "all_pass": true,
+          "input_grad_allclose": true,
+          "input_grad_max_abs": 0.0,
+          "loss_abs": 9.5367431640625e-07,
+          "weight_grad_allclose": true,
+          "weight_grad_max_abs": 0.0
+        },
+        "error": {
+          "all_pass": true,
+          "input_grad_allclose": true,
+          "input_grad_max_abs": 0.0,
+          "loss_abs": 9.5367431640625e-07,
+          "weight_grad_allclose": true,
+          "weight_grad_max_abs": 0.001953125
+        },
+        "first_compile_and_run_seconds": 1.852430145998369,
+        "fullgraph": false,
+        "new_cache_files_during_steady": [],
+        "shape": [
+          8,
+          16,
+          32
+        ],
+        "status": "pass",
+        "steady_new_cache_file_count": 0
+      },
+      "head_fullgraph": {
+        "dtype": "torch.bfloat16",
+        "duration_seconds": 0.013411100997473113,
+        "dynamo_counters": {
+          "inline_call": {
+            "Unsupported Tensor.item() call with capture_scalar_outputs=False\n  Explanation: Dynamo does not support tracing `Tensor.item()` with config.capture_scalar_outputs=False.\n  Hint: Set `torch._dynamo.config.capture_scalar_outputs = True` or `export TORCHDYNAMO_CAPTURE_SCALAR_OUTPUTS=1` to include these operations in the captured graph.\n\n  Developer debug context: call_method TensorVariable() item () {}\n": 1
+          }
+        },
+        "eager_vs_oracle": {
+          "all_pass": true,
+          "input_grad_allclose": true,
+          "input_grad_max_abs": 0.0,
+          "loss_abs": 9.5367431640625e-07,
+          "weight_grad_allclose": true,
+          "weight_grad_max_abs": 0.0
+        },
+        "error": "Unsupported Tensor.item() call with capture_scalar_outputs=False\n  Explanation: Dynamo does not support tracing `Tensor.item()` with config.capture_scalar_outputs=False.\n  Hint: Set `torch._dynamo.config.capture_scalar_outputs = True` or `export TORCHDYNAMO_CAPTURE_SCALAR_OUTPUTS=1` to include these operations in the captured graph.\n\n  Developer debug context: call_method TensorVariable() item () {}\n\n\nfrom user code:\n   File \"/workspace/infraswe_eval/extended-r7/scripts/r7_liger_compile_probe.py\", line 46, in loss_fn\n    loss, _, _, _ = function.apply(\n  File \"/venv/main/lib/python3.12/site-packages/torch/amp/autocast_mode.py\", line 517, in decorate_fwd\n    return fwd(*args, **kwargs)\n  File \"/workspace/infraswe_eval/extended-r7/sources/liger-head/src/liger_kernel/ops/fused_linear_cross_entropy.py\", line 397, in forward\n    fused_linear_cross_entropy_forward(\n  File \"/workspace/infraswe_eval/extended-r7/sources/liger-head/src/liger_kernel/ops/fused_linear_cross_entropy.py\", line 93, in fused_linear_cross_entropy_forward\n    total_n_non_ignore = target_mask.sum().item()\n\nSet TORCHDYNAMO_VERBOSE=1 for the internal stack trace (please do this especially if you're reporting a bug to PyTorch). For even more developer context, set TORCH_LOGS=\"+dynamo\"\n",
+        "error_type": "Unsupported",
+        "fullgraph": true,
+        "shape": [
+          8,
+          16,
+          32
+        ],
+        "status": "fail"
+      }
+    },
+    "cuda_version": "12.8",
+    "device": "NVIDIA H100 PCIe",
+    "device_capability": [
+      9,
+      0
+    ],
+    "eager_timing": {
+      "base_median_us": 510.91595310026605,
+      "head_median_us": 498.32025001705915,
+      "head_over_base_median_ratio": 0.9753468197522989,
+      "iterations_per_measurement": 64,
+      "pair_count": 7,
+      "pairs_us": [
+        {
+          "base": 539.176953225251,
+          "head": 507.18604688881896
+        },
+        {
+          "base": 510.91595310026605,
+          "head": 492.67337499259156
+        },
+        {
+          "base": 496.14770318839874,
+          "head": 489.8976562799362
+        },
+        {
+          "base": 490.4124218683137,
+          "head": 487.2523124959116
+        },
+        {
+          "base": 488.33843743523175,
+          "head": 503.91215631861996
+        },
+        {
+          "base": 516.684046942828,
+          "head": 498.32025001705915
+        },
+        {
+          "base": 538.1643125019764,
+          "head": 519.9906718189595
+        }
+      ],
+      "within_three_percent": true
+    },
+    "head_default_all_cases_pass": true,
+    "head_default_graph_break_count": 3,
+    "head_default_zero_graph_breaks": false,
+    "head_default_zero_steady_compile_artifacts": true,
+    "head_fullgraph_pass": false,
+    "source_identity": {
+      "base_source_sha256": "sha256:9fabb20ffa238a832567001dd6e1c4150489c75afd99b073b04a37734e239042",
+      "head_source_sha256": "sha256:ad03c13fee271b672eab78360f451b18f7b5e6ae440012a34586b0513ceec551"
+    },
+    "torch_version": "2.8.0+cu128"
+  },
+  "failure_codes": [],
+  "head_sha": "4c78b9d1be3ca8b0a883f2ad8c60f8bf0686d344",
+  "probe": "r7-liger-h100-torch-compile-v1",
+  "project": "liger-kernel",
+  "protocol_id": "historical-pr-blind-cross-project-v0.5-r7",
+  "schema_version": "0.5",
+  "selection_lock_sha256": "sha256:e75d03448650ef7ff13f93729d151f99be652702f4971cb889dbb2c0de57716b",
+  "status": "pass",
+  "test_plan_sha256": "sha256:aa73f348b2d5ce4a19fa0c3a6e0159681f10254f5a878ad3cabbd8709f3bb888"
+}

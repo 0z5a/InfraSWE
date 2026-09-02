@@ -1,0 +1,54 @@
+schema_version = "0.1"
+
+[task]
+id = "tensor-parallel-shard-contract"
+title = "Tensor-parallel shard coverage contract"
+track = "inference-performance"
+repository = "infraswe/tp-shard-fixture"
+base_commit = "fixture-v1"
+level = "L3"
+
+[environment]
+profile = "gpu-2x-sm120-pcie"
+agent_mode = "docker"
+verifier_mode = "separate"
+network = "deny"
+agent_image = "python@sha256:09f7da3bc104798d0afb40bc08d23ab2da20a76130cec1f2ef170848f5d85217"
+verifier_image = "pytorch/pytorch@sha256:417bd75df6365104c283ea4c1651fb3530d9eb5a4c2fafa51943cff2a94e6385"
+gpu_count = 2
+shm_size = "1g"
+
+[budget]
+agent_timeout_sec = 180
+verifier_timeout_sec = 240
+gpu_minutes = 25
+max_model_cost_usd = 0
+max_infra_cost_usd = 8
+
+[replay]
+count = 3
+require_all = true
+
+[artifacts]
+config_paths = ["shard_policy.py", "tp_config.json"]
+require_clean_patch = true
+
+[gates]
+forbid_test_modification = true
+forbid_credential_access = true
+forbid_silent_fallback = true
+forbid_data_corruption = true
+forbid_resource_leak = true
+
+[execution]
+repo = "fixture/repo"
+instruction = "instruction.md"
+solution_command = ["python", "solution/solve.py"]
+verifier_command = ["python", "tests/verify.py"]
+allowed_patch_paths = ["shard_policy.py", "tp_config.json"]
+
+[scoring]
+reference_wall_time_sec = 120.0
+reference_cost_usd = 0
+slo_metric = "reconstruction_goodput_ratio"
+resource_metric = "resource_efficiency_ratio"

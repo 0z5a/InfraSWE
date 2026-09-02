@@ -1,0 +1,136 @@
+{
+  "cases": [
+    {
+      "base_sha": "cf064d2e6bad2886238ac565b3b49007764f4939",
+      "case_id": "cutlass-pr-3332",
+      "changed_paths": [
+        "python/CuTeDSL/cutlass/base_dsl/typing.py",
+        "test/python/CuTeDSL/test_unsigned_constant.py"
+      ],
+      "claim": "CuTeDSL lowers unsigned integer constants above INT64_MAX without signed overflow.",
+      "decision_rule": "Accept with scope only if exact source and boundary probes preserve all supported neighbors and the direct test covers the target. A missing outer-boundary policy is revise; inability to execute the full CuTeDSL compiler remains separately unresolved.",
+      "execution_tier": "exact-source boundary probe plus CuTeDSL runtime if available",
+      "head_sha": "6791fbcb7a4cd3d4fc5a78e66335395748f1970f",
+      "project": "cutlass-cute",
+      "pull_number": 3332,
+      "questions": [
+        "Do 2^63 and UINT64_MAX retain exact integer values without float conversion?",
+        "Are INT64_MAX and the signed negative boundary unchanged?",
+        "Does the implementation choose an explicit signed/unsigned width rather than wrap?",
+        "Do values outside the supported integer domain fail explicitly?",
+        "Does the changed test cover both target and neighboring boundaries?"
+      ],
+      "repository": "NVIDIA/cutlass"
+    },
+    {
+      "base_sha": "78333e8c14e983b04bbc743a07e01cae2df89737",
+      "case_id": "flashinfer-pr-3950",
+      "changed_paths": [
+        "flashinfer/comm/trtllm_mnnvl_ar.py",
+        "tests/comm/test_trtllm_allreduce_checkpoint.py"
+      ],
+      "claim": "MNNVL communicator flags survive checkpoint restore under inference mode.",
+      "decision_rule": "Accept with scope only if the same public restore path gives equal flag state in ordinary and inference modes, without weakening tensor safety or overwriting unowned state. Real multi-GPU MNNVL transport stays unresolved without its cell.",
+      "execution_tier": "exact-AST state-transition probe plus mocked checkpoint lifecycle",
+      "head_sha": "243d56c12cf1c724bdb128a4575ebf6ce1e8a1a9",
+      "project": "flashinfer",
+      "pull_number": 3950,
+      "questions": [
+        "Are boolean/control flags restored even when tensor mutation is disabled?",
+        "Are tensor payloads and immutable metadata still handled by their declared owners?",
+        "Does restore preserve explicit user/runtime state outside the serialized fields?",
+        "Do inference-mode and ordinary-mode restores converge on the same flag state?",
+        "Does a direct regression exercise the actual checkpoint restore entrypoint?"
+      ],
+      "repository": "flashinfer-ai/flashinfer"
+    },
+    {
+      "base_sha": "495ae9aaa609d39fd4e294d4f64faf52e29f50a6",
+      "case_id": "sglang-pr-31346",
+      "changed_paths": [
+        "python/sglang/srt/arg_groups/overrides.py",
+        "test/registered/unit/test_dsa_tilelang_fp8_validation.py"
+      ],
+      "claim": "CUDA TileLang DSA rejects fp8_e4m3 KV configuration before runtime dispatch.",
+      "decision_rule": "Accept with scope only if the full truth table rejects exactly the unsupported combination at configuration time, retains supported neighbors, and has direct tests.",
+      "execution_tier": "exact validation-call probe with a backend/dtype truth table",
+      "head_sha": "18b77797da3544d73966c6df6480cb0fbbcc4644",
+      "project": "sglang",
+      "pull_number": 31346,
+      "questions": [
+        "Does the exact forbidden CUDA + TileLang DSA + fp8_e4m3 combination fail fast?",
+        "Do supported KV dtypes remain allowed on the same backend?",
+        "Are non-TileLang DSA and non-CUDA paths unaffected?",
+        "Is the error precise and attached to the normal override/validation lifecycle?",
+        "Does the changed test cover invalid and valid neighboring controls?"
+      ],
+      "repository": "sgl-project/sglang"
+    },
+    {
+      "base_sha": "c879f3da5ceaaef3cb197c4e59ce683d420ce96c",
+      "case_id": "sglang-pr-31349",
+      "changed_paths": [
+        "python/sglang/srt/layers/attention/flashinfer_backend.py",
+        "test/registered/unit/layers/attention/test_flashinfer_decode_plan.py"
+      ],
+      "claim": "FlashInfer CUDA-graph decode planning uses a bounded deterministic launch set.",
+      "decision_rule": "Accept with scope only if a repeated boundary matrix proves deterministic bounded planning with explicit over-capacity behavior and direct regression coverage. Actual CUDA graph replay stays unresolved if the required GPU stack is unavailable.",
+      "execution_tier": "exact helper/state probe over graph batch-size matrices",
+      "head_sha": "9380dacd676c8c4a92307a34d5948bcf648a01bb",
+      "project": "sglang",
+      "pull_number": 31349,
+      "questions": [
+        "Is every planned decode launch bounded by the configured capture capacity?",
+        "Is plan selection deterministic across repeated calls and orderings?",
+        "Are zero, boundary, padding, and over-capacity inputs explicit?",
+        "Do graph and non-graph paths preserve their separate lifecycle contracts?",
+        "Does the direct test cover neighboring capture sizes instead of one public example?"
+      ],
+      "repository": "sgl-project/sglang"
+    },
+    {
+      "base_sha": "1ff9429655f01c804a7b17412144323e804f1324",
+      "case_id": "vllm-pr-48695",
+      "changed_paths": [
+        "tests/model_executor/test_flashinfer_capability.py",
+        "vllm/model_executor/layers/fused_moe/experts/flashinfer_cutlass_moe.py",
+        "vllm/utils/flashinfer.py"
+      ],
+      "claim": "vLLM selects FlashInfer FP4 MoE only when the required native kernel is available.",
+      "decision_rule": "Accept with scope only if selection is based on the required kernel capability, partial installations take the approved fallback, supported configurations remain enabled, and the direct tests cover all three states.",
+      "execution_tier": "exact capability-gate probe with import/kernel/architecture controls",
+      "head_sha": "16dc533d18f9a8d8ebc289aa65a330166f9efbf6",
+      "project": "vllm",
+      "pull_number": 48695,
+      "questions": [
+        "Does installed FlashInfer without the FP4 kernel report unavailable?",
+        "Does a supported kernel/profile report available without importing it during selection?",
+        "Is unavailable behavior an explicit approved fallback rather than a later crash?",
+        "Are cached capability results invalidated or scoped to the relevant environment?",
+        "Does the direct test cover present, missing, and partial capability states?"
+      ],
+      "repository": "vllm-project/vllm"
+    }
+  ],
+  "frozen_at": "2026-09-02T06:45:04.970918+00:00",
+  "frozen_before_source_diff_content_inspection": true,
+  "merge_outcomes_visible_to_machine_judge": false,
+  "protocol_id": "historical-pr-blind-case-contract-v0.5.5-r9-5",
+  "review_text_requested": false,
+  "review_text_visible_to_machine_judge": false,
+  "schema_version": "0.5.5",
+  "scoring_policy": {
+    "decisions": [
+      "accept_with_scope",
+      "revise",
+      "reject",
+      "unresolved"
+    ],
+    "forced_polarization_used": false,
+    "kind": "ordered explainable contract judgment",
+    "missing_environment_evidence": "unresolved, never candidate fail",
+    "weighted_score_used": false
+  },
+  "selection_lock_sha256": "sha256:e3e4ce43bba9f8e8552a82c670e81b3a20f2c4af7f9c855960da61297cb982eb",
+  "test_plan_sha256": "sha256:24b697af8d9d98246e4658ef79f4dcd817ccc1ed2bea4dd1e40e41a21bbc7302"
+}

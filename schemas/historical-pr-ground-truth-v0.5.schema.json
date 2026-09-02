@@ -1,0 +1,107 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "api_response_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Api Response Sha256",
+      "type": "string"
+    },
+    "case_id": {
+      "title": "Case Id",
+      "type": "string"
+    },
+    "closed_at": {
+      "anyOf": [
+        {
+          "format": "date-time",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Closed At"
+    },
+    "html_url": {
+      "title": "Html Url",
+      "type": "string"
+    },
+    "merge_commit_sha": {
+      "anyOf": [
+        {
+          "pattern": "^[0-9a-f]{40}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Merge Commit Sha"
+    },
+    "merged": {
+      "title": "Merged",
+      "type": "boolean"
+    },
+    "merged_at": {
+      "anyOf": [
+        {
+          "format": "date-time",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Merged At"
+    },
+    "observed_at": {
+      "format": "date-time",
+      "title": "Observed At",
+      "type": "string"
+    },
+    "prediction_lock_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Prediction Lock Sha256",
+      "type": "string"
+    },
+    "pull_number": {
+      "minimum": 1,
+      "title": "Pull Number",
+      "type": "integer"
+    },
+    "repository": {
+      "title": "Repository",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "0.5",
+      "default": "0.5",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "state": {
+      "enum": [
+        "open",
+        "closed"
+      ],
+      "title": "State",
+      "type": "string"
+    }
+  },
+  "required": [
+    "case_id",
+    "repository",
+    "pull_number",
+    "state",
+    "merged",
+    "html_url",
+    "observed_at",
+    "prediction_lock_sha256",
+    "api_response_sha256"
+  ],
+  "title": "HistoricalGroundTruth",
+  "type": "object"
+}

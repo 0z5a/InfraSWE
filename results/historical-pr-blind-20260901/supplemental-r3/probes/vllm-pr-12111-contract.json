@@ -1,0 +1,43 @@
+{
+  "case_id": "vllm-pr-12111",
+  "created_at": "2026-09-01T16:36:42.376296+00:00",
+  "duration_seconds": 0.011829291004687548,
+  "evidence_sha256": "sha256:afeb1e9c2ee08a2191f017701c6edb309c0abfb0204201219b0b2233fbc0ad3e",
+  "facts": {
+    "activation_classes": {
+      "FatreluAndMul": {
+        "base_assigns_self_op_for_cpu": true,
+        "head_assigns_self_op_for_cpu": false,
+        "head_forward_cuda_loads_self_op": true
+      },
+      "MulAndSilu": {
+        "base_assigns_self_op_for_cpu": true,
+        "head_assigns_self_op_for_cpu": false,
+        "head_forward_cuda_loads_self_op": true
+      }
+    },
+    "classes_with_uninitialized_cpu_op": [
+      "FatreluAndMul",
+      "MulAndSilu"
+    ],
+    "compilation_path": "not-required",
+    "custom_op_forward_cpu_delegates_to_forward_cuda": true,
+    "environment_deletions_without_restore": [
+      "lora_llm:112"
+    ],
+    "steady_state_compile_seconds": 0.0
+  },
+  "failure_codes": [
+    "CPU_CUSTOM_OP_ATTRIBUTE_UNINITIALIZED",
+    "PROCESS_ENV_MUTATION_NOT_RESTORED"
+  ],
+  "probe": "vllm-cpu-activation-env-contract-v1",
+  "schema_version": "0.5",
+  "source_identity": {
+    "base_activation_sha256": "sha256:0b70835dedf4f92f419e0ac399fd4066d9db625f9e41751aa19c874f43186a36",
+    "custom_op_sha256": "sha256:1caacbe7bf746ee7f617bb95392e5d56a7aecdd402f2184efecc02b2fb751faf",
+    "head_activation_sha256": "sha256:f8d20d72fc6833e9ebd0ced8f476a3642d429f077fe8796c762804d749f9efbb",
+    "head_test_sha256": "sha256:dc92744c521950a2a019259434e38b51421fdf4e666300493d5077528c739801"
+  },
+  "status": "fail"
+}

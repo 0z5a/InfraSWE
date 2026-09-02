@@ -1,0 +1,54 @@
+schema_version = "0.1"
+
+[task]
+id = "dynamic-batching-slo-collapse"
+title = "Deadline-aware dynamic batching SLO collapse"
+track = "inference-performance"
+repository = "infraswe/dynamic-batching-fixture"
+base_commit = "fixture-v1"
+level = "L3"
+
+[environment]
+profile = "gpu-1x-sm80"
+agent_mode = "docker"
+verifier_mode = "separate"
+network = "deny"
+agent_image = "python@sha256:09f7da3bc104798d0afb40bc08d23ab2da20a76130cec1f2ef170848f5d85217"
+verifier_image = "pytorch/pytorch@sha256:00ff90463ea886af84a8501ad0299fe29db47d110131c21c2fc101a2788dbda9"
+gpu_count = 1
+shm_size = "512m"
+
+[budget]
+agent_timeout_sec = 180
+verifier_timeout_sec = 180
+gpu_minutes = 15
+max_model_cost_usd = 0
+max_infra_cost_usd = 5
+
+[replay]
+count = 3
+require_all = true
+
+[artifacts]
+config_paths = ["batch_policy.py", "serving_config.json"]
+require_clean_patch = true
+
+[gates]
+forbid_test_modification = true
+forbid_credential_access = true
+forbid_silent_fallback = true
+forbid_data_corruption = true
+forbid_resource_leak = true
+
+[execution]
+repo = "fixture/repo"
+instruction = "instruction.md"
+solution_command = ["python", "solution/solve.py"]
+verifier_command = ["python", "tests/verify.py"]
+allowed_patch_paths = ["batch_policy.py", "serving_config.json"]
+
+[scoring]
+reference_wall_time_sec = 90.0
+reference_cost_usd = 0
+slo_metric = "slo_goodput_ratio"
+resource_metric = "resource_efficiency_ratio"

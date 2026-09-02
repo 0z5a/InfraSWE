@@ -1,0 +1,157 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "artifact_set_sha256": {
+      "title": "Artifact Set Sha256",
+      "type": "string"
+    },
+    "artifacts": {
+      "items": {
+        "additionalProperties": true,
+        "type": "object"
+      },
+      "title": "Artifacts",
+      "type": "array"
+    },
+    "binary_path": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Binary Path"
+    },
+    "capability_fingerprint": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Capability Fingerprint"
+    },
+    "certified": {
+      "title": "Certified",
+      "type": "boolean"
+    },
+    "failure_codes": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Failure Codes",
+      "type": "array"
+    },
+    "feature_id": {
+      "enum": [
+        "SM89-TARGET-001",
+        "SM89-FP8-MMA-001",
+        "SM89-FP8-CVT-001",
+        "SM89-CPASYNC-001"
+      ],
+      "title": "Feature Id",
+      "type": "string"
+    },
+    "gates": {
+      "additionalProperties": true,
+      "title": "Gates",
+      "type": "object"
+    },
+    "matcher_version": {
+      "title": "Matcher Version",
+      "type": "string"
+    },
+    "namespace": {
+      "title": "Namespace",
+      "type": "string"
+    },
+    "replay_count": {
+      "anyOf": [
+        {
+          "minimum": 0,
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Replay Count"
+    },
+    "replays_path": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Replays Path"
+    },
+    "runtime_reason": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Runtime Reason"
+    },
+    "schema_version": {
+      "const": "0.1",
+      "default": "0.1",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "status": {
+      "enum": [
+        "certified",
+        "static_only",
+        "failed"
+      ],
+      "title": "Status",
+      "type": "string"
+    },
+    "title": {
+      "title": "Title",
+      "type": "string"
+    },
+    "tool_commands": {
+      "items": {
+        "additionalProperties": true,
+        "type": "object"
+      },
+      "title": "Tool Commands",
+      "type": "array"
+    },
+    "verifier": {
+      "const": "infraswe-native-sm89",
+      "title": "Verifier",
+      "type": "string"
+    }
+  },
+  "required": [
+    "verifier",
+    "matcher_version",
+    "feature_id",
+    "title",
+    "namespace",
+    "artifact_set_sha256",
+    "capability_fingerprint",
+    "status",
+    "certified",
+    "gates"
+  ],
+  "title": "AdaSM89NativeResult",
+  "type": "object"
+}

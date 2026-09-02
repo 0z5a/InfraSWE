@@ -1,0 +1,243 @@
+{
+  "build_checks": {
+    "deterministic_ptx": true,
+    "sm_121_executable": true,
+    "sm_121_ptx": true,
+    "sm_121a_cubin": true,
+    "sm_121f_cubin": true,
+    "warning_free": true
+  },
+  "contract_checks": {
+    "capability": true,
+    "fallback_policy": true,
+    "lifecycle": true,
+    "runtime_version": true,
+    "workspace": true
+  },
+  "locality_checks": {
+    "backend_subtree_confined": true,
+    "config_only_case_extensions": true,
+    "dependency_fanout_within_budget": true,
+    "single_semantic_entrypoint": true
+  },
+  "maintenance_probes": {
+    "allocation-failure-rejection": true,
+    "capability-off-rejection": true,
+    "gpu-first-system-memory": true,
+    "managed-allocation": true,
+    "mapped-pinned-allocation": true,
+    "odd-tail-shape": true,
+    "runtime-minor-rejection": true,
+    "workspace-budget-rejection": true
+  },
+  "negative_probe_records": {
+    "allocation-failure-rejection": {
+      "command": {
+        "argv": [
+          "/workspace/evidence/gb10-uma-v04-score-final/artifacts/uma-score-workload",
+          "--mode",
+          "candidate",
+          "--allocation",
+          "system",
+          "--touch",
+          "cpu-first",
+          "--requests",
+          "64",
+          "--elements",
+          "65536",
+          "--streams",
+          "4",
+          "--tenants",
+          "4",
+          "--arrival-rate",
+          "0",
+          "--slo-us",
+          "3600000000",
+          "--replay-index",
+          "1",
+          "--regime",
+          "normal",
+          "--protocol-id",
+          "gb10-uma-load-normalized-v0.4-r1",
+          "--max-workspace-bytes",
+          "1073741824",
+          "--required-runtime-version",
+          "13000"
+        ],
+        "duration_seconds": 0.11141681671142578,
+        "env_overrides": {
+          "INFRASWE_FORCE_ALLOC_FAIL": "1"
+        },
+        "returncode": 5,
+        "stderr": "",
+        "stdout": "{\"schema_version\":\"0.4\",\"passed\":false,\"failure_code\":\"GB10_ALLOCATION_INJECTED_FAILURE\",\"reason\":\"allocator failure injection was handled before launch\"}\n",
+        "timed_out": false
+      },
+      "expected_failure_code": "GB10_ALLOCATION_INJECTED_FAILURE",
+      "parsed": {
+        "failure_code": "GB10_ALLOCATION_INJECTED_FAILURE",
+        "passed": false,
+        "reason": "allocator failure injection was handled before launch",
+        "schema_version": "0.4"
+      },
+      "passed": true
+    },
+    "capability-off-rejection": {
+      "command": {
+        "argv": [
+          "/workspace/evidence/gb10-uma-v04-score-final/artifacts/uma-score-workload",
+          "--mode",
+          "candidate",
+          "--allocation",
+          "system",
+          "--touch",
+          "cpu-first",
+          "--requests",
+          "64",
+          "--elements",
+          "65536",
+          "--streams",
+          "4",
+          "--tenants",
+          "4",
+          "--arrival-rate",
+          "0",
+          "--slo-us",
+          "3600000000",
+          "--replay-index",
+          "1",
+          "--regime",
+          "normal",
+          "--protocol-id",
+          "gb10-uma-load-normalized-v0.4-r1",
+          "--max-workspace-bytes",
+          "1073741824",
+          "--required-runtime-version",
+          "13000"
+        ],
+        "duration_seconds": 0.11459755897521973,
+        "env_overrides": {
+          "INFRASWE_FORCE_NO_PAGEABLE": "1"
+        },
+        "returncode": 4,
+        "stderr": "",
+        "stdout": "{\"schema_version\":\"0.4\",\"passed\":false,\"failure_code\":\"GB10_PAGEABLE_ACCESS_UNAVAILABLE\",\"reason\":\"system-memory GPU path rejected by capability contract\"}\n",
+        "timed_out": false
+      },
+      "expected_failure_code": "GB10_PAGEABLE_ACCESS_UNAVAILABLE",
+      "parsed": {
+        "failure_code": "GB10_PAGEABLE_ACCESS_UNAVAILABLE",
+        "passed": false,
+        "reason": "system-memory GPU path rejected by capability contract",
+        "schema_version": "0.4"
+      },
+      "passed": true
+    },
+    "runtime-minor-rejection": {
+      "command": {
+        "argv": [
+          "/workspace/evidence/gb10-uma-v04-score-final/artifacts/uma-score-workload",
+          "--mode",
+          "candidate",
+          "--allocation",
+          "system",
+          "--touch",
+          "cpu-first",
+          "--requests",
+          "64",
+          "--elements",
+          "65536",
+          "--streams",
+          "4",
+          "--tenants",
+          "4",
+          "--arrival-rate",
+          "0",
+          "--slo-us",
+          "3600000000",
+          "--replay-index",
+          "1",
+          "--regime",
+          "normal",
+          "--protocol-id",
+          "gb10-uma-load-normalized-v0.4-r1",
+          "--max-workspace-bytes",
+          "1073741824",
+          "--required-runtime-version",
+          "13010"
+        ],
+        "duration_seconds": 0.0014388561248779297,
+        "env_overrides": {},
+        "returncode": 3,
+        "stderr": "",
+        "stdout": "{\"schema_version\":\"0.4\",\"passed\":false,\"failure_code\":\"GB10_RUNTIME_VERSION_UNSUPPORTED\",\"reason\":\"runtime below frozen minimum\"}\n",
+        "timed_out": false
+      },
+      "expected_failure_code": "GB10_RUNTIME_VERSION_UNSUPPORTED",
+      "parsed": {
+        "failure_code": "GB10_RUNTIME_VERSION_UNSUPPORTED",
+        "passed": false,
+        "reason": "runtime below frozen minimum",
+        "schema_version": "0.4"
+      },
+      "passed": true
+    },
+    "workspace-budget-rejection": {
+      "command": {
+        "argv": [
+          "/workspace/evidence/gb10-uma-v04-score-final/artifacts/uma-score-workload",
+          "--mode",
+          "candidate",
+          "--allocation",
+          "system",
+          "--touch",
+          "cpu-first",
+          "--requests",
+          "64",
+          "--elements",
+          "65536",
+          "--streams",
+          "4",
+          "--tenants",
+          "4",
+          "--arrival-rate",
+          "0",
+          "--slo-us",
+          "3600000000",
+          "--replay-index",
+          "1",
+          "--regime",
+          "normal",
+          "--protocol-id",
+          "gb10-uma-load-normalized-v0.4-r1",
+          "--max-workspace-bytes",
+          "4096",
+          "--required-runtime-version",
+          "13000"
+        ],
+        "duration_seconds": 0.14746880531311035,
+        "env_overrides": {},
+        "returncode": 6,
+        "stderr": "",
+        "stdout": "{\"schema_version\":\"0.4\",\"passed\":false,\"failure_code\":\"GB10_WORKSPACE_BUDGET_EXCEEDED\",\"reason\":\"required workspace exceeds frozen task budget\"}\n",
+        "timed_out": false
+      },
+      "expected_failure_code": "GB10_WORKSPACE_BUDGET_EXCEEDED",
+      "parsed": {
+        "failure_code": "GB10_WORKSPACE_BUDGET_EXCEEDED",
+        "passed": false,
+        "reason": "required workspace exceeds frozen task budget",
+        "schema_version": "0.4"
+      },
+      "passed": true
+    }
+  },
+  "runtime_dependencies": [
+    "\tlibstdc++.so.6 => /lib/aarch64-linux-gnu/libstdc++.so.6 (0x0000fb792adf0000)",
+    "\tlibgcc_s.so.1 => /lib/aarch64-linux-gnu/libgcc_s.so.1 (0x0000fb792adb0000)",
+    "\tlibc.so.6 => /lib/aarch64-linux-gnu/libc.so.6 (0x0000fb792abf0000)",
+    "\t/lib/ld-linux-aarch64.so.1 (0x0000fb792b150000)",
+    "\tlibm.so.6 => /lib/aarch64-linux-gnu/libm.so.6 (0x0000fb792ab40000)"
+  ],
+  "schema_version": "0.4"
+}

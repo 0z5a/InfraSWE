@@ -1,0 +1,58 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "accelerator_work_drained": {
+      "title": "Accelerator Work Drained",
+      "type": "boolean"
+    },
+    "attestation_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Attestation Sha256",
+      "type": "string"
+    },
+    "candidate_processes_terminated": {
+      "title": "Candidate Processes Terminated",
+      "type": "boolean"
+    },
+    "environment_id": {
+      "title": "Environment Id",
+      "type": "string"
+    },
+    "environment_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Environment Sha256",
+      "type": "string"
+    },
+    "filesystem_frozen": {
+      "title": "Filesystem Frozen",
+      "type": "boolean"
+    },
+    "frozen_at": {
+      "format": "date-time",
+      "title": "Frozen At",
+      "type": "string"
+    },
+    "mutation_channel_closed": {
+      "title": "Mutation Channel Closed",
+      "type": "boolean"
+    },
+    "schema_version": {
+      "const": "0.1",
+      "default": "0.1",
+      "title": "Schema Version",
+      "type": "string"
+    }
+  },
+  "required": [
+    "environment_id",
+    "frozen_at",
+    "filesystem_frozen",
+    "candidate_processes_terminated",
+    "accelerator_work_drained",
+    "mutation_channel_closed",
+    "environment_sha256",
+    "attestation_sha256"
+  ],
+  "title": "WorkspaceFreezeAttestation",
+  "type": "object"
+}

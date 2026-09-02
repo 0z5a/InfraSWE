@@ -1,0 +1,44 @@
+{
+  "schema_version": "0.1",
+  "id": "sft-packed-valid-target-mean-v1",
+  "algorithm": "sft",
+  "data_contract": {
+    "format": "messages-or-prompt-completion",
+    "chat_template_digest": "fixture-pinned",
+    "eos_policy": "exact",
+    "truncation_side": "right",
+    "packing": true
+  },
+  "loss_contract": {
+    "labels": "assistant-only",
+    "ignore_index": -100,
+    "reduction": "valid-target-token-mean",
+    "packed_boundary_attention": "forbidden"
+  },
+  "precision_tracks": {
+    "fp32": "required-oracle",
+    "bf16": "required-cell-baseline",
+    "fp16": "optional",
+    "fp8": "experimental-capability-gated"
+  },
+  "hard_gates": [
+    "FORWARD_SEMANTICS",
+    "BACKWARD_SEMANTICS",
+    "LOSS_FINITE",
+    "OPTIMIZER_UPDATE",
+    "CHECKPOINT_RESUME",
+    "RNG_CONTINUITY",
+    "NO_SILENT_FALLBACK",
+    "NO_DEADLOCK",
+    "NO_RESOURCE_LEAK",
+    "EVIDENCE_INTEGRITY",
+    "ALGORITHM_FIDELITY"
+  ],
+  "scoring_authority": {
+    "global": "infraswe-scoring-v0.4",
+    "formula": "100*C^0.45*U^0.30*M^0.25",
+    "missing_evidence": "unresolved-not-zero",
+    "absolute_cross-hardware-performance": "forbidden",
+    "sol-and-memory": "same-cell-only"
+  }
+}

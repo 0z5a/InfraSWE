@@ -1,0 +1,28 @@
+{
+  "schema_version": "0.4",
+  "feature_id": "ADA-CROSS-SKU-001",
+  "reuse_contract_id": "ada-sm89-same-isa-cross-sku-v0.1",
+  "required_cells": ["l40s-48gb-pcie", "l20-48gb-pcie"],
+  "shared_identity": [
+    "semantic_implementation_family_id",
+    "source_subtree_sha256",
+    "semantic_artifact_sha256",
+    "codegen_cache_key"
+  ],
+  "board_local_identity": [
+    "board_tuning_cache_key",
+    "pci_device_id",
+    "vbios",
+    "sm_count",
+    "l2_bytes",
+    "memory_clock_mhz",
+    "power_limit_watts",
+    "pcie_link",
+    "execution_mode"
+  ],
+  "production_path_ratio_min_each_case": 0.98,
+  "diagnostic_formula": "0.5*sqrt(P_l40s*P_l20)+0.5*min(P_l40s,P_l20)",
+  "deployability_formula": "infraswe-scoring-v0.4-C/U/M",
+  "diagnostic_cross_cell_ranking_allowed": false,
+  "missing_cell_policy": "unresolved_not_zero"
+}

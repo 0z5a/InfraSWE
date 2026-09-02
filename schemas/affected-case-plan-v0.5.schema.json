@@ -1,0 +1,91 @@
+{
+  "$defs": {
+    "AffectedCaseDecision": {
+      "additionalProperties": false,
+      "properties": {
+        "case_id": {
+          "title": "Case Id",
+          "type": "string"
+        },
+        "reasons": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Reasons",
+          "type": "array"
+        },
+        "selected": {
+          "title": "Selected",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "case_id",
+        "selected",
+        "reasons"
+      ],
+      "title": "AffectedCaseDecision",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "changed_symbols": {
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1,
+      "title": "Changed Symbols",
+      "type": "array"
+    },
+    "coverage_confidence": {
+      "enum": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "title": "Coverage Confidence",
+      "type": "string"
+    },
+    "decisions": {
+      "items": {
+        "$ref": "#/$defs/AffectedCaseDecision"
+      },
+      "minItems": 1,
+      "title": "Decisions",
+      "type": "array"
+    },
+    "failure_codes": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Failure Codes",
+      "type": "array"
+    },
+    "false_negative_audit_required": {
+      "const": true,
+      "default": true,
+      "title": "False Negative Audit Required",
+      "type": "boolean"
+    },
+    "required_categories_present": {
+      "title": "Required Categories Present",
+      "type": "boolean"
+    },
+    "schema_version": {
+      "const": "0.5",
+      "default": "0.5",
+      "title": "Schema Version",
+      "type": "string"
+    }
+  },
+  "required": [
+    "changed_symbols",
+    "decisions",
+    "coverage_confidence",
+    "required_categories_present"
+  ],
+  "title": "AffectedCasePlan",
+  "type": "object"
+}

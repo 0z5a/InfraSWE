@@ -1,0 +1,70 @@
+{
+  "cases": [
+    {
+      "causal": false,
+      "dtype": "torch.float16",
+      "head_dim": 64,
+      "max_abs_gradient_errors": [
+        0.00048828125,
+        0.001953125,
+        0.0009765625
+      ],
+      "max_abs_output_error": 0.00048828125,
+      "name": "fp16_noncausal_hdim64",
+      "status": "pass"
+    },
+    {
+      "causal": true,
+      "dtype": "torch.bfloat16",
+      "head_dim": 128,
+      "max_abs_gradient_errors": [
+        0.0078125,
+        0.015625,
+        0.0078125
+      ],
+      "max_abs_output_error": 0.0078125,
+      "name": "bf16_causal_hdim128",
+      "status": "pass"
+    },
+    {
+      "causal": true,
+      "dtype": "torch.float16",
+      "head_dim": 256,
+      "max_abs_gradient_errors": [
+        0.001953125,
+        0.001953125,
+        0.0009765625
+      ],
+      "max_abs_output_error": 0.0009765625,
+      "name": "fp16_causal_hdim256",
+      "status": "pass"
+    },
+    {
+      "kv_lens": [
+        7,
+        13
+      ],
+      "max_abs_output_error": 0.0009765625,
+      "name": "varlen_causal",
+      "q_lens": [
+        5,
+        11
+      ],
+      "status": "pass"
+    },
+    {
+      "max_abs_output_error": 0.00048828125,
+      "name": "kvcache_causal",
+      "status": "pass"
+    }
+  ],
+  "cuda": "12.4",
+  "device": "NVIDIA A100-SXM4-40GB",
+  "device_capability": [
+    8,
+    0
+  ],
+  "probe": "flashattention-sm80-entrypoints-v1",
+  "status": "pass",
+  "torch": "2.5.1+cu124"
+}

@@ -1,0 +1,136 @@
+{
+  "$defs": {
+    "JudgeCalibrationMetrics": {
+      "additionalProperties": false,
+      "properties": {
+        "evidence_grounding_precision": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Evidence Grounding Precision",
+          "type": "number"
+        },
+        "hard_violation_false_pass_rate": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Hard Violation False Pass Rate",
+          "type": "number"
+        },
+        "in_domain_non_abstain_coverage": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "In Domain Non Abstain Coverage",
+          "type": "number"
+        },
+        "position_consistency": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Position Consistency",
+          "type": "number"
+        },
+        "prompt_injection_asr": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Prompt Injection Asr",
+          "type": "number"
+        },
+        "schema_valid_rate": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Schema Valid Rate",
+          "type": "number"
+        },
+        "semantic_equivalence_invariance": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Semantic Equivalence Invariance",
+          "type": "number"
+        },
+        "test_retest_agreement": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Test Retest Agreement",
+          "type": "number"
+        },
+        "weighted_kappa_lower_95ci": {
+          "maximum": 1,
+          "minimum": -1,
+          "title": "Weighted Kappa Lower 95Ci",
+          "type": "number"
+        }
+      },
+      "required": [
+        "weighted_kappa_lower_95ci",
+        "hard_violation_false_pass_rate",
+        "test_retest_agreement",
+        "position_consistency",
+        "semantic_equivalence_invariance",
+        "evidence_grounding_precision",
+        "schema_valid_rate",
+        "prompt_injection_asr",
+        "in_domain_non_abstain_coverage"
+      ],
+      "title": "JudgeCalibrationMetrics",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "calibration_set_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Calibration Set Sha256",
+      "type": "string"
+    },
+    "confidence_interval_policy_id": {
+      "title": "Confidence Interval Policy Id",
+      "type": "string"
+    },
+    "domain": {
+      "enum": [
+        "kernel",
+        "distributed-communication",
+        "memory-tiering",
+        "training-integration",
+        "inference-runtime"
+      ],
+      "title": "Domain",
+      "type": "string"
+    },
+    "metrics": {
+      "$ref": "#/$defs/JudgeCalibrationMetrics"
+    },
+    "profile_id": {
+      "title": "Profile Id",
+      "type": "string"
+    },
+    "sample_count": {
+      "minimum": 1,
+      "title": "Sample Count",
+      "type": "integer"
+    },
+    "schema_version": {
+      "const": "0.5.3",
+      "default": "0.5.3",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "status": {
+      "enum": [
+        "pass",
+        "fail"
+      ],
+      "title": "Status",
+      "type": "string"
+    }
+  },
+  "required": [
+    "profile_id",
+    "calibration_set_sha256",
+    "domain",
+    "sample_count",
+    "confidence_interval_policy_id",
+    "metrics",
+    "status"
+  ],
+  "title": "JudgeCalibrationReport",
+  "type": "object"
+}

@@ -1,0 +1,81 @@
+{
+  "$defs": {
+    "CandidateFallback": {
+      "additionalProperties": false,
+      "properties": {
+        "behavior": {
+          "enum": [
+            "explicit-unsupported",
+            "explicit-error",
+            "approved-fallback"
+          ],
+          "title": "Behavior",
+          "type": "string"
+        },
+        "capability_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Capability Id"
+        },
+        "trigger": {
+          "title": "Trigger",
+          "type": "string"
+        }
+      },
+      "required": [
+        "trigger",
+        "behavior"
+      ],
+      "title": "CandidateFallback",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "declaration_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Declaration Sha256",
+      "type": "string"
+    },
+    "does_not_use": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Does Not Use",
+      "type": "array"
+    },
+    "fallbacks": {
+      "items": {
+        "$ref": "#/$defs/CandidateFallback"
+      },
+      "title": "Fallbacks",
+      "type": "array"
+    },
+    "requires": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Requires",
+      "type": "array"
+    },
+    "uses": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Uses",
+      "type": "array"
+    }
+  },
+  "required": [
+    "declaration_sha256"
+  ],
+  "title": "CandidateCapabilityDeclaration",
+  "type": "object"
+}

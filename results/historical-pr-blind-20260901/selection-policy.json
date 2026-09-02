@@ -1,0 +1,51 @@
+{
+  "date_window": {
+    "from": "2024-09-01",
+    "through": "2025-03-01"
+  },
+  "eligibility": {
+    "changed_files": [
+      1,
+      10
+    ],
+    "churn_lines": [
+      1,
+      500
+    ],
+    "excluded_title_tokens": [
+      "wip",
+      "do not merge",
+      "revert",
+      "draft"
+    ],
+    "requires_source_or_build_file": true
+  },
+  "graphql_requested_fields": [
+    "number",
+    "title",
+    "createdAt",
+    "baseRefName",
+    "baseRefOid",
+    "headRefOid",
+    "commits.commit.oid",
+    "commits.commit.parents.oid",
+    "changedFiles",
+    "additions",
+    "deletions",
+    "files.path"
+  ],
+  "outcome_fields_requested": false,
+  "per_project": 3,
+  "projects": [
+    "vllm",
+    "sglang",
+    "flash-attention",
+    "flashinfer"
+  ],
+  "ranking": "ascending sha256(selection_policy_id|repository#pull_number)",
+  "replay_base_derivation": "prefer baseRefOid when its base..head path set equals GraphQL files; otherwise use the first PR commit first parent only when it has exact path parity",
+  "schema_version": "0.5",
+  "search_scope": "closed PRs; merged state deliberately not requested",
+  "selection_policy_id": "historical-pr-fixed-seed-v0.5-r1",
+  "selection_seed": "historical-pr-fixed-seed-v0.5-r1"
+}

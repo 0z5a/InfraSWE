@@ -1,0 +1,826 @@
+{
+  "$defs": {
+    "CheckpointEvidence": {
+      "additionalProperties": false,
+      "properties": {
+        "fresh_process": {
+          "title": "Fresh Process",
+          "type": "boolean"
+        },
+        "next_step_comparison": {
+          "$ref": "#/$defs/TensorComparisonEvidence"
+        },
+        "restored_components": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Restored Components",
+          "type": "array"
+        },
+        "rng_streams_restored": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Rng Streams Restored",
+          "type": "array"
+        },
+        "saved_components": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Saved Components",
+          "type": "array"
+        }
+      },
+      "required": [
+        "saved_components",
+        "restored_components",
+        "next_step_comparison",
+        "fresh_process"
+      ],
+      "title": "CheckpointEvidence",
+      "type": "object"
+    },
+    "DAPOSemanticEvidence": {
+      "additionalProperties": false,
+      "properties": {
+        "asymmetric_clip_higher": {
+          "title": "Asymmetric Clip Higher",
+          "type": "boolean"
+        },
+        "dynamic_sampling": {
+          "title": "Dynamic Sampling",
+          "type": "boolean"
+        },
+        "overlong_policy_exact": {
+          "title": "Overlong Policy Exact",
+          "type": "boolean"
+        },
+        "reward_aggregation_exact": {
+          "title": "Reward Aggregation Exact",
+          "type": "boolean"
+        },
+        "soft_overlong_punishment_exact": {
+          "title": "Soft Overlong Punishment Exact",
+          "type": "boolean"
+        },
+        "token_level_policy_gradient": {
+          "title": "Token Level Policy Gradient",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "token_level_policy_gradient",
+        "asymmetric_clip_higher",
+        "dynamic_sampling",
+        "overlong_policy_exact",
+        "soft_overlong_punishment_exact",
+        "reward_aggregation_exact"
+      ],
+      "title": "DAPOSemanticEvidence",
+      "type": "object"
+    },
+    "GRPORolloutSample": {
+      "additionalProperties": false,
+      "properties": {
+        "group_id": {
+          "title": "Group Id",
+          "type": "string"
+        },
+        "observed_advantage": {
+          "title": "Observed Advantage",
+          "type": "number"
+        },
+        "old_log_probs": {
+          "items": {
+            "type": "number"
+          },
+          "minItems": 1,
+          "title": "Old Log Probs",
+          "type": "array"
+        },
+        "policy_version": {
+          "minimum": 0,
+          "title": "Policy Version",
+          "type": "integer"
+        },
+        "prompt_id": {
+          "title": "Prompt Id",
+          "type": "string"
+        },
+        "reward": {
+          "title": "Reward",
+          "type": "number"
+        },
+        "sample_id": {
+          "title": "Sample Id",
+          "type": "string"
+        },
+        "sampling_seed": {
+          "minimum": 0,
+          "title": "Sampling Seed",
+          "type": "integer"
+        },
+        "token_ids": {
+          "items": {
+            "type": "integer"
+          },
+          "minItems": 1,
+          "title": "Token Ids",
+          "type": "array"
+        },
+        "train_policy_version": {
+          "minimum": 0,
+          "title": "Train Policy Version",
+          "type": "integer"
+        },
+        "valid_token_mask": {
+          "items": {
+            "type": "boolean"
+          },
+          "minItems": 1,
+          "title": "Valid Token Mask",
+          "type": "array"
+        }
+      },
+      "required": [
+        "prompt_id",
+        "group_id",
+        "sample_id",
+        "policy_version",
+        "train_policy_version",
+        "sampling_seed",
+        "token_ids",
+        "old_log_probs",
+        "reward",
+        "observed_advantage",
+        "valid_token_mask"
+      ],
+      "title": "GRPORolloutSample",
+      "type": "object"
+    },
+    "GRPOSemanticEvidence": {
+      "additionalProperties": false,
+      "properties": {
+        "advantage_epsilon": {
+          "default": 1e-08,
+          "exclusiveMinimum": 0,
+          "title": "Advantage Epsilon",
+          "type": "number"
+        },
+        "advantage_tolerance": {
+          "default": 1e-06,
+          "minimum": 0,
+          "title": "Advantage Tolerance",
+          "type": "number"
+        },
+        "expected_group_size": {
+          "exclusiveMinimum": 1,
+          "title": "Expected Group Size",
+          "type": "integer"
+        },
+        "kl_definition": {
+          "title": "Kl Definition",
+          "type": "string"
+        },
+        "kl_sign": {
+          "const": "penalty-positive",
+          "default": "penalty-positive",
+          "title": "Kl Sign",
+          "type": "string"
+        },
+        "max_policy_staleness": {
+          "default": 1,
+          "minimum": 0,
+          "title": "Max Policy Staleness",
+          "type": "integer"
+        },
+        "samples": {
+          "items": {
+            "$ref": "#/$defs/GRPORolloutSample"
+          },
+          "minItems": 2,
+          "title": "Samples",
+          "type": "array"
+        }
+      },
+      "required": [
+        "samples",
+        "expected_group_size",
+        "kl_definition"
+      ],
+      "title": "GRPOSemanticEvidence",
+      "type": "object"
+    },
+    "IntegrityEvidence": {
+      "additionalProperties": false,
+      "properties": {
+        "manifest_sha256": {
+          "pattern": "^sha256:[0-9a-fA-F]{8,64}$",
+          "title": "Manifest Sha256",
+          "type": "string"
+        },
+        "raw_evidence_digests": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Raw Evidence Digests",
+          "type": "array"
+        },
+        "timeline_consistent": {
+          "title": "Timeline Consistent",
+          "type": "boolean"
+        },
+        "versions_exact": {
+          "title": "Versions Exact",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "manifest_sha256",
+        "raw_evidence_digests",
+        "timeline_consistent",
+        "versions_exact"
+      ],
+      "title": "IntegrityEvidence",
+      "type": "object"
+    },
+    "MuonSemanticEvidence": {
+      "additionalProperties": false,
+      "properties": {
+        "coefficients_id": {
+          "title": "Coefficients Id",
+          "type": "string"
+        },
+        "epsilon": {
+          "exclusiveMinimum": 0,
+          "title": "Epsilon",
+          "type": "number"
+        },
+        "newton_schulz_iterations": {
+          "exclusiveMinimum": 0,
+          "title": "Newton Schulz Iterations",
+          "type": "integer"
+        },
+        "normalization_id": {
+          "title": "Normalization Id",
+          "type": "string"
+        },
+        "parameter_groups": {
+          "items": {
+            "$ref": "#/$defs/ParameterGroupRecord"
+          },
+          "minItems": 1,
+          "title": "Parameter Groups",
+          "type": "array"
+        },
+        "trainable_parameters": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Trainable Parameters",
+          "type": "array"
+        },
+        "update_comparison": {
+          "$ref": "#/$defs/TensorComparisonEvidence"
+        }
+      },
+      "required": [
+        "trainable_parameters",
+        "parameter_groups",
+        "newton_schulz_iterations",
+        "coefficients_id",
+        "normalization_id",
+        "epsilon",
+        "update_comparison"
+      ],
+      "title": "MuonSemanticEvidence",
+      "type": "object"
+    },
+    "NormalizedTrainingConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "activation_checkpointing": {
+          "title": "Activation Checkpointing",
+          "type": "boolean"
+        },
+        "global_batch_tokens": {
+          "exclusiveMinimum": 0,
+          "title": "Global Batch Tokens",
+          "type": "integer"
+        },
+        "gradient_accumulation_steps": {
+          "exclusiveMinimum": 0,
+          "title": "Gradient Accumulation Steps",
+          "type": "integer"
+        },
+        "gradient_clipping": {
+          "title": "Gradient Clipping",
+          "type": "string"
+        },
+        "learning_rate_schedule": {
+          "title": "Learning Rate Schedule",
+          "type": "string"
+        },
+        "loss_reduction": {
+          "title": "Loss Reduction",
+          "type": "string"
+        },
+        "micro_batch_size": {
+          "exclusiveMinimum": 0,
+          "title": "Micro Batch Size",
+          "type": "integer"
+        },
+        "optimizer": {
+          "title": "Optimizer",
+          "type": "string"
+        },
+        "precision": {
+          "enum": [
+            "fp32",
+            "bf16",
+            "fp16",
+            "tf32",
+            "fp8"
+          ],
+          "title": "Precision",
+          "type": "string"
+        },
+        "seed_bundle": {
+          "$ref": "#/$defs/SeedBundle"
+        },
+        "sequence_length_policy": {
+          "title": "Sequence Length Policy",
+          "type": "string"
+        }
+      },
+      "required": [
+        "global_batch_tokens",
+        "micro_batch_size",
+        "gradient_accumulation_steps",
+        "sequence_length_policy",
+        "precision",
+        "loss_reduction",
+        "gradient_clipping",
+        "optimizer",
+        "learning_rate_schedule",
+        "activation_checkpointing",
+        "seed_bundle"
+      ],
+      "title": "NormalizedTrainingConfig",
+      "type": "object"
+    },
+    "ParameterGroupRecord": {
+      "additionalProperties": false,
+      "properties": {
+        "group_id": {
+          "title": "Group Id",
+          "type": "string"
+        },
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "optimizer": {
+          "title": "Optimizer",
+          "type": "string"
+        },
+        "semantic_role": {
+          "enum": [
+            "hidden-matrix",
+            "embedding",
+            "output-head",
+            "norm",
+            "bias",
+            "other"
+          ],
+          "title": "Semantic Role",
+          "type": "string"
+        },
+        "shape": {
+          "items": {
+            "type": "integer"
+          },
+          "minItems": 1,
+          "title": "Shape",
+          "type": "array"
+        },
+        "state_shape": {
+          "items": {
+            "type": "integer"
+          },
+          "title": "State Shape",
+          "type": "array"
+        },
+        "update_count": {
+          "default": 1,
+          "minimum": 0,
+          "title": "Update Count",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "name",
+        "shape",
+        "semantic_role",
+        "group_id",
+        "optimizer"
+      ],
+      "title": "ParameterGroupRecord",
+      "type": "object"
+    },
+    "RuntimeSafetyEvidence": {
+      "additionalProperties": false,
+      "properties": {
+        "deadlock": {
+          "default": false,
+          "title": "Deadlock",
+          "type": "boolean"
+        },
+        "declared_fallbacks": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Declared Fallbacks",
+          "type": "array"
+        },
+        "half_batch_updates": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Half Batch Updates",
+          "type": "integer"
+        },
+        "loss_values": {
+          "items": {
+            "type": "number"
+          },
+          "minItems": 1,
+          "title": "Loss Values",
+          "type": "array"
+        },
+        "resource_leaks": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Resource Leaks",
+          "type": "array"
+        },
+        "silent_fallback_count": {
+          "minimum": 0,
+          "title": "Silent Fallback Count",
+          "type": "integer"
+        },
+        "watchdog_passed": {
+          "default": true,
+          "title": "Watchdog Passed",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "loss_values",
+        "silent_fallback_count"
+      ],
+      "title": "RuntimeSafetyEvidence",
+      "type": "object"
+    },
+    "SFTSemanticEvidence": {
+      "additionalProperties": false,
+      "properties": {
+        "observed_attention_edges": {
+          "items": {
+            "maxItems": 2,
+            "minItems": 2,
+            "prefixItems": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "integer"
+              }
+            ],
+            "type": "array"
+          },
+          "title": "Observed Attention Edges",
+          "type": "array"
+        },
+        "observed_denominator": {
+          "minimum": 0,
+          "title": "Observed Denominator",
+          "type": "integer"
+        },
+        "observed_loss": {
+          "title": "Observed Loss",
+          "type": "number"
+        },
+        "packed_sample_ids": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Packed Sample Ids",
+          "type": "array"
+        },
+        "target_mask": {
+          "items": {
+            "type": "boolean"
+          },
+          "minItems": 1,
+          "title": "Target Mask",
+          "type": "array"
+        },
+        "token_losses": {
+          "items": {
+            "type": "number"
+          },
+          "minItems": 1,
+          "title": "Token Losses",
+          "type": "array"
+        }
+      },
+      "required": [
+        "token_losses",
+        "target_mask",
+        "observed_loss",
+        "observed_denominator",
+        "packed_sample_ids"
+      ],
+      "title": "SFTSemanticEvidence",
+      "type": "object"
+    },
+    "SeedBundle": {
+      "additionalProperties": false,
+      "properties": {
+        "data": {
+          "minimum": 0,
+          "title": "Data",
+          "type": "integer"
+        },
+        "dropout": {
+          "minimum": 0,
+          "title": "Dropout",
+          "type": "integer"
+        },
+        "model": {
+          "minimum": 0,
+          "title": "Model",
+          "type": "integer"
+        },
+        "sampling": {
+          "minimum": 0,
+          "title": "Sampling",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "model",
+        "data",
+        "sampling",
+        "dropout"
+      ],
+      "title": "SeedBundle",
+      "type": "object"
+    },
+    "TensorComparisonEvidence": {
+      "additionalProperties": false,
+      "properties": {
+        "atol": {
+          "minimum": 0,
+          "title": "Atol",
+          "type": "number"
+        },
+        "candidate": {
+          "items": {
+            "type": "number"
+          },
+          "minItems": 1,
+          "title": "Candidate",
+          "type": "array"
+        },
+        "distributed_mode": {
+          "default": "single",
+          "title": "Distributed Mode",
+          "type": "string"
+        },
+        "dtype": {
+          "title": "Dtype",
+          "type": "string"
+        },
+        "quantity": {
+          "title": "Quantity",
+          "type": "string"
+        },
+        "reference": {
+          "items": {
+            "type": "number"
+          },
+          "minItems": 1,
+          "title": "Reference",
+          "type": "array"
+        },
+        "rtol": {
+          "minimum": 0,
+          "title": "Rtol",
+          "type": "number"
+        },
+        "sequence_bucket": {
+          "exclusiveMinimum": 0,
+          "title": "Sequence Bucket",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "reference",
+        "candidate",
+        "atol",
+        "rtol",
+        "quantity",
+        "dtype",
+        "sequence_bucket"
+      ],
+      "title": "TensorComparisonEvidence",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "adapter_id": {
+      "title": "Adapter Id",
+      "type": "string"
+    },
+    "algorithm": {
+      "title": "Algorithm",
+      "type": "string"
+    },
+    "backward": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/TensorComparisonEvidence"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "certification_scope": {
+      "title": "Certification Scope",
+      "type": "string"
+    },
+    "checkpoint": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/CheckpointEvidence"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "dapo": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/DAPOSemanticEvidence"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "evidence_manifest_sha256": {
+      "pattern": "^sha256:[0-9a-fA-F]{8,64}$",
+      "title": "Evidence Manifest Sha256",
+      "type": "string"
+    },
+    "forward": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/TensorComparisonEvidence"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "framework_stack_id": {
+      "title": "Framework Stack Id",
+      "type": "string"
+    },
+    "framework_version": {
+      "title": "Framework Version",
+      "type": "string"
+    },
+    "grpo": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/GRPOSemanticEvidence"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "hardware_cell_id": {
+      "title": "Hardware Cell Id",
+      "type": "string"
+    },
+    "implementation_bundle_id": {
+      "title": "Implementation Bundle Id",
+      "type": "string"
+    },
+    "integrity": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/IntegrityEvidence"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "muon": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/MuonSemanticEvidence"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "normalized_config": {
+      "$ref": "#/$defs/NormalizedTrainingConfig"
+    },
+    "optimizer": {
+      "title": "Optimizer",
+      "type": "string"
+    },
+    "optimizer_update": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/TensorComparisonEvidence"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "runtime": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/RuntimeSafetyEvidence"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "schema_version": {
+      "const": "0.1",
+      "default": "0.1",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "sft": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/SFTSemanticEvidence"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "task_id": {
+      "title": "Task Id",
+      "type": "string"
+    }
+  },
+  "required": [
+    "task_id",
+    "algorithm",
+    "optimizer",
+    "certification_scope",
+    "adapter_id",
+    "framework_version",
+    "framework_stack_id",
+    "hardware_cell_id",
+    "implementation_bundle_id",
+    "evidence_manifest_sha256",
+    "normalized_config"
+  ],
+  "title": "TrainingEvidenceBundle",
+  "type": "object"
+}

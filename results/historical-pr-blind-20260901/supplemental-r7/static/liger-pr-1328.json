@@ -1,0 +1,58 @@
+{
+  "case_id": "liger-pr-1328",
+  "created_at": "2026-09-02T03:33:44.922052+00:00",
+  "duration_seconds": 0.1251956659834832,
+  "evidence_sha256": "sha256:8204d551cf30680ed9b8ce915bf111f611b7ace5010c3d89067cdd3181980d8e",
+  "facts": {
+    "changed_paths": [
+      "src/liger_kernel/ops/fused_linear_cross_entropy.py",
+      "test/transformers/test_fused_linear_cross_entropy.py"
+    ],
+    "changed_test_file_count": 1,
+    "changed_test_paths": [
+      "test/transformers/test_fused_linear_cross_entropy.py"
+    ],
+    "compilation_path": "not-required",
+    "existing_test_search_matches": [
+      "4c78b9d1be3ca8b0a883f2ad8c60f8bf0686d344:test/transformers/test_fused_linear_cross_entropy.py:1099:    \"dtype_out\" not in torch.ops.aten.addmm.overloads(),",
+      "4c78b9d1be3ca8b0a883f2ad8c60f8bf0686d344:test/transformers/test_fused_linear_cross_entropy.py:1102:def test_torch_compile_fp32_accum_backward():",
+      "4c78b9d1be3ca8b0a883f2ad8c60f8bf0686d344:test/transformers/test_fused_linear_cross_entropy.py:1107:    which TorchInductor cannot lower (aten.addmm.dtype_out), so compiling a",
+      "4c78b9d1be3ca8b0a883f2ad8c60f8bf0686d344:test/transformers/test_fused_linear_cross_entropy.py:1129:        fn = torch.compile(liger_fused_linear_cross_entropy)"
+    ],
+    "path_parity": true,
+    "steady_state_compile_seconds": 0.0,
+    "target": {
+      "base_compile_gate_count": 0,
+      "direct_compile_regression_test_count": 1,
+      "direct_test_uses_fullgraph": false,
+      "head_compile_fallback_uses_mm_float": true,
+      "head_compile_gate_count": 1,
+      "head_dtype_out_fast_path_retained": true
+    }
+  },
+  "failure_codes": [],
+  "probe": "r7-cross-project-static-v1",
+  "project": "liger-kernel",
+  "protocol_id": "historical-pr-blind-cross-project-v0.5-r7",
+  "schema_version": "0.5",
+  "source_identity": {
+    "base_sha": "91ae44ae659ebaf40d4a851777f4f02515e9ba65",
+    "base_source_exists": {
+      "src/liger_kernel/ops/fused_linear_cross_entropy.py": true,
+      "test/transformers/test_fused_linear_cross_entropy.py": true
+    },
+    "base_source_sha256": {
+      "src/liger_kernel/ops/fused_linear_cross_entropy.py": "sha256:9fabb20ffa238a832567001dd6e1c4150489c75afd99b073b04a37734e239042",
+      "test/transformers/test_fused_linear_cross_entropy.py": "sha256:b8bcb92d601274106512a498fe6c9816f1641a5890270d0775ba54ce57dcaf9a"
+    },
+    "head_sha": "4c78b9d1be3ca8b0a883f2ad8c60f8bf0686d344",
+    "head_source_sha256": {
+      "src/liger_kernel/ops/fused_linear_cross_entropy.py": "sha256:ad03c13fee271b672eab78360f451b18f7b5e6ae440012a34586b0513ceec551",
+      "test/transformers/test_fused_linear_cross_entropy.py": "sha256:7d58414b9842def0462bdaa3cb2b7cb4e5247a8763dbf9d40e04c58b4b2a908d"
+    },
+    "selection_lock_sha256": "sha256:e75d03448650ef7ff13f93729d151f99be652702f4971cb889dbb2c0de57716b",
+    "test_plan_sha256": "sha256:aa73f348b2d5ce4a19fa0c3a6e0159681f10254f5a878ad3cabbd8709f3bb888",
+    "unified_diff_sha256": "sha256:99b9cc869bb4b15f9bfb23d80646edbdf17917e9be861067bdbb9f740491fd78"
+  },
+  "status": "pass"
+}

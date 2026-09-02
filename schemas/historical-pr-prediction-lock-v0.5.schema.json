@@ -1,0 +1,122 @@
+{
+  "$defs": {
+    "HistoricalPredictionMaterial": {
+      "additionalProperties": false,
+      "properties": {
+        "candidate_sha256": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Candidate Sha256",
+          "type": "string"
+        },
+        "case_id": {
+          "title": "Case Id",
+          "type": "string"
+        },
+        "confidence": {
+          "enum": [
+            "low",
+            "medium",
+            "high",
+            "not-applicable"
+          ],
+          "title": "Confidence",
+          "type": "string"
+        },
+        "evidence_sha256": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Evidence Sha256",
+          "type": "string"
+        },
+        "frozen_at": {
+          "format": "date-time",
+          "title": "Frozen At",
+          "type": "string"
+        },
+        "mergeability_decision": {
+          "enum": [
+            "accept",
+            "accept_with_scope",
+            "revise",
+            "reject",
+            "unresolved"
+          ],
+          "title": "Mergeability Decision",
+          "type": "string"
+        },
+        "predicted_outcome": {
+          "enum": [
+            "merged",
+            "not-merged",
+            "abstain"
+          ],
+          "title": "Predicted Outcome",
+          "type": "string"
+        },
+        "prediction_policy_id": {
+          "default": "historical-merge-prediction-v0.5-r1",
+          "enum": [
+            "historical-merge-prediction-v0.5-r1",
+            "historical-merge-prediction-v0.5-r2-polarized"
+          ],
+          "title": "Prediction Policy Id",
+          "type": "string"
+        },
+        "rationale_codes": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Rationale Codes",
+          "type": "array"
+        },
+        "schema_version": {
+          "const": "0.5",
+          "default": "0.5",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "score_100": {
+          "anyOf": [
+            {
+              "maximum": 100,
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Score 100"
+        }
+      },
+      "required": [
+        "case_id",
+        "candidate_sha256",
+        "evidence_sha256",
+        "predicted_outcome",
+        "mergeability_decision",
+        "confidence",
+        "frozen_at"
+      ],
+      "title": "HistoricalPredictionMaterial",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "lock_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Lock Sha256",
+      "type": "string"
+    },
+    "material": {
+      "$ref": "#/$defs/HistoricalPredictionMaterial"
+    }
+  },
+  "required": [
+    "material",
+    "lock_sha256"
+  ],
+  "title": "HistoricalPredictionLock",
+  "type": "object"
+}

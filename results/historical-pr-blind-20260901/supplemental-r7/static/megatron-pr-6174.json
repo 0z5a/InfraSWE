@@ -1,0 +1,83 @@
+{
+  "case_id": "megatron-pr-6174",
+  "created_at": "2026-09-02T03:33:45.532403+00:00",
+  "duration_seconds": 0.5190159580670297,
+  "evidence_sha256": "sha256:59d5cfc1bd0981a6bf3c4bd4476d203633bacef7d8f4438de91eb01e6b51b3db",
+  "facts": {
+    "changed_paths": [
+      "megatron/core/distributed/fsdp/src/megatron_fsdp/megatron_fsdp.py",
+      "megatron/core/models/common/model_chunk_schedule_plan.py",
+      "megatron/core/pipeline_parallel/combined_1f1b.py",
+      "tests/unit_tests/a2a_overlap/test_fsdp_1f1b_overlap.py",
+      "tests/unit_tests/a2a_overlap/utils.py"
+    ],
+    "changed_test_file_count": 2,
+    "changed_test_paths": [
+      "tests/unit_tests/a2a_overlap/test_fsdp_1f1b_overlap.py",
+      "tests/unit_tests/a2a_overlap/utils.py"
+    ],
+    "compilation_path": "not-required",
+    "existing_test_search_matches": [
+      "426c2db0461f62ebba5064df4837c1146f24ef61:tests/unit_tests/a2a_overlap/test_delay_wgrad_compute.py:196:        Both use combined_1f1b_schedule_for_no_pipelining with",
+      "426c2db0461f62ebba5064df4837c1146f24ef61:tests/unit_tests/a2a_overlap/test_fsdp_1f1b_overlap.py:40:    Uses combined_1f1b_schedule_for_no_pipelining (the production code path)",
+      "426c2db0461f62ebba5064df4837c1146f24ef61:tests/unit_tests/a2a_overlap/test_fsdp_1f1b_overlap.py:95:    def test_fsdp_1f1b_genuine_forward_state(self):",
+      "426c2db0461f62ebba5064df4837c1146f24ef61:tests/unit_tests/a2a_overlap/test_fsdp_1f1b_overlap.py:125:            control_fsdp.module.prepare_forward_module = lambda module: None",
+      "426c2db0461f62ebba5064df4837c1146f24ef61:tests/unit_tests/a2a_overlap/test_fsdp_1f1b_overlap.py:139:            genuine_forward_state_transitions = []",
+      "426c2db0461f62ebba5064df4837c1146f24ef61:tests/unit_tests/a2a_overlap/test_fsdp_1f1b_overlap.py:140:            original_prepare_forward = test_fsdp.module.prepare_forward_module",
+      "426c2db0461f62ebba5064df4837c1146f24ef61:tests/unit_tests/a2a_overlap/test_fsdp_1f1b_overlap.py:156:                genuine_forward_state_transitions.append((before, after))",
+      "426c2db0461f62ebba5064df4837c1146f24ef61:tests/unit_tests/a2a_overlap/test_fsdp_1f1b_overlap.py:159:            test_fsdp.module.prepare_forward_module = _track_prepare_forward",
+      "426c2db0461f62ebba5064df4837c1146f24ef61:tests/unit_tests/a2a_overlap/test_fsdp_1f1b_overlap.py:182:            assert len(genuine_forward_state_transitions) == (",
+      "426c2db0461f62ebba5064df4837c1146f24ef61:tests/unit_tests/a2a_overlap/test_fsdp_1f1b_overlap.py:187:                for before, _ in genuine_forward_state_transitions",
+      "426c2db0461f62ebba5064df4837c1146f24ef61:tests/unit_tests/a2a_overlap/test_fsdp_1f1b_overlap.py:191:                for _, after in genuine_forward_state_transitions",
+      "426c2db0461f62ebba5064df4837c1146f24ef61:tests/unit_tests/a2a_overlap/test_fsdp_1f1b_overlap.py:213:        forward/backward; test uses combined_1f1b_schedule_for_no_pipelining.",
+      "426c2db0461f62ebba5064df4837c1146f24ef61:tests/unit_tests/a2a_overlap/utils.py:341:    \"\"\"Forward step function compatible with combined_1f1b_schedule_for_no_pipelining.",
+      "426c2db0461f62ebba5064df4837c1146f24ef61:tests/unit_tests/a2a_overlap/utils.py:357:    from megatron.core.pipeline_parallel.combined_1f1b import (",
+      "426c2db0461f62ebba5064df4837c1146f24ef61:tests/unit_tests/a2a_overlap/utils.py:358:        combined_1f1b_schedule_for_no_pipelining,",
+      "426c2db0461f62ebba5064df4837c1146f24ef61:tests/unit_tests/a2a_overlap/utils.py:363:    combined_1f1b_schedule_for_no_pipelining("
+    ],
+    "path_parity": true,
+    "steady_state_compile_seconds": 0.0,
+    "target": {
+      "direct_state_transition_test_count": 1,
+      "direct_test_microbatch_count": 2,
+      "head_hook_is_wired_from_wrapper": true,
+      "head_prepare_clears_only_pre_backward": true,
+      "head_prepare_forward_method_count": 1,
+      "head_same_underlying_layer_guard": true
+    }
+  },
+  "failure_codes": [],
+  "probe": "r7-cross-project-static-v1",
+  "project": "megatron-core",
+  "protocol_id": "historical-pr-blind-cross-project-v0.5-r7",
+  "schema_version": "0.5",
+  "source_identity": {
+    "base_sha": "c76ff610bfa064d4af3035daa594d8c41ca7fce6",
+    "base_source_exists": {
+      "megatron/core/distributed/fsdp/src/megatron_fsdp/megatron_fsdp.py": true,
+      "megatron/core/models/common/model_chunk_schedule_plan.py": true,
+      "megatron/core/pipeline_parallel/combined_1f1b.py": true,
+      "tests/unit_tests/a2a_overlap/test_fsdp_1f1b_overlap.py": true,
+      "tests/unit_tests/a2a_overlap/utils.py": true
+    },
+    "base_source_sha256": {
+      "megatron/core/distributed/fsdp/src/megatron_fsdp/megatron_fsdp.py": "sha256:31d8076d364af49112335bb2bb9e1cd73d8ef65506af0a4c8c93494843cb4bea",
+      "megatron/core/models/common/model_chunk_schedule_plan.py": "sha256:aa7b876c8e442820a3844845942b751609a14d43999006d554732def92f396f2",
+      "megatron/core/pipeline_parallel/combined_1f1b.py": "sha256:b5418aba7755fe1a9338d32352e44cff6da98ebb40666a0a525c167af6698112",
+      "tests/unit_tests/a2a_overlap/test_fsdp_1f1b_overlap.py": "sha256:864c228866cb2246f6ef3d474ed34901337020f28227c8fe19909d37cef06f10",
+      "tests/unit_tests/a2a_overlap/utils.py": "sha256:c30c8cdaee4b3968b016ee4614032f8e89d66886fe3c8df34aacfb8a2d35b838"
+    },
+    "head_sha": "426c2db0461f62ebba5064df4837c1146f24ef61",
+    "head_source_sha256": {
+      "megatron/core/distributed/fsdp/src/megatron_fsdp/megatron_fsdp.py": "sha256:5f553add6357de80547408839e42862b3fc0b5659d2c373cb6262536878bb17f",
+      "megatron/core/models/common/model_chunk_schedule_plan.py": "sha256:94f6e75e866f47e27771a184a040e24c7d2b0737e48d6f0290fbc2fc5cabbc7e",
+      "megatron/core/pipeline_parallel/combined_1f1b.py": "sha256:6a177fb82f29e5b92e796cca3b8c40c5a648c73650dbc9bb4763244d72a3324e",
+      "tests/unit_tests/a2a_overlap/test_fsdp_1f1b_overlap.py": "sha256:d4a3d65a560d20f1920d4252b2bf43fdfba6aab0739105304325de6d9b56c663",
+      "tests/unit_tests/a2a_overlap/utils.py": "sha256:1ae478a27cc0b890ea4597d5b78c5dfaca91034de27ef9260cd251cf3cb1668a"
+    },
+    "selection_lock_sha256": "sha256:e75d03448650ef7ff13f93729d151f99be652702f4971cb889dbb2c0de57716b",
+    "test_plan_sha256": "sha256:aa73f348b2d5ce4a19fa0c3a6e0159681f10254f5a878ad3cabbd8709f3bb888",
+    "unified_diff_sha256": "sha256:402b0cc0a0f8a81adfdf2ba1a57642b8f9c0ca6a91b4910328d57e782999e6b4"
+  },
+  "status": "pass"
+}

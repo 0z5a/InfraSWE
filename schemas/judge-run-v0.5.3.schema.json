@@ -1,0 +1,275 @@
+{
+  "$defs": {
+    "JudgeCriterionOutput": {
+      "additionalProperties": false,
+      "properties": {
+        "abstain_reason": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Abstain Reason"
+        },
+        "counterevidence_refs": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Counterevidence Refs",
+          "type": "array"
+        },
+        "criterion_id": {
+          "title": "Criterion Id",
+          "type": "string"
+        },
+        "evidence_refs": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Evidence Refs",
+          "type": "array"
+        },
+        "missing_evidence": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Missing Evidence",
+          "type": "array"
+        },
+        "normalized_value": {
+          "anyOf": [
+            {
+              "maximum": 1,
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Normalized Value"
+        },
+        "ordinal_grade": {
+          "anyOf": [
+            {
+              "maximum": 4,
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Ordinal Grade"
+        },
+        "rationale_summary": {
+          "default": "",
+          "title": "Rationale Summary",
+          "type": "string"
+        },
+        "requested_probes": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Requested Probes",
+          "type": "array"
+        },
+        "security_flags": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Security Flags",
+          "type": "array"
+        },
+        "verdict": {
+          "enum": [
+            "clear-violation",
+            "major-misalignment",
+            "mixed-or-insufficient",
+            "mostly-aligned",
+            "clearly-aligned",
+            "abstain",
+            "insufficient-evidence",
+            "out-of-scope",
+            "possible-prompt-injection"
+          ],
+          "title": "Verdict",
+          "type": "string"
+        }
+      },
+      "required": [
+        "criterion_id",
+        "verdict"
+      ],
+      "title": "JudgeCriterionOutput",
+      "type": "object"
+    },
+    "JudgeOutput": {
+      "additionalProperties": false,
+      "properties": {
+        "criteria": {
+          "items": {
+            "$ref": "#/$defs/JudgeCriterionOutput"
+          },
+          "minItems": 1,
+          "title": "Criteria",
+          "type": "array"
+        },
+        "global_status": {
+          "$ref": "#/$defs/JudgeOutputGlobal"
+        },
+        "input_pack_sha256": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Input Pack Sha256",
+          "type": "string"
+        },
+        "judge_cell_sha256": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Judge Cell Sha256",
+          "type": "string"
+        },
+        "judge_run_id": {
+          "title": "Judge Run Id",
+          "type": "string"
+        },
+        "mode": {
+          "enum": [
+            "off",
+            "advisory",
+            "verifier-audit",
+            "bounded-semantic",
+            "human-assisted",
+            "exploratory-proxy",
+            "trajectory-audit"
+          ],
+          "title": "Mode",
+          "type": "string"
+        },
+        "rubric_sha256": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Rubric Sha256",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "0.5.3",
+          "default": "0.5.3",
+          "title": "Schema Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "judge_run_id",
+        "judge_cell_sha256",
+        "input_pack_sha256",
+        "rubric_sha256",
+        "mode",
+        "criteria",
+        "global_status"
+      ],
+      "title": "JudgeOutput",
+      "type": "object"
+    },
+    "JudgeOutputGlobal": {
+      "additionalProperties": false,
+      "properties": {
+        "out_of_scope": {
+          "default": false,
+          "title": "Out Of Scope",
+          "type": "boolean"
+        },
+        "prompt_injection_suspected": {
+          "default": false,
+          "title": "Prompt Injection Suspected",
+          "type": "boolean"
+        },
+        "schema_valid": {
+          "const": true,
+          "default": true,
+          "title": "Schema Valid",
+          "type": "boolean"
+        }
+      },
+      "title": "JudgeOutputGlobal",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "calibration_weight": {
+      "maximum": 1,
+      "minimum": 0,
+      "title": "Calibration Weight",
+      "type": "number"
+    },
+    "candidate_family_excluded": {
+      "default": false,
+      "title": "Candidate Family Excluded",
+      "type": "boolean"
+    },
+    "criterion_calibration_weights": {
+      "additionalProperties": {
+        "type": "number"
+      },
+      "title": "Criterion Calibration Weights",
+      "type": "object"
+    },
+    "decoding_seed": {
+      "title": "Decoding Seed",
+      "type": "integer"
+    },
+    "failure_codes": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Failure Codes",
+      "type": "array"
+    },
+    "member_id": {
+      "title": "Member Id",
+      "type": "string"
+    },
+    "model_family": {
+      "title": "Model Family",
+      "type": "string"
+    },
+    "output": {
+      "$ref": "#/$defs/JudgeOutput"
+    },
+    "repetition": {
+      "minimum": 1,
+      "title": "Repetition",
+      "type": "integer"
+    },
+    "schema_version": {
+      "const": "0.5.3",
+      "default": "0.5.3",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "validation_status": {
+      "enum": [
+        "valid",
+        "invalid"
+      ],
+      "title": "Validation Status",
+      "type": "string"
+    }
+  },
+  "required": [
+    "member_id",
+    "model_family",
+    "repetition",
+    "decoding_seed",
+    "calibration_weight",
+    "validation_status",
+    "output"
+  ],
+  "title": "JudgeRunRecord",
+  "type": "object"
+}

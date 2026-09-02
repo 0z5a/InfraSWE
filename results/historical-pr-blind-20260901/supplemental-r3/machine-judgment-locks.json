@@ -1,0 +1,222 @@
+{
+  "evidence_bindings": {
+    "sglang-pr-3136": {
+      "supplemental-r3/probes/sglang-pr-3136-contract.json": "sha256:0527a9e782f3fd226cdb5c39ba69f2c534752579f2adc73b904244b243375a66"
+    },
+    "vllm-pr-11531": {
+      "supplemental-r3/probes/vllm-pr-11531-swap-cache-stable.json": "sha256:965925426f89aa99d597158d2c468d21795c138ac91f58f3efc0d079aed994c5",
+      "supplemental-r3/probes/vllm-pr-11531-swap.json": "sha256:037cae02f4ebc94294b444dc637342147f4f76286be8a03fc4db98b578ca0906"
+    },
+    "vllm-pr-12111": {
+      "supplemental-r3/probes/vllm-pr-12111-contract.json": "sha256:0d86afc1956dcac5af4e5bdd75ba49b760e808f1713860984ec7ad43a3ce121d"
+    }
+  },
+  "frozen_at": "2026-09-01T16:45:18.843828+00:00",
+  "learned_model_used": false,
+  "lock_set_sha256": "sha256:b2dc2cdb9fb40fff3a23caa8a6f4a17e9dda185e9acc9ba1130e7ec003cc4dcf",
+  "locks": [
+    {
+      "lock_sha256": "sha256:1dc38bec6f5726467e1941d3cdbb8e34c9b865f6f9b5716fe2606286ccff6a17",
+      "material": {
+        "candidate_sha256": "sha256:a3a68ca07647bd80135a491bac023ba918eb61bdb154cc0ae9e657fb1424f15a",
+        "case_id": "sglang-pr-3136",
+        "decision": "revise",
+        "evidence_sha256": "sha256:c026e427b682149fa662f27b1ae3ccede5c309729499370c1c541c9aea72952d",
+        "frozen_at": "2026-09-01T16:45:18.843828Z",
+        "narrative": "[submodule-pointer-does-not-move-backward: fail] The proposed FlashInfer pointer is an ancestor, not a descendant: it moves backward by 4 commits and implicitly changes 44 files. [test-poke-adds-observable-coverage: fail] The only test edit changes an unreachable error message from 'p not recognized' to 'pp not recognized'; it adds no coverage and degrades the diagnostic. [early-exit-avoids-unnecessary-build: pass] The ancestry and test contracts are decisive; compilation was not required.",
+        "observations": [
+          {
+            "blocking": true,
+            "conclusion": "The proposed FlashInfer pointer is an ancestor, not a descendant: it moves backward by 4 commits and implicitly changes 44 files.",
+            "counterevidence": [],
+            "evidence": [
+              "sha256:6c9b73fcb05d743dbec91a0f1a812d4052b1e61c23f2590c43e1b9395a44ad2f"
+            ],
+            "failure_code": "SUBMODULE_POINTER_REGRESSION",
+            "question": "Is the proposed submodule commit a descendant of the pinned base commit?",
+            "rule_id": "submodule-pointer-does-not-move-backward",
+            "status": "fail"
+          },
+          {
+            "blocking": true,
+            "conclusion": "The only test edit changes an unreachable error message from 'p not recognized' to 'pp not recognized'; it adds no coverage and degrades the diagnostic.",
+            "counterevidence": [],
+            "evidence": [
+              "sha256:493305f4a50f98049e053a0524aacadf60e6da9c002369c5fd7c98a4f51ac0f9"
+            ],
+            "failure_code": "TEST_POKE_WITHOUT_COVERAGE",
+            "question": "Does a test-only CI poke add an assertion, input case, or useful diagnostic?",
+            "rule_id": "test-poke-adds-observable-coverage",
+            "status": "fail"
+          },
+          {
+            "blocking": true,
+            "conclusion": "The ancestry and test contracts are decisive; compilation was not required.",
+            "counterevidence": [],
+            "evidence": [
+              "steady_state_compile_seconds=0"
+            ],
+            "failure_code": null,
+            "question": "Can a decisive contract failure stop before compiling the regressed submodule?",
+            "rule_id": "early-exit-avoids-unnecessary-build",
+            "status": "pass"
+          }
+        ],
+        "policy_id": "historical-explainable-agent-v0.5-r3",
+        "rationale_codes": [
+          "SUBMODULE_POINTER_REGRESSION",
+          "TEST_POKE_WITHOUT_COVERAGE"
+        ],
+        "schema_version": "0.5",
+        "test_plan_sha256": "sha256:7d12140f7a4560b48e1d5436e64171e8a6947a2a32e3267b4ac293bcbd9952d0"
+      }
+    },
+    {
+      "lock_sha256": "sha256:64bd6a3a17e50c76f7287b3aefdfac95fed42b0b59d5c11415d28d5eda02b01c",
+      "material": {
+        "candidate_sha256": "sha256:ae5f03765af2a041e6cfeb03db88db239f43006bac9d77e87684e51e71010122",
+        "case_id": "vllm-pr-11531",
+        "decision": "revise",
+        "evidence_sha256": "sha256:9afc46af15d2f1eb30a5f47962f0051abc0fed20535a3609703e1619cdbdd8ca",
+        "frozen_at": "2026-09-01T16:45:18.843828Z",
+        "narrative": "[page-copy-preserves-every-byte: fail] The kernel divides byte size by eight after reinterpreting every tensor as int64; 2 odd-byte cases disagree with the byte oracle. [asynchronous-metadata-outlives-kernel-consumption: fail] A delayed current-stream launch consumed the mapping written by the next request, while the old per-copy path retained the intended mapping. [zero-work-launch-is-guarded: fail] The exact head source has no num_blocks == 0 guard. [performance-direction-is-measured-not-assumed: pass] At one mapping the candidate speedup is 0.920x; at 256 mappings it is 41.36x. The optimization direction is valuable but does not override correctness failures. [compilation-is-outside-steady-state: pass] The first precompile took 49.40s; the stable cache load took 0.068s and steady-state compile time was zero.",
+        "observations": [
+          {
+            "blocking": true,
+            "conclusion": "The kernel divides byte size by eight after reinterpreting every tensor as int64; 2 odd-byte cases disagree with the byte oracle.",
+            "counterevidence": [
+              "Aligned 256-byte FP16 pages match the oracle."
+            ],
+            "evidence": [
+              "sha256:41269860b72d3a3038b207add2e8a0a41f6e2a899db0cdc2b98fea09f12fe659"
+            ],
+            "failure_code": "PAGE_COPY_DROPS_NON_INT64_TAIL_BYTES",
+            "question": "Does the fused page copy preserve tensor pages not divisible by eight bytes?",
+            "rule_id": "page-copy-preserves-every-byte",
+            "status": "fail"
+          },
+          {
+            "blocking": true,
+            "conclusion": "A delayed current-stream launch consumed the mapping written by the next request, while the old per-copy path retained the intended mapping.",
+            "counterevidence": [],
+            "evidence": [
+              "sha256:41269860b72d3a3038b207add2e8a0a41f6e2a899db0cdc2b98fea09f12fe659"
+            ],
+            "failure_code": "ASYNC_PINNED_MAPPING_BUFFER_LIFETIME_RACE",
+            "question": "Can reusable pinned mapping storage remain unchanged until the kernel consumes it?",
+            "rule_id": "asynchronous-metadata-outlives-kernel-consumption",
+            "status": "fail"
+          },
+          {
+            "blocking": true,
+            "conclusion": "The exact head source has no num_blocks == 0 guard.",
+            "counterevidence": [],
+            "evidence": [
+              "sha256:7c4cb5e8df35e9bade1af6a9c8d87b0cb6b7fd188270989ff9fc7020fe71df6a"
+            ],
+            "failure_code": "ZERO_BLOCK_KERNEL_LAUNCH_UNGUARDED",
+            "question": "Does an empty block mapping return before a zero-grid CUDA launch?",
+            "rule_id": "zero-work-launch-is-guarded",
+            "status": "fail"
+          },
+          {
+            "blocking": true,
+            "conclusion": "At one mapping the candidate speedup is 0.920x; at 256 mappings it is 41.36x. The optimization direction is valuable but does not override correctness failures.",
+            "counterevidence": [],
+            "evidence": [
+              "sha256:41269860b72d3a3038b207add2e8a0a41f6e2a899db0cdc2b98fea09f12fe659"
+            ],
+            "failure_code": null,
+            "question": "Is the fused direction measured across both small and large mapping counts?",
+            "rule_id": "performance-direction-is-measured-not-assumed",
+            "status": "pass"
+          },
+          {
+            "blocking": true,
+            "conclusion": "The first precompile took 49.40s; the stable cache load took 0.068s and steady-state compile time was zero.",
+            "counterevidence": [],
+            "evidence": [
+              "sha256:04a681b497188b43d80d68ee60e30a325eb84badc73c8f7a194effe80ee9b7a0",
+              "sha256:41269860b72d3a3038b207add2e8a0a41f6e2a899db0cdc2b98fea09f12fe659"
+            ],
+            "failure_code": null,
+            "question": "Is unavoidable CUDA compilation excluded from benchmark timing?",
+            "rule_id": "compilation-is-outside-steady-state",
+            "status": "pass"
+          }
+        ],
+        "policy_id": "historical-explainable-agent-v0.5-r3",
+        "rationale_codes": [
+          "ASYNC_PINNED_MAPPING_BUFFER_LIFETIME_RACE",
+          "PAGE_COPY_DROPS_NON_INT64_TAIL_BYTES",
+          "ZERO_BLOCK_KERNEL_LAUNCH_UNGUARDED"
+        ],
+        "schema_version": "0.5",
+        "test_plan_sha256": "sha256:7d12140f7a4560b48e1d5436e64171e8a6947a2a32e3267b4ac293bcbd9952d0"
+      }
+    },
+    {
+      "lock_sha256": "sha256:2b27042931700e1cbd39d6a7f36940040838c7bae1ba96cfa7f35d61be5d0590",
+      "material": {
+        "candidate_sha256": "sha256:ca9195526cbb0f02303b32e36fb86ceff0119607a9c6b9ef3952ec17e6315f2a",
+        "case_id": "vllm-pr-12111",
+        "decision": "revise",
+        "evidence_sha256": "sha256:84a85c4240acd573ced7ce508fdf8b4ea65c6728abd9253a4c2223a5efaa0167",
+        "frozen_at": "2026-09-01T16:45:18.843828Z",
+        "narrative": "[backend-dispatch-initializes-every-loaded-attribute: fail] CustomOp.forward_cpu still delegates to forward_cuda, which loads self.op, but the head no longer initializes it on CPU for FatreluAndMul, MulAndSilu. [test-process-environment-is-restored: fail] The module-scoped fixture deletes CUDA_VISIBLE_DEVICES before yield without a monkeypatch or finally restoration. [compile-free-call-graph-probe: pass] AST call-graph and lifecycle checks completed in milliseconds with no compilation.",
+        "observations": [
+          {
+            "blocking": true,
+            "conclusion": "CustomOp.forward_cpu still delegates to forward_cuda, which loads self.op, but the head no longer initializes it on CPU for FatreluAndMul, MulAndSilu.",
+            "counterevidence": [],
+            "evidence": [
+              "sha256:afeb1e9c2ee08a2191f017701c6edb309c0abfb0204201219b0b2233fbc0ad3e"
+            ],
+            "failure_code": "CPU_CUSTOM_OP_ATTRIBUTE_UNINITIALIZED",
+            "question": "Does the CPU dispatch path initialize every attribute loaded downstream?",
+            "rule_id": "backend-dispatch-initializes-every-loaded-attribute",
+            "status": "fail"
+          },
+          {
+            "blocking": true,
+            "conclusion": "The module-scoped fixture deletes CUDA_VISIBLE_DEVICES before yield without a monkeypatch or finally restoration.",
+            "counterevidence": [],
+            "evidence": [
+              "sha256:afeb1e9c2ee08a2191f017701c6edb309c0abfb0204201219b0b2233fbc0ad3e"
+            ],
+            "failure_code": "PROCESS_ENV_MUTATION_NOT_RESTORED",
+            "question": "Does a test fixture restore each process-global environment mutation?",
+            "rule_id": "test-process-environment-is-restored",
+            "status": "fail"
+          },
+          {
+            "blocking": true,
+            "conclusion": "AST call-graph and lifecycle checks completed in milliseconds with no compilation.",
+            "counterevidence": [],
+            "evidence": [
+              "steady_state_compile_seconds=0"
+            ],
+            "failure_code": null,
+            "question": "Can the affected CPU and fixture contracts be resolved without CUDA compilation?",
+            "rule_id": "compile-free-call-graph-probe",
+            "status": "pass"
+          }
+        ],
+        "policy_id": "historical-explainable-agent-v0.5-r3",
+        "rationale_codes": [
+          "CPU_CUSTOM_OP_ATTRIBUTE_UNINITIALIZED",
+          "PROCESS_ENV_MUTATION_NOT_RESTORED"
+        ],
+        "schema_version": "0.5",
+        "test_plan_sha256": "sha256:7d12140f7a4560b48e1d5436e64171e8a6947a2a32e3267b4ac293bcbd9952d0"
+      }
+    }
+  ],
+  "protocol_id": "historical-reviewed-failure-alignment-v0.5-r3",
+  "review_text_visible_during_machine_judgment": false,
+  "schema_version": "0.5",
+  "selection_lock_sha256": "sha256:9b7f1e33b772b01d42f6b7d8c73c1d143d145aa4eb8636af9bf6d08aed77e949",
+  "test_plan_sha256": "sha256:7d12140f7a4560b48e1d5436e64171e8a6947a2a32e3267b4ac293bcbd9952d0",
+  "trained_weights_used": false,
+  "weighted_score_used": false
+}

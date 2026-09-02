@@ -1,0 +1,78 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://infraswe.dev/schemas/blackwell-feature-summary.schema.json",
+  "title": "InfraSWE B200 compiler-feature summary",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "generated_at",
+    "suite_id",
+    "status",
+    "replay_count",
+    "replay_indices",
+    "capability_manifest_sha256",
+    "capability_fingerprint",
+    "hardware",
+    "toolchain",
+    "features",
+    "score_namespaces",
+    "leaderboard_ready",
+    "leaderboard_score_100",
+    "leaderboard_blocker",
+    "raw_replays"
+  ],
+  "properties": {
+    "schema_version": { "const": "0.1" },
+    "generated_at": { "type": "string", "format": "date-time" },
+    "suite_id": { "const": "b200-sm100-compiler-features-v0.1" },
+    "status": { "enum": ["native_conformance_certified", "evidence_pending", "failed"] },
+    "replay_count": { "const": 3 },
+    "replay_indices": { "const": [1, 2, 3] },
+    "capability_manifest_sha256": { "$ref": "#/$defs/sha256" },
+    "capability_fingerprint": { "$ref": "#/$defs/sha256" },
+    "hardware": { "type": ["object", "null"] },
+    "toolchain": { "type": "object" },
+    "features": { "type": "array", "minItems": 5, "items": { "type": "object" } },
+    "score_namespaces": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["SM100-Core", "SM100-Scheduler", "SM100-Fabric", "PTX-Preview"],
+      "properties": {
+        "SM100-Core": { "$ref": "#/$defs/namespace" },
+        "SM100-Scheduler": { "$ref": "#/$defs/namespace" },
+        "SM100-Fabric": { "$ref": "#/$defs/namespace" },
+        "PTX-Preview": { "$ref": "#/$defs/namespace" }
+      }
+    },
+    "leaderboard_ready": { "const": false },
+    "leaderboard_score_100": { "type": "null" },
+    "leaderboard_blocker": { "type": "string", "minLength": 1 },
+    "raw_replays": { "type": "array", "minItems": 3, "maxItems": 3, "items": { "type": "string" } }
+  },
+  "$defs": {
+    "sha256": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" },
+    "namespace": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "registered_feature_count",
+        "applicable_feature_count",
+        "certified_feature_count",
+        "certification_coverage_percent",
+        "leaderboard_score_100",
+        "note"
+      ],
+      "properties": {
+        "status": { "enum": ["disabled", "not_run", "not_applicable", "certified_conformance", "failed", "pending_evidence"] },
+        "registered_feature_count": { "type": "integer", "minimum": 0 },
+        "applicable_feature_count": { "type": "integer", "minimum": 0 },
+        "certified_feature_count": { "type": "integer", "minimum": 0 },
+        "certification_coverage_percent": { "type": ["number", "null"], "minimum": 0, "maximum": 100 },
+        "leaderboard_score_100": { "type": "null" },
+        "note": { "type": "string" }
+      }
+    }
+  }
+}

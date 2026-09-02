@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://infraswe.dev/schemas/blackwell-native-result.schema.json",
+  "title": "InfraSWE SM100 native verification result",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "generated_at",
+    "verifier",
+    "matcher_version",
+    "feature_id",
+    "title",
+    "namespace",
+    "required_target",
+    "minimum_ptx_isa",
+    "artifact_root",
+    "artifact_set_sha256",
+    "capability_fingerprint",
+    "status",
+    "certified",
+    "gates",
+    "failure_codes",
+    "artifacts",
+    "tool_commands"
+  ],
+  "properties": {
+    "schema_version": { "const": "0.1" },
+    "generated_at": { "type": "string", "format": "date-time" },
+    "verifier": { "const": "infraswe-native-sm100" },
+    "matcher_version": { "const": "cuda-binary-utilities-13.3-sm100-v2" },
+    "feature_id": { "type": "string" },
+    "title": { "type": "string" },
+    "namespace": { "enum": ["SM100-Core", "SM100-Scheduler", "SM100-Fabric", "PTX-Preview"] },
+    "required_target": { "enum": ["sm_100", "sm_100f", "sm_100a"] },
+    "minimum_ptx_isa": { "type": "string" },
+    "artifact_root": { "type": "string" },
+    "artifact_set_sha256": { "$ref": "#/$defs/sha256" },
+    "capability_fingerprint": { "anyOf": [{ "$ref": "#/$defs/sha256" }, { "type": "null" }] },
+    "status": { "enum": ["certified", "static_only", "failed"] },
+    "certified": { "type": "boolean" },
+    "gates": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["reachable_ptx", "native_sass", "fallback", "dynamic"],
+      "properties": {
+        "reachable_ptx": { "type": "object" },
+        "native_sass": { "type": "object" },
+        "fallback": { "type": "object" },
+        "dynamic": { "type": "object" }
+      }
+    },
+    "failure_codes": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
+    "artifacts": { "type": "array", "items": { "type": "object" } },
+    "tool_commands": { "type": "array", "items": { "type": "object" } }
+  },
+  "$defs": {
+    "sha256": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" }
+  }
+}

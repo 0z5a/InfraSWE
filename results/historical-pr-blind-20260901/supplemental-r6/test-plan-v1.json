@@ -1,0 +1,156 @@
+{
+  "schema_version": "0.5",
+  "protocol_id": "historical-pr-blind-cross-project-v0.5-r6",
+  "selection_lock_sha256": "sha256:1702e56243e082b5471607ba3dec364e84fb28e8c297fbceac914735c2bef3ee",
+  "review_text_requested": false,
+  "review_text_visible_to_machine_judge": false,
+  "frozen_before_source_diff_inspection": true,
+  "execution_policy": {
+    "comparison": "exact base SHA versus exact head SHA",
+    "primary_gpu_cell": "NVIDIA H100 PCIe 80GB, SM90",
+    "source_binding": "Every extracted probe must bind exact base/head source and unified-diff digests.",
+    "environment_fallback": "If a full historical checkout cannot run because its pinned dependency stack is unavailable, use a behavior-preserving extraction of the exact changed function or kernel and mark any untested integration property unresolved.",
+    "timing": {
+      "warmup": "precompile every timed variant before collecting samples",
+      "steady_state_compilation_allowed": false,
+      "paired_order": "interleave base and head, alternating first position",
+      "minimum_pairs": 7,
+      "common_path_regression_limit": 1.03
+    },
+    "machine_decisions": [
+      "accept_with_scope",
+      "revise",
+      "reject",
+      "unresolved"
+    ]
+  },
+  "cases": [
+    {
+      "case_id": "cutlass-pr-2275",
+      "project": "cutlass-cute",
+      "base_sha": "f535c33634b640a4c0bee131f2f6e9f81877a18c",
+      "head_sha": "5e113b4ba1d145786c3d4ce56ca5db4dbc898708",
+      "claim": "The SM90 FP8 blockwise group-scale GEMM path handles the K == 128 boundary.",
+      "bound_contracts": [
+        "cutlass-cute-kernel-library-v1:api-abi",
+        "cutlass-cute-kernel-library-v1:build-test-matrix",
+        "cutlass-cute-kernel-library-v1:deployment-workload-portfolio",
+        "cutlass-cute-kernel-library-v1:performance-acceptance-targets"
+      ],
+      "predeclared_questions": [
+        "Does the exact changed scale-layout expression avoid an invalid or empty K-scale partition at K == 128?",
+        "Does a representative SM90 FP8 blockwise group-scale GEMM at K == 128 match a high-precision or CUTLASS reference?",
+        "Are neighboring supported K values, especially K == 256, unchanged in correctness and within 3% steady latency?",
+        "Is K == 128 covered by a direct regression test for the changed collective?",
+        "Are all timed variants compiled before measurement with zero steady compilation?"
+      ],
+      "decision_rule": "Accept with scope only if the boundary expression and H100 execution are correct, the neighboring supported path is retained, a direct regression test exists, and steady compilation is zero. Missing direct boundary coverage or a common-path regression requires revise; inability to instantiate the exact collective leaves runtime properties unresolved."
+    },
+    {
+      "case_id": "liger-pr-804",
+      "project": "liger-kernel",
+      "base_sha": "9cf2019a6c234be2102571dc35741ee844c7903d",
+      "head_sha": "eaddff94798cc0b08d30afedd744600d9de3ec21",
+      "claim": "Casting Triton program IDs to int64 prevents large-offset illegal memory access in RMSNorm and RoPE.",
+      "bound_contracts": [
+        "liger-training-fused-kernel-v1:api-abi",
+        "liger-training-fused-kernel-v1:build-test-matrix",
+        "liger-training-fused-kernel-v1:deployment-workload-portfolio",
+        "liger-training-fused-kernel-v1:performance-acceptance-targets"
+      ],
+      "predeclared_questions": [
+        "Is the program ID widened before every changed row or token offset multiplication in both RMSNorm and RoPE?",
+        "Does exact Triton arithmetic cross the 2**31-element boundary without wrapping for both changed kernel families?",
+        "Do ordinary offsets preserve outputs and remain within 3% steady latency after precompile?",
+        "Do direct tests exercise large-offset RMSNorm and RoPE in each supported training dtype?",
+        "Does steady timing create zero new Triton cache artifacts?"
+      ],
+      "decision_rule": "Accept with scope only if both changed families cross the int32 boundary correctly, ordinary behavior and latency are retained, direct large-offset coverage exists for both families, and steady compilation is zero. Partial family or dtype coverage requires revise."
+    },
+    {
+      "case_id": "deepgemm-pr-55",
+      "project": "deepgemm",
+      "base_sha": "5e4badc5777ff1371358ec73e0aac91229181fec",
+      "head_sha": "723a00338e28068a09982bd651bd14d18257b93e",
+      "claim": "The JIT template's RNG validation works under CUDA graph capture and replay.",
+      "bound_contracts": [
+        "deepgemm-moe-gemm-kernel-v1:lifecycle",
+        "deepgemm-moe-gemm-kernel-v1:build-test-matrix",
+        "deepgemm-moe-gemm-kernel-v1:dependency-policy",
+        "deepgemm-moe-gemm-kernel-v1:maintainability-probes"
+      ],
+      "predeclared_questions": [
+        "Does the exact head logic avoid CUDA-graph-unsafe RNG checking during capture without globally disabling the normal-launch validation?",
+        "Can an exact changed-template probe capture once and replay repeatedly without an RNG-state or capture error?",
+        "Does the ordinary non-graph path retain the intended RNG check and failure behavior?",
+        "Are generated source and cache identity stable across repeated replay with zero steady JIT work?",
+        "Is direct capture/replay regression coverage added for the changed lifecycle?"
+      ],
+      "decision_rule": "Accept with scope only if capture/replay succeeds, ordinary validation is retained, cache identity is stable, zero steady JIT work occurs, and direct graph coverage exists. Broadly suppressing validation, replay instability, or missing lifecycle coverage requires revise."
+    },
+    {
+      "case_id": "megatron-pr-5608",
+      "project": "megatron-core",
+      "base_sha": "027fa4aabac5bfaec6633a04939205f7efb061ba",
+      "head_sha": "73e16b7b438f286d05bad2f754fbbdc2cad3c25b",
+      "claim": "Production Triton tensor-operation kernels avoid repeated compilation and autotuning.",
+      "bound_contracts": [
+        "megatron-core-training-kernel-host-v1:lifecycle",
+        "megatron-core-training-kernel-host-v1:build-test-matrix",
+        "megatron-core-training-kernel-host-v1:dependency-policy",
+        "megatron-core-training-kernel-host-v1:performance-acceptance-targets"
+      ],
+      "predeclared_questions": [
+        "Does the exact decorator or launch change eliminate repeated compilation and autotuning for stable production shapes?",
+        "After all variants are precompiled, do repeated stable-shape launches create zero new cache artifacts or autotune calls?",
+        "Do shape or stride changes that require distinct specialization still select correct kernels rather than reusing an invalid cache entry?",
+        "Do base and head match a PyTorch oracle on representative and boundary shapes?",
+        "Is the lifecycle behavior covered by a direct unit or integration test?"
+      ],
+      "decision_rule": "Accept with scope only if stable production launches perform zero repeated compile/autotune work, necessary specialization remains correct, numerical output matches an oracle, and direct lifecycle coverage exists. Incorrect cache reuse or missing production-lifecycle evidence requires revise."
+    },
+    {
+      "case_id": "torchtitan-pr-2717",
+      "project": "torchtitan",
+      "base_sha": "d4dfa9eec95f5b8c99fb85e3280c77efe9624e8b",
+      "head_sha": "73f8b90dedb9a8feb53a7b852110d5fe9ed35315",
+      "claim": "A fused Triton router float32 batched matrix multiply is a correct and faster replacement for the eager composition.",
+      "bound_contracts": [
+        "torchtitan-pytorch-native-training-host-v1:api-abi",
+        "torchtitan-pytorch-native-training-host-v1:build-test-matrix",
+        "torchtitan-pytorch-native-training-host-v1:deployment-workload-portfolio",
+        "torchtitan-pytorch-native-training-host-v1:performance-acceptance-targets"
+      ],
+      "predeclared_questions": [
+        "Do forward outputs match the exact eager float32 router oracle across representative and non-power-of-two token, hidden, and expert dimensions?",
+        "If the fused result participates in training, are autograd or explicitly declared non-differentiable semantics preserved?",
+        "Are dtype conversion, accumulation precision, contiguous-layout assumptions, and unsupported-shape behavior explicit?",
+        "After precompile, does the fused head improve median H100 latency while producing zero steady compilation?",
+        "Are direct correctness and performance tests included for the fused kernel and its call-site gate?"
+      ],
+      "decision_rule": "Accept with scope only if forward and required training semantics match the eager oracle, layout and shape gates are explicit, median H100 steady latency improves, zero steady compilation occurs, and direct tests exist. A semantic mismatch is reject-worthy; missing coverage or a non-improving performance claim requires revise."
+    },
+    {
+      "case_id": "verl-pr-1688",
+      "project": "verl",
+      "base_sha": "3d5f15fa9a51e13087c8c7579a2a0a56be9d5285",
+      "head_sha": "7ca0307e3847473c442cbffd7289ad95728d6cb4",
+      "claim": "Temperature is passed only when the fused-kernel actor path supports it.",
+      "bound_contracts": [
+        "verl-posttraining-rollout-host-v1:api-abi",
+        "verl-posttraining-rollout-host-v1:build-test-matrix",
+        "verl-posttraining-rollout-host-v1:fallback-policy",
+        "verl-posttraining-rollout-host-v1:maintainability-probes"
+      ],
+      "predeclared_questions": [
+        "Does the exact head call include temperature on the fused-kernel path and omit it on the non-fused path?",
+        "Do both boolean branches preserve all other keyword arguments and return semantics?",
+        "Can the non-fused callable reject a temperature keyword while the fused callable requires it, without either branch failing?",
+        "Is the capability decision evaluated per actor configuration without stale or cross-request state?",
+        "Are both fused and non-fused call signatures covered by direct tests?"
+      ],
+      "decision_rule": "Accept with scope only if both branch signatures execute correctly, non-temperature semantics are identical, the capability gate is configuration-local, and direct two-branch coverage exists. A one-sided fix or missing branch coverage requires revise."
+    }
+  ],
+  "test_plan_sha256": "sha256:cab4d8356c11d762aec5e9b24a6b8fc7e200356387164b54cdc03809e8e53f23"
+}

@@ -1,0 +1,265 @@
+{
+  "$defs": {
+    "ArtifactAllowRule": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "enum": [
+            "source-patch",
+            "source-file",
+            "configuration",
+            "declaration",
+            "build-recipe",
+            "binary"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "logical_name": {
+          "title": "Logical Name",
+          "type": "string"
+        },
+        "max_bytes": {
+          "exclusiveMinimum": 0,
+          "title": "Max Bytes",
+          "type": "integer"
+        },
+        "required": {
+          "default": true,
+          "title": "Required",
+          "type": "boolean"
+        },
+        "source_glob": {
+          "title": "Source Glob",
+          "type": "string"
+        }
+      },
+      "required": [
+        "logical_name",
+        "source_glob",
+        "kind",
+        "max_bytes"
+      ],
+      "title": "ArtifactAllowRule",
+      "type": "object"
+    },
+    "ArtifactBuildPolicy": {
+      "additionalProperties": false,
+      "properties": {
+        "binary_submission": {
+          "default": "forbidden",
+          "enum": [
+            "forbidden",
+            "allowlisted-attested"
+          ],
+          "title": "Binary Submission",
+          "type": "string"
+        },
+        "cache_policy_sha256": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Cache Policy Sha256",
+          "type": "string"
+        },
+        "mode": {
+          "const": "pristine-rebuild",
+          "default": "pristine-rebuild",
+          "title": "Mode",
+          "type": "string"
+        },
+        "network": {
+          "default": "disabled",
+          "enum": [
+            "disabled",
+            "allowlist"
+          ],
+          "title": "Network",
+          "type": "string"
+        }
+      },
+      "required": [
+        "cache_policy_sha256"
+      ],
+      "title": "ArtifactBuildPolicy",
+      "type": "object"
+    },
+    "ArtifactCanonicalizationPolicy": {
+      "additionalProperties": false,
+      "properties": {
+        "normalize_patch_headers": {
+          "default": true,
+          "title": "Normalize Patch Headers",
+          "type": "boolean"
+        },
+        "normalize_text_eol": {
+          "default": false,
+          "title": "Normalize Text Eol",
+          "type": "boolean"
+        },
+        "preserve_executable_bit": {
+          "default": true,
+          "title": "Preserve Executable Bit",
+          "type": "boolean"
+        },
+        "stable_archive_order": {
+          "const": true,
+          "default": true,
+          "title": "Stable Archive Order",
+          "type": "boolean"
+        },
+        "timestamp_policy": {
+          "const": "zero",
+          "default": "zero",
+          "title": "Timestamp Policy",
+          "type": "string"
+        },
+        "uid_gid_policy": {
+          "const": "zero",
+          "default": "zero",
+          "title": "Uid Gid Policy",
+          "type": "string"
+        }
+      },
+      "title": "ArtifactCanonicalizationPolicy",
+      "type": "object"
+    },
+    "ArtifactEvidencePolicy": {
+      "additionalProperties": false,
+      "properties": {
+        "candidate_claim_authority": {
+          "const": "none",
+          "default": "none",
+          "title": "Candidate Claim Authority",
+          "type": "string"
+        },
+        "official_evidence_min_origin_trust": {
+          "const": "T2_PRISTINE_REEXECUTED",
+          "default": "T2_PRISTINE_REEXECUTED",
+          "title": "Official Evidence Min Origin Trust",
+          "type": "string"
+        }
+      },
+      "title": "ArtifactEvidencePolicy",
+      "type": "object"
+    },
+    "ArtifactFilesystemPolicy": {
+      "additionalProperties": false,
+      "properties": {
+        "hardlink_policy": {
+          "default": "flatten-within-root",
+          "enum": [
+            "reject",
+            "flatten-within-root"
+          ],
+          "title": "Hardlink Policy",
+          "type": "string"
+        },
+        "max_file_count": {
+          "default": 10000,
+          "minimum": 1,
+          "title": "Max File Count",
+          "type": "integer"
+        },
+        "max_path_length": {
+          "default": 240,
+          "minimum": 32,
+          "title": "Max Path Length",
+          "type": "integer"
+        },
+        "max_total_bytes": {
+          "default": 104857600,
+          "exclusiveMinimum": 0,
+          "title": "Max Total Bytes",
+          "type": "integer"
+        },
+        "secret_policy": {
+          "default": "reject",
+          "enum": [
+            "reject",
+            "report"
+          ],
+          "title": "Secret Policy",
+          "type": "string"
+        },
+        "special_file_policy": {
+          "const": "reject",
+          "default": "reject",
+          "title": "Special File Policy",
+          "type": "string"
+        },
+        "symlink_policy": {
+          "default": "reject-escape",
+          "enum": [
+            "reject",
+            "reject-escape"
+          ],
+          "title": "Symlink Policy",
+          "type": "string"
+        }
+      },
+      "title": "ArtifactFilesystemPolicy",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "allow": {
+      "items": {
+        "$ref": "#/$defs/ArtifactAllowRule"
+      },
+      "minItems": 1,
+      "title": "Allow",
+      "type": "array"
+    },
+    "build": {
+      "$ref": "#/$defs/ArtifactBuildPolicy"
+    },
+    "canonicalization": {
+      "$ref": "#/$defs/ArtifactCanonicalizationPolicy"
+    },
+    "collection_roots": {
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1,
+      "title": "Collection Roots",
+      "type": "array"
+    },
+    "deny": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Deny",
+      "type": "array"
+    },
+    "evidence": {
+      "$ref": "#/$defs/ArtifactEvidencePolicy"
+    },
+    "filesystem": {
+      "$ref": "#/$defs/ArtifactFilesystemPolicy"
+    },
+    "policy_id": {
+      "title": "Policy Id",
+      "type": "string"
+    },
+    "policy_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Policy Sha256",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "0.1",
+      "default": "0.1",
+      "title": "Schema Version",
+      "type": "string"
+    }
+  },
+  "required": [
+    "policy_id",
+    "collection_roots",
+    "allow",
+    "build",
+    "policy_sha256"
+  ],
+  "title": "ArtifactPolicy",
+  "type": "object"
+}

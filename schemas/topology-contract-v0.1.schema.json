@@ -1,0 +1,170 @@
+{
+  "$defs": {
+    "TopologyRelationRequirement": {
+      "additionalProperties": false,
+      "properties": {
+        "k": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "K"
+        },
+        "maximum_distance": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Maximum Distance"
+        },
+        "pattern": {
+          "enum": [
+            "same-node",
+            "same-socket",
+            "same-numa",
+            "same-root-complex",
+            "all-pairs",
+            "ring",
+            "mesh",
+            "one-nic-per-k-gpu",
+            "cross-node",
+            "anti-affinity"
+          ],
+          "title": "Pattern",
+          "type": "string"
+        },
+        "peer_access_required": {
+          "default": false,
+          "title": "Peer Access Required",
+          "type": "boolean"
+        },
+        "relation_id": {
+          "title": "Relation Id",
+          "type": "string"
+        },
+        "source_role": {
+          "title": "Source Role",
+          "type": "string"
+        },
+        "target_role": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Target Role"
+        },
+        "via_edge_kinds": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Via Edge Kinds",
+          "type": "array"
+        }
+      },
+      "required": [
+        "relation_id",
+        "pattern",
+        "source_role"
+      ],
+      "title": "TopologyRelationRequirement",
+      "type": "object"
+    },
+    "TopologyVertexRequirement": {
+      "additionalProperties": false,
+      "properties": {
+        "attribute_equals": {
+          "additionalProperties": true,
+          "title": "Attribute Equals",
+          "type": "object"
+        },
+        "count": {
+          "minimum": 1,
+          "title": "Count",
+          "type": "integer"
+        },
+        "kind": {
+          "title": "Kind",
+          "type": "string"
+        },
+        "role": {
+          "title": "Role",
+          "type": "string"
+        }
+      },
+      "required": [
+        "role",
+        "kind",
+        "count"
+      ],
+      "title": "TopologyVertexRequirement",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "contract_id": {
+      "title": "Contract Id",
+      "type": "string"
+    },
+    "contract_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Contract Sha256",
+      "type": "string"
+    },
+    "minimum_proof": {
+      "enum": [
+        "CP3-runtime",
+        "CP4-behavior",
+        "CP5-operational"
+      ],
+      "title": "Minimum Proof",
+      "type": "string"
+    },
+    "relations": {
+      "items": {
+        "$ref": "#/$defs/TopologyRelationRequirement"
+      },
+      "title": "Relations",
+      "type": "array"
+    },
+    "schema_version": {
+      "const": "0.1",
+      "default": "0.1",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "vertices": {
+      "items": {
+        "$ref": "#/$defs/TopologyVertexRequirement"
+      },
+      "minItems": 1,
+      "title": "Vertices",
+      "type": "array"
+    }
+  },
+  "required": [
+    "contract_id",
+    "vertices",
+    "minimum_proof",
+    "contract_sha256"
+  ],
+  "title": "TopologyContract",
+  "type": "object"
+}

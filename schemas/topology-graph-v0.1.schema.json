@@ -1,0 +1,128 @@
+{
+  "$defs": {
+    "TopologyEdge": {
+      "additionalProperties": false,
+      "properties": {
+        "attributes": {
+          "additionalProperties": true,
+          "title": "Attributes",
+          "type": "object"
+        },
+        "kind": {
+          "enum": [
+            "attached-to",
+            "same-numa",
+            "peer-accessible",
+            "nvlink-connected",
+            "pcie-path",
+            "rdma-reachable",
+            "shares-root-complex",
+            "shares-copy-engine",
+            "shares-memory-controller",
+            "mounted-from"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "source": {
+          "title": "Source",
+          "type": "string"
+        },
+        "target": {
+          "title": "Target",
+          "type": "string"
+        }
+      },
+      "required": [
+        "source",
+        "target",
+        "kind"
+      ],
+      "title": "TopologyEdge",
+      "type": "object"
+    },
+    "TopologyVertex": {
+      "additionalProperties": false,
+      "properties": {
+        "attributes": {
+          "additionalProperties": true,
+          "title": "Attributes",
+          "type": "object"
+        },
+        "kind": {
+          "enum": [
+            "host",
+            "socket",
+            "numa-node",
+            "cpu-set",
+            "accelerator",
+            "nic",
+            "switch",
+            "memory-tier",
+            "storage",
+            "process-role"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "role": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Role"
+        },
+        "vertex_id": {
+          "title": "Vertex Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "vertex_id",
+        "kind"
+      ],
+      "title": "TopologyVertex",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "edges": {
+      "items": {
+        "$ref": "#/$defs/TopologyEdge"
+      },
+      "title": "Edges",
+      "type": "array"
+    },
+    "graph_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Graph Sha256",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "0.1",
+      "default": "0.1",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "vertices": {
+      "items": {
+        "$ref": "#/$defs/TopologyVertex"
+      },
+      "minItems": 1,
+      "title": "Vertices",
+      "type": "array"
+    }
+  },
+  "required": [
+    "vertices",
+    "graph_sha256"
+  ],
+  "title": "TopologyGraph",
+  "type": "object"
+}

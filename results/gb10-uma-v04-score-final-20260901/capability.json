@@ -1,0 +1,641 @@
+{
+  "capability_fingerprint": "sha256:351133facbaaa3afeef7ce4d742c373d32e6c2dee5b838a96b810c94a7e6f601",
+  "contract": {
+    "canonical_cuda_series": "13.3",
+    "canonical_ptx_isa": "9.3",
+    "features": {
+      "GB10-ARM-ORDER-001": {
+        "feature_id": "GB10-ARM-ORDER-001",
+        "forbidden_patterns": [],
+        "host_isa_require_any": [
+          "\\bcas(?:p)?\\b",
+          "\\bswp\\b",
+          "\\bldadd\\b",
+          "\\bldset\\b"
+        ],
+        "leaderboard_eligible": true,
+        "minimum_ptx_isa": null,
+        "namespace": "GB10-Arm64",
+        "phase": "p2",
+        "ptx_require_all": [],
+        "ptx_require_any": [],
+        "required_target": null,
+        "runtime_requirements": [
+          "aarch64",
+          "host_native_atomics"
+        ],
+        "title": "GB10 Arm weak-memory-ordering ring buffer"
+      },
+      "GB10-MATRIX-IO-001": {
+        "feature_id": "GB10-MATRIX-IO-001",
+        "forbidden_patterns": [
+          "\\btcgen05\\.",
+          "\\btmem\\b",
+          "\\btarget\\s+sm_100a\\b",
+          "global[_ -]?temporary[_ -]?unpack"
+        ],
+        "host_isa_require_any": [],
+        "leaderboard_eligible": true,
+        "minimum_ptx_isa": "9.3",
+        "namespace": "GB10-SM121-LowP",
+        "phase": "p2",
+        "ptx_require_all": [
+          "\\bldmatrix\\.(?:m16n16|m8n16)\\b"
+        ],
+        "ptx_require_any": [
+          "\\.b6x16_p32\\b",
+          "\\.b4x16_p64\\b"
+        ],
+        "required_target": "sm_121f",
+        "runtime_requirements": [],
+        "title": "SM121 low-bit matrix I/O conversion"
+      },
+      "GB10-MMA-001": {
+        "feature_id": "GB10-MMA-001",
+        "forbidden_patterns": [
+          "\\btcgen05\\.",
+          "\\btmem\\b",
+          "\\btarget\\s+sm_100a\\b",
+          "\\bcublas(?:lt)?\\b",
+          "\\bcutlass_profiler\\b"
+        ],
+        "host_isa_require_any": [],
+        "leaderboard_eligible": true,
+        "minimum_ptx_isa": "9.3",
+        "namespace": "GB10-SM121-LowP",
+        "phase": "p1",
+        "ptx_require_all": [
+          "\\bmma\\.sync\\b",
+          "\\.block_scale\\b"
+        ],
+        "ptx_require_any": [
+          "\\.kind::mxf4nvf4\\b",
+          "\\.kind::mxf4\\b"
+        ],
+        "required_target": "sm_121a",
+        "runtime_requirements": [],
+        "title": "SM121 block-scaled warp MMA"
+      },
+      "GB10-ROCE-001": {
+        "feature_id": "GB10-ROCE-001",
+        "forbidden_patterns": [],
+        "host_isa_require_any": [],
+        "leaderboard_eligible": false,
+        "minimum_ptx_isa": null,
+        "namespace": "GB10-RoCE",
+        "phase": "p3-optional",
+        "ptx_require_all": [],
+        "ptx_require_any": [],
+        "required_target": null,
+        "runtime_requirements": [
+          "minimum_nodes_2",
+          "gpudirect_rdma_not_assumed"
+        ],
+        "title": "Pinned-host staged RoCE transport"
+      },
+      "GB10-TARGET-001": {
+        "feature_id": "GB10-TARGET-001",
+        "forbidden_patterns": [
+          "\\btcgen05\\.",
+          "\\btmem\\b",
+          "\\btarget\\s+sm_100a\\b"
+        ],
+        "host_isa_require_any": [],
+        "leaderboard_eligible": true,
+        "minimum_ptx_isa": null,
+        "namespace": "GB10-SM121-Codegen",
+        "phase": "p0",
+        "ptx_require_all": [],
+        "ptx_require_any": [],
+        "required_target": "sm_121",
+        "runtime_requirements": [
+          "aarch64",
+          "compute_capability_12_1"
+        ],
+        "title": "SM121 native build and runtime dispatch"
+      },
+      "GB10-TMA-001": {
+        "feature_id": "GB10-TMA-001",
+        "forbidden_patterns": [
+          "\\btcgen05\\.",
+          "\\btmem\\b",
+          "\\btarget\\s+sm_100a\\b",
+          "\\.tile::scatter4\\b",
+          "\\.cta_group::2\\b"
+        ],
+        "host_isa_require_any": [],
+        "leaderboard_eligible": true,
+        "minimum_ptx_isa": "9.0",
+        "namespace": "GB10-SM121-TMA",
+        "phase": "p2",
+        "ptx_require_all": [
+          "\\bcp\\.async\\.bulk\\.tensor\\b",
+          "\\.tile::gather4\\b",
+          "\\.shared::cta\\b"
+        ],
+        "ptx_require_any": [],
+        "required_target": "sm_121",
+        "runtime_requirements": [
+          "tensor_map_access_supported"
+        ],
+        "title": "SM121 CTA-local TMA gather4"
+      },
+      "GB10-UMA-001": {
+        "feature_id": "GB10-UMA-001",
+        "forbidden_patterns": [],
+        "host_isa_require_any": [],
+        "leaderboard_eligible": true,
+        "minimum_ptx_isa": null,
+        "namespace": "GB10-UMA",
+        "phase": "p1",
+        "ptx_require_all": [],
+        "ptx_require_any": [],
+        "required_target": null,
+        "runtime_requirements": [
+          "unified_addressing",
+          "pageable_memory_access",
+          "host_page_table_coherence"
+        ],
+        "title": "GB10 CPU/GPU unified-memory pipeline"
+      }
+    },
+    "matcher_version": "cuda-binary-utilities-sm121-v1",
+    "minimum_cuda_series": "13.0",
+    "minimum_release_feature_ids": [
+      "GB10-TARGET-001",
+      "GB10-MMA-001",
+      "GB10-UMA-001",
+      "GB10-MATRIX-IO-001",
+      "GB10-ARM-ORDER-001"
+    ],
+    "pack_namespaces": [
+      "GB10-SM121-Codegen",
+      "GB10-SM121-LowP",
+      "GB10-SM121-TMA",
+      "GB10-UMA",
+      "GB10-Arm64",
+      "GB10-Runtime",
+      "GB10-RoCE"
+    ],
+    "schema_version": "0.1",
+    "target_lanes": {
+      "sm_121": {
+        "description": "SM121 baseline deployment target",
+        "forward_compatible": true,
+        "kind": "baseline"
+      },
+      "sm_121a": {
+        "description": "SM121 architecture-specific target",
+        "forward_compatible": false,
+        "kind": "architecture"
+      },
+      "sm_121f": {
+        "description": "SM12x family-specific target",
+        "forward_compatible": true,
+        "kind": "family"
+      }
+    }
+  },
+  "contract_sha256": "sha256:b7238926c3abee80c55a2ff166a1b3c2c47b024358aa8524cac35e38b7ca0364",
+  "failure_codes": [
+    "GB10_NATIVE_TASK_EVIDENCE_PENDING",
+    "GB10_PERFORMANCE_EVIDENCE_PENDING",
+    "GB10_TASK_EXECUTION_PENDING"
+  ],
+  "features": {
+    "GB10-ARM-ORDER-001": {
+      "leaderboard_eligible": true,
+      "namespace": "GB10-Arm64",
+      "phase": "p2",
+      "reason": "platform capability is eligible; native task evidence is still required",
+      "required_target": null,
+      "state": "pending_evidence"
+    },
+    "GB10-MATRIX-IO-001": {
+      "leaderboard_eligible": true,
+      "namespace": "GB10-SM121-LowP",
+      "phase": "p2",
+      "reason": "feature requires PTX 9.3+",
+      "required_target": "sm_121f",
+      "state": "toolchain_too_old"
+    },
+    "GB10-MMA-001": {
+      "leaderboard_eligible": true,
+      "namespace": "GB10-SM121-LowP",
+      "phase": "p1",
+      "reason": "feature requires PTX 9.3+",
+      "required_target": "sm_121a",
+      "state": "toolchain_too_old"
+    },
+    "GB10-ROCE-001": {
+      "leaderboard_eligible": false,
+      "namespace": "GB10-RoCE",
+      "phase": "p3-optional",
+      "reason": "single-node probe; scale-out is scored separately",
+      "required_target": null,
+      "state": "not_applicable"
+    },
+    "GB10-TARGET-001": {
+      "leaderboard_eligible": true,
+      "namespace": "GB10-SM121-Codegen",
+      "phase": "p0",
+      "reason": "platform capability is eligible; native task evidence is still required",
+      "required_target": "sm_121",
+      "state": "pending_evidence"
+    },
+    "GB10-TMA-001": {
+      "leaderboard_eligible": true,
+      "namespace": "GB10-SM121-TMA",
+      "phase": "p2",
+      "reason": "platform capability is eligible; native task evidence is still required",
+      "required_target": "sm_121",
+      "state": "pending_evidence"
+    },
+    "GB10-UMA-001": {
+      "leaderboard_eligible": true,
+      "namespace": "GB10-UMA",
+      "phase": "p1",
+      "reason": "platform capability is eligible; native task evidence is still required",
+      "required_target": null,
+      "state": "pending_evidence"
+    }
+  },
+  "gates": {
+    "compile": {
+      "evidence": {
+        "canonical": false,
+        "cuda_release": "13.0",
+        "ptx_isa": "9.0",
+        "target_acceptance": {
+          "sm_121": true,
+          "sm_121a": true,
+          "sm_121f": true
+        }
+      },
+      "failure_codes": [],
+      "status": "pass"
+    },
+    "correctness_liveness": {
+      "evidence": {
+        "reason": "task workloads have not been executed"
+      },
+      "failure_codes": [
+        "GB10_TASK_EXECUTION_PENDING"
+      ],
+      "status": "unresolved"
+    },
+    "native_feature": {
+      "evidence": {
+        "reason": "per-task PTX/SASS and runtime evidence has not been supplied"
+      },
+      "failure_codes": [
+        "GB10_NATIVE_TASK_EVIDENCE_PENDING"
+      ],
+      "status": "unresolved"
+    },
+    "performance": {
+      "evidence": {
+        "reason": "unprofiled steady-state samples have not been captured"
+      },
+      "failure_codes": [
+        "GB10_PERFORMANCE_EVIDENCE_PENDING"
+      ],
+      "status": "unresolved"
+    },
+    "platform": {
+      "evidence": {
+        "host_arch": "aarch64",
+        "selected_gpu": {
+          "architecture": "sm121",
+          "compute_capability": "12.1",
+          "driver_version": "580.173.02",
+          "index": 0,
+          "memory_bytes": null,
+          "name": "NVIDIA GB10",
+          "pci_bus_id": "0000000F:01:00.0",
+          "uuid": "GPU-4a09153b-325e-980e-fcc6-79508f1d1f9a"
+        }
+      },
+      "failure_codes": [],
+      "status": "pass"
+    }
+  },
+  "generated_at": "2026-09-01T07:57:51.782842Z",
+  "hardware": {
+    "all_gpus": [
+      {
+        "architecture": "sm121",
+        "compute_capability": "12.1",
+        "driver_version": "580.173.02",
+        "index": 0,
+        "memory_bytes": null,
+        "name": "NVIDIA GB10",
+        "pci_bus_id": "0000000F:01:00.0",
+        "uuid": "GPU-4a09153b-325e-980e-fcc6-79508f1d1f9a"
+      }
+    ],
+    "cpu_count": 20,
+    "host_arch": "aarch64",
+    "query": {
+      "argv": [
+        "/usr/bin/nvidia-smi",
+        "--query-gpu=index,uuid,name,memory.total,driver_version,pci.bus_id,compute_cap",
+        "--format=csv,noheader,nounits"
+      ],
+      "available": true,
+      "returncode": 0,
+      "stderr": "",
+      "stdout": "0, GPU-4a09153b-325e-980e-fcc6-79508f1d1f9a, NVIDIA GB10, [N/A], 580.173.02, 0000000F:01:00.0, 12.1\n"
+    },
+    "selected_gpu": {
+      "architecture": "sm121",
+      "compute_capability": "12.1",
+      "driver_version": "580.173.02",
+      "index": 0,
+      "memory_bytes": null,
+      "name": "NVIDIA GB10",
+      "pci_bus_id": "0000000F:01:00.0",
+      "uuid": "GPU-4a09153b-325e-980e-fcc6-79508f1d1f9a"
+    }
+  },
+  "probe_version": "gb10-sm121-capability-v1",
+  "profile_id": "gpu-1x-sm121-gb10-cuda130",
+  "runtime_attributes": {
+    "build": {
+      "argv": [
+        "/usr/local/cuda-13.0/bin/nvcc",
+        "-std=c++17",
+        "platforms/nvidia-gb10/capability_probe/cuda_probe.cc",
+        "-lcuda",
+        "-o",
+        "/workspace/evidence/cuda130-v2/artifacts/cuda-runtime-attributes"
+      ],
+      "available": true,
+      "returncode": 0,
+      "stderr": "",
+      "stdout": ""
+    },
+    "parsed": {
+      "attributes": {
+        "async_engine_count": {
+          "returncode": 0,
+          "value": 1
+        },
+        "cluster_launch": {
+          "returncode": 0,
+          "value": 1
+        },
+        "concurrent_managed_access": {
+          "returncode": 0,
+          "value": 1
+        },
+        "direct_managed_mem_access_from_host": {
+          "returncode": 0,
+          "value": 0
+        },
+        "dma_buf_supported": {
+          "returncode": 0,
+          "value": 0
+        },
+        "gpudirect_rdma_supported": {
+          "returncode": 0,
+          "value": 0
+        },
+        "host_native_atomics": {
+          "returncode": 0,
+          "value": 1
+        },
+        "host_page_table_coherence": {
+          "returncode": 0,
+          "value": 1
+        },
+        "pageable_memory_access": {
+          "returncode": 0,
+          "value": 1
+        },
+        "tensor_map_access_supported": {
+          "returncode": 0,
+          "value": 1
+        },
+        "unified_addressing": {
+          "returncode": 0,
+          "value": 1
+        }
+      },
+      "available": true,
+      "cu_device_get_returncode": 0,
+      "cu_init_returncode": 0
+    },
+    "run": {
+      "argv": [
+        "/workspace/evidence/cuda130-v2/artifacts/cuda-runtime-attributes"
+      ],
+      "available": true,
+      "returncode": 0,
+      "stderr": "",
+      "stdout": "{\"available\":true,\"cu_init_returncode\":0,\"cu_device_get_returncode\":0,\"attributes\":{\"unified_addressing\":{\"returncode\":0,\"value\":1},\"concurrent_managed_access\":{\"returncode\":0,\"value\":1},\"pageable_memory_access\":{\"returncode\":0,\"value\":1},\"host_page_table_coherence\":{\"returncode\":0,\"value\":1},\"direct_managed_mem_access_from_host\":{\"returncode\":0,\"value\":0},\"host_native_atomics\":{\"returncode\":0,\"value\":1},\"cluster_launch\":{\"returncode\":0,\"value\":1},\"gpudirect_rdma_supported\":{\"returncode\":0,\"value\":0},\"dma_buf_supported\":{\"returncode\":0,\"value\":0},\"async_engine_count\":{\"returncode\":0,\"value\":1},\"tensor_map_access_supported\":{\"returncode\":0,\"value\":1}}}\n"
+    }
+  },
+  "schema_version": "0.1",
+  "status": "ready",
+  "toolchain": {
+    "canonical": false,
+    "canonical_cuda_series": "13.3",
+    "canonical_ptx_isa": "9.3",
+    "commands": {
+      "cuobjdump_version": {
+        "argv": [
+          "/usr/local/cuda-13.0/bin/cuobjdump",
+          "--version"
+        ],
+        "available": true,
+        "returncode": 0,
+        "stderr": "",
+        "stdout": "cuobjdump: NVIDIA (R) fat binary listing tool\nCopyright (c) 2005-2025 NVIDIA Corporation\nBuilt on Thu_Aug_14_07:31:26_PM_PDT_2025\nCuda compilation tools, release 13.0, V13.0.85\nBuild cuda_13.0.r13.0/compiler.36400806_0\n"
+      },
+      "nvcc_gpu_arch": {
+        "argv": [
+          "/usr/local/cuda-13.0/bin/nvcc",
+          "--list-gpu-arch"
+        ],
+        "available": true,
+        "returncode": 0,
+        "stderr": "",
+        "stdout": "compute_75\ncompute_80\ncompute_86\ncompute_87\ncompute_88\ncompute_89\ncompute_90\ncompute_100\ncompute_110\ncompute_103\ncompute_120\ncompute_121\n"
+      },
+      "nvcc_gpu_code": {
+        "argv": [
+          "/usr/local/cuda-13.0/bin/nvcc",
+          "--list-gpu-code"
+        ],
+        "available": true,
+        "returncode": 0,
+        "stderr": "",
+        "stdout": "sm_75\nsm_80\nsm_86\nsm_87\nsm_88\nsm_89\nsm_90\nsm_100\nsm_110\nsm_103\nsm_120\nsm_121\n"
+      },
+      "nvcc_version": {
+        "argv": [
+          "/usr/local/cuda-13.0/bin/nvcc",
+          "--version"
+        ],
+        "available": true,
+        "returncode": 0,
+        "stderr": "",
+        "stdout": "nvcc: NVIDIA (R) Cuda compiler driver\nCopyright (c) 2005-2025 NVIDIA Corporation\nBuilt on Wed_Aug_20_01:57:39_PM_PDT_2025\nCuda compilation tools, release 13.0, V13.0.88\nBuild cuda_13.0.r13.0/compiler.36424714_0\n"
+      },
+      "nvdisasm_version": {
+        "argv": [
+          "/usr/local/cuda-13.0/bin/nvdisasm",
+          "--version"
+        ],
+        "available": true,
+        "returncode": 0,
+        "stderr": "",
+        "stdout": "nvdisasm: NVIDIA (R) CUDA disassembler\nCopyright (c) 2005-2025 NVIDIA Corporation\nBuilt on Thu_Aug_14_07:20:28_PM_PDT_2025\nCuda compilation tools, release 13.0, V13.0.85\nBuild cuda_13.0.r13.0/compiler.36400806_0\n"
+      },
+      "ptxas_version": {
+        "argv": [
+          "/usr/local/cuda-13.0/bin/ptxas",
+          "--version"
+        ],
+        "available": true,
+        "returncode": 0,
+        "stderr": "",
+        "stdout": "ptxas: NVIDIA (R) Ptx optimizing assembler\nCopyright (c) 2005-2025 NVIDIA Corporation\nBuilt on Wed_Aug_20_01:53:56_PM_PDT_2025\nCuda compilation tools, release 13.0, V13.0.88\nBuild cuda_13.0.r13.0/compiler.36424714_0\n"
+      }
+    },
+    "detected_cuda_release": "13.0",
+    "detected_ptx_isa": "9.0",
+    "minimum_cuda_series": "13.0",
+    "targets": {
+      "sm_121": {
+        "command": {
+          "argv": [
+            "/usr/local/cuda-13.0/bin/ptxas",
+            "-arch=sm_121",
+            "--warn-on-spills",
+            "/workspace/evidence/cuda130-v2/artifacts/target-lanes/target-sm_121.ptx",
+            "-o",
+            "/workspace/evidence/cuda130-v2/artifacts/target-lanes/target-sm_121.cubin"
+          ],
+          "available": true,
+          "returncode": 0,
+          "stderr": "",
+          "stdout": ""
+        },
+        "cubin_path": "target-sm_121.cubin",
+        "cubin_sha256": "sha256:736261e9734f7cb2a65e0b139f2ae2d295ee8f7a3ea86f4f1a5911e8815ff17c",
+        "log_path": "target-sm_121.ptxas.log",
+        "log_sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "passed": true,
+        "source_path": "target-sm_121.ptx",
+        "source_sha256": "sha256:33a538d403b78b381144b973345a855107979873001cfa2e877cfbbbe997b8ad",
+        "status": "accepted"
+      },
+      "sm_121a": {
+        "command": {
+          "argv": [
+            "/usr/local/cuda-13.0/bin/ptxas",
+            "-arch=sm_121a",
+            "--warn-on-spills",
+            "/workspace/evidence/cuda130-v2/artifacts/target-lanes/target-sm_121a.ptx",
+            "-o",
+            "/workspace/evidence/cuda130-v2/artifacts/target-lanes/target-sm_121a.cubin"
+          ],
+          "available": true,
+          "returncode": 0,
+          "stderr": "",
+          "stdout": ""
+        },
+        "cubin_path": "target-sm_121a.cubin",
+        "cubin_sha256": "sha256:4672fe36ada1df2f862923b67bd7be36733907d22b05d1ba0d8388dae7066c32",
+        "log_path": "target-sm_121a.ptxas.log",
+        "log_sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "passed": true,
+        "source_path": "target-sm_121a.ptx",
+        "source_sha256": "sha256:002030f1143a3976287dbcc96784de164f74efffd215bd5bb5adeabf30397136",
+        "status": "accepted"
+      },
+      "sm_121f": {
+        "command": {
+          "argv": [
+            "/usr/local/cuda-13.0/bin/ptxas",
+            "-arch=sm_121f",
+            "--warn-on-spills",
+            "/workspace/evidence/cuda130-v2/artifacts/target-lanes/target-sm_121f.ptx",
+            "-o",
+            "/workspace/evidence/cuda130-v2/artifacts/target-lanes/target-sm_121f.cubin"
+          ],
+          "available": true,
+          "returncode": 0,
+          "stderr": "",
+          "stdout": ""
+        },
+        "cubin_path": "target-sm_121f.cubin",
+        "cubin_sha256": "sha256:ee39ecfd299a6928e9b1c730070fdc3db05702f0891e8b59588f220d62b1b897",
+        "log_path": "target-sm_121f.ptxas.log",
+        "log_sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "passed": true,
+        "source_path": "target-sm_121f.ptx",
+        "source_sha256": "sha256:409e866ea449f1986fe0d052513945650c4b96b1b8f1430965a3b4d17781b783",
+        "status": "accepted"
+      }
+    }
+  },
+  "topology": {
+    "ibv_devices": {
+      "argv": [
+        "ibv_devices"
+      ],
+      "available": false,
+      "returncode": 127,
+      "stderr": "command not found",
+      "stdout": ""
+    },
+    "ibv_devinfo": {
+      "argv": [
+        "ibv_devinfo"
+      ],
+      "available": false,
+      "returncode": 127,
+      "stderr": "command not found",
+      "stdout": ""
+    },
+    "lscpu": {
+      "argv": [
+        "/usr/bin/lscpu",
+        "--json"
+      ],
+      "available": true,
+      "returncode": 0,
+      "stderr": "",
+      "stdout": "{\n   \"lscpu\": [\n      {\n         \"field\": \"Architecture:\",\n         \"data\": \"aarch64\"\n      },{\n         \"field\": \"CPU op-mode(s):\",\n         \"data\": \"64-bit\"\n      },{\n         \"field\": \"Byte Order:\",\n         \"data\": \"Little Endian\"\n      },{\n         \"field\": \"CPU(s):\",\n         \"data\": \"20\"\n      },{\n         \"field\": \"On-line CPU(s) list:\",\n         \"data\": \"0-19\"\n      },{\n         \"field\": \"Vendor ID:\",\n         \"data\": \"ARM\"\n      },{\n         \"field\": \"Model name:\",\n         \"data\": \"Cortex-X925\"\n      },{\n         \"field\": \"Model:\",\n         \"data\": \"1\"\n      },{\n         \"field\": \"Thread(s) per core:\",\n         \"data\": \"1\"\n      },{\n         \"field\": \"Core(s) per socket:\",\n         \"data\": \"10\"\n      },{\n         \"field\": \"Socket(s):\",\n         \"data\": \"1\"\n      },{\n         \"field\": \"Stepping:\",\n         \"data\": \"r0p1\"\n      },{\n         \"field\": \"Frequency boost:\",\n         \"data\": \"disabled\"\n      },{\n         \"field\": \"CPU(s) scaling MHz:\",\n         \"data\": \"100%\"\n      },{\n         \"field\": \"CPU max MHz:\",\n         \"data\": \"3900.0000\"\n      },{\n         \"field\": \"CPU min MHz:\",\n         \"data\": \"1378.0000\"\n      },{\n         \"field\": \"BogoMIPS:\",\n         \"data\": \"2000.00\"\n      },{\n         \"field\": \"Flags:\",\n         \"data\": \"fp asimd evtstrm aes pmull sha1 sha2 crc32 atomics fphp asimdhp cpuid asimdrdm jscvt fcma lrcpc dcpop sha3 sm3 sm4 asimddp sha512 sve asimdfhm dit uscat ilrcpc flagm sb paca pacg dcpodp sve2 sveaes svepmull svebitperm svesha3 svesm4 flagm2 frint svei8mm svebf16 i8mm bf16 dgh bti ecv afp wfxt\"\n      },{\n         \"field\": \"Model name:\",\n         \"data\": \"Cortex-A725\"\n      },{\n         \"field\": \"Model:\",\n         \"data\": \"1\"\n      },{\n         \"field\": \"Thread(s) per core:\",\n         \"data\": \"1\"\n      },{\n         \"field\": \"Core(s) per socket:\",\n         \"data\": \"10\"\n      },{\n         \"field\": \"Socket(s):\",\n         \"data\": \"1\"\n      },{\n         \"field\": \"Stepping:\",\n         \"data\": \"r0p1\"\n      },{\n         \"field\": \"CPU(s) scaling MHz:\",\n         \"data\": \"100%\"\n      },{\n         \"field\": \"CPU max MHz:\",\n         \"data\": \"2808.0000\"\n      },{\n         \"field\": \"CPU min MHz:\",\n         \"data\": \"338.0000\"\n      },{\n         \"field\": \"BogoMIPS:\",\n         \"data\": \"2000.00\"\n      },{\n         \"field\": \"Flags:\",\n         \"data\": \"fp asimd evtstrm aes pmull sha1 sha2 crc32 atomics fphp asimdhp cpuid asimdrdm jscvt fcma lrcpc dcpop sha3 sm3 sm4 asimddp sha512 sve asimdfhm dit uscat ilrcpc flagm sb paca pacg dcpodp sve2 sveaes svepmull svebitperm svesha3 svesm4 flagm2 frint svei8mm svebf16 i8mm bf16 dgh bti ecv afp wfxt\"\n      },{\n         \"field\": \"L1d cache:\",\n         \"data\": \"1.3 MiB (20 instances)\"\n      },{\n         \"field\": \"L1i cache:\",\n         \"data\": \"1.3 MiB (20 instances)\"\n      },{\n         \"field\": \"L2 cache:\",\n         \"data\": \"25 MiB (20 instances)\"\n      },{\n         \"field\": \"L3 cache:\",\n         \"data\": \"24 MiB (2 instances)\"\n      },{\n         \"field\": \"NUMA node(s):\",\n         \"data\": \"1\"\n      },{\n         \"field\": \"NUMA node0 CPU(s):\",\n         \"data\": \"0-19\"\n      },{\n         \"field\": \"Vulnerability Gather data sampling:\",\n         \"data\": \"Not affected\"\n      },{\n         \"field\": \"Vulnerability Ghostwrite:\",\n         \"data\": \"Not affected\"\n      },{\n         \"field\": \"Vulnerability Indirect target selection:\",\n         \"data\": \"Not affected\"\n      },{\n         \"field\": \"Vulnerability Itlb multihit:\",\n         \"data\": \"Not affected\"\n      },{\n         \"field\": \"Vulnerability L1tf:\",\n         \"data\": \"Not affected\"\n      },{\n         \"field\": \"Vulnerability Mds:\",\n         \"data\": \"Not affected\"\n      },{\n         \"field\": \"Vulnerability Meltdown:\",\n         \"data\": \"Not affected\"\n      },{\n         \"field\": \"Vulnerability Mmio stale data:\",\n         \"data\": \"Not affected\"\n      },{\n         \"field\": \"Vulnerability Old microcode:\",\n         \"data\": \"Not affected\"\n      },{\n         \"field\": \"Vulnerability Reg file data sampling:\",\n         \"data\": \"Not affected\"\n      },{\n         \"field\": \"Vulnerability Retbleed:\",\n         \"data\": \"Not affected\"\n      },{\n         \"field\": \"Vulnerability Spec rstack overflow:\",\n         \"data\": \"Not affected\"\n      },{\n         \"field\": \"Vulnerability Spec store bypass:\",\n         \"data\": \"Mitigation; Speculative Store Bypass disabled via prctl\"\n      },{\n         \"field\": \"Vulnerability Spectre v1:\",\n         \"data\": \"Mitigation; __user pointer sanitization\"\n      },{\n         \"field\": \"Vulnerability Spectre v2:\",\n         \"data\": \"Mitigation; CSV2, BHB\"\n      },{\n         \"field\": \"Vulnerability Srbds:\",\n         \"data\": \"Not affected\"\n      },{\n         \"field\": \"Vulnerability Tsa:\",\n         \"data\": \"Not affected\"\n      },{\n         \"field\": \"Vulnerability Tsx async abort:\",\n         \"data\": \"Not affected\"\n      },{\n         \"field\": \"Vulnerability Vmscape:\",\n         \"data\": \"Not affected\"\n      }\n   ]\n}\n"
+    },
+    "network": {
+      "argv": [
+        "/usr/sbin/ip",
+        "-json",
+        "-brief",
+        "link"
+      ],
+      "available": true,
+      "returncode": 0,
+      "stderr": "",
+      "stdout": "[{\"ifname\":\"lo\",\"operstate\":\"UNKNOWN\",\"address\":\"00:00:00:00:00:00\",\"flags\":[\"LOOPBACK\",\"UP\",\"LOWER_UP\"]},{\"link_index\":2920,\"ifname\":\"eth0\",\"operstate\":\"UP\",\"address\":\"5a:59:62:a2:80:72\",\"flags\":[\"BROADCAST\",\"MULTICAST\",\"UP\",\"LOWER_UP\"]}]\n"
+    },
+    "nvidia_topology": {
+      "argv": [
+        "/usr/bin/nvidia-smi",
+        "topo",
+        "-m"
+      ],
+      "available": true,
+      "returncode": 0,
+      "stderr": "",
+      "stdout": "\t\u001b[4mGPU0\tCPU Affinity\tNUMA Affinity\tGPU NUMA ID\u001b[0m\nGPU0\t X \t0-19\t0\t\tN/A\n\nLegend:\n\n  X    = Self\n  SYS  = Connection traversing PCIe as well as the SMP interconnect between NUMA nodes (e.g., QPI/UPI)\n  NODE = Connection traversing PCIe as well as the interconnect between PCIe Host Bridges within a NUMA node\n  PHB  = Connection traversing PCIe as well as a PCIe Host Bridge (typically the CPU)\n  PXB  = Connection traversing multiple PCIe bridges (without traversing the PCIe Host Bridge)\n  PIX  = Connection traversing at most a single PCIe bridge\n  NV#  = Connection traversing a bonded set of # NVLinks\n"
+    }
+  },
+  "warnings": [
+    "minimum CUDA 13.0 validation passed; canonical CUDA 13.3/PTX 9.3 is not installed"
+  ]
+}

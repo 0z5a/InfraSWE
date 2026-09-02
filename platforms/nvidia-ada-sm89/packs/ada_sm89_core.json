@@ -1,0 +1,33 @@
+{
+  "schema_version": "0.1",
+  "pack_id": "Ada-SM89-Core",
+  "required": true,
+  "supported_cells": ["l40s-48gb-pcie", "l20-48gb-pcie"],
+  "compile": {
+    "native_cubin": "sm_89",
+    "ptx_fallback": "compute_89",
+    "native_dispatch_replays": 7,
+    "ptx_jit_cold_replays": 7,
+    "ptx_jit_warm_replays": 7
+  },
+  "features": [
+    "SM89-TARGET-001",
+    "SM89-FP8-MMA-001",
+    "SM89-FP8-CVT-001",
+    "SM89-CPASYNC-001",
+    "SM89-L2-001"
+  ],
+  "forbidden_families": [
+    "wgmma",
+    "cp.async.bulk.tensor",
+    "tensormap",
+    "clusterlaunchcontrol",
+    "distributed_shared_memory",
+    "tcgen05",
+    "tmem",
+    "multimem",
+    "fabric.try",
+    "e2m1_native_mma"
+  ],
+  "silent_fallback_max": 0
+}

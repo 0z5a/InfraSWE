@@ -1,0 +1,531 @@
+{
+  "case_id": "cutlass-pr-2275",
+  "created_at": "2026-09-02T02:45:18.334243+00:00",
+  "duration_seconds": 113.43450622099954,
+  "environment": {
+    "cmake": "/workspace/infraswe_eval/extended-r6/toolchain-venv/bin/cmake",
+    "cuda_visible_devices": null,
+    "nvcc": "/workspace/infraswe_eval/extended-r6/cuda-local/usr/local/cuda-12.8/bin/nvcc"
+  },
+  "evidence_sha256": "sha256:956cf83a57471d5faf5002e30a39bb462f67b040bcc4a12281a98e5dc829e408",
+  "facts": {
+    "aot_compilation_completed_before_execution": true,
+    "builds": {
+      "base": {
+        "build": {
+          "command": [
+            "/workspace/infraswe_eval/extended-r6/toolchain-venv/bin/cmake",
+            "--build",
+            "/workspace/infraswe_eval/extended-r6/build/cutlass-v2/base",
+            "--target",
+            "68_hopper_fp8_warp_specialized_grouped_gemm_with_blockwise_scaling",
+            "-j",
+            "2"
+          ],
+          "duration_seconds": 38.077815043000555,
+          "return_code": 0,
+          "stderr_sha256": "sha256:12ae32cb1ec02d01eda3581b127c1fee3b0dc53572ed6baf239721a03d82e126",
+          "stderr_tail": "",
+          "stdout_sha256": "sha256:ae013ed8603676472e301fe255ff1c9f04be9408f641ea9b749f001b83fce5b6",
+          "stdout_tail": "[1/2] Building CUDA object examples/68_hopper_fp8_warp_specialized_grouped_gemm_with_blockwise_scaling/CMakeFiles/68_hopper_fp8_warp_specialized_grouped_gemm_with_blockwise_scaling.dir/68_hopper_fp8_warp_specialized_grouped_gemm_with_blockwise_scaling.cu.o\nptxas info    : (C7517) warpgroup.wait is injected in around line 1391 by compiler to allow use of registers defined by GMMA in function '_ZN7cutlass13device_kernelINS_4gemm6kernel13GemmUniversalINS1_17GroupProblemShapeIN4cute5tupleIJiiiEEEEENS1_10collective13CollectiveMmaINS1_51MainloopSm90ArrayTmaGmmaWarpSpecializedBlockScalingILi6ENS6_IJNS5_1CILi1EEENSC_ILi2EEESD_EEENS1_62KernelPtrArrayTmaWarpSpecializedCooperativeFP8BlockScaledAccumEEENS6_IJNSC_ILi128EEESI_SI_EEENS_12float_e4m3_tENS6_IJPNS6_IJlSD_NSC_ILi0EEEEEEPNS5_6LayoutINS6_IJNS6_IJSD_iEEENS6_IJSI_iEEEiEEENS6_IJNS6_IJSL_SD_EEENS6_IJSL_iEEEiEEEEEEEESK_NS6_IJSN_PNSO_INS6_IJSQ_SQ_iEEESU_EEEEENS5_8TiledMMAINS5_8MMA_AtomIJNS5_4SM904GMMA31MMA_64x128x32_F32E4M3E4M3_SS_TNILNS15_7ScaleInE1ELS17_1EEEEEENSO_INS6_IJSE_SD_SD_EEENS6_IJSD_SL_SL_EEEEENS6_IJNS5_10UnderscoreES1D_S1D_EEEEENS5_23SM90_TMA_LOAD_MULTICASTENS5_14ComposedLayoutINS5_7SwizzleILi3ELi4ELi3EEENS5_18smem_ptr_flag_bitsILi8EEENSO_INS6_IJNSC_ILi8EEESI_EEENS6_IJSI_SD_EEEEEEEvNS5_8identityENS5_13SM90_TMA_LOADES1Q_vS1R_EENS_8epilogue10collective18CollectiveEpilogueINS1U_30Sm90PtrArrayTmaWarpSpecializedILi4ELi2ELi16ELb0ELb0ELi2EEEJSJ_NS6_IJSI_NSC_ILi32EEEEEESK_PNS6_IJSD_lSL_EEESK_S22_NS1U_6fusion15FusionCallbacksIS1Y_NS23_17LinearCombinationISK_fSK_fLNS_15FloatRoundStyleE2EEESJ_S20_JEEES1S_NS1H_IS1J_S1L_NSO_INS6_IJSI_S1M_EEENS6_IJSD_SI_EEEEEEENS5_39AutoVectorizingCopyWithAssumedAlignmentILi128EEENS5_14SM90_TMA_STOREES2C_S2E_NS5_9Copy_AtomIJNS5_17SM90_U32x4_STSM_NENS_6half_tEEEEvEEEvvEEEEvNT_6ParamsE'\nptxas info    : (C7514) Potential Performance Loss: wgmma.mma_async instructions are serialized due to non wgmma instructions reading accumulator registers of  a wgmma between start and end of the pipeline stage in the function '_ZN7cutlass13device_kernelINS_4gemm6kernel13GemmUniversalINS1_17GroupProblemShapeIN4cute5tupleIJiiiEEEEENS1_10collective13CollectiveMmaINS1_51MainloopSm90ArrayTmaGmmaWarpSpecializedBlockScalingILi6ENS6_IJNS5_1CILi1EEENSC_ILi2EEESD_EEENS1_62KernelPtrArrayTmaWarpSpecializedCooperativeFP8BlockScaledAccumEEENS6_IJNSC_ILi128EEESI_SI_EEENS_12float_e4m3_tENS6_IJPNS6_IJlSD_NSC_ILi0EEEEEEPNS5_6LayoutINS6_IJNS6_IJSD_iEEENS6_IJSI_iEEEiEEENS6_IJNS6_IJSL_SD_EEENS6_IJSL_iEEEiEEEEEEEESK_NS6_IJSN_PNSO_INS6_IJSQ_SQ_iEEESU_EEEEENS5_8TiledMMAINS5_8MMA_AtomIJNS5_4SM904GMMA31MMA_64x128x32_F32E4M3E4M3_SS_TNILNS15_7ScaleInE1ELS17_1EEEEEENSO_INS6_IJSE_SD_SD_EEENS6_IJSD_SL_SL_EEEEENS6_IJNS5_10UnderscoreES1D_S1D_EEEEENS5_23SM90_TMA_LOAD_MULTICASTENS5_14ComposedLayoutINS5_7SwizzleILi3ELi4ELi3EEENS5_18smem_ptr_flag_bitsILi8EEENSO_INS6_IJNSC_ILi8EEESI_EEENS6_IJSI_SD_EEEEEEEvNS5_8identityENS5_13SM90_TMA_LOADES1Q_vS1R_EENS_8epilogue10collective18CollectiveEpilogueINS1U_30Sm90PtrArrayTmaWarpSpecializedILi4ELi2ELi16ELb0ELb0ELi2EEEJSJ_NS6_IJSI_NSC_ILi32EEEEEESK_PNS6_IJSD_lSL_EEESK_S22_NS1U_6fusion15FusionCallbacksIS1Y_NS23_17LinearCombinationISK_fSK_fLNS_15FloatRoundStyleE2EEESJ_S20_JEEES1S_NS1H_IS1J_S1L_NSO_INS6_IJSI_S1M_EEENS6_IJSD_SI_EEEEEEENS5_39AutoVectorizingCopyWithAssumedAlignmentILi128EEENS5_14SM90_TMA_STOREES2C_S2E_NS5_9Copy_AtomIJNS5_17SM90_U32x4_STSM_NENS_6half_tEEEEvEEEvvEEEEvNT_6ParamsE'\n[2/2] Linking CUDA executable examples/68_hopper_fp8_warp_specialized_grouped_gemm_with_blockwise_scaling/68_hopper_fp8_warp_specialized_grouped_gemm_with_blockwise_scaling\n",
+          "timed_out": false
+        },
+        "configure": {
+          "command": [
+            "/workspace/infraswe_eval/extended-r6/toolchain-venv/bin/cmake",
+            "-S",
+            "/workspace/infraswe_eval/extended-r6/sources/cutlass/base",
+            "-B",
+            "/workspace/infraswe_eval/extended-r6/build/cutlass-v2/base",
+            "-GNinja",
+            "-DCMAKE_CUDA_COMPILER=/workspace/infraswe_eval/extended-r6/cuda-local/usr/local/cuda-12.8/bin/nvcc",
+            "-DCUTLASS_NVCC_ARCHS=90a",
+            "-DCUTLASS_ENABLE_TESTS=OFF",
+            "-DCUTLASS_ENABLE_EXAMPLES=ON",
+            "-DCUTLASS_ENABLE_LIBRARY=OFF"
+          ],
+          "duration_seconds": 1.2151444519995493,
+          "return_code": 0,
+          "stderr_sha256": "sha256:30fa13bdf9d4f122db2d3d9bc112bc64ebf6de518e0fc7601e8710b213f14e37",
+          "stderr_tail": "fatal: not a git repository (or any of the parent directories): .git\n",
+          "stdout_sha256": "sha256:bd33e78c13707b76af45b65d7cd76efe26c2fea944a24f7f88f19741c0f136d6",
+          "stdout_tail": "-- CMake Version: 3.31.6\n-- CUTLASS 3.9.1\n-- CUDART: /workspace/infraswe_eval/extended-r6/cuda-local/usr/local/cuda-12.8/lib64/libcudart.so\n-- CUDA Driver: /workspace/infraswe_eval/extended-r6/cuda-local/usr/local/cuda-12.8/lib64/stubs/libcuda.so\n-- NVRTC: Not Found\n-- Default Install Location: install\n-- CUDA Compilation Architectures: 90a\n-- Enable caching of reference results in conv unit tests\n-- Enable rigorous conv problem sizes in conv unit tests\n-- Grid Dependency Control (GDC) is enabled for SM100 kernels (required for programmatic dependent launches).\n-- Using the following NVCC flags: \n  --expt-relaxed-constexpr\n  -ftemplate-backtrace-limit=0\n  -DCUTLASS_TEST_LEVEL=0\n  -DCUTLASS_TEST_ENABLE_CACHED_RESULTS=1\n  -DCUTLASS_CONV_UNIT_TEST_RIGOROUS_SIZE_ENABLED=1\n  -DCUTLASS_DEBUG_TRACE_LEVEL=0\n  -Xcompiler=-Wconversion\n  -Xcompiler=-fno-strict-aliasing\n-- CUTLASS Revision: Unable to detect, Git returned code 128.\n-- Configuring cublas ...\n-- cuBLAS Disabled.\n-- Configuring cuBLAS ... done.\n-- Configuring done (0.8s)\n-- Generating done (0.2s)\n-- Build files have been written to: /workspace/infraswe_eval/extended-r6/build/cutlass-v2/base\n",
+          "timed_out": false
+        }
+      },
+      "head": {
+        "build": {
+          "command": [
+            "/workspace/infraswe_eval/extended-r6/toolchain-venv/bin/cmake",
+            "--build",
+            "/workspace/infraswe_eval/extended-r6/build/cutlass-v2/head",
+            "--target",
+            "68_hopper_fp8_warp_specialized_grouped_gemm_with_blockwise_scaling",
+            "-j",
+            "2"
+          ],
+          "duration_seconds": 37.06353424200006,
+          "return_code": 0,
+          "stderr_sha256": "sha256:12ae32cb1ec02d01eda3581b127c1fee3b0dc53572ed6baf239721a03d82e126",
+          "stderr_tail": "",
+          "stdout_sha256": "sha256:ae013ed8603676472e301fe255ff1c9f04be9408f641ea9b749f001b83fce5b6",
+          "stdout_tail": "[1/2] Building CUDA object examples/68_hopper_fp8_warp_specialized_grouped_gemm_with_blockwise_scaling/CMakeFiles/68_hopper_fp8_warp_specialized_grouped_gemm_with_blockwise_scaling.dir/68_hopper_fp8_warp_specialized_grouped_gemm_with_blockwise_scaling.cu.o\nptxas info    : (C7517) warpgroup.wait is injected in around line 1391 by compiler to allow use of registers defined by GMMA in function '_ZN7cutlass13device_kernelINS_4gemm6kernel13GemmUniversalINS1_17GroupProblemShapeIN4cute5tupleIJiiiEEEEENS1_10collective13CollectiveMmaINS1_51MainloopSm90ArrayTmaGmmaWarpSpecializedBlockScalingILi6ENS6_IJNS5_1CILi1EEENSC_ILi2EEESD_EEENS1_62KernelPtrArrayTmaWarpSpecializedCooperativeFP8BlockScaledAccumEEENS6_IJNSC_ILi128EEESI_SI_EEENS_12float_e4m3_tENS6_IJPNS6_IJlSD_NSC_ILi0EEEEEEPNS5_6LayoutINS6_IJNS6_IJSD_iEEENS6_IJSI_iEEEiEEENS6_IJNS6_IJSL_SD_EEENS6_IJSL_iEEEiEEEEEEEESK_NS6_IJSN_PNSO_INS6_IJSQ_SQ_iEEESU_EEEEENS5_8TiledMMAINS5_8MMA_AtomIJNS5_4SM904GMMA31MMA_64x128x32_F32E4M3E4M3_SS_TNILNS15_7ScaleInE1ELS17_1EEEEEENSO_INS6_IJSE_SD_SD_EEENS6_IJSD_SL_SL_EEEEENS6_IJNS5_10UnderscoreES1D_S1D_EEEEENS5_23SM90_TMA_LOAD_MULTICASTENS5_14ComposedLayoutINS5_7SwizzleILi3ELi4ELi3EEENS5_18smem_ptr_flag_bitsILi8EEENSO_INS6_IJNSC_ILi8EEESI_EEENS6_IJSI_SD_EEEEEEEvNS5_8identityENS5_13SM90_TMA_LOADES1Q_vS1R_EENS_8epilogue10collective18CollectiveEpilogueINS1U_30Sm90PtrArrayTmaWarpSpecializedILi4ELi2ELi16ELb0ELb0ELi2EEEJSJ_NS6_IJSI_NSC_ILi32EEEEEESK_PNS6_IJSD_lSL_EEESK_S22_NS1U_6fusion15FusionCallbacksIS1Y_NS23_17LinearCombinationISK_fSK_fLNS_15FloatRoundStyleE2EEESJ_S20_JEEES1S_NS1H_IS1J_S1L_NSO_INS6_IJSI_S1M_EEENS6_IJSD_SI_EEEEEEENS5_39AutoVectorizingCopyWithAssumedAlignmentILi128EEENS5_14SM90_TMA_STOREES2C_S2E_NS5_9Copy_AtomIJNS5_17SM90_U32x4_STSM_NENS_6half_tEEEEvEEEvvEEEEvNT_6ParamsE'\nptxas info    : (C7514) Potential Performance Loss: wgmma.mma_async instructions are serialized due to non wgmma instructions reading accumulator registers of  a wgmma between start and end of the pipeline stage in the function '_ZN7cutlass13device_kernelINS_4gemm6kernel13GemmUniversalINS1_17GroupProblemShapeIN4cute5tupleIJiiiEEEEENS1_10collective13CollectiveMmaINS1_51MainloopSm90ArrayTmaGmmaWarpSpecializedBlockScalingILi6ENS6_IJNS5_1CILi1EEENSC_ILi2EEESD_EEENS1_62KernelPtrArrayTmaWarpSpecializedCooperativeFP8BlockScaledAccumEEENS6_IJNSC_ILi128EEESI_SI_EEENS_12float_e4m3_tENS6_IJPNS6_IJlSD_NSC_ILi0EEEEEEPNS5_6LayoutINS6_IJNS6_IJSD_iEEENS6_IJSI_iEEEiEEENS6_IJNS6_IJSL_SD_EEENS6_IJSL_iEEEiEEEEEEEESK_NS6_IJSN_PNSO_INS6_IJSQ_SQ_iEEESU_EEEEENS5_8TiledMMAINS5_8MMA_AtomIJNS5_4SM904GMMA31MMA_64x128x32_F32E4M3E4M3_SS_TNILNS15_7ScaleInE1ELS17_1EEEEEENSO_INS6_IJSE_SD_SD_EEENS6_IJSD_SL_SL_EEEEENS6_IJNS5_10UnderscoreES1D_S1D_EEEEENS5_23SM90_TMA_LOAD_MULTICASTENS5_14ComposedLayoutINS5_7SwizzleILi3ELi4ELi3EEENS5_18smem_ptr_flag_bitsILi8EEENSO_INS6_IJNSC_ILi8EEESI_EEENS6_IJSI_SD_EEEEEEEvNS5_8identityENS5_13SM90_TMA_LOADES1Q_vS1R_EENS_8epilogue10collective18CollectiveEpilogueINS1U_30Sm90PtrArrayTmaWarpSpecializedILi4ELi2ELi16ELb0ELb0ELi2EEEJSJ_NS6_IJSI_NSC_ILi32EEEEEESK_PNS6_IJSD_lSL_EEESK_S22_NS1U_6fusion15FusionCallbacksIS1Y_NS23_17LinearCombinationISK_fSK_fLNS_15FloatRoundStyleE2EEESJ_S20_JEEES1S_NS1H_IS1J_S1L_NSO_INS6_IJSI_S1M_EEENS6_IJSD_SI_EEEEEEENS5_39AutoVectorizingCopyWithAssumedAlignmentILi128EEENS5_14SM90_TMA_STOREES2C_S2E_NS5_9Copy_AtomIJNS5_17SM90_U32x4_STSM_NENS_6half_tEEEEvEEEvvEEEEvNT_6ParamsE'\n[2/2] Linking CUDA executable examples/68_hopper_fp8_warp_specialized_grouped_gemm_with_blockwise_scaling/68_hopper_fp8_warp_specialized_grouped_gemm_with_blockwise_scaling\n",
+          "timed_out": false
+        },
+        "configure": {
+          "command": [
+            "/workspace/infraswe_eval/extended-r6/toolchain-venv/bin/cmake",
+            "-S",
+            "/workspace/infraswe_eval/extended-r6/sources/cutlass/head",
+            "-B",
+            "/workspace/infraswe_eval/extended-r6/build/cutlass-v2/head",
+            "-GNinja",
+            "-DCMAKE_CUDA_COMPILER=/workspace/infraswe_eval/extended-r6/cuda-local/usr/local/cuda-12.8/bin/nvcc",
+            "-DCUTLASS_NVCC_ARCHS=90a",
+            "-DCUTLASS_ENABLE_TESTS=OFF",
+            "-DCUTLASS_ENABLE_EXAMPLES=ON",
+            "-DCUTLASS_ENABLE_LIBRARY=OFF"
+          ],
+          "duration_seconds": 1.2891660160003084,
+          "return_code": 0,
+          "stderr_sha256": "sha256:30fa13bdf9d4f122db2d3d9bc112bc64ebf6de518e0fc7601e8710b213f14e37",
+          "stderr_tail": "fatal: not a git repository (or any of the parent directories): .git\n",
+          "stdout_sha256": "sha256:da1d574d396827f1855ce2857e8d4960eb330c0d74064be3c57c3889171c7776",
+          "stdout_tail": "-- CMake Version: 3.31.6\n-- CUTLASS 3.9.1\n-- CUDART: /workspace/infraswe_eval/extended-r6/cuda-local/usr/local/cuda-12.8/lib64/libcudart.so\n-- CUDA Driver: /workspace/infraswe_eval/extended-r6/cuda-local/usr/local/cuda-12.8/lib64/stubs/libcuda.so\n-- NVRTC: Not Found\n-- Default Install Location: install\n-- CUDA Compilation Architectures: 90a\n-- Enable caching of reference results in conv unit tests\n-- Enable rigorous conv problem sizes in conv unit tests\n-- Grid Dependency Control (GDC) is enabled for SM100 kernels (required for programmatic dependent launches).\n-- Using the following NVCC flags: \n  --expt-relaxed-constexpr\n  -ftemplate-backtrace-limit=0\n  -DCUTLASS_TEST_LEVEL=0\n  -DCUTLASS_TEST_ENABLE_CACHED_RESULTS=1\n  -DCUTLASS_CONV_UNIT_TEST_RIGOROUS_SIZE_ENABLED=1\n  -DCUTLASS_DEBUG_TRACE_LEVEL=0\n  -Xcompiler=-Wconversion\n  -Xcompiler=-fno-strict-aliasing\n-- CUTLASS Revision: Unable to detect, Git returned code 128.\n-- Configuring cublas ...\n-- cuBLAS Disabled.\n-- Configuring cuBLAS ... done.\n-- Configuring done (0.9s)\n-- Generating done (0.2s)\n-- Build files have been written to: /workspace/infraswe_eval/extended-r6/build/cutlass-v2/head\n",
+          "timed_out": false
+        }
+      }
+    },
+    "correctness": {
+      "base_k128": {
+        "average_runtime_ms": null,
+        "command": [
+          "/workspace/infraswe_eval/extended-r6/build/cutlass-v2/base/examples/68_hopper_fp8_warp_specialized_grouped_gemm_with_blockwise_scaling/68_hopper_fp8_warp_specialized_grouped_gemm_with_blockwise_scaling",
+          "--m=1024",
+          "--n=1024",
+          "--k=128",
+          "--groups=10",
+          "--iterations=0"
+        ],
+        "disposition_passed": true,
+        "duration_seconds": 1.54815628400047,
+        "return_code": 0,
+        "stderr_sha256": "sha256:12ae32cb1ec02d01eda3581b127c1fee3b0dc53572ed6baf239721a03d82e126",
+        "stderr_tail": "",
+        "stdout_sha256": "sha256:4826c732015ee1a9a067ad99ace33926a769fa28f6ee0f19aeccfdfdfb8cdc80",
+        "stdout_tail": "Running tests with host problem shapes:\n  Disposition: Passed\nRunning tests without host problem shapes:\n  Disposition: Passed\n",
+        "timed_out": false
+      },
+      "base_k256": {
+        "average_runtime_ms": null,
+        "command": [
+          "/workspace/infraswe_eval/extended-r6/build/cutlass-v2/base/examples/68_hopper_fp8_warp_specialized_grouped_gemm_with_blockwise_scaling/68_hopper_fp8_warp_specialized_grouped_gemm_with_blockwise_scaling",
+          "--m=1024",
+          "--n=1024",
+          "--k=256",
+          "--groups=10",
+          "--iterations=0"
+        ],
+        "disposition_passed": true,
+        "duration_seconds": 2.2131267360000493,
+        "return_code": 0,
+        "stderr_sha256": "sha256:12ae32cb1ec02d01eda3581b127c1fee3b0dc53572ed6baf239721a03d82e126",
+        "stderr_tail": "",
+        "stdout_sha256": "sha256:4826c732015ee1a9a067ad99ace33926a769fa28f6ee0f19aeccfdfdfb8cdc80",
+        "stdout_tail": "Running tests with host problem shapes:\n  Disposition: Passed\nRunning tests without host problem shapes:\n  Disposition: Passed\n",
+        "timed_out": false
+      },
+      "head_k128": {
+        "average_runtime_ms": null,
+        "command": [
+          "/workspace/infraswe_eval/extended-r6/build/cutlass-v2/head/examples/68_hopper_fp8_warp_specialized_grouped_gemm_with_blockwise_scaling/68_hopper_fp8_warp_specialized_grouped_gemm_with_blockwise_scaling",
+          "--m=1024",
+          "--n=1024",
+          "--k=128",
+          "--groups=10",
+          "--iterations=0"
+        ],
+        "disposition_passed": true,
+        "duration_seconds": 1.577086911999686,
+        "return_code": 0,
+        "stderr_sha256": "sha256:12ae32cb1ec02d01eda3581b127c1fee3b0dc53572ed6baf239721a03d82e126",
+        "stderr_tail": "",
+        "stdout_sha256": "sha256:4826c732015ee1a9a067ad99ace33926a769fa28f6ee0f19aeccfdfdfb8cdc80",
+        "stdout_tail": "Running tests with host problem shapes:\n  Disposition: Passed\nRunning tests without host problem shapes:\n  Disposition: Passed\n",
+        "timed_out": false
+      },
+      "head_k256": {
+        "average_runtime_ms": null,
+        "command": [
+          "/workspace/infraswe_eval/extended-r6/build/cutlass-v2/head/examples/68_hopper_fp8_warp_specialized_grouped_gemm_with_blockwise_scaling/68_hopper_fp8_warp_specialized_grouped_gemm_with_blockwise_scaling",
+          "--m=1024",
+          "--n=1024",
+          "--k=256",
+          "--groups=10",
+          "--iterations=0"
+        ],
+        "disposition_passed": true,
+        "duration_seconds": 1.804141270999935,
+        "return_code": 0,
+        "stderr_sha256": "sha256:12ae32cb1ec02d01eda3581b127c1fee3b0dc53572ed6baf239721a03d82e126",
+        "stderr_tail": "",
+        "stdout_sha256": "sha256:4826c732015ee1a9a067ad99ace33926a769fa28f6ee0f19aeccfdfdfb8cdc80",
+        "stdout_tail": "Running tests with host problem shapes:\n  Disposition: Passed\nRunning tests without host problem shapes:\n  Disposition: Passed\n",
+        "timed_out": false
+      }
+    },
+    "source_contract": {
+      "base_final_tile_guard_count": 0,
+      "head_final_tile_guard_count": 1
+    },
+    "steady_state_compile_seconds": 0.0,
+    "timing": {
+      "base_median_ms": 0.0290752,
+      "head_median_ms": 0.0292781,
+      "head_over_base_median_ratio": 1.0069784558661679,
+      "pairs": [
+        {
+          "first": "base",
+          "raw": {
+            "base": {
+              "average_runtime_ms": 0.0291376,
+              "command": [
+                "/workspace/infraswe_eval/extended-r6/build/cutlass-v2/base/examples/68_hopper_fp8_warp_specialized_grouped_gemm_with_blockwise_scaling/68_hopper_fp8_warp_specialized_grouped_gemm_with_blockwise_scaling",
+                "--m=1024",
+                "--n=1024",
+                "--k=256",
+                "--groups=10",
+                "--iterations=100"
+              ],
+              "disposition_passed": true,
+              "duration_seconds": 1.7682001470002433,
+              "return_code": 0,
+              "stderr_sha256": "sha256:12ae32cb1ec02d01eda3581b127c1fee3b0dc53572ed6baf239721a03d82e126",
+              "stderr_tail": "",
+              "stdout_sha256": "sha256:a12df0176fa58349dc5b543ac09152a4f59eab4643ebc2230c95ab150cacf370",
+              "stdout_tail": "Running tests with host problem shapes:\n  Disposition: Passed\n  Problem Sizes, Alpha, Beta \n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n  Groups      : 10\n  Tile shape (M, N, K): _128, _128, _128\n  ScaleGranularityM: 1 (ScaleMsPerTile: 128)\n  ScaleGranularityN: 128 (ScaleNsPerTile: 1)\n  Rasterization: Heuristic with a maximum CTA swizzle of 1\n  Avg runtime: 0.0291376 ms\n  GFLOPS: 184254\nRunning tests without host problem shapes:\n  Disposition: Passed\n  Problem Sizes, Alpha, Beta \n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n  Groups      : 10\n  Tile shape (M, N, K): _128, _128, _128\n  ScaleGranularityM: 1 (ScaleMsPerTile: 128)\n  ScaleGranularityN: 128 (ScaleNsPerTile: 1)\n  Rasterization: Heuristic with a maximum CTA swizzle of 1\n  Avg runtime: 0.0273997 ms\n  GFLOPS: 195941\n",
+              "timed_out": false
+            },
+            "head": {
+              "average_runtime_ms": 0.0293174,
+              "command": [
+                "/workspace/infraswe_eval/extended-r6/build/cutlass-v2/head/examples/68_hopper_fp8_warp_specialized_grouped_gemm_with_blockwise_scaling/68_hopper_fp8_warp_specialized_grouped_gemm_with_blockwise_scaling",
+                "--m=1024",
+                "--n=1024",
+                "--k=256",
+                "--groups=10",
+                "--iterations=100"
+              ],
+              "disposition_passed": true,
+              "duration_seconds": 2.5981197279998014,
+              "return_code": 0,
+              "stderr_sha256": "sha256:12ae32cb1ec02d01eda3581b127c1fee3b0dc53572ed6baf239721a03d82e126",
+              "stderr_tail": "",
+              "stdout_sha256": "sha256:6ea627425fecb49b97c304c8680730fa1c29fb78415fd41df486b1ad653c486e",
+              "stdout_tail": "Running tests with host problem shapes:\n  Disposition: Passed\n  Problem Sizes, Alpha, Beta \n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n  Groups      : 10\n  Tile shape (M, N, K): _128, _128, _128\n  ScaleGranularityM: 1 (ScaleMsPerTile: 128)\n  ScaleGranularityN: 128 (ScaleNsPerTile: 1)\n  Rasterization: Heuristic with a maximum CTA swizzle of 1\n  Avg runtime: 0.0293174 ms\n  GFLOPS: 183123\nRunning tests without host problem shapes:\n  Disposition: Passed\n  Problem Sizes, Alpha, Beta \n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n  Groups      : 10\n  Tile shape (M, N, K): _128, _128, _128\n  ScaleGranularityM: 1 (ScaleMsPerTile: 128)\n  ScaleGranularityN: 128 (ScaleNsPerTile: 1)\n  Rasterization: Heuristic with a maximum CTA swizzle of 1\n  Avg runtime: 0.0292246 ms\n  GFLOPS: 183705\n",
+              "timed_out": false
+            }
+          },
+          "runtime_ms": {
+            "base": 0.0291376,
+            "head": 0.0293174
+          }
+        },
+        {
+          "first": "head",
+          "raw": {
+            "base": {
+              "average_runtime_ms": 0.0291632,
+              "command": [
+                "/workspace/infraswe_eval/extended-r6/build/cutlass-v2/base/examples/68_hopper_fp8_warp_specialized_grouped_gemm_with_blockwise_scaling/68_hopper_fp8_warp_specialized_grouped_gemm_with_blockwise_scaling",
+                "--m=1024",
+                "--n=1024",
+                "--k=256",
+                "--groups=10",
+                "--iterations=100"
+              ],
+              "disposition_passed": true,
+              "duration_seconds": 2.501178345999506,
+              "return_code": 0,
+              "stderr_sha256": "sha256:12ae32cb1ec02d01eda3581b127c1fee3b0dc53572ed6baf239721a03d82e126",
+              "stderr_tail": "",
+              "stdout_sha256": "sha256:a12ff8c8baa4f7bfe89504413c4e4db7096a5f3f97171a8a76a90c980a1f24db",
+              "stdout_tail": "Running tests with host problem shapes:\n  Disposition: Passed\n  Problem Sizes, Alpha, Beta \n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n  Groups      : 10\n  Tile shape (M, N, K): _128, _128, _128\n  ScaleGranularityM: 1 (ScaleMsPerTile: 128)\n  ScaleGranularityN: 128 (ScaleNsPerTile: 1)\n  Rasterization: Heuristic with a maximum CTA swizzle of 1\n  Avg runtime: 0.0291632 ms\n  GFLOPS: 184092\nRunning tests without host problem shapes:\n  Disposition: Passed\n  Problem Sizes, Alpha, Beta \n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n  Groups      : 10\n  Tile shape (M, N, K): _128, _128, _128\n  ScaleGranularityM: 1 (ScaleMsPerTile: 128)\n  ScaleGranularityN: 128 (ScaleNsPerTile: 1)\n  Rasterization: Heuristic with a maximum CTA swizzle of 1\n  Avg runtime: 0.0290218 ms\n  GFLOPS: 184989\n",
+              "timed_out": false
+            },
+            "head": {
+              "average_runtime_ms": 0.0292947,
+              "command": [
+                "/workspace/infraswe_eval/extended-r6/build/cutlass-v2/head/examples/68_hopper_fp8_warp_specialized_grouped_gemm_with_blockwise_scaling/68_hopper_fp8_warp_specialized_grouped_gemm_with_blockwise_scaling",
+                "--m=1024",
+                "--n=1024",
+                "--k=256",
+                "--groups=10",
+                "--iterations=100"
+              ],
+              "disposition_passed": true,
+              "duration_seconds": 1.8704787409997152,
+              "return_code": 0,
+              "stderr_sha256": "sha256:12ae32cb1ec02d01eda3581b127c1fee3b0dc53572ed6baf239721a03d82e126",
+              "stderr_tail": "",
+              "stdout_sha256": "sha256:94dde93c86cc01e7905d46874105db188e0cd497aeb846d24a71126986c5de50",
+              "stdout_tail": "Running tests with host problem shapes:\n  Disposition: Passed\n  Problem Sizes, Alpha, Beta \n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n  Groups      : 10\n  Tile shape (M, N, K): _128, _128, _128\n  ScaleGranularityM: 1 (ScaleMsPerTile: 128)\n  ScaleGranularityN: 128 (ScaleNsPerTile: 1)\n  Rasterization: Heuristic with a maximum CTA swizzle of 1\n  Avg runtime: 0.0292947 ms\n  GFLOPS: 183265\nRunning tests without host problem shapes:\n  Disposition: Passed\n  Problem Sizes, Alpha, Beta \n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n  Groups      : 10\n  Tile shape (M, N, K): _128, _128, _128\n  ScaleGranularityM: 1 (ScaleMsPerTile: 128)\n  ScaleGranularityN: 128 (ScaleNsPerTile: 1)\n  Rasterization: Heuristic with a maximum CTA swizzle of 1\n  Avg runtime: 0.0292118 ms\n  GFLOPS: 183785\n",
+              "timed_out": false
+            }
+          },
+          "runtime_ms": {
+            "base": 0.0291632,
+            "head": 0.0292947
+          }
+        },
+        {
+          "first": "base",
+          "raw": {
+            "base": {
+              "average_runtime_ms": 0.0275386,
+              "command": [
+                "/workspace/infraswe_eval/extended-r6/build/cutlass-v2/base/examples/68_hopper_fp8_warp_specialized_grouped_gemm_with_blockwise_scaling/68_hopper_fp8_warp_specialized_grouped_gemm_with_blockwise_scaling",
+                "--m=1024",
+                "--n=1024",
+                "--k=256",
+                "--groups=10",
+                "--iterations=100"
+              ],
+              "disposition_passed": true,
+              "duration_seconds": 1.7544218370003364,
+              "return_code": 0,
+              "stderr_sha256": "sha256:12ae32cb1ec02d01eda3581b127c1fee3b0dc53572ed6baf239721a03d82e126",
+              "stderr_tail": "",
+              "stdout_sha256": "sha256:d2093cdda6732a492543657578e75f3298a6dc25c69da0969ff4e905860f0826",
+              "stdout_tail": "Running tests with host problem shapes:\n  Disposition: Passed\n  Problem Sizes, Alpha, Beta \n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n  Groups      : 10\n  Tile shape (M, N, K): _128, _128, _128\n  ScaleGranularityM: 1 (ScaleMsPerTile: 128)\n  ScaleGranularityN: 128 (ScaleNsPerTile: 1)\n  Rasterization: Heuristic with a maximum CTA swizzle of 1\n  Avg runtime: 0.0275386 ms\n  GFLOPS: 194952\nRunning tests without host problem shapes:\n  Disposition: Passed\n  Problem Sizes, Alpha, Beta \n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n  Groups      : 10\n  Tile shape (M, N, K): _128, _128, _128\n  ScaleGranularityM: 1 (ScaleMsPerTile: 128)\n  ScaleGranularityN: 128 (ScaleNsPerTile: 1)\n  Rasterization: Heuristic with a maximum CTA swizzle of 1\n  Avg runtime: 0.0292432 ms\n  GFLOPS: 183588\n",
+              "timed_out": false
+            },
+            "head": {
+              "average_runtime_ms": 0.0293149,
+              "command": [
+                "/workspace/infraswe_eval/extended-r6/build/cutlass-v2/head/examples/68_hopper_fp8_warp_specialized_grouped_gemm_with_blockwise_scaling/68_hopper_fp8_warp_specialized_grouped_gemm_with_blockwise_scaling",
+                "--m=1024",
+                "--n=1024",
+                "--k=256",
+                "--groups=10",
+                "--iterations=100"
+              ],
+              "disposition_passed": true,
+              "duration_seconds": 2.4096456620000026,
+              "return_code": 0,
+              "stderr_sha256": "sha256:12ae32cb1ec02d01eda3581b127c1fee3b0dc53572ed6baf239721a03d82e126",
+              "stderr_tail": "",
+              "stdout_sha256": "sha256:921ccb73fc2d378da120787afb260a93b47c7f080a06518decb0e427573ffbb4",
+              "stdout_tail": "Running tests with host problem shapes:\n  Disposition: Passed\n  Problem Sizes, Alpha, Beta \n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n  Groups      : 10\n  Tile shape (M, N, K): _128, _128, _128\n  ScaleGranularityM: 1 (ScaleMsPerTile: 128)\n  ScaleGranularityN: 128 (ScaleNsPerTile: 1)\n  Rasterization: Heuristic with a maximum CTA swizzle of 1\n  Avg runtime: 0.0293149 ms\n  GFLOPS: 183139\nRunning tests without host problem shapes:\n  Disposition: Passed\n  Problem Sizes, Alpha, Beta \n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n  Groups      : 10\n  Tile shape (M, N, K): _128, _128, _128\n  ScaleGranularityM: 1 (ScaleMsPerTile: 128)\n  ScaleGranularityN: 128 (ScaleNsPerTile: 1)\n  Rasterization: Heuristic with a maximum CTA swizzle of 1\n  Avg runtime: 0.0275773 ms\n  GFLOPS: 194679\n",
+              "timed_out": false
+            }
+          },
+          "runtime_ms": {
+            "base": 0.0275386,
+            "head": 0.0293149
+          }
+        },
+        {
+          "first": "head",
+          "raw": {
+            "base": {
+              "average_runtime_ms": 0.02744,
+              "command": [
+                "/workspace/infraswe_eval/extended-r6/build/cutlass-v2/base/examples/68_hopper_fp8_warp_specialized_grouped_gemm_with_blockwise_scaling/68_hopper_fp8_warp_specialized_grouped_gemm_with_blockwise_scaling",
+                "--m=1024",
+                "--n=1024",
+                "--k=256",
+                "--groups=10",
+                "--iterations=100"
+              ],
+              "disposition_passed": true,
+              "duration_seconds": 1.8700060729997858,
+              "return_code": 0,
+              "stderr_sha256": "sha256:12ae32cb1ec02d01eda3581b127c1fee3b0dc53572ed6baf239721a03d82e126",
+              "stderr_tail": "",
+              "stdout_sha256": "sha256:a4867291c1dadfddc776eec2deccf715212627039f24b89895754c45e5524b4c",
+              "stdout_tail": "Running tests with host problem shapes:\n  Disposition: Passed\n  Problem Sizes, Alpha, Beta \n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n  Groups      : 10\n  Tile shape (M, N, K): _128, _128, _128\n  ScaleGranularityM: 1 (ScaleMsPerTile: 128)\n  ScaleGranularityN: 128 (ScaleNsPerTile: 1)\n  Rasterization: Heuristic with a maximum CTA swizzle of 1\n  Avg runtime: 0.02744 ms\n  GFLOPS: 195653\nRunning tests without host problem shapes:\n  Disposition: Passed\n  Problem Sizes, Alpha, Beta \n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n  Groups      : 10\n  Tile shape (M, N, K): _128, _128, _128\n  ScaleGranularityM: 1 (ScaleMsPerTile: 128)\n  ScaleGranularityN: 128 (ScaleNsPerTile: 1)\n  Rasterization: Heuristic with a maximum CTA swizzle of 1\n  Avg runtime: 0.0290966 ms\n  GFLOPS: 184513\n",
+              "timed_out": false
+            },
+            "head": {
+              "average_runtime_ms": 0.0291251,
+              "command": [
+                "/workspace/infraswe_eval/extended-r6/build/cutlass-v2/head/examples/68_hopper_fp8_warp_specialized_grouped_gemm_with_blockwise_scaling/68_hopper_fp8_warp_specialized_grouped_gemm_with_blockwise_scaling",
+                "--m=1024",
+                "--n=1024",
+                "--k=256",
+                "--groups=10",
+                "--iterations=100"
+              ],
+              "disposition_passed": true,
+              "duration_seconds": 1.9100330520004718,
+              "return_code": 0,
+              "stderr_sha256": "sha256:12ae32cb1ec02d01eda3581b127c1fee3b0dc53572ed6baf239721a03d82e126",
+              "stderr_tail": "",
+              "stdout_sha256": "sha256:c46723c61b74cec130888c1a8e8a3c72acba93c68394f36483188251d3f36dc8",
+              "stdout_tail": "Running tests with host problem shapes:\n  Disposition: Passed\n  Problem Sizes, Alpha, Beta \n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n  Groups      : 10\n  Tile shape (M, N, K): _128, _128, _128\n  ScaleGranularityM: 1 (ScaleMsPerTile: 128)\n  ScaleGranularityN: 128 (ScaleNsPerTile: 1)\n  Rasterization: Heuristic with a maximum CTA swizzle of 1\n  Avg runtime: 0.0291251 ms\n  GFLOPS: 184333\nRunning tests without host problem shapes:\n  Disposition: Passed\n  Problem Sizes, Alpha, Beta \n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n  Groups      : 10\n  Tile shape (M, N, K): _128, _128, _128\n  ScaleGranularityM: 1 (ScaleMsPerTile: 128)\n  ScaleGranularityN: 128 (ScaleNsPerTile: 1)\n  Rasterization: Heuristic with a maximum CTA swizzle of 1\n  Avg runtime: 0.027449 ms\n  GFLOPS: 195589\n",
+              "timed_out": false
+            }
+          },
+          "runtime_ms": {
+            "base": 0.02744,
+            "head": 0.0291251
+          }
+        },
+        {
+          "first": "base",
+          "raw": {
+            "base": {
+              "average_runtime_ms": 0.0293613,
+              "command": [
+                "/workspace/infraswe_eval/extended-r6/build/cutlass-v2/base/examples/68_hopper_fp8_warp_specialized_grouped_gemm_with_blockwise_scaling/68_hopper_fp8_warp_specialized_grouped_gemm_with_blockwise_scaling",
+                "--m=1024",
+                "--n=1024",
+                "--k=256",
+                "--groups=10",
+                "--iterations=100"
+              ],
+              "disposition_passed": true,
+              "duration_seconds": 2.3630325150006684,
+              "return_code": 0,
+              "stderr_sha256": "sha256:12ae32cb1ec02d01eda3581b127c1fee3b0dc53572ed6baf239721a03d82e126",
+              "stderr_tail": "",
+              "stdout_sha256": "sha256:5341d6cbd5a1a90f16e7439f083a864ed57ebdb3e15925d24e795905220258fa",
+              "stdout_tail": "Running tests with host problem shapes:\n  Disposition: Passed\n  Problem Sizes, Alpha, Beta \n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n  Groups      : 10\n  Tile shape (M, N, K): _128, _128, _128\n  ScaleGranularityM: 1 (ScaleMsPerTile: 128)\n  ScaleGranularityN: 128 (ScaleNsPerTile: 1)\n  Rasterization: Heuristic with a maximum CTA swizzle of 1\n  Avg runtime: 0.0293613 ms\n  GFLOPS: 182850\nRunning tests without host problem shapes:\n  Disposition: Passed\n  Problem Sizes, Alpha, Beta \n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n  Groups      : 10\n  Tile shape (M, N, K): _128, _128, _128\n  ScaleGranularityM: 1 (ScaleMsPerTile: 128)\n  ScaleGranularityN: 128 (ScaleNsPerTile: 1)\n  Rasterization: Heuristic with a maximum CTA swizzle of 1\n  Avg runtime: 0.0291603 ms\n  GFLOPS: 184110\n",
+              "timed_out": false
+            },
+            "head": {
+              "average_runtime_ms": 0.0292781,
+              "command": [
+                "/workspace/infraswe_eval/extended-r6/build/cutlass-v2/head/examples/68_hopper_fp8_warp_specialized_grouped_gemm_with_blockwise_scaling/68_hopper_fp8_warp_specialized_grouped_gemm_with_blockwise_scaling",
+                "--m=1024",
+                "--n=1024",
+                "--k=256",
+                "--groups=10",
+                "--iterations=100"
+              ],
+              "disposition_passed": true,
+              "duration_seconds": 1.8219521139999415,
+              "return_code": 0,
+              "stderr_sha256": "sha256:12ae32cb1ec02d01eda3581b127c1fee3b0dc53572ed6baf239721a03d82e126",
+              "stderr_tail": "",
+              "stdout_sha256": "sha256:821b3d5722ddae03a5ae84c819167a58bae97c2bdadefb58bf6d38fe9f8f7a47",
+              "stdout_tail": "Running tests with host problem shapes:\n  Disposition: Passed\n  Problem Sizes, Alpha, Beta \n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n  Groups      : 10\n  Tile shape (M, N, K): _128, _128, _128\n  ScaleGranularityM: 1 (ScaleMsPerTile: 128)\n  ScaleGranularityN: 128 (ScaleNsPerTile: 1)\n  Rasterization: Heuristic with a maximum CTA swizzle of 1\n  Avg runtime: 0.0292781 ms\n  GFLOPS: 183370\nRunning tests without host problem shapes:\n  Disposition: Passed\n  Problem Sizes, Alpha, Beta \n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n  Groups      : 10\n  Tile shape (M, N, K): _128, _128, _128\n  ScaleGranularityM: 1 (ScaleMsPerTile: 128)\n  ScaleGranularityN: 128 (ScaleNsPerTile: 1)\n  Rasterization: Heuristic with a maximum CTA swizzle of 1\n  Avg runtime: 0.0275786 ms\n  GFLOPS: 194670\n",
+              "timed_out": false
+            }
+          },
+          "runtime_ms": {
+            "base": 0.0293613,
+            "head": 0.0292781
+          }
+        },
+        {
+          "first": "head",
+          "raw": {
+            "base": {
+              "average_runtime_ms": 0.0290451,
+              "command": [
+                "/workspace/infraswe_eval/extended-r6/build/cutlass-v2/base/examples/68_hopper_fp8_warp_specialized_grouped_gemm_with_blockwise_scaling/68_hopper_fp8_warp_specialized_grouped_gemm_with_blockwise_scaling",
+                "--m=1024",
+                "--n=1024",
+                "--k=256",
+                "--groups=10",
+                "--iterations=100"
+              ],
+              "disposition_passed": true,
+              "duration_seconds": 1.8445639249994201,
+              "return_code": 0,
+              "stderr_sha256": "sha256:12ae32cb1ec02d01eda3581b127c1fee3b0dc53572ed6baf239721a03d82e126",
+              "stderr_tail": "",
+              "stdout_sha256": "sha256:46495a484889b056adbdb9a5790a9ff76154f49c9d67018760a5d8f1e5a1c226",
+              "stdout_tail": "Running tests with host problem shapes:\n  Disposition: Passed\n  Problem Sizes, Alpha, Beta \n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n  Groups      : 10\n  Tile shape (M, N, K): _128, _128, _128\n  ScaleGranularityM: 1 (ScaleMsPerTile: 128)\n  ScaleGranularityN: 128 (ScaleNsPerTile: 1)\n  Rasterization: Heuristic with a maximum CTA swizzle of 1\n  Avg runtime: 0.0290451 ms\n  GFLOPS: 184840\nRunning tests without host problem shapes:\n  Disposition: Passed\n  Problem Sizes, Alpha, Beta \n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n  Groups      : 10\n  Tile shape (M, N, K): _128, _128, _128\n  ScaleGranularityM: 1 (ScaleMsPerTile: 128)\n  ScaleGranularityN: 128 (ScaleNsPerTile: 1)\n  Rasterization: Heuristic with a maximum CTA swizzle of 1\n  Avg runtime: 0.0290214 ms\n  GFLOPS: 184991\n",
+              "timed_out": false
+            },
+            "head": {
+              "average_runtime_ms": 0.0275325,
+              "command": [
+                "/workspace/infraswe_eval/extended-r6/build/cutlass-v2/head/examples/68_hopper_fp8_warp_specialized_grouped_gemm_with_blockwise_scaling/68_hopper_fp8_warp_specialized_grouped_gemm_with_blockwise_scaling",
+                "--m=1024",
+                "--n=1024",
+                "--k=256",
+                "--groups=10",
+                "--iterations=100"
+              ],
+              "disposition_passed": true,
+              "duration_seconds": 1.801941166000688,
+              "return_code": 0,
+              "stderr_sha256": "sha256:12ae32cb1ec02d01eda3581b127c1fee3b0dc53572ed6baf239721a03d82e126",
+              "stderr_tail": "",
+              "stdout_sha256": "sha256:749ebc67d16b4488c1b65850de7c2a566a92939e28f152769f6b3079117f3113",
+              "stdout_tail": "Running tests with host problem shapes:\n  Disposition: Passed\n  Problem Sizes, Alpha, Beta \n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n  Groups      : 10\n  Tile shape (M, N, K): _128, _128, _128\n  ScaleGranularityM: 1 (ScaleMsPerTile: 128)\n  ScaleGranularityN: 128 (ScaleNsPerTile: 1)\n  Rasterization: Heuristic with a maximum CTA swizzle of 1\n  Avg runtime: 0.0275325 ms\n  GFLOPS: 194995\nRunning tests without host problem shapes:\n  Disposition: Passed\n  Problem Sizes, Alpha, Beta \n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n  Groups      : 10\n  Tile shape (M, N, K): _128, _128, _128\n  ScaleGranularityM: 1 (ScaleMsPerTile: 128)\n  ScaleGranularityN: 128 (ScaleNsPerTile: 1)\n  Rasterization: Heuristic with a maximum CTA swizzle of 1\n  Avg runtime: 0.0291971 ms\n  GFLOPS: 183878\n",
+              "timed_out": false
+            }
+          },
+          "runtime_ms": {
+            "base": 0.0290451,
+            "head": 0.0275325
+          }
+        },
+        {
+          "first": "base",
+          "raw": {
+            "base": {
+              "average_runtime_ms": 0.0290752,
+              "command": [
+                "/workspace/infraswe_eval/extended-r6/build/cutlass-v2/base/examples/68_hopper_fp8_warp_specialized_grouped_gemm_with_blockwise_scaling/68_hopper_fp8_warp_specialized_grouped_gemm_with_blockwise_scaling",
+                "--m=1024",
+                "--n=1024",
+                "--k=256",
+                "--groups=10",
+                "--iterations=100"
+              ],
+              "disposition_passed": true,
+              "duration_seconds": 1.7602762989999974,
+              "return_code": 0,
+              "stderr_sha256": "sha256:12ae32cb1ec02d01eda3581b127c1fee3b0dc53572ed6baf239721a03d82e126",
+              "stderr_tail": "",
+              "stdout_sha256": "sha256:2b7f7f1d981fbeac91ef4abdca0bfe42758761f355be72c54fc9ef8087971ccd",
+              "stdout_tail": "Running tests with host problem shapes:\n  Disposition: Passed\n  Problem Sizes, Alpha, Beta \n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n  Groups      : 10\n  Tile shape (M, N, K): _128, _128, _128\n  ScaleGranularityM: 1 (ScaleMsPerTile: 128)\n  ScaleGranularityN: 128 (ScaleNsPerTile: 1)\n  Rasterization: Heuristic with a maximum CTA swizzle of 1\n  Avg runtime: 0.0290752 ms\n  GFLOPS: 184649\nRunning tests without host problem shapes:\n  Disposition: Passed\n  Problem Sizes, Alpha, Beta \n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n  Groups      : 10\n  Tile shape (M, N, K): _128, _128, _128\n  ScaleGranularityM: 1 (ScaleMsPerTile: 128)\n  ScaleGranularityN: 128 (ScaleNsPerTile: 1)\n  Rasterization: Heuristic with a maximum CTA swizzle of 1\n  Avg runtime: 0.0290262 ms\n  GFLOPS: 184961\n",
+              "timed_out": false
+            },
+            "head": {
+              "average_runtime_ms": 0.02916,
+              "command": [
+                "/workspace/infraswe_eval/extended-r6/build/cutlass-v2/head/examples/68_hopper_fp8_warp_specialized_grouped_gemm_with_blockwise_scaling/68_hopper_fp8_warp_specialized_grouped_gemm_with_blockwise_scaling",
+                "--m=1024",
+                "--n=1024",
+                "--k=256",
+                "--groups=10",
+                "--iterations=100"
+              ],
+              "disposition_passed": true,
+              "duration_seconds": 2.367259973999353,
+              "return_code": 0,
+              "stderr_sha256": "sha256:12ae32cb1ec02d01eda3581b127c1fee3b0dc53572ed6baf239721a03d82e126",
+              "stderr_tail": "",
+              "stdout_sha256": "sha256:f8ce01a5cf963dd1866e2d0771e9c0643b5097c9728a3e8129a42af08ec71820",
+              "stdout_tail": "Running tests with host problem shapes:\n  Disposition: Passed\n  Problem Sizes, Alpha, Beta \n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n  Groups      : 10\n  Tile shape (M, N, K): _128, _128, _128\n  ScaleGranularityM: 1 (ScaleMsPerTile: 128)\n  ScaleGranularityN: 128 (ScaleNsPerTile: 1)\n  Rasterization: Heuristic with a maximum CTA swizzle of 1\n  Avg runtime: 0.02916 ms\n  GFLOPS: 184112\nRunning tests without host problem shapes:\n  Disposition: Passed\n  Problem Sizes, Alpha, Beta \n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n    (1024,1024,256), 1, 0\n  Groups      : 10\n  Tile shape (M, N, K): _128, _128, _128\n  ScaleGranularityM: 1 (ScaleMsPerTile: 128)\n  ScaleGranularityN: 128 (ScaleNsPerTile: 1)\n  Rasterization: Heuristic with a maximum CTA swizzle of 1\n  Avg runtime: 0.0290048 ms\n  GFLOPS: 185097\n",
+              "timed_out": false
+            }
+          },
+          "runtime_ms": {
+            "base": 0.0290752,
+            "head": 0.02916
+          }
+        }
+      ]
+    }
+  },
+  "failure_codes": [
+    "CUTLASS_BASE_K128_CONTROL_DID_NOT_REPRODUCE"
+  ],
+  "infrastructure_codes": [],
+  "probe": "cutlass-group-scale-k128-h100-v1",
+  "protocol_id": "historical-pr-blind-cross-project-v0.5-r6",
+  "schema_version": "0.5",
+  "source_identity": {
+    "base_source_sha256": "sha256:94215365c2163863020baf09e42c41de2faea047dca6b035987adbc8d574fdd9",
+    "head_source_sha256": "sha256:157e3e29c367f0afe5e4d208b3492c06d918ead16a097d2d214b2c29b639badf"
+  },
+  "status": "fail"
+}

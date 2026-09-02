@@ -1,0 +1,97 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "candidate_artifact_manifest_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Candidate Artifact Manifest Sha256",
+      "type": "string"
+    },
+    "environment_allowlist_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Environment Allowlist Sha256",
+      "type": "string"
+    },
+    "failure_code": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Failure Code"
+    },
+    "network_observed": {
+      "default": false,
+      "title": "Network Observed",
+      "type": "boolean"
+    },
+    "owner": {
+      "enum": [
+        "candidate",
+        "benchmark",
+        "infrastructure",
+        "none"
+      ],
+      "title": "Owner",
+      "type": "string"
+    },
+    "pristine_base_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Pristine Base Sha256",
+      "type": "string"
+    },
+    "result_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Result Sha256",
+      "type": "string"
+    },
+    "resulting_source_tree_sha256": {
+      "anyOf": [
+        {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Resulting Source Tree Sha256"
+    },
+    "schema_version": {
+      "const": "0.1",
+      "default": "0.1",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "status": {
+      "enum": [
+        "APPLIED",
+        "APPLY_FAILED",
+        "BENCHMARK_DEFECT",
+        "INFRA_INVALID"
+      ],
+      "title": "Status",
+      "type": "string"
+    },
+    "transport_envelope_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Transport Envelope Sha256",
+      "type": "string"
+    }
+  },
+  "required": [
+    "pristine_base_sha256",
+    "transport_envelope_sha256",
+    "candidate_artifact_manifest_sha256",
+    "status",
+    "owner",
+    "environment_allowlist_sha256",
+    "result_sha256"
+  ],
+  "title": "PristineApplyResult",
+  "type": "object"
+}

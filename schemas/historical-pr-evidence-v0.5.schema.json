@@ -1,0 +1,228 @@
+{
+  "$defs": {
+    "HistoricalCheckResult": {
+      "additionalProperties": false,
+      "properties": {
+        "category": {
+          "enum": [
+            "checkout",
+            "static",
+            "build",
+            "unit",
+            "gpu",
+            "policy"
+          ],
+          "title": "Category",
+          "type": "string"
+        },
+        "command": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Command",
+          "type": "array"
+        },
+        "details": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Details"
+        },
+        "duration_seconds": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Duration Seconds"
+        },
+        "failure_code": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Failure Code"
+        },
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "return_code": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Return Code"
+        },
+        "status": {
+          "enum": [
+            "pass",
+            "fail",
+            "unresolved",
+            "not-applicable"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "stderr_sha256": {
+          "anyOf": [
+            {
+              "pattern": "^sha256:[0-9a-f]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Stderr Sha256"
+        },
+        "stdout_sha256": {
+          "anyOf": [
+            {
+              "pattern": "^sha256:[0-9a-f]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Stdout Sha256"
+        }
+      },
+      "required": [
+        "name",
+        "category",
+        "status"
+      ],
+      "title": "HistoricalCheckResult",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "candidate_failure_codes": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Candidate Failure Codes",
+      "type": "array"
+    },
+    "candidate_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Candidate Sha256",
+      "type": "string"
+    },
+    "case_id": {
+      "title": "Case Id",
+      "type": "string"
+    },
+    "checks": {
+      "items": {
+        "$ref": "#/$defs/HistoricalCheckResult"
+      },
+      "minItems": 1,
+      "title": "Checks",
+      "type": "array"
+    },
+    "environment_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Environment Sha256",
+      "type": "string"
+    },
+    "finished_at": {
+      "format": "date-time",
+      "title": "Finished At",
+      "type": "string"
+    },
+    "infrastructure_failure_codes": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Infrastructure Failure Codes",
+      "type": "array"
+    },
+    "project_fit_score_100": {
+      "anyOf": [
+        {
+          "maximum": 100,
+          "minimum": 0,
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Project Fit Score 100"
+    },
+    "raw_evidence_digests": {
+      "items": {
+        "pattern": "^sha256:[0-9a-f]{64}$",
+        "type": "string"
+      },
+      "title": "Raw Evidence Digests",
+      "type": "array"
+    },
+    "schema_version": {
+      "const": "0.5",
+      "default": "0.5",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "stage": {
+      "enum": [
+        "F0-contract",
+        "F1-smoke",
+        "F2-affected",
+        "F3-verify"
+      ],
+      "title": "Stage",
+      "type": "string"
+    },
+    "started_at": {
+      "format": "date-time",
+      "title": "Started At",
+      "type": "string"
+    },
+    "test_plan_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Test Plan Sha256",
+      "type": "string"
+    }
+  },
+  "required": [
+    "case_id",
+    "candidate_sha256",
+    "test_plan_sha256",
+    "environment_sha256",
+    "started_at",
+    "finished_at",
+    "stage",
+    "checks"
+  ],
+  "title": "BlindEvaluationEvidence",
+  "type": "object"
+}

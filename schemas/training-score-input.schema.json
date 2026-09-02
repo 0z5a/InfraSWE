@@ -1,0 +1,316 @@
+{
+  "$defs": {
+    "TrainingCellEfficiencyEvidence": {
+      "additionalProperties": false,
+      "properties": {
+        "actual_memory_bytes": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Actual Memory Bytes"
+        },
+        "calibration": {
+          "additionalProperties": true,
+          "title": "Calibration",
+          "type": "object"
+        },
+        "candidate_time_seconds": {
+          "exclusiveMinimum": 0,
+          "title": "Candidate Time Seconds",
+          "type": "number"
+        },
+        "counter_confidence": {
+          "default": "high",
+          "enum": [
+            "low",
+            "medium",
+            "high"
+          ],
+          "title": "Counter Confidence",
+          "type": "string"
+        },
+        "counter_evidence_available": {
+          "title": "Counter Evidence Available",
+          "type": "boolean"
+        },
+        "evidence_digests": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Evidence Digests",
+          "type": "array"
+        },
+        "regime": {
+          "enum": [
+            "launch-bound",
+            "memory-bound",
+            "compute-bound",
+            "mixed",
+            "communication-bound",
+            "utility/no-efficiency-score"
+          ],
+          "title": "Regime",
+          "type": "string"
+        },
+        "traffic_amplification_budget": {
+          "default": 1.0,
+          "minimum": 1,
+          "title": "Traffic Amplification Budget",
+          "type": "number"
+        },
+        "work_model": {
+          "additionalProperties": true,
+          "title": "Work Model",
+          "type": "object"
+        },
+        "work_model_id": {
+          "title": "Work Model Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "work_model_id",
+        "regime",
+        "work_model",
+        "calibration",
+        "candidate_time_seconds",
+        "counter_evidence_available"
+      ],
+      "title": "TrainingCellEfficiencyEvidence",
+      "type": "object"
+    },
+    "TrainingMaintainabilityEvidence": {
+      "additionalProperties": false,
+      "properties": {
+        "build_reproducibility": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Build Reproducibility",
+          "type": "number"
+        },
+        "contract": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Contract",
+          "type": "number"
+        },
+        "locality": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Locality",
+          "type": "number"
+        },
+        "tests": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Tests",
+          "type": "number"
+        }
+      },
+      "required": [
+        "contract",
+        "locality",
+        "tests",
+        "build_reproducibility"
+      ],
+      "title": "TrainingMaintainabilityEvidence",
+      "type": "object"
+    },
+    "TrainingReuseEvidence": {
+      "additionalProperties": false,
+      "properties": {
+        "compile_cache_reuse": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Compile Cache Reuse",
+          "type": "number"
+        },
+        "dispatcher_reuse": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Dispatcher Reuse",
+          "type": "number"
+        },
+        "dtype_coverage": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Dtype Coverage",
+          "type": "number"
+        },
+        "expected_variant_budget": {
+          "exclusiveMinimum": 0,
+          "title": "Expected Variant Budget",
+          "type": "integer"
+        },
+        "layout_coverage": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Layout Coverage",
+          "type": "number"
+        },
+        "max_variant_budget": {
+          "exclusiveMinimum": 0,
+          "title": "Max Variant Budget",
+          "type": "integer"
+        },
+        "observed_variants": {
+          "minimum": 0,
+          "title": "Observed Variants",
+          "type": "integer"
+        },
+        "portability_reuse": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Portability Reuse",
+          "type": "number"
+        },
+        "shape_coverage": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Shape Coverage",
+          "type": "number"
+        },
+        "silent_fallback_rate": {
+          "default": 0,
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Silent Fallback Rate",
+          "type": "number"
+        }
+      },
+      "required": [
+        "shape_coverage",
+        "dtype_coverage",
+        "layout_coverage",
+        "observed_variants",
+        "expected_variant_budget",
+        "max_variant_budget",
+        "dispatcher_reuse",
+        "compile_cache_reuse",
+        "portability_reuse"
+      ],
+      "title": "TrainingReuseEvidence",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "benchmark_cell_id": {
+      "title": "Benchmark Cell Id",
+      "type": "string"
+    },
+    "cell_artifact_template": {
+      "anyOf": [
+        {
+          "enum": [
+            "cell-artifact-mixed-v0.4",
+            "cell-artifact-memory-v0.4",
+            "cell-artifact-compute-v0.4",
+            "cell-artifact-distributed-v0.4"
+          ],
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Cell Artifact Template"
+    },
+    "cell_efficiency": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/TrainingCellEfficiencyEvidence"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "evidence_digests": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Evidence Digests",
+      "type": "array"
+    },
+    "fresh_process_replays": {
+      "maximum": 10,
+      "minimum": 1,
+      "title": "Fresh Process Replays",
+      "type": "integer"
+    },
+    "load_cells": {
+      "items": {
+        "additionalProperties": true,
+        "type": "object"
+      },
+      "title": "Load Cells",
+      "type": "array"
+    },
+    "maintainability": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/TrainingMaintainabilityEvidence"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "profiler_grade": {
+      "enum": [
+        "G0",
+        "G1",
+        "G2",
+        "G3",
+        "G4"
+      ],
+      "title": "Profiler Grade",
+      "type": "string"
+    },
+    "raw_metrics": {
+      "additionalProperties": true,
+      "title": "Raw Metrics",
+      "type": "object"
+    },
+    "reuse": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/TrainingReuseEvidence"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "schema_version": {
+      "const": "0.1",
+      "default": "0.1",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "sealed": {
+      "default": false,
+      "title": "Sealed",
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "benchmark_cell_id",
+    "profiler_grade",
+    "fresh_process_replays"
+  ],
+  "title": "TrainingScoreInput",
+  "type": "object"
+}

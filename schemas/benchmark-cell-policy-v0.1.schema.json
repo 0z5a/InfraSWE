@@ -1,0 +1,54 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "comparison_excluded_fields": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Comparison Excluded Fields",
+      "type": "array"
+    },
+    "comparison_included_fields": {
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1,
+      "title": "Comparison Included Fields",
+      "type": "array"
+    },
+    "cross_cell_raw_performance_comparison": {
+      "const": "forbidden",
+      "default": "forbidden",
+      "title": "Cross Cell Raw Performance Comparison",
+      "type": "string"
+    },
+    "policy_id": {
+      "title": "Policy Id",
+      "type": "string"
+    },
+    "policy_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Policy Sha256",
+      "type": "string"
+    },
+    "post_result_field_exclusion": {
+      "const": "forbidden",
+      "default": "forbidden",
+      "title": "Post Result Field Exclusion",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "0.1",
+      "default": "0.1",
+      "title": "Schema Version",
+      "type": "string"
+    }
+  },
+  "required": [
+    "policy_id",
+    "comparison_included_fields",
+    "policy_sha256"
+  ],
+  "title": "BenchmarkCellPolicy",
+  "type": "object"
+}

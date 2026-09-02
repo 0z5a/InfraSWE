@@ -1,0 +1,54 @@
+{
+  "base_sha": "1ff9429655f01c804a7b17412144323e804f1324",
+  "case_id": "vllm-pr-48695",
+  "environment": {
+    "platform": "macOS-26.6.1-arm64-arm-64bit",
+    "python": "3.12.13"
+  },
+  "evidence_sha256": "sha256:1e3c52c3f0b29bbd7d2bed6e56fb610f920917e0dbcddf537252a316e70faf82",
+  "facts": {
+    "base_fp4_specific_gate_present": false,
+    "direct_test_covers_base_capability_missing": false,
+    "direct_test_covers_jit_cache_branch": false,
+    "direct_test_covers_malformed_or_failed_nvcc": false,
+    "direct_test_methods": [
+      "test_fp4_capability_accepts_precompiled_cubin",
+      "test_fp4_capability_rejects_missing_nvcc_without_cubin",
+      "test_fp4_capability_requires_supported_nvcc_without_cubin"
+    ],
+    "generic_cubin_presence_proves_specific_fp4_kernel": false,
+    "generic_jit_cache_presence_proves_specific_fp4_kernel": false,
+    "head_fp4_specific_gate_present": true,
+    "nvcc_calls_use_check_and_timeout": true,
+    "quant_scheme_gate_call_count": 2,
+    "scenario_matrix_pass": true,
+    "scenario_results": {
+      "base_capability_missing": false,
+      "generic_cubin_present": true,
+      "generic_jit_cache_present": true,
+      "malformed_nvcc": false,
+      "no_artifact_or_nvcc": false,
+      "nvcc_12_7": false,
+      "nvcc_12_8": true,
+      "nvcc_13_0": true,
+      "nvcc_oserror": false,
+      "nvcc_timeout": false
+    }
+  },
+  "failure_codes": [],
+  "head_sha": "16dc533d18f9a8d8ebc289aa65a330166f9efbf6",
+  "observed_at": "2026-09-02T06:52:24.120831+00:00",
+  "path_parity": true,
+  "protocol_id": "historical-pr-blind-case-contract-v0.5.5-r9-5",
+  "schema_version": "0.5.5",
+  "selection_lock_sha256": "sha256:e3e4ce43bba9f8e8552a82c670e81b3a20f2c4af7f9c855960da61297cb982eb",
+  "source_digests": {
+    "base:vllm/model_executor/layers/fused_moe/experts/flashinfer_cutlass_moe.py": "sha256:a41d00239ba7b0b2b09adb6facd6df68eaf46b1b69bd92547e8aa2a38c56065c",
+    "base:vllm/utils/flashinfer.py": "sha256:86aca72f51181c016decc9b29a8f36f79032370c37676515691176a5273a9ba5",
+    "head:tests/model_executor/test_flashinfer_capability.py": "sha256:0b600b906fd7dc5582399a594b858d5bc8b1c9eae6ccc378bbfab4792cf6df3d",
+    "head:vllm/model_executor/layers/fused_moe/experts/flashinfer_cutlass_moe.py": "sha256:fa86893a1b9ab8c33ef7f39f167bad9aa964a3fb21061ca5b95806ea3ca85aa5",
+    "head:vllm/utils/flashinfer.py": "sha256:24a214974e30abbd911a10c1becbad701be8dfe7cf64d4b7042d1c68d513883f"
+  },
+  "status": "pass",
+  "test_plan_sha256": "sha256:24b697af8d9d98246e4658ef79f4dcd817ccc1ed2bea4dd1e40e41a21bbc7302"
+}

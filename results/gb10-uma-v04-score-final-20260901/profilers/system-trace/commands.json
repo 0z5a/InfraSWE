@@ -1,0 +1,63 @@
+{
+  "profile": {
+    "argv": [
+      "nsys",
+      "profile",
+      "--trace=cuda,osrt",
+      "--sample=none",
+      "--cpuctxsw=none",
+      "--force-overwrite=true",
+      "--output=/workspace/evidence/gb10-uma-v04-score-final/profilers/system-trace/uma-normal",
+      "/workspace/evidence/gb10-uma-v04-score-final/artifacts/uma-score-workload",
+      "--mode",
+      "candidate",
+      "--allocation",
+      "system",
+      "--touch",
+      "cpu-first",
+      "--requests",
+      "256",
+      "--elements",
+      "65536",
+      "--streams",
+      "4",
+      "--tenants",
+      "4",
+      "--arrival-rate",
+      "36274.0372931",
+      "--slo-us",
+      "2000",
+      "--replay-index",
+      "1",
+      "--regime",
+      "normal",
+      "--protocol-id",
+      "gb10-uma-load-normalized-v0.4-r1",
+      "--max-workspace-bytes",
+      "1073741824",
+      "--required-runtime-version",
+      "13000"
+    ],
+    "duration_seconds": 1.624044418334961,
+    "env_overrides": {},
+    "returncode": 0,
+    "stderr": "",
+    "stdout": "{\"schema_version\":\"0.4\",\"passed\":true,\"mode\":\"candidate\",\"allocation\":\"system\",\"touch\":\"cpu-first\",\"requests\":256,\"completed_requests\":256,\"valid_requests\":256,\"slo_good_requests\":256,\"slo_goodput_ratio\":1,\"error_drop_rate\":0,\"throughput_rps\":32934.3898068,\"p50_seconds\":1.9528e-05,\"p95_seconds\":0.000409405,\"p99_seconds\":0.00066498525,\"duration_seconds\":0.00777303,\"offer_duration_seconds\":0.007084789,\"drain_seconds\":0.000688241,\"max_queue_depth\":22,\"queue_depth_at_offer_end\":1,\"rss_growth_bytes\":3514368,\"fairness_jain\":1,\"workspace_bytes\":2097152,\"minimum_external_bytes_per_request\":524288,\"runtime_version\":13000,\"pageable_memory_access\":1,\"host_page_table_coherence\":1,\"unified_addressing\":1,\"cpu_dereferenced_cuda_malloc\":false}\nCollecting data...\nGenerating '/tmp/nsys-report-2809.qdstrm'\n\n[1/1] [0%                          ] uma-normal.nsys-rep\n[1/1] [0%                          ] uma-normal.nsys-rep\n[1/1] [7%                          ] uma-normal.nsys-rep\n[1/1] [===============67%          ] uma-normal.nsys-rep\n[1/1] [========================100%] uma-normal.nsys-rep\n[1/1] [========================100%] uma-normal.nsys-rep\nGenerated:\n\t/workspace/evidence/gb10-uma-v04-score-final/profilers/system-trace/uma-normal.nsys-rep\n",
+    "timed_out": false
+  },
+  "stats": {
+    "argv": [
+      "nsys",
+      "stats",
+      "--report",
+      "cuda_gpu_kern_sum,cuda_api_sum",
+      "/workspace/evidence/gb10-uma-v04-score-final/profilers/system-trace/uma-normal.nsys-rep"
+    ],
+    "duration_seconds": 0.0843360424041748,
+    "env_overrides": {},
+    "returncode": 0,
+    "stderr": "",
+    "stdout": "Generating SQLite file /workspace/evidence/gb10-uma-v04-score-final/profilers/system-trace/uma-normal.sqlite from /workspace/evidence/gb10-uma-v04-score-final/profilers/system-trace/uma-normal.nsys-rep\nProcessing [/workspace/evidence/gb10-uma-v04-score-final/profilers/system-trace/uma-normal.sqlite] with [/opt/nvidia/nsight-systems/2025.3.2/host-linux-armv8/reports/cuda_gpu_kern_sum.py]... \n\n ** CUDA GPU Kernel Summary (cuda_gpu_kern_sum):\n\n Time (%)  Total Time (ns)  Instances  Avg (ns)  Med (ns)  Min (ns)  Max (ns)  StdDev (ns)          Name        \n --------  ---------------  ---------  --------  --------  --------  --------  -----------  --------------------\n    100.0          1961216        260    7543.1    1184.0      1088   1603360      99354.4  uma_transform_kernel\n\nProcessing [/workspace/evidence/gb10-uma-v04-score-final/profilers/system-trace/uma-normal.sqlite] with [/opt/nvidia/nsight-systems/2025.3.2/host-linux-armv8/reports/cuda_api_sum.py]... \n\n ** CUDA API Summary (cuda_api_sum):\n\n Time (%)  Total Time (ns)  Num Calls   Avg (ns)   Med (ns)  Min (ns)  Max (ns)   StdDev (ns)            Name           \n --------  ---------------  ---------  ----------  --------  --------  ---------  -----------  -------------------------\n     97.9        188011168          4  47002792.0    2512.0      2016  188004128   94000890.7  cudaStreamCreateWithFlags\n      1.4          2706656        260     10410.2    4064.0       992    1610048      99597.0  cudaStreamSynchronize    \n      0.6          1204752        260      4633.7    4280.0      2016      60944       4358.5  cudaLaunchKernel         \n      0.0            38768          1     38768.0   38768.0     38768      38768          0.0  cuLibraryLoadData        \n      0.0            32320        260       124.3     112.0        32       1936        169.6  cuKernelGetName          \n      0.0            15120          4      3780.0    2888.0      2368       6976       2149.1  cudaStreamDestroy        \n      0.0              672          1       672.0     672.0       672        672          0.0  cuModuleGetLoadingMode   \n      0.0              256          1       256.0     256.0       256        256          0.0  cuLibraryGetKernel       \n\n",
+    "timed_out": false
+  }
+}

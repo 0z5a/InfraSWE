@@ -1,0 +1,130 @@
+{
+  "$defs": {
+    "JudgeComponentProjection": {
+      "additionalProperties": false,
+      "properties": {
+        "component": {
+          "enum": [
+            "U",
+            "M",
+            "P"
+          ],
+          "title": "Component",
+          "type": "string"
+        },
+        "criterion_values": {
+          "additionalProperties": {
+            "type": "number"
+          },
+          "title": "Criterion Values",
+          "type": "object"
+        },
+        "deterministic_core_projection": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Deterministic Core Projection",
+          "type": "number"
+        },
+        "judge_assisted_projection": {
+          "anyOf": [
+            {
+              "maximum": 1,
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Judge Assisted Projection"
+        },
+        "judge_weight_within_component": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Judge Weight Within Component",
+          "type": "number"
+        },
+        "status": {
+          "enum": [
+            "official",
+            "unresolved-judge",
+            "deterministic-only"
+          ],
+          "title": "Status",
+          "type": "string"
+        }
+      },
+      "required": [
+        "component",
+        "status",
+        "deterministic_core_projection",
+        "judge_weight_within_component",
+        "criterion_values"
+      ],
+      "title": "JudgeComponentProjection",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "components": {
+      "additionalProperties": {
+        "$ref": "#/$defs/JudgeComponentProjection"
+      },
+      "propertyNames": {
+        "enum": [
+          "U",
+          "M",
+          "P"
+        ]
+      },
+      "title": "Components",
+      "type": "object"
+    },
+    "cross_judge_cell_ranking_allowed": {
+      "const": false,
+      "default": false,
+      "title": "Cross Judge Cell Ranking Allowed",
+      "type": "boolean"
+    },
+    "infra_cert_status": {
+      "enum": [
+        "pass",
+        "fail",
+        "unresolved"
+      ],
+      "title": "Infra Cert Status",
+      "type": "string"
+    },
+    "projection_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Projection Sha256",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "0.5.3",
+      "default": "0.5.3",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "status": {
+      "enum": [
+        "official",
+        "unresolved-judge",
+        "hard-gate-failed",
+        "hard-gate-unresolved"
+      ],
+      "title": "Status",
+      "type": "string"
+    }
+  },
+  "required": [
+    "infra_cert_status",
+    "status",
+    "components",
+    "projection_sha256"
+  ],
+  "title": "JudgeScoreProjection",
+  "type": "object"
+}

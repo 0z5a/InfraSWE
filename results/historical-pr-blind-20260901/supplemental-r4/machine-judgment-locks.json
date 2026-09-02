@@ -1,0 +1,217 @@
+{
+  "evidence_bindings": {
+    "vllm-pr-13996": {
+      "supplemental-r4/oracles/deepgemm-20250227-contract.json": "sha256:aaf37d6745b89bf11d552273a36238ae6efadba2c4f72fd6346d6a74300ac7fe",
+      "supplemental-r4/probes/vllm-pr-13996-deepgemm.json": "sha256:edec85cdd28eab1ecd2d84de21f790b7264531fc1854ceaeef5bb62b78ee25d2"
+    },
+    "vllm-pr-8200": {
+      "supplemental-r4/probes/vllm-pr-8200-cache-layout-stable.json": "sha256:60cfa44ad593277c5084da41a08ad0924d459819674780b2bf33be15c65d70a2",
+      "supplemental-r4/probes/vllm-pr-8200-cache-layout.json": "sha256:0c868bd4da93883ab1f9bf58a90b84a84541c69157f7c0c925c26abe5f8c19ef"
+    }
+  },
+  "frozen_at": "2026-09-01T16:58:53.651004+00:00",
+  "learned_model_used": false,
+  "lock_set_sha256": "sha256:c5ad254ad3e3c006cdd035b5c52d71c0ad400f1fdcf6d8cfc1835f4647a12ba8",
+  "locks": [
+    {
+      "lock_sha256": "sha256:a474d0f410cf176391297bb16f192ff5202d41274547ab0b3dcf170ff39f2459",
+      "material": {
+        "candidate_sha256": "sha256:08603a8c2000884413dd04581ea7e928124caecc2ac8b2d6fdc1c80be3eee78c",
+        "case_id": "vllm-pr-8200",
+        "decision": "revise",
+        "evidence_sha256": "sha256:25f12434f60ff65fc06cb9c21bd7196f4de960a6b2e0a2f181393625a5e5c671",
+        "frozen_at": "2026-09-01T16:58:53.651004Z",
+        "narrative": "[runtime-capabilities-are-gated-with-fallbacks: pass] Every declared optional capability has a gate and fallback. [optimization-targets-current-architecture-generation: not-applicable] No architecture-generation split applies to this change. [competing-fixes-have-one-canonical-owner: pass] No competing fix is known, or the candidate is the declared canonical owner. [same-layout-cache-strides-are-correct: pass] The exact head formula passes both NHD/NHD and HND/HND; the base fails HND, so the intended feature is genuinely implemented. [key-and-value-cache-strides-are-independent-or-validated: fail] The head uses key-cache page/head strides for both tensors. Mixed HND/NHD cases preserve key values but silently corrupt value-cache placement, and no stride-equality guard exists. [existing-layout-performance-is-preserved: pass] On 1024 tokens, 32 heads, and head size 128, the head/base NHD median ratio is 1.000. [compilation-is-outside-steady-state: pass] First precompile took 48.12s; cached load took 0.076s and steady-state compile time was zero.",
+        "observations": [
+          {
+            "blocking": true,
+            "conclusion": "Every declared optional capability has a gate and fallback.",
+            "counterevidence": [],
+            "evidence": [],
+            "failure_code": null,
+            "question": "Is every optional hardware/runtime capability checked before activation, with a tested fallback when unavailable?",
+            "rule_id": "runtime-capabilities-are-gated-with-fallbacks",
+            "status": "pass"
+          },
+          {
+            "blocking": true,
+            "conclusion": "No architecture-generation split applies to this change.",
+            "counterevidence": [],
+            "evidence": [],
+            "failure_code": null,
+            "question": "Does the change belong to the current default architecture generation, or cover its successor under the same owner?",
+            "rule_id": "optimization-targets-current-architecture-generation",
+            "status": "not-applicable"
+          },
+          {
+            "blocking": true,
+            "conclusion": "No competing fix is known, or the candidate is the declared canonical owner.",
+            "counterevidence": [],
+            "evidence": [],
+            "failure_code": null,
+            "question": "When another change claims the same owner/failure signature, is one canonical fix chosen before implementation is judged?",
+            "rule_id": "competing-fixes-have-one-canonical-owner",
+            "status": "pass"
+          },
+          {
+            "blocking": true,
+            "conclusion": "The exact head formula passes both NHD/NHD and HND/HND; the base fails HND, so the intended feature is genuinely implemented.",
+            "counterevidence": [],
+            "evidence": [
+              "sha256:1cb2f3eb0f5caad5323e1b952e02266d30b11deab894139e673d5f237e303d89"
+            ],
+            "failure_code": null,
+            "question": "Do NHD and HND key/value caches match a stride-aware oracle?",
+            "rule_id": "same-layout-cache-strides-are-correct",
+            "status": "pass"
+          },
+          {
+            "blocking": true,
+            "conclusion": "The head uses key-cache page/head strides for both tensors. Mixed HND/NHD cases preserve key values but silently corrupt value-cache placement, and no stride-equality guard exists.",
+            "counterevidence": [
+              "Same-layout NHD and HND cases both pass."
+            ],
+            "evidence": [
+              "sha256:1cb2f3eb0f5caad5323e1b952e02266d30b11deab894139e673d5f237e303d89"
+            ],
+            "failure_code": "KEY_VALUE_CACHE_STRIDES_NOT_INDEPENDENT_OR_VALIDATED",
+            "question": "Are key/value page and head strides passed independently, or rejected when they differ?",
+            "rule_id": "key-and-value-cache-strides-are-independent-or-validated",
+            "status": "fail"
+          },
+          {
+            "blocking": true,
+            "conclusion": "On 1024 tokens, 32 heads, and head size 128, the head/base NHD median ratio is 1.000.",
+            "counterevidence": [],
+            "evidence": [
+              "sha256:1cb2f3eb0f5caad5323e1b952e02266d30b11deab894139e673d5f237e303d89"
+            ],
+            "failure_code": null,
+            "question": "Does stride-aware indexing preserve NHD steady-state speed?",
+            "rule_id": "existing-layout-performance-is-preserved",
+            "status": "pass"
+          },
+          {
+            "blocking": true,
+            "conclusion": "First precompile took 48.12s; cached load took 0.076s and steady-state compile time was zero.",
+            "counterevidence": [],
+            "evidence": [
+              "sha256:20618747cf55f77c3ab9c471aae0b1633fb18356db1e8ee4c4d181ba2ed1609f",
+              "sha256:1cb2f3eb0f5caad5323e1b952e02266d30b11deab894139e673d5f237e303d89"
+            ],
+            "failure_code": null,
+            "question": "Is unavoidable CUDA compilation excluded from benchmark timing?",
+            "rule_id": "compilation-is-outside-steady-state",
+            "status": "pass"
+          }
+        ],
+        "policy_id": "historical-explainable-agent-v0.5-r4",
+        "rationale_codes": [
+          "KEY_VALUE_CACHE_STRIDES_NOT_INDEPENDENT_OR_VALIDATED"
+        ],
+        "schema_version": "0.5",
+        "test_plan_sha256": "sha256:f15052af36712142e87e00be0c28145575e6a575b40eafad299b035736f88716"
+      }
+    },
+    {
+      "lock_sha256": "sha256:1f2e10f8ed18039cd473ea4e0e74ccbc196db5ca4dbc2fa25de9ce5336adb55e",
+      "material": {
+        "candidate_sha256": "sha256:f772aefc153b197a8d2ba263118b5924c4a690e50ec63ce3eb2d5e35c33500cb",
+        "case_id": "vllm-pr-13996",
+        "decision": "revise",
+        "evidence_sha256": "sha256:edfbaad3760a5cb43a016db8ef831609e3aabb54ec771a839f7fa916340bbae3",
+        "frozen_at": "2026-09-01T16:58:53.651004Z",
+        "narrative": "[runtime-capabilities-are-gated-with-fallbacks: fail] At least one optional capability can select the optimized path without both an availability gate and a fallback. [optimization-targets-current-architecture-generation: not-applicable] No architecture-generation split applies to this change. [competing-fixes-have-one-canonical-owner: pass] No competing fix is known, or the candidate is the declared canonical owner. [backend-scale-layout-contract-is-satisfied: fail] Historical DeepGEMM requires a TMA-aligned transposed LHS scale, while the branch calls per_token_group_quant_fp8 without column_major_scales=True. [runtime-jit-has-a-precompile-path: fail] The historical backend compiles shape-specific kernels at runtime, but the patch exposes only an execution-time environment flag and no warmup/precompile entry point. [unsupported-backend-early-exit-protects-benchmark-budget: pass] The machine rejected the missing capability contract before importing or compiling DeepGEMM; observed steady-state compile time is zero.",
+        "observations": [
+          {
+            "blocking": true,
+            "conclusion": "At least one optional capability can select the optimized path without both an availability gate and a fallback.",
+            "counterevidence": [],
+            "evidence": [
+              "deepgemm_hopper_sm90a: gate=False, fallback=False; historical upstream supports Hopper/sm90a only",
+              "deepgemm_optional_package: gate=False, fallback=False; selected branch imports deep_gemm directly"
+            ],
+            "failure_code": "OPTIONAL_CAPABILITY_GATE_OR_FALLBACK_MISSING",
+            "question": "Is every optional hardware/runtime capability checked before activation, with a tested fallback when unavailable?",
+            "rule_id": "runtime-capabilities-are-gated-with-fallbacks",
+            "status": "fail"
+          },
+          {
+            "blocking": true,
+            "conclusion": "No architecture-generation split applies to this change.",
+            "counterevidence": [],
+            "evidence": [],
+            "failure_code": null,
+            "question": "Does the change belong to the current default architecture generation, or cover its successor under the same owner?",
+            "rule_id": "optimization-targets-current-architecture-generation",
+            "status": "not-applicable"
+          },
+          {
+            "blocking": true,
+            "conclusion": "No competing fix is known, or the candidate is the declared canonical owner.",
+            "counterevidence": [],
+            "evidence": [],
+            "failure_code": null,
+            "question": "When another change claims the same owner/failure signature, is one canonical fix chosen before implementation is judged?",
+            "rule_id": "competing-fixes-have-one-canonical-owner",
+            "status": "pass"
+          },
+          {
+            "blocking": true,
+            "conclusion": "Historical DeepGEMM requires a TMA-aligned transposed LHS scale, while the branch calls per_token_group_quant_fp8 without column_major_scales=True.",
+            "counterevidence": [],
+            "evidence": [
+              "sha256:2c4131461f400cedaaa9996fbf7663b66ba5906249dc7fc535daaabae06acc0a",
+              "sha256:7013c23f394f39ac4457b65dc9073f1f77c3cf361147b2fa372878b8fb706bca"
+            ],
+            "failure_code": "DEEPGEMM_LHS_SCALE_LAYOUT_CONTRACT_VIOLATED",
+            "question": "Does the supplied LHS scale use DeepGEMM's TMA-aligned column-major layout?",
+            "rule_id": "backend-scale-layout-contract-is-satisfied",
+            "status": "fail"
+          },
+          {
+            "blocking": true,
+            "conclusion": "The historical backend compiles shape-specific kernels at runtime, but the patch exposes only an execution-time environment flag and no warmup/precompile entry point.",
+            "counterevidence": [],
+            "evidence": [
+              "sha256:2c4131461f400cedaaa9996fbf7663b66ba5906249dc7fc535daaabae06acc0a",
+              "sha256:7013c23f394f39ac4457b65dc9073f1f77c3cf361147b2fa372878b8fb706bca"
+            ],
+            "failure_code": "DEEPGEMM_RUNTIME_JIT_PRECOMPILE_CONTRACT_MISSING",
+            "question": "Can all shape-keyed DeepGEMM JIT work finish before timed benchmark cases?",
+            "rule_id": "runtime-jit-has-a-precompile-path",
+            "status": "fail"
+          },
+          {
+            "blocking": true,
+            "conclusion": "The machine rejected the missing capability contract before importing or compiling DeepGEMM; observed steady-state compile time is zero.",
+            "counterevidence": [],
+            "evidence": [
+              "device_compute_capability=8.0",
+              "steady_state_compile_seconds=0"
+            ],
+            "failure_code": null,
+            "question": "Can an unsupported A100 stop before import or JIT compilation?",
+            "rule_id": "unsupported-backend-early-exit-protects-benchmark-budget",
+            "status": "pass"
+          }
+        ],
+        "policy_id": "historical-explainable-agent-v0.5-r4",
+        "rationale_codes": [
+          "DEEPGEMM_LHS_SCALE_LAYOUT_CONTRACT_VIOLATED",
+          "DEEPGEMM_RUNTIME_JIT_PRECOMPILE_CONTRACT_MISSING",
+          "OPTIONAL_CAPABILITY_GATE_OR_FALLBACK_MISSING"
+        ],
+        "schema_version": "0.5",
+        "test_plan_sha256": "sha256:f15052af36712142e87e00be0c28145575e6a575b40eafad299b035736f88716"
+      }
+    }
+  ],
+  "protocol_id": "historical-reviewed-failure-alignment-v0.5-r4",
+  "review_text_visible_during_machine_judgment": false,
+  "schema_version": "0.5",
+  "selection_lock_sha256": "sha256:89d5535213689c02eb57199a165bec354a1c77674ca4e616588788555d9475a6",
+  "test_plan_sha256": "sha256:f15052af36712142e87e00be0c28145575e6a575b40eafad299b035736f88716",
+  "trained_weights_used": false,
+  "weighted_score_used": false
+}

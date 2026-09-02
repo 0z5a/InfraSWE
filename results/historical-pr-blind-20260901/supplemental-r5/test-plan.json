@@ -1,0 +1,47 @@
+{
+  "schema_version": "0.5",
+  "policy_id": "explainable-static-plus-targeted-runtime-v0.5-r4",
+  "review_feedback_hidden": true,
+  "frozen_before_probe_execution": true,
+  "cases": [
+    {
+      "candidate_ref": "vllm#53038",
+      "base_sha": "f85e060ec24ad5b67b47690b89bd0a5f1def05f4",
+      "head_sha": "3652d21f3cfb492bc8ae3c28ef824a188ba8c4a5",
+      "hypothesis": "int64 row indices prevent the 2**31-element offset wrap, but all four changed kernel families need coverage and common-shape steady latency must not regress",
+      "checks": [
+        "standalone Triton offset arithmetic at the exact overflow boundary",
+        "precompile both variants before timing and verify zero steady compile events",
+        "paired common-range arithmetic latency",
+        "changed-kernel to test-path coverage, including FP8"
+      ],
+      "decision_rule": "accept only if overflow is fixed, steady compilation is zero, common-path latency stays within 3%, and each changed semantic kernel family has a direct test; otherwise revise"
+    },
+    {
+      "candidate_ref": "vllm#50423",
+      "base_sha": "48a077e4cfaa5425ac5df67ce95f07a99c6d26d5",
+      "head_sha": "04c86bc362be4c0301fe9e01ac1c47aaf7b691d2",
+      "hypothesis": "a dequeue lock prevents concurrent cursor/socket races, but lock acquisition must consume the same caller timeout budget rather than restarting it",
+      "checks": [
+        "execute the exact base/head dequeue AST with two concurrent consumers",
+        "hold the new lock for part of timeout and measure total deadline",
+        "measure uncontended per-dequeue overhead",
+        "inspect the added regression test for timeout-budget coverage"
+      ],
+      "decision_rule": "accept only if serialization is fixed, total elapsed time respects the original timeout deadline, and hot-path overhead is negligible; otherwise revise"
+    },
+    {
+      "candidate_ref": "vllm#52205",
+      "base_sha": "11c3fa4adc8105bd1dbad888d6df81617ee7c8fc",
+      "head_sha": "74adf4ec87aa6da575cd0ad570c6e5755129e635",
+      "hypothesis": "the decorator option routes the AMD KDA op to an eager segment under FULL mode, but the new mode/call-site requires direct tests, an AMD capability boundary, and latency evidence",
+      "checks": [
+        "execute extracted base/head decorator logic under FULL and PIECEWISE fake capture contexts",
+        "verify legacy decorator call sites preserve FULL behavior",
+        "verify the Kimi-K3 AMD call site alone opts into always_break",
+        "audit test diff, backend scope, fallback, and performance evidence"
+      ],
+      "decision_rule": "accept only if routing semantics are correct and the changed FULL-mode AMD path has direct correctness/replay and performance evidence; otherwise revise"
+    }
+  ]
+}

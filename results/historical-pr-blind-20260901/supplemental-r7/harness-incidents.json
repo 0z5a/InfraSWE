@@ -1,0 +1,46 @@
+{
+  "schema_version": "0.5",
+  "protocol_id": "historical-pr-blind-cross-project-v0.5-r7",
+  "incidents": [
+    {
+      "incident_id": "r7-h100-instance-outbid-20260902",
+      "observed_at": "2026-09-02T11:28:00+08:00",
+      "stage": "gpu-execution",
+      "review_text_visible": false,
+      "merge_outcomes_visible": false,
+      "symptom": "The original H100 endpoint closed connections before key exchange and was subsequently reported as outbid.",
+      "impact": "No hardware result was produced while the endpoint was unavailable; no candidate was marked failed for this infrastructure event.",
+      "correction": "Move the frozen source and probes to the replacement endpoint on the same public IP at port 48959, verify the new host key and source digests, rebuild torch 2.8.0+cu128, then rerun all GPU cells."
+    },
+    {
+      "incident_id": "r7-liger-dynamo-temporary-module-registration-20260902",
+      "observed_at": "2026-09-02T11:52:46+08:00",
+      "stage": "liger-h100-probe",
+      "review_text_visible": false,
+      "merge_outcomes_visible": false,
+      "symptom": "The first Liger run loaded exact sources under temporary module names without registering them in sys.modules, so Dynamo failed to re-import both base and head before reaching the target graph.",
+      "impact": "The first-run compile failures were harness failures and were excluded from machine evidence; discarded evidence digest was sha256:7c596e95bb002ea44421115e044b79a273806769a24556a429547ecc82b70f95.",
+      "correction": "Register each temporary module before execution, use a fresh Inductor cache, increase paired timing from 8 to 64 iterations per measurement, and rerun the complete matrix."
+    },
+    {
+      "incident_id": "r7-cuda-aot-diagnostic-accounting-20260902",
+      "observed_at": "2026-09-02T11:53:20+08:00",
+      "stage": "cuda-aot-probe",
+      "review_text_visible": false,
+      "merge_outcomes_visible": false,
+      "symptom": "The first AOT artifact retained only the stderr tail for CUTLASS and counted every DeepGEMM fence in the combined PTX translation unit.",
+      "impact": "The CUTLASS intended assertion was outside the retained tail, and DeepGEMM's six unrelated baseline fences made a zero-baseline predicate invalid.",
+      "correction": "Retain both diagnostic head and tail; count DeepGEMM fences directly followed by the target phase XOR. Rerun AOT and bind only final digests sha256:516ad803d4ff6cab93585c3b256d3e9e1f8cde6a3a76451ae89752fff2472e24 and sha256:1909eb78eec4eb5bb7c87eb5c448b35b9281d8dc8014f1c5dad6ebbec8cabbfb."
+    },
+    {
+      "incident_id": "r7-custom-review-bot-classification-20260902",
+      "observed_at": "2026-09-02T12:00:00+08:00",
+      "stage": "post-lock-review-reveal",
+      "review_text_visible": true,
+      "merge_outcomes_visible": true,
+      "symptom": "GitHub exposes ds-review-bot as a nonstandard automation account without the bracketed bot suffix, so the first reveal classified four DeepGEMM bot messages as human feedback.",
+      "impact": "The first post-lock reveal overstated strict human-feedback eligibility as three cases; machine locks were already frozen and were unaffected.",
+      "correction": "Treat -bot and _bot account suffixes as automation, bind final-head commit metadata, and regenerate the reveal. Discarded reveal digests were sha256:1fa10baf7b869002aeb4a9b741e995f419a8411bb2f0fd07bee7ca710c113554 and sha256:3e1a0faad308789aefcf3119b14938c6fb6a232123363cb3ebce5b0f724dd736; the final digest is sha256:c0f557dfab292dd8ab276428f1269c09111ad6240feb30c6d8494632c374ae65."
+    }
+  ]
+}

@@ -1,0 +1,103 @@
+{
+  "$defs": {
+    "TrainingGate": {
+      "additionalProperties": false,
+      "properties": {
+        "evidence_refs": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Evidence Refs",
+          "type": "array"
+        },
+        "failure_codes": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Failure Codes",
+          "type": "array"
+        },
+        "reason": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Reason"
+        },
+        "status": {
+          "enum": [
+            "pass",
+            "fail",
+            "unresolved",
+            "not_applicable"
+          ],
+          "title": "Status",
+          "type": "string"
+        }
+      },
+      "required": [
+        "status"
+      ],
+      "title": "TrainingGate",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "algorithm": {
+      "title": "Algorithm",
+      "type": "string"
+    },
+    "certification_scope": {
+      "title": "Certification Scope",
+      "type": "string"
+    },
+    "evidence_manifest_sha256": {
+      "title": "Evidence Manifest Sha256",
+      "type": "string"
+    },
+    "failure_codes": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Failure Codes",
+      "type": "array"
+    },
+    "gates": {
+      "additionalProperties": {
+        "$ref": "#/$defs/TrainingGate"
+      },
+      "title": "Gates",
+      "type": "object"
+    },
+    "schema_version": {
+      "const": "0.1",
+      "default": "0.1",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "status": {
+      "enum": [
+        "pass",
+        "fail",
+        "unresolved"
+      ],
+      "title": "Status",
+      "type": "string"
+    }
+  },
+  "required": [
+    "status",
+    "algorithm",
+    "certification_scope",
+    "gates",
+    "evidence_manifest_sha256"
+  ],
+  "title": "TrainingCertification",
+  "type": "object"
+}

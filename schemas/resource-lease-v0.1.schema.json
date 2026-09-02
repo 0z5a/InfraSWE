@@ -1,0 +1,92 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "acquired_at": {
+      "format": "date-time",
+      "title": "Acquired At",
+      "type": "string"
+    },
+    "allocations": {
+      "additionalProperties": true,
+      "title": "Allocations",
+      "type": "object"
+    },
+    "expires_at": {
+      "format": "date-time",
+      "title": "Expires At",
+      "type": "string"
+    },
+    "failure_codes": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Failure Codes",
+      "type": "array"
+    },
+    "heartbeat_interval_s": {
+      "minimum": 1,
+      "title": "Heartbeat Interval S",
+      "type": "integer"
+    },
+    "isolation": {
+      "additionalProperties": true,
+      "title": "Isolation",
+      "type": "object"
+    },
+    "lease_id": {
+      "title": "Lease Id",
+      "type": "string"
+    },
+    "lease_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Lease Sha256",
+      "type": "string"
+    },
+    "post_lease_snapshot_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Post Lease Snapshot Sha256",
+      "type": "string"
+    },
+    "pre_lease_snapshot_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Pre Lease Snapshot Sha256",
+      "type": "string"
+    },
+    "resolution_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Resolution Sha256",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "0.1",
+      "default": "0.1",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "status": {
+      "enum": [
+        "active",
+        "released",
+        "broken",
+        "expired"
+      ],
+      "title": "Status",
+      "type": "string"
+    }
+  },
+  "required": [
+    "lease_id",
+    "resolution_sha256",
+    "status",
+    "allocations",
+    "isolation",
+    "acquired_at",
+    "expires_at",
+    "heartbeat_interval_s",
+    "pre_lease_snapshot_sha256",
+    "post_lease_snapshot_sha256",
+    "lease_sha256"
+  ],
+  "title": "ResourceLease",
+  "type": "object"
+}

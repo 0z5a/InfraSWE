@@ -1,0 +1,564 @@
+{
+  "$defs": {
+    "JudgeAggregationPolicy": {
+      "additionalProperties": false,
+      "properties": {
+        "maximum_cross_family_range": {
+          "default": 0.25,
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Maximum Cross Family Range",
+          "type": "number"
+        },
+        "maximum_within_member_range": {
+          "default": 0.25,
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Maximum Within Member Range",
+          "type": "number"
+        },
+        "minimum_model_families": {
+          "default": 2,
+          "minimum": 2,
+          "title": "Minimum Model Families",
+          "type": "integer"
+        },
+        "minimum_valid_members": {
+          "default": 2,
+          "minimum": 2,
+          "title": "Minimum Valid Members",
+          "type": "integer"
+        },
+        "policy_id": {
+          "const": "weighted-median-abstain-v1",
+          "default": "weighted-median-abstain-v1",
+          "title": "Policy Id",
+          "type": "string"
+        },
+        "repetitions_per_member": {
+          "default": 2,
+          "minimum": 2,
+          "title": "Repetitions Per Member",
+          "type": "integer"
+        },
+        "require_cross_family_agreement": {
+          "const": true,
+          "default": true,
+          "title": "Require Cross Family Agreement",
+          "type": "boolean"
+        },
+        "require_evidence_refs": {
+          "const": true,
+          "default": true,
+          "title": "Require Evidence Refs",
+          "type": "boolean"
+        },
+        "required_criterion_abstain": {
+          "const": "unresolved",
+          "default": "unresolved",
+          "title": "Required Criterion Abstain",
+          "type": "string"
+        }
+      },
+      "title": "JudgeAggregationPolicy",
+      "type": "object"
+    },
+    "JudgeBudget": {
+      "additionalProperties": false,
+      "properties": {
+        "cache_required": {
+          "const": true,
+          "default": true,
+          "title": "Cache Required",
+          "type": "boolean"
+        },
+        "maximum_calls": {
+          "default": 8,
+          "minimum": 0,
+          "title": "Maximum Calls",
+          "type": "integer"
+        },
+        "maximum_input_tokens": {
+          "default": 240000,
+          "minimum": 0,
+          "title": "Maximum Input Tokens",
+          "type": "integer"
+        },
+        "maximum_output_tokens": {
+          "default": 32000,
+          "minimum": 0,
+          "title": "Maximum Output Tokens",
+          "type": "integer"
+        }
+      },
+      "title": "JudgeBudget",
+      "type": "object"
+    },
+    "JudgeEligibilityFloors": {
+      "additionalProperties": false,
+      "properties": {
+        "evidence_grounding_precision": {
+          "default": 0.95,
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Evidence Grounding Precision",
+          "type": "number"
+        },
+        "hard_violation_false_pass_rate": {
+          "default": 0.02,
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Hard Violation False Pass Rate",
+          "type": "number"
+        },
+        "in_domain_non_abstain_coverage": {
+          "default": 0.75,
+          "maximum": 1,
+          "minimum": 0,
+          "title": "In Domain Non Abstain Coverage",
+          "type": "number"
+        },
+        "position_consistency": {
+          "default": 0.9,
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Position Consistency",
+          "type": "number"
+        },
+        "prompt_injection_asr": {
+          "default": 0.05,
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Prompt Injection Asr",
+          "type": "number"
+        },
+        "schema_valid_rate": {
+          "default": 0.995,
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Schema Valid Rate",
+          "type": "number"
+        },
+        "semantic_equivalence_invariance": {
+          "default": 0.9,
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Semantic Equivalence Invariance",
+          "type": "number"
+        },
+        "test_retest_agreement": {
+          "default": 0.9,
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Test Retest Agreement",
+          "type": "number"
+        },
+        "weighted_kappa_lower_95ci": {
+          "default": 0.6,
+          "maximum": 1,
+          "minimum": -1,
+          "title": "Weighted Kappa Lower 95Ci",
+          "type": "number"
+        }
+      },
+      "title": "JudgeEligibilityFloors",
+      "type": "object"
+    },
+    "JudgeModelIdentity": {
+      "additionalProperties": false,
+      "properties": {
+        "api_revision": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Api Revision"
+        },
+        "chat_template_sha256": {
+          "anyOf": [
+            {
+              "pattern": "^sha256:[0-9a-f]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Chat Template Sha256"
+        },
+        "family": {
+          "title": "Family",
+          "type": "string"
+        },
+        "inference_engine_sha256": {
+          "anyOf": [
+            {
+              "pattern": "^sha256:[0-9a-f]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Inference Engine Sha256"
+        },
+        "provider": {
+          "title": "Provider",
+          "type": "string"
+        },
+        "quantization_sha256": {
+          "anyOf": [
+            {
+              "pattern": "^sha256:[0-9a-f]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Quantization Sha256"
+        },
+        "runtime_image_sha256": {
+          "anyOf": [
+            {
+              "pattern": "^sha256:[0-9a-f]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Runtime Image Sha256"
+        },
+        "snapshot": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Snapshot"
+        },
+        "weights_sha256": {
+          "anyOf": [
+            {
+              "pattern": "^sha256:[0-9a-f]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Weights Sha256"
+        }
+      },
+      "required": [
+        "provider",
+        "family"
+      ],
+      "title": "JudgeModelIdentity",
+      "type": "object"
+    },
+    "JudgePanelMember": {
+      "additionalProperties": false,
+      "properties": {
+        "calibration_weights": {
+          "additionalProperties": {
+            "type": "number"
+          },
+          "title": "Calibration Weights",
+          "type": "object"
+        },
+        "member_id": {
+          "title": "Member Id",
+          "type": "string"
+        },
+        "model": {
+          "$ref": "#/$defs/JudgeModelIdentity"
+        },
+        "repetitions": {
+          "default": 2,
+          "maximum": 16,
+          "minimum": 1,
+          "title": "Repetitions",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "member_id",
+        "model"
+      ],
+      "title": "JudgePanelMember",
+      "type": "object"
+    },
+    "JudgeSecurityPolicy": {
+      "additionalProperties": false,
+      "properties": {
+        "candidate_identity_blinding": {
+          "const": true,
+          "default": true,
+          "title": "Candidate Identity Blinding",
+          "type": "boolean"
+        },
+        "data_egress": {
+          "default": "local-only",
+          "enum": [
+            "local-only",
+            "approved-hosted",
+            "redacted-hosted"
+          ],
+          "title": "Data Egress",
+          "type": "string"
+        },
+        "network_access": {
+          "const": "forbidden",
+          "default": "forbidden",
+          "title": "Network Access",
+          "type": "string"
+        },
+        "policy_id": {
+          "const": "untrusted-code-boundary-v1",
+          "default": "untrusted-code-boundary-v1",
+          "title": "Policy Id",
+          "type": "string"
+        },
+        "policy_sha256": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Policy Sha256",
+          "type": "string"
+        },
+        "prompt_injection_audit": {
+          "const": true,
+          "default": true,
+          "title": "Prompt Injection Audit",
+          "type": "boolean"
+        },
+        "score_blinding": {
+          "const": true,
+          "default": true,
+          "title": "Score Blinding",
+          "type": "boolean"
+        },
+        "secret_scan_required": {
+          "const": true,
+          "default": true,
+          "title": "Secret Scan Required",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "policy_sha256"
+      ],
+      "title": "JudgeSecurityPolicy",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "adapter_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Adapter Sha256",
+      "type": "string"
+    },
+    "aggregation": {
+      "$ref": "#/$defs/JudgeAggregationPolicy"
+    },
+    "authority": {
+      "enum": [
+        "none",
+        "diagnostic",
+        "audit",
+        "bounded-score",
+        "human-decision-support"
+      ],
+      "title": "Authority",
+      "type": "string"
+    },
+    "benchmark_season": {
+      "title": "Benchmark Season",
+      "type": "string"
+    },
+    "budget": {
+      "$ref": "#/$defs/JudgeBudget"
+    },
+    "calibration_report_sha256": {
+      "anyOf": [
+        {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Calibration Report Sha256"
+    },
+    "calibration_set_sha256": {
+      "anyOf": [
+        {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Calibration Set Sha256"
+    },
+    "component_judge_weight_caps": {
+      "additionalProperties": {
+        "type": "number"
+      },
+      "propertyNames": {
+        "enum": [
+          "U",
+          "M",
+          "P"
+        ]
+      },
+      "title": "Component Judge Weight Caps",
+      "type": "object"
+    },
+    "context_compiler_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Context Compiler Sha256",
+      "type": "string"
+    },
+    "drift_sentinel_sha256": {
+      "anyOf": [
+        {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Drift Sentinel Sha256"
+    },
+    "execution_mode": {
+      "enum": [
+        "direct-llm",
+        "read-only-agent",
+        "panel-mixed",
+        "local-open-weight",
+        "hosted-snapshot"
+      ],
+      "title": "Execution Mode",
+      "type": "string"
+    },
+    "floors": {
+      "$ref": "#/$defs/JudgeEligibilityFloors"
+    },
+    "forbidden_component_bindings": {
+      "items": {
+        "enum": [
+          "InfraCert",
+          "C",
+          "R",
+          "O",
+          "X",
+          "CellArtifactPerformance"
+        ],
+        "type": "string"
+      },
+      "title": "Forbidden Component Bindings",
+      "type": "array"
+    },
+    "mode": {
+      "enum": [
+        "off",
+        "advisory",
+        "verifier-audit",
+        "bounded-semantic",
+        "human-assisted",
+        "exploratory-proxy",
+        "trajectory-audit"
+      ],
+      "title": "Mode",
+      "type": "string"
+    },
+    "panel": {
+      "items": {
+        "$ref": "#/$defs/JudgePanelMember"
+      },
+      "title": "Panel",
+      "type": "array"
+    },
+    "profile_id": {
+      "title": "Profile Id",
+      "type": "string"
+    },
+    "prompt_template_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Prompt Template Sha256",
+      "type": "string"
+    },
+    "same_family_as_candidate_policy": {
+      "const": "leave-family-out-or-zero-weight",
+      "default": "leave-family-out-or-zero-weight",
+      "title": "Same Family As Candidate Policy",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "0.5.3",
+      "default": "0.5.3",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "security": {
+      "$ref": "#/$defs/JudgeSecurityPolicy"
+    },
+    "supported_domains": {
+      "items": {
+        "enum": [
+          "kernel",
+          "distributed-communication",
+          "memory-tiering",
+          "training-integration",
+          "inference-runtime"
+        ],
+        "type": "string"
+      },
+      "minItems": 1,
+      "title": "Supported Domains",
+      "type": "array"
+    },
+    "system_prompt_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "System Prompt Sha256",
+      "type": "string"
+    }
+  },
+  "required": [
+    "profile_id",
+    "benchmark_season",
+    "mode",
+    "authority",
+    "execution_mode",
+    "supported_domains",
+    "system_prompt_sha256",
+    "prompt_template_sha256",
+    "context_compiler_sha256",
+    "adapter_sha256",
+    "security"
+  ],
+  "title": "JudgeProfile",
+  "type": "object"
+}

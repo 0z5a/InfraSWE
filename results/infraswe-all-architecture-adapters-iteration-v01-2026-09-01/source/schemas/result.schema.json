@@ -1,0 +1,187 @@
+{
+  "$defs": {
+    "CoreComponents": {
+      "additionalProperties": false,
+      "properties": {
+        "correctness": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Correctness",
+          "type": "number"
+        },
+        "efficiency": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Efficiency",
+          "type": "number"
+        },
+        "fresh_replay": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Fresh Replay",
+          "type": "number"
+        },
+        "protocol": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Protocol",
+          "type": "number"
+        },
+        "regression": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Regression",
+          "type": "number"
+        }
+      },
+      "required": [
+        "correctness",
+        "regression",
+        "fresh_replay",
+        "efficiency",
+        "protocol"
+      ],
+      "title": "CoreComponents",
+      "type": "object"
+    },
+    "GateResult": {
+      "additionalProperties": false,
+      "properties": {
+        "passed": {
+          "title": "Passed",
+          "type": "boolean"
+        },
+        "reasons": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Reasons",
+          "type": "array"
+        }
+      },
+      "required": [
+        "passed"
+      ],
+      "title": "GateResult",
+      "type": "object"
+    },
+    "InfraComponents": {
+      "additionalProperties": false,
+      "properties": {
+        "fault_recovery": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Fault Recovery",
+          "type": "number"
+        },
+        "observability": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Observability",
+          "type": "number"
+        },
+        "resource_efficiency": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Resource Efficiency",
+          "type": "number"
+        },
+        "safety_rollback": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Safety Rollback",
+          "type": "number"
+        },
+        "slo_goodput": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Slo Goodput",
+          "type": "number"
+        },
+        "topology_robustness": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Topology Robustness",
+          "type": "number"
+        }
+      },
+      "required": [
+        "slo_goodput",
+        "fault_recovery",
+        "safety_rollback",
+        "resource_efficiency",
+        "topology_robustness",
+        "observability"
+      ],
+      "title": "InfraComponents",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "core_100": {
+      "maximum": 100,
+      "minimum": 0,
+      "title": "Core 100",
+      "type": "number"
+    },
+    "core_components": {
+      "$ref": "#/$defs/CoreComponents"
+    },
+    "coverage": {
+      "maximum": 1,
+      "minimum": 0,
+      "title": "Coverage",
+      "type": "number"
+    },
+    "gate": {
+      "$ref": "#/$defs/GateResult"
+    },
+    "infra_components": {
+      "$ref": "#/$defs/InfraComponents"
+    },
+    "infra_ext_100": {
+      "maximum": 100,
+      "minimum": 0,
+      "title": "Infra Ext 100",
+      "type": "number"
+    },
+    "infra_total": {
+      "maximum": 100,
+      "minimum": 0,
+      "title": "Infra Total",
+      "type": "number"
+    },
+    "raw": {
+      "additionalProperties": true,
+      "title": "Raw",
+      "type": "object"
+    },
+    "resolved_at_1": {
+      "title": "Resolved At 1",
+      "type": "boolean"
+    },
+    "schema_version": {
+      "default": "0.1",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "stable_resolved_at_1": {
+      "title": "Stable Resolved At 1",
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "resolved_at_1",
+    "stable_resolved_at_1",
+    "coverage",
+    "gate",
+    "core_components",
+    "infra_components",
+    "core_100",
+    "infra_ext_100",
+    "infra_total"
+  ],
+  "title": "ScoreResult",
+  "type": "object"
+}

@@ -1,0 +1,90 @@
+{
+  "case_id": "sglang-pr-3044",
+  "compilation_path": "not-required",
+  "created_at": "2026-09-01T16:02:01.942956+00:00",
+  "duration_seconds": 0.04124160413630307,
+  "evidence_sha256": "sha256:a21ef1c59158e728dcb9d00c127c1f1107a4c959f724fba841ffb14d7d0189e2",
+  "observations": [
+    {
+      "blocking": true,
+      "conclusion": "No retained parameter changed from used to completely unused in changed Python code.",
+      "counterevidence": [],
+      "evidence": [],
+      "failure_code": null,
+      "question": "Does every retained caller-facing parameter still affect behavior?",
+      "rule_id": "interface-parameter-use-preserved",
+      "status": "pass"
+    },
+    {
+      "blocking": true,
+      "conclusion": "The explicit test matrix falls to 5.9% of its prior size. No compensating evidence is present in this source-level check.",
+      "counterevidence": [],
+      "evidence": [
+        "python/sglang/test/test_block_fp8.py->test/srt/test_block_fp8.py explicit Cartesian upper bound 311040->18432 (5.9%); BLOCK_SIZE:4->1, DTYPES:3->2, K:3->2, M:5->4, N:3->2"
+      ],
+      "failure_code": "TEST_MATRIX_CONTRACTION_GT_50_PERCENT",
+      "question": "Does a test move preserve at least half of its explicit input matrix?",
+      "rule_id": "test-matrix-not-silently-contracted",
+      "status": "fail"
+    },
+    {
+      "blocking": true,
+      "conclusion": "The patch adds an unscoped UserWarning suppression; unrelated diagnostics can disappear and make the moved suite less informative.",
+      "counterevidence": [],
+      "evidence": [
+        "test/srt/test_block_fp8.py:14"
+      ],
+      "failure_code": "DIAGNOSTIC_SUPPRESSION_BROAD_USER_WARNING",
+      "question": "Does the patch avoid globally suppressing a broad warning category?",
+      "rule_id": "diagnostics-remain-specific",
+      "status": "fail"
+    },
+    {
+      "blocking": true,
+      "conclusion": "No substantive line is newly duplicated across three or more changed files.",
+      "counterevidence": [],
+      "evidence": [],
+      "failure_code": null,
+      "question": "Is a repeated cross-cutting fix implemented at one central owner?",
+      "rule_id": "cross-cutting-fix-owned-centrally",
+      "status": "pass"
+    }
+  ],
+  "protocol_id": "historical-explainable-static-v0.5-r2",
+  "schema_version": "0.5",
+  "source_identity": {
+    "after_source_sha256": {
+      "test/srt/run_suite.py": "sha256:d585f1ff688e7e7b1d7d3cdca721f9b19a9bc86da6d8854e1fcb632958f89d3f",
+      "test/srt/test_activation.py": "sha256:e2d44515130362aa7b3df9b58de78bbda9c1309496bc8705cbb62c5137950358",
+      "test/srt/test_block_fp8.py": "sha256:0ce9246f4cc32555d53e80c9d23788bc227bc46047f7393f756f156b97886bda",
+      "test/srt/test_layernorm.py": "sha256:723ac722478586c265e80b607f8c3922afac1d2bf2b30c3d9ba46c0ee54fe153"
+    },
+    "base_sha": "3d8f1c9bcf50b4d41fcf4ad2dfc430230276b4ab",
+    "before_source_sha256": {
+      "python/sglang/test/test_activation.py": "sha256:e2d44515130362aa7b3df9b58de78bbda9c1309496bc8705cbb62c5137950358",
+      "python/sglang/test/test_block_fp8.py": "sha256:03514469d63138c935a306b1b022c2075984e79bb31dca33eadbe741e0c94ee2",
+      "python/sglang/test/test_layernorm.py": "sha256:723ac722478586c265e80b607f8c3922afac1d2bf2b30c3d9ba46c0ee54fe153",
+      "test/srt/run_suite.py": "sha256:0e727c163d70a3afc77037750a08f2de1aafe50a5c54765d85c3ff2922284705"
+    },
+    "head_sha": "33ffb9bbda1e97083eac96ce8ad6fe056bd4d053",
+    "pairs": [
+      {
+        "after": "test/srt/test_activation.py",
+        "before": "python/sglang/test/test_activation.py"
+      },
+      {
+        "after": "test/srt/test_block_fp8.py",
+        "before": "python/sglang/test/test_block_fp8.py"
+      },
+      {
+        "after": "test/srt/test_layernorm.py",
+        "before": "python/sglang/test/test_layernorm.py"
+      },
+      {
+        "after": "test/srt/run_suite.py",
+        "before": "test/srt/run_suite.py"
+      }
+    ],
+    "unified_diff_sha256": "sha256:4ede3ef5fa538d948e5128b818ef06487f432043721bc6a62c96dc59d489bbf3"
+  }
+}

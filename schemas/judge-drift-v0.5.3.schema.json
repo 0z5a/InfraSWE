@@ -1,0 +1,50 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "checks": {
+      "additionalProperties": {
+        "type": "boolean"
+      },
+      "title": "Checks",
+      "type": "object"
+    },
+    "model_identity_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Model Identity Sha256",
+      "type": "string"
+    },
+    "profile_id": {
+      "title": "Profile Id",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "0.5.3",
+      "default": "0.5.3",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "sentinel_set_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Sentinel Set Sha256",
+      "type": "string"
+    },
+    "status": {
+      "enum": [
+        "pass",
+        "fail",
+        "drifted"
+      ],
+      "title": "Status",
+      "type": "string"
+    }
+  },
+  "required": [
+    "profile_id",
+    "sentinel_set_sha256",
+    "model_identity_sha256",
+    "checks",
+    "status"
+  ],
+  "title": "JudgeDriftSentinel",
+  "type": "object"
+}

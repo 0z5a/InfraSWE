@@ -1,0 +1,24 @@
+platform_cell: l20-48gb-pcie
+architecture_backend: ada_sm89
+identity:
+  compute_capability: "8.9"
+  product_pattern: "(?:^|\\s)L20(?:[-\\s]|$)"
+  framebuffer_gb: 48
+board_fingerprint_required:
+  - pci_device_id
+  - vbios
+  - sm_count
+  - l2_bytes
+  - memory_clock_mhz
+  - enforced_power_limit_watts
+  - pcie_link
+  - execution_mode
+tuning_policy:
+  source_kernel_family: shared
+  config_is_board_local: true
+  search_dimensions: [block_m, block_n, block_k, num_warps, stages, split_strategy]
+  initial_bias: compute_occupancy
+calibration:
+  nominal_memory_bandwidth_gbps_metadata_only: 864
+  runtime_anchors_required: true
+  thermal_soak_seconds_publishable_min: 600

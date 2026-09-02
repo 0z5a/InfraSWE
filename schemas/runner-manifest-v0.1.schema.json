@@ -1,0 +1,135 @@
+{
+  "$defs": {
+    "RunnerAcceleratorIdentity": {
+      "additionalProperties": false,
+      "properties": {
+        "count": {
+          "minimum": 0,
+          "title": "Count",
+          "type": "integer"
+        },
+        "memory_bytes_each": {
+          "minimum": 0,
+          "title": "Memory Bytes Each",
+          "type": "integer"
+        },
+        "model": {
+          "title": "Model",
+          "type": "string"
+        },
+        "vendor": {
+          "title": "Vendor",
+          "type": "string"
+        }
+      },
+      "required": [
+        "vendor",
+        "model",
+        "count",
+        "memory_bytes_each"
+      ],
+      "title": "RunnerAcceleratorIdentity",
+      "type": "object"
+    },
+    "RunnerHostIdentity": {
+      "additionalProperties": false,
+      "properties": {
+        "architecture": {
+          "title": "Architecture",
+          "type": "string"
+        },
+        "cpu_model": {
+          "title": "Cpu Model",
+          "type": "string"
+        },
+        "numa_nodes": {
+          "minimum": 1,
+          "title": "Numa Nodes",
+          "type": "integer"
+        },
+        "sockets": {
+          "minimum": 1,
+          "title": "Sockets",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "architecture",
+        "sockets",
+        "numa_nodes",
+        "cpu_model"
+      ],
+      "title": "RunnerHostIdentity",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "accelerators": {
+      "items": {
+        "$ref": "#/$defs/RunnerAcceleratorIdentity"
+      },
+      "title": "Accelerators",
+      "type": "array"
+    },
+    "attestation_policy_id": {
+      "title": "Attestation Policy Id",
+      "type": "string"
+    },
+    "declared_capabilities": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Declared Capabilities",
+      "type": "array"
+    },
+    "host": {
+      "$ref": "#/$defs/RunnerHostIdentity"
+    },
+    "manifest_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Manifest Sha256",
+      "type": "string"
+    },
+    "network": {
+      "additionalProperties": true,
+      "title": "Network",
+      "type": "object"
+    },
+    "owner": {
+      "title": "Owner",
+      "type": "string"
+    },
+    "revision": {
+      "minimum": 1,
+      "title": "Revision",
+      "type": "integer"
+    },
+    "runner_id": {
+      "title": "Runner Id",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "0.1",
+      "default": "0.1",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "software_profile": {
+      "additionalProperties": true,
+      "title": "Software Profile",
+      "type": "object"
+    }
+  },
+  "required": [
+    "runner_id",
+    "revision",
+    "owner",
+    "host",
+    "software_profile",
+    "attestation_policy_id",
+    "manifest_sha256"
+  ],
+  "title": "RunnerManifest",
+  "type": "object"
+}

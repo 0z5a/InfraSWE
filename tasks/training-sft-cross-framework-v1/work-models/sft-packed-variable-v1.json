@@ -1,0 +1,21 @@
+{
+  "schema_version": "0.1",
+  "id": "sft-packed-variable-v1",
+  "token_accounting": "non-padding-target-tokens",
+  "sequence_buckets": [128, 256, 512, 1024, 2048],
+  "variable_length_distribution": "sealed-v1",
+  "packing": "enabled",
+  "batch_measure": "global-target-tokens",
+  "gradient_accumulation": "exact",
+  "optimizer_step_boundary": "exact",
+  "warmup_steps": 20,
+  "measured_steps": 200,
+  "replay_count": 7,
+  "memory_policy": {
+    "max_peak_reserved_fraction": 0.9,
+    "min_steady_state_headroom_fraction": 0.08,
+    "calibration_steps": 10,
+    "oom_is_failure_after_calibration": true,
+    "auto_batch_changes_semantic_cell": true
+  }
+}

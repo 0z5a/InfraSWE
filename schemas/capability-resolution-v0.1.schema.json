@@ -1,0 +1,448 @@
+{
+  "$defs": {
+    "CapabilityRequirementResolution": {
+      "additionalProperties": false,
+      "properties": {
+        "attestation_sha256": {
+          "anyOf": [
+            {
+              "pattern": "^sha256:[0-9a-f]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Attestation Sha256"
+        },
+        "capability_id": {
+          "title": "Capability Id",
+          "type": "string"
+        },
+        "failure_code": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Failure Code"
+        },
+        "mode": {
+          "enum": [
+            "required-present",
+            "required-usable",
+            "required-native",
+            "required-absent",
+            "forbidden-use",
+            "preferred",
+            "optional-observe",
+            "explicitly-not-assumed"
+          ],
+          "title": "Mode",
+          "type": "string"
+        },
+        "phase": {
+          "enum": [
+            "agent",
+            "collect",
+            "build",
+            "verify",
+            "measure",
+            "profile",
+            "judge"
+          ],
+          "title": "Phase",
+          "type": "string"
+        },
+        "proof_level": {
+          "anyOf": [
+            {
+              "enum": [
+                "CP0-declared",
+                "CP1-inventory",
+                "CP2-compile",
+                "CP3-runtime",
+                "CP4-behavior",
+                "CP5-operational"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Proof Level"
+        },
+        "status": {
+          "enum": [
+            "satisfied",
+            "unsatisfied",
+            "unresolved",
+            "not-applicable"
+          ],
+          "title": "Status",
+          "type": "string"
+        }
+      },
+      "required": [
+        "phase",
+        "capability_id",
+        "mode",
+        "status"
+      ],
+      "title": "CapabilityRequirementResolution",
+      "type": "object"
+    },
+    "ExcludedRunner": {
+      "additionalProperties": false,
+      "properties": {
+        "capability_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Capability Id"
+        },
+        "observed_status": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Observed Status"
+        },
+        "proof_level": {
+          "anyOf": [
+            {
+              "enum": [
+                "CP0-declared",
+                "CP1-inventory",
+                "CP2-compile",
+                "CP3-runtime",
+                "CP4-behavior",
+                "CP5-operational"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Proof Level"
+        },
+        "reason_code": {
+          "title": "Reason Code",
+          "type": "string"
+        },
+        "runner_id": {
+          "title": "Runner Id",
+          "type": "string"
+        },
+        "variant_id": {
+          "title": "Variant Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "runner_id",
+        "variant_id",
+        "reason_code"
+      ],
+      "title": "ExcludedRunner",
+      "type": "object"
+    },
+    "ResourceFeasibilityResult": {
+      "additionalProperties": false,
+      "properties": {
+        "phases": {
+          "items": {
+            "$ref": "#/$defs/ResourcePhaseResolution"
+          },
+          "title": "Phases",
+          "type": "array"
+        },
+        "request_sha256": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Request Sha256",
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "feasible",
+            "capacity-unavailable",
+            "unschedulable",
+            "unresolved"
+          ],
+          "title": "Status",
+          "type": "string"
+        }
+      },
+      "required": [
+        "status",
+        "phases",
+        "request_sha256"
+      ],
+      "title": "ResourceFeasibilityResult",
+      "type": "object"
+    },
+    "ResourcePhaseResolution": {
+      "additionalProperties": false,
+      "properties": {
+        "busy_resources": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Busy Resources",
+          "type": "array"
+        },
+        "missing_resources": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Missing Resources",
+          "type": "array"
+        },
+        "phase": {
+          "enum": [
+            "agent",
+            "collect",
+            "build",
+            "verify",
+            "measure",
+            "profile",
+            "judge"
+          ],
+          "title": "Phase",
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "feasible",
+            "capacity-unavailable",
+            "unschedulable",
+            "unresolved"
+          ],
+          "title": "Status",
+          "type": "string"
+        }
+      },
+      "required": [
+        "phase",
+        "status"
+      ],
+      "title": "ResourcePhaseResolution",
+      "type": "object"
+    },
+    "TopologyMatchResult": {
+      "additionalProperties": false,
+      "properties": {
+        "failure_codes": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Failure Codes",
+          "type": "array"
+        },
+        "graph_sha256": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Graph Sha256",
+          "type": "string"
+        },
+        "matched_relations": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Matched Relations",
+          "type": "array"
+        },
+        "status": {
+          "enum": [
+            "satisfied",
+            "unsatisfied",
+            "unresolved",
+            "probe-defect"
+          ],
+          "title": "Status",
+          "type": "string"
+        }
+      },
+      "required": [
+        "status",
+        "graph_sha256"
+      ],
+      "title": "TopologyMatchResult",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "candidate_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Candidate Sha256",
+      "type": "string"
+    },
+    "contradictions": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Contradictions",
+      "type": "array"
+    },
+    "excluded_runners": {
+      "items": {
+        "$ref": "#/$defs/ExcludedRunner"
+      },
+      "title": "Excluded Runners",
+      "type": "array"
+    },
+    "policy_id": {
+      "title": "Policy Id",
+      "type": "string"
+    },
+    "registry_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Registry Sha256",
+      "type": "string"
+    },
+    "required_probes": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Required Probes",
+      "type": "array"
+    },
+    "requirements": {
+      "items": {
+        "$ref": "#/$defs/CapabilityRequirementResolution"
+      },
+      "title": "Requirements",
+      "type": "array"
+    },
+    "resolution_id": {
+      "title": "Resolution Id",
+      "type": "string"
+    },
+    "resolution_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Resolution Sha256",
+      "type": "string"
+    },
+    "resources": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/ResourceFeasibilityResult"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "schema_version": {
+      "const": "0.1",
+      "default": "0.1",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "selected_runner_manifest_sha256": {
+      "anyOf": [
+        {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Selected Runner Manifest Sha256"
+    },
+    "selected_runner_snapshot_sha256": {
+      "anyOf": [
+        {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Selected Runner Snapshot Sha256"
+    },
+    "selected_variant_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Selected Variant Id"
+    },
+    "status": {
+      "enum": [
+        "eligible",
+        "unschedulable",
+        "capacity-unavailable",
+        "unresolved",
+        "candidate-declaration-ineligible",
+        "runner-contradiction"
+      ],
+      "title": "Status",
+      "type": "string"
+    },
+    "task_seal_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Task Seal Sha256",
+      "type": "string"
+    },
+    "topology": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/TopologyMatchResult"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "unresolved": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Unresolved",
+      "type": "array"
+    }
+  },
+  "required": [
+    "resolution_id",
+    "task_seal_sha256",
+    "candidate_sha256",
+    "registry_sha256",
+    "status",
+    "policy_id",
+    "resolution_sha256"
+  ],
+  "title": "CapabilityResolution",
+  "type": "object"
+}

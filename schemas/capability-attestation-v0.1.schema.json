@@ -1,0 +1,144 @@
+{
+  "$defs": {
+    "CapabilityProbeIdentity": {
+      "additionalProperties": false,
+      "properties": {
+        "image_sha256": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Image Sha256",
+          "type": "string"
+        },
+        "implementation_sha256": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Implementation Sha256",
+          "type": "string"
+        },
+        "probe_id": {
+          "title": "Probe Id",
+          "type": "string"
+        },
+        "toolchain_sha256": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Toolchain Sha256",
+          "type": "string"
+        }
+      },
+      "required": [
+        "probe_id",
+        "implementation_sha256",
+        "image_sha256",
+        "toolchain_sha256"
+      ],
+      "title": "CapabilityProbeIdentity",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "attestation_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Attestation Sha256",
+      "type": "string"
+    },
+    "capability_definition_version": {
+      "minimum": 1,
+      "title": "Capability Definition Version",
+      "type": "integer"
+    },
+    "capability_id": {
+      "title": "Capability Id",
+      "type": "string"
+    },
+    "evidence_refs": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Evidence Refs",
+      "type": "array"
+    },
+    "expires_at": {
+      "anyOf": [
+        {
+          "format": "date-time",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Expires At"
+    },
+    "observed_at": {
+      "format": "date-time",
+      "title": "Observed At",
+      "type": "string"
+    },
+    "origin_trust": {
+      "const": "T4_INFRA_ATTESTED",
+      "default": "T4_INFRA_ATTESTED",
+      "title": "Origin Trust",
+      "type": "string"
+    },
+    "parameters": {
+      "additionalProperties": true,
+      "title": "Parameters",
+      "type": "object"
+    },
+    "probe": {
+      "$ref": "#/$defs/CapabilityProbeIdentity"
+    },
+    "proof_level": {
+      "anyOf": [
+        {
+          "enum": [
+            "CP0-declared",
+            "CP1-inventory",
+            "CP2-compile",
+            "CP3-runtime",
+            "CP4-behavior",
+            "CP5-operational"
+          ],
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Proof Level"
+    },
+    "runner_snapshot_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Runner Snapshot Sha256",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "0.1",
+      "default": "0.1",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "status": {
+      "enum": [
+        "supported",
+        "unsupported",
+        "unknown",
+        "contradictory"
+      ],
+      "title": "Status",
+      "type": "string"
+    }
+  },
+  "required": [
+    "capability_id",
+    "capability_definition_version",
+    "runner_snapshot_sha256",
+    "status",
+    "probe",
+    "observed_at",
+    "attestation_sha256"
+  ],
+  "title": "CapabilityAttestation",
+  "type": "object"
+}

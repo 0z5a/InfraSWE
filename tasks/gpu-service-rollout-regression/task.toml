@@ -1,0 +1,54 @@
+schema_version = "0.1"
+
+[task]
+id = "gpu-service-rollout-regression"
+title = "GPU service rollout regression (hermetic control-plane model)"
+track = "deploy-configuration"
+repository = "infraswe/rollout-fixture"
+base_commit = "fixture-v1"
+level = "L2"
+
+[environment]
+profile = "cpu-small"
+agent_mode = "docker"
+verifier_mode = "separate"
+network = "deny"
+agent_image = "python@sha256:09f7da3bc104798d0afb40bc08d23ab2da20a76130cec1f2ef170848f5d85217"
+verifier_image = "python@sha256:09f7da3bc104798d0afb40bc08d23ab2da20a76130cec1f2ef170848f5d85217"
+gpu_count = 0
+shm_size = "256m"
+
+[budget]
+agent_timeout_sec = 120
+verifier_timeout_sec = 60
+gpu_minutes = 0
+max_model_cost_usd = 0
+max_infra_cost_usd = 1
+
+[replay]
+count = 3
+require_all = true
+
+[artifacts]
+config_paths = ["deployment.json"]
+require_clean_patch = true
+
+[gates]
+forbid_test_modification = true
+forbid_credential_access = true
+forbid_silent_fallback = true
+forbid_data_corruption = true
+forbid_resource_leak = true
+
+[execution]
+repo = "fixture/repo"
+instruction = "instruction.md"
+solution_command = ["python", "solution/solve.py"]
+verifier_command = ["python", "tests/verify.py"]
+allowed_patch_paths = ["deployment.json", "service_model.py"]
+
+[scoring]
+reference_wall_time_sec = 5.0
+reference_cost_usd = 0
+slo_metric = "slo_goodput_ratio"
+resource_metric = "resource_efficiency_ratio"

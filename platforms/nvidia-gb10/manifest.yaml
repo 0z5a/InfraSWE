@@ -1,0 +1,51 @@
+platform_id: nvidia-gb10-dgx-spark
+revision: "0.1"
+
+required:
+  host_arch: aarch64
+  cuda_compute_capability: "12.1"
+  min_cuda_toolkit: "13.0"
+
+canonical_runner:
+  cuda_toolkit: "13.3"
+  ptx_isa: "9.3"
+  os: ubuntu-24.04-arm64
+
+compile_targets:
+  baseline: sm_121
+  family: sm_121f
+  strict_native: sm_121a
+
+host_compile:
+  preferred:
+    gcc: ">=15"
+    llvm: ">=21"
+    flags: ["-mcpu=gb10"]
+  portable:
+    flags: ["-march=armv8.2-a+rcpc", "-moutline-atomics"]
+
+features:
+  required: [warp_mma, unified_addressing, arm64]
+  probed:
+    - blockscaled_mma
+    - pageable_memory_access
+    - host_page_table_coherence
+    - direct_managed_host_access
+    - host_native_atomics
+    - cluster_launch
+    - tma_gather4_cta
+  explicitly_not_assumed:
+    - tcgen05
+    - tensor_memory
+    - tma_cta_group_2
+    - tma_scatter4
+    - gpudirect_rdma
+    - dma_buf_gpu_direct
+    - nvlink_multicast_fabric
+
+scores:
+  single_node:
+    required: true
+  roce_scaleout:
+    required: false
+    minimum_nodes: 2

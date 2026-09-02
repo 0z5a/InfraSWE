@@ -1,0 +1,177 @@
+{
+  "$defs": {
+    "HistoricalExplainableJudgmentMaterial": {
+      "additionalProperties": false,
+      "description": "Frozen rule trace; deliberately contains no learned or weighted score.",
+      "properties": {
+        "candidate_sha256": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Candidate Sha256",
+          "type": "string"
+        },
+        "case_id": {
+          "title": "Case Id",
+          "type": "string"
+        },
+        "decision": {
+          "enum": [
+            "accept_with_scope",
+            "revise",
+            "reject",
+            "unresolved"
+          ],
+          "title": "Decision",
+          "type": "string"
+        },
+        "evidence_sha256": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Evidence Sha256",
+          "type": "string"
+        },
+        "frozen_at": {
+          "format": "date-time",
+          "title": "Frozen At",
+          "type": "string"
+        },
+        "narrative": {
+          "title": "Narrative",
+          "type": "string"
+        },
+        "observations": {
+          "items": {
+            "$ref": "#/$defs/HistoricalHeuristicObservation"
+          },
+          "minItems": 1,
+          "title": "Observations",
+          "type": "array"
+        },
+        "policy_id": {
+          "default": "historical-explainable-agent-v0.5-r2",
+          "enum": [
+            "historical-explainable-agent-v0.5-r2",
+            "historical-explainable-agent-v0.5-r3",
+            "historical-explainable-agent-v0.5-r4",
+            "historical-explainable-agent-v0.5-r5-polarized"
+          ],
+          "title": "Policy Id",
+          "type": "string"
+        },
+        "rationale_codes": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Rationale Codes",
+          "type": "array"
+        },
+        "schema_version": {
+          "const": "0.5",
+          "default": "0.5",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "test_plan_sha256": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Test Plan Sha256",
+          "type": "string"
+        }
+      },
+      "required": [
+        "case_id",
+        "candidate_sha256",
+        "test_plan_sha256",
+        "evidence_sha256",
+        "observations",
+        "decision",
+        "rationale_codes",
+        "narrative",
+        "frozen_at"
+      ],
+      "title": "HistoricalExplainableJudgmentMaterial",
+      "type": "object"
+    },
+    "HistoricalHeuristicObservation": {
+      "additionalProperties": false,
+      "description": "One explicit yes/no/unresolved question used by the historical agent.",
+      "properties": {
+        "blocking": {
+          "title": "Blocking",
+          "type": "boolean"
+        },
+        "conclusion": {
+          "title": "Conclusion",
+          "type": "string"
+        },
+        "counterevidence": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Counterevidence",
+          "type": "array"
+        },
+        "evidence": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Evidence",
+          "type": "array"
+        },
+        "failure_code": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Failure Code"
+        },
+        "question": {
+          "title": "Question",
+          "type": "string"
+        },
+        "rule_id": {
+          "title": "Rule Id",
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "pass",
+            "fail",
+            "unresolved",
+            "not-applicable"
+          ],
+          "title": "Status",
+          "type": "string"
+        }
+      },
+      "required": [
+        "rule_id",
+        "question",
+        "status",
+        "blocking",
+        "conclusion"
+      ],
+      "title": "HistoricalHeuristicObservation",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "lock_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Lock Sha256",
+      "type": "string"
+    },
+    "material": {
+      "$ref": "#/$defs/HistoricalExplainableJudgmentMaterial"
+    }
+  },
+  "required": [
+    "material",
+    "lock_sha256"
+  ],
+  "title": "HistoricalExplainableJudgmentLock",
+  "type": "object"
+}

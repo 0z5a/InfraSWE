@@ -1,0 +1,55 @@
+{
+  "schema_version": "0.5",
+  "protocol_id": "historical-reviewed-failure-alignment-v0.5-r4",
+  "selection_lock_sha256": "sha256:89d5535213689c02eb57199a165bec354a1c77674ca4e616588788555d9475a6",
+  "review_text_requested": false,
+  "review_text_visible_to_machine_judge": false,
+  "compile_policy": {
+    "mode": "auto",
+    "precompile_before_timed_cases": true,
+    "steady_state_compilation_allowed": false,
+    "cache_reuse_required": true
+  },
+  "cases": [
+    {
+      "case_id": "vllm-pr-8200",
+      "repository": "vllm-project/vllm",
+      "pull_number": 8200,
+      "base_sha": "bb103b29bf3d26fa831458a8ca5af1bb820c4712",
+      "base_derivation": "merge-base-path-parity",
+      "head_sha": "dd2613fa612ef1fb96628d55d0b9dfa3e43308dd",
+      "paths": [
+        "csrc/cache_kernels.cu",
+        "tests/kernels/test_cache.py",
+        "vllm/utils.py"
+      ],
+      "claim": "Make reshape_and_cache_flash honor both NHD and HND KV-cache strides.",
+      "predeclared_questions": [
+        "Do exact NHD and HND writes match a stride-aware oracle across dtypes and shapes?",
+        "Are key and value page/head strides independently honored or explicitly required equal?",
+        "Does the existing NHD layout retain steady-state speed after one precompile?",
+        "Are padded slot mappings and non-contiguous cache views preserved?"
+      ]
+    },
+    {
+      "case_id": "vllm-pr-13996",
+      "repository": "vllm-project/vllm",
+      "pull_number": 13996,
+      "base_sha": "b3f7aaccd0338e86dc58a6c7ea867a43be9a591b",
+      "base_derivation": "base-ref-oid-path-parity",
+      "head_sha": "2adfe67cb72679caded75810fe78211f66954f20",
+      "paths": [
+        "vllm/envs.py",
+        "vllm/model_executor/layers/quantization/utils/fp8_utils.py"
+      ],
+      "claim": "Select DeepGEMM for 128x128 block-FP8 dense linear operations behind an environment flag.",
+      "predeclared_questions": [
+        "Does the flag check GPU architecture and DeepGEMM availability before selecting the backend?",
+        "Are every DeepGEMM shape, scale-layout, dtype, and alignment precondition enforced?",
+        "Does unsupported hardware fall back to CUTLASS/Triton rather than raising at import or launch?",
+        "Is any unavoidable backend compilation pre-run and excluded from steady-state timing?"
+      ]
+    }
+  ],
+  "test_plan_sha256": "sha256:f15052af36712142e87e00be0c28145575e6a575b40eafad299b035736f88716"
+}

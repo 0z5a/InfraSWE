@@ -1,0 +1,54 @@
+{
+  "case_id": "vllm-pr-13140",
+  "conclusions": [
+    "Each of 32 warps initializes one shared_counts row.",
+    "Any token thread can atomically update any row selected by input expert_id.",
+    "Without a block barrier, one warp can update a row before its owning warp finishes initialization.",
+    "The added depth-1 barrier is reached by every block thread and separates initialization from atomics."
+  ],
+  "facts": {
+    "base_barrier_count": 3,
+    "base_has_cross_warp_atomic": true,
+    "base_has_initializer": true,
+    "consumer_index": "warp_idx = topk_ids[i] / 8",
+    "diff_additions": [
+      "",
+      "  __syncthreads();"
+    ],
+    "diff_deletions": [],
+    "experts_per_row": 8,
+    "head_barrier_count": 4,
+    "head_barrier_lines_and_pre_line_brace_depth": [
+      [
+        20,
+        1
+      ],
+      [
+        32,
+        1
+      ],
+      [
+        48,
+        1
+      ],
+      [
+        58,
+        1
+      ]
+    ],
+    "initializer_index": "warp_id = threadIdx.x / 32",
+    "launch_threads": 1024,
+    "max_experts": 256,
+    "shared_count_rows": 32,
+    "warps_per_block": 32
+  },
+  "failure_codes": [],
+  "probe": "vllm-moe-barrier-static-v1",
+  "schema_version": "0.5",
+  "source_identity": {
+    "base_source_sha256": "sha256:b702c4dd84abe0bab6833206ef1bebb87ac422c4dd27ec9886c11c2f9d453270",
+    "head_source_sha256": "sha256:2c8d9873aac8bc1f5b0243c697dde1d2ec61ed31196099e0f4fade54f9d73776",
+    "kernel_diff_sha256": "sha256:158ed3457ef16b2a143191845c9b20eb1753aba87df36187f74661d9ae6e7aa2"
+  },
+  "status": "pass"
+}

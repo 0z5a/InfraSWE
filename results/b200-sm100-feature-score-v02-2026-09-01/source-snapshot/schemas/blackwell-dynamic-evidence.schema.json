@@ -1,0 +1,85 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://infraswe.dev/schemas/blackwell-dynamic-evidence.schema.json",
+  "title": "InfraSWE SM100 evaluator-owned dynamic evidence",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "feature_id",
+    "replay_index",
+    "status",
+    "artifact_set_sha256",
+    "capability_fingerprint",
+    "evaluator",
+    "correctness",
+    "liveness",
+    "mutation",
+    "profiler"
+  ],
+  "properties": {
+    "schema_version": { "const": "0.1" },
+    "feature_id": { "pattern": "^BW-[A-Z0-9-]+$", "type": "string" },
+    "replay_index": { "type": "integer", "minimum": 1, "maximum": 3 },
+    "status": { "enum": ["passed", "failed", "timeout"] },
+    "artifact_set_sha256": { "$ref": "#/$defs/sha256" },
+    "capability_fingerprint": { "$ref": "#/$defs/sha256" },
+    "generated_at": { "type": "string", "format": "date-time" },
+    "case_id": { "type": "string" },
+    "evaluator": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["owner", "evaluator_sha256"],
+      "properties": {
+        "owner": { "const": "infraswe" },
+        "evaluator_sha256": { "$ref": "#/$defs/sha256" }
+      }
+    },
+    "correctness": {
+      "type": "object",
+      "required": ["passed", "dynamic_input_changes_output"],
+      "properties": {
+        "passed": { "type": "boolean" },
+        "dynamic_input_changes_output": { "type": "boolean" }
+      },
+      "additionalProperties": true
+    },
+    "liveness": {
+      "type": "object",
+      "required": ["completed", "watchdog_passed"],
+      "properties": {
+        "completed": { "type": "boolean" },
+        "watchdog_passed": { "type": "boolean" },
+        "timeout_seconds": { "type": "number", "exclusiveMinimum": 0 }
+      },
+      "additionalProperties": true
+    },
+    "mutation": {
+      "type": "object",
+      "required": ["performed", "passed"],
+      "properties": {
+        "performed": { "type": "boolean" },
+        "passed": { "type": "boolean" }
+      },
+      "additionalProperties": true
+    },
+    "profiler": {
+      "type": "object",
+      "required": ["captured"],
+      "properties": {
+        "captured": { "type": "boolean" },
+        "entry_observed": { "type": "boolean" },
+        "kernel_names": { "type": "array", "items": { "type": "string" } },
+        "device_events": { "type": "array", "items": { "type": "object" } },
+        "cuda_events": { "type": "array", "items": { "type": "object" } }
+      },
+      "additionalProperties": true
+    },
+    "performance": { "type": "object" },
+    "hardware": { "type": "object" },
+    "implementation_provenance": { "type": "array", "items": { "type": "object" } }
+  },
+  "$defs": {
+    "sha256": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" }
+  }
+}

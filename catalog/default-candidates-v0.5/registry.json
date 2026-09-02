@@ -1,0 +1,2146 @@
+{
+  "candidates": {
+    "aiter": {
+      "backends": [
+        "rocm"
+      ],
+      "build": {
+        "activation_scope": "explicitly-activated-candidate-only",
+        "adapter_id": "aiter-adapter-v1",
+        "compilation_mode": "adapter-aot",
+        "registry_load_compiles_candidate": false,
+        "registry_load_imports_candidate": false,
+        "selection_action": "metadata-only"
+      },
+      "default_eligible": true,
+      "display_name": "AITER",
+      "id": "aiter",
+      "license_status": "declared",
+      "operator_families": [
+        "generic",
+        "attention-training",
+        "attention-inference-prefill",
+        "attention-inference-decode",
+        "paged-attention",
+        "dense-gemm",
+        "grouped-moe-gemm",
+        "training-fused-ops",
+        "quantization",
+        "communication-collective",
+        "moe-dispatch-combine",
+        "gpu-initiated-communication"
+      ],
+      "phases": [
+        "training",
+        "inference",
+        "communication"
+      ],
+      "roles": [
+        "peer-impl"
+      ],
+      "source": {
+        "kind": "pinned-git",
+        "repository": "https://github.com/ROCm/aiter",
+        "revision": "27a85a1f6413a6a26195e089a2311be78245ff0c"
+      },
+      "tier": "P2"
+    },
+    "composable_kernel": {
+      "backends": [
+        "rocm"
+      ],
+      "build": {
+        "activation_scope": "explicitly-activated-candidate-only",
+        "adapter_id": "composable_kernel-adapter-v1",
+        "compilation_mode": "adapter-aot",
+        "registry_load_compiles_candidate": false,
+        "registry_load_imports_candidate": false,
+        "selection_action": "metadata-only"
+      },
+      "default_eligible": true,
+      "display_name": "Composable Kernel",
+      "id": "composable_kernel",
+      "license_status": "declared",
+      "operator_families": [
+        "attention-training",
+        "attention-inference-prefill",
+        "dense-gemm",
+        "grouped-moe-gemm",
+        "quantization"
+      ],
+      "phases": [
+        "training",
+        "inference"
+      ],
+      "roles": [
+        "peer-impl"
+      ],
+      "source": {
+        "kind": "pinned-git",
+        "repository": "https://github.com/ROCm/composable_kernel",
+        "revision": "798ec4fb2baab96f35a4fbe941645983c1de68a5"
+      },
+      "tier": "P2"
+    },
+    "cublaslt": {
+      "backends": [
+        "generic",
+        "cuda",
+        "rocm",
+        "triton"
+      ],
+      "build": {
+        "activation_scope": "explicitly-activated-candidate-only",
+        "adapter_id": null,
+        "compilation_mode": "environment-provided",
+        "registry_load_compiles_candidate": false,
+        "registry_load_imports_candidate": false,
+        "selection_action": "metadata-only"
+      },
+      "default_eligible": true,
+      "display_name": "cuBLASLt",
+      "id": "cublaslt",
+      "license_status": "runtime-provided",
+      "operator_families": [
+        "dense-gemm",
+        "grouped-moe-gemm"
+      ],
+      "phases": [
+        "generic",
+        "training",
+        "inference",
+        "communication"
+      ],
+      "roles": [
+        "oracle"
+      ],
+      "source": {
+        "kind": "runtime-builtin",
+        "repository": null,
+        "revision": null
+      },
+      "tier": "P0"
+    },
+    "cuda_datacenter": {
+      "backends": [
+        "generic",
+        "cuda",
+        "rocm",
+        "triton"
+      ],
+      "build": {
+        "activation_scope": "explicitly-activated-candidate-only",
+        "adapter_id": null,
+        "compilation_mode": "environment-provided",
+        "registry_load_compiles_candidate": false,
+        "registry_load_imports_candidate": false,
+        "selection_action": "metadata-only"
+      },
+      "default_eligible": true,
+      "display_name": "CUDA datacenter",
+      "id": "cuda_datacenter",
+      "license_status": "runtime-provided",
+      "operator_families": [
+        "generic",
+        "attention-training",
+        "attention-inference-prefill",
+        "attention-inference-decode",
+        "paged-attention",
+        "dense-gemm",
+        "grouped-moe-gemm",
+        "training-fused-ops",
+        "quantization",
+        "communication-collective",
+        "moe-dispatch-combine",
+        "gpu-initiated-communication"
+      ],
+      "phases": [
+        "generic",
+        "training",
+        "inference",
+        "communication"
+      ],
+      "roles": [
+        "coverage-target"
+      ],
+      "source": {
+        "kind": "runtime-builtin",
+        "repository": null,
+        "revision": null
+      },
+      "tier": "P0"
+    },
+    "cutlass_cute": {
+      "backends": [
+        "cuda"
+      ],
+      "build": {
+        "activation_scope": "explicitly-activated-candidate-only",
+        "adapter_id": "cutlass_cute-adapter-v1",
+        "compilation_mode": "adapter-aot",
+        "registry_load_compiles_candidate": false,
+        "registry_load_imports_candidate": false,
+        "selection_action": "metadata-only"
+      },
+      "default_eligible": true,
+      "display_name": "CUTLASS / CuTe",
+      "id": "cutlass_cute",
+      "license_status": "declared",
+      "operator_families": [
+        "dense-gemm",
+        "grouped-moe-gemm"
+      ],
+      "phases": [
+        "training",
+        "inference"
+      ],
+      "roles": [
+        "peer-impl"
+      ],
+      "source": {
+        "kind": "pinned-git",
+        "repository": "https://github.com/NVIDIA/cutlass",
+        "revision": "dc45f979ae336a235da1676b311f35efeb30149a"
+      },
+      "tier": "P0"
+    },
+    "deepep": {
+      "backends": [
+        "cuda"
+      ],
+      "build": {
+        "activation_scope": "explicitly-activated-candidate-only",
+        "adapter_id": "deepep-adapter-v1",
+        "compilation_mode": "adapter-aot",
+        "registry_load_compiles_candidate": false,
+        "registry_load_imports_candidate": false,
+        "selection_action": "metadata-only"
+      },
+      "default_eligible": true,
+      "display_name": "DeepEP",
+      "id": "deepep",
+      "license_status": "declared",
+      "operator_families": [
+        "moe-dispatch-combine"
+      ],
+      "phases": [
+        "communication",
+        "inference"
+      ],
+      "roles": [
+        "peer-impl"
+      ],
+      "source": {
+        "kind": "pinned-git",
+        "repository": "https://github.com/deepseek-ai/DeepEP",
+        "revision": "01dc3aaac82068020353dce2c302e38153c0bfaa"
+      },
+      "tier": "P1"
+    },
+    "deepgemm": {
+      "backends": [
+        "cuda"
+      ],
+      "build": {
+        "activation_scope": "explicitly-activated-candidate-only",
+        "adapter_id": "deepgemm-adapter-v1",
+        "compilation_mode": "adapter-jit",
+        "registry_load_compiles_candidate": false,
+        "registry_load_imports_candidate": false,
+        "selection_action": "metadata-only"
+      },
+      "default_eligible": true,
+      "display_name": "DeepGEMM",
+      "id": "deepgemm",
+      "license_status": "declared",
+      "operator_families": [
+        "dense-gemm",
+        "grouped-moe-gemm"
+      ],
+      "phases": [
+        "training",
+        "inference"
+      ],
+      "roles": [
+        "peer-impl"
+      ],
+      "source": {
+        "kind": "pinned-git",
+        "repository": "https://github.com/deepseek-ai/DeepGEMM",
+        "revision": "559d79fb6994a58b8a15b4b93bf13ccc16edf247"
+      },
+      "tier": "P1"
+    },
+    "edge_coverage": {
+      "backends": [
+        "generic",
+        "cuda",
+        "rocm",
+        "triton"
+      ],
+      "build": {
+        "activation_scope": "explicitly-activated-candidate-only",
+        "adapter_id": null,
+        "compilation_mode": "environment-provided",
+        "registry_load_compiles_candidate": false,
+        "registry_load_imports_candidate": false,
+        "selection_action": "metadata-only"
+      },
+      "default_eligible": true,
+      "display_name": "Edge inference",
+      "id": "edge_coverage",
+      "license_status": "runtime-provided",
+      "operator_families": [
+        "generic",
+        "attention-training",
+        "attention-inference-prefill",
+        "attention-inference-decode",
+        "paged-attention",
+        "dense-gemm",
+        "grouped-moe-gemm",
+        "training-fused-ops",
+        "quantization",
+        "communication-collective",
+        "moe-dispatch-combine",
+        "gpu-initiated-communication"
+      ],
+      "phases": [
+        "generic",
+        "training",
+        "inference",
+        "communication"
+      ],
+      "roles": [
+        "coverage-target"
+      ],
+      "source": {
+        "kind": "runtime-builtin",
+        "repository": null,
+        "revision": null
+      },
+      "tier": "P0"
+    },
+    "executorch": {
+      "backends": [
+        "generic"
+      ],
+      "build": {
+        "activation_scope": "explicitly-activated-candidate-only",
+        "adapter_id": null,
+        "compilation_mode": "host-owned",
+        "registry_load_compiles_candidate": false,
+        "registry_load_imports_candidate": false,
+        "selection_action": "metadata-only"
+      },
+      "default_eligible": true,
+      "display_name": "ExecuTorch",
+      "id": "executorch",
+      "license_status": "declared",
+      "operator_families": [
+        "generic",
+        "dense-gemm",
+        "quantization"
+      ],
+      "phases": [
+        "inference"
+      ],
+      "roles": [
+        "host-project",
+        "coverage-target"
+      ],
+      "source": {
+        "kind": "pinned-git",
+        "repository": "https://github.com/pytorch/executorch",
+        "revision": "1cfcdf8022325d86d7b745ff624f1a83c4d52d60"
+      },
+      "tier": "P2"
+    },
+    "fbgemm_gpu": {
+      "backends": [
+        "cuda"
+      ],
+      "build": {
+        "activation_scope": "explicitly-activated-candidate-only",
+        "adapter_id": "fbgemm_gpu-adapter-v1",
+        "compilation_mode": "adapter-aot",
+        "registry_load_compiles_candidate": false,
+        "registry_load_imports_candidate": false,
+        "selection_action": "metadata-only"
+      },
+      "default_eligible": true,
+      "display_name": "FBGEMM_GPU",
+      "id": "fbgemm_gpu",
+      "license_status": "declared",
+      "operator_families": [
+        "quantization"
+      ],
+      "phases": [
+        "training",
+        "inference"
+      ],
+      "roles": [
+        "peer-impl"
+      ],
+      "source": {
+        "kind": "pinned-git",
+        "repository": "https://github.com/pytorch/FBGEMM",
+        "revision": "f51f3f45b12d3b4d3e7f5233d52a50cf9dd46adc"
+      },
+      "tier": "P2"
+    },
+    "flash_attention": {
+      "backends": [
+        "cuda"
+      ],
+      "build": {
+        "activation_scope": "explicitly-activated-candidate-only",
+        "adapter_id": "flash_attention-adapter-v1",
+        "compilation_mode": "adapter-aot",
+        "registry_load_compiles_candidate": false,
+        "registry_load_imports_candidate": false,
+        "selection_action": "metadata-only"
+      },
+      "default_eligible": true,
+      "display_name": "FlashAttention",
+      "id": "flash_attention",
+      "license_status": "declared",
+      "operator_families": [
+        "attention-training",
+        "attention-inference-prefill"
+      ],
+      "phases": [
+        "training",
+        "inference"
+      ],
+      "roles": [
+        "peer-impl"
+      ],
+      "source": {
+        "kind": "pinned-git",
+        "repository": "https://github.com/Dao-AILab/flash-attention",
+        "revision": "ce088ab9ce0fc0434dcd8afa0a791da9fcc3a820"
+      },
+      "tier": "P0"
+    },
+    "flashinfer": {
+      "backends": [
+        "cuda"
+      ],
+      "build": {
+        "activation_scope": "explicitly-activated-candidate-only",
+        "adapter_id": "flashinfer-adapter-v1",
+        "compilation_mode": "adapter-jit",
+        "registry_load_compiles_candidate": false,
+        "registry_load_imports_candidate": false,
+        "selection_action": "metadata-only"
+      },
+      "default_eligible": true,
+      "display_name": "FlashInfer",
+      "id": "flashinfer",
+      "license_status": "declared",
+      "operator_families": [
+        "attention-inference-prefill",
+        "attention-inference-decode",
+        "paged-attention",
+        "quantization"
+      ],
+      "phases": [
+        "inference"
+      ],
+      "roles": [
+        "peer-impl"
+      ],
+      "source": {
+        "kind": "pinned-git",
+        "repository": "https://github.com/flashinfer-ai/flashinfer",
+        "revision": "9d0e6f82ffa23d4271c08e0e0d4fc638b6b707ea"
+      },
+      "tier": "P0"
+    },
+    "host_native": {
+      "backends": [
+        "generic",
+        "cuda",
+        "rocm",
+        "triton"
+      ],
+      "build": {
+        "activation_scope": "explicitly-activated-candidate-only",
+        "adapter_id": null,
+        "compilation_mode": "none",
+        "registry_load_compiles_candidate": false,
+        "registry_load_imports_candidate": false,
+        "selection_action": "metadata-only"
+      },
+      "default_eligible": true,
+      "display_name": "Host-native trace",
+      "id": "host_native",
+      "license_status": "draft-owned",
+      "operator_families": [
+        "generic",
+        "attention-training",
+        "attention-inference-prefill",
+        "attention-inference-decode",
+        "paged-attention",
+        "dense-gemm",
+        "grouped-moe-gemm",
+        "training-fused-ops",
+        "quantization",
+        "communication-collective",
+        "moe-dispatch-combine",
+        "gpu-initiated-communication"
+      ],
+      "phases": [
+        "generic",
+        "training",
+        "inference",
+        "communication"
+      ],
+      "roles": [
+        "workload-source"
+      ],
+      "source": {
+        "kind": "draft-relative",
+        "repository": null,
+        "revision": null
+      },
+      "tier": "P0"
+    },
+    "kernelbench": {
+      "backends": [
+        "cuda",
+        "triton"
+      ],
+      "build": {
+        "activation_scope": "explicitly-activated-candidate-only",
+        "adapter_id": null,
+        "compilation_mode": "none",
+        "registry_load_compiles_candidate": false,
+        "registry_load_imports_candidate": false,
+        "selection_action": "metadata-only"
+      },
+      "default_eligible": true,
+      "display_name": "KernelBench",
+      "id": "kernelbench",
+      "license_status": "declared",
+      "operator_families": [
+        "generic",
+        "attention-training",
+        "attention-inference-prefill",
+        "attention-inference-decode",
+        "paged-attention",
+        "dense-gemm",
+        "grouped-moe-gemm",
+        "training-fused-ops",
+        "quantization",
+        "communication-collective",
+        "moe-dispatch-combine",
+        "gpu-initiated-communication"
+      ],
+      "phases": [
+        "training",
+        "inference"
+      ],
+      "roles": [
+        "workload-source"
+      ],
+      "source": {
+        "kind": "pinned-git",
+        "repository": "https://github.com/ScalingIntelligence/KernelBench",
+        "revision": "423217d9fda91e0c2d67e4a43bf62f96f6d104f1"
+      },
+      "tier": "P2"
+    },
+    "liger_kernel": {
+      "backends": [
+        "cuda",
+        "triton"
+      ],
+      "build": {
+        "activation_scope": "explicitly-activated-candidate-only",
+        "adapter_id": "liger_kernel-adapter-v1",
+        "compilation_mode": "adapter-jit",
+        "registry_load_compiles_candidate": false,
+        "registry_load_imports_candidate": false,
+        "selection_action": "metadata-only"
+      },
+      "default_eligible": true,
+      "display_name": "Liger-Kernel",
+      "id": "liger_kernel",
+      "license_status": "declared",
+      "operator_families": [
+        "training-fused-ops"
+      ],
+      "phases": [
+        "training"
+      ],
+      "roles": [
+        "peer-impl"
+      ],
+      "source": {
+        "kind": "pinned-git",
+        "repository": "https://github.com/linkedin/Liger-Kernel",
+        "revision": "e6a81bb0c34f31ca7806d0c2b72f6d66b0542694"
+      },
+      "tier": "P0"
+    },
+    "llama_cpp": {
+      "backends": [
+        "generic",
+        "cuda"
+      ],
+      "build": {
+        "activation_scope": "explicitly-activated-candidate-only",
+        "adapter_id": null,
+        "compilation_mode": "host-owned",
+        "registry_load_compiles_candidate": false,
+        "registry_load_imports_candidate": false,
+        "selection_action": "metadata-only"
+      },
+      "default_eligible": true,
+      "display_name": "llama.cpp",
+      "id": "llama_cpp",
+      "license_status": "declared",
+      "operator_families": [
+        "generic",
+        "attention-inference-decode",
+        "dense-gemm",
+        "quantization"
+      ],
+      "phases": [
+        "inference"
+      ],
+      "roles": [
+        "host-project",
+        "coverage-target"
+      ],
+      "source": {
+        "kind": "pinned-git",
+        "repository": "https://github.com/ggml-org/llama.cpp",
+        "revision": "c845263f8b7d60113e213a3bd2d5cc6472ccf204"
+      },
+      "tier": "P2"
+    },
+    "megatron_core": {
+      "backends": [
+        "cuda"
+      ],
+      "build": {
+        "activation_scope": "explicitly-activated-candidate-only",
+        "adapter_id": null,
+        "compilation_mode": "host-owned",
+        "registry_load_compiles_candidate": false,
+        "registry_load_imports_candidate": false,
+        "selection_action": "metadata-only"
+      },
+      "default_eligible": true,
+      "display_name": "Megatron-Core",
+      "id": "megatron_core",
+      "license_status": "declared",
+      "operator_families": [
+        "generic",
+        "attention-training",
+        "grouped-moe-gemm",
+        "training-fused-ops",
+        "quantization",
+        "communication-collective",
+        "moe-dispatch-combine",
+        "gpu-initiated-communication"
+      ],
+      "phases": [
+        "generic",
+        "training",
+        "communication"
+      ],
+      "roles": [
+        "host-project"
+      ],
+      "source": {
+        "kind": "pinned-git",
+        "repository": "https://github.com/NVIDIA/Megatron-LM",
+        "revision": "3c04d2bd2255c9652a687c3d5a5b9636467696db"
+      },
+      "tier": "P1"
+    },
+    "mlc_llm": {
+      "backends": [
+        "generic",
+        "cuda"
+      ],
+      "build": {
+        "activation_scope": "explicitly-activated-candidate-only",
+        "adapter_id": null,
+        "compilation_mode": "host-owned",
+        "registry_load_compiles_candidate": false,
+        "registry_load_imports_candidate": false,
+        "selection_action": "metadata-only"
+      },
+      "default_eligible": true,
+      "display_name": "MLC-LLM",
+      "id": "mlc_llm",
+      "license_status": "declared",
+      "operator_families": [
+        "generic",
+        "attention-inference-decode",
+        "dense-gemm",
+        "quantization"
+      ],
+      "phases": [
+        "inference"
+      ],
+      "roles": [
+        "host-project",
+        "coverage-target"
+      ],
+      "source": {
+        "kind": "pinned-git",
+        "repository": "https://github.com/mlc-ai/mlc-llm",
+        "revision": "9fa644f54b04983adea4d0168f49fc6af4a893ba"
+      },
+      "tier": "P2"
+    },
+    "nccl": {
+      "backends": [
+        "cuda"
+      ],
+      "build": {
+        "activation_scope": "explicitly-activated-candidate-only",
+        "adapter_id": null,
+        "compilation_mode": "environment-provided",
+        "registry_load_compiles_candidate": false,
+        "registry_load_imports_candidate": false,
+        "selection_action": "metadata-only"
+      },
+      "default_eligible": true,
+      "display_name": "NCCL",
+      "id": "nccl",
+      "license_status": "declared",
+      "operator_families": [
+        "communication-collective"
+      ],
+      "phases": [
+        "communication"
+      ],
+      "roles": [
+        "peer-impl"
+      ],
+      "source": {
+        "kind": "pinned-git",
+        "repository": "https://github.com/NVIDIA/nccl",
+        "revision": "fd168324a3dc0c9080fd4881b6c7f4bb252a95a2"
+      },
+      "tier": "P1"
+    },
+    "nccl_runtime": {
+      "backends": [
+        "generic",
+        "cuda",
+        "rocm",
+        "triton"
+      ],
+      "build": {
+        "activation_scope": "explicitly-activated-candidate-only",
+        "adapter_id": null,
+        "compilation_mode": "environment-provided",
+        "registry_load_compiles_candidate": false,
+        "registry_load_imports_candidate": false,
+        "selection_action": "metadata-only"
+      },
+      "default_eligible": true,
+      "display_name": "NCCL runtime oracle",
+      "id": "nccl_runtime",
+      "license_status": "runtime-provided",
+      "operator_families": [
+        "communication-collective"
+      ],
+      "phases": [
+        "generic",
+        "training",
+        "inference",
+        "communication"
+      ],
+      "roles": [
+        "oracle"
+      ],
+      "source": {
+        "kind": "runtime-builtin",
+        "repository": null,
+        "revision": null
+      },
+      "tier": "P0"
+    },
+    "nvshmem": {
+      "backends": [
+        "cuda"
+      ],
+      "build": {
+        "activation_scope": "explicitly-activated-candidate-only",
+        "adapter_id": "nvshmem-adapter-v1",
+        "compilation_mode": "adapter-aot",
+        "registry_load_compiles_candidate": false,
+        "registry_load_imports_candidate": false,
+        "selection_action": "metadata-only"
+      },
+      "default_eligible": true,
+      "display_name": "NVSHMEM",
+      "id": "nvshmem",
+      "license_status": "declared",
+      "operator_families": [
+        "gpu-initiated-communication"
+      ],
+      "phases": [
+        "communication"
+      ],
+      "roles": [
+        "peer-impl"
+      ],
+      "source": {
+        "kind": "pinned-git",
+        "repository": "https://github.com/NVIDIA/nvshmem",
+        "revision": "b0d9d3dc08fc3ee0840fdb6f3a2c11932d85a2e2"
+      },
+      "tier": "P2"
+    },
+    "online_inference": {
+      "backends": [
+        "generic",
+        "cuda",
+        "rocm",
+        "triton"
+      ],
+      "build": {
+        "activation_scope": "explicitly-activated-candidate-only",
+        "adapter_id": null,
+        "compilation_mode": "environment-provided",
+        "registry_load_compiles_candidate": false,
+        "registry_load_imports_candidate": false,
+        "selection_action": "metadata-only"
+      },
+      "default_eligible": true,
+      "display_name": "Online inference",
+      "id": "online_inference",
+      "license_status": "runtime-provided",
+      "operator_families": [
+        "generic",
+        "attention-training",
+        "attention-inference-prefill",
+        "attention-inference-decode",
+        "paged-attention",
+        "dense-gemm",
+        "grouped-moe-gemm",
+        "training-fused-ops",
+        "quantization",
+        "communication-collective",
+        "moe-dispatch-combine",
+        "gpu-initiated-communication"
+      ],
+      "phases": [
+        "generic",
+        "training",
+        "inference",
+        "communication"
+      ],
+      "roles": [
+        "coverage-target"
+      ],
+      "source": {
+        "kind": "runtime-builtin",
+        "repository": null,
+        "revision": null
+      },
+      "tier": "P0"
+    },
+    "project_original": {
+      "backends": [
+        "generic",
+        "cuda",
+        "rocm",
+        "triton"
+      ],
+      "build": {
+        "activation_scope": "explicitly-activated-candidate-only",
+        "adapter_id": null,
+        "compilation_mode": "none",
+        "registry_load_compiles_candidate": false,
+        "registry_load_imports_candidate": false,
+        "selection_action": "metadata-only"
+      },
+      "default_eligible": true,
+      "display_name": "Project original",
+      "id": "project_original",
+      "license_status": "draft-owned",
+      "operator_families": [
+        "generic",
+        "attention-training",
+        "attention-inference-prefill",
+        "attention-inference-decode",
+        "paged-attention",
+        "dense-gemm",
+        "grouped-moe-gemm",
+        "training-fused-ops",
+        "quantization",
+        "communication-collective",
+        "moe-dispatch-combine",
+        "gpu-initiated-communication"
+      ],
+      "phases": [
+        "generic",
+        "training",
+        "inference",
+        "communication"
+      ],
+      "roles": [
+        "oracle"
+      ],
+      "source": {
+        "kind": "draft-relative",
+        "repository": null,
+        "revision": null
+      },
+      "tier": "P0"
+    },
+    "python_reference": {
+      "backends": [
+        "generic",
+        "cuda",
+        "rocm",
+        "triton"
+      ],
+      "build": {
+        "activation_scope": "explicitly-activated-candidate-only",
+        "adapter_id": null,
+        "compilation_mode": "none",
+        "registry_load_compiles_candidate": false,
+        "registry_load_imports_candidate": false,
+        "selection_action": "metadata-only"
+      },
+      "default_eligible": true,
+      "display_name": "Minimal Python reference",
+      "id": "python_reference",
+      "license_status": "draft-owned",
+      "operator_families": [
+        "generic",
+        "attention-training",
+        "attention-inference-prefill",
+        "attention-inference-decode",
+        "paged-attention",
+        "dense-gemm",
+        "grouped-moe-gemm",
+        "training-fused-ops",
+        "quantization",
+        "communication-collective",
+        "moe-dispatch-combine",
+        "gpu-initiated-communication"
+      ],
+      "phases": [
+        "generic",
+        "training",
+        "inference",
+        "communication"
+      ],
+      "roles": [
+        "oracle"
+      ],
+      "source": {
+        "kind": "draft-relative",
+        "repository": null,
+        "revision": null
+      },
+      "tier": "P0"
+    },
+    "reference_scatter_gather": {
+      "backends": [
+        "generic",
+        "cuda",
+        "rocm",
+        "triton"
+      ],
+      "build": {
+        "activation_scope": "explicitly-activated-candidate-only",
+        "adapter_id": null,
+        "compilation_mode": "none",
+        "registry_load_compiles_candidate": false,
+        "registry_load_imports_candidate": false,
+        "selection_action": "metadata-only"
+      },
+      "default_eligible": true,
+      "display_name": "Reference scatter/gather",
+      "id": "reference_scatter_gather",
+      "license_status": "draft-owned",
+      "operator_families": [
+        "moe-dispatch-combine"
+      ],
+      "phases": [
+        "generic",
+        "training",
+        "inference",
+        "communication"
+      ],
+      "roles": [
+        "oracle"
+      ],
+      "source": {
+        "kind": "draft-relative",
+        "repository": null,
+        "revision": null
+      },
+      "tier": "P0"
+    },
+    "rocm_coverage": {
+      "backends": [
+        "generic",
+        "cuda",
+        "rocm",
+        "triton"
+      ],
+      "build": {
+        "activation_scope": "explicitly-activated-candidate-only",
+        "adapter_id": null,
+        "compilation_mode": "environment-provided",
+        "registry_load_compiles_candidate": false,
+        "registry_load_imports_candidate": false,
+        "selection_action": "metadata-only"
+      },
+      "default_eligible": true,
+      "display_name": "ROCm",
+      "id": "rocm_coverage",
+      "license_status": "runtime-provided",
+      "operator_families": [
+        "generic",
+        "attention-training",
+        "attention-inference-prefill",
+        "attention-inference-decode",
+        "paged-attention",
+        "dense-gemm",
+        "grouped-moe-gemm",
+        "training-fused-ops",
+        "quantization",
+        "communication-collective",
+        "moe-dispatch-combine",
+        "gpu-initiated-communication"
+      ],
+      "phases": [
+        "generic",
+        "training",
+        "inference",
+        "communication"
+      ],
+      "roles": [
+        "coverage-target"
+      ],
+      "source": {
+        "kind": "runtime-builtin",
+        "repository": null,
+        "revision": null
+      },
+      "tier": "P0"
+    },
+    "sglang": {
+      "backends": [
+        "cuda",
+        "rocm"
+      ],
+      "build": {
+        "activation_scope": "explicitly-activated-candidate-only",
+        "adapter_id": null,
+        "compilation_mode": "host-owned",
+        "registry_load_compiles_candidate": false,
+        "registry_load_imports_candidate": false,
+        "selection_action": "metadata-only"
+      },
+      "default_eligible": true,
+      "display_name": "SGLang",
+      "id": "sglang",
+      "license_status": "declared",
+      "operator_families": [
+        "generic",
+        "attention-inference-prefill",
+        "attention-inference-decode",
+        "paged-attention",
+        "grouped-moe-gemm",
+        "quantization",
+        "communication-collective",
+        "moe-dispatch-combine"
+      ],
+      "phases": [
+        "generic",
+        "inference",
+        "communication"
+      ],
+      "roles": [
+        "host-project",
+        "peer-impl"
+      ],
+      "source": {
+        "kind": "pinned-git",
+        "repository": "https://github.com/sgl-project/sglang",
+        "revision": "bb3e3cbceb510b05109d3dfdcbbd07a1a2905314"
+      },
+      "tier": "P0"
+    },
+    "synthetic_boundary": {
+      "backends": [
+        "generic",
+        "cuda",
+        "rocm",
+        "triton"
+      ],
+      "build": {
+        "activation_scope": "explicitly-activated-candidate-only",
+        "adapter_id": null,
+        "compilation_mode": "none",
+        "registry_load_compiles_candidate": false,
+        "registry_load_imports_candidate": false,
+        "selection_action": "metadata-only"
+      },
+      "default_eligible": true,
+      "display_name": "Synthetic boundary generator",
+      "id": "synthetic_boundary",
+      "license_status": "draft-owned",
+      "operator_families": [
+        "generic",
+        "attention-training",
+        "attention-inference-prefill",
+        "attention-inference-decode",
+        "paged-attention",
+        "dense-gemm",
+        "grouped-moe-gemm",
+        "training-fused-ops",
+        "quantization",
+        "communication-collective",
+        "moe-dispatch-combine",
+        "gpu-initiated-communication"
+      ],
+      "phases": [
+        "generic",
+        "training",
+        "inference",
+        "communication"
+      ],
+      "roles": [
+        "workload-source"
+      ],
+      "source": {
+        "kind": "draft-relative",
+        "repository": null,
+        "revision": null
+      },
+      "tier": "P0"
+    },
+    "tensorrt_llm": {
+      "backends": [
+        "cuda"
+      ],
+      "build": {
+        "activation_scope": "explicitly-activated-candidate-only",
+        "adapter_id": null,
+        "compilation_mode": "host-owned",
+        "registry_load_compiles_candidate": false,
+        "registry_load_imports_candidate": false,
+        "selection_action": "metadata-only"
+      },
+      "default_eligible": true,
+      "display_name": "TensorRT-LLM",
+      "id": "tensorrt_llm",
+      "license_status": "declared",
+      "operator_families": [
+        "attention-inference-prefill",
+        "attention-inference-decode",
+        "paged-attention",
+        "dense-gemm",
+        "grouped-moe-gemm",
+        "quantization"
+      ],
+      "phases": [
+        "inference"
+      ],
+      "roles": [
+        "host-project"
+      ],
+      "source": {
+        "kind": "pinned-git",
+        "repository": "https://github.com/NVIDIA/TensorRT-LLM",
+        "revision": "5fb68830c919b8dbcc07cb1095f5e7d369509919"
+      },
+      "tier": "P2"
+    },
+    "torch_eager": {
+      "backends": [
+        "generic",
+        "cuda",
+        "rocm",
+        "triton"
+      ],
+      "build": {
+        "activation_scope": "explicitly-activated-candidate-only",
+        "adapter_id": null,
+        "compilation_mode": "environment-provided",
+        "registry_load_compiles_candidate": false,
+        "registry_load_imports_candidate": false,
+        "selection_action": "metadata-only"
+      },
+      "default_eligible": true,
+      "display_name": "PyTorch eager",
+      "id": "torch_eager",
+      "license_status": "runtime-provided",
+      "operator_families": [
+        "generic",
+        "attention-training",
+        "attention-inference-prefill",
+        "attention-inference-decode",
+        "paged-attention",
+        "dense-gemm",
+        "grouped-moe-gemm",
+        "training-fused-ops",
+        "quantization",
+        "communication-collective",
+        "moe-dispatch-combine",
+        "gpu-initiated-communication"
+      ],
+      "phases": [
+        "generic",
+        "training",
+        "inference",
+        "communication"
+      ],
+      "roles": [
+        "oracle"
+      ],
+      "source": {
+        "kind": "runtime-builtin",
+        "repository": null,
+        "revision": null
+      },
+      "tier": "P0"
+    },
+    "torchao": {
+      "backends": [
+        "cuda",
+        "rocm"
+      ],
+      "build": {
+        "activation_scope": "explicitly-activated-candidate-only",
+        "adapter_id": "torchao-adapter-v1",
+        "compilation_mode": "adapter-aot",
+        "registry_load_compiles_candidate": false,
+        "registry_load_imports_candidate": false,
+        "selection_action": "metadata-only"
+      },
+      "default_eligible": true,
+      "display_name": "TorchAO",
+      "id": "torchao",
+      "license_status": "declared",
+      "operator_families": [
+        "quantization"
+      ],
+      "phases": [
+        "training",
+        "inference"
+      ],
+      "roles": [
+        "peer-impl"
+      ],
+      "source": {
+        "kind": "pinned-git",
+        "repository": "https://github.com/pytorch/ao",
+        "revision": "86d5d96ebb2d8be1bc13e3a0f5334130e5ad3ad6"
+      },
+      "tier": "P1"
+    },
+    "torchtitan": {
+      "backends": [
+        "cuda",
+        "triton"
+      ],
+      "build": {
+        "activation_scope": "explicitly-activated-candidate-only",
+        "adapter_id": null,
+        "compilation_mode": "host-owned",
+        "registry_load_compiles_candidate": false,
+        "registry_load_imports_candidate": false,
+        "selection_action": "metadata-only"
+      },
+      "default_eligible": true,
+      "display_name": "TorchTitan",
+      "id": "torchtitan",
+      "license_status": "declared",
+      "operator_families": [
+        "generic",
+        "attention-training",
+        "training-fused-ops",
+        "quantization"
+      ],
+      "phases": [
+        "generic",
+        "training"
+      ],
+      "roles": [
+        "host-project"
+      ],
+      "source": {
+        "kind": "pinned-git",
+        "repository": "https://github.com/pytorch/torchtitan",
+        "revision": "496b11d43860bb8d27b54568c76db6310ae7f55e"
+      },
+      "tier": "P1"
+    },
+    "training_coverage": {
+      "backends": [
+        "generic",
+        "cuda",
+        "rocm",
+        "triton"
+      ],
+      "build": {
+        "activation_scope": "explicitly-activated-candidate-only",
+        "adapter_id": null,
+        "compilation_mode": "environment-provided",
+        "registry_load_compiles_candidate": false,
+        "registry_load_imports_candidate": false,
+        "selection_action": "metadata-only"
+      },
+      "default_eligible": true,
+      "display_name": "Training",
+      "id": "training_coverage",
+      "license_status": "runtime-provided",
+      "operator_families": [
+        "generic",
+        "attention-training",
+        "attention-inference-prefill",
+        "attention-inference-decode",
+        "paged-attention",
+        "dense-gemm",
+        "grouped-moe-gemm",
+        "training-fused-ops",
+        "quantization",
+        "communication-collective",
+        "moe-dispatch-combine",
+        "gpu-initiated-communication"
+      ],
+      "phases": [
+        "generic",
+        "training",
+        "inference",
+        "communication"
+      ],
+      "roles": [
+        "coverage-target"
+      ],
+      "source": {
+        "kind": "runtime-builtin",
+        "repository": null,
+        "revision": null
+      },
+      "tier": "P0"
+    },
+    "transformer_engine": {
+      "backends": [
+        "cuda"
+      ],
+      "build": {
+        "activation_scope": "explicitly-activated-candidate-only",
+        "adapter_id": "transformer_engine-adapter-v1",
+        "compilation_mode": "adapter-aot",
+        "registry_load_compiles_candidate": false,
+        "registry_load_imports_candidate": false,
+        "selection_action": "metadata-only"
+      },
+      "default_eligible": true,
+      "display_name": "Transformer Engine",
+      "id": "transformer_engine",
+      "license_status": "declared",
+      "operator_families": [
+        "attention-training",
+        "dense-gemm",
+        "training-fused-ops",
+        "quantization"
+      ],
+      "phases": [
+        "training"
+      ],
+      "roles": [
+        "peer-impl"
+      ],
+      "source": {
+        "kind": "pinned-git",
+        "repository": "https://github.com/NVIDIA/TransformerEngine",
+        "revision": "f307af80275d473b4177415552f492f4797a1e39"
+      },
+      "tier": "P1"
+    },
+    "tritonbench": {
+      "backends": [
+        "cuda",
+        "rocm",
+        "triton"
+      ],
+      "build": {
+        "activation_scope": "explicitly-activated-candidate-only",
+        "adapter_id": null,
+        "compilation_mode": "none",
+        "registry_load_compiles_candidate": false,
+        "registry_load_imports_candidate": false,
+        "selection_action": "metadata-only"
+      },
+      "default_eligible": true,
+      "display_name": "TritonBench",
+      "id": "tritonbench",
+      "license_status": "declared",
+      "operator_families": [
+        "generic",
+        "attention-training",
+        "attention-inference-prefill",
+        "attention-inference-decode",
+        "paged-attention",
+        "dense-gemm",
+        "grouped-moe-gemm",
+        "training-fused-ops",
+        "quantization",
+        "communication-collective",
+        "moe-dispatch-combine",
+        "gpu-initiated-communication"
+      ],
+      "phases": [
+        "training",
+        "inference"
+      ],
+      "roles": [
+        "workload-source"
+      ],
+      "source": {
+        "kind": "pinned-git",
+        "repository": "https://github.com/pytorch-labs/tritonbench",
+        "revision": "e5c687f5ec4c3ebb5e64334a64db37b29d399f15"
+      },
+      "tier": "P1"
+    },
+    "user_custom": {
+      "backends": [
+        "generic",
+        "cuda",
+        "rocm",
+        "triton"
+      ],
+      "build": {
+        "activation_scope": "explicitly-activated-candidate-only",
+        "adapter_id": null,
+        "compilation_mode": "none",
+        "registry_load_compiles_candidate": false,
+        "registry_load_imports_candidate": false,
+        "selection_action": "metadata-only"
+      },
+      "default_eligible": true,
+      "display_name": "User custom workload",
+      "id": "user_custom",
+      "license_status": "draft-owned",
+      "operator_families": [
+        "generic",
+        "attention-training",
+        "attention-inference-prefill",
+        "attention-inference-decode",
+        "paged-attention",
+        "dense-gemm",
+        "grouped-moe-gemm",
+        "training-fused-ops",
+        "quantization",
+        "communication-collective",
+        "moe-dispatch-combine",
+        "gpu-initiated-communication"
+      ],
+      "phases": [
+        "generic",
+        "training",
+        "inference",
+        "communication"
+      ],
+      "roles": [
+        "workload-source"
+      ],
+      "source": {
+        "kind": "draft-relative",
+        "repository": null,
+        "revision": null
+      },
+      "tier": "P0"
+    },
+    "verl": {
+      "backends": [
+        "cuda",
+        "triton"
+      ],
+      "build": {
+        "activation_scope": "explicitly-activated-candidate-only",
+        "adapter_id": null,
+        "compilation_mode": "host-owned",
+        "registry_load_compiles_candidate": false,
+        "registry_load_imports_candidate": false,
+        "selection_action": "metadata-only"
+      },
+      "default_eligible": true,
+      "display_name": "verl",
+      "id": "verl",
+      "license_status": "declared",
+      "operator_families": [
+        "training-fused-ops",
+        "generic"
+      ],
+      "phases": [
+        "generic",
+        "training"
+      ],
+      "roles": [
+        "host-project"
+      ],
+      "source": {
+        "kind": "pinned-git",
+        "repository": "https://github.com/volcengine/verl",
+        "revision": "c2429f29a25d573f63d9bcc29e7ceb690817dce9"
+      },
+      "tier": "P1"
+    },
+    "vllm": {
+      "backends": [
+        "cuda",
+        "rocm"
+      ],
+      "build": {
+        "activation_scope": "explicitly-activated-candidate-only",
+        "adapter_id": null,
+        "compilation_mode": "host-owned",
+        "registry_load_compiles_candidate": false,
+        "registry_load_imports_candidate": false,
+        "selection_action": "metadata-only"
+      },
+      "default_eligible": true,
+      "display_name": "vLLM",
+      "id": "vllm",
+      "license_status": "declared",
+      "operator_families": [
+        "generic",
+        "attention-inference-prefill",
+        "attention-inference-decode",
+        "paged-attention",
+        "grouped-moe-gemm",
+        "quantization",
+        "communication-collective",
+        "moe-dispatch-combine",
+        "gpu-initiated-communication"
+      ],
+      "phases": [
+        "generic",
+        "inference",
+        "communication"
+      ],
+      "roles": [
+        "host-project",
+        "peer-impl"
+      ],
+      "source": {
+        "kind": "pinned-git",
+        "repository": "https://github.com/vllm-project/vllm",
+        "revision": "cdefd9d4997f00da72dc6245cc60678b50761b7e"
+      },
+      "tier": "P0"
+    },
+    "xformers": {
+      "backends": [
+        "cuda",
+        "triton"
+      ],
+      "build": {
+        "activation_scope": "explicitly-activated-candidate-only",
+        "adapter_id": "xformers-adapter-v1",
+        "compilation_mode": "adapter-aot",
+        "registry_load_compiles_candidate": false,
+        "registry_load_imports_candidate": false,
+        "selection_action": "metadata-only"
+      },
+      "default_eligible": true,
+      "display_name": "xFormers",
+      "id": "xformers",
+      "license_status": "declared",
+      "operator_families": [
+        "attention-training",
+        "attention-inference-prefill"
+      ],
+      "phases": [
+        "training",
+        "inference"
+      ],
+      "roles": [
+        "peer-impl"
+      ],
+      "source": {
+        "kind": "pinned-git",
+        "repository": "https://github.com/facebookresearch/xformers",
+        "revision": "029779dabdf19ce75dcb6c4a648535136d990639"
+      },
+      "tier": "P2"
+    }
+  },
+  "fallback_chains": {
+    "attention": [
+      "flashinfer",
+      "flash_attention",
+      "vllm",
+      "torch_eager",
+      "python_reference"
+    ],
+    "communication": [
+      "deepep",
+      "nvshmem",
+      "nccl",
+      "project_original",
+      "python_reference"
+    ],
+    "gemm": [
+      "deepgemm",
+      "cutlass_cute",
+      "cublaslt",
+      "torch_eager",
+      "python_reference"
+    ],
+    "generic": [
+      "project_original",
+      "torch_eager",
+      "python_reference"
+    ],
+    "training-fused-ops": [
+      "liger_kernel",
+      "transformer_engine",
+      "project_original",
+      "torch_eager"
+    ]
+  },
+  "learned_model_used": false,
+  "registry_version": "default-candidates-v0.5-proposed.1",
+  "rules": [
+    {
+      "backends": [
+        "cuda",
+        "triton"
+      ],
+      "coverage_targets": [
+        "cuda_datacenter",
+        "training_coverage"
+      ],
+      "hosts": [
+        "torchtitan",
+        "megatron_core"
+      ],
+      "id": "01-attention-training-cuda-triton",
+      "operator_family": "attention-training",
+      "oracles": [
+        "torch_eager",
+        "project_original"
+      ],
+      "order": 1,
+      "phases": [
+        "training"
+      ],
+      "primary_peer_impl": "flash_attention",
+      "required_tests": [
+        "forward-correctness",
+        "backward-correctness",
+        "gradient-error",
+        "long-sequence",
+        "compile-cache-reuse"
+      ],
+      "secondary_peer_impls": [
+        "transformer_engine",
+        "xformers"
+      ],
+      "workload_sources": [
+        "host_native",
+        "synthetic_boundary",
+        "tritonbench"
+      ]
+    },
+    {
+      "backends": [
+        "cuda"
+      ],
+      "coverage_targets": [
+        "cuda_datacenter",
+        "online_inference"
+      ],
+      "hosts": [
+        "vllm",
+        "sglang",
+        "tensorrt_llm"
+      ],
+      "id": "02-attention-inference-prefill-cuda",
+      "operator_family": "attention-inference-prefill",
+      "oracles": [
+        "torch_eager",
+        "project_original"
+      ],
+      "order": 2,
+      "phases": [
+        "inference"
+      ],
+      "primary_peer_impl": "flashinfer",
+      "required_tests": [
+        "prefill-correctness",
+        "varlen",
+        "paged-kv",
+        "graph-capture",
+        "concurrent-streams"
+      ],
+      "secondary_peer_impls": [
+        "flash_attention",
+        "vllm"
+      ],
+      "workload_sources": [
+        "host_native",
+        "synthetic_boundary",
+        "tritonbench"
+      ]
+    },
+    {
+      "backends": [
+        "cuda"
+      ],
+      "coverage_targets": [
+        "cuda_datacenter",
+        "online_inference"
+      ],
+      "hosts": [
+        "vllm",
+        "sglang"
+      ],
+      "id": "03-attention-inference-decode-cuda",
+      "operator_family": "attention-inference-decode",
+      "oracles": [
+        "torch_eager",
+        "project_original"
+      ],
+      "order": 3,
+      "phases": [
+        "inference"
+      ],
+      "primary_peer_impl": "flashinfer",
+      "required_tests": [
+        "decode-correctness",
+        "paged-kv",
+        "batch-variation",
+        "graph-capture",
+        "concurrent-streams"
+      ],
+      "secondary_peer_impls": [
+        "vllm",
+        "sglang"
+      ],
+      "workload_sources": [
+        "host_native",
+        "synthetic_boundary",
+        "tritonbench"
+      ]
+    },
+    {
+      "backends": [
+        "cuda"
+      ],
+      "coverage_targets": [
+        "cuda_datacenter",
+        "online_inference"
+      ],
+      "hosts": [
+        "vllm",
+        "sglang"
+      ],
+      "id": "04-paged-attention-cuda",
+      "operator_family": "paged-attention",
+      "oracles": [
+        "torch_eager",
+        "project_original"
+      ],
+      "order": 4,
+      "phases": [
+        "inference"
+      ],
+      "primary_peer_impl": "flashinfer",
+      "required_tests": [
+        "page-boundary",
+        "ragged-kv",
+        "decode-correctness",
+        "graph-capture",
+        "memory-peak"
+      ],
+      "secondary_peer_impls": [
+        "vllm"
+      ],
+      "workload_sources": [
+        "host_native",
+        "synthetic_boundary",
+        "tritonbench"
+      ]
+    },
+    {
+      "backends": [
+        "cuda"
+      ],
+      "coverage_targets": [
+        "cuda_datacenter"
+      ],
+      "hosts": [
+        "vllm",
+        "sglang",
+        "megatron_core"
+      ],
+      "id": "05-dense-gemm-cuda",
+      "operator_family": "dense-gemm",
+      "oracles": [
+        "torch_eager",
+        "cublaslt"
+      ],
+      "order": 5,
+      "phases": [
+        "training",
+        "inference",
+        "generic"
+      ],
+      "primary_peer_impl": "cutlass_cute",
+      "required_tests": [
+        "numerical-correctness",
+        "tiny-m",
+        "skinny-shape",
+        "non-aligned-k",
+        "concurrent-streams"
+      ],
+      "secondary_peer_impls": [
+        "deepgemm"
+      ],
+      "workload_sources": [
+        "host_native",
+        "synthetic_boundary",
+        "tritonbench"
+      ]
+    },
+    {
+      "backends": [
+        "cuda"
+      ],
+      "coverage_targets": [
+        "cuda_datacenter"
+      ],
+      "hosts": [
+        "vllm",
+        "sglang",
+        "megatron_core"
+      ],
+      "id": "06-grouped-moe-gemm-cuda",
+      "operator_family": "grouped-moe-gemm",
+      "oracles": [
+        "torch_eager",
+        "project_original"
+      ],
+      "order": 6,
+      "phases": [
+        "training",
+        "inference"
+      ],
+      "primary_peer_impl": "deepgemm",
+      "required_tests": [
+        "balanced-experts",
+        "long-tail-experts",
+        "tiny-m",
+        "non-aligned-k",
+        "concurrent-streams"
+      ],
+      "secondary_peer_impls": [
+        "cutlass_cute"
+      ],
+      "workload_sources": [
+        "host_native",
+        "synthetic_boundary",
+        "tritonbench"
+      ]
+    },
+    {
+      "backends": [
+        "cuda",
+        "triton"
+      ],
+      "coverage_targets": [
+        "cuda_datacenter",
+        "training_coverage"
+      ],
+      "hosts": [
+        "torchtitan",
+        "megatron_core",
+        "verl"
+      ],
+      "id": "07-training-fused-ops-cuda-triton",
+      "operator_family": "training-fused-ops",
+      "oracles": [
+        "torch_eager",
+        "project_original"
+      ],
+      "order": 7,
+      "phases": [
+        "training"
+      ],
+      "primary_peer_impl": "liger_kernel",
+      "required_tests": [
+        "forward-correctness",
+        "backward-correctness",
+        "gradient-error",
+        "memory-peak",
+        "fsdp2-compatibility"
+      ],
+      "secondary_peer_impls": [
+        "transformer_engine"
+      ],
+      "workload_sources": [
+        "host_native",
+        "synthetic_boundary",
+        "tritonbench"
+      ]
+    },
+    {
+      "backends": [
+        "cuda"
+      ],
+      "coverage_targets": [
+        "cuda_datacenter"
+      ],
+      "hosts": [
+        "vllm",
+        "sglang",
+        "megatron_core"
+      ],
+      "id": "08-quantization-cuda",
+      "operator_family": "quantization",
+      "oracles": [
+        "torch_eager",
+        "project_original"
+      ],
+      "order": 8,
+      "phases": [
+        "training",
+        "inference"
+      ],
+      "primary_peer_impl": "torchao",
+      "required_tests": [
+        "quant-dequant-correctness",
+        "scale-layout",
+        "pack-unpack",
+        "batch-variation",
+        "memory-lifecycle"
+      ],
+      "secondary_peer_impls": [
+        "fbgemm_gpu",
+        "transformer_engine",
+        "vllm",
+        "sglang"
+      ],
+      "workload_sources": [
+        "host_native",
+        "synthetic_boundary",
+        "tritonbench"
+      ]
+    },
+    {
+      "backends": [
+        "cuda"
+      ],
+      "coverage_targets": [
+        "cuda_datacenter"
+      ],
+      "hosts": [
+        "megatron_core",
+        "vllm",
+        "sglang"
+      ],
+      "id": "09-communication-collective-cuda",
+      "operator_family": "communication-collective",
+      "oracles": [
+        "nccl_runtime"
+      ],
+      "order": 9,
+      "phases": [
+        "communication"
+      ],
+      "primary_peer_impl": "nccl",
+      "required_tests": [
+        "rank-branch-consistency",
+        "deadlock-soak",
+        "stream-overlap",
+        "backpressure",
+        "multinode-stability"
+      ],
+      "secondary_peer_impls": [],
+      "workload_sources": [
+        "host_native",
+        "synthetic_boundary"
+      ]
+    },
+    {
+      "backends": [
+        "cuda"
+      ],
+      "coverage_targets": [
+        "cuda_datacenter"
+      ],
+      "hosts": [
+        "vllm",
+        "sglang",
+        "megatron_core"
+      ],
+      "id": "10-moe-dispatch-combine-cuda",
+      "operator_family": "moe-dispatch-combine",
+      "oracles": [
+        "reference_scatter_gather",
+        "project_original"
+      ],
+      "order": 10,
+      "phases": [
+        "communication",
+        "inference"
+      ],
+      "primary_peer_impl": "deepep",
+      "required_tests": [
+        "dispatch-correctness",
+        "variable-size",
+        "long-tail-experts",
+        "deadlock-soak",
+        "backpressure"
+      ],
+      "secondary_peer_impls": [
+        "nccl"
+      ],
+      "workload_sources": [
+        "host_native",
+        "synthetic_boundary"
+      ]
+    },
+    {
+      "backends": [
+        "cuda"
+      ],
+      "coverage_targets": [
+        "cuda_datacenter"
+      ],
+      "hosts": [
+        "megatron_core",
+        "vllm"
+      ],
+      "id": "11-gpu-initiated-communication-cuda",
+      "operator_family": "gpu-initiated-communication",
+      "oracles": [
+        "project_original",
+        "nccl_runtime"
+      ],
+      "order": 11,
+      "phases": [
+        "communication"
+      ],
+      "primary_peer_impl": "nvshmem",
+      "required_tests": [
+        "ordering",
+        "stream-overlap",
+        "deadlock-soak",
+        "backpressure",
+        "multinode-stability"
+      ],
+      "secondary_peer_impls": [
+        "nccl"
+      ],
+      "workload_sources": [
+        "host_native",
+        "synthetic_boundary"
+      ]
+    },
+    {
+      "backends": [
+        "rocm"
+      ],
+      "coverage_targets": [
+        "rocm_coverage"
+      ],
+      "hosts": [
+        "vllm",
+        "sglang"
+      ],
+      "id": "12-generic-rocm",
+      "operator_family": "generic",
+      "oracles": [
+        "torch_eager",
+        "project_original"
+      ],
+      "order": 12,
+      "phases": [
+        "generic",
+        "training",
+        "inference",
+        "communication"
+      ],
+      "primary_peer_impl": "aiter",
+      "required_tests": [
+        "numerical-correctness",
+        "unsupported-shape",
+        "profiler-evidence",
+        "concurrent-stability",
+        "memory-lifecycle"
+      ],
+      "secondary_peer_impls": [
+        "composable_kernel"
+      ],
+      "workload_sources": [
+        "host_native",
+        "synthetic_boundary",
+        "tritonbench"
+      ]
+    },
+    {
+      "backends": [
+        "generic",
+        "cuda",
+        "triton"
+      ],
+      "coverage_targets": [
+        "cuda_datacenter"
+      ],
+      "hosts": [
+        "vllm",
+        "sglang",
+        "torchtitan"
+      ],
+      "id": "13-generic-generic-cuda-triton",
+      "operator_family": "generic",
+      "oracles": [
+        "torch_eager",
+        "project_original"
+      ],
+      "order": 13,
+      "phases": [
+        "generic",
+        "inference",
+        "training",
+        "communication"
+      ],
+      "primary_peer_impl": "vllm",
+      "required_tests": [
+        "numerical-correctness",
+        "synthetic-boundary",
+        "host-integration",
+        "concurrent-stability",
+        "memory-lifecycle"
+      ],
+      "secondary_peer_impls": [
+        "sglang"
+      ],
+      "workload_sources": [
+        "host_native",
+        "synthetic_boundary",
+        "tritonbench"
+      ]
+    }
+  ],
+  "schema_version": "0.5",
+  "selection_policy_id": "ordered-role-match-v0.5-r1",
+  "source_capture_date": "2026-09-02",
+  "status": "proposed",
+  "weighted_score_used": false
+}

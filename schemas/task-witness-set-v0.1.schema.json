@@ -1,0 +1,119 @@
+{
+  "$defs": {
+    "FeasibilityWitness": {
+      "additionalProperties": false,
+      "properties": {
+        "build_recipe_sha256": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Build Recipe Sha256",
+          "type": "string"
+        },
+        "covers": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Covers",
+          "type": "array"
+        },
+        "grading_usage": {
+          "const": "forbidden",
+          "default": "forbidden",
+          "title": "Grading Usage",
+          "type": "string"
+        },
+        "kind": {
+          "enum": [
+            "reference-patch",
+            "reference-implementation",
+            "oracle-adapter",
+            "constructive-trace",
+            "approved-upstream",
+            "minimal-executable"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "known_limitations": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Known Limitations",
+          "type": "array"
+        },
+        "license_status": {
+          "enum": [
+            "redistributable",
+            "private-qualification-only",
+            "reviewed-exception"
+          ],
+          "title": "License Status",
+          "type": "string"
+        },
+        "reviewer": {
+          "title": "Reviewer",
+          "type": "string"
+        },
+        "sha256": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Sha256",
+          "type": "string"
+        },
+        "source_locator": {
+          "title": "Source Locator",
+          "type": "string"
+        },
+        "target_revision": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Target Revision",
+          "type": "string"
+        },
+        "witness_id": {
+          "title": "Witness Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "witness_id",
+        "kind",
+        "source_locator",
+        "sha256",
+        "target_revision",
+        "build_recipe_sha256",
+        "covers",
+        "license_status",
+        "reviewer"
+      ],
+      "title": "FeasibilityWitness",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "0.1",
+      "default": "0.1",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "witness_set_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Witness Set Sha256",
+      "type": "string"
+    },
+    "witnesses": {
+      "items": {
+        "$ref": "#/$defs/FeasibilityWitness"
+      },
+      "minItems": 1,
+      "title": "Witnesses",
+      "type": "array"
+    }
+  },
+  "required": [
+    "witnesses",
+    "witness_set_sha256"
+  ],
+  "title": "WitnessSet",
+  "type": "object"
+}

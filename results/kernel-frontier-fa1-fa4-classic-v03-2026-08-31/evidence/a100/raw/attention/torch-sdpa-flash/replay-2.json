@@ -1,0 +1,2443 @@
+{
+  "all_correct": true,
+  "backend": "torch-sdpa-flash",
+  "backend_version": "2.8.0+cu128",
+  "benchmark": "flash-attention-forward-portfolio-v1",
+  "benchmark_kind": "kernel-library",
+  "case_count": 5,
+  "cases": [
+    {
+      "case_group": "common",
+      "case_id": "common-b4-s512-h16-d64-noncausal",
+      "causal": false,
+      "correctness": {
+        "cosine_similarity": 0.9999973177909851,
+        "dynamic_input_changes_output": true,
+        "max_abs_error": 0.001953125,
+        "mean_abs_error": 8.327196701429784e-05,
+        "passed": true,
+        "relative_l2_error": 0.0023528304882347584
+      },
+      "dtype": "bfloat16",
+      "measurement": {
+        "blocks": [
+          {
+            "block_index": 1,
+            "candidate_latency_us": 52.945234007754564,
+            "candidate_positions_us": [
+              52.81988600104093,
+              53.07058201446821
+            ],
+            "order": "ABBA",
+            "reference_latency_us": 990.2989001984292,
+            "reference_positions_us": [
+              1026.1644403985206,
+              954.4333599983378
+            ]
+          },
+          {
+            "block_index": 2,
+            "candidate_latency_us": 52.87966934750085,
+            "candidate_positions_us": [
+              52.91630947881724,
+              52.843029216184455
+            ],
+            "order": "BAAB",
+            "reference_latency_us": 886.5334531094165,
+            "reference_positions_us": [
+              886.4789922186669,
+              886.5879140001663
+            ]
+          },
+          {
+            "block_index": 3,
+            "candidate_latency_us": 52.90956012273239,
+            "candidate_positions_us": [
+              52.92980819098693,
+              52.88931205447784
+            ],
+            "order": "ABBA",
+            "reference_latency_us": 887.0454341807265,
+            "reference_positions_us": [
+              886.7840056723737,
+              887.3068626890791
+            ]
+          },
+          {
+            "block_index": 4,
+            "candidate_latency_us": 52.77456761304492,
+            "candidate_positions_us": [
+              53.130363564931294,
+              52.41877166115856
+            ],
+            "order": "BAAB",
+            "reference_latency_us": 887.5574558339221,
+            "reference_positions_us": [
+              887.1979409075798,
+              887.9169707602643
+            ]
+          },
+          {
+            "block_index": 5,
+            "candidate_latency_us": 52.52483784591186,
+            "candidate_positions_us": [
+              52.47277010183101,
+              52.57690558999272
+            ],
+            "order": "BAAB",
+            "reference_latency_us": 887.1761484349028,
+            "reference_positions_us": [
+              887.1107710168717,
+              887.2415258529338
+            ]
+          },
+          {
+            "block_index": 6,
+            "candidate_latency_us": 52.38695378132908,
+            "candidate_positions_us": [
+              52.22785719819437,
+              52.546050364463795
+            ],
+            "order": "BAAB",
+            "reference_latency_us": 887.5465393066406,
+            "reference_positions_us": [
+              887.699046033494,
+              887.3940325797872
+            ]
+          },
+          {
+            "block_index": 7,
+            "candidate_latency_us": 52.61740172650181,
+            "candidate_positions_us": [
+              52.74853463900291,
+              52.48626881400071
+            ],
+            "order": "BAAB",
+            "reference_latency_us": 887.0127657626538,
+            "reference_positions_us": [
+              887.1761890167886,
+              886.8493425085189
+            ]
+          },
+          {
+            "block_index": 8,
+            "candidate_latency_us": 52.57401223910057,
+            "candidate_positions_us": [
+              52.47084120123624,
+              52.6771832769649
+            ],
+            "order": "BAAB",
+            "reference_latency_us": 887.3178197982463,
+            "reference_positions_us": [
+              887.372280688996,
+              887.2633589074967
+            ]
+          },
+          {
+            "block_index": 9,
+            "candidate_latency_us": 52.466018949749326,
+            "candidate_positions_us": [
+              52.399486247204564,
+              52.532551652294096
+            ],
+            "order": "ABBA",
+            "reference_latency_us": 887.1108115987574,
+            "reference_positions_us": [
+              887.2415258529338,
+              886.9800973445812
+            ]
+          },
+          {
+            "block_index": 10,
+            "candidate_latency_us": 52.262568428916,
+            "candidate_positions_us": [
+              52.39370313741393,
+              52.131433720418066
+            ],
+            "order": "ABBA",
+            "reference_latency_us": 887.1761890167886,
+            "reference_positions_us": [
+              886.9800973445812,
+              887.372280688996
+            ]
+          },
+          {
+            "block_index": 11,
+            "candidate_latency_us": 52.59233140676035,
+            "candidate_positions_us": [
+              52.21435848602467,
+              52.97030432749603
+            ],
+            "order": "BAAB",
+            "reference_latency_us": 886.936512399227,
+            "reference_positions_us": [
+              887.2415258529338,
+              886.6314989455203
+            ]
+          },
+          {
+            "block_index": 12,
+            "candidate_latency_us": 52.33295713665346,
+            "candidate_positions_us": [
+              52.20857178424038,
+              52.45734248906655
+            ],
+            "order": "BAAB",
+            "reference_latency_us": 887.4376175251414,
+            "reference_positions_us": [
+              887.65546108814,
+              887.2197739621427
+            ]
+          },
+          {
+            "block_index": 13,
+            "candidate_latency_us": 52.351276304313245,
+            "candidate_positions_us": [
+              52.272211135892995,
+              52.430341472733495
+            ],
+            "order": "BAAB",
+            "reference_latency_us": 887.2959867436834,
+            "reference_positions_us": [
+              887.1543559622257,
+              887.4376175251413
+            ]
+          },
+          {
+            "block_index": 14,
+            "candidate_latency_us": 52.792888576701536,
+            "candidate_positions_us": [
+              52.738893728022745,
+              52.84688342538033
+            ],
+            "order": "ABBA",
+            "reference_latency_us": 887.1652724895071,
+            "reference_positions_us": [
+              887.1979409075798,
+              887.1326040714345
+            ]
+          },
+          {
+            "block_index": 15,
+            "candidate_latency_us": 55.18800839641449,
+            "candidate_positions_us": [
+              52.49783862557564,
+              57.87817816725334
+            ],
+            "order": "ABBA",
+            "reference_latency_us": 889.2241538839137,
+            "reference_positions_us": [
+              887.0890191260804,
+              891.359288641747
+            ]
+          },
+          {
+            "block_index": 16,
+            "candidate_latency_us": 52.74274973321545,
+            "candidate_positions_us": [
+              53.00501735421448,
+              52.48048211221641
+            ],
+            "order": "ABBA",
+            "reference_latency_us": 887.2960273255694,
+            "reference_positions_us": [
+              887.4158656343501,
+              887.1761890167886
+            ]
+          },
+          {
+            "block_index": 17,
+            "candidate_latency_us": 52.45734069306972,
+            "candidate_positions_us": [
+              52.466983400046715,
+              52.44769798609272
+            ],
+            "order": "ABBA",
+            "reference_latency_us": 887.121728126039,
+            "reference_positions_us": [
+              887.1761890167886,
+              887.0672672352893
+            ]
+          },
+          {
+            "block_index": 18,
+            "candidate_latency_us": 52.85941948324947,
+            "candidate_positions_us": [
+              52.83917141499492,
+              52.87966755150401
+            ],
+            "order": "BAAB",
+            "reference_latency_us": 887.3722806889959,
+            "reference_positions_us": [
+              887.2197739621427,
+              887.5247874158493
+            ]
+          },
+          {
+            "block_index": 19,
+            "candidate_latency_us": 52.66946947058267,
+            "candidate_positions_us": [
+              52.88738315388308,
+              52.45155578728225
+            ],
+            "order": "ABBA",
+            "reference_latency_us": 887.2306499075382,
+            "reference_positions_us": [
+              887.0454341807264,
+              887.4158656343501
+            ]
+          },
+          {
+            "block_index": 20,
+            "candidate_latency_us": 53.170861497437215,
+            "candidate_positions_us": [
+              53.21135942994314,
+              53.130363564931294
+            ],
+            "order": "ABBA",
+            "reference_latency_us": 888.0585609598363,
+            "reference_positions_us": [
+              887.0890191260804,
+              889.0281027935921
+            ]
+          },
+          {
+            "block_index": 21,
+            "candidate_latency_us": 52.336814937842995,
+            "candidate_positions_us": [
+              52.45734248906655,
+              52.21628738661944
+            ],
+            "order": "ABBA",
+            "reference_latency_us": 887.5138708885679,
+            "reference_positions_us": [
+              887.2851107982879,
+              887.7426309788481
+            ]
+          },
+          {
+            "block_index": 22,
+            "candidate_latency_us": 52.65211295722344,
+            "candidate_positions_us": [
+              52.59618741195305,
+              52.70803850249382
+            ],
+            "order": "BAAB",
+            "reference_latency_us": 887.3831566343915,
+            "reference_positions_us": [
+              887.0890191260804,
+              887.6772941427027
+            ]
+          },
+          {
+            "block_index": 23,
+            "candidate_latency_us": 52.60293856403473,
+            "candidate_positions_us": [
+              52.49783862557564,
+              52.70803850249382
+            ],
+            "order": "ABBA",
+            "reference_latency_us": 887.1979814894655,
+            "reference_positions_us": [
+              886.8711755630818,
+              887.5247874158493
+            ]
+          },
+          {
+            "block_index": 24,
+            "candidate_latency_us": 55.98059436920224,
+            "candidate_positions_us": [
+              52.83917141499492,
+              59.122017323409544
+            ],
+            "order": "BAAB",
+            "reference_latency_us": 887.3286551617562,
+            "reference_positions_us": [
+              887.4593694159325,
+              887.1979409075798
+            ]
+          },
+          {
+            "block_index": 25,
+            "candidate_latency_us": 52.66561346538997,
+            "candidate_positions_us": [
+              52.920167280006766,
+              52.41105965077316
+            ],
+            "order": "BAAB",
+            "reference_latency_us": 887.3395716890376,
+            "reference_positions_us": [
+              887.5029543612866,
+              887.1761890167886
+            ]
+          },
+          {
+            "block_index": 26,
+            "candidate_latency_us": 52.41877166115856,
+            "candidate_positions_us": [
+              52.430341472733495,
+              52.40720184958363
+            ],
+            "order": "ABBA",
+            "reference_latency_us": 887.0236417080494,
+            "reference_positions_us": [
+              887.0018492353723,
+              887.0454341807264
+            ]
+          },
+          {
+            "block_index": 27,
+            "candidate_latency_us": 52.83917141499492,
+            "candidate_positions_us": [
+              53.05322909310264,
+              52.625113736887215
+            ],
+            "order": "ABBA",
+            "reference_latency_us": 887.2306499075382,
+            "reference_positions_us": [
+              887.0890191260804,
+              887.372280688996
+            ]
+          },
+          {
+            "block_index": 28,
+            "candidate_latency_us": 52.62704263748198,
+            "candidate_positions_us": [
+              52.70418070130429,
+              52.54990457365966
+            ],
+            "order": "BAAB",
+            "reference_latency_us": 887.4158250524642,
+            "reference_positions_us": [
+              887.3286957436419,
+              887.5029543612866
+            ]
+          },
+          {
+            "block_index": 29,
+            "candidate_latency_us": 52.999232448427016,
+            "candidate_positions_us": [
+              52.29342545044175,
+              53.70503944641228
+            ],
+            "order": "ABBA",
+            "reference_latency_us": 887.1870649621842,
+            "reference_positions_us": [
+              887.2415258529338,
+              887.1326040714345
+            ]
+          },
+          {
+            "block_index": 30,
+            "candidate_latency_us": 52.415880106263245,
+            "candidate_positions_us": [
+              52.285709848062695,
+              52.546050364463795
+            ],
+            "order": "BAAB",
+            "reference_latency_us": 886.9147199265501,
+            "reference_positions_us": [
+              886.7621726178108,
+              887.0672672352893
+            ]
+          }
+        ],
+        "candidate": "torch-sdpa-flash",
+        "candidate_pilot_us": 94.2080020904541,
+        "candidate_repetitions": 531,
+        "reference": "torch-sdpa-math",
+        "reference_pilot_us": 1068.0320262908936,
+        "reference_repetitions": 47
+      },
+      "profiler": {
+        "captured": true,
+        "cuda_events": [
+          {
+            "count": 1,
+            "device_time_us": 80.51199999999972,
+            "name": "aten::scaled_dot_product_attention",
+            "self_device_time_us": 0.0
+          },
+          {
+            "count": 1,
+            "device_time_us": 80.51199999999972,
+            "name": "aten::_scaled_dot_product_flash_attention",
+            "self_device_time_us": 0.0
+          },
+          {
+            "count": 1,
+            "device_time_us": 80.51199999999972,
+            "name": "aten::_flash_attention_forward",
+            "self_device_time_us": 40.25599999999986
+          },
+          {
+            "count": 1,
+            "device_time_us": 40.25599999999986,
+            "name": "Activity Buffer Request",
+            "self_device_time_us": 40.25599999999986
+          },
+          {
+            "count": 1,
+            "device_time_us": 40.25599999999986,
+            "name": "void pytorch_flash::flash_fwd_kernel<Flash_fwd_kernel_traits<64, 128, 128, 4, false, false, cutlass::bfloat16_t, Flash_kernel_traits<64, 128, 128, 4, cutlass::bfloat16_t> >, false, false, false, false, true, true, false, false>(pytorch_flash::Flash_fwd_params)",
+            "self_device_time_us": 40.25599999999986
+          }
+        ]
+      },
+      "shape": {
+        "batch": 4,
+        "head_dim": 64,
+        "heads": 16,
+        "seqlen": 512
+      },
+      "weight": 0.2,
+      "work_model": {
+        "known_omissions": [
+          "softmax scalar operations",
+          "scheduler and launch floors"
+        ],
+        "minimum_external_bytes": 16777216,
+        "semantic_flops": 4294967296,
+        "version": "attention-fwd-semantic-v1"
+      }
+    },
+    {
+      "case_group": "common",
+      "case_id": "common-b2-s1024-h16-d64-causal",
+      "causal": true,
+      "correctness": {
+        "cosine_similarity": 0.9999979734420776,
+        "dynamic_input_changes_output": true,
+        "max_abs_error": 0.015625,
+        "mean_abs_error": 0.00010229231702396646,
+        "passed": true,
+        "relative_l2_error": 0.0020626215264201164
+      },
+      "dtype": "bfloat16",
+      "measurement": {
+        "blocks": [
+          {
+            "block_index": 1,
+            "candidate_latency_us": 65.6363386545122,
+            "candidate_positions_us": [
+              65.78391728687484,
+              65.48876002214956
+            ],
+            "order": "ABBA",
+            "reference_latency_us": 1785.1395077175564,
+            "reference_positions_us": [
+              1785.5406867133247,
+              1784.738328721788
+            ]
+          },
+          {
+            "block_index": 2,
+            "candidate_latency_us": 65.53507147368437,
+            "candidate_positions_us": [
+              65.41005326107175,
+              65.66008968629698
+            ],
+            "order": "BAAB",
+            "reference_latency_us": 1784.2578181514034,
+            "reference_positions_us": [
+              1784.5511259856048,
+              1783.964510317202
+            ]
+          },
+          {
+            "block_index": 3,
+            "candidate_latency_us": 65.97671153382484,
+            "candidate_positions_us": [
+              65.3296879359654,
+              66.6237351316843
+            ],
+            "order": "BAAB",
+            "reference_latency_us": 1785.8553992377388,
+            "reference_positions_us": [
+              1785.6308265968605,
+              1786.0799718786168
+            ]
+          },
+          {
+            "block_index": 4,
+            "candidate_latency_us": 66.76472097203352,
+            "candidate_positions_us": [
+              65.55872378141984,
+              67.97071816264719
+            ],
+            "order": "ABBA",
+            "reference_latency_us": 1788.0035682960793,
+            "reference_positions_us": [
+              1784.9896748860676,
+              1791.017461706091
+            ]
+          },
+          {
+            "block_index": 5,
+            "candidate_latency_us": 65.4844892197761,
+            "candidate_positions_us": [
+              65.24727309959522,
+              65.72170533995697
+            ],
+            "order": "BAAB",
+            "reference_latency_us": 1785.553190443251,
+            "reference_positions_us": [
+              1785.1733454951534,
+              1785.9330353913483
+            ]
+          },
+          {
+            "block_index": 6,
+            "candidate_latency_us": 65.65124796044012,
+            "candidate_positions_us": [
+              65.82002659515318,
+              65.48246932572707
+            ],
+            "order": "ABBA",
+            "reference_latency_us": 1785.9549345793548,
+            "reference_positions_us": [
+              1785.289481834129,
+              1786.6203873245804
+            ]
+          },
+          {
+            "block_index": 7,
+            "candidate_latency_us": 65.36407549682365,
+            "candidate_positions_us": [
+              65.3082253276438,
+              65.4199256660035
+            ],
+            "order": "BAAB",
+            "reference_latency_us": 1784.9019368489585,
+            "reference_positions_us": [
+              1785.0761413574219,
+              1784.7277323404949
+            ]
+          },
+          {
+            "block_index": 8,
+            "candidate_latency_us": 65.49720882629015,
+            "candidate_positions_us": [
+              65.72210418511622,
+              65.27231346746409
+            ],
+            "order": "ABBA",
+            "reference_latency_us": 1786.143974021629,
+            "reference_positions_us": [
+              1786.4461828161168,
+              1785.8417652271412
+            ]
+          },
+          {
+            "block_index": 9,
+            "candidate_latency_us": 66.78704840302714,
+            "candidate_positions_us": [
+              65.80147437180545,
+              67.77262243424883
+            ],
+            "order": "BAAB",
+            "reference_latency_us": 1785.447085345233,
+            "reference_positions_us": [
+              1785.5668244538483,
+              1785.3273462366176
+            ]
+          },
+          {
+            "block_index": 10,
+            "candidate_latency_us": 65.49744181504656,
+            "candidate_positions_us": [
+              65.47803069246976,
+              65.51685293762334
+            ],
+            "order": "ABBA",
+            "reference_latency_us": 1786.2038788972077,
+            "reference_positions_us": [
+              1787.0554040979457,
+              1785.35235369647
+            ]
+          },
+          {
+            "block_index": 11,
+            "candidate_latency_us": 65.04804994255366,
+            "candidate_positions_us": [
+              64.95225009957703,
+              65.14384978553029
+            ],
+            "order": "BAAB",
+            "reference_latency_us": 1785.0572091561776,
+            "reference_positions_us": [
+              1784.9505389178241,
+              1785.1638793945312
+            ]
+          },
+          {
+            "block_index": 12,
+            "candidate_latency_us": 65.1175832649689,
+            "candidate_positions_us": [
+              65.36202203659784,
+              64.87314449333996
+            ],
+            "order": "BAAB",
+            "reference_latency_us": 1785.151375664605,
+            "reference_positions_us": [
+              1785.3629500777633,
+              1784.9398012514469
+            ]
+          },
+          {
+            "block_index": 13,
+            "candidate_latency_us": 65.04430632660355,
+            "candidate_positions_us": [
+              64.9546984560001,
+              65.13391419720699
+            ],
+            "order": "BAAB",
+            "reference_latency_us": 1785.2723156964337,
+            "reference_positions_us": [
+              1785.5241563585068,
+              1785.0204750343605
+            ]
+          },
+          {
+            "block_index": 14,
+            "candidate_latency_us": 65.01962728875517,
+            "candidate_positions_us": [
+              65.20116107064004,
+              64.83809350687031
+            ],
+            "order": "BAAB",
+            "reference_latency_us": 1785.4589532922814,
+            "reference_positions_us": [
+              1786.0835040057148,
+              1784.8344025788483
+            ]
+          },
+          {
+            "block_index": 15,
+            "candidate_latency_us": 66.24338098687909,
+            "candidate_positions_us": [
+              67.34397051003656,
+              65.14279146372161
+            ],
+            "order": "BAAB",
+            "reference_latency_us": 1786.0278376826534,
+            "reference_positions_us": [
+              1786.7555971498844,
+              1785.3000782154224
+            ]
+          },
+          {
+            "block_index": 16,
+            "candidate_latency_us": 65.27397005701164,
+            "candidate_positions_us": [
+              65.39786281546203,
+              65.15007729856124
+            ],
+            "order": "ABBA",
+            "reference_latency_us": 1785.3191517017506,
+            "reference_positions_us": [
+              1785.2978176540798,
+              1785.3404857494213
+            ]
+          },
+          {
+            "block_index": 17,
+            "candidate_latency_us": 64.93101455656884,
+            "candidate_positions_us": [
+              64.90149804030392,
+              64.96053107283377
+            ],
+            "order": "ABBA",
+            "reference_latency_us": 1785.0868083812572,
+            "reference_positions_us": [
+              1785.0418090820312,
+              1785.1318076804832
+            ]
+          },
+          {
+            "block_index": 18,
+            "candidate_latency_us": 65.00084405113205,
+            "candidate_positions_us": [
+              65.02618651459183,
+              64.97550158767227
+            ],
+            "order": "BAAB",
+            "reference_latency_us": 1785.1069415057148,
+            "reference_positions_us": [
+              1785.7256288881656,
+              1784.488254123264
+            ]
+          },
+          {
+            "block_index": 19,
+            "candidate_latency_us": 65.03612407739612,
+            "candidate_positions_us": [
+              64.88116088614454,
+              65.19108726864769
+            ],
+            "order": "ABBA",
+            "reference_latency_us": 1785.601227371781,
+            "reference_positions_us": [
+              1786.053975423177,
+              1785.148479320385
+            ]
+          },
+          {
+            "block_index": 20,
+            "candidate_latency_us": 66.5739801853093,
+            "candidate_positions_us": [
+              65.24694138678952,
+              67.90101898382909
+            ],
+            "order": "ABBA",
+            "reference_latency_us": 1787.3492770724827,
+            "reference_positions_us": [
+              1785.1566738552517,
+              1789.5418802897136
+            ]
+          },
+          {
+            "block_index": 21,
+            "candidate_latency_us": 65.26174604522515,
+            "candidate_positions_us": [
+              65.11257795566851,
+              65.4109141347818
+            ],
+            "order": "BAAB",
+            "reference_latency_us": 1785.7421592429832,
+            "reference_positions_us": [
+              1786.2577085141781,
+              1785.226609971788
+            ]
+          },
+          {
+            "block_index": 22,
+            "candidate_latency_us": 65.32445556135158,
+            "candidate_positions_us": [
+              65.23501552163196,
+              65.41389560107119
+            ],
+            "order": "BAAB",
+            "reference_latency_us": 1785.407949376989,
+            "reference_positions_us": [
+              1785.6900250470196,
+              1785.1258737069588
+            ]
+          },
+          {
+            "block_index": 23,
+            "candidate_latency_us": 64.92594606387689,
+            "candidate_positions_us": [
+              64.98431567079533,
+              64.86757645695846
+            ],
+            "order": "BAAB",
+            "reference_latency_us": 1785.1768776222511,
+            "reference_positions_us": [
+              1785.1982116699219,
+              1785.1555435745804
+            ]
+          },
+          {
+            "block_index": 24,
+            "candidate_latency_us": 65.18108454797085,
+            "candidate_positions_us": [
+              65.13828569811076,
+              65.22388339783095
+            ],
+            "order": "BAAB",
+            "reference_latency_us": 1784.9831051296658,
+            "reference_positions_us": [
+              1785.2538779929832,
+              1784.7123322663483
+            ]
+          },
+          {
+            "block_index": 25,
+            "candidate_latency_us": 65.02294046785028,
+            "candidate_positions_us": [
+              65.18088709987222,
+              64.86499383582832
+            ],
+            "order": "BAAB",
+            "reference_latency_us": 1785.576855694806,
+            "reference_positions_us": [
+              1785.2017437970196,
+              1785.9519675925926
+            ]
+          },
+          {
+            "block_index": 26,
+            "candidate_latency_us": 64.86168263121422,
+            "candidate_positions_us": [
+              65.14106971630152,
+              64.58229554612691
+            ],
+            "order": "BAAB",
+            "reference_latency_us": 1785.4364183213975,
+            "reference_positions_us": [
+              1785.7386271158855,
+              1785.1342095269097
+            ]
+          },
+          {
+            "block_index": 27,
+            "candidate_latency_us": 65.30679975237166,
+            "candidate_positions_us": [
+              65.08806674870398,
+              65.52553275603933
+            ],
+            "order": "ABBA",
+            "reference_latency_us": 1785.687693843135,
+            "reference_positions_us": [
+              1786.039705629702,
+              1785.3356820565682
+            ]
+          },
+          {
+            "block_index": 28,
+            "candidate_latency_us": 65.55975051153274,
+            "candidate_positions_us": [
+              65.55335714209895,
+              65.56614388096654
+            ],
+            "order": "BAAB",
+            "reference_latency_us": 1786.0503726535374,
+            "reference_positions_us": [
+              1785.5952227557148,
+              1786.50552255136
+            ]
+          },
+          {
+            "block_index": 29,
+            "candidate_latency_us": 65.10867045779653,
+            "candidate_positions_us": [
+              65.16200316371878,
+              65.05533775187428
+            ],
+            "order": "BAAB",
+            "reference_latency_us": 1785.8103999385128,
+            "reference_positions_us": [
+              1786.5398548267506,
+              1785.080945050275
+            ]
+          },
+          {
+            "block_index": 30,
+            "candidate_latency_us": 65.55832691074158,
+            "candidate_positions_us": [
+              65.36308035840652,
+              65.75357346307663
+            ],
+            "order": "ABBA",
+            "reference_latency_us": 1785.3724161783855,
+            "reference_positions_us": [
+              1785.5703565809463,
+              1785.1744757758247
+            ]
+          }
+        ],
+        "candidate": "torch-sdpa-flash",
+        "candidate_pilot_us": 103.58399897813797,
+        "candidate_repetitions": 483,
+        "reference": "torch-sdpa-math",
+        "reference_pilot_us": 1881.6959857940674,
+        "reference_repetitions": 27
+      },
+      "profiler": {
+        "captured": true,
+        "cuda_events": [
+          {
+            "count": 1,
+            "device_time_us": 106.04799999999977,
+            "name": "aten::scaled_dot_product_attention",
+            "self_device_time_us": 0.0
+          },
+          {
+            "count": 1,
+            "device_time_us": 106.04799999999977,
+            "name": "aten::_scaled_dot_product_flash_attention",
+            "self_device_time_us": 0.0
+          },
+          {
+            "count": 1,
+            "device_time_us": 106.04799999999977,
+            "name": "aten::_flash_attention_forward",
+            "self_device_time_us": 53.02399999999989
+          },
+          {
+            "count": 1,
+            "device_time_us": 53.02399999999989,
+            "name": "Activity Buffer Request",
+            "self_device_time_us": 53.02399999999989
+          },
+          {
+            "count": 1,
+            "device_time_us": 53.02399999999989,
+            "name": "void pytorch_flash::flash_fwd_kernel<Flash_fwd_kernel_traits<64, 128, 128, 4, false, false, cutlass::bfloat16_t, Flash_kernel_traits<64, 128, 128, 4, cutlass::bfloat16_t> >, false, true, false, false, true, true, false, false>(pytorch_flash::Flash_fwd_params)",
+            "self_device_time_us": 53.02399999999989
+          }
+        ]
+      },
+      "shape": {
+        "batch": 2,
+        "head_dim": 64,
+        "heads": 16,
+        "seqlen": 1024
+      },
+      "weight": 0.2,
+      "work_model": {
+        "known_omissions": [
+          "softmax scalar operations",
+          "scheduler and launch floors"
+        ],
+        "minimum_external_bytes": 16777216,
+        "semantic_flops": 4294967296,
+        "version": "attention-fwd-semantic-v1"
+      }
+    },
+    {
+      "case_group": "common",
+      "case_id": "common-b1-s2048-h16-d128-causal",
+      "causal": true,
+      "correctness": {
+        "cosine_similarity": 0.9999977350234985,
+        "dynamic_input_changes_output": true,
+        "max_abs_error": 0.015625,
+        "mean_abs_error": 7.632040069438517e-05,
+        "passed": true,
+        "relative_l2_error": 0.002096263226121664
+      },
+      "dtype": "bfloat16",
+      "measurement": {
+        "blocks": [
+          {
+            "block_index": 1,
+            "candidate_latency_us": 155.20047143912217,
+            "candidate_positions_us": [
+              155.3247842828599,
+              155.0761585953844
+            ],
+            "order": "BAAB",
+            "reference_latency_us": 3959.1580904447114,
+            "reference_positions_us": [
+              3959.830064039964,
+              3958.486116849459
+            ]
+          },
+          {
+            "block_index": 2,
+            "candidate_latency_us": 154.74209326580478,
+            "candidate_positions_us": [
+              154.7750369275464,
+              154.70914960406316
+            ],
+            "order": "BAAB",
+            "reference_latency_us": 3956.3531142014726,
+            "reference_positions_us": [
+              3956.214024470403,
+              3956.492203932542
+            ]
+          },
+          {
+            "block_index": 3,
+            "candidate_latency_us": 154.9815572954122,
+            "candidate_positions_us": [
+              155.14337068821098,
+              154.81974390261342
+            ],
+            "order": "ABBA",
+            "reference_latency_us": 3958.0135345458984,
+            "reference_positions_us": [
+              3958.318857046274,
+              3957.708212045523
+            ]
+          },
+          {
+            "block_index": 4,
+            "candidate_latency_us": 154.81694273370078,
+            "candidate_positions_us": [
+              154.74544509185407,
+              154.88844037554753
+            ],
+            "order": "BAAB",
+            "reference_latency_us": 3957.752521221454,
+            "reference_positions_us": [
+              3956.765394944411,
+              3958.7396474984976
+            ]
+          },
+          {
+            "block_index": 5,
+            "candidate_latency_us": 154.64783512897571,
+            "candidate_positions_us": [
+              154.83996658644418,
+              154.45570367150725
+            ],
+            "order": "BAAB",
+            "reference_latency_us": 3958.316216102013,
+            "reference_positions_us": [
+              3959.5125638521636,
+              3957.119868351863
+            ]
+          },
+          {
+            "block_index": 6,
+            "candidate_latency_us": 154.8788637296924,
+            "candidate_positions_us": [
+              154.9346317307221,
+              154.82309572866274
+            ],
+            "order": "ABBA",
+            "reference_latency_us": 3957.654072688176,
+            "reference_positions_us": [
+              3957.587608924279,
+              3957.7205364520732
+            ]
+          },
+          {
+            "block_index": 7,
+            "candidate_latency_us": 155.26600761892405,
+            "candidate_positions_us": [
+              155.3061736677481,
+              155.22584157010002
+            ],
+            "order": "ABBA",
+            "reference_latency_us": 3957.1200150709883,
+            "reference_positions_us": [
+              3957.2727496807393,
+              3956.967280461238
+            ]
+          },
+          {
+            "block_index": 8,
+            "candidate_latency_us": 154.92465605795633,
+            "candidate_positions_us": [
+              154.8334065840334,
+              155.01590553187924
+            ],
+            "order": "BAAB",
+            "reference_latency_us": 3957.252942598783,
+            "reference_positions_us": [
+              3957.139822152945,
+              3957.3660630446216
+            ]
+          },
+          {
+            "block_index": 9,
+            "candidate_latency_us": 154.91856690730012,
+            "candidate_positions_us": [
+              154.86326975802498,
+              154.97386405657525
+            ],
+            "order": "BAAB",
+            "reference_latency_us": 3958.557569063627,
+            "reference_positions_us": [
+              3958.5970365084136,
+              3958.5181016188403
+            ]
+          },
+          {
+            "block_index": 10,
+            "candidate_latency_us": 154.67447416552938,
+            "candidate_positions_us": [
+              154.71879009422398,
+              154.6301582368348
+            ],
+            "order": "ABBA",
+            "reference_latency_us": 3956.3814309927134,
+            "reference_positions_us": [
+              3956.0417762169473,
+              3956.7210857684795
+            ]
+          },
+          {
+            "block_index": 11,
+            "candidate_latency_us": 154.99508430768256,
+            "candidate_positions_us": [
+              155.28636597190442,
+              154.7038026434607
+            ],
+            "order": "BAAB",
+            "reference_latency_us": 3960.103255051833,
+            "reference_positions_us": [
+              3958.456479586088,
+              3961.750030517578
+            ]
+          },
+          {
+            "block_index": 12,
+            "candidate_latency_us": 154.94607582251896,
+            "candidate_positions_us": [
+              155.15823045036285,
+              154.73392119467508
+            ],
+            "order": "BAAB",
+            "reference_latency_us": 3959.606170654297,
+            "reference_positions_us": [
+              3961.115030141977,
+              3958.0973111666167
+            ]
+          },
+          {
+            "block_index": 13,
+            "candidate_latency_us": 154.91582160215495,
+            "candidate_positions_us": [
+              154.76887595204627,
+              155.06276725226365
+            ],
+            "order": "BAAB",
+            "reference_latency_us": 3956.7865224984976,
+            "reference_positions_us": [
+              3956.70905480018,
+              3956.863990196815
+            ]
+          },
+          {
+            "block_index": 14,
+            "candidate_latency_us": 154.83307140142847,
+            "candidate_positions_us": [
+              154.69028361172855,
+              154.9758591911284
+            ],
+            "order": "BAAB",
+            "reference_latency_us": 3957.6517251821665,
+            "reference_positions_us": [
+              3956.8763146033652,
+              3958.4271357609678
+            ]
+          },
+          {
+            "block_index": 15,
+            "candidate_latency_us": 155.13298800799637,
+            "candidate_positions_us": [
+              155.11136872997844,
+              155.1546072860143
+            ],
+            "order": "BAAB",
+            "reference_latency_us": 3957.9285841721758,
+            "reference_positions_us": [
+              3957.846128023588,
+              3958.011040320763
+            ]
+          },
+          {
+            "block_index": 16,
+            "candidate_latency_us": 154.9371695418737,
+            "candidate_positions_us": [
+              155.26681365328355,
+              154.60752543046385
+            ],
+            "order": "ABBA",
+            "reference_latency_us": 3963.6676494891826,
+            "reference_positions_us": [
+              3960.8171903170073,
+              3966.5181086613584
+            ]
+          },
+          {
+            "block_index": 17,
+            "candidate_latency_us": 155.16412008756373,
+            "candidate_positions_us": [
+              155.09168872274614,
+              155.23655145238135
+            ],
+            "order": "ABBA",
+            "reference_latency_us": 3958.4689507117637,
+            "reference_positions_us": [
+              3957.932398869441,
+              3959.0055025540864
+            ]
+          },
+          {
+            "block_index": 18,
+            "candidate_latency_us": 154.83066127888827,
+            "candidate_positions_us": [
+              154.74383302313512,
+              154.91748953464142
+            ],
+            "order": "ABBA",
+            "reference_latency_us": 3957.926236666166,
+            "reference_positions_us": [
+              3957.622234637921,
+              3958.230238694411
+            ]
+          },
+          {
+            "block_index": 19,
+            "candidate_latency_us": 154.80120511234554,
+            "candidate_positions_us": [
+              154.62145945018307,
+              154.98095077450805
+            ],
+            "order": "ABBA",
+            "reference_latency_us": 3958.7236551138067,
+            "reference_positions_us": [
+              3959.0768080491284,
+              3958.3705021784854
+            ]
+          },
+          {
+            "block_index": 20,
+            "candidate_latency_us": 154.87022878734638,
+            "candidate_positions_us": [
+              154.8789275739981,
+              154.86153000069461
+            ],
+            "order": "ABBA",
+            "reference_latency_us": 3959.5901782696064,
+            "reference_positions_us": [
+              3960.561312161959,
+              3958.6190443772534
+            ]
+          },
+          {
+            "block_index": 21,
+            "candidate_latency_us": 154.84170634377452,
+            "candidate_positions_us": [
+              154.74651448397458,
+              154.93689820357446
+            ],
+            "order": "ABBA",
+            "reference_latency_us": 3958.0973111666162,
+            "reference_positions_us": [
+              3958.9661818284253,
+              3957.2284405048076
+            ]
+          },
+          {
+            "block_index": 22,
+            "candidate_latency_us": 154.93436039242283,
+            "candidate_positions_us": [
+              155.21888254077862,
+              154.64983824406707
+            ],
+            "order": "BAAB",
+            "reference_latency_us": 3959.424092219426,
+            "reference_positions_us": [
+              3957.634559044471,
+              3961.213625394381
+            ]
+          },
+          {
+            "block_index": 23,
+            "candidate_latency_us": 154.9747259547022,
+            "candidate_positions_us": [
+              154.9279280786235,
+              155.02152383078092
+            ],
+            "order": "BAAB",
+            "reference_latency_us": 3958.2572350135215,
+            "reference_positions_us": [
+              3957.6615553635816,
+              3958.8529146634614
+            ]
+          },
+          {
+            "block_index": 24,
+            "candidate_latency_us": 155.01737395091038,
+            "candidate_positions_us": [
+              154.9863136961869,
+              155.04843420563384
+            ],
+            "order": "BAAB",
+            "reference_latency_us": 3958.05182823768,
+            "reference_positions_us": [
+              3958.013681265024,
+              3958.0899752103364
+            ]
+          },
+          {
+            "block_index": 25,
+            "candidate_latency_us": 155.15674607025528,
+            "candidate_positions_us": [
+              154.86700464990847,
+              155.44648749060212
+            ],
+            "order": "BAAB",
+            "reference_latency_us": 3958.577229426457,
+            "reference_positions_us": [
+              3958.6683420034556,
+              3958.486116849459
+            ]
+          },
+          {
+            "block_index": 26,
+            "candidate_latency_us": 155.13010703370162,
+            "candidate_positions_us": [
+              155.3214324568106,
+              154.93878161059263
+            ],
+            "order": "ABBA",
+            "reference_latency_us": 3958.088654738206,
+            "reference_positions_us": [
+              3958.343505859375,
+              3957.833803617037
+            ]
+          },
+          {
+            "block_index": 27,
+            "candidate_latency_us": 155.1647266084679,
+            "candidate_positions_us": [
+              155.20643290116698,
+              155.12302031576883
+            ],
+            "order": "ABBA",
+            "reference_latency_us": 3958.2670651949365,
+            "reference_positions_us": [
+              3958.180941068209,
+              3958.3531893216646
+            ]
+          },
+          {
+            "block_index": 28,
+            "candidate_latency_us": 154.9629386997622,
+            "candidate_positions_us": [
+              154.95175796572633,
+              154.97411943379805
+            ],
+            "order": "BAAB",
+            "reference_latency_us": 3957.019072312575,
+            "reference_positions_us": [
+              3956.839341383714,
+              3957.1988032414365
+            ]
+          },
+          {
+            "block_index": 29,
+            "candidate_latency_us": 154.83541767966298,
+            "candidate_positions_us": [
+              154.65907970731726,
+              155.0117556520087
+            ],
+            "order": "BAAB",
+            "reference_latency_us": 3958.7544661301836,
+            "reference_positions_us": [
+              3958.5723876953125,
+              3958.936544565054
+            ]
+          },
+          {
+            "block_index": 30,
+            "candidate_latency_us": 154.9387736300544,
+            "candidate_positions_us": [
+              154.66643776354928,
+              155.21110949655954
+            ],
+            "order": "BAAB",
+            "reference_latency_us": 3957.049883328951,
+            "reference_positions_us": [
+              3957.7108529897837,
+              3956.388913668119
+            ]
+          }
+        ],
+        "candidate": "torch-sdpa-flash",
+        "candidate_pilot_us": 209.60000157356262,
+        "candidate_repetitions": 239,
+        "reference": "torch-sdpa-math",
+        "reference_pilot_us": 4008.607864379883,
+        "reference_repetitions": 13
+      },
+      "profiler": {
+        "captured": true,
+        "cuda_events": []
+      },
+      "shape": {
+        "batch": 1,
+        "head_dim": 128,
+        "heads": 16,
+        "seqlen": 2048
+      },
+      "weight": 0.2,
+      "work_model": {
+        "known_omissions": [
+          "softmax scalar operations",
+          "scheduler and launch floors"
+        ],
+        "minimum_external_bytes": 33554432,
+        "semantic_flops": 17179869184,
+        "version": "attention-fwd-semantic-v1"
+      }
+    },
+    {
+      "case_group": "boundary_tail",
+      "case_id": "boundary-b3-s1000-h12-d64-causal",
+      "causal": true,
+      "correctness": {
+        "cosine_similarity": 0.9999979734420776,
+        "dynamic_input_changes_output": true,
+        "max_abs_error": 0.0078125,
+        "mean_abs_error": 0.00010410203685751185,
+        "passed": true,
+        "relative_l2_error": 0.0020945400465279818
+      },
+      "dtype": "bfloat16",
+      "measurement": {
+        "blocks": [
+          {
+            "block_index": 1,
+            "candidate_latency_us": 66.0552935265089,
+            "candidate_positions_us": [
+              66.09480289104575,
+              66.01578416197208
+            ],
+            "order": "ABBA",
+            "reference_latency_us": 1872.9476928710938,
+            "reference_positions_us": [
+              1873.5077197735127,
+              1872.3876659686748
+            ]
+          },
+          {
+            "block_index": 2,
+            "candidate_latency_us": 65.59419523831667,
+            "candidate_positions_us": [
+              65.43738609538867,
+              65.75100438124468
+            ],
+            "order": "ABBA",
+            "reference_latency_us": 1873.1772349430964,
+            "reference_positions_us": [
+              1873.5262063833384,
+              1872.8282635028545
+            ]
+          },
+          {
+            "block_index": 3,
+            "candidate_latency_us": 65.7169337715962,
+            "candidate_positions_us": [
+              65.50922523550436,
+              65.92464230768805
+            ],
+            "order": "ABBA",
+            "reference_latency_us": 1873.0098284207857,
+            "reference_positions_us": [
+              1872.8540860689604,
+              1873.165570772611
+            ]
+          },
+          {
+            "block_index": 4,
+            "candidate_latency_us": 65.55700626503042,
+            "candidate_positions_us": [
+              65.75593494233631,
+              65.35807758772454
+            ],
+            "order": "BAAB",
+            "reference_latency_us": 1872.5076822134165,
+            "reference_positions_us": [
+              1872.8775611290564,
+              1872.1378032977764
+            ]
+          },
+          {
+            "block_index": 5,
+            "candidate_latency_us": 65.49206342286263,
+            "candidate_positions_us": [
+              65.35996331108942,
+              65.62416353463585
+            ],
+            "order": "BAAB",
+            "reference_latency_us": 1877.3187490609976,
+            "reference_positions_us": [
+              1874.6276268592248,
+              1880.0098712627705
+            ]
+          },
+          {
+            "block_index": 6,
+            "candidate_latency_us": 65.52903398094264,
+            "candidate_positions_us": [
+              65.38920499840562,
+              65.66886296347967
+            ],
+            "order": "ABBA",
+            "reference_latency_us": 1872.91013277494,
+            "reference_positions_us": [
+              1872.4849407489482,
+              1873.3353248009314
+            ]
+          },
+          {
+            "block_index": 7,
+            "candidate_latency_us": 65.30369220136785,
+            "candidate_positions_us": [
+              65.2884918005288,
+              65.3188926022069
+            ],
+            "order": "ABBA",
+            "reference_latency_us": 1873.0719639704778,
+            "reference_positions_us": [
+              1873.1285975529597,
+              1873.0153303879958
+            ]
+          },
+          {
+            "block_index": 8,
+            "candidate_latency_us": 65.4919185335674,
+            "candidate_positions_us": [
+              65.37948227793721,
+              65.60435478919759
+            ],
+            "order": "BAAB",
+            "reference_latency_us": 1873.0209790743315,
+            "reference_positions_us": [
+              1872.9243645301233,
+              1873.1175936185396
+            ]
+          },
+          {
+            "block_index": 9,
+            "candidate_latency_us": 65.81246123021964,
+            "candidate_positions_us": [
+              65.76870682558506,
+              65.85621563485421
+            ],
+            "order": "ABBA",
+            "reference_latency_us": 1873.4246033888596,
+            "reference_positions_us": [
+              1873.5408782958984,
+              1873.3083284818208
+            ]
+          },
+          {
+            "block_index": 10,
+            "candidate_latency_us": 65.3696146681736,
+            "candidate_positions_us": [
+              65.33804826455322,
+              65.40118107179396
+            ],
+            "order": "ABBA",
+            "reference_latency_us": 1873.1803160447341,
+            "reference_positions_us": [
+              1873.0929448054387,
+              1873.2676872840295
+            ]
+          },
+          {
+            "block_index": 11,
+            "candidate_latency_us": 65.35053036921148,
+            "candidate_positions_us": [
+              65.39820543492462,
+              65.30285530349835
+            ],
+            "order": "ABBA",
+            "reference_latency_us": 1873.249787550706,
+            "reference_positions_us": [
+              1873.1962350698618,
+              1873.3033400315505
+            ]
+          },
+          {
+            "block_index": 12,
+            "candidate_latency_us": 65.62942279980025,
+            "candidate_positions_us": [
+              65.6966514327899,
+              65.5621941668106
+            ],
+            "order": "BAAB",
+            "reference_latency_us": 1873.1888991135818,
+            "reference_positions_us": [
+              1873.1975555419922,
+              1873.1802426851714
+            ]
+          },
+          {
+            "block_index": 13,
+            "candidate_latency_us": 65.63892926758919,
+            "candidate_positions_us": [
+              65.5621206408996,
+              65.7157378942788
+            ],
+            "order": "ABBA",
+            "reference_latency_us": 1873.235115638146,
+            "reference_positions_us": [
+              1873.6493037297175,
+              1872.8209275465745
+            ]
+          },
+          {
+            "block_index": 14,
+            "candidate_latency_us": 66.06338353924741,
+            "candidate_positions_us": [
+              65.94786352040816,
+              66.17890355808665
+            ],
+            "order": "BAAB",
+            "reference_latency_us": 1874.2246627807617,
+            "reference_positions_us": [
+              1873.4314258282002,
+              1875.0178997333232
+            ]
+          },
+          {
+            "block_index": 15,
+            "candidate_latency_us": 65.9183666549302,
+            "candidate_positions_us": [
+              65.71130903940352,
+              66.12542427045688
+            ],
+            "order": "ABBA",
+            "reference_latency_us": 1876.4738669762244,
+            "reference_positions_us": [
+              1878.564981313852,
+              1874.3827526385967
+            ]
+          },
+          {
+            "block_index": 16,
+            "candidate_latency_us": 65.76061681284656,
+            "candidate_positions_us": [
+              65.61095482097461,
+              65.9102788047185
+            ],
+            "order": "BAAB",
+            "reference_latency_us": 1872.9175420907827,
+            "reference_positions_us": [
+              1873.0977865365835,
+              1872.737297644982
+            ]
+          },
+          {
+            "block_index": 17,
+            "candidate_latency_us": 65.30180431547619,
+            "candidate_positions_us": [
+              65.55014889256483,
+              65.05345973838755
+            ],
+            "order": "ABBA",
+            "reference_latency_us": 1873.3353981604942,
+            "reference_positions_us": [
+              1873.1754009540264,
+              1873.4953953669622
+            ]
+          },
+          {
+            "block_index": 18,
+            "candidate_latency_us": 65.16125088646298,
+            "candidate_positions_us": [
+              65.21476693704825,
+              65.10773483587771
+            ],
+            "order": "BAAB",
+            "reference_latency_us": 1873.2289534348708,
+            "reference_positions_us": [
+              1873.4695728008564,
+              1872.9883340688853
+            ]
+          },
+          {
+            "block_index": 19,
+            "candidate_latency_us": 65.80803670039793,
+            "candidate_positions_us": [
+              65.46300338779717,
+              66.15307001299868
+            ],
+            "order": "ABBA",
+            "reference_latency_us": 1873.2701815091646,
+            "reference_positions_us": [
+              1873.0449676513672,
+              1873.4953953669622
+            ]
+          },
+          {
+            "block_index": 20,
+            "candidate_latency_us": 66.13152043349078,
+            "candidate_positions_us": [
+              66.1913121368339,
+              66.07172873014765
+            ],
+            "order": "BAAB",
+            "reference_latency_us": 1873.5433725210337,
+            "reference_positions_us": [
+              1873.4670785757212,
+              1873.6196664663462
+            ]
+          },
+          {
+            "block_index": 21,
+            "candidate_latency_us": 65.81572880820622,
+            "candidate_positions_us": [
+              65.96839887484941,
+              65.66305874156303
+            ],
+            "order": "BAAB",
+            "reference_latency_us": 1873.198729294997,
+            "reference_positions_us": [
+              1873.407950768104,
+              1872.9895078218901
+            ]
+          },
+          {
+            "block_index": 22,
+            "candidate_latency_us": 65.77371523764128,
+            "candidate_positions_us": [
+              66.11802410376586,
+              65.4294063715167
+            ],
+            "order": "BAAB",
+            "reference_latency_us": 1872.8510783268855,
+            "reference_positions_us": [
+              1873.3587998610276,
+              1872.3433567927434
+            ]
+          },
+          {
+            "block_index": 23,
+            "candidate_latency_us": 66.05757715480398,
+            "candidate_positions_us": [
+              65.38238438889553,
+              66.73276992071243
+            ],
+            "order": "BAAB",
+            "reference_latency_us": 1873.1544934786284,
+            "reference_positions_us": [
+              1873.5988323505107,
+              1872.7101546067458
+            ]
+          },
+          {
+            "block_index": 24,
+            "candidate_latency_us": 65.48709177376192,
+            "candidate_positions_us": [
+              65.06376201603689,
+              65.91042153148695
+            ],
+            "order": "BAAB",
+            "reference_latency_us": 1873.9187534038838,
+            "reference_positions_us": [
+              1874.8836517333984,
+              1872.953855074369
+            ]
+          },
+          {
+            "block_index": 25,
+            "candidate_latency_us": 66.12959578464361,
+            "candidate_positions_us": [
+              66.21619849518584,
+              66.04299307410139
+            ],
+            "order": "BAAB",
+            "reference_latency_us": 1873.2984983004058,
+            "reference_positions_us": [
+              1873.7317598783052,
+              1872.865236722506
+            ]
+          },
+          {
+            "block_index": 26,
+            "candidate_latency_us": 65.85730771088546,
+            "candidate_positions_us": [
+              65.95098620909953,
+              65.76362921267139
+            ],
+            "order": "ABBA",
+            "reference_latency_us": 1873.5390443068284,
+            "reference_positions_us": [
+              1873.3857961801382,
+              1873.6922924335186
+            ]
+          },
+          {
+            "block_index": 27,
+            "candidate_latency_us": 65.58748275514633,
+            "candidate_positions_us": [
+              65.7274933899341,
+              65.44747212035855
+            ],
+            "order": "ABBA",
+            "reference_latency_us": 1873.0381452120268,
+            "reference_positions_us": [
+              1872.635034414438,
+              1873.4412560096155
+            ]
+          },
+          {
+            "block_index": 28,
+            "candidate_latency_us": 66.0154554578993,
+            "candidate_positions_us": [
+              65.83169258100375,
+              66.19921833479485
+            ],
+            "order": "ABBA",
+            "reference_latency_us": 1873.434433570275,
+            "reference_positions_us": [
+              1873.074458195613,
+              1873.794408944937
+            ]
+          },
+          {
+            "block_index": 29,
+            "candidate_latency_us": 66.24932408062509,
+            "candidate_positions_us": [
+              65.77001299176898,
+              66.72863516948121
+            ],
+            "order": "BAAB",
+            "reference_latency_us": 1873.3526376577524,
+            "reference_positions_us": [
+              1873.3711242675781,
+              1873.3341510479268
+            ]
+          },
+          {
+            "block_index": 30,
+            "candidate_latency_us": 65.65090317845073,
+            "candidate_positions_us": [
+              65.75586574147889,
+              65.5459406154226
+            ],
+            "order": "ABBA",
+            "reference_latency_us": 1873.2824325561523,
+            "reference_positions_us": [
+              1873.4805767352764,
+              1873.0842883770283
+            ]
+          }
+        ],
+        "candidate": "torch-sdpa-flash",
+        "candidate_pilot_us": 113.50400000810623,
+        "candidate_repetitions": 441,
+        "reference": "torch-sdpa-math",
+        "reference_pilot_us": 1963.9999866485596,
+        "reference_repetitions": 26
+      },
+      "profiler": {
+        "captured": true,
+        "cuda_events": []
+      },
+      "shape": {
+        "batch": 3,
+        "head_dim": 64,
+        "heads": 12,
+        "seqlen": 1000
+      },
+      "weight": 0.2,
+      "work_model": {
+        "known_omissions": [
+          "softmax scalar operations",
+          "scheduler and launch floors"
+        ],
+        "minimum_external_bytes": 18432000,
+        "semantic_flops": 4608000000,
+        "version": "attention-fwd-semantic-v1"
+      }
+    },
+    {
+      "case_group": "stress_large",
+      "case_id": "stress-b1-s4096-h8-d128-causal",
+      "causal": true,
+      "correctness": {
+        "cosine_similarity": 0.9999977350234985,
+        "dynamic_input_changes_output": true,
+        "max_abs_error": 0.0078125,
+        "mean_abs_error": 5.658134614350274e-05,
+        "passed": true,
+        "relative_l2_error": 0.002128806198015809
+      },
+      "dtype": "bfloat16",
+      "measurement": {
+        "blocks": [
+          {
+            "block_index": 1,
+            "candidate_latency_us": 306.0349129341744,
+            "candidate_positions_us": [
+              305.5286407470703,
+              306.5411851212785
+            ],
+            "order": "BAAB",
+            "reference_latency_us": 7973.872048514229,
+            "reference_positions_us": [
+              7973.321097237723,
+              7974.422999790737
+            ]
+          },
+          {
+            "block_index": 2,
+            "candidate_latency_us": 306.0109164263751,
+            "candidate_positions_us": [
+              305.4668065663931,
+              306.55502628635713
+            ],
+            "order": "BAAB",
+            "reference_latency_us": 7975.883483886719,
+            "reference_positions_us": [
+              7973.691667829241,
+              7978.075299944197
+            ]
+          },
+          {
+            "block_index": 3,
+            "candidate_latency_us": 306.6914532635663,
+            "candidate_positions_us": [
+              306.6374031273094,
+              306.7455033998232
+            ],
+            "order": "BAAB",
+            "reference_latency_us": 7975.842339651925,
+            "reference_positions_us": [
+              7973.522186279297,
+              7978.162493024553
+            ]
+          },
+          {
+            "block_index": 4,
+            "candidate_latency_us": 306.32950808550856,
+            "candidate_positions_us": [
+              306.67696772394953,
+              305.98204844706765
+            ],
+            "order": "ABBA",
+            "reference_latency_us": 7973.9679609026225,
+            "reference_positions_us": [
+              7974.752153669085,
+              7973.18376813616
+            ]
+          },
+          {
+            "block_index": 5,
+            "candidate_latency_us": 305.6624773386362,
+            "candidate_positions_us": [
+              305.4363147632496,
+              305.8886399140229
+            ],
+            "order": "ABBA",
+            "reference_latency_us": 7977.575029645647,
+            "reference_positions_us": [
+              7977.6458740234375,
+              7977.504185267857
+            ]
+          },
+          {
+            "block_index": 6,
+            "candidate_latency_us": 304.70096742784654,
+            "candidate_positions_us": [
+              304.2661563770191,
+              305.135778478674
+            ],
+            "order": "BAAB",
+            "reference_latency_us": 7976.786204746792,
+            "reference_positions_us": [
+              7974.806649344308,
+              7978.765760149275
+            ]
+          },
+          {
+            "block_index": 7,
+            "candidate_latency_us": 304.9705866220835,
+            "candidate_positions_us": [
+              305.21490767195417,
+              304.7262655722128
+            ],
+            "order": "ABBA",
+            "reference_latency_us": 7977.716445922852,
+            "reference_positions_us": [
+              7978.381565638951,
+              7977.0513262067525
+            ]
+          },
+          {
+            "block_index": 8,
+            "candidate_latency_us": 305.23416158315297,
+            "candidate_positions_us": [
+              304.12021843162745,
+              306.34810473467854
+            ],
+            "order": "BAAB",
+            "reference_latency_us": 7974.797657557896,
+            "reference_positions_us": [
+              7972.438812255859,
+              7977.156502859933
+            ]
+          },
+          {
+            "block_index": 9,
+            "candidate_latency_us": 305.91437623307513,
+            "candidate_positions_us": [
+              306.07934900232266,
+              305.7494034638276
+            ],
+            "order": "BAAB",
+            "reference_latency_us": 7982.976096017021,
+            "reference_positions_us": [
+              7973.860604422433,
+              7992.091587611607
+            ]
+          },
+          {
+            "block_index": 10,
+            "candidate_latency_us": 305.12334205008847,
+            "candidate_positions_us": [
+              305.5720973659206,
+              304.67458673425625
+            ],
+            "order": "ABBA",
+            "reference_latency_us": 7975.6001063755575,
+            "reference_positions_us": [
+              7975.7990155901225,
+              7975.401197160993
+            ]
+          },
+          {
+            "block_index": 11,
+            "candidate_latency_us": 306.1382706100876,
+            "candidate_positions_us": [
+              305.2317902848527,
+              307.04475093532255
+            ],
+            "order": "ABBA",
+            "reference_latency_us": 7975.010190691267,
+            "reference_positions_us": [
+              7978.687831333706,
+              7971.332550048828
+            ]
+          },
+          {
+            "block_index": 12,
+            "candidate_latency_us": 304.1414054664406,
+            "candidate_positions_us": [
+              304.3794631958008,
+              303.90334773708037
+            ],
+            "order": "BAAB",
+            "reference_latency_us": 7973.988396780832,
+            "reference_positions_us": [
+              7974.783761160715,
+              7973.193032400949
+            ]
+          },
+          {
+            "block_index": 13,
+            "candidate_latency_us": 306.2258282223263,
+            "candidate_positions_us": [
+              305.792421907992,
+              306.6592345366607
+            ],
+            "order": "ABBA",
+            "reference_latency_us": 7974.754333496094,
+            "reference_positions_us": [
+              7974.679129464285,
+              7974.829537527902
+            ]
+          },
+          {
+            "block_index": 14,
+            "candidate_latency_us": 306.04519715180265,
+            "candidate_positions_us": [
+              304.5552485697978,
+              307.53514573380755
+            ],
+            "order": "ABBA",
+            "reference_latency_us": 7971.426282610212,
+            "reference_positions_us": [
+              7969.481331961496,
+              7973.371233258928
+            ]
+          },
+          {
+            "block_index": 15,
+            "candidate_latency_us": 305.6070224658863,
+            "candidate_positions_us": [
+              305.4639970934069,
+              305.75004783836573
+            ],
+            "order": "ABBA",
+            "reference_latency_us": 7973.554338727678,
+            "reference_positions_us": [
+              7973.426273890904,
+              7973.682403564453
+            ]
+          },
+          {
+            "block_index": 16,
+            "candidate_latency_us": 305.7239893320444,
+            "candidate_positions_us": [
+              305.3284206905881,
+              306.11955797350083
+            ],
+            "order": "ABBA",
+            "reference_latency_us": 7973.7554277692525,
+            "reference_positions_us": [
+              7972.840990339007,
+              7974.6698651994975
+            ]
+          },
+          {
+            "block_index": 17,
+            "candidate_latency_us": 306.80108714748076,
+            "candidate_positions_us": [
+              307.7584859487173,
+              305.8436883462442
+            ],
+            "order": "ABBA",
+            "reference_latency_us": 7974.587304251534,
+            "reference_positions_us": [
+              7975.419180733817,
+              7973.7554277692525
+            ]
+          },
+          {
+            "block_index": 18,
+            "candidate_latency_us": 305.910587310791,
+            "candidate_positions_us": [
+              306.2129665065456,
+              305.6082081150364
+            ],
+            "order": "ABBA",
+            "reference_latency_us": 7979.803357805525,
+            "reference_positions_us": [
+              7976.310729980469,
+              7983.295985630581
+            ]
+          },
+          {
+            "block_index": 19,
+            "candidate_latency_us": 305.45382886319544,
+            "candidate_positions_us": [
+              305.00128462507917,
+              305.9063731013118
+            ],
+            "order": "ABBA",
+            "reference_latency_us": 7974.038805280414,
+            "reference_positions_us": [
+              7974.48240007673,
+              7973.595210484096
+            ]
+          },
+          {
+            "block_index": 20,
+            "candidate_latency_us": 305.7731937717747,
+            "candidate_positions_us": [
+              305.0181672379777,
+              306.52822030557166
+            ],
+            "order": "BAAB",
+            "reference_latency_us": 7975.424085344587,
+            "reference_positions_us": [
+              7976.672036307199,
+              7974.176134381975
+            ]
+          },
+          {
+            "block_index": 21,
+            "candidate_latency_us": 306.4033534075763,
+            "candidate_positions_us": [
+              305.4095087824641,
+              307.39719803268844
+            ],
+            "order": "BAAB",
+            "reference_latency_us": 7973.019463675362,
+            "reference_positions_us": [
+              7972.973959786551,
+              7973.064967564174
+            ]
+          },
+          {
+            "block_index": 22,
+            "candidate_latency_us": 306.45557352014487,
+            "candidate_positions_us": [
+              306.26271222088786,
+              306.6484348194019
+            ],
+            "order": "ABBA",
+            "reference_latency_us": 7972.429820469448,
+            "reference_positions_us": [
+              7972.90529523577,
+              7971.954345703125
+            ]
+          },
+          {
+            "block_index": 23,
+            "candidate_latency_us": 304.6032544728872,
+            "candidate_positions_us": [
+              304.68087582974823,
+              304.5256331160262
+            ],
+            "order": "ABBA",
+            "reference_latency_us": 7972.68785749163,
+            "reference_positions_us": [
+              7973.311832972935,
+              7972.063882010324
+            ]
+          },
+          {
+            "block_index": 24,
+            "candidate_latency_us": 305.10367573918523,
+            "candidate_positions_us": [
+              306.1917794717325,
+              304.01557200663797
+            ],
+            "order": "BAAB",
+            "reference_latency_us": 7972.962243216378,
+            "reference_positions_us": [
+              7974.308558872768,
+              7971.615927559988
+            ]
+          },
+          {
+            "block_index": 25,
+            "candidate_latency_us": 305.3375192590662,
+            "candidate_positions_us": [
+              305.56908169308224,
+              305.10595682505016
+            ],
+            "order": "ABBA",
+            "reference_latency_us": 7972.7976662772035,
+            "reference_positions_us": [
+              7973.380497523716,
+              7972.214835030692
+            ]
+          },
+          {
+            "block_index": 26,
+            "candidate_latency_us": 305.4900555997282,
+            "candidate_positions_us": [
+              305.2847578718856,
+              305.69535332757073
+            ],
+            "order": "ABBA",
+            "reference_latency_us": 7973.57041495187,
+            "reference_positions_us": [
+              7972.918919154576,
+              7974.221910749163
+            ]
+          },
+          {
+            "block_index": 27,
+            "candidate_latency_us": 305.3757822191393,
+            "candidate_positions_us": [
+              306.3870249567805,
+              304.3645394814981
+            ],
+            "order": "BAAB",
+            "reference_latency_us": 7974.10501752581,
+            "reference_positions_us": [
+              7973.535810198103,
+              7974.674224853516
+            ]
+          },
+          {
+            "block_index": 28,
+            "candidate_latency_us": 305.5170806678566,
+            "candidate_positions_us": [
+              305.1440006977803,
+              305.89016063793287
+            ],
+            "order": "ABBA",
+            "reference_latency_us": 7974.038805280413,
+            "reference_positions_us": [
+              7973.874228341238,
+              7974.203382219587
+            ]
+          },
+          {
+            "block_index": 29,
+            "candidate_latency_us": 306.12344999571104,
+            "candidate_positions_us": [
+              306.7059388031831,
+              305.540961188239
+            ],
+            "order": "ABBA",
+            "reference_latency_us": 7972.356523786272,
+            "reference_positions_us": [
+              7971.954345703125,
+              7972.758701869419
+            ]
+          },
+          {
+            "block_index": 30,
+            "candidate_latency_us": 307.0111403594146,
+            "candidate_positions_us": [
+              307.5541676701726,
+              306.46811304865656
+            ],
+            "order": "BAAB",
+            "reference_latency_us": 7972.557612827846,
+            "reference_positions_us": [
+              7973.9837646484375,
+              7971.131461007254
+            ]
+          }
+        ],
+        "candidate": "torch-sdpa-flash",
+        "candidate_pilot_us": 339.04001116752625,
+        "candidate_repetitions": 148,
+        "reference": "torch-sdpa-math",
+        "reference_pilot_us": 8012.576103210449,
+        "reference_repetitions": 7
+      },
+      "profiler": {
+        "captured": true,
+        "cuda_events": []
+      },
+      "shape": {
+        "batch": 1,
+        "head_dim": 128,
+        "heads": 8,
+        "seqlen": 4096
+      },
+      "weight": 0.2,
+      "work_model": {
+        "known_omissions": [
+          "softmax scalar operations",
+          "scheduler and launch floors"
+        ],
+        "minimum_external_bytes": 33554432,
+        "semantic_flops": 34359738368,
+        "version": "attention-fwd-semantic-v1"
+      }
+    }
+  ],
+  "finished_at": "2026-08-31T09:45:46.248223Z",
+  "hardware": {
+    "compute_capability": "8.0",
+    "cudnn_version": 91002,
+    "gpu_name": "NVIDIA A100-SXM4-80GB",
+    "nvidia_smi": {
+      "clocks.mem": "1593",
+      "clocks.sm": "855",
+      "driver_version": "580.65.06",
+      "memory.total": "81920",
+      "memory.used": "4",
+      "name": "NVIDIA A100-SXM4-80GB",
+      "pci.bus_id": "00000000:C8:00.0",
+      "power.draw": "60.80",
+      "power.limit": "500.00",
+      "pstate": "P0",
+      "temperature.gpu": "34",
+      "utilization.gpu": "0",
+      "uuid": "GPU-167e421f-d2fa-7d37-3c84-4758d0f6901a"
+    },
+    "platform": "Linux-5.15.0-119-generic-x86_64-with-glibc2.39",
+    "python": "3.12.14",
+    "sm_count": 108,
+    "torch_cuda": "12.8",
+    "torch_version": "2.8.0+cu128",
+    "total_memory_bytes": 85094825984
+  },
+  "implementation_commit": "pytorch-2.8.0-cu128",
+  "implementation_provenance": [
+    {
+      "module": "torch",
+      "path": "/venv/main/lib/python3.12/site-packages/torch/__init__.py",
+      "sha256": "sha256:2f0deb66d5dff6b9c02a62832c3bf3824c2ee031c462a3afeb9ca170466da5bf"
+    }
+  ],
+  "peak_memory_bytes": 1417839104,
+  "protocol": {
+    "blocks": 30,
+    "completion_fence": "end-event-synchronize",
+    "fresh_allocator_per_replay": true,
+    "fresh_process": true,
+    "min_timed_span_ms": 50.0,
+    "paired_order": "randomized-ABBA-or-BAAB",
+    "profiler_separate_from_official_timing": true,
+    "timer": "evaluator-owned-cuda-events",
+    "warmup_calls": 5
+  },
+  "replay_index": 2,
+  "schema_version": "0.3",
+  "started_at": "2026-08-31T09:45:19.356887Z",
+  "status": "passed"
+}

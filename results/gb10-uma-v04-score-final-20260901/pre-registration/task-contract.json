@@ -1,0 +1,98 @@
+{
+  "backend_profile": {
+    "adapter": "cuda-gb10-uma",
+    "benchmark_cell_id": "sha256:5a44dc3e8aa5427ae8548feddce9b9725451822e33c184d0c79397fe4c409691",
+    "id": "gpu-1x-sm121-gb10-cuda130"
+  },
+  "certification": {
+    "fresh_replays": 7,
+    "hidden_correctness_required": 1.0,
+    "require_all": true,
+    "silent_fallback_rate_max": 0.0
+  },
+  "concurrency": {
+    "burst_or_soak": "required",
+    "load_ratios": [
+      0.25,
+      0.5,
+      0.8,
+      1.0,
+      1.2
+    ],
+    "minimum_completed_requests_per_cell": 1000,
+    "protocol_id": "gb10-uma-load-normalized-v0.4-r1",
+    "reference_saturation_anchor": "local-reference-copy-pipeline",
+    "request_mix_sha256": "sha256:3e35e34f337ec01572354b5d485c9ec47a8114769903662bd8efc74c92df7779"
+  },
+  "efficiency": {
+    "calibration_manifest_sha256": "sha256:3e35e34f337ec01572354b5d485c9ec47a8114769903662bd8efc74c92df7779",
+    "regime": "memory-bound",
+    "traffic_amplification_budget": 1.1,
+    "work_model_confidence_min": "high",
+    "work_model_id": "gb10-uma-f32-transform-v1"
+  },
+  "environment": {
+    "agent_mode": "docker",
+    "exclusive_gpu_lease": true,
+    "gpu_count": 1,
+    "mps": "disabled",
+    "network": "deny",
+    "profile": "gpu-1x-sm121-gb10-cuda130",
+    "verifier_mode": "separate"
+  },
+  "evidence": {
+    "collectors": [
+      "runtime",
+      "nsys-system-trace",
+      "ncu-final-case"
+    ],
+    "minimum_grade_for_cell_efficiency": "E3-kernel-counter",
+    "minimum_grade_for_deployability": "E2-system-trace"
+  },
+  "maintainability": {
+    "build_profiles": [
+      "sm_121-runtime",
+      "sm_121f-build",
+      "sm_121a-build"
+    ],
+    "probe_set_sha256": "sha256:3e35e34f337ec01572354b5d485c9ec47a8114769903662bd8efc74c92df7779",
+    "require_capability_contract": true,
+    "require_structured_failure_codes": true
+  },
+  "replay": {
+    "count": 7,
+    "require_all": true
+  },
+  "reuse_contract": {
+    "compile_cache_observability": "required-if-applicable",
+    "expected_variant_budget": 4,
+    "max_variant_budget": 12,
+    "require_case_to_implementation_map": true,
+    "sha256": "sha256:3e35e34f337ec01572354b5d485c9ec47a8114769903662bd8efc74c92df7779",
+    "specialization_dimensions": [
+      "allocation-kind",
+      "touch-order",
+      "target-lane"
+    ]
+  },
+  "schema_version": "0.4",
+  "scoring": {
+    "absolute_latency_global_ranking": "forbidden",
+    "cell_artifact_template": "cell-artifact-memory-v0.4",
+    "deployability_template": "deployability-v0.4",
+    "raw_peak_performance_in_cross_cell_score": false
+  },
+  "semantic_contract": {
+    "path": "scoring_protocol_v04.json",
+    "sha256": "sha256:3e35e34f337ec01572354b5d485c9ec47a8114769903662bd8efc74c92df7779"
+  },
+  "task": {
+    "base_commit": "sha256:499194ab301dd57a4ccafe91af6723eadeded60a473a866c5bf82ec73e95b8fd",
+    "id": "gb10-uma-cpu-gpu-pipeline-v04",
+    "implementation_level": "integrated",
+    "kind": "benchmark-replacement",
+    "repository": "infraswe",
+    "title": "GB10 UMA CPU/GPU production pipeline",
+    "track": "gb10-uma"
+  }
+}

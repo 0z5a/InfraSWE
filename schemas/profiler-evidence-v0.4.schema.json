@@ -1,0 +1,350 @@
+{
+  "$defs": {
+    "NormalizedProfilerMetrics": {
+      "additionalProperties": false,
+      "properties": {
+        "achieved_occupancy": {
+          "anyOf": [
+            {
+              "maximum": 1,
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Achieved Occupancy"
+        },
+        "compile_cache_hit_count": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Compile Cache Hit Count"
+        },
+        "compile_cache_miss_count": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Compile Cache Miss Count"
+        },
+        "compiled_graph_count": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Compiled Graph Count"
+        },
+        "compute_throughput_pct": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Compute Throughput Pct"
+        },
+        "cpu_launch_gap_seconds": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Cpu Launch Gap Seconds"
+        },
+        "dram_bytes_read": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Dram Bytes Read"
+        },
+        "dram_bytes_write": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Dram Bytes Write"
+        },
+        "generated_kernel_count": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Generated Kernel Count"
+        },
+        "graph_break_count": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Graph Break Count"
+        },
+        "guard_count": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Guard Count"
+        },
+        "l2_bytes": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "L2 Bytes"
+        },
+        "local_memory_bytes": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Local Memory Bytes"
+        },
+        "memcpy_critical_path_fraction": {
+          "anyOf": [
+            {
+              "maximum": 1,
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Memcpy Critical Path Fraction"
+        },
+        "memory_throughput_pct": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Memory Throughput Pct"
+        },
+        "recompile_count": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Recompile Count"
+        },
+        "registers_per_thread": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Registers Per Thread"
+        },
+        "serialized_stream_fraction": {
+          "anyOf": [
+            {
+              "maximum": 1,
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Serialized Stream Fraction"
+        }
+      },
+      "title": "NormalizedProfilerMetrics",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "collector_backend": {
+      "title": "Collector Backend",
+      "type": "string"
+    },
+    "collector_kind": {
+      "enum": [
+        "framework",
+        "system-trace",
+        "kernel-counter"
+      ],
+      "title": "Collector Kind",
+      "type": "string"
+    },
+    "collector_version": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Collector Version"
+    },
+    "confidence": {
+      "enum": [
+        "low",
+        "medium",
+        "high",
+        "not_applicable"
+      ],
+      "title": "Confidence",
+      "type": "string"
+    },
+    "metric_map_version": {
+      "title": "Metric Map Version",
+      "type": "string"
+    },
+    "normalized": {
+      "$ref": "#/$defs/NormalizedProfilerMetrics"
+    },
+    "official_timing_source": {
+      "const": "separate-unprofiled-run",
+      "default": "separate-unprofiled-run",
+      "title": "Official Timing Source",
+      "type": "string"
+    },
+    "profiled_timing_authoritative": {
+      "const": false,
+      "default": false,
+      "title": "Profiled Timing Authoritative",
+      "type": "boolean"
+    },
+    "raw_evidence": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Raw Evidence",
+      "type": "array"
+    },
+    "raw_evidence_digests": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Raw Evidence Digests",
+      "type": "array"
+    },
+    "schema_version": {
+      "const": "0.4",
+      "default": "0.4",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "status": {
+      "enum": [
+        "captured",
+        "not_applicable",
+        "unresolved"
+      ],
+      "title": "Status",
+      "type": "string"
+    },
+    "unavailable_reasons": {
+      "additionalProperties": {
+        "type": "string"
+      },
+      "title": "Unavailable Reasons",
+      "type": "object"
+    }
+  },
+  "required": [
+    "collector_kind",
+    "collector_backend",
+    "metric_map_version",
+    "status",
+    "confidence"
+  ],
+  "title": "ProfilerEvidence",
+  "type": "object"
+}

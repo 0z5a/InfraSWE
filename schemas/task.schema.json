@@ -1,0 +1,1579 @@
+{
+  "$defs": {
+    "ArtifactConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "config_paths": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Config Paths",
+          "type": "array"
+        },
+        "require_clean_patch": {
+          "default": true,
+          "title": "Require Clean Patch",
+          "type": "boolean"
+        }
+      },
+      "title": "ArtifactConfig",
+      "type": "object"
+    },
+    "BackendProfileRef": {
+      "additionalProperties": false,
+      "properties": {
+        "adapter": {
+          "title": "Adapter",
+          "type": "string"
+        },
+        "benchmark_cell_id": {
+          "title": "Benchmark Cell Id",
+          "type": "string"
+        },
+        "id": {
+          "title": "Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "adapter",
+        "benchmark_cell_id"
+      ],
+      "title": "BackendProfileRef",
+      "type": "object"
+    },
+    "BudgetConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "agent_timeout_sec": {
+          "default": 900,
+          "exclusiveMinimum": 0,
+          "title": "Agent Timeout Sec",
+          "type": "integer"
+        },
+        "gpu_minutes": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Gpu Minutes",
+          "type": "number"
+        },
+        "max_infra_cost_usd": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Max Infra Cost Usd",
+          "type": "number"
+        },
+        "max_model_cost_usd": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Max Model Cost Usd",
+          "type": "number"
+        },
+        "verifier_timeout_sec": {
+          "default": 300,
+          "exclusiveMinimum": 0,
+          "title": "Verifier Timeout Sec",
+          "type": "integer"
+        }
+      },
+      "title": "BudgetConfig",
+      "type": "object"
+    },
+    "CertificationConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "fresh_replays": {
+          "default": 7,
+          "maximum": 10,
+          "minimum": 1,
+          "title": "Fresh Replays",
+          "type": "integer"
+        },
+        "hidden_correctness_required": {
+          "default": 1.0,
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Hidden Correctness Required",
+          "type": "number"
+        },
+        "require_all": {
+          "default": true,
+          "title": "Require All",
+          "type": "boolean"
+        },
+        "silent_fallback_rate_max": {
+          "default": 0.0,
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Silent Fallback Rate Max",
+          "type": "number"
+        }
+      },
+      "title": "CertificationConfig",
+      "type": "object"
+    },
+    "ConcurrencyConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "burst_or_soak": {
+          "default": "required",
+          "enum": [
+            "required",
+            "optional",
+            "not_applicable"
+          ],
+          "title": "Burst Or Soak",
+          "type": "string"
+        },
+        "load_ratios": {
+          "items": {
+            "type": "number"
+          },
+          "minItems": 1,
+          "title": "Load Ratios",
+          "type": "array"
+        },
+        "minimum_completed_requests_per_cell": {
+          "default": 1000,
+          "exclusiveMinimum": 0,
+          "title": "Minimum Completed Requests Per Cell",
+          "type": "integer"
+        },
+        "protocol_id": {
+          "title": "Protocol Id",
+          "type": "string"
+        },
+        "reference_saturation_anchor": {
+          "title": "Reference Saturation Anchor",
+          "type": "string"
+        },
+        "request_mix_sha256": {
+          "title": "Request Mix Sha256",
+          "type": "string"
+        }
+      },
+      "required": [
+        "protocol_id",
+        "reference_saturation_anchor",
+        "load_ratios",
+        "request_mix_sha256"
+      ],
+      "title": "ConcurrencyConfig",
+      "type": "object"
+    },
+    "EfficiencyConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "calibration_manifest_sha256": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Calibration Manifest Sha256"
+        },
+        "regime": {
+          "enum": [
+            "launch-bound",
+            "memory-bound",
+            "compute-bound",
+            "mixed",
+            "communication-bound",
+            "utility/no-efficiency-score"
+          ],
+          "title": "Regime",
+          "type": "string"
+        },
+        "traffic_amplification_budget": {
+          "default": 1.0,
+          "minimum": 1,
+          "title": "Traffic Amplification Budget",
+          "type": "number"
+        },
+        "work_model_confidence_min": {
+          "default": "high",
+          "enum": [
+            "low",
+            "medium",
+            "high"
+          ],
+          "title": "Work Model Confidence Min",
+          "type": "string"
+        },
+        "work_model_id": {
+          "title": "Work Model Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "work_model_id",
+        "regime"
+      ],
+      "title": "EfficiencyConfig",
+      "type": "object"
+    },
+    "EnvironmentConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "agent_image": {
+          "default": "python:3.12-slim",
+          "title": "Agent Image",
+          "type": "string"
+        },
+        "agent_mode": {
+          "default": "docker",
+          "enum": [
+            "local",
+            "docker",
+            "vm",
+            "kubernetes"
+          ],
+          "title": "Agent Mode",
+          "type": "string"
+        },
+        "capability_probe": {
+          "default": false,
+          "title": "Capability Probe",
+          "type": "boolean"
+        },
+        "exclusive_gpu_lease": {
+          "default": false,
+          "title": "Exclusive Gpu Lease",
+          "type": "boolean"
+        },
+        "gpu_count": {
+          "default": 0,
+          "maximum": 16,
+          "minimum": 0,
+          "title": "Gpu Count",
+          "type": "integer"
+        },
+        "mps": {
+          "default": "not-applicable",
+          "enum": [
+            "disabled",
+            "enabled",
+            "not-applicable"
+          ],
+          "title": "Mps",
+          "type": "string"
+        },
+        "network": {
+          "default": "deny",
+          "enum": [
+            "deny",
+            "allowlist"
+          ],
+          "title": "Network",
+          "type": "string"
+        },
+        "profile": {
+          "default": "cpu-small",
+          "title": "Profile",
+          "type": "string"
+        },
+        "shm_size": {
+          "default": "256m",
+          "pattern": "^[1-9][0-9]*(?:[kKmMgG])$",
+          "title": "Shm Size",
+          "type": "string"
+        },
+        "verifier_image": {
+          "default": "python:3.12-slim",
+          "title": "Verifier Image",
+          "type": "string"
+        },
+        "verifier_mode": {
+          "const": "separate",
+          "default": "separate",
+          "title": "Verifier Mode",
+          "type": "string"
+        }
+      },
+      "title": "EnvironmentConfig",
+      "type": "object"
+    },
+    "EvidenceConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "collectors": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Collectors",
+          "type": "array"
+        },
+        "minimum_grade_for_cell_efficiency": {
+          "default": "E3-kernel-counter",
+          "enum": [
+            "E0-runtime",
+            "E1-framework",
+            "E2-system-trace",
+            "E3-kernel-counter",
+            "E4-sealed"
+          ],
+          "title": "Minimum Grade For Cell Efficiency",
+          "type": "string"
+        },
+        "minimum_grade_for_deployability": {
+          "default": "E2-system-trace",
+          "enum": [
+            "E0-runtime",
+            "E1-framework",
+            "E2-system-trace",
+            "E3-kernel-counter",
+            "E4-sealed"
+          ],
+          "title": "Minimum Grade For Deployability",
+          "type": "string"
+        }
+      },
+      "required": [
+        "collectors"
+      ],
+      "title": "EvidenceConfig",
+      "type": "object"
+    },
+    "ExecutionConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "allowed_patch_paths": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Allowed Patch Paths",
+          "type": "array"
+        },
+        "instruction": {
+          "default": "instruction.md",
+          "title": "Instruction",
+          "type": "string"
+        },
+        "repo": {
+          "default": "fixture/repo",
+          "title": "Repo",
+          "type": "string"
+        },
+        "solution_command": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Solution Command",
+          "type": "array"
+        },
+        "verifier_command": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Verifier Command",
+          "type": "array"
+        }
+      },
+      "title": "ExecutionConfig",
+      "type": "object"
+    },
+    "GateConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "forbid_credential_access": {
+          "default": true,
+          "title": "Forbid Credential Access",
+          "type": "boolean"
+        },
+        "forbid_data_corruption": {
+          "default": true,
+          "title": "Forbid Data Corruption",
+          "type": "boolean"
+        },
+        "forbid_resource_leak": {
+          "default": true,
+          "title": "Forbid Resource Leak",
+          "type": "boolean"
+        },
+        "forbid_silent_fallback": {
+          "default": true,
+          "title": "Forbid Silent Fallback",
+          "type": "boolean"
+        },
+        "forbid_test_modification": {
+          "default": true,
+          "title": "Forbid Test Modification",
+          "type": "boolean"
+        }
+      },
+      "title": "GateConfig",
+      "type": "object"
+    },
+    "KernelCaseSet": {
+      "additionalProperties": false,
+      "properties": {
+        "count": {
+          "minimum": 0,
+          "title": "Count",
+          "type": "integer"
+        },
+        "digest": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Digest"
+        },
+        "feedback_policy": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Feedback Policy"
+        },
+        "path": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Path"
+        },
+        "provenance": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Provenance"
+        }
+      },
+      "required": [
+        "count"
+      ],
+      "title": "KernelCaseSet",
+      "type": "object"
+    },
+    "KernelContract": {
+      "additionalProperties": false,
+      "properties": {
+        "allowed_backends": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Allowed Backends",
+          "type": "array"
+        },
+        "anti_hack_policy": {
+          "additionalProperties": true,
+          "title": "Anti Hack Policy",
+          "type": "object"
+        },
+        "artifact_surface": {
+          "enum": [
+            "device-kernel",
+            "dispatcher",
+            "framework-patch",
+            "communication-program",
+            "runtime-utility"
+          ],
+          "title": "Artifact Surface",
+          "type": "string"
+        },
+        "capabilities": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Capabilities",
+          "type": "array"
+        },
+        "dev_private_cases": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/KernelCaseSet"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "entrypoint": {
+          "title": "Entrypoint",
+          "type": "string"
+        },
+        "execution_scope": {
+          "enum": [
+            "single-device",
+            "multi-device-intranode",
+            "multi-node"
+          ],
+          "title": "Execution Scope",
+          "type": "string"
+        },
+        "hidden_cases": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/KernelCaseSet"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "measurement_domain": {
+          "enum": [
+            "device-time",
+            "host-e2e",
+            "request-e2e",
+            "step-e2e",
+            "system-e2e"
+          ],
+          "title": "Measurement Domain",
+          "type": "string"
+        },
+        "mechanism_policy": {
+          "enum": [
+            "strict-native",
+            "approved-compositional",
+            "framework-integrated",
+            "direct-communication",
+            "capability-gated"
+          ],
+          "title": "Mechanism Policy",
+          "type": "string"
+        },
+        "numerics": {
+          "additionalProperties": true,
+          "title": "Numerics",
+          "type": "object"
+        },
+        "public_cases": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/KernelCaseSet"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "reference_entrypoint": {
+          "title": "Reference Entrypoint",
+          "type": "string"
+        },
+        "resource_contract": {
+          "additionalProperties": true,
+          "title": "Resource Contract",
+          "type": "object"
+        },
+        "target_arch": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Target Arch",
+          "type": "array"
+        },
+        "workload_semantics": {
+          "enum": [
+            "operator",
+            "fusion",
+            "collective",
+            "expert-parallel",
+            "setup-utility",
+            "system-pipeline",
+            "build-portability",
+            "memory-ordering"
+          ],
+          "title": "Workload Semantics",
+          "type": "string"
+        }
+      },
+      "required": [
+        "entrypoint",
+        "reference_entrypoint",
+        "target_arch",
+        "allowed_backends",
+        "artifact_surface",
+        "execution_scope",
+        "workload_semantics",
+        "mechanism_policy",
+        "measurement_domain"
+      ],
+      "title": "KernelContract",
+      "type": "object"
+    },
+    "KernelPerformanceConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "anchor_manifest_sha256": {
+          "title": "Anchor Manifest Sha256",
+          "type": "string"
+        },
+        "beyond_anchor_tolerance": {
+          "default": 0.03,
+          "minimum": 0,
+          "title": "Beyond Anchor Tolerance",
+          "type": "number"
+        },
+        "case_aggregation": {
+          "default": "weighted-certified-only",
+          "title": "Case Aggregation",
+          "type": "string"
+        },
+        "min_headroom": {
+          "default": 1.1,
+          "exclusiveMinimum": 1,
+          "title": "Min Headroom",
+          "type": "number"
+        },
+        "primary": {
+          "default": "anchor_score",
+          "title": "Primary",
+          "type": "string"
+        },
+        "report": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Report",
+          "type": "array"
+        },
+        "sampling_plan_sha256": {
+          "title": "Sampling Plan Sha256",
+          "type": "string"
+        },
+        "scoring_baseline_sha256": {
+          "title": "Scoring Baseline Sha256",
+          "type": "string"
+        }
+      },
+      "required": [
+        "scoring_baseline_sha256",
+        "anchor_manifest_sha256",
+        "sampling_plan_sha256"
+      ],
+      "title": "KernelPerformanceConfig",
+      "type": "object"
+    },
+    "KernelRoleGraphRef": {
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "title": "Path",
+          "type": "string"
+        },
+        "sha256": {
+          "title": "Sha256",
+          "type": "string"
+        }
+      },
+      "required": [
+        "path",
+        "sha256"
+      ],
+      "title": "KernelRoleGraphRef",
+      "type": "object"
+    },
+    "KernelRoleRequirements": {
+      "additionalProperties": false,
+      "properties": {
+        "artifact_roles": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Artifact Roles",
+          "type": "array"
+        },
+        "certification_roles": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Certification Roles",
+          "type": "array"
+        },
+        "fresh_replays": {
+          "default": 3,
+          "maximum": 10,
+          "minimum": 1,
+          "title": "Fresh Replays",
+          "type": "integer"
+        },
+        "required_passes": {
+          "default": 3,
+          "maximum": 10,
+          "minimum": 1,
+          "title": "Required Passes",
+          "type": "integer"
+        },
+        "search_roles": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Search Roles",
+          "type": "array"
+        }
+      },
+      "title": "KernelRoleRequirements",
+      "type": "object"
+    },
+    "KernelScoringConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "benchmark_cell_id": {
+          "title": "Benchmark Cell Id",
+          "type": "string"
+        },
+        "component_formula_origins": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "title": "Component Formula Origins",
+          "type": "object"
+        },
+        "formula_origin": {
+          "default": "infraswe-profile-template",
+          "title": "Formula Origin",
+          "type": "string"
+        },
+        "formula_parameters_sha256": {
+          "title": "Formula Parameters Sha256",
+          "type": "string"
+        },
+        "formula_version": {
+          "title": "Formula Version",
+          "type": "string"
+        },
+        "leaderboard_season": {
+          "title": "Leaderboard Season",
+          "type": "string"
+        },
+        "performance": {
+          "$ref": "#/$defs/KernelPerformanceConfig"
+        },
+        "profile": {
+          "anyOf": [
+            {
+              "enum": [
+                "kernel-micro",
+                "kernel-library",
+                "kernel-integrated",
+                "kernel-distributed"
+              ],
+              "type": "string"
+            },
+            {
+              "enum": [
+                "benchmark-replacement",
+                "backend-conformance",
+                "backend-repair",
+                "cross-backend-port",
+                "distributed-integration",
+                "kernel-frontier",
+                "training-workflow"
+              ],
+              "type": "string"
+            }
+          ],
+          "title": "Profile"
+        },
+        "role_graph": {
+          "$ref": "#/$defs/KernelRoleGraphRef"
+        },
+        "role_requirements": {
+          "$ref": "#/$defs/KernelRoleRequirements"
+        },
+        "search": {
+          "$ref": "#/$defs/KernelSearchConfig"
+        }
+      },
+      "required": [
+        "benchmark_cell_id",
+        "leaderboard_season",
+        "formula_version",
+        "formula_parameters_sha256",
+        "profile",
+        "role_graph",
+        "role_requirements",
+        "performance"
+      ],
+      "title": "KernelScoringConfig",
+      "type": "object"
+    },
+    "KernelSearchConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "dev_private_query_limit": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Dev Private Query Limit",
+          "type": "integer"
+        },
+        "enabled": {
+          "default": false,
+          "title": "Enabled",
+          "type": "boolean"
+        },
+        "max_candidates": {
+          "default": 128,
+          "exclusiveMinimum": 0,
+          "title": "Max Candidates",
+          "type": "integer"
+        },
+        "primary_budget_axis": {
+          "default": "leased_device_seconds",
+          "enum": [
+            "leased_device_seconds",
+            "wall_seconds",
+            "tokens",
+            "usd"
+          ],
+          "title": "Primary Budget Axis",
+          "type": "string"
+        },
+        "publish_axes": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Publish Axes",
+          "type": "array"
+        },
+        "sealed_checkpoint_fractions": {
+          "items": {
+            "type": "number"
+          },
+          "title": "Sealed Checkpoint Fractions",
+          "type": "array"
+        },
+        "sealed_feedback_during_episode": {
+          "const": false,
+          "default": false,
+          "title": "Sealed Feedback During Episode",
+          "type": "boolean"
+        }
+      },
+      "title": "KernelSearchConfig",
+      "type": "object"
+    },
+    "MaintainabilityConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "build_profiles": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Build Profiles",
+          "type": "array"
+        },
+        "probe_set_sha256": {
+          "title": "Probe Set Sha256",
+          "type": "string"
+        },
+        "require_capability_contract": {
+          "default": true,
+          "title": "Require Capability Contract",
+          "type": "boolean"
+        },
+        "require_structured_failure_codes": {
+          "default": true,
+          "title": "Require Structured Failure Codes",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "probe_set_sha256",
+        "build_profiles"
+      ],
+      "title": "MaintainabilityConfig",
+      "type": "object"
+    },
+    "ReplayConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "count": {
+          "default": 3,
+          "maximum": 10,
+          "minimum": 1,
+          "title": "Count",
+          "type": "integer"
+        },
+        "fresh_process": {
+          "default": true,
+          "title": "Fresh Process",
+          "type": "boolean"
+        },
+        "require_all": {
+          "default": true,
+          "title": "Require All",
+          "type": "boolean"
+        }
+      },
+      "title": "ReplayConfig",
+      "type": "object"
+    },
+    "ReuseContractConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "compile_cache_observability": {
+          "default": "required-if-applicable",
+          "enum": [
+            "required",
+            "required-if-applicable",
+            "optional",
+            "not_applicable"
+          ],
+          "title": "Compile Cache Observability",
+          "type": "string"
+        },
+        "expected_variant_budget": {
+          "exclusiveMinimum": 0,
+          "title": "Expected Variant Budget",
+          "type": "integer"
+        },
+        "max_variant_budget": {
+          "exclusiveMinimum": 0,
+          "title": "Max Variant Budget",
+          "type": "integer"
+        },
+        "require_case_to_implementation_map": {
+          "default": true,
+          "title": "Require Case To Implementation Map",
+          "type": "boolean"
+        },
+        "sha256": {
+          "title": "Sha256",
+          "type": "string"
+        },
+        "specialization_dimensions": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Specialization Dimensions",
+          "type": "array"
+        }
+      },
+      "required": [
+        "sha256",
+        "expected_variant_budget",
+        "max_variant_budget"
+      ],
+      "title": "ReuseContractConfig",
+      "type": "object"
+    },
+    "ScoringConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "absolute_latency_global_ranking": {
+          "anyOf": [
+            {
+              "const": "forbidden",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Absolute Latency Global Ranking"
+        },
+        "cell_artifact_template": {
+          "anyOf": [
+            {
+              "enum": [
+                "cell-artifact-mixed-v0.4",
+                "cell-artifact-memory-v0.4",
+                "cell-artifact-compute-v0.4",
+                "cell-artifact-distributed-v0.4"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Cell Artifact Template"
+        },
+        "deployability_template": {
+          "anyOf": [
+            {
+              "const": "deployability-v0.4",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Deployability Template"
+        },
+        "kernel": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/KernelScoringConfig"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "raw_peak_performance_in_cross_cell_score": {
+          "const": false,
+          "default": false,
+          "title": "Raw Peak Performance In Cross Cell Score",
+          "type": "boolean"
+        },
+        "reference_cost_usd": {
+          "default": 0.0,
+          "minimum": 0,
+          "title": "Reference Cost Usd",
+          "type": "number"
+        },
+        "reference_wall_time_sec": {
+          "default": 60.0,
+          "exclusiveMinimum": 0,
+          "title": "Reference Wall Time Sec",
+          "type": "number"
+        },
+        "resource_metric": {
+          "default": "resource_efficiency_ratio",
+          "title": "Resource Metric",
+          "type": "string"
+        },
+        "slo_metric": {
+          "default": "slo_goodput_ratio",
+          "title": "Slo Metric",
+          "type": "string"
+        }
+      },
+      "title": "ScoringConfig",
+      "type": "object"
+    },
+    "SemanticContractRef": {
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "title": "Path",
+          "type": "string"
+        },
+        "sha256": {
+          "title": "Sha256",
+          "type": "string"
+        }
+      },
+      "required": [
+        "path",
+        "sha256"
+      ],
+      "title": "SemanticContractRef",
+      "type": "object"
+    },
+    "TaskMetadata": {
+      "additionalProperties": false,
+      "properties": {
+        "base_commit": {
+          "title": "Base Commit",
+          "type": "string"
+        },
+        "id": {
+          "pattern": "^[a-z0-9][a-z0-9-]{2,79}$",
+          "title": "Id",
+          "type": "string"
+        },
+        "implementation_level": {
+          "anyOf": [
+            {
+              "enum": [
+                "micro",
+                "library",
+                "integrated",
+                "distributed",
+                "utility"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Implementation Level"
+        },
+        "kind": {
+          "anyOf": [
+            {
+              "enum": [
+                "infra-regression",
+                "kernel-micro",
+                "kernel-library",
+                "kernel-integrated",
+                "kernel-distributed",
+                "benchmark-replacement",
+                "backend-conformance",
+                "backend-repair",
+                "cross-backend-port",
+                "distributed-integration",
+                "kernel-frontier",
+                "training-workflow"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Kind"
+        },
+        "level": {
+          "default": "L1",
+          "enum": [
+            "L1",
+            "L2",
+            "L3",
+            "L4",
+            "K0",
+            "K1",
+            "K2",
+            "K3",
+            "K4",
+            "K5"
+          ],
+          "title": "Level",
+          "type": "string"
+        },
+        "repository": {
+          "title": "Repository",
+          "type": "string"
+        },
+        "title": {
+          "title": "Title",
+          "type": "string"
+        },
+        "track": {
+          "title": "Track",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "title",
+        "track",
+        "repository",
+        "base_commit"
+      ],
+      "title": "TaskMetadata",
+      "type": "object"
+    },
+    "TrainingArtifactRef": {
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "title": "Path",
+          "type": "string"
+        },
+        "sha256": {
+          "pattern": "^sha256:[0-9a-fA-F]{8,64}$",
+          "title": "Sha256",
+          "type": "string"
+        }
+      },
+      "required": [
+        "path",
+        "sha256"
+      ],
+      "title": "TrainingArtifactRef",
+      "type": "object"
+    },
+    "TrainingImplementationConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "artifact_formats": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Artifact Formats",
+          "type": "array"
+        },
+        "candidates": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Candidates",
+          "type": "array"
+        },
+        "device_runtime": {
+          "default": "cuda",
+          "title": "Device Runtime",
+          "type": "string"
+        },
+        "forbid_silent_fallback": {
+          "const": true,
+          "default": true,
+          "title": "Forbid Silent Fallback",
+          "type": "boolean"
+        },
+        "graph_compiler": {
+          "default": "none",
+          "title": "Graph Compiler",
+          "type": "string"
+        },
+        "graph_mode": {
+          "default": "eager",
+          "title": "Graph Mode",
+          "type": "string"
+        },
+        "kernel_language": {
+          "default": "pytorch",
+          "title": "Kernel Language",
+          "type": "string"
+        }
+      },
+      "required": [
+        "candidates"
+      ],
+      "title": "TrainingImplementationConfig",
+      "type": "object"
+    },
+    "TrainingProfilingConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "authoritative_timing": {
+          "const": "separate-unprofiled-run",
+          "default": "separate-unprofiled-run",
+          "title": "Authoritative Timing",
+          "type": "string"
+        },
+        "cell_efficiency_grade": {
+          "const": "G4",
+          "default": "G4",
+          "title": "Cell Efficiency Grade",
+          "type": "string"
+        },
+        "concurrency_grade": {
+          "default": "G3",
+          "enum": [
+            "G0",
+            "G1",
+            "G2",
+            "G3",
+            "G4"
+          ],
+          "title": "Concurrency Grade",
+          "type": "string"
+        },
+        "minimum_grade_for_deployability": {
+          "default": "G3",
+          "enum": [
+            "G0",
+            "G1",
+            "G2",
+            "G3",
+            "G4"
+          ],
+          "title": "Minimum Grade For Deployability",
+          "type": "string"
+        },
+        "profiled_timing_authoritative": {
+          "const": false,
+          "default": false,
+          "title": "Profiled Timing Authoritative",
+          "type": "boolean"
+        }
+      },
+      "title": "TrainingProfilingConfig",
+      "type": "object"
+    },
+    "TrainingTrainerConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "adapter": {
+          "default": "matrix",
+          "title": "Adapter",
+          "type": "string"
+        },
+        "distributed": {
+          "default": "single",
+          "title": "Distributed",
+          "type": "string"
+        },
+        "launcher": {
+          "default": "custom",
+          "title": "Launcher",
+          "type": "string"
+        },
+        "optional": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Optional",
+          "type": "array"
+        },
+        "required": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Required",
+          "type": "array"
+        },
+        "rollout_engine": {
+          "default": "none",
+          "title": "Rollout Engine",
+          "type": "string"
+        }
+      },
+      "required": [
+        "required"
+      ],
+      "title": "TrainingTrainerConfig",
+      "type": "object"
+    },
+    "TrainingWorkloadConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "algorithm": {
+          "title": "Algorithm",
+          "type": "string"
+        },
+        "certification_scope": {
+          "title": "Certification Scope",
+          "type": "string"
+        },
+        "family": {
+          "title": "Family",
+          "type": "string"
+        },
+        "optimizer": {
+          "title": "Optimizer",
+          "type": "string"
+        },
+        "semantic_contract": {
+          "$ref": "#/$defs/TrainingArtifactRef"
+        },
+        "work_model": {
+          "$ref": "#/$defs/TrainingArtifactRef"
+        }
+      },
+      "required": [
+        "family",
+        "algorithm",
+        "optimizer",
+        "semantic_contract",
+        "work_model",
+        "certification_scope"
+      ],
+      "title": "TrainingWorkloadConfig",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "artifacts": {
+      "$ref": "#/$defs/ArtifactConfig"
+    },
+    "backend_profile": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/BackendProfileRef"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "budget": {
+      "$ref": "#/$defs/BudgetConfig"
+    },
+    "certification": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/CertificationConfig"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "concurrency": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/ConcurrencyConfig"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "efficiency": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/EfficiencyConfig"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "environment": {
+      "$ref": "#/$defs/EnvironmentConfig"
+    },
+    "evidence": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/EvidenceConfig"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "execution": {
+      "$ref": "#/$defs/ExecutionConfig"
+    },
+    "gates": {
+      "$ref": "#/$defs/GateConfig"
+    },
+    "implementation": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/TrainingImplementationConfig"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "kernel_contract": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/KernelContract"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "maintainability": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/MaintainabilityConfig"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "profiling": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/TrainingProfilingConfig"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "replay": {
+      "$ref": "#/$defs/ReplayConfig"
+    },
+    "reuse_contract": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/ReuseContractConfig"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "schema_version": {
+      "default": "0.1",
+      "enum": [
+        "0.1",
+        "0.3",
+        "0.4"
+      ],
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "scoring": {
+      "$ref": "#/$defs/ScoringConfig"
+    },
+    "semantic_contract": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/SemanticContractRef"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "task": {
+      "$ref": "#/$defs/TaskMetadata"
+    },
+    "trainer": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/TrainingTrainerConfig"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "workload": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/TrainingWorkloadConfig"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    }
+  },
+  "required": [
+    "task"
+  ],
+  "title": "TaskPackage",
+  "type": "object"
+}

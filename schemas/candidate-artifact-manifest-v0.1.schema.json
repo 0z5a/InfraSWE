@@ -1,0 +1,144 @@
+{
+  "$defs": {
+    "CandidateArtifactEntry": {
+      "additionalProperties": false,
+      "properties": {
+        "authority": {
+          "default": "NONE",
+          "enum": [
+            "NONE",
+            "CANDIDATE_CLAIM"
+          ],
+          "title": "Authority",
+          "type": "string"
+        },
+        "kind": {
+          "enum": [
+            "source-patch",
+            "source-file",
+            "configuration",
+            "declaration",
+            "build-recipe",
+            "binary"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "logical_name": {
+          "title": "Logical Name",
+          "type": "string"
+        },
+        "media_type": {
+          "title": "Media Type",
+          "type": "string"
+        },
+        "mode": {
+          "pattern": "^0[0-7]{3}$",
+          "title": "Mode",
+          "type": "string"
+        },
+        "origin_trust": {
+          "enum": [
+            "T0_AGENT_SELF_REPORTED",
+            "T1_COLLECTOR_CAPTURED"
+          ],
+          "title": "Origin Trust",
+          "type": "string"
+        },
+        "relative_path": {
+          "title": "Relative Path",
+          "type": "string"
+        },
+        "sha256": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Sha256",
+          "type": "string"
+        },
+        "size_bytes": {
+          "minimum": 0,
+          "title": "Size Bytes",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "logical_name",
+        "relative_path",
+        "kind",
+        "media_type",
+        "sha256",
+        "size_bytes",
+        "mode",
+        "origin_trust"
+      ],
+      "title": "CandidateArtifactEntry",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "artifact_policy_id": {
+      "title": "Artifact Policy Id",
+      "type": "string"
+    },
+    "artifact_policy_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Artifact Policy Sha256",
+      "type": "string"
+    },
+    "artifacts": {
+      "items": {
+        "$ref": "#/$defs/CandidateArtifactEntry"
+      },
+      "minItems": 1,
+      "title": "Artifacts",
+      "type": "array"
+    },
+    "candidate_id": {
+      "title": "Candidate Id",
+      "type": "string"
+    },
+    "canonicalizer_version": {
+      "title": "Canonicalizer Version",
+      "type": "string"
+    },
+    "collection_environment_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Collection Environment Sha256",
+      "type": "string"
+    },
+    "freeze_attestation_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Freeze Attestation Sha256",
+      "type": "string"
+    },
+    "manifest_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Manifest Sha256",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "0.1",
+      "default": "0.1",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "task_seal_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Task Seal Sha256",
+      "type": "string"
+    }
+  },
+  "required": [
+    "artifact_policy_id",
+    "artifact_policy_sha256",
+    "task_seal_sha256",
+    "candidate_id",
+    "artifacts",
+    "collection_environment_sha256",
+    "freeze_attestation_sha256",
+    "canonicalizer_version",
+    "manifest_sha256"
+  ],
+  "title": "CandidateArtifactManifest",
+  "type": "object"
+}

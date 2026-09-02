@@ -1,0 +1,985 @@
+{
+  "$defs": {
+    "DraftAcceptanceContract": {
+      "additionalProperties": false,
+      "properties": {
+        "hidden_probe_policy_sha256": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Hidden Probe Policy Sha256",
+          "type": "string"
+        },
+        "human_review_sha256": {
+          "anyOf": [
+            {
+              "pattern": "^sha256:[0-9a-f]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Human Review Sha256"
+        },
+        "path": {
+          "title": "Path",
+          "type": "string"
+        },
+        "probe_set_sha256": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Probe Set Sha256",
+          "type": "string"
+        },
+        "sha256": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Sha256",
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "proposed",
+            "human-reviewed",
+            "sealed"
+          ],
+          "title": "Status",
+          "type": "string"
+        }
+      },
+      "required": [
+        "status",
+        "path",
+        "sha256",
+        "probe_set_sha256",
+        "hidden_probe_policy_sha256"
+      ],
+      "title": "DraftAcceptanceContract",
+      "type": "object"
+    },
+    "DraftMetadata": {
+      "additionalProperties": false,
+      "properties": {
+        "created_by": {
+          "title": "Created By",
+          "type": "string"
+        },
+        "id": {
+          "pattern": "^[a-z0-9][a-z0-9-]{2,79}$",
+          "title": "Id",
+          "type": "string"
+        },
+        "revision": {
+          "minimum": 1,
+          "title": "Revision",
+          "type": "integer"
+        },
+        "state": {
+          "enum": [
+            "D0-created",
+            "D1-target-bound",
+            "D2-precedents-retrieved",
+            "D3-contract-proposed",
+            "D4-human-reviewed",
+            "D5-fast-loop",
+            "D6-sealed",
+            "D7-official-evaluation",
+            "D8-decided",
+            "D9-archived"
+          ],
+          "title": "State",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "revision",
+        "state",
+        "created_by"
+      ],
+      "title": "DraftMetadata",
+      "type": "object"
+    },
+    "DraftTarget": {
+      "additionalProperties": false,
+      "properties": {
+        "catalog_profile": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Catalog Profile"
+        },
+        "mode": {
+          "enum": [
+            "catalog",
+            "repository"
+          ],
+          "title": "Mode",
+          "type": "string"
+        },
+        "project_profile_sha256": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Project Profile Sha256",
+          "type": "string"
+        },
+        "repository": {
+          "title": "Repository",
+          "type": "string"
+        },
+        "revision": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Revision",
+          "type": "string"
+        }
+      },
+      "required": [
+        "mode",
+        "repository",
+        "revision",
+        "project_profile_sha256"
+      ],
+      "title": "DraftTarget",
+      "type": "object"
+    },
+    "MemoryTier": {
+      "additionalProperties": false,
+      "properties": {
+        "capacity_bytes": {
+          "exclusiveMinimum": 0,
+          "title": "Capacity Bytes",
+          "type": "integer"
+        },
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "kind": {
+          "enum": [
+            "device",
+            "host-pinned",
+            "host-pageable",
+            "cxl",
+            "nvme",
+            "remote-memory"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "numa_node": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Numa Node"
+        },
+        "policy": {
+          "enum": [
+            "required",
+            "optional",
+            "explicit-unsupported",
+            "roadmap"
+          ],
+          "title": "Policy",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "kind",
+        "capacity_bytes",
+        "policy"
+      ],
+      "title": "MemoryTier",
+      "type": "object"
+    },
+    "MemoryTierCapacity": {
+      "additionalProperties": false,
+      "properties": {
+        "device_budget_bytes": {
+          "exclusiveMinimum": 0,
+          "title": "Device Budget Bytes",
+          "type": "integer"
+        },
+        "host_pageable_budget_bytes": {
+          "minimum": 0,
+          "title": "Host Pageable Budget Bytes",
+          "type": "integer"
+        },
+        "host_pinned_budget_bytes": {
+          "minimum": 0,
+          "title": "Host Pinned Budget Bytes",
+          "type": "integer"
+        },
+        "queue_limit": {
+          "exclusiveMinimum": 0,
+          "title": "Queue Limit",
+          "type": "integer"
+        },
+        "unbounded_growth": {
+          "const": false,
+          "default": false,
+          "title": "Unbounded Growth",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "device_budget_bytes",
+        "host_pinned_budget_bytes",
+        "host_pageable_budget_bytes",
+        "queue_limit"
+      ],
+      "title": "MemoryTierCapacity",
+      "type": "object"
+    },
+    "MemoryTierCellIdentity": {
+      "additionalProperties": false,
+      "properties": {
+        "allocator": {
+          "title": "Allocator",
+          "type": "string"
+        },
+        "background_load_policy": {
+          "title": "Background Load Policy",
+          "type": "string"
+        },
+        "cell_id": {
+          "title": "Cell Id",
+          "type": "string"
+        },
+        "cpu_affinity": {
+          "title": "Cpu Affinity",
+          "type": "string"
+        },
+        "cpu_model": {
+          "title": "Cpu Model",
+          "type": "string"
+        },
+        "cpu_socket_count": {
+          "minimum": 1,
+          "title": "Cpu Socket Count",
+          "type": "integer"
+        },
+        "driver_runtime": {
+          "title": "Driver Runtime",
+          "type": "string"
+        },
+        "framework": {
+          "title": "Framework",
+          "type": "string"
+        },
+        "gpu_count": {
+          "minimum": 1,
+          "title": "Gpu Count",
+          "type": "integer"
+        },
+        "gpu_memory_bytes": {
+          "exclusiveMinimum": 0,
+          "title": "Gpu Memory Bytes",
+          "type": "integer"
+        },
+        "gpu_model": {
+          "title": "Gpu Model",
+          "type": "string"
+        },
+        "gpu_topology_sha256": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Gpu Topology Sha256",
+          "type": "string"
+        },
+        "host_memory_bytes": {
+          "exclusiveMinimum": 0,
+          "title": "Host Memory Bytes",
+          "type": "integer"
+        },
+        "host_page_policy": {
+          "title": "Host Page Policy",
+          "type": "string"
+        },
+        "interconnect": {
+          "title": "Interconnect",
+          "type": "string"
+        },
+        "numa_policy": {
+          "title": "Numa Policy",
+          "type": "string"
+        },
+        "numa_topology_sha256": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Numa Topology Sha256",
+          "type": "string"
+        },
+        "os_kernel": {
+          "title": "Os Kernel",
+          "type": "string"
+        },
+        "pinned_policy": {
+          "enum": [
+            "required",
+            "optional",
+            "forbidden"
+          ],
+          "title": "Pinned Policy",
+          "type": "string"
+        }
+      },
+      "required": [
+        "cell_id",
+        "gpu_model",
+        "gpu_count",
+        "gpu_topology_sha256",
+        "gpu_memory_bytes",
+        "cpu_model",
+        "cpu_socket_count",
+        "numa_topology_sha256",
+        "host_memory_bytes",
+        "cpu_affinity",
+        "numa_policy",
+        "interconnect",
+        "pinned_policy",
+        "host_page_policy",
+        "os_kernel",
+        "driver_runtime",
+        "framework",
+        "allocator",
+        "background_load_policy"
+      ],
+      "title": "MemoryTierCellIdentity",
+      "type": "object"
+    },
+    "MemoryTierDeployment": {
+      "additionalProperties": false,
+      "properties": {
+        "concurrency_protocol_id": {
+          "const": "memory-tiering-load-normalized-v1",
+          "default": "memory-tiering-load-normalized-v1",
+          "title": "Concurrency Protocol Id",
+          "type": "string"
+        },
+        "optional_cells": {
+          "items": {
+            "$ref": "#/$defs/MemoryTierCellIdentity"
+          },
+          "title": "Optional Cells",
+          "type": "array"
+        },
+        "performance_mode": {
+          "enum": [
+            "fixed-workload",
+            "fixed-device-budget",
+            "capacity-enable"
+          ],
+          "title": "Performance Mode",
+          "type": "string"
+        },
+        "required_cells": {
+          "items": {
+            "$ref": "#/$defs/MemoryTierCellIdentity"
+          },
+          "minItems": 1,
+          "title": "Required Cells",
+          "type": "array"
+        },
+        "residency_target_sha256": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Residency Target Sha256",
+          "type": "string"
+        },
+        "service_target_sha256": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Service Target Sha256",
+          "type": "string"
+        },
+        "transfer_target_sha256": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Transfer Target Sha256",
+          "type": "string"
+        },
+        "workload_portfolio_sha256": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Workload Portfolio Sha256",
+          "type": "string"
+        }
+      },
+      "required": [
+        "performance_mode",
+        "workload_portfolio_sha256",
+        "required_cells",
+        "service_target_sha256",
+        "residency_target_sha256",
+        "transfer_target_sha256"
+      ],
+      "title": "MemoryTierDeployment",
+      "type": "object"
+    },
+    "MemoryTierScoringPolicy": {
+      "additionalProperties": false,
+      "properties": {
+        "backend_or_tier_count_score": {
+          "const": "forbidden",
+          "default": "forbidden",
+          "title": "Backend Or Tier Count Score",
+          "type": "string"
+        },
+        "cell_artifact_template_id": {
+          "const": "cell-artifact-memory-tiering-v0.5.2",
+          "default": "cell-artifact-memory-tiering-v0.5.2",
+          "title": "Cell Artifact Template Id",
+          "type": "string"
+        },
+        "communication_domain_score": {
+          "const": "forbidden",
+          "default": "forbidden",
+          "title": "Communication Domain Score",
+          "type": "string"
+        },
+        "concurrent_stability_source": {
+          "const": "system-path-load-cells-v1",
+          "default": "system-path-load-cells-v1",
+          "title": "Concurrent Stability Source",
+          "type": "string"
+        },
+        "cpu_offload_score": {
+          "const": "forbidden",
+          "default": "forbidden",
+          "title": "Cpu Offload Score",
+          "type": "string"
+        },
+        "deployability_template_id": {
+          "const": "deployability-v0.4",
+          "default": "deployability-v0.4",
+          "title": "Deployability Template Id",
+          "type": "string"
+        },
+        "generic_cross_platform_score": {
+          "const": "forbidden",
+          "default": "forbidden",
+          "title": "Generic Cross Platform Score",
+          "type": "string"
+        },
+        "memory_tier_count_score": {
+          "const": "forbidden",
+          "default": "forbidden",
+          "title": "Memory Tier Count Score",
+          "type": "string"
+        },
+        "offload_domain_score": {
+          "const": "forbidden",
+          "default": "forbidden",
+          "title": "Offload Domain Score",
+          "type": "string"
+        },
+        "operational_fit_source": {
+          "const": "concurrent-stability",
+          "default": "concurrent-stability",
+          "title": "Operational Fit Source",
+          "type": "string"
+        },
+        "operational_projection_policy": {
+          "const": "identity-v1",
+          "default": "identity-v1",
+          "title": "Operational Projection Policy",
+          "type": "string"
+        },
+        "parent_inherits_child_pure_triton_x": {
+          "const": false,
+          "default": false,
+          "title": "Parent Inherits Child Pure Triton X",
+          "type": "boolean"
+        },
+        "project_fit_template_id": {
+          "const": "project-fit-system-path-v0.5.1",
+          "default": "project-fit-system-path-v0.5.1",
+          "title": "Project Fit Template Id",
+          "type": "string"
+        }
+      },
+      "title": "MemoryTierScoringPolicy",
+      "type": "object"
+    },
+    "MemoryTieringContract": {
+      "additionalProperties": false,
+      "properties": {
+        "abstract_parent_profile": {
+          "const": "memory-tiering-offload-runtime-v1",
+          "default": "memory-tiering-offload-runtime-v1",
+          "title": "Abstract Parent Profile",
+          "type": "string"
+        },
+        "allocator_owner": {
+          "title": "Allocator Owner",
+          "type": "string"
+        },
+        "capacity": {
+          "$ref": "#/$defs/MemoryTierCapacity"
+        },
+        "consumer_waits_for_ready_event": {
+          "const": true,
+          "default": true,
+          "title": "Consumer Waits For Ready Event",
+          "type": "boolean"
+        },
+        "copy_stream_owner": {
+          "title": "Copy Stream Owner",
+          "type": "string"
+        },
+        "destination_tier_id": {
+          "title": "Destination Tier Id",
+          "type": "string"
+        },
+        "explicit_fallback": {
+          "const": true,
+          "default": true,
+          "title": "Explicit Fallback",
+          "type": "boolean"
+        },
+        "fallback_tier_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Fallback Tier Id"
+        },
+        "mutability": {
+          "title": "Mutability",
+          "type": "string"
+        },
+        "object_kind": {
+          "enum": [
+            "kv-cache",
+            "weight",
+            "training-state",
+            "activation",
+            "checkpoint-staging"
+          ],
+          "title": "Object Kind",
+          "type": "string"
+        },
+        "profile_id": {
+          "enum": [
+            "memory-tiering-offload-runtime-v1",
+            "kv-cache-cpu-offload-v1",
+            "weight-cpu-offload-v1",
+            "training-state-cpu-offload-v1",
+            "activation-cpu-offload-v1",
+            "checkpoint-staging-cpu-offload-v1"
+          ],
+          "title": "Profile Id",
+          "type": "string"
+        },
+        "request_or_step_isolation": {
+          "const": true,
+          "default": true,
+          "title": "Request Or Step Isolation",
+          "type": "boolean"
+        },
+        "residency_owner": {
+          "title": "Residency Owner",
+          "type": "string"
+        },
+        "source_tier_id": {
+          "title": "Source Tier Id",
+          "type": "string"
+        },
+        "teardown_quiescence": {
+          "const": true,
+          "default": true,
+          "title": "Teardown Quiescence",
+          "type": "boolean"
+        },
+        "tiers": {
+          "items": {
+            "$ref": "#/$defs/MemoryTier"
+          },
+          "minItems": 2,
+          "title": "Tiers",
+          "type": "array"
+        },
+        "transitions": {
+          "items": {
+            "$ref": "#/$defs/ResidencyTransition"
+          },
+          "minItems": 1,
+          "title": "Transitions",
+          "type": "array"
+        },
+        "version_token_required": {
+          "title": "Version Token Required",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "profile_id",
+        "object_kind",
+        "mutability",
+        "source_tier_id",
+        "destination_tier_id",
+        "tiers",
+        "transitions",
+        "version_token_required",
+        "allocator_owner",
+        "residency_owner",
+        "copy_stream_owner",
+        "capacity"
+      ],
+      "title": "MemoryTieringContract",
+      "type": "object"
+    },
+    "OffloadBaseline": {
+      "additionalProperties": false,
+      "properties": {
+        "mode": {
+          "title": "Mode",
+          "type": "string"
+        },
+        "outcome": {
+          "default": "runnable",
+          "enum": [
+            "runnable",
+            "expected-capacity-limit",
+            "unresolved"
+          ],
+          "title": "Outcome",
+          "type": "string"
+        },
+        "revision": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Revision",
+          "type": "string"
+        }
+      },
+      "required": [
+        "mode",
+        "revision"
+      ],
+      "title": "OffloadBaseline",
+      "type": "object"
+    },
+    "OffloadBaselineSet": {
+      "additionalProperties": false,
+      "properties": {
+        "load_anchor": {
+          "$ref": "#/$defs/OffloadBaseline"
+        },
+        "scoring_baseline": {
+          "$ref": "#/$defs/OffloadBaseline"
+        },
+        "semantic_baseline": {
+          "$ref": "#/$defs/OffloadBaseline"
+        }
+      },
+      "required": [
+        "semantic_baseline",
+        "scoring_baseline",
+        "load_anchor"
+      ],
+      "title": "OffloadBaselineSet",
+      "type": "object"
+    },
+    "ResidencyTransition": {
+      "additionalProperties": false,
+      "properties": {
+        "operation": {
+          "title": "Operation",
+          "type": "string"
+        },
+        "source_state": {
+          "enum": [
+            "UNALLOCATED",
+            "DEVICE_RESIDENT",
+            "EVICTING",
+            "HOST_RESIDENT",
+            "PREFETCHING",
+            "DEVICE_READY",
+            "INVALIDATED",
+            "FAILED",
+            "FREED"
+          ],
+          "title": "Source State",
+          "type": "string"
+        },
+        "target_state": {
+          "enum": [
+            "DEVICE_RESIDENT",
+            "EVICTING",
+            "HOST_RESIDENT",
+            "PREFETCHING",
+            "DEVICE_READY",
+            "INVALIDATED",
+            "FAILED",
+            "FREED"
+          ],
+          "title": "Target State",
+          "type": "string"
+        }
+      },
+      "required": [
+        "source_state",
+        "target_state",
+        "operation"
+      ],
+      "title": "ResidencyTransition",
+      "type": "object"
+    },
+    "SystemPathCandidate": {
+      "additionalProperties": false,
+      "properties": {
+        "domain": {
+          "enum": [
+            "distributed-communication",
+            "memory-tiering"
+          ],
+          "title": "Domain",
+          "type": "string"
+        },
+        "entrypoints": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Entrypoints",
+          "type": "array"
+        },
+        "implementation_kind": {
+          "enum": [
+            "communication-native",
+            "communication-plugin",
+            "communication-framework-integration",
+            "memory-tiering-runtime",
+            "framework-offload-integration",
+            "native-offload-extension",
+            "native-library",
+            "mixed-system"
+          ],
+          "title": "Implementation Kind",
+          "type": "string"
+        },
+        "intent": {
+          "title": "Intent",
+          "type": "string"
+        },
+        "kind": {
+          "enum": [
+            "git-diff",
+            "source-tree",
+            "package",
+            "generated"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "revision": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Revision",
+          "type": "string"
+        }
+      },
+      "required": [
+        "domain",
+        "kind",
+        "revision",
+        "intent",
+        "implementation_kind",
+        "entrypoints"
+      ],
+      "title": "SystemPathCandidate",
+      "type": "object"
+    },
+    "SystemRetrievalBinding": {
+      "additionalProperties": false,
+      "properties": {
+        "anchor_plugin": {
+          "enum": [
+            "communication-v1",
+            "memory-tier-v1"
+          ],
+          "title": "Anchor Plugin",
+          "type": "string"
+        },
+        "corpus_cutoff": {
+          "format": "date-time",
+          "title": "Corpus Cutoff",
+          "type": "string"
+        },
+        "human_waiver_sha256": {
+          "anyOf": [
+            {
+              "pattern": "^sha256:[0-9a-f]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Human Waiver Sha256"
+        },
+        "leakage_audit_sha256": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Leakage Audit Sha256",
+          "type": "string"
+        },
+        "precedent_set_sha256": {
+          "anyOf": [
+            {
+              "pattern": "^sha256:[0-9a-f]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Precedent Set Sha256"
+        },
+        "query_plan_sha256": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Query Plan Sha256",
+          "type": "string"
+        },
+        "snapshot_sha256": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Snapshot Sha256",
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "complete",
+            "partial",
+            "blocked",
+            "stale",
+            "conflicting"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "trust_card_sha256": {
+          "anyOf": [
+            {
+              "pattern": "^sha256:[0-9a-f]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Trust Card Sha256"
+        }
+      },
+      "required": [
+        "status",
+        "anchor_plugin",
+        "corpus_cutoff",
+        "snapshot_sha256",
+        "query_plan_sha256",
+        "leakage_audit_sha256"
+      ],
+      "title": "SystemRetrievalBinding",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "acceptance_contract": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/DraftAcceptanceContract"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "baseline_set": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/OffloadBaselineSet"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "candidate": {
+      "$ref": "#/$defs/SystemPathCandidate"
+    },
+    "deployment": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/MemoryTierDeployment"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "draft": {
+      "$ref": "#/$defs/DraftMetadata"
+    },
+    "memory_tiering": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/MemoryTieringContract"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "retrieval": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/SystemRetrievalBinding"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "schema_version": {
+      "const": "0.5.2",
+      "default": "0.5.2",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "scoring": {
+      "$ref": "#/$defs/MemoryTierScoringPolicy"
+    },
+    "target": {
+      "$ref": "#/$defs/DraftTarget"
+    },
+    "template_id": {
+      "const": "memory-tier-integration-v1",
+      "default": "memory-tier-integration-v1",
+      "title": "Template Id",
+      "type": "string"
+    }
+  },
+  "required": [
+    "draft",
+    "target",
+    "candidate"
+  ],
+  "title": "MemoryTierDraftSpec",
+  "type": "object"
+}

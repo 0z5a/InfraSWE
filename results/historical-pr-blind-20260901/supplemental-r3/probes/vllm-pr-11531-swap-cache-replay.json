@@ -1,0 +1,141 @@
+{
+  "case_id": "vllm-pr-11531",
+  "correctness": [
+    {
+      "bytes_per_page": 256,
+      "differing_elements": 0,
+      "dtype": "torch.float16",
+      "elements_per_page": 128,
+      "matches_oracle": true,
+      "source_device": "cuda",
+      "target_device": "cuda"
+    },
+    {
+      "bytes_per_page": 6,
+      "differing_elements": 8,
+      "dtype": "torch.float16",
+      "elements_per_page": 3,
+      "matches_oracle": false,
+      "source_device": "cuda",
+      "target_device": "cuda"
+    },
+    {
+      "bytes_per_page": 7,
+      "differing_elements": 20,
+      "dtype": "torch.uint8",
+      "elements_per_page": 7,
+      "matches_oracle": false,
+      "source_device": "cuda",
+      "target_device": "cuda"
+    },
+    {
+      "bytes_per_page": 512,
+      "differing_elements": 0,
+      "dtype": "torch.float32",
+      "elements_per_page": 128,
+      "matches_oracle": true,
+      "source_device": "cpu",
+      "target_device": "cuda"
+    },
+    {
+      "bytes_per_page": 512,
+      "differing_elements": 0,
+      "dtype": "torch.float32",
+      "elements_per_page": 128,
+      "matches_oracle": true,
+      "source_device": "cuda",
+      "target_device": "cpu"
+    }
+  ],
+  "created_at": "2026-09-01T16:43:32.019285+00:00",
+  "duration_seconds": 50.17546123499051,
+  "environment": {
+    "compute_capability": [
+      8,
+      0
+    ],
+    "cuda_runtime": "12.4",
+    "device": "NVIDIA A100-SXM4-40GB",
+    "torch_version": "2.5.1+cu124"
+  },
+  "evidence_sha256": "sha256:bd8e738c43605d1c2449a9abbc73faa4a3224119231fc7182bd787b8c357066c",
+  "failure_codes": [
+    "PAGE_COPY_DROPS_NON_INT64_TAIL_BYTES",
+    "ASYNC_PINNED_MAPPING_BUFFER_LIFETIME_RACE",
+    "ZERO_BLOCK_KERNEL_LAUNCH_UNGUARDED"
+  ],
+  "mapping_lifetime": {
+    "delay_cycles": 200000000,
+    "fast_matches_intended_mapping": false,
+    "fast_matches_overwritten_mapping": true,
+    "reused_mapping_race_reproduced": true,
+    "slow_matches_intended_mapping": true
+  },
+  "performance": [
+    {
+      "bytes_per_page": 16384,
+      "fast_median_us": 24.57600086927414,
+      "fast_p95_us": 26.623999699950218,
+      "iterations": 100,
+      "mapping_count": 1,
+      "slow_median_us": 23.552000522613525,
+      "slow_p95_us": 24.57600086927414,
+      "speedup": 0.9583333207014629
+    },
+    {
+      "bytes_per_page": 16384,
+      "fast_median_us": 25.599999353289604,
+      "fast_p95_us": 25.599999353289604,
+      "iterations": 100,
+      "mapping_count": 8,
+      "slow_median_us": 55.296000093221664,
+      "slow_p95_us": 57.34400078654289,
+      "speedup": 2.1600000582076624
+    },
+    {
+      "bytes_per_page": 16384,
+      "fast_median_us": 25.599999353289604,
+      "fast_p95_us": 25.599999353289604,
+      "iterations": 100,
+      "mapping_count": 64,
+      "slow_median_us": 283.6480140686035,
+      "slow_p95_us": 293.88800263404846,
+      "speedup": 11.08000082945919
+    },
+    {
+      "bytes_per_page": 16384,
+      "fast_median_us": 25.599999353289604,
+      "fast_p95_us": 25.599999353289604,
+      "iterations": 100,
+      "mapping_count": 256,
+      "slow_median_us": 1059.8399639129639,
+      "slow_p95_us": 1069.0560340881348,
+      "speedup": 41.39999963620211
+    }
+  ],
+  "phases": {
+    "cold_start": {
+      "extension_load": null,
+      "first_launch_seconds": 0.2754767530132085
+    },
+    "precompile": {
+      "build_directory": "/workspace/.cache/torch_extensions/infraswe_vllm_swap_pr11531_sm80_v1",
+      "cache_hit_before": true,
+      "seconds": 49.341212102910504
+    },
+    "steady_state": {
+      "compile_seconds": 0.0,
+      "timed_iterations_per_case": 100
+    }
+  },
+  "probe": "vllm-swap-blocks-pr11531-v1",
+  "schema_version": "0.5",
+  "source_identity": {
+    "embedded_probe_cuda_sha256": "sha256:c823126bc3dfbe86f35f706b258bc46f3d183cf4608e60cc3bf5e0e49c83577a",
+    "head_cache_kernels_sha256": "sha256:7c4cb5e8df35e9bade1af6a9c8d87b0cb6b7fd188270989ff9fc7020fe71df6a"
+  },
+  "static_contracts": {
+    "empty_mapping_guard_present": false
+  },
+  "status": "fail"
+}

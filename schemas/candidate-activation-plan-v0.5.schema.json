@@ -1,0 +1,129 @@
+{
+  "$defs": {
+    "CandidateActivationAction": {
+      "additionalProperties": false,
+      "properties": {
+        "action": {
+          "enum": [
+            "skip-no-compilation",
+            "reuse-precompiled-artifact",
+            "precompile-before-timed-cases",
+            "compile-inline-with-warning"
+          ],
+          "title": "Action",
+          "type": "string"
+        },
+        "cache_hit": {
+          "title": "Cache Hit",
+          "type": "boolean"
+        },
+        "candidate_id": {
+          "title": "Candidate Id",
+          "type": "string"
+        },
+        "compilation_mode": {
+          "title": "Compilation Mode",
+          "type": "string"
+        },
+        "compilation_required": {
+          "title": "Compilation Required",
+          "type": "boolean"
+        },
+        "rationale_codes": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Rationale Codes",
+          "type": "array"
+        }
+      },
+      "required": [
+        "candidate_id",
+        "compilation_mode",
+        "compilation_required",
+        "cache_hit",
+        "action",
+        "rationale_codes"
+      ],
+      "title": "CandidateActivationAction",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "actions": {
+      "items": {
+        "$ref": "#/$defs/CandidateActivationAction"
+      },
+      "maxItems": 1,
+      "minItems": 1,
+      "title": "Actions",
+      "type": "array"
+    },
+    "activated_candidate_ids": {
+      "items": {
+        "type": "string"
+      },
+      "maxItems": 1,
+      "minItems": 1,
+      "title": "Activated Candidate Ids",
+      "type": "array"
+    },
+    "activation_policy": {
+      "const": "single-explicit-peer-v0.5",
+      "default": "single-explicit-peer-v0.5",
+      "title": "Activation Policy",
+      "type": "string"
+    },
+    "inactive_candidate_count": {
+      "minimum": 0,
+      "title": "Inactive Candidate Count",
+      "type": "integer"
+    },
+    "registry_candidate_count": {
+      "minimum": 1,
+      "title": "Registry Candidate Count",
+      "type": "integer"
+    },
+    "registry_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Registry Sha256",
+      "type": "string"
+    },
+    "resolution_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Resolution Sha256",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "0.5",
+      "default": "0.5",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "selection_compile_seconds": {
+      "default": 0.0,
+      "maximum": 0,
+      "minimum": 0,
+      "title": "Selection Compile Seconds",
+      "type": "number"
+    },
+    "timed_benchmark_started": {
+      "const": false,
+      "default": false,
+      "title": "Timed Benchmark Started",
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "registry_sha256",
+    "resolution_sha256",
+    "activated_candidate_ids",
+    "actions",
+    "registry_candidate_count",
+    "inactive_candidate_count"
+  ],
+  "title": "CandidateActivationPlan",
+  "type": "object"
+}

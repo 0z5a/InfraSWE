@@ -1,0 +1,200 @@
+{
+  "$defs": {
+    "OfficialTimingSample": {
+      "additionalProperties": false,
+      "properties": {
+        "completion_counter_after": {
+          "minimum": 0,
+          "title": "Completion Counter After",
+          "type": "integer"
+        },
+        "completion_counter_before": {
+          "minimum": 0,
+          "title": "Completion Counter Before",
+          "type": "integer"
+        },
+        "deferred_error_check_passed": {
+          "title": "Deferred Error Check Passed",
+          "type": "boolean"
+        },
+        "device_elapsed_seconds": {
+          "anyOf": [
+            {
+              "exclusiveMinimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Device Elapsed Seconds"
+        },
+        "evidence_refs": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Evidence Refs",
+          "type": "array"
+        },
+        "host_elapsed_seconds": {
+          "exclusiveMinimum": 0,
+          "title": "Host Elapsed Seconds",
+          "type": "number"
+        },
+        "origin_trust": {
+          "const": "T3_TRUSTED_METERED",
+          "default": "T3_TRUSTED_METERED",
+          "title": "Origin Trust",
+          "type": "string"
+        },
+        "output_consumed_by_trusted_plane": {
+          "title": "Output Consumed By Trusted Plane",
+          "type": "boolean"
+        },
+        "pair_id": {
+          "title": "Pair Id",
+          "type": "string"
+        },
+        "pair_position": {
+          "enum": [
+            "baseline-first",
+            "candidate-first"
+          ],
+          "title": "Pair Position",
+          "type": "string"
+        },
+        "profiler_active": {
+          "const": false,
+          "default": false,
+          "title": "Profiler Active",
+          "type": "boolean"
+        },
+        "repetition": {
+          "minimum": 1,
+          "title": "Repetition",
+          "type": "integer"
+        },
+        "role": {
+          "enum": [
+            "baseline",
+            "candidate"
+          ],
+          "title": "Role",
+          "type": "string"
+        },
+        "sample_id": {
+          "title": "Sample Id",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "0.1",
+          "default": "0.1",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "synchronization": {
+          "enum": [
+            "device-synchronize",
+            "event-completion",
+            "blocking-contract",
+            "distributed-barrier-and-device-sync"
+          ],
+          "title": "Synchronization",
+          "type": "string"
+        },
+        "work_units": {
+          "minimum": 1,
+          "title": "Work Units",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "sample_id",
+        "pair_id",
+        "pair_position",
+        "role",
+        "repetition",
+        "work_units",
+        "host_elapsed_seconds",
+        "synchronization",
+        "completion_counter_before",
+        "completion_counter_after",
+        "output_consumed_by_trusted_plane",
+        "deferred_error_check_passed",
+        "evidence_refs"
+      ],
+      "title": "OfficialTimingSample",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "all_samples_retained": {
+      "title": "All Samples Retained",
+      "type": "boolean"
+    },
+    "failure_codes": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Failure Codes",
+      "type": "array"
+    },
+    "official_timing_profiled": {
+      "const": false,
+      "default": false,
+      "title": "Official Timing Profiled",
+      "type": "boolean"
+    },
+    "paired_order_policy": {
+      "enum": [
+        "counterbalanced",
+        "randomized-pre-registered"
+      ],
+      "title": "Paired Order Policy",
+      "type": "string"
+    },
+    "report_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Report Sha256",
+      "type": "string"
+    },
+    "samples": {
+      "items": {
+        "$ref": "#/$defs/OfficialTimingSample"
+      },
+      "title": "Samples",
+      "type": "array"
+    },
+    "schema_version": {
+      "const": "0.1",
+      "default": "0.1",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "status": {
+      "enum": [
+        "PASS",
+        "BENCHMARK_DEFECT",
+        "INFRA_INVALID"
+      ],
+      "title": "Status",
+      "type": "string"
+    },
+    "timer_policy_id": {
+      "title": "Timer Policy Id",
+      "type": "string"
+    }
+  },
+  "required": [
+    "timer_policy_id",
+    "paired_order_policy",
+    "all_samples_retained",
+    "status",
+    "report_sha256"
+  ],
+  "title": "MeasurementIntegrityReport",
+  "type": "object"
+}

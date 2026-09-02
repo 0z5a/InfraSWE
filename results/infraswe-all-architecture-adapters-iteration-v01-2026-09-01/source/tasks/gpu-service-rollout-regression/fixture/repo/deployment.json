@@ -1,0 +1,24 @@
+{
+  "apiVersion": "apps/v1",
+  "kind": "Deployment",
+  "metadata": {
+    "name": "inference-service"
+  },
+  "spec": {
+    "replicas": 2,
+    "image": "example.invalid/inference:v1",
+    "containerPort": 8000,
+    "readinessProbe": {
+      "path": "/healthz",
+      "initialDelaySeconds": 0,
+      "periodSeconds": 1
+    },
+    "strategy": {
+      "maxUnavailable": 1,
+      "maxSurge": 0
+    },
+    "terminationGracePeriodSeconds": 0,
+    "rollbackEnabled": true
+  }
+}
+

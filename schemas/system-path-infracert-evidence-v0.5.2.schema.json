@@ -1,0 +1,250 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "bounded_resources": {
+      "anyOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Bounded Resources"
+    },
+    "collective_order_consistent": {
+      "anyOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Collective Order Consistent"
+    },
+    "consumer_visibility_valid": {
+      "anyOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Consumer Visibility Valid"
+    },
+    "correctness_passed": {
+      "anyOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Correctness Passed"
+    },
+    "deadlock_absent": {
+      "anyOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Deadlock Absent"
+    },
+    "domain": {
+      "enum": [
+        "distributed-communication",
+        "memory-tiering"
+      ],
+      "title": "Domain",
+      "type": "string"
+    },
+    "evidence_digests": {
+      "items": {
+        "pattern": "^sha256:[0-9a-f]{64}$",
+        "type": "string"
+      },
+      "minItems": 1,
+      "title": "Evidence Digests",
+      "type": "array"
+    },
+    "fallback_policy_respected": {
+      "anyOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Fallback Policy Respected"
+    },
+    "host_memory_leak_absent": {
+      "anyOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Host Memory Leak Absent"
+    },
+    "isolation_valid": {
+      "anyOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Isolation Valid"
+    },
+    "lifecycle_quiescent": {
+      "anyOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Lifecycle Quiescent"
+    },
+    "pageable_fallback_explicit": {
+      "anyOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Pageable Fallback Explicit"
+    },
+    "partial_copy_absent": {
+      "anyOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Partial Copy Absent"
+    },
+    "prefetch_queue_bounded": {
+      "anyOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Prefetch Queue Bounded"
+    },
+    "progress_passed": {
+      "anyOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Progress Passed"
+    },
+    "rank_divergence_absent": {
+      "anyOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Rank Divergence Absent"
+    },
+    "residency_state_valid": {
+      "anyOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Residency State Valid"
+    },
+    "schema_version": {
+      "const": "0.5.2",
+      "default": "0.5.2",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "stale_or_lost_update_absent": {
+      "anyOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Stale Or Lost Update Absent"
+    },
+    "use_after_free_absent": {
+      "anyOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Use After Free Absent"
+    },
+    "version_token_valid": {
+      "anyOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Version Token Valid"
+    }
+  },
+  "required": [
+    "domain",
+    "evidence_digests",
+    "correctness_passed",
+    "progress_passed",
+    "lifecycle_quiescent",
+    "bounded_resources",
+    "fallback_policy_respected"
+  ],
+  "title": "SystemPathInfraCertEvidence",
+  "type": "object"
+}

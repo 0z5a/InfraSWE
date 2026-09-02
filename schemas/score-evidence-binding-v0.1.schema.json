@@ -1,0 +1,62 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "component_id": {
+      "title": "Component Id",
+      "type": "string"
+    },
+    "evidence_pack_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Evidence Pack Sha256",
+      "type": "string"
+    },
+    "evidence_refs": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Evidence Refs",
+      "type": "array"
+    },
+    "required_authority": {
+      "enum": [
+        "VERIFIER",
+        "METER",
+        "INFRASTRUCTURE",
+        "BOUNDED_JUDGE"
+      ],
+      "title": "Required Authority",
+      "type": "string"
+    },
+    "status": {
+      "enum": [
+        "VALID",
+        "UNRESOLVED",
+        "NOT_APPLICABLE"
+      ],
+      "title": "Status",
+      "type": "string"
+    },
+    "value": {
+      "anyOf": [
+        {
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Value"
+    }
+  },
+  "required": [
+    "component_id",
+    "status",
+    "required_authority",
+    "evidence_pack_sha256"
+  ],
+  "title": "ScoreEvidenceBinding",
+  "type": "object"
+}

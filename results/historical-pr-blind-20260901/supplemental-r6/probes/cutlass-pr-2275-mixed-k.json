@@ -1,0 +1,59 @@
+{
+  "case_id": "cutlass-pr-2275",
+  "created_at": "2026-09-02T02:52:04.142236+00:00",
+  "duration_seconds": 1.369141631000275,
+  "evidence_sha256": "sha256:f0990096401fc44ad397a8901cb3008ed172a755193cb7c472ef0da9ff69ed7d",
+  "facts": {
+    "aot_binaries_reused_from_primary_probe": true,
+    "base": {
+      "command": [
+        "/workspace/infraswe_eval/extended-r6/build/cutlass-v2/base/examples/68_hopper_fp8_warp_specialized_grouped_gemm_with_blockwise_scaling/68_hopper_fp8_warp_specialized_grouped_gemm_with_blockwise_scaling",
+        "--benchmark=/workspace/infraswe_eval/extended-r6/cutlass-mixed-k-problems.txt",
+        "--iterations=0"
+      ],
+      "disposition_passed": true,
+      "duration_seconds": 0.7382506589992772,
+      "return_code": 0,
+      "stderr_sha256": "sha256:12ae32cb1ec02d01eda3581b127c1fee3b0dc53572ed6baf239721a03d82e126",
+      "stderr_tail": "",
+      "stdout_sha256": "sha256:4826c732015ee1a9a067ad99ace33926a769fa28f6ee0f19aeccfdfdfb8cdc80",
+      "stdout_tail": "Running tests with host problem shapes:\n  Disposition: Passed\nRunning tests without host problem shapes:\n  Disposition: Passed\n",
+      "timed_out": false
+    },
+    "head": {
+      "command": [
+        "/workspace/infraswe_eval/extended-r6/build/cutlass-v2/head/examples/68_hopper_fp8_warp_specialized_grouped_gemm_with_blockwise_scaling/68_hopper_fp8_warp_specialized_grouped_gemm_with_blockwise_scaling",
+        "--benchmark=/workspace/infraswe_eval/extended-r6/cutlass-mixed-k-problems.txt",
+        "--iterations=0"
+      ],
+      "disposition_passed": true,
+      "duration_seconds": 0.6304737549999118,
+      "return_code": 0,
+      "stderr_sha256": "sha256:12ae32cb1ec02d01eda3581b127c1fee3b0dc53572ed6baf239721a03d82e126",
+      "stderr_tail": "",
+      "stdout_sha256": "sha256:4826c732015ee1a9a067ad99ace33926a769fa28f6ee0f19aeccfdfdfb8cdc80",
+      "stdout_tail": "Running tests with host problem shapes:\n  Disposition: Passed\nRunning tests without host problem shapes:\n  Disposition: Passed\n",
+      "timed_out": false
+    },
+    "k128_problem_count": 4,
+    "problems": [
+      "0 256x512x128",
+      "1 256x512x512",
+      "2 512x256x128",
+      "3 256x256x128",
+      "4 256x512x1024",
+      "5 1024x512x128"
+    ],
+    "steady_state_compile_seconds": 0.0
+  },
+  "failure_codes": [
+    "CUTLASS_MIXED_K_BASE_CONTROL_DID_NOT_REPRODUCE"
+  ],
+  "probe": "cutlass-documented-mixed-k-h100-v1",
+  "protocol_id": "historical-pr-blind-cross-project-v0.5-r6",
+  "schema_version": "0.5",
+  "source_identity": {
+    "problem_file_sha256": "sha256:7bf2ace3c744d7a88c2ee63fb0c2dee692ac8d6b4899d77cc981449c7e47335c"
+  },
+  "status": "fail"
+}

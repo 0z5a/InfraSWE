@@ -1,0 +1,59 @@
+{
+  "schema_version": "0.3",
+  "report_kind": "sm120-architecture-supplement",
+  "generated_at": "2026-08-31T13:56:30Z",
+  "hardware": {
+    "gpu_name": "NVIDIA RTX PRO 5000 Blackwell",
+    "compute_capability": "12.0",
+    "sm_count": 110,
+    "total_memory_bytes": 50752258048,
+    "driver_version": "580.173.02",
+    "torch_version": "2.8.0+cu128",
+    "torch_cuda": "12.8"
+  },
+  "calibration": {
+    "launch_floor_us": 3.9993743896484375,
+    "hbm_bandwidth_gbps": 1108.0240933494174,
+    "bf16_matmul_tflops": 204.07720283194385
+  },
+  "attention": [
+    {"backend": "torch-sdpa-flash", "artifact_100": 98.85508442508733, "certified": true},
+    {"backend": "fa4", "artifact_100": 98.73249858564763, "certified": true},
+    {"backend": "fa2", "artifact_100": 98.61178911877165, "certified": true},
+    {"backend": "fa1", "artifact_100": null, "status": "not_applicable"},
+    {"backend": "fa3", "artifact_100": null, "status": "not_applicable"}
+  ],
+  "gradient": {
+    "all_expectations_passed": true,
+    "strictly_monotonic": true,
+    "score_span": 67.05473248648295,
+    "minimum_adjacent_gap": 6.371259481439353,
+    "maximum_pilot_error": 2.5510946586798156,
+    "points": [
+      {"passes": 0, "artifact_100": 98.75150304064321},
+      {"passes": 32, "artifact_100": 83.9009037800073},
+      {"passes": 64, "artifact_100": 75.09546210524263},
+      {"passes": 96, "artifact_100": 68.72420262380328},
+      {"passes": 192, "artifact_100": 56.83509960971691},
+      {"passes": 384, "artifact_100": 45.15251886850014},
+      {"passes": 1024, "artifact_100": 31.69677055416026}
+    ]
+  },
+  "classic": [
+    {"case_id": "rope-bf16-b4-s2048-h16-d128", "status": "scored", "artifact_100": 95.78136955390899},
+    {"case_id": "gemm-bf16-4096-cube", "status": "not_frontier_eligible", "artifact_100": null},
+    {"case_id": "layernorm-bf16-4096x4096", "status": "not_frontier_eligible", "artifact_100": null},
+    {"case_id": "vector-add-bf16-16m", "status": "not_frontier_eligible", "artifact_100": null},
+    {"case_id": "rmsnorm-bf16-4096x4096", "status": "quarantined", "artifact_100": null},
+    {"case_id": "softmax-bf16-4096x4096", "status": "quarantined", "artifact_100": null},
+    {"case_id": "swiglu-bf16-8192x4096", "status": "quarantined", "artifact_100": null}
+  ],
+  "evidence_counts": {
+    "gradient_raw_json": 24,
+    "gradient_profiler_json": 35,
+    "frontier_raw_json": 15,
+    "frontier_profiler_json": 22,
+    "fa2_sm120_elf_images": 96
+  }
+}
+

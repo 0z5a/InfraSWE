@@ -1,0 +1,66 @@
+{
+  "backend": "fa4",
+  "case_id": "common-b2-s1024-h16-d64-causal",
+  "evidence_kind": "per-case-profiler",
+  "fresh_process": true,
+  "generated_at": "2026-09-01T03:55:08.297611Z",
+  "hardware": {
+    "compute_capability": "9.0",
+    "cudnn_version": 91002,
+    "gpu_name": "NVIDIA H200 NVL",
+    "nvidia_smi": {
+      "clocks.mem": "3201",
+      "clocks.sm": "345",
+      "driver_version": "580.159.03",
+      "memory.total": "143771",
+      "memory.used": "5",
+      "name": "NVIDIA H200 NVL",
+      "pci.bus_id": "00000000:A8:00.0",
+      "power.draw": "87.08",
+      "power.limit": "500.00",
+      "pstate": "P0",
+      "temperature.gpu": "42",
+      "utilization.gpu": "0",
+      "uuid": "GPU-e756ae4d-6847-0c30-f1ca-4bf9ee20366e"
+    },
+    "platform": "Linux-6.8.0-124-generic-x86_64-with-glibc2.39",
+    "python": "3.12.14",
+    "sm_count": 132,
+    "torch_cuda": "12.8",
+    "torch_version": "2.8.0+cu128",
+    "total_memory_bytes": 150109880320
+  },
+  "implementation_provenance": [
+    {
+      "module": "flash_attn.cute",
+      "path": "/workspace/infraswe/envs/fa4/flash_attn/cute",
+      "sha256": "sha256:9935fb3cfbd6ea7294858299cac85c03c76bb3e7f6fb2a79f6a4fe32b77bdc7b"
+    }
+  ],
+  "profiler": {
+    "captured": true,
+    "cuda_events": [
+      {
+        "count": 1,
+        "device_time_us": 47.23199999999997,
+        "name": "FlashAttnFunc",
+        "self_device_time_us": 23.615999999999985
+      },
+      {
+        "count": 1,
+        "device_time_us": 23.615999999999985,
+        "name": "Activity Buffer Request",
+        "self_device_time_us": 23.615999999999985
+      },
+      {
+        "count": 1,
+        "device_time_us": 23.615999999999985,
+        "name": "kernel_cutlass_kernel_flash_attncuteflash_fwd_sm90FlashAttentionForwardSm90_object_at__tensor0000o11101213_tensor0000o11101213_tensor0000o11101213_tensor0000o11101213_None_None_None_None__0",
+        "self_device_time_us": 23.615999999999985
+      }
+    ]
+  },
+  "schema_version": "0.3",
+  "status": "passed",
+  "suite": "attention"
+}

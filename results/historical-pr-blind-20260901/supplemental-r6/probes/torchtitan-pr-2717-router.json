@@ -1,0 +1,199 @@
+{
+  "case_id": "torchtitan-pr-2717",
+  "created_at": "2026-09-02T02:35:07.355234+00:00",
+  "duration_seconds": 8.634601512000245,
+  "environment": {
+    "cuda_version": "12.8",
+    "triton_cache_dir": "/workspace/infraswe_eval/extended-r6/cache/torchtitan"
+  },
+  "evidence_sha256": "sha256:3e0be38be3b6e837aea5029553927f4b60fa6c1453131d0d2513f5cfda73b13b",
+  "facts": {
+    "compute_capability": [
+      9,
+      0
+    ],
+    "correctness": [
+      {
+        "forward": {
+          "allclose_atol_2e_2_rtol_2e_2": true,
+          "max_abs": 0.0,
+          "mean_abs": 0.0
+        },
+        "hidden": 96,
+        "passes": true,
+        "routed_gradient": {
+          "allclose_atol_2e_2_rtol_2e_2": true,
+          "max_abs": 0.0,
+          "mean_abs": 0.0
+        },
+        "score_gradient": {
+          "allclose_atol_2e_2_rtol_2e_2": true,
+          "max_abs": 4.76837158203125e-07,
+          "mean_abs": 1.7029898913278885e-07
+        },
+        "token_count": 7,
+        "top_k": 2
+      },
+      {
+        "forward": {
+          "allclose_atol_2e_2_rtol_2e_2": true,
+          "max_abs": 0.0,
+          "mean_abs": 0.0
+        },
+        "hidden": 128,
+        "passes": true,
+        "routed_gradient": {
+          "allclose_atol_2e_2_rtol_2e_2": true,
+          "max_abs": 0.0,
+          "mean_abs": 0.0
+        },
+        "score_gradient": {
+          "allclose_atol_2e_2_rtol_2e_2": true,
+          "max_abs": 1.9073486328125e-06,
+          "mean_abs": 3.641471266746521e-07
+        },
+        "token_count": 32,
+        "top_k": 4
+      },
+      {
+        "forward": {
+          "allclose_atol_2e_2_rtol_2e_2": true,
+          "max_abs": 0.0,
+          "mean_abs": 0.0
+        },
+        "hidden": 257,
+        "passes": true,
+        "routed_gradient": {
+          "allclose_atol_2e_2_rtol_2e_2": true,
+          "max_abs": 0.0,
+          "mean_abs": 0.0
+        },
+        "score_gradient": {
+          "allclose_atol_2e_2_rtol_2e_2": true,
+          "max_abs": 3.814697265625e-06,
+          "mean_abs": 7.821963663445786e-07
+        },
+        "token_count": 65,
+        "top_k": 4
+      },
+      {
+        "forward": {
+          "allclose_atol_2e_2_rtol_2e_2": true,
+          "max_abs": 0.0,
+          "mean_abs": 0.0
+        },
+        "hidden": 1024,
+        "passes": true,
+        "routed_gradient": {
+          "allclose_atol_2e_2_rtol_2e_2": true,
+          "max_abs": 0.0,
+          "mean_abs": 0.0
+        },
+        "score_gradient": {
+          "allclose_atol_2e_2_rtol_2e_2": true,
+          "max_abs": 1.52587890625e-05,
+          "mean_abs": 2.5186427592416294e-06
+        },
+        "token_count": 129,
+        "top_k": 8
+      }
+    ],
+    "device": "NVIDIA H100 PCIe",
+    "fp16_behavior": {
+      "dtype": "torch.float16",
+      "error": {
+        "allclose_atol_2e_2_rtol_2e_2": true,
+        "max_abs": 0.01171875,
+        "mean_abs": 0.001218568766489625
+      },
+      "status": "executed"
+    },
+    "noncontiguous_behavior": {
+      "error": {
+        "allclose_atol_2e_2_rtol_2e_2": false,
+        "max_abs": 6.375,
+        "mean_abs": 1.3270341157913208
+      },
+      "input_is_contiguous": false,
+      "status": "executed"
+    },
+    "performance": {
+      "base_median_us": 486.62293752034503,
+      "base_peak_allocated_bytes": 352452608,
+      "cache_files_after_precompile": 195,
+      "head_median_us": 58.41066837310791,
+      "head_over_base_median_ratio": 0.12003270678268396,
+      "head_peak_allocated_bytes": 142737408,
+      "pairs": [
+        {
+          "base": 489.82826868693036,
+          "first": "base",
+          "head": 65.81333478291829
+        },
+        {
+          "base": 486.70825958251953,
+          "first": "head",
+          "head": 54.85546588897705
+        },
+        {
+          "base": 486.6933186848958,
+          "first": "base",
+          "head": 60.405333836873375
+        },
+        {
+          "base": 486.62293752034503,
+          "first": "head",
+          "head": 56.871465841929115
+        },
+        {
+          "base": 486.55786514282227,
+          "first": "base",
+          "head": 58.41066837310791
+        },
+        {
+          "base": 486.50134404500324,
+          "first": "head",
+          "head": 55.518933137257896
+        },
+        {
+          "base": 486.4927927652995,
+          "first": "base",
+          "head": 59.09973382949829
+        }
+      ],
+      "shape": {
+        "hidden": 4096,
+        "token_count": 1024,
+        "top_k": 8
+      },
+      "steady_new_cache_files": []
+    },
+    "source_contract": {
+      "base_has_eager_bmm": true,
+      "head_calls_apply_router_scores": true,
+      "head_has_bfloat16_output_cast": true,
+      "head_has_bfloat16_runtime_guard": false,
+      "head_has_contiguity_guard": false,
+      "head_has_custom_autograd": true,
+      "head_kernel_count": 3
+    },
+    "steady_state_compile_seconds": 0.0,
+    "torch_version": "2.8.0+cu128",
+    "triton_version": "3.4.0"
+  },
+  "failure_codes": [
+    "TORCHTITAN_ROUTER_BFLOAT16_RUNTIME_GATE_MISSING",
+    "TORCHTITAN_ROUTER_CONTIGUITY_GATE_MISSING",
+    "TORCHTITAN_ROUTER_NONCONTIGUOUS_SILENT_MISMATCH"
+  ],
+  "probe": "torchtitan-fused-router-h100-v1",
+  "protocol_id": "historical-pr-blind-cross-project-v0.5-r6",
+  "schema_version": "0.5",
+  "source_identity": {
+    "base_kernels": "sha256:14da6ccc78c9077128522e07f46750e7d8cf23ae710edf8611bb35f84ad80cc4",
+    "base_moe": "sha256:476e86fd81b839a73c1a93adab90019cbdb81601ea4491ad747fbb7377c35622",
+    "head_kernels": "sha256:abc2880af9da677c7cd1a9b06c6af05f53fa1a461a6f223adf25fbb437e3234e",
+    "head_moe": "sha256:6dfadcd2146a26d3d688c8ed5b28a41ca1f7ca03bc29f451b086df785a2375ac"
+  },
+  "status": "fail"
+}

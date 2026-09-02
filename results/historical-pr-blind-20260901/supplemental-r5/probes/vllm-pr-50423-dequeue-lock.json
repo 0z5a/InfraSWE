@@ -1,0 +1,80 @@
+{
+  "findings": {
+    "concurrent_recv_is_serialized": true,
+    "single_timeout_budget_preserved": false,
+    "timeout_is_restarted_after_lock_wait": true
+  },
+  "probe": "vllm-shm-dequeue-lock-r1",
+  "schema_version": "0.5",
+  "serialization": {
+    "base": {
+      "elapsed_seconds": 0.025311216013506055,
+      "errors": [],
+      "max_concurrent_recv": 2,
+      "result_count": 2,
+      "threads_alive": 0
+    },
+    "head": {
+      "elapsed_seconds": 0.050393223064020276,
+      "errors": [],
+      "max_concurrent_recv": 1,
+      "result_count": 2,
+      "threads_alive": 0
+    }
+  },
+  "source": {
+    "base_sha256": "sha256:a78bbfb8f750812049646a1224ccf1f12ca8e49f8765481cefb3ead93dff82a3",
+    "head_sha256": "sha256:e613a01aa6f5f20e503f5265d4467b8e5012bf733dd5d8eef6079a5c1b21e892"
+  },
+  "test_contract": {
+    "concurrent_consumer_test_added": true,
+    "lock_wait_deadline_test_added": false
+  },
+  "timeout_budget": {
+    "base": {
+      "deadline_overshoot_seconds": 9.934799745678347e-05,
+      "elapsed_seconds": 0.10009934799745679,
+      "error": "TimeoutError",
+      "hold_seconds": 0.08,
+      "requested_timeout_seconds": 0.1
+    },
+    "head": {
+      "deadline_overshoot_seconds": 0.08021123204380273,
+      "elapsed_seconds": 0.18021123204380274,
+      "error": "TimeoutError",
+      "hold_seconds": 0.08,
+      "requested_timeout_seconds": 0.1
+    }
+  },
+  "uncontended_overhead": {
+    "base": {
+      "calls_per_replay": 100000,
+      "median_nanoseconds_per_call": 172.36001,
+      "replays": 7,
+      "samples_nanoseconds_per_call": [
+        377.98924,
+        338.94557,
+        219.06635,
+        170.29113,
+        171.62182,
+        172.36001,
+        171.78612
+      ]
+    },
+    "head": {
+      "calls_per_replay": 100000,
+      "median_nanoseconds_per_call": 397.22754,
+      "replays": 7,
+      "samples_nanoseconds_per_call": [
+        397.22754,
+        397.38713,
+        395.41865,
+        398.23712,
+        397.11624,
+        397.15163,
+        397.75644
+      ]
+    },
+    "head_to_base_ratio": 2.304638645588382
+  }
+}

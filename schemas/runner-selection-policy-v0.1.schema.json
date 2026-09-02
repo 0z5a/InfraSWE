@@ -1,0 +1,62 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "historical_candidate_performance_input": {
+      "const": "forbidden",
+      "default": "forbidden",
+      "title": "Historical Candidate Performance Input",
+      "type": "string"
+    },
+    "policy_id": {
+      "title": "Policy Id",
+      "type": "string"
+    },
+    "policy_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Policy Sha256",
+      "type": "string"
+    },
+    "post_result_reselection": {
+      "const": "forbidden",
+      "default": "forbidden",
+      "title": "Post Result Reselection",
+      "type": "string"
+    },
+    "probe_budget": {
+      "default": 0,
+      "minimum": 0,
+      "title": "Probe Budget",
+      "type": "integer"
+    },
+    "runner_order": {
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1,
+      "title": "Runner Order",
+      "type": "array"
+    },
+    "schema_version": {
+      "const": "0.1",
+      "default": "0.1",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "variant_order": {
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1,
+      "title": "Variant Order",
+      "type": "array"
+    }
+  },
+  "required": [
+    "policy_id",
+    "variant_order",
+    "runner_order",
+    "policy_sha256"
+  ],
+  "title": "RunnerSelectionPolicy",
+  "type": "object"
+}

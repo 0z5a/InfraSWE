@@ -1,0 +1,975 @@
+{
+  "cases": [
+    {
+      "base_sha": "4310065d8c77225b44e64d7fd170a6bb8835eee2",
+      "benchmark_domain": "training",
+      "case_id": "liger-pr-1413",
+      "changed_paths": [
+        "src/liger_kernel/ops/fused_moe_kernels.py"
+      ],
+      "claim": "The fused-MoE Blackwell/B300 path computes the correct input gradient without changing routing, expert, or weight gradients.",
+      "closure": "on a declared target, dx and all companion gradients meet the frozen reference tolerance for every routed-token edge case",
+      "created_at": "2026-08-27T21:22:41Z",
+      "head_sha": "f548dfb85c832a821f23586e1d6b340efd33a930",
+      "matrix": [
+        "Blackwell declared path/A100 control",
+        "FP16/BF16",
+        "top-k 1/2",
+        "zero/uneven expert tokens",
+        "forward/backward repeated"
+      ],
+      "project": "liger-kernel",
+      "pull_number": 1413,
+      "repository": "linkedin/Liger-Kernel",
+      "risk_family": "loss-gradient",
+      "runtime": "candidate target test and exact fused/reference gradient oracle; A100 may validate only the architecture-independent control",
+      "temporal_band": "recent",
+      "title": "fix(fused_moe): correct input-gradient (dx) on Blackwell/B300"
+    },
+    {
+      "base_sha": "9497a29b79838b30a82f2174685afa65ff122f7c",
+      "benchmark_domain": "training",
+      "case_id": "liger-pr-1244",
+      "changed_paths": [
+        "examples/alignment/run_orpo.py",
+        "src/liger_kernel/transformers/trainer/orpo_trainer.py"
+      ],
+      "claim": "The ORPO trainer remains importable and performs the same objective, batching, backward pass, and parameter update after the TRL experimental move.",
+      "closure": "supported TRL layouts construct the trainer and one step matches the reference loss, gradients, and updated parameters",
+      "created_at": "2026-05-31T10:32:12Z",
+      "head_sha": "2e85e6a0f6cc4231c2174b560b2db45ff8fb8fa2",
+      "matrix": [
+        "old/new TRL export layout",
+        "import/direct construction",
+        "chosen/rejected boundary lengths",
+        "FP32/BF16",
+        "one optimizer step"
+      ],
+      "project": "liger-kernel",
+      "pull_number": 1244,
+      "repository": "linkedin/Liger-Kernel",
+      "risk_family": "memory-performance",
+      "runtime": "candidate tests plus a tiny ORPO batch with independent loss/gradient and optimizer-step comparison",
+      "temporal_band": "mature",
+      "title": "Import ORPO from trl.experimental"
+    },
+    {
+      "base_sha": "9e3f2618c38b0138b00229b57395e95962f16f0b",
+      "benchmark_domain": "training",
+      "case_id": "liger-pr-1204",
+      "changed_paths": [
+        "src/liger_kernel/chunked_loss/dpo_loss.py",
+        "test/chunked_loss/test_dpo_loss.py"
+      ],
+      "claim": "Every added DPO loss type implements its declared formula and stable gradient while preserving existing loss modes.",
+      "closure": "each mode matches its independent value/gradient oracle and all pre-existing modes remain unchanged",
+      "created_at": "2026-04-27T13:20:32Z",
+      "head_sha": "e52f7fa2f20c832e859a90671a309bb850c0b24e",
+      "matrix": [
+        "hinge/bco_pair/robust/exo_pair/discopop/existing",
+        "beta boundary values",
+        "positive/equal/negative margins",
+        "none/mean reduction",
+        "FP32/BF16"
+      ],
+      "project": "liger-kernel",
+      "pull_number": 1204,
+      "repository": "linkedin/Liger-Kernel",
+      "risk_family": "loss-gradient",
+      "runtime": "candidate tests and an independent PyTorch formula with finite-difference and autograd gradient checks",
+      "temporal_band": "mature",
+      "title": "[DPO] Add hinge, bco_pair, robust, exo_pair, discopop loss types"
+    },
+    {
+      "base_sha": "b8f093adb3c7df4561ad7b9817cfc896add16f14",
+      "benchmark_domain": "training",
+      "case_id": "liger-pr-1202",
+      "changed_paths": [
+        "src/liger_kernel/chunked_loss/fused_linear_ppo.py",
+        "src/liger_kernel/chunked_loss/grpo_loss.py",
+        "src/liger_kernel/ops/grpo_loss.py",
+        "src/liger_kernel/transformers/grpo_loss.py",
+        "test/chunked_loss/test_grpo_loss.py",
+        "test/transformers/test_grpo_loss.py"
+      ],
+      "claim": "The TRL-Liger GRPO path produces correctly shaped per-token losses and gradients across masking and chunk boundaries.",
+      "closure": "losses, normalization, masks, and logits/weight gradients match the unfused reference at every chunk boundary",
+      "created_at": "2026-04-26T07:01:18Z",
+      "head_sha": "9e03933923ed3e817d22feb7eb1eb52992f70a30",
+      "matrix": [
+        "fused/unfused",
+        "single/multiple chunks",
+        "all/some/zero masked tokens",
+        "short/long completion",
+        "FP32/BF16"
+      ],
+      "project": "liger-kernel",
+      "pull_number": 1202,
+      "repository": "linkedin/Liger-Kernel",
+      "risk_family": "loss-gradient",
+      "runtime": "candidate GRPO tests plus an unfused PyTorch loss/logprob/gradient oracle on GPU",
+      "temporal_band": "mature",
+      "title": "[GRPO] fix TRL-liger missing "
+    },
+    {
+      "base_sha": "8020e691d4b78be6cc4868b96e5c73ca3c1058ea",
+      "benchmark_domain": "training",
+      "case_id": "liger-pr-1253",
+      "changed_paths": [
+        "src/liger_kernel/ops/group_norm.py"
+      ],
+      "claim": "GroupNorm FP16 backward accumulators use the intended precision and preserve numerically valid input, weight, and bias gradients.",
+      "closure": "all gradients meet dtype-specific tolerance without overflow/regression and the FP16 path no longer routes through BF16 accumulation",
+      "created_at": "2026-06-04T21:28:34Z",
+      "head_sha": "e3c2e34c269216483942ebb90b67d910df6f4053",
+      "matrix": [
+        "FP16/BF16/FP32",
+        "affine on/off",
+        "small/large groups",
+        "constant/high-dynamic-range input",
+        "contiguous/strided"
+      ],
+      "project": "liger-kernel",
+      "pull_number": 1253,
+      "repository": "linkedin/Liger-Kernel",
+      "risk_family": "loss-gradient",
+      "runtime": "candidate tests plus PyTorch GroupNorm forward/backward and accumulator-dtype inspection",
+      "temporal_band": "mature",
+      "title": "Cast GroupNorm fp16 backward gradient accumulators to fp16 (not bfloat16)"
+    },
+    {
+      "base_sha": "63598637cca2d8a8edded770c8b56b780693148b",
+      "benchmark_domain": "training",
+      "case_id": "liger-pr-1208",
+      "changed_paths": [
+        "src/liger_kernel/ops/dyt.py"
+      ],
+      "claim": "DyT autotuning selects legal forward/backward kernels without changing outputs, gradients, cache behavior, or launch validity.",
+      "closure": "every selected configuration is in bounds, numerically matches the reference, and warm execution does not repeatedly retune",
+      "created_at": "2026-04-29T05:25:53Z",
+      "head_sha": "4720fa178c51648e063afd75a346641867695742",
+      "matrix": [
+        "cold/warm autotune cache",
+        "FP16/BF16/FP32",
+        "short/boundary/large hidden size",
+        "contiguous/strided",
+        "forward/backward"
+      ],
+      "project": "liger-kernel",
+      "pull_number": 1208,
+      "repository": "linkedin/Liger-Kernel",
+      "risk_family": "loss-gradient",
+      "runtime": "candidate tests plus eager-reference numeric checks and A100 launch/timing sweeps over frozen shapes",
+      "temporal_band": "mature",
+      "title": "perf(dyt): enable triton.autotune for DyT forward and backward kernels"
+    },
+    {
+      "base_sha": "a3344a6fa2031770855f203d991a31cebc89a23b",
+      "benchmark_domain": "training",
+      "case_id": "megatron-pr-7021",
+      "changed_paths": [
+        "megatron/core/models/gpt/gpt_model.py",
+        "megatron/core/models/hybrid/hybrid_model.py",
+        "megatron/core/transformer/transformer_config.py",
+        "megatron/training/arguments.py",
+        "megatron/training/training.py",
+        "tests/unit_tests/models/test_hybrid_model.py",
+        "tests/unit_tests/models/test_hybrid_moe_model.py",
+        "tests/unit_tests/test_argument_utils.py",
+        "tests/unit_tests/transformer/test_multi_token_prediction.py"
+      ],
+      "claim": "MTP-only mode trains only the declared MTP objective and parameters while preserving topology, optimizer, checkpoint, and standard-training behavior.",
+      "closure": "the intended parameters alone update in MTP-only mode, loss is finite, resume is trajectory-equivalent, and standard mode is unchanged",
+      "created_at": "2026-09-01T14:48:58Z",
+      "head_sha": "9abda9438d29dedfbd71ac9ddcb5a32ab70517d8",
+      "matrix": [
+        "MTP-only/standard",
+        "MTP enabled/disabled",
+        "TP1/TP2",
+        "one/two optimizer steps",
+        "save/resume"
+      ],
+      "project": "megatron-core",
+      "pull_number": 7021,
+      "repository": "NVIDIA/Megatron-LM",
+      "risk_family": "memory-performance",
+      "runtime": "candidate tests plus reduced two-A100 train steps with parameter-delta, gradient-owner, and checkpoint-resume comparison",
+      "temporal_band": "recent",
+      "title": "Add MTP-only training mode"
+    },
+    {
+      "base_sha": "ef549a6d0792485d1e5c4db049e82dc00f38ecca",
+      "benchmark_domain": "training",
+      "case_id": "megatron-pr-5145",
+      "changed_paths": [
+        "megatron/training/theoretical_memory_usage.py",
+        "tests/unit_tests/training/test_weight_and_optimizer_memory.py"
+      ],
+      "claim": "Latent-MoE theoretical memory accounting includes each owned tensor exactly once and tracks measured allocation across supported configurations.",
+      "closure": "the formula matches the declared tensor inventory, changes monotonically with each component, and bounds measured deltas within frozen tolerance",
+      "created_at": "2026-06-04T02:45:57Z",
+      "head_sha": "081635aa71c7bf006911dfdcc2a073917bc06603",
+      "matrix": [
+        "latent/standard MoE",
+        "shared experts on/off",
+        "TP/EP 1/2",
+        "FP16/BF16",
+        "activation recompute on/off"
+      ],
+      "project": "megatron-core",
+      "pull_number": 5145,
+      "repository": "NVIDIA/Megatron-LM",
+      "risk_family": "optimizer-state",
+      "runtime": "exact formula/component inventory plus small-model A100 measured allocation trend and legacy-estimator controls",
+      "temporal_band": "mature",
+      "title": "Fix LatentMoE theoretical memory estimate"
+    },
+    {
+      "base_sha": "ae2efd53ae26aad06aabc5c524b2528f2f917685",
+      "benchmark_domain": "training",
+      "case_id": "megatron-pr-5169",
+      "changed_paths": [
+        "megatron/inference/utils.py",
+        "megatron/training/argument_utils.py",
+        "megatron/training/config/__init__.py",
+        "megatron/training/config/container.py",
+        "megatron/training/config/inference_config.py",
+        "tools/run_inference_performance_test.py",
+        "tools/run_text_generation_server.py"
+      ],
+      "claim": "The MCore/MBridge configuration refactor constructs equivalent training and inference objects without dropping, duplicating, or misrouting configuration values.",
+      "closure": "all declared fields reach the intended owner exactly once and a reduced training step matches the pre-refactor configuration behavior",
+      "created_at": "2026-06-04T22:27:57Z",
+      "head_sha": "9c91aa409058d0bef94413f05a8f54f41a3d72fd",
+      "matrix": [
+        "MCore/MBridge entry",
+        "train/inference construction",
+        "default/explicit values",
+        "single/distributed topology",
+        "legacy builder absent/present control"
+      ],
+      "project": "megatron-core",
+      "pull_number": 5169,
+      "repository": "NVIDIA/Megatron-LM",
+      "risk_family": "loss-gradient",
+      "runtime": "candidate tests plus exhaustive adapter-field projection and a reduced forward/backward training construction smoke test",
+      "temporal_band": "mature",
+      "title": "Add inference functions to support MCore-/MBridge- training refactor and remove legacy modelbuilder functions"
+    },
+    {
+      "base_sha": "396bee18f5a67458a4411078b4dbd2389d8829b4",
+      "benchmark_domain": "training",
+      "case_id": "megatron-pr-5134",
+      "changed_paths": [
+        "megatron/core/dist_checkpointing/serialization.py",
+        "megatron/core/dist_checkpointing/strategies/base.py",
+        "megatron/core/dist_checkpointing/strategies/torch.py",
+        "tests/unit_tests/dist_checkpointing/test_fully_parallel.py",
+        "tests/unit_tests/dist_checkpointing/test_integrity.py",
+        "tests/unit_tests/dist_checkpointing/test_msc.py",
+        "tests/unit_tests/dist_checkpointing/test_serialization.py"
+      ],
+      "claim": "Removing deprecated distributed-checkpoint modules leaves every supported save/load strategy functional and fails legacy imports explicitly.",
+      "closure": "supported checkpoints round-trip byte/value-equivalently, registry resolution has no stale target, and deprecated imports fail with a bounded diagnostic",
+      "created_at": "2026-06-03T12:04:11Z",
+      "head_sha": "f3cb92160f3670748e9ed99745fdeaf8ddc64234",
+      "matrix": [
+        "torch/default supported strategy",
+        "single/two rank",
+        "save/load",
+        "sharded/common state",
+        "supported/deprecated import"
+      ],
+      "project": "megatron-core",
+      "pull_number": 5134,
+      "repository": "NVIDIA/Megatron-LM",
+      "risk_family": "checkpoint-resume",
+      "runtime": "candidate tests plus two-rank checkpoint round-trip with parameter and optimizer-state equality",
+      "temporal_band": "mature",
+      "title": "remove deprecated modules from core/dist_checkpointing"
+    },
+    {
+      "base_sha": "d23ca853fe57d1a3b70c20736e49839bdfa929ca",
+      "benchmark_domain": "training",
+      "case_id": "megatron-pr-5131",
+      "changed_paths": [
+        "megatron/core/transformer/transformer_config.py",
+        "megatron/core/transformer/transformer_layer.py",
+        "megatron/training/arguments.py",
+        "tests/unit_tests/models/test_hybrid_moe_model.py",
+        "tests/unit_tests/transformer/test_transformer_layer.py"
+      ],
+      "claim": "TE CUDA-graph training avoids dummy attention masks only where legal and preserves captured forward/backward values and gradients.",
+      "closure": "legal captures replay deterministically without dummy-mask allocation, required masks remain present, and values/gradients match eager execution",
+      "created_at": "2026-06-03T06:53:12Z",
+      "head_sha": "3671459e3cbfd773ddd40b12a2a1a6670ca33778",
+      "matrix": [
+        "capture/eager",
+        "dummy mask required/not required",
+        "one/repeated replay",
+        "sequence boundary shapes",
+        "TE compatible/incompatible configuration"
+      ],
+      "project": "megatron-core",
+      "pull_number": 5131,
+      "repository": "NVIDIA/Megatron-LM",
+      "risk_family": "memory-performance",
+      "runtime": "candidate tests plus A100 capture/replay against eager output and gradient references with mask-consumer tracing",
+      "temporal_band": "mature",
+      "title": "[dev] moe(fix): Avoid TE cuda graph dummy attention masks"
+    },
+    {
+      "base_sha": "4108d12356b4e256e0e6d774a5c7df259d9d9912",
+      "benchmark_domain": "training",
+      "case_id": "megatron-pr-5162",
+      "changed_paths": [
+        "megatron/core/model_parallel_config.py",
+        "tests/unit_tests/test_model_parallel_config.py"
+      ],
+      "claim": "Moving the TE cross-entropy guard to training arguments preserves safe configuration projection and loss/gradient behavior.",
+      "closure": "each configuration selects the intended loss implementation exactly once and produces reference-equivalent loss and gradients",
+      "created_at": "2026-06-04T16:42:55Z",
+      "head_sha": "288795f15eab38753080a80ea82571ac36ed322e",
+      "matrix": [
+        "fusion on/off/default",
+        "compatible/incompatible TE setting",
+        "CLI/config object",
+        "TP1/TP2",
+        "forward/backward"
+      ],
+      "project": "megatron-core",
+      "pull_number": 5162,
+      "repository": "NVIDIA/Megatron-LM",
+      "risk_family": "memory-performance",
+      "runtime": "candidate argument tests plus exact guard propagation and fused/reference loss-gradient comparison where available",
+      "temporal_band": "mature",
+      "title": "Move TE cross entropy guard to training args"
+    },
+    {
+      "base_sha": "3778dbf6d1a533ab478ecf5ddaa11449a47752b2",
+      "benchmark_domain": "training",
+      "case_id": "slime-pr-2345",
+      "changed_paths": [
+        "slime/rollout/fully_async_rollout.py"
+      ],
+      "claim": "Fully asynchronous rollout sorts nested groups by the intended stable key without losing, duplicating, or cross-assigning samples.",
+      "closure": "every submitted sample is returned once to its original group in stable intended order across repeated asynchronous completion patterns",
+      "created_at": "2026-09-02T08:19:42Z",
+      "head_sha": "d029f794e6cfdc783e3b144fc03407a6c2131874",
+      "matrix": [
+        "flat/nested groups",
+        "already/reverse/equal-key order",
+        "empty/one/many groups",
+        "partial completion",
+        "repeated async batches"
+      ],
+      "project": "slime",
+      "pull_number": 2345,
+      "repository": "THUDM/slime",
+      "risk_family": "memory-performance",
+      "runtime": "candidate tests plus deterministic scheduler simulation tracking sample identity, group ownership, and completion order",
+      "temporal_band": "recent",
+      "title": "fix(rollout): fix nested group sorting in fully async rollout"
+    },
+    {
+      "base_sha": "d719f0361aab548743f0a3c7a8abe0ee26b00bb1",
+      "benchmark_domain": "training",
+      "case_id": "slime-pr-2010",
+      "changed_paths": [
+        "slime/backends/megatron_utils/loss.py"
+      ],
+      "claim": "Per-chunk logits scaling lowers training peak memory without changing loss normalization, gradients, or optimizer updates.",
+      "closure": "loss, gradients, and updated parameters meet tolerance while measured peak is lower and scales with chunk rather than full logits",
+      "created_at": "2026-06-02T17:15:23Z",
+      "head_sha": "ac785f2bf44319c878f3001cf97bb791c34e64d4",
+      "matrix": [
+        "one/multiple chunks",
+        "chunk boundary +/-1",
+        "short/long token count",
+        "FP32/BF16",
+        "forward/backward/step"
+      ],
+      "project": "slime",
+      "pull_number": 2010,
+      "repository": "THUDM/slime",
+      "risk_family": "loss-gradient",
+      "runtime": "candidate tests plus A100 unchunked value/gradient/optimizer reference and peak-memory measurement",
+      "temporal_band": "mature",
+      "title": "perf(megatron-loss): scale logits per-chunk to avoid OOM"
+    },
+    {
+      "base_sha": "16c15fc2068db1f73313f63f0d3c90e762b025d2",
+      "benchmark_domain": "training",
+      "case_id": "slime-pr-2015",
+      "changed_paths": [
+        ".github/workflows/pr-test.yml",
+        ".github/workflows/pr-test.yml.j2",
+        "slime/ray/rollout.py",
+        "tests/test_rollout_offload_coordination.py"
+      ],
+      "claim": "Rollout generation is quiesced before offload memory is released, including failure and repeated lifecycle paths.",
+      "closure": "no generation consumer accesses released storage, pause precedes every release, failure retains recoverable ownership, and restart succeeds",
+      "created_at": "2026-06-04T02:03:51Z",
+      "head_sha": "0e05c56c42d4e8c6c3e668288af94557db57f6a2",
+      "matrix": [
+        "generation active/idle",
+        "offload on/off",
+        "pause success/failure",
+        "one/repeated release",
+        "concurrent request arrival"
+      ],
+      "project": "slime",
+      "pull_number": 2015,
+      "repository": "THUDM/slime",
+      "risk_family": "checkpoint-resume",
+      "runtime": "candidate tests plus exact call/event order and accelerator allocation-lifetime probe",
+      "temporal_band": "mature",
+      "title": "fix(rollout): pause generation before releasing offload memory"
+    },
+    {
+      "base_sha": "44d29ee59dfa1489c369937779cbbdb1798ce701",
+      "benchmark_domain": "training",
+      "case_id": "slime-pr-2014",
+      "changed_paths": [
+        "slime/ray/rollout.py",
+        "slime/rollout/base_types.py",
+        "slime/rollout/sglang_rollout.py",
+        "tests/plugin_contracts/test_plugin_rollout_contracts.py"
+      ],
+      "claim": "The rollout manager applies sample filtering exactly once while preserving group cardinality, accounting, and train-batch ownership.",
+      "closure": "only accepted samples reach training once, all counters and groups agree, and empty results take the declared bounded path",
+      "created_at": "2026-06-04T02:03:48Z",
+      "head_sha": "22e7bd57c63d067a1d93d7d5b6cc872649e38b6d",
+      "matrix": [
+        "filter off/on",
+        "keep all/some/none",
+        "sync/async rollout",
+        "grouped/ungrouped samples",
+        "repeat batches"
+      ],
+      "project": "slime",
+      "pull_number": 2014,
+      "repository": "THUDM/slime",
+      "risk_family": "memory-performance",
+      "runtime": "candidate tests plus identity-and-count tracing through manager, rollout backend, and downstream training batch",
+      "temporal_band": "mature",
+      "title": "fix(rollout): apply sample filter in rollout manager"
+    },
+    {
+      "base_sha": "a5770f847842acc4cb5b5c10d4365cc0226b7280",
+      "benchmark_domain": "training",
+      "case_id": "slime-pr-1969",
+      "changed_paths": [
+        ".github/workflows/pr-test.yml",
+        ".github/workflows/pr-test.yml.j2",
+        "requirements.txt",
+        "slime/backends/megatron_utils/hf_checkpoint_saver.py",
+        "slime/backends/megatron_utils/model.py",
+        "slime/backends/megatron_utils/update_weight/hf_weight_iterator_base.py",
+        "slime/backends/megatron_utils/update_weight/hf_weight_iterator_bridge.py",
+        "slime/backends/megatron_utils/update_weight/hf_weight_iterator_direct.py",
+        "slime/utils/arguments.py",
+        "tests/utils/test_hf_checkpoint_saver.py"
+      ],
+      "claim": "Raw-mode save-hf emits a complete, correctly mapped Hugging Face checkpoint without corrupting training ownership or the existing save mode.",
+      "closure": "every expected parameter is written once with correct shape/value, reload logits match, and training can continue without state mutation",
+      "created_at": "2026-05-28T07:07:05Z",
+      "head_sha": "dd7dfb8e961d4da46ce3da0a51a05a4b446f47a9",
+      "matrix": [
+        "raw/non-raw",
+        "single/tensor-parallel shards",
+        "direct/bridge iterator",
+        "one/repeated save",
+        "load/forward round-trip"
+      ],
+      "project": "slime",
+      "pull_number": 1969,
+      "repository": "THUDM/slime",
+      "risk_family": "checkpoint-resume",
+      "runtime": "candidate tests plus tiny-model parameter inventory, HF reload, logits equality, and continued optimizer-step control",
+      "temporal_band": "mature",
+      "title": "support --save-hf for raw mode"
+    },
+    {
+      "base_sha": "e1b9c90b16b29ab971972ec9d35d489e4fcd6695",
+      "benchmark_domain": "training",
+      "case_id": "slime-pr-2020",
+      "changed_paths": [
+        "slime/backends/megatron_utils/hf_checkpoint_saver.py",
+        "tests/utils/test_hf_checkpoint_saver.py"
+      ],
+      "claim": "Node-local writers accelerate raw HF save while producing one complete, collision-free checkpoint equivalent to the serial writer.",
+      "closure": "all tensors appear exactly once, manifests/checksums and reload outputs match serial save, failures cannot publish a partial checkpoint",
+      "created_at": "2026-06-04T15:32:22Z",
+      "head_sha": "364d8b7de328d5db47495d40fd2cc5c0e124cbdc",
+      "matrix": [
+        "one/two nodes simulated",
+        "one/multiple shards",
+        "balanced/uneven ownership",
+        "success/writer failure",
+        "serial/node-writer output"
+      ],
+      "project": "slime",
+      "pull_number": 2020,
+      "repository": "THUDM/slime",
+      "risk_family": "checkpoint-resume",
+      "runtime": "candidate tests plus multi-process shard manifest, checksum, atomic-finalization, reload parity, and elapsed-time evidence",
+      "temporal_band": "mature",
+      "title": "Accelerate raw HF save with node writers"
+    },
+    {
+      "base_sha": "565880f049cb386d312b156a6a4b4ffd34ec7281",
+      "benchmark_domain": "training",
+      "case_id": "torchtitan-pr-4358",
+      "changed_paths": [
+        "README.md",
+        "docs/observability/silent_data_corruption.md",
+        "tests/integration_tests/features.py",
+        "tests/integration_tests/h100.py",
+        "tests/unit_tests/cpu/test_config_manager.py",
+        "tests/unit_tests/cpu/test_invalid_loss.py",
+        "tests/unit_tests/cpu/test_trainer.py",
+        "torchtitan/experiments/graph_trainer/llama3/config_registry.py",
+        "torchtitan/experiments/graph_trainer/tests/integration_tests.py",
+        "torchtitan/trainer.py",
+        "torchtitan_recipes/tests/features.py",
+        "torchtitan_recipes/tests/h100.py"
+      ],
+      "claim": "Trainer-integrated deterministic replay reproduces the same step inputs, RNG, loss, gradients, and parameters after the declared corruption event.",
+      "closure": "a replayed step is trajectory-identical to the clean reference and normal training incurs no semantic change",
+      "created_at": "2026-08-27T21:34:28Z",
+      "head_sha": "4a0ea335b8aed1659645e409a157c215fc7e2b3c",
+      "matrix": [
+        "replay off/on",
+        "no fault/injected fault",
+        "single/distributed reduced step",
+        "dropout on/off",
+        "checkpoint before/after event"
+      ],
+      "project": "torchtitan",
+      "pull_number": 4358,
+      "repository": "pytorch/torchtitan",
+      "risk_family": "loss-gradient",
+      "runtime": "candidate tests plus two-A100 fault-injected train/replay trace comparing RNG, loss, gradients, and parameter trajectory",
+      "temporal_band": "recent",
+      "title": "[SDC] Integrate deterministic replay into Trainer"
+    },
+    {
+      "base_sha": "84482d0043fb2d880b73953d6be42ac72378d1b9",
+      "benchmark_domain": "training",
+      "case_id": "torchtitan-pr-3523",
+      "changed_paths": [
+        "torchtitan/experiments/graph_trainer/.claude/CLAUDE.md",
+        "torchtitan/experiments/graph_trainer/cpu_offload.py",
+        "torchtitan/experiments/graph_trainer/tests/test_cpu_offload.py"
+      ],
+      "claim": "CPU offload retains the wait dependency for non-Tensor consumers so replay cannot read an activation before transfer completes.",
+      "closure": "every consumer observes completed data, dependency edges remain live, and forward/backward values match the non-offloaded reference",
+      "created_at": "2026-06-04T04:02:03Z",
+      "head_sha": "484a1eaa66df9cbf2e53e06e186031479b6640a7",
+      "matrix": [
+        "Tensor/non-Tensor consumer",
+        "sync/delayed transfer",
+        "base/view activation",
+        "one/repeated backward",
+        "offload on/off"
+      ],
+      "project": "torchtitan",
+      "pull_number": 3523,
+      "repository": "pytorch/torchtitan",
+      "risk_family": "checkpoint-resume",
+      "runtime": "candidate tests plus forced delayed-copy event trace and non-offloaded value/gradient oracle",
+      "temporal_band": "mature",
+      "title": "[cpu-offload] Fix wait_tensor dep edge for non-Tensor consumers"
+    },
+    {
+      "base_sha": "bb772188f0d9fe737e5d256c7e3b28f0b0144083",
+      "benchmark_domain": "training",
+      "case_id": "torchtitan-pr-3538",
+      "changed_paths": [
+        "torchtitan/experiments/graph_trainer/cudagraph.py",
+        "torchtitan/experiments/graph_trainer/passes.py",
+        "torchtitan/experiments/graph_trainer/tests/test_precompile.py",
+        "torchtitan/experiments/graph_trainer/tests/test_trace_module.py"
+      ],
+      "claim": "An omitted cudagraph direction defaults to forward capture while explicit backward behavior and replay numerics remain unchanged.",
+      "closure": "the omitted value selects forward exactly, explicit values retain meaning, and captured results match eager execution",
+      "created_at": "2026-06-04T21:53:51Z",
+      "head_sha": "1f5dfabf165f23adbb4542a5a9c2d574a9d088af",
+      "matrix": [
+        "direction omitted/true/false",
+        "forward/backward graph",
+        "one/repeated replay",
+        "static/dynamic shape",
+        "safe/unsafe node"
+      ],
+      "project": "torchtitan",
+      "pull_number": 3538,
+      "repository": "pytorch/torchtitan",
+      "risk_family": "memory-performance",
+      "runtime": "candidate tests plus graph-direction inspection and eager-equivalence output/gradient replay",
+      "temporal_band": "mature",
+      "title": "[graph_trainer] cudagraph_pass: default is_forward to True"
+    },
+    {
+      "base_sha": "1418df545b89216e1d0340352475b8c46fe9d149",
+      "benchmark_domain": "training",
+      "case_id": "torchtitan-pr-3534",
+      "changed_paths": [
+        "torchtitan/experiments/graph_trainer/cudagraph.py",
+        "torchtitan/experiments/graph_trainer/tests/test_passes.py"
+      ],
+      "claim": "Cudagraph capture stages non-static inputs before capture so replay observes current values without stale aliases or shape misuse.",
+      "closure": "each replay consumes current staged values, rejects unsupported shape changes, and matches eager outputs and gradients",
+      "created_at": "2026-06-04T21:25:17Z",
+      "head_sha": "9148ea2dead01811f9e2a7c42344a79e1950532c",
+      "matrix": [
+        "static/non-static input",
+        "same/changed values",
+        "same/changed legal shape",
+        "one/repeated replay",
+        "forward/backward"
+      ],
+      "project": "torchtitan",
+      "pull_number": 3534,
+      "repository": "pytorch/torchtitan",
+      "risk_family": "memory-performance",
+      "runtime": "candidate tests plus storage/alias tracing and eager-equivalence output/gradient replays",
+      "temporal_band": "mature",
+      "title": "[graph_trainer] cudagraph: stage non-static inputs before capture"
+    },
+    {
+      "base_sha": "d92336fee0e6582385b84960a4240ebb97feb7e9",
+      "benchmark_domain": "training",
+      "case_id": "torchtitan-pr-3533",
+      "changed_paths": [
+        "torchtitan/experiments/graph_trainer/cudagraph.py",
+        "torchtitan/experiments/graph_trainer/tests/test_passes.py"
+      ],
+      "claim": "Per-node capture-safety classification captures only legal graph nodes and preserves fallback order, values, and gradients.",
+      "closure": "safe nodes alone are captured, unsafe nodes execute once in order, failures fall back cleanly, and numerics equal eager execution",
+      "created_at": "2026-06-04T21:25:14Z",
+      "head_sha": "629275f4b7a71314f67974fcf7f7cc06796d5970",
+      "matrix": [
+        "all-safe/all-unsafe/mixed graph",
+        "forward/backward node",
+        "side-effect/no side-effect",
+        "one/repeated replay",
+        "predicate exception"
+      ],
+      "project": "torchtitan",
+      "pull_number": 3533,
+      "repository": "pytorch/torchtitan",
+      "risk_family": "memory-performance",
+      "runtime": "candidate tests plus synthetic mixed graph with capture trace and eager-equivalence output/gradient oracle",
+      "temporal_band": "mature",
+      "title": "[graph_trainer] cudagraph: per-node capture-safety predicate"
+    },
+    {
+      "base_sha": "88bb34eaaa7bf6fd7631047374ef32b124df008c",
+      "benchmark_domain": "training",
+      "case_id": "torchtitan-pr-3530",
+      "changed_paths": [
+        "torchtitan/experiments/graph_trainer/selective_activation_remat.py",
+        "torchtitan/experiments/graph_trainer/tests/test_passes.py"
+      ],
+      "claim": "Selective-activation-rematerialization duplicates receive independent custom metadata without aliasing or changing recompute gradients.",
+      "closure": "duplicate nodes never share mutable metadata, recompute selects the intended node, and all gradients match the non-remat reference",
+      "created_at": "2026-06-04T18:48:52Z",
+      "head_sha": "4a80678f8c5454246c87121f6f4bd4eadb7b8f64",
+      "matrix": [
+        "single/duplicate remat",
+        "shared/independent input",
+        "one/repeated backward",
+        "mutation/no mutation",
+        "AC enabled/disabled"
+      ],
+      "project": "torchtitan",
+      "pull_number": 3530,
+      "repository": "pytorch/torchtitan",
+      "risk_family": "memory-performance",
+      "runtime": "candidate tests plus FX metadata identity inspection and eager-versus-rematerialized gradient comparison",
+      "temporal_band": "mature",
+      "title": "[graph_trainer] AC remat: give recompute dups independent custom meta"
+    },
+    {
+      "base_sha": "5b79827b04cee6e4b7b5ff737e047f1d72d50433",
+      "benchmark_domain": "training",
+      "case_id": "verl-pr-7697",
+      "changed_paths": [
+        "docs/sglang_multiturn/multiturn.rst",
+        "tests/experimental/agent_loop/test_call_tool_on_cpu.py",
+        "tests/experimental/agent_loop/test_invalid_tool_call_limit_on_cpu.py",
+        "tests/workers/config/test_rollout_config_on_cpu.py",
+        "verl/experimental/agent_loop/tool_agent_loop.py",
+        "verl/trainer/config/_generated_ppo_megatron_trainer.yaml",
+        "verl/trainer/config/_generated_ppo_torchtitan_trainer.yaml",
+        "verl/trainer/config/_generated_ppo_trainer.yaml",
+        "verl/trainer/config/_generated_ppo_veomni_trainer.yaml",
+        "verl/trainer/config/rollout/rollout.yaml",
+        "verl/workers/config/rollout.py"
+      ],
+      "claim": "The configured consecutive-invalid-tool-call limit terminates only the offending rollout sequence and resets after a valid call.",
+      "closure": "counts are per sequence, valid calls reset exactly, only threshold violations terminate, and downstream training receives consistent outcomes",
+      "created_at": "2026-09-02T17:39:43Z",
+      "head_sha": "5553827269b06ee9d7dcaa31cde1383cfbd635d3",
+      "matrix": [
+        "limit 0/1/many",
+        "below/at/above limit",
+        "valid reset/no reset",
+        "single/multiple agents",
+        "sync/async completion"
+      ],
+      "project": "verl",
+      "pull_number": 7697,
+      "repository": "verl-project/verl",
+      "risk_family": "loss-gradient",
+      "runtime": "candidate config and agent-loop tests plus an end-to-end scripted rollout tracking termination, reward, and surviving sequences",
+      "temporal_band": "recent",
+      "title": " [rollout, tool, cfg] feat: add consecutive invalid tool call limit"
+    },
+    {
+      "base_sha": "8f5e16179f7b4b479aa95a072848438ad6bcbf64",
+      "benchmark_domain": "training",
+      "case_id": "verl-pr-6558",
+      "changed_paths": [
+        "tests/experimental/one_step_off_policy/test_ray_trainer_on_cpu.py",
+        "verl/experimental/one_step_off_policy/ray_trainer.py"
+      ],
+      "claim": "One-step off-policy training reports dataloader exhaustion at the correct boundary without consuming extra data or mutating optimizer state.",
+      "closure": "the precise bounded error occurs only on exhaustion, no batch is skipped or duplicated, and failed steps leave parameters/state unchanged",
+      "created_at": "2026-06-01T09:13:36Z",
+      "head_sha": "44d70a61579340b93d7163a46a78e55981b4df05",
+      "matrix": [
+        "empty/one/multiple batches",
+        "exhaust before/after requested step",
+        "single/repeated iterator",
+        "normal/worker exception",
+        "resume attempt"
+      ],
+      "project": "verl",
+      "pull_number": 6558,
+      "repository": "verl-project/verl",
+      "risk_family": "checkpoint-resume",
+      "runtime": "candidate tests plus iterator-consumption and parameter/optimizer-state trace around a reduced training step",
+      "temporal_band": "mature",
+      "title": "[trainer] Improve one-step dataloader exhaustion error"
+    },
+    {
+      "base_sha": "0a1c5b64c3f4da3b99936c9fc9c08e65211aee72",
+      "benchmark_domain": "training",
+      "case_id": "verl-pr-6564",
+      "changed_paths": [
+        "tests/utils/test_rmpad_logprob_labels_on_cpu.py",
+        "verl/utils/megatron/tensor_parallel.py",
+        "verl/utils/torch_functional.py"
+      ],
+      "claim": "Remove-padding Megatron utilities keep logprob labels aligned to their original sequence tokens through sharding and reconstruction.",
+      "closure": "each label maps to its source token once, padding never contributes, and gathered loss/gradients match the padded reference",
+      "created_at": "2026-06-01T20:34:36Z",
+      "head_sha": "d5ced6a860b0c0c720a3bfae7cebb86b4d29911d",
+      "matrix": [
+        "rmpad on/off",
+        "equal/uneven lengths",
+        "left/right padding",
+        "TP1/TP2",
+        "loss/backward"
+      ],
+      "project": "verl",
+      "pull_number": 6564,
+      "repository": "verl-project/verl",
+      "risk_family": "memory-performance",
+      "runtime": "candidate tests plus two-A100 pack/shard/gather identity oracle and padded-reference logprob loss/gradient comparison",
+      "temporal_band": "mature",
+      "title": "[training_utils,megatron] fix: keep rmpad logprob labels within sequence"
+    },
+    {
+      "base_sha": "22b04f9494334c02f976234bc79fa01caa369b47",
+      "benchmark_domain": "training",
+      "case_id": "verl-pr-6574",
+      "changed_paths": [
+        "tests/experimental/fully_async_policy/test_ray_actor_resources_on_cpu.py",
+        "verl/experimental/fully_async_policy/README.md",
+        "verl/experimental/fully_async_policy/README_zh.md",
+        "verl/experimental/fully_async_policy/config/fully_async_ppo_megatron_trainer.yaml",
+        "verl/experimental/fully_async_policy/config/fully_async_ppo_trainer.yaml",
+        "verl/experimental/fully_async_policy/fully_async_main.py",
+        "verl/experimental/fully_async_policy/fully_async_rollouter.py",
+        "verl/experimental/fully_async_policy/fully_async_trainer.py",
+        "verl/experimental/fully_async_policy/message_queue.py",
+        "verl/experimental/fully_async_policy/ray_actor_resources.py"
+      ],
+      "claim": "Fully asynchronous helper actors reserve sufficient but non-duplicated CPU resources so legal jobs schedule and progress.",
+      "closure": "declared bundles equal actual actor reservations, no resource is double counted, legal tight-cluster jobs start, and restart releases/reacquires resources",
+      "created_at": "2026-06-02T09:23:36Z",
+      "head_sha": "939743fbd6cb18b794c5ef5044691a2990865fee",
+      "matrix": [
+        "default/explicit CPU",
+        "one/multiple nodes",
+        "one/multiple helpers",
+        "tight/ample cluster",
+        "actor restart"
+      ],
+      "project": "verl",
+      "pull_number": 6574,
+      "repository": "verl-project/verl",
+      "risk_family": "loss-gradient",
+      "runtime": "candidate tests plus local Ray placement/resource accounting and timeout-protected actor progress probe",
+      "temporal_band": "mature",
+      "title": "[fully_async, ray] fix: auto-size helper actor CPU reservations"
+    },
+    {
+      "base_sha": "9f73954a87e247de4c31bc2f5222969e395b2904",
+      "benchmark_domain": "training",
+      "case_id": "verl-pr-6560",
+      "changed_paths": [
+        "tests/workers/config/test_rollout_config_on_cpu.py",
+        "tests/workers/rollout/test_vllm_cli_args_on_cpu.py",
+        "verl/trainer/config/_generated_ppo_megatron_trainer.yaml",
+        "verl/trainer/config/_generated_ppo_torchtitan_trainer.yaml",
+        "verl/trainer/config/_generated_ppo_trainer.yaml",
+        "verl/trainer/config/_generated_ppo_veomni_trainer.yaml",
+        "verl/trainer/config/rollout/rollout.yaml",
+        "verl/workers/config/rollout.py",
+        "verl/workers/rollout/vllm_cli_args.py",
+        "verl/workers/rollout/vllm_rollout/utils.py",
+        "verl/workers/rollout/vllm_rollout/vllm_async_server.py"
+      ],
+      "claim": "vLLM tool-calling configuration is propagated losslessly from trainer config to every rollout server and changes tool parsing only when enabled.",
+      "closure": "every server receives identical intended flags once, defaults preserve old behavior, and enabled parsing yields the declared training rollout records",
+      "created_at": "2026-06-01T11:14:31Z",
+      "head_sha": "f80f4bbd4e68b985c7f3ac035948123f638da98c",
+      "matrix": [
+        "tool calling off/on",
+        "default/explicit parser",
+        "single/multiple servers",
+        "valid/invalid tool output",
+        "sync/async rollout"
+      ],
+      "project": "verl",
+      "pull_number": 6560,
+      "repository": "verl-project/verl",
+      "risk_family": "loss-gradient",
+      "runtime": "candidate config tests plus exhaustive adapter projection and scripted rollout-server request/response behavior",
+      "temporal_band": "mature",
+      "title": "[rollout,vllm,cfg] feat: expose vLLM tool-calling config"
+    },
+    {
+      "base_sha": "81fbf5e4888e8348b1ca9661b42a9ce72f36c14d",
+      "benchmark_domain": "training",
+      "case_id": "verl-pr-6598",
+      "changed_paths": [
+        "tests/special_sanity/check_device_api_usage.py",
+        "verl/trainer/main_ppo_sync.py",
+        "verl/workers/engine_workers.py",
+        "verl/workers/rollout/sglang_rollout/async_sglang_server.py",
+        "verl/workers/rollout/sglang_rollout/http_server_engine.py",
+        "verl/workers/rollout/sglang_rollout/sglang_rollout.py"
+      ],
+      "claim": "Fully asynchronous SGLang broadcasting transfers one coherent actor weight version to all rollout workers before they serve the next generation.",
+      "closure": "all workers activate the same complete new version exactly once before service, failures cannot expose partial weights, and repeated updates progress",
+      "created_at": "2026-06-03T20:26:12Z",
+      "head_sha": "5fc13a7ce2571157fdf7127eda82e835b5a362d4",
+      "matrix": [
+        "sync/fully async",
+        "one/two rollout workers",
+        "single/repeated update",
+        "slow/failing receiver",
+        "offload on/off"
+      ],
+      "project": "verl",
+      "pull_number": 6598,
+      "repository": "verl-project/verl",
+      "risk_family": "loss-gradient",
+      "runtime": "candidate tests plus two-A100 versioned parameter broadcast with call-order, checksum, generation, and failure-lifetime tracing",
+      "temporal_band": "mature",
+      "title": "Full async sg lang weight broadcasting"
+    }
+  ],
+  "ci_or_label_requested": false,
+  "cross_case_controls": [
+    "An exact candidate-owned or measured counterexample overrides historical disposition.",
+    "A timeout requires rank diagnostics and a healthy control before it proves nonprogress.",
+    "Configuration, import, compile, and mocked orchestration do not alone close a broad training claim.",
+    "A100 skips cannot masquerade as Blackwell, ROCm, NPU, or another target execution.",
+    "Candidate body remains outcome-free and separately hashed after this plan lock."
+  ],
+  "disposition_policy": {
+    "accept": "The title-scoped production contract has exact functional closure and no reachable blocker.",
+    "check": "The PR is within the <=7-day hot window, changes <=8 coherent files, has exact core-path evidence, and leaves exactly one executable integration residual with no counterexample.",
+    "check_changed_files_max": 8,
+    "forced_polarization_used": false,
+    "hot_window_days": 7,
+    "mature_created_at_cutoff": "2026-06-04T23:59:59Z",
+    "reject": "There is an exact reachable failure, nonfunctional target-only evidence, broad training plumbing without step/gradient/checkpoint/measured-memory closure, or a mature disposition lacking accept evidence.",
+    "resolution_gray_zone_excluded": true,
+    "unresolved": "Required backend, architecture, topology, or exact evidence is unavailable; technical uncertainty is recorded without fabricating failure.",
+    "weighted_score_used": false
+  },
+  "domain_allocation": {
+    "training": 30
+  },
+  "evaluation_layers": {
+    "disposition_prediction": [
+      "accept",
+      "check",
+      "reject",
+      "unresolved"
+    ],
+    "governance_gap_recorded_separately": true,
+    "technical_contract": [
+      "pass",
+      "bounded-gap",
+      "fail",
+      "unresolved"
+    ],
+    "technical_result_never_rewritten_from_history": true
+  },
+  "evidence_tiers": [
+    "exact candidate-owned tests",
+    "exact isolated base/head contract probe",
+    "two-A100 numeric, progress, checkpoint, lifecycle, or memory probe",
+    "candidate-authored outcome-free body evidence acquired after this lock",
+    "full target/model end-to-end execution where dependencies permit"
+  ],
+  "frozen_at": "2026-09-02T18:02:31.812234+00:00",
+  "frozen_before_candidate_body_access": true,
+  "frozen_before_source_diff_content_access": true,
+  "machine_policy_id": "training-contract-disposition-split-v0.1-r16",
+  "merge_outcome_or_state_requested": false,
+  "metadata_amendment_sha256": "sha256:7bdf8f118d9c6bc6917a4591112c727cf4edf8c143b537a30df892ff5aaaea1e",
+  "ordered_reachability_gate": [
+    "configuration is legal and title-scoped",
+    "production training call site reaches the behavior",
+    "loss, gradient, state, scheduling, or resource invariant is satisfied or violated",
+    "an exact base/head or independent oracle distinguishes the behavior",
+    "remaining remediation is bounded to the candidate direction"
+  ],
+  "protocol_id": "training-iterative-contract-v0.1-r16-30",
+  "r15_policy_iteration_sha256": "sha256:80a7d5e7b2fb2b94d1a3f099dcbc381baa8a8e08d66f0e98a11171d630f5fd06",
+  "review_or_comment_requested": false,
+  "schema_version": "0.1",
+  "selection_lock_sha256": "sha256:e62dfd65af89ec1b75847d007c2a3f1d4ff0d37e8ac5f6ed792df7193e4c24fa",
+  "target_hardware_rule": {
+    "compile_import_or_mock_is_functional_closure": false,
+    "missing_evaluator_hardware_alone_is_reject": false,
+    "required": [
+      "target numeric",
+      "target progress",
+      "target ordering",
+      "target memory"
+    ]
+  },
+  "test_plan_sha256": "sha256:1bf58d5803699b63323b7ab09feb2f5c599fa4368efa7527025c8f6172d5f2a0",
+  "training_closure_rule": {
+    "config_or_mock_only_is_accept": false,
+    "mechanical_adapter_exception": "A mature change may accept when it only propagates one backward-compatible value, enumerates every implementation, passes endpoint tests, and changes no backend semantics.",
+    "required_functional_evidence": [
+      "optimizer-step",
+      "gradient",
+      "checkpoint-round-trip",
+      "measured-memory",
+      "equally exact title-scoped training behavior"
+    ]
+  }
+}

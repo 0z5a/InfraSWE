@@ -1,0 +1,33 @@
+{
+  "environment_repairs": [
+    "pylatexenc==2.11 in /venv/main",
+    "grain==0.2.18 in /workspace/venv-tt"
+  ],
+  "evidence_sha256": "sha256:50474550bfe115474249a6aed9492755c1a702203139eda28d3c651865eb6112",
+  "finished_at": "2026-09-02T18:30:50.545794+00:00",
+  "outcome_review_ci_fields_requested": false,
+  "probe_hashes": {
+    "r16_megatron_mtp_freeze_probe.py": "sha256:d0a35d5b7f15e24505f634863e326fd5038057303490723c8823f3682653872e",
+    "r16_slime_sort_probe.py": "sha256:257cd1a9ed79bfc18025736167e361bd69ac54b482b11d338b3ce4fa63d352ca",
+    "r16_slime_temperature_probe.py": "sha256:28db53af942546c047727135aa0e8f0e442ee5203f5eff74dff7d71c22cd5fa2"
+  },
+  "protocol_id": "r16-exact-head-training-followups-v0.1",
+  "records": [
+    {
+      "case_id": "liger-pr-1244",
+      "command": "cd /workspace/r13-run-liger && git switch --detach refs/r16/pr-1244 >/dev/null && test \"$(git rev-parse HEAD)\" = 2e85e6a0f6cc4231c2174b560b2db45ff8fb8fa2 && timeout 60s env CUDA_VISIBLE_DEVICES=0 PYTHONPATH=src /venv/main/bin/python -c 'from trl.experimental.orpo import ORPOConfig; from liger_kernel.transformers.trainer.orpo_trainer import LigerORPOTrainer; assert ORPOConfig is not None and LigerORPOTrainer is not None; print('\"'\"'current_trl_orpo_import=pass'\"'\"')'",
+      "duration_seconds": 13.168798000086099,
+      "output_sha256": "sha256:e3013afa346d1cc4ede82a118d31d35617acbf0ae0077bdb9dd03aa2469e29eb",
+      "output_tail": "current_trl_orpo_import=pass\nWelcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nPrevious HEAD position was 4720fa1 Merge branch 'main' into perf/dyt-autotune\nHEAD is now at 2e85e6a import orpo from trl.experimental\n<string>:1: TRLExperimentalWarning: You are importing from 'trl.experimental'. APIs here are unstable and may change or be removed without notice. Silence this warning by setting environment variable TRL_EXPERIMENTAL_SILENCE=1.\n",
+      "purpose": "import ORPO through the current TRL experimental export",
+      "returncode": 0,
+      "status": "completed",
+      "timeout": 120
+    }
+  ],
+  "schema_version": "0.1",
+  "selection_lock_sha256": "sha256:e62dfd65af89ec1b75847d007c2a3f1d4ff0d37e8ac5f6ed792df7193e4c24fa",
+  "started_at": "2026-09-02T18:30:37.376050+00:00",
+  "static_evidence_sha256": "sha256:31f2b3df3f4769e10d397b1c512cbd7cb816b9e0f5077f7868e49747b1be985c",
+  "test_plan_sha256": "sha256:1bf58d5803699b63323b7ab09feb2f5c599fa4368efa7527025c8f6172d5f2a0"
+}

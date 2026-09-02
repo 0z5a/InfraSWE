@@ -1,0 +1,1259 @@
+{
+  "candidate_body_integrity_note": "All bodies were acquired after the plan lock; no outcome-bearing block required redaction in R16.",
+  "ci_fields_visible_during_machine_judgment": false,
+  "common_evidence_bindings": {
+    "checkpoint_focused": {
+      "artifact_sha256": "sha256:d477150f9f315be56713a710e614f95904df83c388ca97853ed8dc4b2ab1513c",
+      "evidence_sha256": "sha256:1804297107aae2e9752cb50141a5e829f01a3ec1f9293ac1602eeef5e835886d",
+      "path": "upstream-followup-checkpoint-focused.json"
+    },
+    "checkpoint_retry": {
+      "artifact_sha256": "sha256:25d565470c3ba5103c0835c1e0eb5adb916b458cf549c192fe964c114620ce49",
+      "evidence_sha256": "sha256:0cd0740dfa664811b3df1598a6655526be02d99556224ef6b626287dbbe4f888",
+      "path": "upstream-followup-checkpoint-retry.json"
+    },
+    "followup": {
+      "artifact_sha256": "sha256:5b2638bad37e8538ef3a1cc625c37ca48db47fcfc94ad7bae95cbb1b9024d766",
+      "evidence_sha256": "sha256:029e37aed4850550c6ac9f1147757bfc760ba55bf788fb73a94fa28f0f0db091",
+      "path": "upstream-followup-tests.json"
+    },
+    "initial": {
+      "artifact_sha256": "sha256:766928e5051896289e27b5151892b2df22ab6c4b6e7bdbc9b8f65e0125095e7f",
+      "evidence_sha256": "sha256:18a45c5aeced51d78ff17bb1943449c2dc30e6625fac044fefb4413cebfc0e9a",
+      "path": "upstream-test-matrix.json"
+    },
+    "manifest": {
+      "artifact_sha256": "sha256:457592a0f03d7109c04e648ab61a9dd1af82e08acec2440f26f065c8e44cfc88",
+      "evidence_sha256": "sha256:f0218f264e2bec221d3f106092a2f2d31b9f77e2fef024bdd1aee8b3a4c23dbf",
+      "path": "source-evidence-manifest.json"
+    },
+    "orpo_retry": {
+      "artifact_sha256": "sha256:2442aa0a96f31d351fabb1a08cfb5081648cfed4390965342cf86ecc907b31db",
+      "evidence_sha256": "sha256:50474550bfe115474249a6aed9492755c1a702203139eda28d3c651865eb6112",
+      "path": "upstream-followup-orpo-retry.json"
+    },
+    "static": {
+      "artifact_sha256": "sha256:a8cbb4dc0e3e7763a217ebbc8856f1c16e58baa4089a69ac32bb4ea7cedf1041",
+      "evidence_sha256": "sha256:31f2b3df3f4769e10d397b1c512cbd7cb816b9e0f5077f7868e49747b1be985c",
+      "path": "static-evidence.json"
+    }
+  },
+  "decision_counts": {
+    "accept_with_scope": 21,
+    "check": 2,
+    "reject": 7,
+    "unresolved": 0
+  },
+  "forced_polarization_used": false,
+  "frozen_at": "2026-09-02T18:36:55.107743+00:00",
+  "learned_model_used": false,
+  "legacy_r10_style_decision_counts": {
+    "accept_with_scope": 21,
+    "check": 9
+  },
+  "lock_set_sha256": "sha256:4b6884a5ed00919eec80db5960a8bb84750f6ab05c2476777f31fd9f6babdb44",
+  "locks": [
+    {
+      "lock_sha256": "sha256:13d1407e73c131b23f46ef3c4f80a17b6992f804a27944efe96479b5774422cb",
+      "material": {
+        "candidate_sha256": "sha256:dcd3d52b2c9dc055f3ea3bcd36099d56df41c17d6710f246dee3e62358503489",
+        "case_id": "liger-pr-1413",
+        "common_evidence_binding_sha256": "sha256:73c3a44869ff0ae0d00e72fbf41c00c6eed1051e0e78202d193402641e7379c1",
+        "decision": "check",
+        "frozen_at": "2026-09-02T18:36:55.107743+00:00",
+        "hot_window_check_eligible": true,
+        "legacy_r10_style_decision": "check",
+        "policy_id": "training-contract-disposition-split-v0.1-r16",
+        "rationale_codes": [
+          "PRIMARY_DIRECTION_VALID_BOUNDED_REPAIR_WITH_CLOSURE_TEST"
+        ],
+        "residual_contract": "Run the frozen multi-expert dx reference matrix on B300/sm_103 and confirm both dot contributions across top-k and dtype variants.",
+        "schema_version": "0.1",
+        "selection_lock_sha256": "sha256:e62dfd65af89ec1b75847d007c2a3f1d4ff0d37e8ac5f6ed792df7193e4c24fa",
+        "source_bundle_sha256": "sha256:09e279a10bb85a5dfe9dbf56a4009f1f2c987380e8f137e168a5d60be9d1dbbf",
+        "supplemental_evidence_binding_sha256": "sha256:5935d042742800901c6d4eadd1c479f7ca54613021a2455b07dfcafd06131279",
+        "technical_contract": "bounded-gap",
+        "technical_findings": [
+          "The one-file change separates the two fp32 dot accumulators exactly as its Blackwell miscompile hypothesis requires; six A100 fused-MoE cases passed before the bounded suite timeout.",
+          "The evaluator has no B300/sm_103, so the title-scoped dx correction remains unexecuted locally despite detailed candidate target results."
+        ],
+        "test_plan_sha256": "sha256:1bf58d5803699b63323b7ab09feb2f5c599fa4368efa7527025c8f6172d5f2a0",
+        "triage_input": {
+          "baseline_regression": false,
+          "closure_test": "frozen-probe",
+          "contract_satisfied": false,
+          "design_change_required": false,
+          "evidence_complete": true,
+          "primary_claim_demonstrated": true,
+          "remediation_scope": "single-site",
+          "residual_failure_families": 1,
+          "safety_or_integrity_failure": false,
+          "semantic_noop": false
+        }
+      }
+    },
+    {
+      "lock_sha256": "sha256:75293d001f515f9be377370adced9747aea5e467310e87583dee47ad042139cd",
+      "material": {
+        "candidate_sha256": "sha256:2814c1e1879281182e1358a63f46915a7cfff1de1283f3a4f2868a897b7a97d7",
+        "case_id": "liger-pr-1244",
+        "common_evidence_binding_sha256": "sha256:73c3a44869ff0ae0d00e72fbf41c00c6eed1051e0e78202d193402641e7379c1",
+        "decision": "accept_with_scope",
+        "frozen_at": "2026-09-02T18:36:55.107743+00:00",
+        "hot_window_check_eligible": false,
+        "legacy_r10_style_decision": "accept_with_scope",
+        "policy_id": "training-contract-disposition-split-v0.1-r16",
+        "rationale_codes": [
+          "CASE_CONTRACT_SATISFIED"
+        ],
+        "residual_contract": null,
+        "schema_version": "0.1",
+        "selection_lock_sha256": "sha256:e62dfd65af89ec1b75847d007c2a3f1d4ff0d37e8ac5f6ed792df7193e4c24fa",
+        "source_bundle_sha256": "sha256:09e279a10bb85a5dfe9dbf56a4009f1f2c987380e8f137e168a5d60be9d1dbbf",
+        "supplemental_evidence_binding_sha256": "sha256:a0399bf0933680e646a0c627611ac47f0714f4a9720633a51830d2d094e37135",
+        "technical_contract": "pass",
+        "technical_findings": [
+          "The exact head imports LigerORPOTrainer through TRL 1.12's experimental ORPO export, while the guarded fallback preserves the former import location.",
+          "The two-site change is restricted to import compatibility and the current-path probe succeeds."
+        ],
+        "test_plan_sha256": "sha256:1bf58d5803699b63323b7ab09feb2f5c599fa4368efa7527025c8f6172d5f2a0",
+        "triage_input": {
+          "baseline_regression": false,
+          "closure_test": "frozen-probe",
+          "contract_satisfied": true,
+          "design_change_required": false,
+          "evidence_complete": true,
+          "primary_claim_demonstrated": true,
+          "remediation_scope": "none",
+          "residual_failure_families": 0,
+          "safety_or_integrity_failure": false,
+          "semantic_noop": false
+        }
+      }
+    },
+    {
+      "lock_sha256": "sha256:10440dc3774208e71c6a90d09d739edd32af75f53607ab907070d0283d326025",
+      "material": {
+        "candidate_sha256": "sha256:b7cab8a0135c37d5f71cbf38baab54630cdf9d76320655b9951ec575a8d16b08",
+        "case_id": "liger-pr-1204",
+        "common_evidence_binding_sha256": "sha256:73c3a44869ff0ae0d00e72fbf41c00c6eed1051e0e78202d193402641e7379c1",
+        "decision": "accept_with_scope",
+        "frozen_at": "2026-09-02T18:36:55.107743+00:00",
+        "hot_window_check_eligible": false,
+        "legacy_r10_style_decision": "accept_with_scope",
+        "policy_id": "training-contract-disposition-split-v0.1-r16",
+        "rationale_codes": [
+          "CASE_CONTRACT_SATISFIED"
+        ],
+        "residual_contract": null,
+        "schema_version": "0.1",
+        "selection_lock_sha256": "sha256:e62dfd65af89ec1b75847d007c2a3f1d4ff0d37e8ac5f6ed792df7193e4c24fa",
+        "source_bundle_sha256": "sha256:09e279a10bb85a5dfe9dbf56a4009f1f2c987380e8f137e168a5d60be9d1dbbf",
+        "supplemental_evidence_binding_sha256": "sha256:bdc187274a7533815a9ea32d87c1980c7e5ddabed42f03cc68c6ab33b1b840e2",
+        "technical_contract": "pass",
+        "technical_findings": [
+          "All 322 selected candidate DPO formula/value/gradient cases pass across the five added losses, dtype, bias, reference, and normalization variants.",
+          "Validation rejects invalid loss and label-smoothing inputs, and no existing loss-mode counterexample appears."
+        ],
+        "test_plan_sha256": "sha256:1bf58d5803699b63323b7ab09feb2f5c599fa4368efa7527025c8f6172d5f2a0",
+        "triage_input": {
+          "baseline_regression": false,
+          "closure_test": "frozen-probe",
+          "contract_satisfied": true,
+          "design_change_required": false,
+          "evidence_complete": true,
+          "primary_claim_demonstrated": true,
+          "remediation_scope": "none",
+          "residual_failure_families": 0,
+          "safety_or_integrity_failure": false,
+          "semantic_noop": false
+        }
+      }
+    },
+    {
+      "lock_sha256": "sha256:267d5000aacc56e0f28ec4e90ecf6b3737ac113fb2437f2df11680b166f668e3",
+      "material": {
+        "candidate_sha256": "sha256:d6fed38cd74c2028dfc04105d645f3fda9207847ddbef22ac226a5f37a1f96bc",
+        "case_id": "liger-pr-1202",
+        "common_evidence_binding_sha256": "sha256:73c3a44869ff0ae0d00e72fbf41c00c6eed1051e0e78202d193402641e7379c1",
+        "decision": "accept_with_scope",
+        "frozen_at": "2026-09-02T18:36:55.107743+00:00",
+        "hot_window_check_eligible": false,
+        "legacy_r10_style_decision": "accept_with_scope",
+        "policy_id": "training-contract-disposition-split-v0.1-r16",
+        "rationale_codes": [
+          "CASE_CONTRACT_SATISFIED"
+        ],
+        "residual_contract": null,
+        "schema_version": "0.1",
+        "selection_lock_sha256": "sha256:e62dfd65af89ec1b75847d007c2a3f1d4ff0d37e8ac5f6ed792df7193e4c24fa",
+        "source_bundle_sha256": "sha256:09e279a10bb85a5dfe9dbf56a4009f1f2c987380e8f137e168a5d60be9d1dbbf",
+        "supplemental_evidence_binding_sha256": "sha256:95811c0b0edee82986229bf227e983eb7b9e1da235f684d32aaf3f7e6ab4627b",
+        "technical_contract": "pass",
+        "technical_findings": [
+          "Sixty-nine candidate GRPO value/gradient and normalization cases pass, with only explicitly unsupported VESPO/LUSPO combinations skipped.",
+          "The six-path patch has direct fused/unfused reference coverage at the altered loss boundaries."
+        ],
+        "test_plan_sha256": "sha256:1bf58d5803699b63323b7ab09feb2f5c599fa4368efa7527025c8f6172d5f2a0",
+        "triage_input": {
+          "baseline_regression": false,
+          "closure_test": "frozen-probe",
+          "contract_satisfied": true,
+          "design_change_required": false,
+          "evidence_complete": true,
+          "primary_claim_demonstrated": true,
+          "remediation_scope": "none",
+          "residual_failure_families": 0,
+          "safety_or_integrity_failure": false,
+          "semantic_noop": false
+        }
+      }
+    },
+    {
+      "lock_sha256": "sha256:3f6176cfe5a9b21d06ba7c5962989432cb6ae4044aa1b2686e3f0eebc5d80b5d",
+      "material": {
+        "candidate_sha256": "sha256:e5971a045bf894f3e1ed7ae5bb6035c4e44dff7948a25bb369bf5a6ddf11741f",
+        "case_id": "liger-pr-1253",
+        "common_evidence_binding_sha256": "sha256:73c3a44869ff0ae0d00e72fbf41c00c6eed1051e0e78202d193402641e7379c1",
+        "decision": "accept_with_scope",
+        "frozen_at": "2026-09-02T18:36:55.107743+00:00",
+        "hot_window_check_eligible": false,
+        "legacy_r10_style_decision": "accept_with_scope",
+        "policy_id": "training-contract-disposition-split-v0.1-r16",
+        "rationale_codes": [
+          "CASE_CONTRACT_SATISFIED"
+        ],
+        "residual_contract": null,
+        "schema_version": "0.1",
+        "selection_lock_sha256": "sha256:e62dfd65af89ec1b75847d007c2a3f1d4ff0d37e8ac5f6ed792df7193e4c24fa",
+        "source_bundle_sha256": "sha256:09e279a10bb85a5dfe9dbf56a4009f1f2c987380e8f137e168a5d60be9d1dbbf",
+        "supplemental_evidence_binding_sha256": "sha256:4a9dd27e6645531f3cd5110b7fedfbf14af72b8a788ad59789d6fd976a61c9cb",
+        "technical_contract": "pass",
+        "technical_findings": [
+          "All five GroupNorm forward/backward shape and precision cases pass on A100.",
+          "The one-file fix maps FP16 accumulators to FP16 rather than BF16 and leaves FP32/BF16 branches explicit."
+        ],
+        "test_plan_sha256": "sha256:1bf58d5803699b63323b7ab09feb2f5c599fa4368efa7527025c8f6172d5f2a0",
+        "triage_input": {
+          "baseline_regression": false,
+          "closure_test": "frozen-probe",
+          "contract_satisfied": true,
+          "design_change_required": false,
+          "evidence_complete": true,
+          "primary_claim_demonstrated": true,
+          "remediation_scope": "none",
+          "residual_failure_families": 0,
+          "safety_or_integrity_failure": false,
+          "semantic_noop": false
+        }
+      }
+    },
+    {
+      "lock_sha256": "sha256:1cdd5eb6bc4b8cbfc74fc6aecfd788edd36838688125638fcbf8f0f0e27e93e8",
+      "material": {
+        "candidate_sha256": "sha256:f77e03f13b4b5f9e4a463d1f57e098e475b893cc58d45969dce3adb0cbc22d40",
+        "case_id": "liger-pr-1208",
+        "common_evidence_binding_sha256": "sha256:73c3a44869ff0ae0d00e72fbf41c00c6eed1051e0e78202d193402641e7379c1",
+        "decision": "accept_with_scope",
+        "frozen_at": "2026-09-02T18:36:55.107743+00:00",
+        "hot_window_check_eligible": false,
+        "legacy_r10_style_decision": "accept_with_scope",
+        "policy_id": "training-contract-disposition-split-v0.1-r16",
+        "rationale_codes": [
+          "CASE_CONTRACT_SATISFIED"
+        ],
+        "residual_contract": null,
+        "schema_version": "0.1",
+        "selection_lock_sha256": "sha256:e62dfd65af89ec1b75847d007c2a3f1d4ff0d37e8ac5f6ed792df7193e4c24fa",
+        "source_bundle_sha256": "sha256:09e279a10bb85a5dfe9dbf56a4009f1f2c987380e8f137e168a5d60be9d1dbbf",
+        "supplemental_evidence_binding_sha256": "sha256:472007d733e5dd59638f06629300393d4cf725b5c85247a899d9c92f8caa803c",
+        "technical_contract": "pass",
+        "technical_findings": [
+          "All 24 DyT forward/backward numeric cases pass after real Triton autotuning on A100.",
+          "The DA buffer is reset across variable-grid tuning trials, while DG/DB coverage is fully overwritten for every chosen block width."
+        ],
+        "test_plan_sha256": "sha256:1bf58d5803699b63323b7ab09feb2f5c599fa4368efa7527025c8f6172d5f2a0",
+        "triage_input": {
+          "baseline_regression": false,
+          "closure_test": "frozen-probe",
+          "contract_satisfied": true,
+          "design_change_required": false,
+          "evidence_complete": true,
+          "primary_claim_demonstrated": true,
+          "remediation_scope": "none",
+          "residual_failure_families": 0,
+          "safety_or_integrity_failure": false,
+          "semantic_noop": false
+        }
+      }
+    },
+    {
+      "lock_sha256": "sha256:0b5b1bccbd7b364b3072db018f74a8a9043b6e28eb438479b693b198e1b3d6b7",
+      "material": {
+        "candidate_sha256": "sha256:39382d5fc1189af1782db0c6a7eda30f74b366474cf7a8a9c31398a5a0579b1c",
+        "case_id": "megatron-pr-7021",
+        "common_evidence_binding_sha256": "sha256:73c3a44869ff0ae0d00e72fbf41c00c6eed1051e0e78202d193402641e7379c1",
+        "decision": "accept_with_scope",
+        "frozen_at": "2026-09-02T18:36:55.107743+00:00",
+        "hot_window_check_eligible": false,
+        "legacy_r10_style_decision": "accept_with_scope",
+        "policy_id": "training-contract-disposition-split-v0.1-r16",
+        "rationale_codes": [
+          "CASE_CONTRACT_SATISFIED"
+        ],
+        "residual_contract": null,
+        "schema_version": "0.1",
+        "selection_lock_sha256": "sha256:e62dfd65af89ec1b75847d007c2a3f1d4ff0d37e8ac5f6ed792df7193e4c24fa",
+        "source_bundle_sha256": "sha256:09e279a10bb85a5dfe9dbf56a4009f1f2c987380e8f137e168a5d60be9d1dbbf",
+        "supplemental_evidence_binding_sha256": "sha256:eadd70ff8c6f267863a3454c4e48637827c5d5da497c04041099869c39a9c1b9",
+        "technical_contract": "pass",
+        "technical_findings": [
+          "Argument validation and the exact parameter/router ownership probe pass; the pre-wrap hook is idempotent and excludes frozen parameters before distributed wrapping.",
+          "Candidate functional evidence covers MTP forward/backward, recomputation, gradients, and optimizer state on one GPU; the missing local TE package is not an observed counterexample."
+        ],
+        "test_plan_sha256": "sha256:1bf58d5803699b63323b7ab09feb2f5c599fa4368efa7527025c8f6172d5f2a0",
+        "triage_input": {
+          "baseline_regression": false,
+          "closure_test": "frozen-probe",
+          "contract_satisfied": true,
+          "design_change_required": false,
+          "evidence_complete": true,
+          "primary_claim_demonstrated": true,
+          "remediation_scope": "none",
+          "residual_failure_families": 0,
+          "safety_or_integrity_failure": false,
+          "semantic_noop": false
+        }
+      }
+    },
+    {
+      "lock_sha256": "sha256:0bde56608874cadb1ffee98b598e069581b2d152ba57808d0492bdb913e418b9",
+      "material": {
+        "candidate_sha256": "sha256:252c577f613ae234faae5e1e5472c7047207a4509e43f85d8844623c62473f05",
+        "case_id": "megatron-pr-5145",
+        "common_evidence_binding_sha256": "sha256:73c3a44869ff0ae0d00e72fbf41c00c6eed1051e0e78202d193402641e7379c1",
+        "decision": "accept_with_scope",
+        "frozen_at": "2026-09-02T18:36:55.107743+00:00",
+        "hot_window_check_eligible": false,
+        "legacy_r10_style_decision": "accept_with_scope",
+        "policy_id": "training-contract-disposition-split-v0.1-r16",
+        "rationale_codes": [
+          "CASE_CONTRACT_SATISFIED"
+        ],
+        "residual_contract": null,
+        "schema_version": "0.1",
+        "selection_lock_sha256": "sha256:e62dfd65af89ec1b75847d007c2a3f1d4ff0d37e8ac5f6ed792df7193e4c24fa",
+        "source_bundle_sha256": "sha256:09e279a10bb85a5dfe9dbf56a4009f1f2c987380e8f137e168a5d60be9d1dbbf",
+        "supplemental_evidence_binding_sha256": "sha256:8b53dcd5cc4c501837ba696d873d3e5968abfe2c6cbbb844cb19bdcfea39fb09",
+        "technical_contract": "pass",
+        "technical_findings": [
+          "The candidate LatentMoE accounting test passes and the formula separately counts routed latent dimensions, full-width shared experts, and both latent projections.",
+          "The two-file mature correction has a locally closed component inventory."
+        ],
+        "test_plan_sha256": "sha256:1bf58d5803699b63323b7ab09feb2f5c599fa4368efa7527025c8f6172d5f2a0",
+        "triage_input": {
+          "baseline_regression": false,
+          "closure_test": "frozen-probe",
+          "contract_satisfied": true,
+          "design_change_required": false,
+          "evidence_complete": true,
+          "primary_claim_demonstrated": true,
+          "remediation_scope": "none",
+          "residual_failure_families": 0,
+          "safety_or_integrity_failure": false,
+          "semantic_noop": false
+        }
+      }
+    },
+    {
+      "lock_sha256": "sha256:1336a654e11a5f63aa6b46c7841fc50b05c68c42861fc81e408968ff93ae7b6d",
+      "material": {
+        "candidate_sha256": "sha256:06a27807422183b9f2d6577c2e7939c496f9690a188bd4fe433d62a1ed5b6b5f",
+        "case_id": "megatron-pr-5169",
+        "common_evidence_binding_sha256": "sha256:73c3a44869ff0ae0d00e72fbf41c00c6eed1051e0e78202d193402641e7379c1",
+        "decision": "reject",
+        "frozen_at": "2026-09-02T18:36:55.107743+00:00",
+        "hot_window_check_eligible": false,
+        "legacy_r10_style_decision": "check",
+        "policy_id": "training-contract-disposition-split-v0.1-r16",
+        "rationale_codes": [
+          "EXECUTABLE_CLOSURE_TEST_MISSING",
+          "REMEDIATION_REQUIRES_DESIGN_CHANGE",
+          "REMEDIATION_SCOPE_NOT_BOUNDED",
+          "RESIDUAL_FAILURE_FAMILIES_NOT_CLOSED"
+        ],
+        "residual_contract": "Enumerate all moved fields and run equivalent MCore/MBridge training construction plus forward/backward and inference controls.",
+        "schema_version": "0.1",
+        "selection_lock_sha256": "sha256:e62dfd65af89ec1b75847d007c2a3f1d4ff0d37e8ac5f6ed792df7193e4c24fa",
+        "source_bundle_sha256": "sha256:09e279a10bb85a5dfe9dbf56a4009f1f2c987380e8f137e168a5d60be9d1dbbf",
+        "supplemental_evidence_binding_sha256": "sha256:829a308c1ac3a4cbfc181ea973892b398f5a861d09f0e969f407dfd17664824c",
+        "technical_contract": "bounded-gap",
+        "technical_findings": [
+          "The refactor adds a 363-line inference configuration surface and rewires seven production/tool paths without a matching candidate test.",
+          "Importability alone would not close training field projection, distributed construction, or a forward/backward step."
+        ],
+        "test_plan_sha256": "sha256:1bf58d5803699b63323b7ab09feb2f5c599fa4368efa7527025c8f6172d5f2a0",
+        "triage_input": {
+          "baseline_regression": false,
+          "closure_test": "missing",
+          "contract_satisfied": false,
+          "design_change_required": true,
+          "evidence_complete": true,
+          "primary_claim_demonstrated": true,
+          "remediation_scope": "cross-cutting",
+          "residual_failure_families": 2,
+          "safety_or_integrity_failure": false,
+          "semantic_noop": false
+        }
+      }
+    },
+    {
+      "lock_sha256": "sha256:8b6a033ba443d0e4135109ed68735b858c19b5e9e10ba20624f3c66cad8dd755",
+      "material": {
+        "candidate_sha256": "sha256:ff79c5403bfbc887903091bca63f2d7a4691f85858a06fd2cb46002d6dd19a8f",
+        "case_id": "megatron-pr-5134",
+        "common_evidence_binding_sha256": "sha256:73c3a44869ff0ae0d00e72fbf41c00c6eed1051e0e78202d193402641e7379c1",
+        "decision": "reject",
+        "frozen_at": "2026-09-02T18:36:55.107743+00:00",
+        "hot_window_check_eligible": false,
+        "legacy_r10_style_decision": "check",
+        "policy_id": "training-contract-disposition-split-v0.1-r16",
+        "rationale_codes": [
+          "EXECUTABLE_CLOSURE_TEST_MISSING",
+          "PRIMARY_CLAIM_NOT_DEMONSTRATED",
+          "REMEDIATION_SCOPE_NOT_BOUNDED"
+        ],
+        "residual_contract": "Run the changed serialization, integrity, fully-parallel, and MSC suites at their eight-rank topology and verify checkpoint round trips.",
+        "schema_version": "0.1",
+        "selection_lock_sha256": "sha256:e62dfd65af89ec1b75847d007c2a3f1d4ff0d37e8ac5f6ed792df7193e4c24fa",
+        "source_bundle_sha256": "sha256:09e279a10bb85a5dfe9dbf56a4009f1f2c987380e8f137e168a5d60be9d1dbbf",
+        "supplemental_evidence_binding_sha256": "sha256:e020230d88818d33830d80bc9d7add5f321041f908211796a073d460205dcbe9",
+        "technical_contract": "unresolved",
+        "technical_findings": [
+          "The source consistently replaces deprecated strategy factories with concrete torch strategies and updates affected imports.",
+          "Every changed checkpoint suite that reaches the altered behavior requires an eight-rank topology; one- and two-rank attempts stop at the declared world-size precondition, leaving save/load compatibility unexecuted."
+        ],
+        "test_plan_sha256": "sha256:1bf58d5803699b63323b7ab09feb2f5c599fa4368efa7527025c8f6172d5f2a0",
+        "triage_input": {
+          "baseline_regression": false,
+          "closure_test": "missing",
+          "contract_satisfied": false,
+          "design_change_required": false,
+          "evidence_complete": true,
+          "primary_claim_demonstrated": false,
+          "remediation_scope": "unknown",
+          "residual_failure_families": 1,
+          "safety_or_integrity_failure": false,
+          "semantic_noop": false
+        }
+      }
+    },
+    {
+      "lock_sha256": "sha256:80982c11f842d76a7f5cf8984a0800e82911dcb6e2f7602319414cade7b58701",
+      "material": {
+        "candidate_sha256": "sha256:2647a56b338674f93432433346e2eb4439b79fb2edce8ffc5d2fcca5050c69e6",
+        "case_id": "megatron-pr-5131",
+        "common_evidence_binding_sha256": "sha256:73c3a44869ff0ae0d00e72fbf41c00c6eed1051e0e78202d193402641e7379c1",
+        "decision": "accept_with_scope",
+        "frozen_at": "2026-09-02T18:36:55.107743+00:00",
+        "hot_window_check_eligible": false,
+        "legacy_r10_style_decision": "accept_with_scope",
+        "policy_id": "training-contract-disposition-split-v0.1-r16",
+        "rationale_codes": [
+          "CASE_CONTRACT_SATISFIED"
+        ],
+        "residual_contract": null,
+        "schema_version": "0.1",
+        "selection_lock_sha256": "sha256:e62dfd65af89ec1b75847d007c2a3f1d4ff0d37e8ac5f6ed792df7193e4c24fa",
+        "source_bundle_sha256": "sha256:09e279a10bb85a5dfe9dbf56a4009f1f2c987380e8f137e168a5d60be9d1dbbf",
+        "supplemental_evidence_binding_sha256": "sha256:d497a88f955540b4143bcba32fdc769818e8df73802a19546362ca94bfb930a0",
+        "technical_contract": "pass",
+        "technical_findings": [
+          "The source makes CUDA-graph capture and replay preserve the dataloader's absent-mask signature while retaining masks for required attention types.",
+          "Three target tests are correctly skipped without TransformerEngine, while the candidate supplies detailed H100/CP memory measurements and target-path coverage with no contrary evidence."
+        ],
+        "test_plan_sha256": "sha256:1bf58d5803699b63323b7ab09feb2f5c599fa4368efa7527025c8f6172d5f2a0",
+        "triage_input": {
+          "baseline_regression": false,
+          "closure_test": "frozen-probe",
+          "contract_satisfied": true,
+          "design_change_required": false,
+          "evidence_complete": true,
+          "primary_claim_demonstrated": true,
+          "remediation_scope": "none",
+          "residual_failure_families": 0,
+          "safety_or_integrity_failure": false,
+          "semantic_noop": false
+        }
+      }
+    },
+    {
+      "lock_sha256": "sha256:088d9543b88936c7e1c8e647b053dc4de49cb3dddd6ce243c9461b96eab0f613",
+      "material": {
+        "candidate_sha256": "sha256:4fdf7b88f9ab59f8fc2691542ae2ad2937a245451fb63663be6bd12a9da09ce8",
+        "case_id": "megatron-pr-5162",
+        "common_evidence_binding_sha256": "sha256:73c3a44869ff0ae0d00e72fbf41c00c6eed1051e0e78202d193402641e7379c1",
+        "decision": "accept_with_scope",
+        "frozen_at": "2026-09-02T18:36:55.107743+00:00",
+        "hot_window_check_eligible": false,
+        "legacy_r10_style_decision": "accept_with_scope",
+        "policy_id": "training-contract-disposition-split-v0.1-r16",
+        "rationale_codes": [
+          "CASE_CONTRACT_SATISFIED"
+        ],
+        "residual_contract": null,
+        "schema_version": "0.1",
+        "selection_lock_sha256": "sha256:e62dfd65af89ec1b75847d007c2a3f1d4ff0d37e8ac5f6ed792df7193e4c24fa",
+        "source_bundle_sha256": "sha256:09e279a10bb85a5dfe9dbf56a4009f1f2c987380e8f137e168a5d60be9d1dbbf",
+        "supplemental_evidence_binding_sha256": "sha256:646a27af47ac49f70e803be515d0a24f4cc1b3a7b411d47290eebbcbc993b3e9",
+        "technical_contract": "pass",
+        "technical_findings": [
+          "Both exact tests pass: programmatic ModelParallelConfig construction warns but succeeds, while training-argument validation still rejects unsafe TE cross entropy fusion.",
+          "The two-file change matches the title-scoped ownership boundary."
+        ],
+        "test_plan_sha256": "sha256:1bf58d5803699b63323b7ab09feb2f5c599fa4368efa7527025c8f6172d5f2a0",
+        "triage_input": {
+          "baseline_regression": false,
+          "closure_test": "frozen-probe",
+          "contract_satisfied": true,
+          "design_change_required": false,
+          "evidence_complete": true,
+          "primary_claim_demonstrated": true,
+          "remediation_scope": "none",
+          "residual_failure_families": 0,
+          "safety_or_integrity_failure": false,
+          "semantic_noop": false
+        }
+      }
+    },
+    {
+      "lock_sha256": "sha256:33a8eb5722846e92b218369857b4de439ccfcfeda799c1a339bc2ef6e661cc75",
+      "material": {
+        "candidate_sha256": "sha256:c85a98437faf85ac0679fd4bdbc4c31553e341fe27d6e3a5f8ecfdca3c9dafdb",
+        "case_id": "slime-pr-2345",
+        "common_evidence_binding_sha256": "sha256:73c3a44869ff0ae0d00e72fbf41c00c6eed1051e0e78202d193402641e7379c1",
+        "decision": "check",
+        "frozen_at": "2026-09-02T18:36:55.107743+00:00",
+        "hot_window_check_eligible": true,
+        "legacy_r10_style_decision": "check",
+        "policy_id": "training-contract-disposition-split-v0.1-r16",
+        "rationale_codes": [
+          "PRIMARY_DIRECTION_VALID_BOUNDED_REPAIR_WITH_CLOSURE_TEST"
+        ],
+        "residual_contract": "Add the executed nested-group matrix as a candidate-owned test, including empty groups and equal-index stable ordering.",
+        "schema_version": "0.1",
+        "selection_lock_sha256": "sha256:e62dfd65af89ec1b75847d007c2a3f1d4ff0d37e8ac5f6ed792df7193e4c24fa",
+        "source_bundle_sha256": "sha256:09e279a10bb85a5dfe9dbf56a4009f1f2c987380e8f137e168a5d60be9d1dbbf",
+        "supplemental_evidence_binding_sha256": "sha256:8f8ef989e6afbbbfdf10423c6dea0b8be6febd6e82b7a849fe82a97d8fe32eaf",
+        "technical_contract": "bounded-gap",
+        "technical_findings": [
+          "The exact production coroutine sorts nested sample groups as 2,5,7 and avoids treating list.index as a numeric field.",
+          "The recent one-file fix has one residual because no candidate regression test preserves nested/empty/stable-order behavior in the repository."
+        ],
+        "test_plan_sha256": "sha256:1bf58d5803699b63323b7ab09feb2f5c599fa4368efa7527025c8f6172d5f2a0",
+        "triage_input": {
+          "baseline_regression": false,
+          "closure_test": "frozen-probe",
+          "contract_satisfied": false,
+          "design_change_required": false,
+          "evidence_complete": true,
+          "primary_claim_demonstrated": true,
+          "remediation_scope": "single-site",
+          "residual_failure_families": 1,
+          "safety_or_integrity_failure": false,
+          "semantic_noop": false
+        }
+      }
+    },
+    {
+      "lock_sha256": "sha256:b368abc45bc0c61c48371e56873bb9a1198544a9b76be33e3a8820fa2a50ba38",
+      "material": {
+        "candidate_sha256": "sha256:498ec43b4775c1f4bda94cccb4fe496e16f4e0121f3a817cab6f846ff33f4dec",
+        "case_id": "slime-pr-2010",
+        "common_evidence_binding_sha256": "sha256:73c3a44869ff0ae0d00e72fbf41c00c6eed1051e0e78202d193402641e7379c1",
+        "decision": "accept_with_scope",
+        "frozen_at": "2026-09-02T18:36:55.107743+00:00",
+        "hot_window_check_eligible": false,
+        "legacy_r10_style_decision": "accept_with_scope",
+        "policy_id": "training-contract-disposition-split-v0.1-r16",
+        "rationale_codes": [
+          "CASE_CONTRACT_SATISFIED"
+        ],
+        "residual_contract": null,
+        "schema_version": "0.1",
+        "selection_lock_sha256": "sha256:e62dfd65af89ec1b75847d007c2a3f1d4ff0d37e8ac5f6ed792df7193e4c24fa",
+        "source_bundle_sha256": "sha256:09e279a10bb85a5dfe9dbf56a4009f1f2c987380e8f137e168a5d60be9d1dbbf",
+        "supplemental_evidence_binding_sha256": "sha256:901e8d860bbc67004687c4f6405cc9beb11f653449be4cf1675146427618b172",
+        "technical_contract": "pass",
+        "technical_findings": [
+          "The base/head probe preserves response slices and gradients while reducing first-yield peak allocation from 163,577,856 to 46,137,344 bytes.",
+          "Scalar temperature division commutes with each frozen slicing path and the one-file change removes the full-logits temporary."
+        ],
+        "test_plan_sha256": "sha256:1bf58d5803699b63323b7ab09feb2f5c599fa4368efa7527025c8f6172d5f2a0",
+        "triage_input": {
+          "baseline_regression": false,
+          "closure_test": "frozen-probe",
+          "contract_satisfied": true,
+          "design_change_required": false,
+          "evidence_complete": true,
+          "primary_claim_demonstrated": true,
+          "remediation_scope": "none",
+          "residual_failure_families": 0,
+          "safety_or_integrity_failure": false,
+          "semantic_noop": false
+        }
+      }
+    },
+    {
+      "lock_sha256": "sha256:ad9310b65f4971325d5ba7a4fdddf669c9e5b618fde74e0b8dff879913591d27",
+      "material": {
+        "candidate_sha256": "sha256:0357490f73b9ddb96092a85e61602d630a3e4dcdcf2e5235dfb85c2e97eefac4",
+        "case_id": "slime-pr-2015",
+        "common_evidence_binding_sha256": "sha256:73c3a44869ff0ae0d00e72fbf41c00c6eed1051e0e78202d193402641e7379c1",
+        "decision": "accept_with_scope",
+        "frozen_at": "2026-09-02T18:36:55.107743+00:00",
+        "hot_window_check_eligible": false,
+        "legacy_r10_style_decision": "accept_with_scope",
+        "policy_id": "training-contract-disposition-split-v0.1-r16",
+        "rationale_codes": [
+          "CASE_CONTRACT_SATISFIED"
+        ],
+        "residual_contract": null,
+        "schema_version": "0.1",
+        "selection_lock_sha256": "sha256:e62dfd65af89ec1b75847d007c2a3f1d4ff0d37e8ac5f6ed792df7193e4c24fa",
+        "source_bundle_sha256": "sha256:09e279a10bb85a5dfe9dbf56a4009f1f2c987380e8f137e168a5d60be9d1dbbf",
+        "supplemental_evidence_binding_sha256": "sha256:fe0c6fec1056565e39ef3f17ff9be8b1a953cfc7eb78cb88044952a94619bfc1",
+        "technical_contract": "pass",
+        "technical_findings": [
+          "All three candidate lifecycle tests pass, covering pause, flush, release, restore, and continue ordering.",
+          "The production boundary now owns quiescence before offload memory release."
+        ],
+        "test_plan_sha256": "sha256:1bf58d5803699b63323b7ab09feb2f5c599fa4368efa7527025c8f6172d5f2a0",
+        "triage_input": {
+          "baseline_regression": false,
+          "closure_test": "frozen-probe",
+          "contract_satisfied": true,
+          "design_change_required": false,
+          "evidence_complete": true,
+          "primary_claim_demonstrated": true,
+          "remediation_scope": "none",
+          "residual_failure_families": 0,
+          "safety_or_integrity_failure": false,
+          "semantic_noop": false
+        }
+      }
+    },
+    {
+      "lock_sha256": "sha256:f7d3918bbd31d7914221e97c0c65e750b6aa9d77e5bbabac405b001ae1d0d649",
+      "material": {
+        "candidate_sha256": "sha256:686999e893862dae167dab0bdcc845fdbe4b9fb865e393de97452abd2dca4992",
+        "case_id": "slime-pr-2014",
+        "common_evidence_binding_sha256": "sha256:73c3a44869ff0ae0d00e72fbf41c00c6eed1051e0e78202d193402641e7379c1",
+        "decision": "accept_with_scope",
+        "frozen_at": "2026-09-02T18:36:55.107743+00:00",
+        "hot_window_check_eligible": false,
+        "legacy_r10_style_decision": "accept_with_scope",
+        "policy_id": "training-contract-disposition-split-v0.1-r16",
+        "rationale_codes": [
+          "CASE_CONTRACT_SATISFIED"
+        ],
+        "residual_contract": null,
+        "schema_version": "0.1",
+        "selection_lock_sha256": "sha256:e62dfd65af89ec1b75847d007c2a3f1d4ff0d37e8ac5f6ed792df7193e4c24fa",
+        "source_bundle_sha256": "sha256:09e279a10bb85a5dfe9dbf56a4009f1f2c987380e8f137e168a5d60be9d1dbbf",
+        "supplemental_evidence_binding_sha256": "sha256:4ff01d075abf692a95bdd16305e2a9bfa90b4f72e7c05d352ee96da82f8e2f32",
+        "technical_contract": "pass",
+        "technical_findings": [
+          "All seven candidate plugin rollout contracts pass after installing the declared lightweight parser dependency.",
+          "Filtering is applied once after validation and before manager ownership, while the all-samples provider hook remains intentionally upstream."
+        ],
+        "test_plan_sha256": "sha256:1bf58d5803699b63323b7ab09feb2f5c599fa4368efa7527025c8f6172d5f2a0",
+        "triage_input": {
+          "baseline_regression": false,
+          "closure_test": "frozen-probe",
+          "contract_satisfied": true,
+          "design_change_required": false,
+          "evidence_complete": true,
+          "primary_claim_demonstrated": true,
+          "remediation_scope": "none",
+          "residual_failure_families": 0,
+          "safety_or_integrity_failure": false,
+          "semantic_noop": false
+        }
+      }
+    },
+    {
+      "lock_sha256": "sha256:08f6f19982d2cd3a48989d9918cf66ac438f58aaad2a1ed1604607a5b93c2c0d",
+      "material": {
+        "candidate_sha256": "sha256:d0f637256b1c8f591ae5b35d34a900b0301e5f4314fb142eeb725b380218b9b5",
+        "case_id": "slime-pr-1969",
+        "common_evidence_binding_sha256": "sha256:73c3a44869ff0ae0d00e72fbf41c00c6eed1051e0e78202d193402641e7379c1",
+        "decision": "reject",
+        "frozen_at": "2026-09-02T18:36:55.107743+00:00",
+        "hot_window_check_eligible": false,
+        "legacy_r10_style_decision": "check",
+        "policy_id": "training-contract-disposition-split-v0.1-r16",
+        "rationale_codes": [
+          "EXECUTABLE_CLOSURE_TEST_MISSING",
+          "REMEDIATION_REQUIRES_DESIGN_CHANGE",
+          "REMEDIATION_SCOPE_NOT_BOUNDED",
+          "RESIDUAL_FAILURE_FAMILIES_NOT_CLOSED"
+        ],
+        "residual_contract": "Save a sharded raw-mode model through each iterator, reload it with Transformers, compare logits, and continue one optimizer step.",
+        "schema_version": "0.1",
+        "selection_lock_sha256": "sha256:e62dfd65af89ec1b75847d007c2a3f1d4ff0d37e8ac5f6ed792df7193e4c24fa",
+        "source_bundle_sha256": "sha256:09e279a10bb85a5dfe9dbf56a4009f1f2c987380e8f137e168a5d60be9d1dbbf",
+        "supplemental_evidence_binding_sha256": "sha256:247cd6272d0f4f68dc45ac0971c6dc378e97459aeeccb228757a603ae9bce248",
+        "technical_contract": "bounded-gap",
+        "technical_findings": [
+          "Three candidate tests close asset copying, stale-weight cleanup, and standalone safetensor shard/index writing.",
+          "The ten-path raw-mode feature also changes model iteration, direct/bridge mappings, arguments, and distributed save ownership without an HF reload, logits, or continued-training closure."
+        ],
+        "test_plan_sha256": "sha256:1bf58d5803699b63323b7ab09feb2f5c599fa4368efa7527025c8f6172d5f2a0",
+        "triage_input": {
+          "baseline_regression": false,
+          "closure_test": "missing",
+          "contract_satisfied": false,
+          "design_change_required": true,
+          "evidence_complete": true,
+          "primary_claim_demonstrated": true,
+          "remediation_scope": "cross-cutting",
+          "residual_failure_families": 2,
+          "safety_or_integrity_failure": false,
+          "semantic_noop": false
+        }
+      }
+    },
+    {
+      "lock_sha256": "sha256:c5a24508519432e23db477e8dc79bc7a2d11264843b8348988bc1c84987cb95d",
+      "material": {
+        "candidate_sha256": "sha256:47729c7d9c31a0cf72be764e03cb0e7247a6010fc77c4c1f5ec5c238f6a0e894",
+        "case_id": "slime-pr-2020",
+        "common_evidence_binding_sha256": "sha256:73c3a44869ff0ae0d00e72fbf41c00c6eed1051e0e78202d193402641e7379c1",
+        "decision": "reject",
+        "frozen_at": "2026-09-02T18:36:55.107743+00:00",
+        "hot_window_check_eligible": false,
+        "legacy_r10_style_decision": "check",
+        "policy_id": "training-contract-disposition-split-v0.1-r16",
+        "rationale_codes": [
+          "EXECUTABLE_CLOSURE_TEST_MISSING",
+          "REMEDIATION_REQUIRES_DESIGN_CHANGE",
+          "REMEDIATION_SCOPE_NOT_BOUNDED",
+          "RESIDUAL_FAILURE_FAMILIES_NOT_CLOSED"
+        ],
+        "residual_contract": "Run serial versus multi-node writer saves with checksum/reload parity, failure injection, and measured elapsed time.",
+        "schema_version": "0.1",
+        "selection_lock_sha256": "sha256:e62dfd65af89ec1b75847d007c2a3f1d4ff0d37e8ac5f6ed792df7193e4c24fa",
+        "source_bundle_sha256": "sha256:09e279a10bb85a5dfe9dbf56a4009f1f2c987380e8f137e168a5d60be9d1dbbf",
+        "supplemental_evidence_binding_sha256": "sha256:9580eb59f96005688d4044203b4fbda6a26063b9f71503a42ede8b38d0c96374",
+        "technical_contract": "bounded-gap",
+        "technical_findings": [
+          "Two candidate node-writer tests pass for merged writer state and incomplete final groups.",
+          "No multiprocess node execution or elapsed-time comparison demonstrates the title's acceleration, atomic publication, or writer-failure behavior."
+        ],
+        "test_plan_sha256": "sha256:1bf58d5803699b63323b7ab09feb2f5c599fa4368efa7527025c8f6172d5f2a0",
+        "triage_input": {
+          "baseline_regression": false,
+          "closure_test": "missing",
+          "contract_satisfied": false,
+          "design_change_required": true,
+          "evidence_complete": true,
+          "primary_claim_demonstrated": true,
+          "remediation_scope": "cross-cutting",
+          "residual_failure_families": 2,
+          "safety_or_integrity_failure": false,
+          "semantic_noop": false
+        }
+      }
+    },
+    {
+      "lock_sha256": "sha256:4336e6704a37520eff9be4a508677f9e956870b1849e1b5746bf87aa49192f9a",
+      "material": {
+        "candidate_sha256": "sha256:4d98997915cffc81fb668daeef35fad9beb4f310d6debc49f7fbda132f3735aa",
+        "case_id": "torchtitan-pr-4358",
+        "common_evidence_binding_sha256": "sha256:73c3a44869ff0ae0d00e72fbf41c00c6eed1051e0e78202d193402641e7379c1",
+        "decision": "accept_with_scope",
+        "frozen_at": "2026-09-02T18:36:55.107743+00:00",
+        "hot_window_check_eligible": false,
+        "legacy_r10_style_decision": "accept_with_scope",
+        "policy_id": "training-contract-disposition-split-v0.1-r16",
+        "rationale_codes": [
+          "CASE_CONTRACT_SATISFIED"
+        ],
+        "residual_contract": null,
+        "schema_version": "0.1",
+        "selection_lock_sha256": "sha256:e62dfd65af89ec1b75847d007c2a3f1d4ff0d37e8ac5f6ed792df7193e4c24fa",
+        "source_bundle_sha256": "sha256:09e279a10bb85a5dfe9dbf56a4009f1f2c987380e8f137e168a5d60be9d1dbbf",
+        "supplemental_evidence_binding_sha256": "sha256:724ae64b9cef1c2a60615df1adfefeca2574f496eda0a41b8ff5450d9a572d15",
+        "technical_contract": "pass",
+        "technical_findings": [
+          "Eight focused trainer/config replay tests pass, including failure-before-optimizer, first-microbatch scope, checkpoint rearming, and determinism guards.",
+          "The candidate also registers one- and two-GPU mismatch/cudagraph integration controls, providing functional training closure beyond configuration plumbing."
+        ],
+        "test_plan_sha256": "sha256:1bf58d5803699b63323b7ab09feb2f5c599fa4368efa7527025c8f6172d5f2a0",
+        "triage_input": {
+          "baseline_regression": false,
+          "closure_test": "frozen-probe",
+          "contract_satisfied": true,
+          "design_change_required": false,
+          "evidence_complete": true,
+          "primary_claim_demonstrated": true,
+          "remediation_scope": "none",
+          "residual_failure_families": 0,
+          "safety_or_integrity_failure": false,
+          "semantic_noop": false
+        }
+      }
+    },
+    {
+      "lock_sha256": "sha256:a0e2d3906f14c141d7d3084b68e2ca50ae324d242412013217524391fa5438c4",
+      "material": {
+        "candidate_sha256": "sha256:ab185c8faba5740524e28787dce88b81068671c45b2dd7fe6c2344ad665cd839",
+        "case_id": "torchtitan-pr-3523",
+        "common_evidence_binding_sha256": "sha256:73c3a44869ff0ae0d00e72fbf41c00c6eed1051e0e78202d193402641e7379c1",
+        "decision": "accept_with_scope",
+        "frozen_at": "2026-09-02T18:36:55.107743+00:00",
+        "hot_window_check_eligible": false,
+        "legacy_r10_style_decision": "accept_with_scope",
+        "policy_id": "training-contract-disposition-split-v0.1-r16",
+        "rationale_codes": [
+          "CASE_CONTRACT_SATISFIED"
+        ],
+        "residual_contract": null,
+        "schema_version": "0.1",
+        "selection_lock_sha256": "sha256:e62dfd65af89ec1b75847d007c2a3f1d4ff0d37e8ac5f6ed792df7193e4c24fa",
+        "source_bundle_sha256": "sha256:09e279a10bb85a5dfe9dbf56a4009f1f2c987380e8f137e168a5d60be9d1dbbf",
+        "supplemental_evidence_binding_sha256": "sha256:2740860b729bc4b7cb3d683032d182c10610ac8a0e7b0f1aebe1778383cc497c",
+        "technical_contract": "pass",
+        "technical_findings": [
+          "Both candidate CPU-offload dependency tests pass and explicitly cover non-Tensor consumers.",
+          "The three-path change retains the wait edge through the graph schema boundary without broad state changes."
+        ],
+        "test_plan_sha256": "sha256:1bf58d5803699b63323b7ab09feb2f5c599fa4368efa7527025c8f6172d5f2a0",
+        "triage_input": {
+          "baseline_regression": false,
+          "closure_test": "frozen-probe",
+          "contract_satisfied": true,
+          "design_change_required": false,
+          "evidence_complete": true,
+          "primary_claim_demonstrated": true,
+          "remediation_scope": "none",
+          "residual_failure_families": 0,
+          "safety_or_integrity_failure": false,
+          "semantic_noop": false
+        }
+      }
+    },
+    {
+      "lock_sha256": "sha256:364a7d6f4da13bae2fdefaf4fc5c6b75a605821f7003efc0afb6b83d8e50d398",
+      "material": {
+        "candidate_sha256": "sha256:3601c05af1ed72ff60d7fc5f2e625178336f5bcf07b87ed8eb551f0f4231c501",
+        "case_id": "torchtitan-pr-3538",
+        "common_evidence_binding_sha256": "sha256:73c3a44869ff0ae0d00e72fbf41c00c6eed1051e0e78202d193402641e7379c1",
+        "decision": "accept_with_scope",
+        "frozen_at": "2026-09-02T18:36:55.107743+00:00",
+        "hot_window_check_eligible": false,
+        "legacy_r10_style_decision": "accept_with_scope",
+        "policy_id": "training-contract-disposition-split-v0.1-r16",
+        "rationale_codes": [
+          "CASE_CONTRACT_SATISFIED"
+        ],
+        "residual_contract": null,
+        "schema_version": "0.1",
+        "selection_lock_sha256": "sha256:e62dfd65af89ec1b75847d007c2a3f1d4ff0d37e8ac5f6ed792df7193e4c24fa",
+        "source_bundle_sha256": "sha256:09e279a10bb85a5dfe9dbf56a4009f1f2c987380e8f137e168a5d60be9d1dbbf",
+        "supplemental_evidence_binding_sha256": "sha256:9d321630f7af5a2ea0338d8f6e40a1b3a3a29bee67391b7e5ba5a5fa75ec68bb",
+        "technical_contract": "pass",
+        "technical_findings": [
+          "All three exact call sites changed to rely on the forward default pass, including a real CUDA compile/capture replay.",
+          "The earlier whole-file 23-versus-24 metadata count is outside the changed call sites and is not treated as a candidate failure."
+        ],
+        "test_plan_sha256": "sha256:1bf58d5803699b63323b7ab09feb2f5c599fa4368efa7527025c8f6172d5f2a0",
+        "triage_input": {
+          "baseline_regression": false,
+          "closure_test": "frozen-probe",
+          "contract_satisfied": true,
+          "design_change_required": false,
+          "evidence_complete": true,
+          "primary_claim_demonstrated": true,
+          "remediation_scope": "none",
+          "residual_failure_families": 0,
+          "safety_or_integrity_failure": false,
+          "semantic_noop": false
+        }
+      }
+    },
+    {
+      "lock_sha256": "sha256:bbc2b89dbdb92c8be3970d5f418957cf4c2baf91985d724352ce1f0fe40466cf",
+      "material": {
+        "candidate_sha256": "sha256:8c9c328d22f6542dc5e99e5781a8ddb6bcc46f89802448be0df275ef685d43c9",
+        "case_id": "torchtitan-pr-3534",
+        "common_evidence_binding_sha256": "sha256:73c3a44869ff0ae0d00e72fbf41c00c6eed1051e0e78202d193402641e7379c1",
+        "decision": "accept_with_scope",
+        "frozen_at": "2026-09-02T18:36:55.107743+00:00",
+        "hot_window_check_eligible": false,
+        "legacy_r10_style_decision": "accept_with_scope",
+        "policy_id": "training-contract-disposition-split-v0.1-r16",
+        "rationale_codes": [
+          "CASE_CONTRACT_SATISFIED"
+        ],
+        "residual_contract": null,
+        "schema_version": "0.1",
+        "selection_lock_sha256": "sha256:e62dfd65af89ec1b75847d007c2a3f1d4ff0d37e8ac5f6ed792df7193e4c24fa",
+        "source_bundle_sha256": "sha256:09e279a10bb85a5dfe9dbf56a4009f1f2c987380e8f137e168a5d60be9d1dbbf",
+        "supplemental_evidence_binding_sha256": "sha256:9ad9b3aa1c114f7d34ed6ee484bf211ce87be0fe2366bf9757d52a1b0a18e154",
+        "technical_contract": "pass",
+        "technical_findings": [
+          "Both candidate cudagraph staging tests pass for the altered non-static input path.",
+          "The one-production-file change provides shared-pool capture/replay parity and rejects unsafe alias behavior."
+        ],
+        "test_plan_sha256": "sha256:1bf58d5803699b63323b7ab09feb2f5c599fa4368efa7527025c8f6172d5f2a0",
+        "triage_input": {
+          "baseline_regression": false,
+          "closure_test": "frozen-probe",
+          "contract_satisfied": true,
+          "design_change_required": false,
+          "evidence_complete": true,
+          "primary_claim_demonstrated": true,
+          "remediation_scope": "none",
+          "residual_failure_families": 0,
+          "safety_or_integrity_failure": false,
+          "semantic_noop": false
+        }
+      }
+    },
+    {
+      "lock_sha256": "sha256:323ba5d5d8f6ffd63bd5555de03e4b95a7d5bdebcbb8eb69f192e45d995d12cf",
+      "material": {
+        "candidate_sha256": "sha256:6565d8e9044e86cf63a5b4ff34562857cf40ee06a48ef7ebd46c3cedb529560b",
+        "case_id": "torchtitan-pr-3533",
+        "common_evidence_binding_sha256": "sha256:73c3a44869ff0ae0d00e72fbf41c00c6eed1051e0e78202d193402641e7379c1",
+        "decision": "accept_with_scope",
+        "frozen_at": "2026-09-02T18:36:55.107743+00:00",
+        "hot_window_check_eligible": false,
+        "legacy_r10_style_decision": "accept_with_scope",
+        "policy_id": "training-contract-disposition-split-v0.1-r16",
+        "rationale_codes": [
+          "CASE_CONTRACT_SATISFIED"
+        ],
+        "residual_contract": null,
+        "schema_version": "0.1",
+        "selection_lock_sha256": "sha256:e62dfd65af89ec1b75847d007c2a3f1d4ff0d37e8ac5f6ed792df7193e4c24fa",
+        "source_bundle_sha256": "sha256:09e279a10bb85a5dfe9dbf56a4009f1f2c987380e8f137e168a5d60be9d1dbbf",
+        "supplemental_evidence_binding_sha256": "sha256:6c9a1199e5a6558a99d1f5fa098aa59f10faa710a018afdcf58799e3230baab7",
+        "technical_contract": "pass",
+        "technical_findings": [
+          "Both candidate per-node capture-safety tests pass.",
+          "The predicate and mixed fallback are title-scoped and have direct graph behavior coverage."
+        ],
+        "test_plan_sha256": "sha256:1bf58d5803699b63323b7ab09feb2f5c599fa4368efa7527025c8f6172d5f2a0",
+        "triage_input": {
+          "baseline_regression": false,
+          "closure_test": "frozen-probe",
+          "contract_satisfied": true,
+          "design_change_required": false,
+          "evidence_complete": true,
+          "primary_claim_demonstrated": true,
+          "remediation_scope": "none",
+          "residual_failure_families": 0,
+          "safety_or_integrity_failure": false,
+          "semantic_noop": false
+        }
+      }
+    },
+    {
+      "lock_sha256": "sha256:96c27379e0ffa611bff481cb942f1eab75932c8924960b22fb53d433e1f0c4a2",
+      "material": {
+        "candidate_sha256": "sha256:b051502289f10c8d914d8d13552dfcdfc6a85f7f78e3c2a182fc3eedcbb1d17a",
+        "case_id": "torchtitan-pr-3530",
+        "common_evidence_binding_sha256": "sha256:73c3a44869ff0ae0d00e72fbf41c00c6eed1051e0e78202d193402641e7379c1",
+        "decision": "accept_with_scope",
+        "frozen_at": "2026-09-02T18:36:55.107743+00:00",
+        "hot_window_check_eligible": false,
+        "legacy_r10_style_decision": "accept_with_scope",
+        "policy_id": "training-contract-disposition-split-v0.1-r16",
+        "rationale_codes": [
+          "CASE_CONTRACT_SATISFIED"
+        ],
+        "residual_contract": null,
+        "schema_version": "0.1",
+        "selection_lock_sha256": "sha256:e62dfd65af89ec1b75847d007c2a3f1d4ff0d37e8ac5f6ed792df7193e4c24fa",
+        "source_bundle_sha256": "sha256:09e279a10bb85a5dfe9dbf56a4009f1f2c987380e8f137e168a5d60be9d1dbbf",
+        "supplemental_evidence_binding_sha256": "sha256:804ccec7ab811550871724b0dfd31df6054cf1991baaddaa429f6d245bc8a5e7",
+        "technical_contract": "pass",
+        "technical_findings": [
+          "The candidate rematerialization test passes and proves duplicate custom metadata has distinct identity while preserving values.",
+          "The two-file fix is numerically neutral and closes the exact mutable-alias invariant."
+        ],
+        "test_plan_sha256": "sha256:1bf58d5803699b63323b7ab09feb2f5c599fa4368efa7527025c8f6172d5f2a0",
+        "triage_input": {
+          "baseline_regression": false,
+          "closure_test": "frozen-probe",
+          "contract_satisfied": true,
+          "design_change_required": false,
+          "evidence_complete": true,
+          "primary_claim_demonstrated": true,
+          "remediation_scope": "none",
+          "residual_failure_families": 0,
+          "safety_or_integrity_failure": false,
+          "semantic_noop": false
+        }
+      }
+    },
+    {
+      "lock_sha256": "sha256:fad1ca69e0a3ad8ab5fd8f2f243b509752735a1ce682f5f7240bb8bd1094e32f",
+      "material": {
+        "candidate_sha256": "sha256:5b8e17057212953fcf7f3d871a2470494cc59d4ed2a6484934d36b5b22001580",
+        "case_id": "verl-pr-7697",
+        "common_evidence_binding_sha256": "sha256:73c3a44869ff0ae0d00e72fbf41c00c6eed1051e0e78202d193402641e7379c1",
+        "decision": "accept_with_scope",
+        "frozen_at": "2026-09-02T18:36:55.107743+00:00",
+        "hot_window_check_eligible": false,
+        "legacy_r10_style_decision": "accept_with_scope",
+        "policy_id": "training-contract-disposition-split-v0.1-r16",
+        "rationale_codes": [
+          "CASE_CONTRACT_SATISFIED"
+        ],
+        "residual_contract": null,
+        "schema_version": "0.1",
+        "selection_lock_sha256": "sha256:e62dfd65af89ec1b75847d007c2a3f1d4ff0d37e8ac5f6ed792df7193e4c24fa",
+        "source_bundle_sha256": "sha256:09e279a10bb85a5dfe9dbf56a4009f1f2c987380e8f137e168a5d60be9d1dbbf",
+        "supplemental_evidence_binding_sha256": "sha256:b59424bb2e76b8a44a58ab578c40aea8eb9f19cb319eebcaaa98c12a99131119",
+        "technical_contract": "pass",
+        "technical_findings": [
+          "Twenty-nine selected agent-loop and configuration tests pass, covering invalid categories, ordered parallel results, resets, thresholds, and default-off behavior.",
+          "The functional behavior is tested beyond the generated configuration propagation."
+        ],
+        "test_plan_sha256": "sha256:1bf58d5803699b63323b7ab09feb2f5c599fa4368efa7527025c8f6172d5f2a0",
+        "triage_input": {
+          "baseline_regression": false,
+          "closure_test": "frozen-probe",
+          "contract_satisfied": true,
+          "design_change_required": false,
+          "evidence_complete": true,
+          "primary_claim_demonstrated": true,
+          "remediation_scope": "none",
+          "residual_failure_families": 0,
+          "safety_or_integrity_failure": false,
+          "semantic_noop": false
+        }
+      }
+    },
+    {
+      "lock_sha256": "sha256:56660f6d96ad623bfd792e0068c16ab9b050b62740c3ce7325cff8a648904c47",
+      "material": {
+        "candidate_sha256": "sha256:ae4dadccefd01f178c0073370bb7ad7f67eafc00f9385a68067e20a44559196c",
+        "case_id": "verl-pr-6558",
+        "common_evidence_binding_sha256": "sha256:73c3a44869ff0ae0d00e72fbf41c00c6eed1051e0e78202d193402641e7379c1",
+        "decision": "reject",
+        "frozen_at": "2026-09-02T18:36:55.107743+00:00",
+        "hot_window_check_eligible": false,
+        "legacy_r10_style_decision": "check",
+        "policy_id": "training-contract-disposition-split-v0.1-r16",
+        "rationale_codes": [
+          "HEAD_REGRESSES_BASELINE",
+          "PRIMARY_CLAIM_NOT_DEMONSTRATED",
+          "SAFETY_OR_INTEGRITY_FAILURE"
+        ],
+        "residual_contract": "Restore syntactically complete OmegaConf selection and pass the exhaustion boundary plus parameter/state immutability test.",
+        "schema_version": "0.1",
+        "selection_lock_sha256": "sha256:e62dfd65af89ec1b75847d007c2a3f1d4ff0d37e8ac5f6ed792df7193e4c24fa",
+        "source_bundle_sha256": "sha256:09e279a10bb85a5dfe9dbf56a4009f1f2c987380e8f137e168a5d60be9d1dbbf",
+        "supplemental_evidence_binding_sha256": "sha256:57d94a16dea6e83b23d6f843bc3fe3e993811d865d618224d855579a26bd0d5e",
+        "technical_contract": "fail",
+        "technical_findings": [
+          "The exact production head has an unclosed parenthesis at ray_trainer.py:400 and cannot be imported.",
+          "Both static parsing and py_compile independently reproduce the candidate-owned collection failure."
+        ],
+        "test_plan_sha256": "sha256:1bf58d5803699b63323b7ab09feb2f5c599fa4368efa7527025c8f6172d5f2a0",
+        "triage_input": {
+          "baseline_regression": true,
+          "closure_test": "frozen-probe",
+          "contract_satisfied": false,
+          "design_change_required": false,
+          "evidence_complete": true,
+          "primary_claim_demonstrated": false,
+          "remediation_scope": "single-site",
+          "residual_failure_families": 1,
+          "safety_or_integrity_failure": true,
+          "semantic_noop": false
+        }
+      }
+    },
+    {
+      "lock_sha256": "sha256:fc4ad4f1f7a1ac1eb0ed5ad9f7a34c76696e29affb11932cde9b101a126415e4",
+      "material": {
+        "candidate_sha256": "sha256:6fcbb511026fa7ece9fb3ff29e557ee9f84d6eb8e0b16d3cd843dfefce022ffc",
+        "case_id": "verl-pr-6564",
+        "common_evidence_binding_sha256": "sha256:73c3a44869ff0ae0d00e72fbf41c00c6eed1051e0e78202d193402641e7379c1",
+        "decision": "accept_with_scope",
+        "frozen_at": "2026-09-02T18:36:55.107743+00:00",
+        "hot_window_check_eligible": false,
+        "legacy_r10_style_decision": "accept_with_scope",
+        "policy_id": "training-contract-disposition-split-v0.1-r16",
+        "rationale_codes": [
+          "CASE_CONTRACT_SATISFIED"
+        ],
+        "residual_contract": null,
+        "schema_version": "0.1",
+        "selection_lock_sha256": "sha256:e62dfd65af89ec1b75847d007c2a3f1d4ff0d37e8ac5f6ed792df7193e4c24fa",
+        "source_bundle_sha256": "sha256:09e279a10bb85a5dfe9dbf56a4009f1f2c987380e8f137e168a5d60be9d1dbbf",
+        "supplemental_evidence_binding_sha256": "sha256:b5bef6af7f47fe4ac038f697f60a2d465f80edd8c1055aa74a1405843af89889",
+        "technical_contract": "pass",
+        "technical_findings": [
+          "All three candidate packed-boundary tests pass without FlashAttention.",
+          "Labels are shifted in padded layout then gathered by the existing indices, preventing cross-sequence leakage in both torch and Megatron paths."
+        ],
+        "test_plan_sha256": "sha256:1bf58d5803699b63323b7ab09feb2f5c599fa4368efa7527025c8f6172d5f2a0",
+        "triage_input": {
+          "baseline_regression": false,
+          "closure_test": "frozen-probe",
+          "contract_satisfied": true,
+          "design_change_required": false,
+          "evidence_complete": true,
+          "primary_claim_demonstrated": true,
+          "remediation_scope": "none",
+          "residual_failure_families": 0,
+          "safety_or_integrity_failure": false,
+          "semantic_noop": false
+        }
+      }
+    },
+    {
+      "lock_sha256": "sha256:1b98846a79256f92856878d867f3e94755db40af71a1e1839e8b5eb42beafb29",
+      "material": {
+        "candidate_sha256": "sha256:ccc5b696ab8022f81822a3827383e271555066d5283a392b4d4d8e1d3f15c45b",
+        "case_id": "verl-pr-6574",
+        "common_evidence_binding_sha256": "sha256:73c3a44869ff0ae0d00e72fbf41c00c6eed1051e0e78202d193402641e7379c1",
+        "decision": "reject",
+        "frozen_at": "2026-09-02T18:36:55.107743+00:00",
+        "hot_window_check_eligible": false,
+        "legacy_r10_style_decision": "check",
+        "policy_id": "training-contract-disposition-split-v0.1-r16",
+        "rationale_codes": [
+          "EXECUTABLE_CLOSURE_TEST_MISSING",
+          "REMEDIATION_REQUIRES_DESIGN_CHANGE",
+          "REMEDIATION_SCOPE_NOT_BOUNDED",
+          "RESIDUAL_FAILURE_FAMILIES_NOT_CLOSED"
+        ],
+        "residual_contract": "Start the fully-async actor set on a tight local Ray cluster, prove progress, and verify resources are released and reacquired on restart.",
+        "schema_version": "0.1",
+        "selection_lock_sha256": "sha256:e62dfd65af89ec1b75847d007c2a3f1d4ff0d37e8ac5f6ed792df7193e4c24fa",
+        "source_bundle_sha256": "sha256:09e279a10bb85a5dfe9dbf56a4009f1f2c987380e8f137e168a5d60be9d1dbbf",
+        "supplemental_evidence_binding_sha256": "sha256:8b4848e34b9372873d08228269003d1d42a9dc5ae498689c17da2b17f4e94e2b",
+        "technical_contract": "bounded-gap",
+        "technical_findings": [
+          "All eight CPU sizing and validation tests pass for default, constrained, explicit, and invalid reservations.",
+          "The ten-path scheduling change has no actual Ray actor placement/progress or restart resource-release test, so helper arithmetic alone does not close the nonprogress claim."
+        ],
+        "test_plan_sha256": "sha256:1bf58d5803699b63323b7ab09feb2f5c599fa4368efa7527025c8f6172d5f2a0",
+        "triage_input": {
+          "baseline_regression": false,
+          "closure_test": "missing",
+          "contract_satisfied": false,
+          "design_change_required": true,
+          "evidence_complete": true,
+          "primary_claim_demonstrated": true,
+          "remediation_scope": "cross-cutting",
+          "residual_failure_families": 2,
+          "safety_or_integrity_failure": false,
+          "semantic_noop": false
+        }
+      }
+    },
+    {
+      "lock_sha256": "sha256:dd8eaa4899dc19a94c0883a0d3c0010ca98e18066c8cd9eb14c6f29b39a6eea4",
+      "material": {
+        "candidate_sha256": "sha256:62e28ad81b6d20105cb24d4d8af4ab305466b0fe4de8fe9d0555f4f8fad22789",
+        "case_id": "verl-pr-6560",
+        "common_evidence_binding_sha256": "sha256:73c3a44869ff0ae0d00e72fbf41c00c6eed1051e0e78202d193402641e7379c1",
+        "decision": "accept_with_scope",
+        "frozen_at": "2026-09-02T18:36:55.107743+00:00",
+        "hot_window_check_eligible": false,
+        "legacy_r10_style_decision": "accept_with_scope",
+        "policy_id": "training-contract-disposition-split-v0.1-r16",
+        "rationale_codes": [
+          "CASE_CONTRACT_SATISFIED"
+        ],
+        "residual_contract": null,
+        "schema_version": "0.1",
+        "selection_lock_sha256": "sha256:e62dfd65af89ec1b75847d007c2a3f1d4ff0d37e8ac5f6ed792df7193e4c24fa",
+        "source_bundle_sha256": "sha256:09e279a10bb85a5dfe9dbf56a4009f1f2c987380e8f137e168a5d60be9d1dbbf",
+        "supplemental_evidence_binding_sha256": "sha256:740aab17bd802b06d3275eb9557a6218696925f635b7cc27d60a56200dbe6c14",
+        "technical_contract": "pass",
+        "technical_findings": [
+          "Seven selected config/serializer tests pass locally and the candidate reports nineteen across defaults, validation, docs, and CLI projection.",
+          "The eleven paths are mechanical propagation of three backward-compatible values through enumerated adapters, with no tool-execution semantics added."
+        ],
+        "test_plan_sha256": "sha256:1bf58d5803699b63323b7ab09feb2f5c599fa4368efa7527025c8f6172d5f2a0",
+        "triage_input": {
+          "baseline_regression": false,
+          "closure_test": "frozen-probe",
+          "contract_satisfied": true,
+          "design_change_required": false,
+          "evidence_complete": true,
+          "primary_claim_demonstrated": true,
+          "remediation_scope": "none",
+          "residual_failure_families": 0,
+          "safety_or_integrity_failure": false,
+          "semantic_noop": false
+        }
+      }
+    },
+    {
+      "lock_sha256": "sha256:9b1c9209369417969da2c60395a437a71811768d5ebb70339ff7194049cc46a7",
+      "material": {
+        "candidate_sha256": "sha256:185a9726af1366947291124ceeea90d61096bdcff69d9c39fcfbe7ba5b6d9521",
+        "case_id": "verl-pr-6598",
+        "common_evidence_binding_sha256": "sha256:73c3a44869ff0ae0d00e72fbf41c00c6eed1051e0e78202d193402641e7379c1",
+        "decision": "reject",
+        "frozen_at": "2026-09-02T18:36:55.107743+00:00",
+        "hot_window_check_eligible": false,
+        "legacy_r10_style_decision": "check",
+        "policy_id": "training-contract-disposition-split-v0.1-r16",
+        "rationale_codes": [
+          "EXECUTABLE_CLOSURE_TEST_MISSING",
+          "REMEDIATION_REQUIRES_DESIGN_CHANGE",
+          "REMEDIATION_SCOPE_NOT_BOUNDED",
+          "RESIDUAL_FAILURE_FAMILIES_NOT_CLOSED"
+        ],
+        "residual_contract": "Add and run multi-rank group initialization, sharded weight broadcast, slow/failing receiver, version activation, and repeated-update tests.",
+        "schema_version": "0.1",
+        "selection_lock_sha256": "sha256:e62dfd65af89ec1b75847d007c2a3f1d4ff0d37e8ac5f6ed792df7193e4c24fa",
+        "source_bundle_sha256": "sha256:09e279a10bb85a5dfe9dbf56a4009f1f2c987380e8f137e168a5d60be9d1dbbf",
+        "supplemental_evidence_binding_sha256": "sha256:705667e0078e4bf4d1ff100b9224cdf9fbd242362b38a5e5ba5f63e311df42fe",
+        "technical_contract": "unresolved",
+        "technical_findings": [
+          "The six-path patch introduces a new cross-node NCCL group, synchronous event-loop wrapper, rank mapping, broadcast, and HTTP activation flow.",
+          "No candidate test runs, the body is an untouched template, and neither two-rank progress nor coherent version activation is demonstrated."
+        ],
+        "test_plan_sha256": "sha256:1bf58d5803699b63323b7ab09feb2f5c599fa4368efa7527025c8f6172d5f2a0",
+        "triage_input": {
+          "baseline_regression": false,
+          "closure_test": "missing",
+          "contract_satisfied": false,
+          "design_change_required": true,
+          "evidence_complete": true,
+          "primary_claim_demonstrated": true,
+          "remediation_scope": "cross-cutting",
+          "residual_failure_families": 2,
+          "safety_or_integrity_failure": false,
+          "semantic_noop": false
+        }
+      }
+    }
+  ],
+  "merge_outcomes_visible_during_machine_judgment": false,
+  "policy_id": "training-contract-disposition-split-v0.1-r16",
+  "protocol_id": "training-iterative-contract-v0.1-r16-30",
+  "review_text_visible_during_machine_judgment": false,
+  "schema_version": "0.1",
+  "selection_lock_file_sha256": "sha256:825ea8f67c7316e2cd930c259b19cc414b9c510cf16182f763d5f4e044d905c9",
+  "selection_lock_sha256": "sha256:e62dfd65af89ec1b75847d007c2a3f1d4ff0d37e8ac5f6ed792df7193e4c24fa",
+  "source_bundle_sha256": "sha256:09e279a10bb85a5dfe9dbf56a4009f1f2c987380e8f137e168a5d60be9d1dbbf",
+  "terminology": "check",
+  "test_plan_file_sha256": "sha256:484c4a7bd38278fb3607565143a47c43a973dac801b3ef89ea5d8e386fa01692",
+  "test_plan_sha256": "sha256:1bf58d5803699b63323b7ab09feb2f5c599fa4368efa7527025c8f6172d5f2a0",
+  "trained_weights_used": false,
+  "weighted_score_used": false
+}

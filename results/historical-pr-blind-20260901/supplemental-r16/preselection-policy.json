@@ -1,0 +1,269 @@
+{
+  "blindness": {
+    "allowed_selection_fields": [
+      "number",
+      "title",
+      "createdAt",
+      "baseRefName",
+      "baseRefOid",
+      "headRefOid",
+      "changedFiles",
+      "additions",
+      "deletions",
+      "files.path",
+      "commits.first.commit.oid",
+      "commits.first.commit.parents.first.oid"
+    ],
+    "candidate_body_visible": false,
+    "ci_or_label_visible": false,
+    "diff_content_visible": false,
+    "review_or_comment_visible": false,
+    "state_or_merge_visible": false
+  },
+  "case_count": 30,
+  "created_at_window": {
+    "excluded_resolution_gray_zone": [
+      "2026-06-05T00:00:00Z",
+      "2026-08-26T23:59:59Z"
+    ],
+    "mature_end": "2026-06-04T23:59:59Z",
+    "observation_cutoff": "2026-09-02T23:59:59Z",
+    "per_project_recent_target": 1,
+    "recent_shortfall_fallback": "fill from mature ranking",
+    "recent_start": "2026-08-27T00:00:00Z",
+    "start": "2025-01-01T00:00:00Z"
+  },
+  "domain_allocation": {
+    "training": 30
+  },
+  "domain_anchor": {
+    "direct_terms": [
+      "train",
+      "training",
+      "trainer",
+      "optimizer",
+      "loss",
+      "gradient",
+      "backward",
+      "checkpoint",
+      "resume",
+      "activation checkpoint",
+      "mixed precision",
+      "fp8",
+      "reward",
+      "rollout",
+      "actor",
+      "critic",
+      "grpo",
+      "ppo",
+      "dpo",
+      "distill",
+      "finetun",
+      "learning rate",
+      "lr scheduler",
+      "offload",
+      "recompute",
+      "log_prob",
+      "logprob"
+    ],
+    "source_path_terms": [
+      "/optimizer",
+      "training/",
+      "/trainer",
+      "/loss",
+      "checkpoint",
+      "/scheduler",
+      "backward",
+      "gradient",
+      "/fsdp",
+      "/ppo",
+      "/rollout",
+      "/reward",
+      "/actor",
+      "/critic",
+      "finetun",
+      "distill",
+      "logprob",
+      "log_prob",
+      "cpu_offload",
+      "memory_policy"
+    ],
+    "title_docs_prefix_is_excluded": true
+  },
+  "domain_signals": {
+    "training": {
+      "path_terms": [
+        "optimizer",
+        "training",
+        "trainer",
+        "loss",
+        "checkpoint",
+        "scheduler",
+        "backward",
+        "gradient",
+        "fsdp",
+        "ppo",
+        "rollout",
+        "reward",
+        "actor",
+        "critic",
+        "finetun",
+        "distill",
+        "lora",
+        "logprob",
+        "log_prob",
+        "memory_policy"
+      ],
+      "risk_families": [
+        "optimizer-state",
+        "loss-gradient",
+        "checkpoint-resume",
+        "scheduling-pipeline",
+        "memory-performance"
+      ],
+      "secondary_title_terms": [
+        "fsdp",
+        "ddp",
+        "pipeline",
+        "microbatch",
+        "micro-batch",
+        "lora",
+        "moe",
+        "memory",
+        "freeze",
+        "frozen"
+      ],
+      "strong_title_terms": [
+        "train",
+        "training",
+        "optimizer",
+        "loss",
+        "gradient",
+        "backward",
+        "checkpoint",
+        "resume",
+        "activation checkpoint",
+        "mixed precision",
+        "fp8",
+        "reward",
+        "rollout",
+        "actor",
+        "critic",
+        "grpo",
+        "ppo",
+        "dpo",
+        "distill",
+        "finetun",
+        "learning rate",
+        "lr scheduler",
+        "offload",
+        "recompute",
+        "log_prob",
+        "logprob"
+      ]
+    },
+    "weights": {
+      "candidate_test_path": 1,
+      "domain_path": 4,
+      "secondary_title": 3,
+      "strong_title": 5
+    }
+  },
+  "domains_in_order": [
+    "training"
+  ],
+  "eligibility": {
+    "changed_files_max": 12,
+    "changed_files_min": 1,
+    "changed_lines_max": 1200,
+    "domain_score_min": 4,
+    "exclude_all_previously_scored_pr_identities": true,
+    "exclude_dependency_or_generated_only": true,
+    "exclude_docs_only": true,
+    "exclude_tests_only": true,
+    "require_complete_path_list": true,
+    "require_first_commit_parent": true,
+    "require_runtime_source_path": true
+  },
+  "frozen_at": "2026-09-02T17:56:45.316342+00:00",
+  "grouping_policy": {
+    "finish_reveal_audit_and_iterate_before_next_round": true,
+    "future_rounds_are_not_preselected": true,
+    "round_size": 30
+  },
+  "machine_policy": {
+    "check_coherent_risk_changed_files_max": 8,
+    "disposition_check_hot_window_days": 7,
+    "forced_polarization_used": false,
+    "policy_id": "training-contract-disposition-split-v0.1-r16",
+    "technical_contract_and_disposition_are_separate": true,
+    "weighted_score_used": false
+  },
+  "policy_sha256": "sha256:99bc22cbd0b1f9525d09804b56dd77a194ab86b73afccf519f7dc00657451c95",
+  "projects": {
+    "training": {
+      "liger": {
+        "count": 6,
+        "repository": "linkedin/Liger-Kernel",
+        "source_prefixes": [
+          "src/liger_kernel/"
+        ]
+      },
+      "megatron": {
+        "count": 6,
+        "repository": "NVIDIA/Megatron-LM",
+        "source_prefixes": [
+          "megatron/core/",
+          "megatron/training/"
+        ]
+      },
+      "slime": {
+        "count": 6,
+        "repository": "THUDM/slime",
+        "source_prefixes": [
+          "slime/"
+        ]
+      },
+      "torchtitan": {
+        "count": 6,
+        "repository": "pytorch/torchtitan",
+        "source_prefixes": [
+          "torchtitan/"
+        ]
+      },
+      "verl": {
+        "count": 6,
+        "repository": "verl-project/verl",
+        "source_prefixes": [
+          "verl/"
+        ]
+      }
+    }
+  },
+  "protocol_id": "training-iterative-contract-v0.1-r16-30",
+  "r15_policy_iteration_sha256": "sha256:80a7d5e7b2fb2b94d1a3f099dcbc381baa8a8e08d66f0e98a11171d630f5fd06",
+  "r16_disposition_rules": [
+    "R16-HOT-CHECK-WINDOW",
+    "R16-TARGET-COVERAGE-MUST-BE-FUNCTIONAL",
+    "R16-MECHANICAL-ADAPTER-PROPAGATION",
+    "R16-DATA-MOTION-ONLY-TARGET-OPTIMIZATION",
+    "R16-COUNTEREXAMPLE-OVERRIDES-DISPOSITION",
+    "R16-CROSS-DOMAIN-TRAINING-CLOSURE",
+    "R16-DUAL-OUTPUT"
+  ],
+  "round": "R16",
+  "schema_version": "0.1",
+  "selection_algorithm": {
+    "family_diversity": "greedy family coverage within each project slice",
+    "fill": "deterministic rank among remaining mature eligible cases",
+    "rank_key": [
+      "candidate-owned-test-first",
+      "domain-score-descending",
+      "created-at-descending-within-band",
+      "changed-files-ascending",
+      "changed-lines-ascending",
+      "pull-number-ascending"
+    ],
+    "recent_first": "one best eligible <=7-day case per project when available"
+  }
+}

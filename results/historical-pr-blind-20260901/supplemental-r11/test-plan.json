@@ -1,0 +1,438 @@
+{
+  "cases": [
+    {
+      "base_sha": "d4b4b494c3c51bf6507e7ab09fbafd1e9fa94f39",
+      "case_id": "cutlass-pr-3352",
+      "changed_paths": [
+        "python/CuTeDSL/cutlass/base_dsl/typing.py"
+      ],
+      "claim": "CuTe DSL c_pointer lifecycle does not retain dead Python owners.",
+      "decision_rule": "Accept only if head removes a base retention signal while preserving live-pointer semantics. A bounded remaining ownership edge with a closure probe is revise; an unbounded cycle, semantic no-op, or new lifetime hazard is reject.",
+      "execution_tier": "exact base/head ownership and repeated-GC isolation probe",
+      "head_sha": "75e14d5acdc4aefcea8d8f46068d38026c312e5e",
+      "project": "cutlass-cute",
+      "pull_number": 3352,
+      "questions": [
+        "Does releasing the final public c_pointer wrapper release its owner after GC?",
+        "Does repeated construction avoid monotonically retaining owner or wrapper objects?",
+        "Are live-pointer type, value, and representation semantics unchanged?",
+        "Does a direct test exercise both collection and live-object controls?"
+      ],
+      "repository": "NVIDIA/cutlass"
+    },
+    {
+      "base_sha": "e6233cbac5d7c7a865c19c91cd684ceece19513c",
+      "case_id": "cutlass-pr-3380",
+      "changed_paths": [
+        "include/cutlass/gemm/collective/sm100_blockscaled_mma_mixed_tma_cpasync_warpspecialized.hpp",
+        "media/docs/cpp/fundamental_types.md",
+        "python/CuTeDSL/cutlass/cute/arch/numeric_conversion.py"
+      ],
+      "claim": "i8-to-bf16 conversion and s2t copy execute only on architectures/CTAs that support them.",
+      "decision_rule": "Accept only if both gates satisfy the frozen truth tables without collateral restriction. One demonstrably local missing gate is revise; architecture-wide misclassification or unsafe duplicate copy is reject.",
+      "execution_tier": "exact predicate truth table plus CUDA source/compile contract",
+      "head_sha": "5d49aefd2467fefd8f79b50ec4f589212e6a03fe",
+      "project": "cutlass-cute",
+      "pull_number": 3380,
+      "questions": [
+        "Are Ampere and Ada excluded while Hopper and newer remain enabled?",
+        "Is the s2t operation guarded to the leader CTA at its exact side-effect site?",
+        "Are unrelated conversion paths and documentation claims coherent with the gate?",
+        "Do boundary controls cover sm80, sm89, sm90, sm100 and leader/nonleader CTAs?"
+      ],
+      "repository": "NVIDIA/cutlass"
+    },
+    {
+      "base_sha": "891d57b4db1071624b5c8fa0d1e51cb317fa709f",
+      "case_id": "deepgemm-pr-327",
+      "changed_paths": [
+        "deep_gemm/include/deep_gemm/impls/smxx_clean_logits.cuh"
+      ],
+      "claim": "the clean-logits kernel compiles under CUDA 12.8 NVRTC without changing negative-infinity behavior.",
+      "decision_rule": "Accept if head fixes the exact compile failure and preserves numeric semantics. A working local fix missing only direct coverage is revise; a no-op or finite-value substitution is reject.",
+      "execution_tier": "exact base/head CUDA 12.8 compilation and constant-semantics probe",
+      "head_sha": "f5238042ece0be7e14fd43d6a789775ea7b9a6ef",
+      "project": "deepgemm",
+      "pull_number": 327,
+      "questions": [
+        "Does the exact affected source fail in base and compile in head under CUDA 12.8?",
+        "Does the replacement constant retain IEEE negative-infinity semantics?",
+        "Are finite and NaN neighboring controls unchanged?",
+        "Is the compatibility fix covered by a direct compile or regression test?"
+      ],
+      "repository": "deepseek-ai/DeepGEMM"
+    },
+    {
+      "base_sha": "714dd1a4a980f7937a74343d19a8eba4fe321480",
+      "case_id": "deepgemm-pr-337",
+      "changed_paths": [
+        "deep_gemm/include/deep_gemm/impls/smxx_layout.cuh"
+      ],
+      "claim": "UE8M0 packing extracts FP32 exponent bits without mantissa contamination.",
+      "decision_rule": "Accept only if head removes mantissa contamination across the full matrix and has direct distinguishing coverage. A correct bounded implementation needing one edge policy is revise; a semantic no-op or broad mismatch is reject.",
+      "execution_tier": "exact expression plus exhaustive bit-pattern boundary probe",
+      "head_sha": "16f167d0fceb501e906c2471924f94faf15ac45a",
+      "project": "deepgemm",
+      "pull_number": 337,
+      "questions": [
+        "Do equal exponents with different mantissas pack to the same UE8M0 value?",
+        "Are exponent boundaries, zero, subnormal, infinity, and NaN handled explicitly?",
+        "Does head match an independent bit-mask oracle for every frozen pattern?",
+        "Does direct coverage include nonzero mantissas that distinguish base from head?"
+      ],
+      "repository": "deepseek-ai/DeepGEMM"
+    },
+    {
+      "base_sha": "fc8cbad6b6b90220cf6ef8121c29e299a3ba7d9a",
+      "case_id": "flashattention-pr-2662",
+      "changed_paths": [
+        "flash_attn/cute/tile_scheduler.py"
+      ],
+      "claim": "the SM100 LPT scheduler computes long-context tile indices without int32 overflow.",
+      "decision_rule": "Accept if long-context arithmetic matches the oracle and short cases are preserved. A single remaining cast with a direct closure case is revise; systemic overflow or new index corruption is reject.",
+      "execution_tier": "exact scheduler arithmetic isolation against an integer oracle",
+      "head_sha": "21bb7b7b42f2c1fe90cda6a5839f41f664b4136a",
+      "project": "flash-attention",
+      "pull_number": 2662,
+      "questions": [
+        "Do values around 2^31 avoid wraparound and match an unbounded-integer reference?",
+        "Are ordinary short-context schedules unchanged?",
+        "Are resulting tile indices monotonic, in range, and collision-free where required?",
+        "Does direct coverage include a value that overflows the base implementation?"
+      ],
+      "repository": "Dao-AILab/flash-attention"
+    },
+    {
+      "base_sha": "5ed0361579066273532cc9a7c3a0a144a6003eda",
+      "case_id": "flashattention-pr-2678",
+      "changed_paths": [
+        "flash_attn/cute/testing.py"
+      ],
+      "claim": "is_fake_mode remains correct and traceable under torch.compile.",
+      "decision_rule": "Accept if head fixes the compiled path and preserves fake/eager semantics. A local traceability gap with a closure test is revise; silently returning a wrong mode or requiring a cross-cutting compiler workaround is reject.",
+      "execution_tier": "exact eager, FakeTensor, and torch.compile execution matrix",
+      "head_sha": "fd956114dd40644fd5fc80da878ccfc442190b20",
+      "project": "flash-attention",
+      "pull_number": 2678,
+      "questions": [
+        "Can torch.compile trace the helper without an active_fake_mode graph break?",
+        "Does eager execution still distinguish normal and fake tensors correctly?",
+        "Do fullgraph and repeated compiled calls remain stable?",
+        "Does direct coverage include compiled and eager neighboring controls?"
+      ],
+      "repository": "Dao-AILab/flash-attention"
+    },
+    {
+      "base_sha": "1aca0f887b65f2ba2bc5e9e9d35ff0bd078da76d",
+      "case_id": "flashinfer-pr-3930",
+      "changed_paths": [
+        "flashinfer/comm/cuda_ipc.py"
+      ],
+      "claim": "find_loaded_library never selects look-alike CUDA libraries such as libcudart_stub.",
+      "decision_rule": "Accept if exact head matching chooses only the intended library across all orderings. A bounded missing supported suffix is revise; continued look-alike selection or nondeterministic binding is reject.",
+      "execution_tier": "exact library-name matcher over path-order and version variants",
+      "head_sha": "e855cc25993d11d4707678d68fbde108d0578bef",
+      "project": "flashinfer",
+      "pull_number": 3930,
+      "questions": [
+        "Are canonical unversioned and versioned library names accepted?",
+        "Are prefix/suffix look-alikes rejected regardless of enumeration order?",
+        "Is behavior consistent for Linux shared objects and supported platform forms?",
+        "Does direct coverage include a stub appearing before the real library?"
+      ],
+      "repository": "flashinfer-ai/flashinfer"
+    },
+    {
+      "base_sha": "86800591065eae209e6688f1a250e390135ab3df",
+      "case_id": "flashinfer-pr-3990",
+      "changed_paths": [
+        "flashinfer/comm/mnnvl.py"
+      ],
+      "claim": "B300 MNNVL all-up detection reports true only for complete usable peer connectivity.",
+      "decision_rule": "Accept only if complete/degraded truth tables are exact and failures are safe. One bounded topology shape omission is revise; a false-positive all-up result is reject because it can select an unsafe transport path.",
+      "execution_tier": "exact topology predicate with mocked complete and degraded matrices",
+      "head_sha": "34946f6e2e3025072697b5204b3639ca3b05c85c",
+      "project": "flashinfer",
+      "pull_number": 3990,
+      "questions": [
+        "Do complete supported B300 topologies report all-up?",
+        "Does any missing, asymmetric, or unusable peer edge force false?",
+        "Are diagonal/self entries and device-count boundaries handled correctly?",
+        "Do non-B300 or topology-query failures retain a safe behavior?"
+      ],
+      "repository": "flashinfer-ai/flashinfer"
+    },
+    {
+      "base_sha": "8020e691d4b78be6cc4868b96e5c73ca3c1058ea",
+      "case_id": "liger-pr-1251",
+      "changed_paths": [
+        "src/liger_kernel/ops/cross_entropy.py",
+        "src/liger_kernel/transformers/functional.py",
+        "test/transformers/test_cross_entropy.py"
+      ],
+      "claim": "liger_cross_entropy with inplace=False preserves logits and upstream gradients.",
+      "decision_rule": "Accept if head fixes the corruption and matches the full reference matrix. A local dtype/reduction omission with a direct closure test is revise; continued silent mutation or gradient corruption is reject.",
+      "execution_tier": "exact branched-autograd comparison against PyTorch reference",
+      "head_sha": "cecb7220e96f2e49b0b1494a85ca079b0d5c26d3",
+      "project": "liger-kernel",
+      "pull_number": 1251,
+      "questions": [
+        "Are input logits byte-identical after forward when inplace=False?",
+        "Does a branch consuming the same logits receive the correct upstream gradient?",
+        "Are loss and primary gradients equal to the reference across reductions?",
+        "Are explicit inplace=True and default compatibility semantics unchanged?"
+      ],
+      "repository": "linkedin/Liger-Kernel"
+    },
+    {
+      "base_sha": "c9fc646f4f32b7f1a852d90159bcb3358444bb93",
+      "case_id": "liger-pr-1283",
+      "changed_paths": [
+        "src/liger_kernel/ops/fused_linear_cross_entropy.py"
+      ],
+      "claim": "FLCE grad_weight accumulation aligns input-chunk dtype under AMP.",
+      "decision_rule": "Accept if head fixes all mixed-dtype cases without precision-policy regression. A single missing AMP pairing is revise; silent accumulator downcast or broad numeric divergence is reject.",
+      "execution_tier": "exact mixed-dtype accumulation matrix against FP32 reference",
+      "head_sha": "15a4ea0feb0fdb61b176e09d6aba39b9bb889aab",
+      "project": "liger-kernel",
+      "pull_number": 1283,
+      "questions": [
+        "Does accumulation avoid addmm dtype errors for frozen AMP dtype pairs?",
+        "Is the cast applied to the input chunk rather than silently narrowing grad_weight?",
+        "Are accumulated values within dtype-appropriate tolerance?",
+        "Do same-dtype and repeated-accumulation controls remain unchanged?"
+      ],
+      "repository": "linkedin/Liger-Kernel"
+    },
+    {
+      "base_sha": "cf2f07d7b1315c96c05554c670c43207c6783e5e",
+      "case_id": "megatron-pr-5726",
+      "changed_paths": [
+        "megatron/core/datasets/indexed_dataset.py",
+        "tests/unit_tests/data/test_builder.py"
+      ],
+      "claim": "multimodal add_document derives default modes from the number of lengths entries.",
+      "decision_rule": "Accept if default cardinality follows lengths and explicit behavior is preserved. A bounded malformed-input policy gap is revise; continued metadata misalignment or silent truncation is reject.",
+      "execution_tier": "exact builder call matrix with mocked document metadata",
+      "head_sha": "2116952f43841c84094e25a4cb1d44c0fc9810b5",
+      "project": "megatron-core",
+      "pull_number": 5726,
+      "questions": [
+        "When modes are omitted, is one default mode produced per lengths entry?",
+        "Are one, multiple, and empty/malformed length collections handled deterministically?",
+        "Are explicit valid modes preserved and mismatches rejected or documented?",
+        "Does direct coverage distinguish document count from lengths count?"
+      ],
+      "repository": "NVIDIA/Megatron-LM"
+    },
+    {
+      "base_sha": "48a887fecd01674346f724dcf44f417f455989f0",
+      "case_id": "megatron-pr-5759",
+      "changed_paths": [
+        "megatron/core/dist_checkpointing/serialization.py",
+        "megatron/core/dist_checkpointing/strategies/torch.py",
+        "tests/unit_tests/dist_checkpointing/test_serialization.py"
+      ],
+      "claim": "remove_sharded_tensors remains a working public API across checkpoint strategies.",
+      "decision_rule": "Accept if API, filtering semantics, and affected callers all work. A local unsupported container with a closure test is revise; a broken public import or destructive filtering of unrelated state is reject.",
+      "execution_tier": "exact import/signature and nested checkpoint filtering probe",
+      "head_sha": "c656b65cd38a1cd92a2dd92b0e2607455c7ebe95",
+      "project": "megatron-core",
+      "pull_number": 5759,
+      "questions": [
+        "Can callers import and invoke the documented public function?",
+        "Are selected sharded tensors removed while unrelated nested values are retained?",
+        "Do affected torch checkpoint strategy callers use the restored contract?",
+        "Is the re-enabled direct unit test behaviorally distinguishing?"
+      ],
+      "repository": "NVIDIA/Megatron-LM"
+    },
+    {
+      "base_sha": "ebcb74abd477afbcb940c8ba30d45f983597e38e",
+      "case_id": "sglang-pr-31339",
+      "changed_paths": [
+        "python/sglang/srt/observability/req_time_stats.py"
+      ],
+      "claim": "ReqTimeStats survives scheduler IPC serialization without field loss.",
+      "decision_rule": "Accept if head preserves every field and compatibility control. A bounded optional field default gap is revise; continued silent metric loss or payload incompatibility is reject.",
+      "execution_tier": "exact encode/decode round-trip over populated and default records",
+      "head_sha": "a63b3d1537042c6c489464fbcf71e87ef5c23601",
+      "project": "sglang",
+      "pull_number": 31339,
+      "questions": [
+        "Are all populated timing fields preserved exactly across IPC round-trip?",
+        "Are None/default and backward-compatible payloads handled deterministically?",
+        "Do repeated and collection round-trips retain record identity semantics?",
+        "Does direct coverage fail on the base field omission?"
+      ],
+      "repository": "sgl-project/sglang"
+    },
+    {
+      "base_sha": "c879f3da5ceaaef3cb197c4e59ce683d420ce96c",
+      "case_id": "sglang-pr-31351",
+      "changed_paths": [
+        "python/sglang/srt/function_call/deepseekv31_detector.py",
+        "python/sglang/srt/function_call/deepseekv3_detector.py",
+        "test/registered/unit/function_call/test_deepseekv3_detector.py"
+      ],
+      "claim": "DeepSeek streaming detectors never leak partial bot-token bytes.",
+      "decision_rule": "Accept only if both detectors satisfy exhaustive frozen chunk splits. One bounded detector omission with the same local remedy is revise; unretractable leakage across multiple boundary families or corrupted user text is reject.",
+      "execution_tier": "exact byte/chunk boundary matrix for both changed detectors",
+      "head_sha": "a0feee7906f36bdb45c35a9f63ae71927c03ec3f",
+      "project": "sglang",
+      "pull_number": 31351,
+      "questions": [
+        "Do splits at every byte of the bot token emit no partial marker text?",
+        "Does ordinary UTF-8 content reconstruct exactly once around marker boundaries?",
+        "Are complete markers detected with unchanged state transitions?",
+        "Do direct tests cover both detector variants, Unicode, and incomplete streams?"
+      ],
+      "repository": "sgl-project/sglang"
+    },
+    {
+      "base_sha": "77444f3d32632bc75f7270566f9d08281371a6d0",
+      "case_id": "torchtitan-pr-3861",
+      "changed_paths": [
+        "torchtitan/experiments/rl/actors/trainer.py"
+      ],
+      "claim": "RL checkpoint loading preserves buffer dtype instead of silently downcasting it.",
+      "decision_rule": "Accept if every frozen buffer dtype is preserved without changing parameter policy. A bounded buffer class omission is revise; continued silent downcast or checkpoint value corruption is reject.",
+      "execution_tier": "exact state-loading probe over parameter and buffer dtype pairs",
+      "head_sha": "8e9a733cae5c9e6115ce2603aabd2c6486fc555c",
+      "project": "torchtitan",
+      "pull_number": 3861,
+      "questions": [
+        "Do FP32/FP64/integer buffers retain checkpoint dtype through the affected path?",
+        "Are parameter casting semantics unchanged?",
+        "Do nested modules and persistent/nonpersistent buffer controls behave correctly?",
+        "Does direct coverage distinguish a buffer from a parameter?"
+      ],
+      "repository": "pytorch/torchtitan"
+    },
+    {
+      "base_sha": "77444f3d32632bc75f7270566f9d08281371a6d0",
+      "case_id": "torchtitan-pr-3869",
+      "changed_paths": [
+        "torchtitan/distributed/tensor_parallel.py"
+      ],
+      "claim": "AsyncTP is enabled exactly when its runtime prerequisites hold.",
+      "decision_rule": "Accept if the enablement truth table is exact and fails safely. A single local predicate omission is revise; enabling on an unsupported runtime or disabling broad valid classes is reject.",
+      "execution_tier": "exact configuration predicate truth table with mocked capabilities",
+      "head_sha": "d72d17cb4d819309b67d596d0d4f14dc32e0ff3f",
+      "project": "torchtitan",
+      "pull_number": 3869,
+      "questions": [
+        "Does the intended valid tensor-parallel configuration enable AsyncTP?",
+        "Do degree-one, unsupported backend, or missing compile prerequisites remain disabled?",
+        "Are explicit user disable/enable controls respected with actionable errors?",
+        "Does direct coverage include the previously misclassified valid case and invalid neighbors?"
+      ],
+      "repository": "pytorch/torchtitan"
+    },
+    {
+      "base_sha": "876d3ff9f434f5a7399716fb3a25654bfa2f284d",
+      "case_id": "verl-pr-7010",
+      "changed_paths": [
+        "tests/experimental/fully_async_policy/test_rollouter_lock_on_cpu.py",
+        "verl/experimental/fully_async_policy/fully_async_rollouter.py"
+      ],
+      "claim": "waiting for rollout capacity does not hold the fully-async state lock.",
+      "decision_rule": "Accept if head restores concurrent progress and preserves state invariants. A local cancellation/wakeup omission with a deterministic closure test is revise; deadlock, lost capacity, or a cross-cutting lock redesign is reject.",
+      "execution_tier": "exact bounded concurrency schedule with progress and state invariants",
+      "head_sha": "7e2d343eb9c26149f55be823838b60e8ba199ccd",
+      "project": "verl",
+      "pull_number": 7010,
+      "questions": [
+        "Can an independent state operation acquire the lock while capacity wait is blocked?",
+        "Does the waiter resume exactly once after capacity becomes available?",
+        "Are counters, wakeups, and cancellation paths free of lost updates?",
+        "Does direct CPU coverage deterministically distinguish base from head?"
+      ],
+      "repository": "verl-project/verl"
+    },
+    {
+      "base_sha": "2239fd0ff7210c80ad63e20581924d1f66167429",
+      "case_id": "verl-pr-7046",
+      "changed_paths": [
+        "verl/tools/base_tool.py"
+      ],
+      "claim": "BaseTool initialization resolves fallbacks without circular recursion.",
+      "decision_rule": "Accept if all constructors terminate and precedence is preserved. A bounded missing default case is revise; recursion, silent invalid configuration, or broken subclass initialization is reject.",
+      "execution_tier": "exact constructor matrix over base, subclass, missing, and explicit values",
+      "head_sha": "d208472084a3f832e808a690d68045634969241d",
+      "project": "verl",
+      "pull_number": 7046,
+      "questions": [
+        "Do missing optional values terminate without recursive fallback?",
+        "Are subclass defaults and explicit caller values resolved with stable precedence?",
+        "Do invalid required values fail once with an actionable exception?",
+        "Does direct coverage include the cycle-triggering base case and valid controls?"
+      ],
+      "repository": "verl-project/verl"
+    },
+    {
+      "base_sha": "0885b51981d09089e7a067276046b04a20e5b59d",
+      "case_id": "vllm-pr-48754",
+      "changed_paths": [
+        "vllm/config/speculative.py"
+      ],
+      "claim": "local speculators containing dots in their names are not misclassified as custom classes.",
+      "decision_rule": "Accept if the full classifier truth table is exact. A bounded path-form omission is revise; misrouting genuine classes or broad local names is reject.",
+      "execution_tier": "exact speculative-config classifier truth table",
+      "head_sha": "2f5ada05e987d98859540d1afeb52f12167440f0",
+      "project": "vllm",
+      "pull_number": 48754,
+      "questions": [
+        "Are existing local paths and registered local names with dots classified as local?",
+        "Are genuine module.Class references still classified as custom classes?",
+        "Are built-in and nonexistent-name error paths unchanged?",
+        "Does direct coverage include ambiguous dotted controls rather than one literal?"
+      ],
+      "repository": "vllm-project/vllm"
+    },
+    {
+      "base_sha": "0885b51981d09089e7a067276046b04a20e5b59d",
+      "case_id": "vllm-pr-48755",
+      "changed_paths": [
+        "tests/tool_parsers/test_internlm2_tool_parser.py",
+        "vllm/tool_parsers/internlm2_tool_parser.py"
+      ],
+      "claim": "InternLM2 streaming deltas derive from raw input and reconstruct tool arguments exactly once.",
+      "decision_rule": "Accept only if all frozen chunk families reconstruct exactly. One bounded parser state with a local remedy is revise; unretractable corruption across multiple boundary families or a required parser redesign is reject.",
+      "execution_tier": "exact parser execution across exhaustive frozen JSON chunk boundaries",
+      "head_sha": "0b56da7b4ebae0c2103ffd36c157e3ca84e56688",
+      "project": "vllm",
+      "pull_number": 48755,
+      "questions": [
+        "Do emitted argument deltas concatenate to the final raw argument JSON exactly once?",
+        "Are splits inside keys, escapes, Unicode, values, and delimiters correct?",
+        "Are multiple calls, incomplete input, and ordinary text handled deterministically?",
+        "Do direct tests distinguish raw input offsets from re-serialized JSON offsets?"
+      ],
+      "repository": "vllm-project/vllm"
+    }
+  ],
+  "frozen_at": "2026-09-02T08:06:11.467377+00:00",
+  "frozen_before_source_diff_content_inspection": true,
+  "machine_policy_id": "case-contract-repairability-v0.1",
+  "merge_outcomes_visible_to_machine_judge": false,
+  "protocol_id": "historical-pr-blind-repairability-v0.1-r11-20",
+  "review_text_requested": false,
+  "review_text_visible_to_machine_judge": false,
+  "schema_version": "0.1",
+  "scoring_policy": {
+    "decisions": [
+      "accept_with_scope",
+      "revise",
+      "reject",
+      "unresolved"
+    ],
+    "forced_polarization_used": false,
+    "kind": "ordered exact-contract judgment with repairability triage",
+    "missing_environment_evidence": "unresolved, never candidate fail",
+    "revise_is_bounded_repairability_claim": true,
+    "weighted_score_used": false
+  },
+  "selection_lock_sha256": "sha256:90a16796bc3816ac1283c400f3c0d02a796b936dd2a138e5a73f9648e3d92750",
+  "test_plan_sha256": "sha256:8f5d306954fe6acac7c650dda397c4469f93e6ec6b467393738e0aa778f3bfb8"
+}

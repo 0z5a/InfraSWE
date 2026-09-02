@@ -1,0 +1,60 @@
+{
+  "schema_version": "0.1",
+  "protocol_id": "historical-pr-blind-repairability-v0.1-r11-20",
+  "frozen_at": "2026-09-02T08:03:19+00:00",
+  "case_count": 20,
+  "project_count": 10,
+  "cases_per_project": 2,
+  "source_discovery_lock_sha256": "sha256:dd6e6596bbf73578255bbe49a20b69d55f68f2ad2f1f2c1be2bc02770c0cf3ef",
+  "prior_selection_lock_sha256": [
+    "sha256:e3e4ce43bba9f8e8552a82c670e81b3a20f2c4af7f9c855960da61297cb982eb",
+    "sha256:de17daef35221ddc7f893f39132ead5173eb8d32f056de541a5e9d506cd3334f"
+  ],
+  "merge_outcomes_visible_to_machine_judge": false,
+  "review_text_visible_to_machine_judge": false,
+  "ci_fields_visible_to_machine_judge": false,
+  "diff_content_visible_during_policy_freeze": false,
+  "selection_basis": [
+    "outcome-free title",
+    "changed repository-relative paths",
+    "additions, deletions, and changed-file count",
+    "exact base and head SHA metadata"
+  ],
+  "selection_rules": [
+    "select exactly two eligible and previously unused cases from each default project",
+    "prefer changes with an independently executable boundary, state, dtype, parser, compile, or concurrency contract",
+    "include both apparently local repairs and potentially cross-cutting invariant changes",
+    "do not infer disposition from title sentiment, author identity, PR age, review, CI, state, or merge outcome"
+  ],
+  "machine_policy": {
+    "policy_id": "case-contract-repairability-v0.1",
+    "accept_rule": "all blocking exact-contract checks pass; scope limitations remain explicit",
+    "revise_rule": "the primary direction is demonstrated, no regression or integrity hazard remains, remediation is bounded, and an executable closure test exists",
+    "reject_rule": "the primary claim is false or a semantic no-op, head regresses baseline, integrity is at risk, remediation is unbounded or design-level, closure testing is absent, or multiple residual failure families remain",
+    "unresolved_rule": "required evidence could not be obtained for infrastructure reasons",
+    "weighted_score": false,
+    "forced_polarization": false
+  },
+  "selected_case_ids": [
+    "cutlass-pr-3352",
+    "cutlass-pr-3380",
+    "deepgemm-pr-327",
+    "deepgemm-pr-337",
+    "flashattention-pr-2662",
+    "flashattention-pr-2678",
+    "flashinfer-pr-3930",
+    "flashinfer-pr-3990",
+    "liger-pr-1251",
+    "liger-pr-1283",
+    "megatron-pr-5726",
+    "megatron-pr-5759",
+    "sglang-pr-31339",
+    "sglang-pr-31351",
+    "torchtitan-pr-3861",
+    "torchtitan-pr-3869",
+    "verl-pr-7010",
+    "verl-pr-7046",
+    "vllm-pr-48754",
+    "vllm-pr-48755"
+  ]
+}

@@ -208,7 +208,11 @@ def _native_trace_passed(
     if backend == "torch-sdpa-aotriton":
         native_tokens = ("aotriton", "attn_fwd", "fmha_fwd", "flash")
         return all(
-            any(any(token in name for token in native_tokens) for name in names)
+            any(
+                not name.startswith("aten::")
+                and any(token in name for token in native_tokens)
+                for name in names
+            )
             for names in names_by_case.values()
         )
     if backend.startswith("fa") or backend.startswith("torch-sdpa"):

@@ -273,6 +273,33 @@ def test_mi300x_aotriton_native_trace_can_certify() -> None:
     assert candidate["implementation_mechanism"] == "aotriton"
 
 
+def test_mi300x_aotriton_rejects_framework_flash_wrapper_without_native_kernel() -> None:
+    payloads = suite_payloads()
+    for _, payload in payloads:
+        payload["hardware"] = amd_hardware()
+        if payload.get("benchmark") == "attention":
+            payload["backend"] = "torch-sdpa-aotriton"
+            payload["backend_version"] = "2.4.0+rocm6.1"
+            payload["implementation_commit"] = "pytorch-2.4.0-rocm6.1-aotriton"
+            payload["implementation_mechanism"] = "aotriton"
+            for item in payload["cases"]:
+                item["profiler"] = {
+                    "captured": True,
+                    "device_events": [{"name": "aten::_flash_attention_forward"}],
+                }
+
+    suite = assemble_suite(payloads)
+    candidate = next(
+        item
+        for item in suite["cells"][0]["candidates"]
+        if item["backend"] == "torch-sdpa-aotriton"
+    )
+
+    assert candidate["certified"] is False
+    assert candidate["disposition"] == "invalid"
+    assert "FALLBACK_NATIVE_TRACE_MISSING" in candidate["failure_codes"]
+
+
 def test_mi300x_report_renders_rocm_architecture_without_cuda_labels() -> None:
     payloads = suite_payloads()
     for _, payload in payloads:

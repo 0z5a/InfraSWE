@@ -20,6 +20,8 @@ class HardwareProfile(BaseModel):
     gpu_model: str | None = None
     runtime: Literal["cuda", "rocm"] | None = None
     runtime_version: str | None = None
+    compiler_version: str | None = None
+    framework_runtime_version: str | None = None
     compute_capability: str | None = None
     interconnect: str | None = None
     experimental: bool = False
@@ -102,6 +104,21 @@ def validate_hardware_manifest(
         errors.append(
             f"runtime version {runtime_version or 'unknown'} does not match required "
             f"prefix {profile.runtime_version}"
+        )
+    compiler_version = str(manifest.get("compiler_version") or "")
+    if profile.compiler_version and not compiler_version.startswith(profile.compiler_version):
+        errors.append(
+            f"compiler version {compiler_version or 'unknown'} does not match required "
+            f"prefix {profile.compiler_version}"
+        )
+    framework_runtime_version = str(manifest.get("framework_runtime_version") or "")
+    if profile.framework_runtime_version and not framework_runtime_version.startswith(
+        profile.framework_runtime_version
+    ):
+        errors.append(
+            "framework runtime version "
+            f"{framework_runtime_version or 'unknown'} does not match required "
+            f"prefix {profile.framework_runtime_version}"
         )
     if profile.compute_capability and profile.gpu_count:
         capabilities = _compute_capabilities(manifest)

@@ -469,7 +469,7 @@ def main() -> None:
             "warmup_calls": 5,
             "fresh_process": True,
             "fresh_allocator_per_replay": True,
-            "timer": "evaluator-owned-cuda-events",
+            "timer": f"evaluator-owned-{device_timer_name()}",
             "device_timer": device_timer_name(),
             "completion_fence": "end-event-synchronize",
             "profiler_separate_from_official_timing": True,

@@ -6,15 +6,22 @@ import platform
 import re
 import shutil
 import subprocess
+import sys
 from contextlib import suppress
 from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
 
 
-def _run(command: list[str]) -> tuple[int, str]:
+def _run(command: list[str], *, timeout_seconds: int = 20) -> tuple[int, str]:
     try:
-        completed = subprocess.run(command, text=True, capture_output=True, timeout=20, check=False)
+        completed = subprocess.run(
+            command,
+            text=True,
+            capture_output=True,
+            timeout=timeout_seconds,
+            check=False,
+        )
     except (FileNotFoundError, subprocess.TimeoutExpired) as error:
         return 127, str(error)
     output = completed.stdout.strip() or completed.stderr.strip()
@@ -37,7 +44,7 @@ def _cuda_version(raw: str) -> str | None:
 
 
 def _nvidia_accelerators(raw: str, *, nvcc_version: str = "") -> list[dict[str, Any]]:
-    runtime_version = _cuda_version(nvcc_version)
+    compiler_version = _cuda_version(nvcc_version)
     accelerators = []
     for line in raw.splitlines():
         fields = [field.strip() for field in line.split(",")]
@@ -62,7 +69,10 @@ def _nvidia_accelerators(raw: str, *, nvcc_version: str = "") -> list[dict[str, 
                 "architecture": f"sm{capability.replace('.', '')}",
                 "compute_capability": capability,
                 "runtime": "cuda",
-                "runtime_version": runtime_version,
+                # Kept for schema v0.2 compatibility. New profiles should use
+                # compiler_version and framework_runtime_version explicitly.
+                "runtime_version": compiler_version,
+                "compiler_version": compiler_version,
             }
         )
     return accelerators
@@ -100,7 +110,13 @@ def _amd_accelerators(snapshot: Any, *, rocminfo: str, hipcc_version: str) -> li
         if re.fullmatch(r"card[0-9]+", str(key), flags=re.IGNORECASE) and isinstance(value, dict)
     ]
     architectures = _rocm_architectures(rocminfo)
-    runtime_version = _rocm_version(hipcc_version)
+    compiler_version = _rocm_version(hipcc_version)
+    system = snapshot.get("system", {})
+    normalized_system = (
+        {str(key).lower(): value for key, value in system.items()}
+        if isinstance(system, dict)
+        else {}
+    )
     accelerators = []
     for ordinal, (card, details) in enumerate(sorted(cards)):
         normalized = {str(key).lower(): value for key, value in details.items()}
@@ -131,12 +147,16 @@ def _amd_accelerators(snapshot: Any, *, rocminfo: str, hipcc_version: str) -> li
                 "name": first_value("card series", "product name", "device name", "card model"),
                 "uuid": first_value("unique id", "serial"),
                 "memory_bytes": memory_bytes,
-                "driver_version": first_value("driver version"),
+                "driver_version": first_value("driver version")
+                or first_value("driver version", values=normalized_system),
                 "pci_bus_id": first_value("pci bus"),
                 "architecture": architecture,
                 "compute_capability": None,
                 "runtime": "rocm",
-                "runtime_version": runtime_version,
+                # Kept for schema v0.2 compatibility. New profiles should use
+                # compiler_version and framework_runtime_version explicitly.
+                "runtime_version": compiler_version,
+                "compiler_version": compiler_version,
             }
         )
     return accelerators
@@ -180,6 +200,16 @@ def collect_hardware_manifest(profile: str) -> dict[str, Any]:
         "amd_topology": ["rocm-smi", "--showtopo"],
         "rocminfo": ["rocminfo"],
         "hipcc_version": ["hipcc", "--version"],
+        "framework_runtime": [
+            sys.executable,
+            "-c",
+            (
+                "import json, torch; "
+                "print(json.dumps({'framework': 'torch', 'framework_version': "
+                "torch.__version__, 'cuda': torch.version.cuda, "
+                "'hip': getattr(torch.version, 'hip', None)}))"
+            ),
+        ],
         "infiniband": ["ibv_devices"],
         "cgroup": ["sh", "-c", "cat /sys/fs/cgroup/cgroup.controllers"],
         "network": ["ip", "-json", "-brief", "link"],
@@ -188,13 +218,16 @@ def collect_hardware_manifest(profile: str) -> dict[str, Any]:
         if shutil.which(command[0]) is None:
             manifest["commands"][name] = {"available": False, "error": "command not found"}
             continue
-        code, output = _run(command)
+        code, output = _run(
+            command,
+            timeout_seconds=120 if name == "framework_runtime" else 20,
+        )
         manifest["commands"][name] = {
             "available": code == 0,
             "exit_code": code,
             "raw": output,
         }
-        if name == "amd_query" and code == 0:
+        if name in {"amd_query", "framework_runtime"} and code == 0:
             with suppress(json.JSONDecodeError):
                 manifest["commands"][name]["json"] = json.loads(output)
 
@@ -213,6 +246,27 @@ def collect_hardware_manifest(profile: str) -> dict[str, Any]:
     manifest["accelerator_vendor"] = accelerators[0]["vendor"] if accelerators else None
     manifest["runtime"] = accelerators[0].get("runtime") if accelerators else None
     manifest["runtime_version"] = accelerators[0].get("runtime_version") if accelerators else None
+    manifest["compiler_version"] = (
+        accelerators[0].get("compiler_version") if accelerators else None
+    )
+    framework = manifest["commands"].get("framework_runtime", {}).get("json", {})
+    framework_runtime = manifest["runtime"]
+    manifest["framework"] = framework.get("framework") if isinstance(framework, dict) else None
+    manifest["framework_version"] = (
+        framework.get("framework_version") if isinstance(framework, dict) else None
+    )
+    manifest["framework_runtime_version"] = (
+        framework.get("hip" if framework_runtime == "rocm" else "cuda")
+        if isinstance(framework, dict) and framework_runtime in {"rocm", "cuda"}
+        else None
+    )
+    manifest["driver_versions"] = sorted(
+        {
+            str(accelerator["driver_version"])
+            for accelerator in accelerators
+            if accelerator.get("driver_version")
+        }
+    )
     manifest["gpu_count"] = len(accelerators)
     return manifest
 

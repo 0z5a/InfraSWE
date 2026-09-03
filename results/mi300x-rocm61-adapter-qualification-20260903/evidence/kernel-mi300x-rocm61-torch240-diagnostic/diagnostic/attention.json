@@ -1,0 +1,634 @@
+{
+  "all_correct": true,
+  "backend": "torch-sdpa-aotriton",
+  "backend_version": "2.4.0+rocm6.1",
+  "benchmark": "flash-attention-forward-portfolio-v1",
+  "benchmark_kind": "kernel-library",
+  "case_count": 5,
+  "cases": [
+    {
+      "case_group": "common",
+      "case_id": "common-b4-s512-h16-d64-noncausal",
+      "causal": false,
+      "correctness": {
+        "cosine_similarity": 0.9999836683273315,
+        "dynamic_input_changes_output": true,
+        "max_abs_error": 0.0078125,
+        "mean_abs_error": 0.00028733350336551666,
+        "passed": true,
+        "relative_l2_error": 0.005718017928302288
+      },
+      "dtype": "bfloat16",
+      "measurement": {
+        "blocks": [
+          {
+            "block_index": 1,
+            "candidate_latency_us": 48.88840578496456,
+            "candidate_positions_us": [
+              50.65356194972992,
+              47.1232496201992
+            ],
+            "order": "ABBA",
+            "reference_latency_us": 223.0599045753479,
+            "reference_positions_us": [
+              232.4187994003296,
+              213.7010097503662
+            ]
+          }
+        ],
+        "candidate": "torch-sdpa-aotriton",
+        "candidate_pilot_us": 65.05800038576126,
+        "candidate_repetitions": 16,
+        "reference": "torch-sdpa-math",
+        "reference_pilot_us": 231.4469963312149,
+        "reference_repetitions": 5
+      },
+      "profiler": {
+        "captured": true,
+        "cuda_events": [
+          {
+            "count": 1,
+            "device_time_us": 46.02900000000227,
+            "name": "aten::scaled_dot_product_attention",
+            "self_device_time_us": 0.0
+          },
+          {
+            "count": 1,
+            "device_time_us": 46.02900000000227,
+            "name": "aten::_scaled_dot_product_flash_attention",
+            "self_device_time_us": 0.0
+          },
+          {
+            "count": 1,
+            "device_time_us": 46.02900000000227,
+            "name": "aten::_flash_attention_forward",
+            "self_device_time_us": 46.02900000000227
+          },
+          {
+            "count": 1,
+            "device_time_us": 46.02900000000227,
+            "name": "attn_fwd_0d1d2d3d45d6d7d8d9d1011d12d13d1415d16d17d1819d20d21d2223d24d25d262728",
+            "self_device_time_us": 46.02900000000227
+          }
+        ],
+        "device_event_runtime": "hip",
+        "device_events": [
+          {
+            "count": 1,
+            "device_time_us": 46.02900000000227,
+            "name": "aten::scaled_dot_product_attention",
+            "self_device_time_us": 0.0
+          },
+          {
+            "count": 1,
+            "device_time_us": 46.02900000000227,
+            "name": "aten::_scaled_dot_product_flash_attention",
+            "self_device_time_us": 0.0
+          },
+          {
+            "count": 1,
+            "device_time_us": 46.02900000000227,
+            "name": "aten::_flash_attention_forward",
+            "self_device_time_us": 46.02900000000227
+          },
+          {
+            "count": 1,
+            "device_time_us": 46.02900000000227,
+            "name": "attn_fwd_0d1d2d3d45d6d7d8d9d1011d12d13d1415d16d17d1819d20d21d2223d24d25d262728",
+            "self_device_time_us": 46.02900000000227
+          }
+        ]
+      },
+      "shape": {
+        "batch": 4,
+        "head_dim": 64,
+        "heads": 16,
+        "seqlen": 512
+      },
+      "weight": 0.2,
+      "work_model": {
+        "known_omissions": [
+          "softmax scalar operations",
+          "scheduler and launch floors"
+        ],
+        "minimum_external_bytes": 16777216,
+        "semantic_flops": 4294967296,
+        "version": "attention-fwd-semantic-v1"
+      }
+    },
+    {
+      "case_group": "common",
+      "case_id": "common-b2-s1024-h16-d64-causal",
+      "causal": true,
+      "correctness": {
+        "cosine_similarity": 0.9999882578849792,
+        "dynamic_input_changes_output": true,
+        "max_abs_error": 0.015625,
+        "mean_abs_error": 0.0003506324137561023,
+        "passed": true,
+        "relative_l2_error": 0.004859864246100187
+      },
+      "dtype": "bfloat16",
+      "measurement": {
+        "blocks": [
+          {
+            "block_index": 1,
+            "candidate_latency_us": 76.41658999703148,
+            "candidate_positions_us": [
+              77.41445302963257,
+              75.41872696443038
+            ],
+            "order": "ABBA",
+            "reference_latency_us": 398.371676603953,
+            "reference_positions_us": [
+              395.05334695180255,
+              401.6900062561035
+            ]
+          }
+        ],
+        "candidate": "torch-sdpa-aotriton",
+        "candidate_pilot_us": 97.8270024061203,
+        "candidate_repetitions": 11,
+        "reference": "torch-sdpa-math",
+        "reference_pilot_us": 436.98498606681824,
+        "reference_repetitions": 3
+      },
+      "profiler": {
+        "captured": true,
+        "cuda_events": [
+          {
+            "count": 1,
+            "device_time_us": 79.15799999999999,
+            "name": "aten::scaled_dot_product_attention",
+            "self_device_time_us": 0.0
+          },
+          {
+            "count": 1,
+            "device_time_us": 79.15799999999999,
+            "name": "aten::_scaled_dot_product_flash_attention",
+            "self_device_time_us": 0.0
+          },
+          {
+            "count": 1,
+            "device_time_us": 79.15799999999999,
+            "name": "aten::_flash_attention_forward",
+            "self_device_time_us": 79.15799999999999
+          },
+          {
+            "count": 1,
+            "device_time_us": 79.15799999999999,
+            "name": "attn_fwd_0d1d2d3d45d6d7d8d9d1011d12d13d1415d16d17d1819d20d21d2223d24d25d262728",
+            "self_device_time_us": 79.15799999999999
+          }
+        ],
+        "device_event_runtime": "hip",
+        "device_events": [
+          {
+            "count": 1,
+            "device_time_us": 79.15799999999999,
+            "name": "aten::scaled_dot_product_attention",
+            "self_device_time_us": 0.0
+          },
+          {
+            "count": 1,
+            "device_time_us": 79.15799999999999,
+            "name": "aten::_scaled_dot_product_flash_attention",
+            "self_device_time_us": 0.0
+          },
+          {
+            "count": 1,
+            "device_time_us": 79.15799999999999,
+            "name": "aten::_flash_attention_forward",
+            "self_device_time_us": 79.15799999999999
+          },
+          {
+            "count": 1,
+            "device_time_us": 79.15799999999999,
+            "name": "attn_fwd_0d1d2d3d45d6d7d8d9d1011d12d13d1415d16d17d1819d20d21d2223d24d25d262728",
+            "self_device_time_us": 79.15799999999999
+          }
+        ]
+      },
+      "shape": {
+        "batch": 2,
+        "head_dim": 64,
+        "heads": 16,
+        "seqlen": 1024
+      },
+      "weight": 0.2,
+      "work_model": {
+        "known_omissions": [
+          "softmax scalar operations",
+          "scheduler and launch floors"
+        ],
+        "minimum_external_bytes": 16777216,
+        "semantic_flops": 4294967296,
+        "version": "attention-fwd-semantic-v1"
+      }
+    },
+    {
+      "case_group": "common",
+      "case_id": "common-b1-s2048-h16-d128-causal",
+      "causal": true,
+      "correctness": {
+        "cosine_similarity": 0.9999881386756897,
+        "dynamic_input_changes_output": true,
+        "max_abs_error": 0.01953125,
+        "mean_abs_error": 0.00026049616280943155,
+        "passed": true,
+        "relative_l2_error": 0.004870974458754063
+      },
+      "dtype": "bfloat16",
+      "measurement": {
+        "blocks": [
+          {
+            "block_index": 1,
+            "candidate_latency_us": 171.1009979248047,
+            "candidate_positions_us": [
+              164.67939615249634,
+              177.52259969711304
+            ],
+            "order": "BAAB",
+            "reference_latency_us": 644.9587345123291,
+            "reference_positions_us": [
+              646.2154984474182,
+              643.70197057724
+            ]
+          }
+        ],
+        "candidate": "torch-sdpa-aotriton",
+        "candidate_pilot_us": 215.6040072441101,
+        "candidate_repetitions": 5,
+        "reference": "torch-sdpa-math",
+        "reference_pilot_us": 728.8939952850342,
+        "reference_repetitions": 2
+      },
+      "profiler": {
+        "captured": true,
+        "cuda_events": [
+          {
+            "count": 1,
+            "device_time_us": 169.054,
+            "name": "aten::scaled_dot_product_attention",
+            "self_device_time_us": 0.0
+          },
+          {
+            "count": 1,
+            "device_time_us": 169.054,
+            "name": "aten::_scaled_dot_product_flash_attention",
+            "self_device_time_us": 0.0
+          },
+          {
+            "count": 1,
+            "device_time_us": 169.054,
+            "name": "aten::_flash_attention_forward",
+            "self_device_time_us": 169.054
+          },
+          {
+            "count": 1,
+            "device_time_us": 169.054,
+            "name": "attn_fwd_0d1d2d3d45d6d7d8d9d1011d12d13d1415d16d17d1819d20d21d2223d24d25d262728",
+            "self_device_time_us": 169.054
+          }
+        ],
+        "device_event_runtime": "hip",
+        "device_events": [
+          {
+            "count": 1,
+            "device_time_us": 169.054,
+            "name": "aten::scaled_dot_product_attention",
+            "self_device_time_us": 0.0
+          },
+          {
+            "count": 1,
+            "device_time_us": 169.054,
+            "name": "aten::_scaled_dot_product_flash_attention",
+            "self_device_time_us": 0.0
+          },
+          {
+            "count": 1,
+            "device_time_us": 169.054,
+            "name": "aten::_flash_attention_forward",
+            "self_device_time_us": 169.054
+          },
+          {
+            "count": 1,
+            "device_time_us": 169.054,
+            "name": "attn_fwd_0d1d2d3d45d6d7d8d9d1011d12d13d1415d16d17d1819d20d21d2223d24d25d262728",
+            "self_device_time_us": 169.054
+          }
+        ]
+      },
+      "shape": {
+        "batch": 1,
+        "head_dim": 128,
+        "heads": 16,
+        "seqlen": 2048
+      },
+      "weight": 0.2,
+      "work_model": {
+        "known_omissions": [
+          "softmax scalar operations",
+          "scheduler and launch floors"
+        ],
+        "minimum_external_bytes": 33554432,
+        "semantic_flops": 17179869184,
+        "version": "attention-fwd-semantic-v1"
+      }
+    },
+    {
+      "case_group": "boundary_tail",
+      "case_id": "boundary-b3-s1000-h12-d64-causal",
+      "causal": true,
+      "correctness": {
+        "cosine_similarity": 0.9999884963035583,
+        "dynamic_input_changes_output": true,
+        "max_abs_error": 0.015625,
+        "mean_abs_error": 0.0003534008574206382,
+        "passed": true,
+        "relative_l2_error": 0.004814421758055687
+      },
+      "dtype": "bfloat16",
+      "measurement": {
+        "blocks": [
+          {
+            "block_index": 1,
+            "candidate_latency_us": 80.05229830741882,
+            "candidate_positions_us": [
+              81.10989928245544,
+              78.9946973323822
+            ],
+            "order": "ABBA",
+            "reference_latency_us": 460.52501598993933,
+            "reference_positions_us": [
+              458.31501483917236,
+              462.73501714070636
+            ]
+          }
+        ],
+        "candidate": "torch-sdpa-aotriton",
+        "candidate_pilot_us": 106.64000362157822,
+        "candidate_repetitions": 10,
+        "reference": "torch-sdpa-math",
+        "reference_pilot_us": 479.1800081729889,
+        "reference_repetitions": 3
+      },
+      "profiler": {
+        "captured": true,
+        "cuda_events": [
+          {
+            "count": 1,
+            "device_time_us": 84.52699999999999,
+            "name": "aten::scaled_dot_product_attention",
+            "self_device_time_us": 0.0
+          },
+          {
+            "count": 1,
+            "device_time_us": 84.52699999999999,
+            "name": "aten::_scaled_dot_product_flash_attention",
+            "self_device_time_us": 0.0
+          },
+          {
+            "count": 1,
+            "device_time_us": 84.52699999999999,
+            "name": "aten::_flash_attention_forward",
+            "self_device_time_us": 84.52699999999999
+          },
+          {
+            "count": 1,
+            "device_time_us": 84.52699999999999,
+            "name": "attn_fwd_0d1d2d3d45d6d7d8d9d1011d12d13d1415d16d17d1819d20d21d2223d24d25d262728",
+            "self_device_time_us": 84.52699999999999
+          }
+        ],
+        "device_event_runtime": "hip",
+        "device_events": [
+          {
+            "count": 1,
+            "device_time_us": 84.52699999999999,
+            "name": "aten::scaled_dot_product_attention",
+            "self_device_time_us": 0.0
+          },
+          {
+            "count": 1,
+            "device_time_us": 84.52699999999999,
+            "name": "aten::_scaled_dot_product_flash_attention",
+            "self_device_time_us": 0.0
+          },
+          {
+            "count": 1,
+            "device_time_us": 84.52699999999999,
+            "name": "aten::_flash_attention_forward",
+            "self_device_time_us": 84.52699999999999
+          },
+          {
+            "count": 1,
+            "device_time_us": 84.52699999999999,
+            "name": "attn_fwd_0d1d2d3d45d6d7d8d9d1011d12d13d1415d16d17d1819d20d21d2223d24d25d262728",
+            "self_device_time_us": 84.52699999999999
+          }
+        ]
+      },
+      "shape": {
+        "batch": 3,
+        "head_dim": 64,
+        "heads": 12,
+        "seqlen": 1000
+      },
+      "weight": 0.2,
+      "work_model": {
+        "known_omissions": [
+          "softmax scalar operations",
+          "scheduler and launch floors"
+        ],
+        "minimum_external_bytes": 18432000,
+        "semantic_flops": 4608000000,
+        "version": "attention-fwd-semantic-v1"
+      }
+    },
+    {
+      "case_group": "stress_large",
+      "case_id": "stress-b1-s4096-h8-d128-causal",
+      "causal": true,
+      "correctness": {
+        "cosine_similarity": 0.9999873638153076,
+        "dynamic_input_changes_output": true,
+        "max_abs_error": 0.015625,
+        "mean_abs_error": 0.0001929957652464509,
+        "passed": true,
+        "relative_l2_error": 0.005037651397287846
+      },
+      "dtype": "bfloat16",
+      "measurement": {
+        "blocks": [
+          {
+            "block_index": 1,
+            "candidate_latency_us": 345.6724981466929,
+            "candidate_positions_us": [
+              358.1913312276204,
+              333.1536650657654
+            ],
+            "order": "ABBA",
+            "reference_latency_us": 1155.3499698638916,
+            "reference_positions_us": [
+              1134.9539756774902,
+              1175.745964050293
+            ]
+          }
+        ],
+        "candidate": "torch-sdpa-aotriton",
+        "candidate_pilot_us": 387.66199350357056,
+        "candidate_repetitions": 3,
+        "reference": "torch-sdpa-math",
+        "reference_pilot_us": 1187.9040002822876,
+        "reference_repetitions": 1
+      },
+      "profiler": {
+        "captured": true,
+        "cuda_events": [
+          {
+            "count": 1,
+            "device_time_us": 342.875,
+            "name": "aten::scaled_dot_product_attention",
+            "self_device_time_us": 0.0
+          },
+          {
+            "count": 1,
+            "device_time_us": 342.875,
+            "name": "aten::_scaled_dot_product_flash_attention",
+            "self_device_time_us": 0.0
+          },
+          {
+            "count": 1,
+            "device_time_us": 342.875,
+            "name": "aten::_flash_attention_forward",
+            "self_device_time_us": 342.875
+          },
+          {
+            "count": 1,
+            "device_time_us": 342.875,
+            "name": "attn_fwd_0d1d2d3d45d6d7d8d9d1011d12d13d1415d16d17d1819d20d21d2223d24d25d262728",
+            "self_device_time_us": 342.875
+          }
+        ],
+        "device_event_runtime": "hip",
+        "device_events": [
+          {
+            "count": 1,
+            "device_time_us": 342.875,
+            "name": "aten::scaled_dot_product_attention",
+            "self_device_time_us": 0.0
+          },
+          {
+            "count": 1,
+            "device_time_us": 342.875,
+            "name": "aten::_scaled_dot_product_flash_attention",
+            "self_device_time_us": 0.0
+          },
+          {
+            "count": 1,
+            "device_time_us": 342.875,
+            "name": "aten::_flash_attention_forward",
+            "self_device_time_us": 342.875
+          },
+          {
+            "count": 1,
+            "device_time_us": 342.875,
+            "name": "attn_fwd_0d1d2d3d45d6d7d8d9d1011d12d13d1415d16d17d1819d20d21d2223d24d25d262728",
+            "self_device_time_us": 342.875
+          }
+        ]
+      },
+      "shape": {
+        "batch": 1,
+        "head_dim": 128,
+        "heads": 8,
+        "seqlen": 4096
+      },
+      "weight": 0.2,
+      "work_model": {
+        "known_omissions": [
+          "softmax scalar operations",
+          "scheduler and launch floors"
+        ],
+        "minimum_external_bytes": 33554432,
+        "semantic_flops": 34359738368,
+        "version": "attention-fwd-semantic-v1"
+      }
+    }
+  ],
+  "finished_at": "2026-09-02T21:42:20.395162Z",
+  "hardware": {
+    "accelerator_vendor": "amd",
+    "architecture": "gfx942",
+    "compute_capability": null,
+    "compute_unit_count": 304,
+    "cudnn_version": null,
+    "driver_version": "6.10.5",
+    "gpu_name": "AMD Instinct MI300X",
+    "nvidia_smi": {},
+    "platform": "Linux-6.5.0-28-generic-x86_64-with-glibc2.35",
+    "python": "3.12.14",
+    "rocm_smi": {
+      "driver_version": "6.10.5",
+      "product_name": "AMD Instinct MI300X OAM",
+      "raw": {
+        "card0": {
+          "Card SKU": "MI3SRIOV",
+          "Card model": "0x74a1",
+          "Card series": "AMD Instinct MI300X OAM",
+          "Card vendor": "Advanced Micro Devices, Inc. [AMD/ATI]",
+          "Current Socket Graphics Package Power (W)": "136.0",
+          "GPU use (%)": "0",
+          "Temperature (Sensor junction) (C)": "42.0",
+          "Temperature (Sensor memory) (C)": "41.0",
+          "Unique ID": "0x54ffb3aebfced372",
+          "VRAM Total Memory (B)": "206141652992",
+          "VRAM Total Used Memory (B)": "297803776"
+        },
+        "system": {
+          "Driver version": "6.10.5"
+        }
+      },
+      "unique_id": "0x54ffb3aebfced372"
+    },
+    "runtime": "rocm",
+    "runtime_version": "6.1.40091-a8dbc0c19",
+    "sm_count": 304,
+    "torch_cuda": null,
+    "torch_hip": "6.1.40091-a8dbc0c19",
+    "torch_version": "2.4.0+rocm6.1",
+    "total_memory_bytes": 206141652992
+  },
+  "implementation_commit": "pytorch-2.4.0-rocm6.1-embedded-aotriton",
+  "implementation_mechanism": "aotriton",
+  "implementation_provenance": [
+    {
+      "module": "torch",
+      "path": "/workspace/infraswe/.venv/lib/python3.12/site-packages/torch/__init__.py",
+      "sha256": "sha256:34fd26c3046775a70a6a654df60afb362b2f2e98b2f9b8e713c8763b7a80ff83"
+    },
+    {
+      "module": "pytorch-rocm-attention-runtime",
+      "path": "/workspace/infraswe/.venv/lib/python3.12/site-packages/torch/lib/libtorch_hip.so",
+      "sha256": "sha256:0a255e140dd3afdabb1c3f5848c91990a538c834041821e258d633265ea66e88"
+    }
+  ],
+  "peak_memory_bytes": 637534208,
+  "protocol": {
+    "blocks": 1,
+    "completion_fence": "end-event-synchronize",
+    "device_timer": "hip-events",
+    "fresh_allocator_per_replay": true,
+    "fresh_process": true,
+    "min_timed_span_ms": 1.0,
+    "paired_order": "randomized-ABBA-or-BAAB",
+    "profiler_separate_from_official_timing": true,
+    "timer": "evaluator-owned-hip-events",
+    "warmup_calls": 5
+  },
+  "replay_index": 1,
+  "schema_version": "0.3",
+  "started_at": "2026-09-02T21:42:11.923985Z",
+  "status": "passed"
+}

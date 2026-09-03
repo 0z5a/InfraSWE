@@ -132,6 +132,12 @@ else
   "${python}" -m pip freeze > "${run_root}/environment-freeze.txt"
 fi
 rocm-smi > "${run_root}/rocm-smi-after.txt"
+
+# A run is not scoreable if the device became shared during measurement. This
+# second observation complements the pre-run check and fails before scoring.
+"${python}" rocm_lease_guard.py \
+  --device-index "${gpu}" \
+  --output "${run_root}/lease/exclusive-device-after.json"
 date -u +%Y-%m-%dT%H:%M:%SZ > "${run_root}/completed-at.txt"
 
 "${python}" score_results.py \

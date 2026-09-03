@@ -16,8 +16,8 @@ separate:
 | FA2 | Dao-AILab/flash-attention | `ce088ab9` | SM80 and SM120 |
 | FA3 | `hopper/` in the same repository | `ce088ab9` | SM80 |
 | FA4 | `flash-attn-4` | `4.0.0b28` | SM80 and SM120 (measured; explicit b28 dispatch) |
-| PyTorch Flash SDPA | PyTorch wheel + embedded AOTriton | `torch==2.4.0`, ROCm 6.1 | MI300X / gfx942 (adapter; hardware certification pending) |
-| Portable Triton classics | evaluator-owned Triton source | `infraswe-gfx942-portable-fixed-v1` | MI300X / gfx942 (adapter; hardware certification pending) |
+| PyTorch Flash SDPA | PyTorch wheel + embedded AOTriton | `torch==2.4.0`, ROCm 6.1 | MI300X / gfx942 (diagnostic qualified; formal scoring pending) |
+| Portable Triton classics | evaluator-owned Triton source | `infraswe-gfx942-portable-fixed-v1` | MI300X / gfx942 (diagnostic qualified; formal scoring pending) |
 
 The reproducible container recipes pin the PyTorch base image to digest
 `sha256:a7103283ea7113e10ae5d014bd2342acebda0bc53164b2f7b1dd6eb7a766bdb6`;
@@ -49,7 +49,7 @@ It does not mix scores with any NVIDIA cell. The initial implementation surface 
 - PyTorch 2.4.0 Flash SDPA backed by the AOTriton binary embedded in the ROCm wheel;
 - the seven evaluator-owned portable Triton classic kernels;
 - generic AMD hardware identity, ROCm SMI/rocminfo/HIP provenance, HIP event timing,
-  an exclusive `/dev/kfd` lease guard, three fresh replays, and per-case profiler evidence;
+  fail-closed `rocm-smi` plus `/dev/kfd` lease probes, three fresh replays, and per-case profiler evidence;
 - fail-closed native trace tokens for AOTriton (`aotriton`, `attn_fwd`, `fmha_fwd`, or
   `flash`) so a math fallback remains unscored.
 
@@ -57,6 +57,10 @@ FA1–FA4 in this repository remain the frozen CUDA artifacts listed above. They
 therefore explicitly `not_applicable` in the gfx942 cell rather than being silently
 replaced by AOTriton. See [MI300X_ROCM61.md](MI300X_ROCM61.md) for the exact setup,
 runner, evidence boundary, and remaining hardware validation work.
+
+The 2026-09-03 target-host diagnostic passed all five attention and seven classic cases,
+including native AOTriton/Triton traces. The provider host did not establish an exclusive
+device lease, so the formal runner correctly stopped before measurement and no score was emitted.
 
 ## B200 / SM100 compiler-feature score pack
 

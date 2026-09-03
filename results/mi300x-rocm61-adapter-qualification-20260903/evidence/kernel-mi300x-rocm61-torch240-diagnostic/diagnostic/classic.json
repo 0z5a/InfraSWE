@@ -1,0 +1,528 @@
+{
+  "all_correct": true,
+  "backend": "triton-gfx942-initial",
+  "backend_version": "3.0.0",
+  "benchmark": "classic-kernel-micro-v1",
+  "benchmark_kind": "kernel-micro",
+  "case_count": 7,
+  "cases": [
+    {
+      "case_id": "vector-add-bf16-16m",
+      "correctness": {
+        "cosine_similarity": 1.0000001192092896,
+        "max_abs_error": 0.0,
+        "mean_abs_error": 0.0,
+        "passed": true,
+        "relative_l2_error": 0.0
+      },
+      "dtype": "bfloat16",
+      "measurement": {
+        "blocks": [
+          {
+            "block_index": 1,
+            "candidate_latency_us": 39.53434340655804,
+            "candidate_positions_us": [
+              43.74312609434128,
+              35.325560718774796
+            ],
+            "order": "BAAB",
+            "reference_latency_us": 32.676214618342264,
+            "reference_positions_us": [
+              34.6148567540305,
+              30.737572482654027
+            ]
+          }
+        ],
+        "candidate": "triton-fixed-config",
+        "candidate_pilot_us": 62.654003500938416,
+        "candidate_repetitions": 16,
+        "reference": "pytorch-eager",
+        "reference_pilot_us": 74.63199645280838,
+        "reference_repetitions": 14
+      },
+      "profiler": {
+        "captured": true,
+        "cuda_events": [
+          {
+            "count": 1,
+            "device_time_us": 35.81399999999849,
+            "name": "_vector_add_kernel",
+            "self_device_time_us": 35.81399999999849
+          }
+        ],
+        "device_event_runtime": "hip",
+        "device_events": [
+          {
+            "count": 1,
+            "device_time_us": 35.81399999999849,
+            "name": "_vector_add_kernel",
+            "self_device_time_us": 35.81399999999849
+          }
+        ]
+      },
+      "shape": {
+        "elements": 16777216
+      },
+      "work_model": {
+        "minimum_external_bytes": 100663296,
+        "semantic_flops": 16777216,
+        "version": "classic-semantic-v1"
+      }
+    },
+    {
+      "case_id": "softmax-bf16-4096x4096",
+      "correctness": {
+        "cosine_similarity": 1.0,
+        "max_abs_error": 7.62939453125e-06,
+        "mean_abs_error": 1.547206807117618e-11,
+        "passed": true,
+        "relative_l2_error": 1.4657224710390437e-05
+      },
+      "dtype": "bfloat16",
+      "measurement": {
+        "blocks": [
+          {
+            "block_index": 1,
+            "candidate_latency_us": 31.758613207123496,
+            "candidate_positions_us": [
+              36.16204586896029,
+              27.3551805452867
+            ],
+            "order": "BAAB",
+            "reference_latency_us": 44.40074888142672,
+            "reference_positions_us": [
+              45.047635381872006,
+              43.753862380981445
+            ]
+          }
+        ],
+        "candidate": "triton-fixed-config",
+        "candidate_pilot_us": 46.3699996471405,
+        "candidate_repetitions": 22,
+        "reference": "pytorch-eager",
+        "reference_pilot_us": 47.2709983587265,
+        "reference_repetitions": 22
+      },
+      "profiler": {
+        "captured": true,
+        "cuda_events": [
+          {
+            "count": 1,
+            "device_time_us": 27.361999999999995,
+            "name": "_softmax_kernel",
+            "self_device_time_us": 27.361999999999995
+          }
+        ],
+        "device_event_runtime": "hip",
+        "device_events": [
+          {
+            "count": 1,
+            "device_time_us": 27.361999999999995,
+            "name": "_softmax_kernel",
+            "self_device_time_us": 27.361999999999995
+          }
+        ]
+      },
+      "shape": {
+        "columns": 4096,
+        "rows": 4096
+      },
+      "work_model": {
+        "minimum_external_bytes": 67108864,
+        "semantic_flops": 83886080,
+        "version": "classic-semantic-v1"
+      }
+    },
+    {
+      "case_id": "layernorm-bf16-4096x4096",
+      "correctness": {
+        "cosine_similarity": 1.0,
+        "max_abs_error": 0.015625,
+        "mean_abs_error": 1.6574489336562692e-08,
+        "passed": true,
+        "relative_l2_error": 8.39309359434992e-06
+      },
+      "dtype": "bfloat16",
+      "measurement": {
+        "blocks": [
+          {
+            "block_index": 1,
+            "candidate_latency_us": 35.46734340488911,
+            "candidate_positions_us": [
+              38.474686443805695,
+              32.46000036597252
+            ],
+            "order": "ABBA",
+            "reference_latency_us": 41.85308710388516,
+            "reference_positions_us": [
+              45.20704435265583,
+              38.49912985511448
+            ]
+          }
+        ],
+        "candidate": "triton-fixed-config",
+        "candidate_pilot_us": 66.41999632120132,
+        "candidate_repetitions": 16,
+        "reference": "pytorch-eager",
+        "reference_pilot_us": 44.66700181365013,
+        "reference_repetitions": 23
+      },
+      "profiler": {
+        "captured": true,
+        "cuda_events": [
+          {
+            "count": 1,
+            "device_time_us": 23.915999999999997,
+            "name": "_layernorm_kernel",
+            "self_device_time_us": 23.915999999999997
+          }
+        ],
+        "device_event_runtime": "hip",
+        "device_events": [
+          {
+            "count": 1,
+            "device_time_us": 23.915999999999997,
+            "name": "_layernorm_kernel",
+            "self_device_time_us": 23.915999999999997
+          }
+        ]
+      },
+      "shape": {
+        "columns": 4096,
+        "rows": 4096
+      },
+      "work_model": {
+        "minimum_external_bytes": 67125248,
+        "semantic_flops": 134217728,
+        "version": "classic-semantic-v1"
+      }
+    },
+    {
+      "case_id": "rmsnorm-bf16-4096x4096",
+      "correctness": {
+        "cosine_similarity": 1.0,
+        "max_abs_error": 0.015625,
+        "mean_abs_error": 1.3622411643154919e-08,
+        "passed": true,
+        "relative_l2_error": 1.0516399015614297e-05
+      },
+      "dtype": "bfloat16",
+      "measurement": {
+        "blocks": [
+          {
+            "block_index": 1,
+            "candidate_latency_us": 25.26908367872238,
+            "candidate_positions_us": [
+              28.396000464757282,
+              22.14216689268748
+            ],
+            "order": "ABBA",
+            "reference_latency_us": 270.73413133621216,
+            "reference_positions_us": [
+              286.4702641963959,
+              254.99799847602844
+            ]
+          }
+        ],
+        "candidate": "triton-fixed-config",
+        "candidate_pilot_us": 57.486001402139664,
+        "candidate_repetitions": 18,
+        "reference": "pytorch-eager",
+        "reference_pilot_us": 280.3800106048584,
+        "reference_repetitions": 4
+      },
+      "profiler": {
+        "captured": true,
+        "cuda_events": [
+          {
+            "count": 1,
+            "device_time_us": 20.02000000000001,
+            "name": "_rmsnorm_kernel",
+            "self_device_time_us": 20.02000000000001
+          }
+        ],
+        "device_event_runtime": "hip",
+        "device_events": [
+          {
+            "count": 1,
+            "device_time_us": 20.02000000000001,
+            "name": "_rmsnorm_kernel",
+            "self_device_time_us": 20.02000000000001
+          }
+        ]
+      },
+      "shape": {
+        "columns": 4096,
+        "rows": 4096
+      },
+      "work_model": {
+        "minimum_external_bytes": 67117056,
+        "semantic_flops": 83886080,
+        "version": "classic-semantic-v1"
+      }
+    },
+    {
+      "case_id": "swiglu-bf16-8192x4096",
+      "correctness": {
+        "cosine_similarity": 0.9999958872795105,
+        "max_abs_error": 0.0625,
+        "mean_abs_error": 0.00047591887414455414,
+        "passed": true,
+        "relative_l2_error": 0.002886613132432103
+      },
+      "dtype": "bfloat16",
+      "measurement": {
+        "blocks": [
+          {
+            "block_index": 1,
+            "candidate_latency_us": 96.86555796199374,
+            "candidate_positions_us": [
+              86.66355742348566,
+              107.06755850050185
+            ],
+            "order": "BAAB",
+            "reference_latency_us": 122.89738655090332,
+            "reference_positions_us": [
+              134.01022222306995,
+              111.78455087873671
+            ]
+          }
+        ],
+        "candidate": "triton-fixed-config",
+        "candidate_pilot_us": 111.72699928283691,
+        "candidate_repetitions": 9,
+        "reference": "pytorch-eager",
+        "reference_pilot_us": 117.83699691295624,
+        "reference_repetitions": 9
+      },
+      "profiler": {
+        "captured": true,
+        "cuda_events": [
+          {
+            "count": 1,
+            "device_time_us": 102.995,
+            "name": "_swiglu_kernel",
+            "self_device_time_us": 102.995
+          }
+        ],
+        "device_event_runtime": "hip",
+        "device_events": [
+          {
+            "count": 1,
+            "device_time_us": 102.995,
+            "name": "_swiglu_kernel",
+            "self_device_time_us": 102.995
+          }
+        ]
+      },
+      "shape": {
+        "columns": 4096,
+        "rows": 8192
+      },
+      "work_model": {
+        "minimum_external_bytes": 201326592,
+        "semantic_flops": 201326592,
+        "version": "classic-semantic-v1"
+      }
+    },
+    {
+      "case_id": "rope-bf16-b4-s2048-h16-d128",
+      "correctness": {
+        "cosine_similarity": 0.9999961853027344,
+        "max_abs_error": 0.03125,
+        "mean_abs_error": 0.0011651287786662579,
+        "passed": true,
+        "relative_l2_error": 0.002755732974037528
+      },
+      "dtype": "bfloat16",
+      "measurement": {
+        "blocks": [
+          {
+            "block_index": 1,
+            "candidate_latency_us": 76.33022467295328,
+            "candidate_positions_us": [
+              78.67377996444702,
+              73.98666938145955
+            ],
+            "order": "ABBA",
+            "reference_latency_us": 180.18900354703266,
+            "reference_positions_us": [
+              177.35300461451212,
+              183.02500247955322
+            ]
+          }
+        ],
+        "candidate": "triton-fixed-config",
+        "candidate_pilot_us": 112.68799751996994,
+        "candidate_repetitions": 9,
+        "reference": "pytorch-eager",
+        "reference_pilot_us": 196.54500484466553,
+        "reference_repetitions": 6
+      },
+      "profiler": {
+        "captured": true,
+        "cuda_events": [
+          {
+            "count": 1,
+            "device_time_us": 69.144,
+            "name": "_rope_kernel",
+            "self_device_time_us": 69.144
+          }
+        ],
+        "device_event_runtime": "hip",
+        "device_events": [
+          {
+            "count": 1,
+            "device_time_us": 69.144,
+            "name": "_rope_kernel",
+            "self_device_time_us": 69.144
+          }
+        ]
+      },
+      "shape": {
+        "batch": 4,
+        "head_dim": 128,
+        "heads": 16,
+        "seqlen": 2048
+      },
+      "work_model": {
+        "minimum_external_bytes": 67633152,
+        "semantic_flops": 100663296,
+        "version": "classic-semantic-v1"
+      }
+    },
+    {
+      "case_id": "gemm-bf16-4096-cube",
+      "correctness": {
+        "cosine_similarity": 1.0,
+        "max_abs_error": 0.0,
+        "mean_abs_error": 0.0,
+        "passed": true,
+        "relative_l2_error": 0.0
+      },
+      "dtype": "bfloat16",
+      "measurement": {
+        "blocks": [
+          {
+            "block_index": 1,
+            "candidate_latency_us": 600.3342270851135,
+            "candidate_positions_us": [
+              582.1244716644287,
+              618.5439825057983
+            ],
+            "order": "ABBA",
+            "reference_latency_us": 269.66261863708496,
+            "reference_positions_us": [
+              285.29098629951477,
+              254.03425097465515
+            ]
+          }
+        ],
+        "candidate": "triton-fixed-config",
+        "candidate_pilot_us": 681.1820268630981,
+        "candidate_repetitions": 2,
+        "reference": "pytorch-eager",
+        "reference_pilot_us": 252.0979940891266,
+        "reference_repetitions": 4
+      },
+      "profiler": {
+        "captured": true,
+        "cuda_events": [
+          {
+            "count": 1,
+            "device_time_us": 550.0260000000001,
+            "name": "_matmul_kernel",
+            "self_device_time_us": 550.0260000000001
+          }
+        ],
+        "device_event_runtime": "hip",
+        "device_events": [
+          {
+            "count": 1,
+            "device_time_us": 550.0260000000001,
+            "name": "_matmul_kernel",
+            "self_device_time_us": 550.0260000000001
+          }
+        ]
+      },
+      "shape": {
+        "k": 4096,
+        "m": 4096,
+        "n": 4096
+      },
+      "work_model": {
+        "minimum_external_bytes": 100663296,
+        "semantic_flops": 137438953472,
+        "version": "classic-semantic-v1"
+      }
+    }
+  ],
+  "finished_at": "2026-09-02T21:42:43.317510Z",
+  "hardware": {
+    "accelerator_vendor": "amd",
+    "architecture": "gfx942",
+    "compute_capability": null,
+    "compute_unit_count": 304,
+    "cudnn_version": null,
+    "driver_version": "6.10.5",
+    "gpu_name": "AMD Instinct MI300X",
+    "nvidia_smi": {},
+    "platform": "Linux-6.5.0-28-generic-x86_64-with-glibc2.35",
+    "python": "3.12.14",
+    "rocm_smi": {
+      "driver_version": "6.10.5",
+      "product_name": "AMD Instinct MI300X OAM",
+      "raw": {
+        "card0": {
+          "Card SKU": "MI3SRIOV",
+          "Card model": "0x74a1",
+          "Card series": "AMD Instinct MI300X OAM",
+          "Card vendor": "Advanced Micro Devices, Inc. [AMD/ATI]",
+          "Current Socket Graphics Package Power (W)": "136.0",
+          "GPU use (%)": "0",
+          "Temperature (Sensor junction) (C)": "42.0",
+          "Temperature (Sensor memory) (C)": "41.0",
+          "Unique ID": "0x54ffb3aebfced372",
+          "VRAM Total Memory (B)": "206141652992",
+          "VRAM Total Used Memory (B)": "297811968"
+        },
+        "system": {
+          "Driver version": "6.10.5"
+        }
+      },
+      "unique_id": "0x54ffb3aebfced372"
+    },
+    "runtime": "rocm",
+    "runtime_version": "6.1.40091-a8dbc0c19",
+    "sm_count": 304,
+    "torch_cuda": null,
+    "torch_hip": "6.1.40091-a8dbc0c19",
+    "torch_version": "2.4.0+rocm6.1",
+    "total_memory_bytes": 206141652992
+  },
+  "implementation_commit": "infraswe-gfx942-portable-fixed-v1",
+  "implementation_provenance": [
+    {
+      "module": "triton_kernels",
+      "path": "/workspace/infraswe/benchmarks/kernel_frontier/triton_kernels.py",
+      "sha256": "sha256:a785fa53c5c044f3f68adb0aa8bb7941b839f0793315124a9dd3cf692ff0192b"
+    }
+  ],
+  "peak_memory_bytes": 1073750016,
+  "protocol": {
+    "blocks": 1,
+    "completion_fence": "end-event-synchronize",
+    "device_timer": "hip-events",
+    "fresh_allocator_per_replay": true,
+    "fresh_process": true,
+    "min_timed_span_ms": 1.0,
+    "paired_order": "randomized-ABBA-or-BAAB",
+    "profiler_separate_from_official_timing": true,
+    "timer": "evaluator-owned-hip-events",
+    "warmup_calls": 5
+  },
+  "replay_index": 1,
+  "schema_version": "0.3",
+  "started_at": "2026-09-02T21:42:34.723855Z",
+  "status": "passed"
+}

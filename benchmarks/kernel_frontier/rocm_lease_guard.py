@@ -36,11 +36,22 @@ def _pids_from_json(payload: Any) -> set[int]:
     pids: set[int] = set()
     if isinstance(payload, dict):
         for key, value in payload.items():
-            if "pid" in str(key).lower():
+            key_text = str(key).strip()
+            encoded_pids = {
+                int(item)
+                for item in re.findall(
+                    r"(?i)\bpid[\s:_-]*([1-9][0-9]*)\b",
+                    key_text,
+                )
+            }
+            pids.update(encoded_pids)
+            if not encoded_pids and re.search(r"(?i)(?:^|[\s_-])pid$", key_text):
                 if isinstance(value, int) and value > 0:
                     pids.add(value)
                 elif isinstance(value, str):
-                    pids.update(int(item) for item in re.findall(r"\b[1-9][0-9]*\b", value))
+                    match = re.match(r"\s*([1-9][0-9]*)\b", value)
+                    if match:
+                        pids.add(int(match.group(1)))
             pids.update(_pids_from_json(value))
     elif isinstance(payload, list):
         for value in payload:
@@ -67,7 +78,9 @@ def _rocm_smi_pids(device_index: int) -> tuple[set[int], dict[str, Any]] | None:
     except json.JSONDecodeError:
         evidence["parse_error"] = "rocm-smi did not return JSON"
         return None
-    selected = parsed.get(f"card{device_index}", parsed) if isinstance(parsed, dict) else parsed
+    selected_key = f"card{device_index}"
+    selected = parsed.get(selected_key, parsed) if isinstance(parsed, dict) else parsed
+    evidence["pid_scope"] = selected_key if selected is not parsed else "system"
     return _pids_from_json(selected), evidence
 
 

@@ -70,7 +70,28 @@ cd /workspace/infraswe/benchmarks/kernel_frontier
 bash ./remote_prepare_mi300x_rocm61.sh
 ```
 
-The formal runner performs the exclusive-device check, three calibration replays, three
+If the provider cannot establish exclusive-device evidence, setup can still run capability
+and native-path smoke probes in an explicitly non-scoring mode:
+
+```bash
+INFRASWE_DIAGNOSTIC_ONLY=1 bash ./remote_prepare_mi300x_rocm61.sh
+```
+
+That mode records failed pre/post exclusivity checks and sets
+`official_measurement_eligible=false`; it never authorizes the formal runner or a score.
+
+To exercise all five attention cases and all seven classic kernels without producing a score,
+run the full diagnostic runner after setup:
+
+```bash
+INFRASWE_DIAGNOSTIC_ONLY=1 bash ./remote_diagnose_mi300x_rocm61.sh
+```
+
+Its timing fields are explicitly non-authoritative. The output contains correctness and native
+trace coverage plus pre/post lease observations, a file-level evidence manifest, and a ZIP hash,
+but the script never calls the scorer entry point or creates `score.json`.
+
+The formal runner performs pre- and post-measurement exclusive-device checks, three calibration replays, three
 attention replays, five attention profiler sidecars, three classic replays, seven classic
 profiler sidecars, provenance capture, deterministic scoring, manifest generation, and ZIP:
 
@@ -90,13 +111,16 @@ Both scripts honor `INFRASWE_REMOTE_ROOT`, `INFRASWE_PYTHON`, and `INFRASWE_GPU`
 Supervisor wrappers are supplied with `autostart=false` so copying the configuration
 cannot consume an accelerator before an explicit lease is granted.
 
-## Hardware closure still required
+## Hardware diagnostic result and remaining closure
 
-This repository revision establishes the adapter and local conformance tests only. A real
-MI300X host is still required to close:
+The 2026-09-03 target-host diagnostic established MI300X/gfx942 identity, driver 6.10.5,
+HIP compiler 6.1.40091, PyTorch 2.4.0+rocm6.1, framework HIP 6.1.40091, and Triton 3.0.0.
+All five attention cases passed correctness, dynamic-input, and AOTriton native-trace checks;
+all seven classic kernels passed correctness with native Triton events. The content-addressed
+diagnostic pack is under `results/mi300x-rocm61-adapter-qualification-20260903/`.
 
-- the exact `rocm-smi`, `rocminfo`, driver, firmware and topology snapshot;
-- PyTorch wheel and embedded AOTriton binary hashes from that host;
-- the smoke trace and all formal per-case native traces;
-- three-replay calibration, correctness, latency, confidence interval, and score evidence;
-- the final evidence manifest and report ZIP hash.
+Formal hardware scoring remains open because the provider host reported nine existing GPU PIDs
+at both lease sentinels. The fail-closed formal runner stopped before calibration or measurement.
+Closing the cell still requires an authoritative exclusive lease followed by three fresh-process
+replays, 30-block paired timing, profiler sidecars, deterministic scoring, and an official evidence
+ZIP. Diagnostic latency from the non-exclusive host must not be promoted into that result.

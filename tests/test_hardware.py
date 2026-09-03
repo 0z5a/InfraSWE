@@ -73,6 +73,8 @@ def test_mi300x_profile_checks_vendor_architecture_model_and_runtime() -> None:
         gpu_model="MI300X",
         runtime="rocm",
         runtime_version="6.1",
+        compiler_version="6.1",
+        framework_runtime_version="6.1",
         experimental=True,
     )
     manifest = {
@@ -81,6 +83,8 @@ def test_mi300x_profile_checks_vendor_architecture_model_and_runtime() -> None:
         "accelerator_vendor": "amd",
         "runtime": "rocm",
         "runtime_version": "6.1.2",
+        "compiler_version": "6.1.40093",
+        "framework_runtime_version": "6.1.40091",
         "accelerators": [
             {
                 "index": 0,
@@ -143,8 +147,8 @@ def test_rocm_smi_and_rocminfo_are_normalized_to_generic_accelerator() -> None:
                 "Card Series": "AMD Instinct MI300X OAM",
                 "Unique ID": "0x1234",
                 "VRAM Total Memory (B)": "206158430208",
-                "Driver version": "6.8.5",
-            }
+            },
+            "system": {"Driver version": "6.8.5"},
         },
         rocminfo="  Name: gfx942\n  Name: gfx942\n",
         hipcc_version="HIP version: 6.1.40093-abc",
@@ -163,8 +167,44 @@ def test_rocm_smi_and_rocminfo_are_normalized_to_generic_accelerator() -> None:
             "compute_capability": None,
             "runtime": "rocm",
             "runtime_version": "6.1.40093",
+            "compiler_version": "6.1.40093",
         }
     ]
+
+
+def test_mi300x_profile_rejects_mismatched_framework_runtime() -> None:
+    profile = HardwareProfile(
+        id="gpu-1x-gfx942-mi300x-rocm61",
+        cpu_min=1,
+        ram_gib_min=1,
+        gpu_count=1,
+        accelerator_vendor="amd",
+        architecture="gfx942",
+        gpu_model="MI300X",
+        runtime="rocm",
+        compiler_version="6.1",
+        framework_runtime_version="6.1",
+    )
+    manifest = {
+        "host": {"cpu_count": 64, "memory_gib": 1024},
+        "gpu_count": 1,
+        "accelerator_vendor": "amd",
+        "runtime": "rocm",
+        "compiler_version": "6.1.40093",
+        "framework_runtime_version": "6.0.32830",
+        "accelerators": [
+            {
+                "name": "AMD Instinct MI300X",
+                "architecture": "gfx942",
+            }
+        ],
+        "commands": {},
+    }
+
+    result = validate_hardware_manifest(profile, manifest)
+
+    assert not result["passed"]
+    assert any("framework runtime version 6.0.32830" in error for error in result["errors"])
 
 
 def test_nvidia_toolkit_version_is_normalized_for_compiler_profiles() -> None:

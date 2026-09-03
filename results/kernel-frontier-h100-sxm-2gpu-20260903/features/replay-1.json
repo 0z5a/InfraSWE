@@ -1,0 +1,1361 @@
+{
+  "benchmark": "hopper-sm90-feature-supplement-v2",
+  "evidence_kind": "architecture-feature",
+  "features": {
+    "multimem": {
+      "driver": {
+        "attributes": {
+          "fabric_handle_supported": {
+            "attribute_id": 128,
+            "returncode": 0,
+            "value": 1
+          },
+          "multicast_supported": {
+            "attribute_id": 132,
+            "returncode": 0,
+            "value": 1
+          },
+          "tensor_map_access_supported": {
+            "attribute_id": 127,
+            "returncode": 0,
+            "value": 1
+          }
+        },
+        "cu_device_get_returncode": 0,
+        "cu_init_returncode": 0
+      },
+      "execution_attempted": true,
+      "execution_reason": "valid CUDA multicast mapping executed on two GPUs",
+      "nvlink_status": {
+        "argv": [
+          "nvidia-smi",
+          "nvlink",
+          "-s"
+        ],
+        "returncode": 0,
+        "stderr": "",
+        "stdout": "GPU 0: NVIDIA H100 80GB HBM3 (UUID: GPU-32d195bd-0c3b-8ddb-5ee6-d1863f7215e4)\n\t Link 0: 26.562 GB/s\n\t Link 1: 26.562 GB/s\n\t Link 2: 26.562 GB/s\n\t Link 3: 26.562 GB/s\n\t Link 4: 26.562 GB/s\n\t Link 5: 26.562 GB/s\n\t Link 6: 26.562 GB/s\n\t Link 7: 26.562 GB/s\n\t Link 8: 26.562 GB/s\n\t Link 9: 26.562 GB/s\n\t Link 10: 26.562 GB/s\n\t Link 11: 26.562 GB/s\n\t Link 12: 26.562 GB/s\n\t Link 13: 26.562 GB/s\n\t Link 14: 26.562 GB/s\n\t Link 15: 26.562 GB/s\n\t Link 16: 26.562 GB/s\n\t Link 17: 26.562 GB/s\nGPU 1: NVIDIA H100 80GB HBM3 (UUID: GPU-c92d92a2-66e0-0ce1-2dae-fb0e638c2d3e)\n\t Link 0: 26.562 GB/s\n\t Link 1: 26.562 GB/s\n\t Link 2: 26.562 GB/s\n\t Link 3: 26.562 GB/s\n\t Link 4: 26.562 GB/s\n\t Link 5: 26.562 GB/s\n\t Link 6: 26.562 GB/s\n\t Link 7: 26.562 GB/s\n\t Link 8: 26.562 GB/s\n\t Link 9: 26.562 GB/s\n\t Link 10: 26.562 GB/s\n\t Link 11: 26.562 GB/s\n\t Link 12: 26.562 GB/s\n\t Link 13: 26.562 GB/s\n\t Link 14: 26.562 GB/s\n\t Link 15: 26.562 GB/s\n\t Link 16: 26.562 GB/s\n\t Link 17: 26.562 GB/s\n"
+      },
+      "runtime_command": {
+        "argv": [
+          "timeout",
+          "30s",
+          "/workspace/infraswe/runs/h100-sxm-2gpu-features-20260903/features/artifacts/replay-1/multimem/multimem-runtime-probe",
+          "8",
+          "13"
+        ],
+        "returncode": 0,
+        "stderr": "",
+        "stdout": "{\"status\":\"passed\",\"visible_device_count\":2,\"multicast_attributes\":[1,1],\"input_values\":[8,13],\"backing_values\":[8,13],\"expected_reduce\":21,\"observed_reduce\":[21,21],\"latency_us\":[4.367488,4.121248],\"iterations\":1000,\"allocation_size_bytes\":2097152,\"multicast_minimum_granularity_bytes\":2097152,\"multicast_recommended_granularity_bytes\":2097152,\"allocation_granularity_bytes\":[2097152,2097152]}\n"
+      },
+      "runtime_compiler": {
+        "argv": [
+          "nvcc",
+          "-std=c++17",
+          "-O3",
+          "-lineinfo",
+          "-arch=sm_90",
+          "/workspace/infraswe/benchmarks/kernel_frontier/multimem_runtime_probe.cu",
+          "-lcuda",
+          "-o",
+          "/workspace/infraswe/runs/h100-sxm-2gpu-features-20260903/features/artifacts/replay-1/multimem/multimem-runtime-probe"
+        ],
+        "binary_path": "multimem/multimem-runtime-probe",
+        "binary_sha256": "sha256:387a19f10d18e0501648b368f7b82675503ef5e8b4350b220eb73ac885ffa092",
+        "instruction_gate_passed": true,
+        "passed": true,
+        "returncode": 0,
+        "sass_instruction_lines": [
+          "/*00b0*/                   LDGMC.E.ADD.32.STRONG.SYS R5, [RZ.U32+UR4] ;      /* 0x00000000ff0579a4 */"
+        ],
+        "sass_path": "multimem/multimem-runtime-probe.sass.txt",
+        "sass_sha256": "sha256:04e6240575e2a7a5d993818b96293f05e743142fa1ddf52e6cf1cf6b032c6d51",
+        "source_path": "multimem_runtime_probe.cu",
+        "source_sha256": "sha256:d831df06f01dd577db8d9e249f3a7f997c2e86f25fba8cc6891179cee0a01a05",
+        "stderr": "",
+        "stdout": ""
+      },
+      "runtime_execution": {
+        "allocation_granularity_bytes": [
+          2097152,
+          2097152
+        ],
+        "allocation_size_bytes": 2097152,
+        "backing_values": [
+          8,
+          13
+        ],
+        "expected_reduce": 21,
+        "input_values": [
+          8,
+          13
+        ],
+        "iterations": 1000,
+        "latency_us": [
+          4.367488,
+          4.121248
+        ],
+        "multicast_attributes": [
+          1,
+          1
+        ],
+        "multicast_minimum_granularity_bytes": 2097152,
+        "multicast_recommended_granularity_bytes": 2097152,
+        "observed_reduce": [
+          21,
+          21
+        ],
+        "status": "passed",
+        "visible_device_count": 2
+      },
+      "status": "passed",
+      "toolchain_compile": {
+        "argv": [
+          "ptxas",
+          "--verbose",
+          "--gpu-name=sm_90",
+          "/workspace/infraswe/runs/h100-sxm-2gpu-features-20260903/features/artifacts/replay-1/multimem/multimem-probe.ptx",
+          "--output-file",
+          "/workspace/infraswe/runs/h100-sxm-2gpu-features-20260903/features/artifacts/replay-1/multimem/multimem-probe.cubin"
+        ],
+        "cubin_path": "multimem/multimem-probe.cubin",
+        "cubin_sha256": "sha256:3e538928bbccad9c71d6dd12a8c938ae7b78f9eccb6bbdbf6c39e4990574b004",
+        "instruction_gate_passed": true,
+        "passed": true,
+        "ptx_path": "multimem/multimem-probe.ptx",
+        "ptx_sha256": "sha256:617d1c467ca12fd945903e73882c28fe24b300bafcb2dc982d9fa8249fcf2360",
+        "ptxas_log_path": "multimem/ptxas.txt",
+        "ptxas_log_sha256": "sha256:bc5b5c94ffef52ba78edfbb619bbb18ffb52a81672d0b846636bafc5a997daad",
+        "returncode": 0,
+        "sass_instruction_lines": [
+          "/*0020*/                   LDGMC.E.ADD.32.STRONG.SYS R5, [RZ.U32+UR4] ;  /* 0x00000000ff0579a4 */"
+        ],
+        "sass_path": "multimem/multimem-probe.sass.txt",
+        "sass_returncode": 0,
+        "sass_sha256": "sha256:83753e75cc84ff752473fc7d45139d76a626ae139c2ab99cbb5089a07a4d0436",
+        "stderr": "ptxas info    : 0 bytes gmem\nptxas info    : Compiling entry function 'multimem_load_reduce_probe' for 'sm_90'\nptxas info    : Function properties for multimem_load_reduce_probe\n    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads\nptxas info    : Used 8 registers, used 0 barriers\nptxas info    : Compile time = 2.091 ms\n",
+        "stdout": ""
+      },
+      "topology": {
+        "argv": [
+          "nvidia-smi",
+          "topo",
+          "-m"
+        ],
+        "returncode": 0,
+        "stderr": "",
+        "stdout": "\t\u001b[4mGPU0\tGPU1\tCPU Affinity\tNUMA Affinity\tGPU NUMA ID\u001b[0m\nGPU0\t X \tNV18\t0-111\t0-1\t\tN/A\nGPU1\tNV18\t X \t0-111\t0-1\t\tN/A\n\nLegend:\n\n  X    = Self\n  SYS  = Connection traversing PCIe as well as the SMP interconnect between NUMA nodes (e.g., QPI/UPI)\n  NODE = Connection traversing PCIe as well as the interconnect between PCIe Host Bridges within a NUMA node\n  PHB  = Connection traversing PCIe as well as a PCIe Host Bridge (typically the CPU)\n  PXB  = Connection traversing multiple PCIe bridges (without traversing the PCIe Host Bridge)\n  PIX  = Connection traversing at most a single PCIe bridge\n  NV#  = Connection traversing a bonded set of # NVLinks\n"
+      },
+      "visible_cuda_device_count": 2
+    },
+    "tma": {
+      "block_shape": [
+        32,
+        128
+      ],
+      "compiler_evidence": {
+        "artifacts": [
+          {
+            "path": "triton-1.ttgir",
+            "sha256": "sha256:ad308e4d00a5cee8b190c68c3170502c9ae4e6de332ead228025b1e4c20dadd4",
+            "size_bytes": 5404,
+            "source_cache_path": "/workspace/infraswe/runs/h100-sxm-2gpu-features-20260903/features/triton-cache/replay-1/IGNDEK5Y5QH3UR6KMQYKDFXQTQRGREYLTH2XAHX7P3EJZGZJSKSQ/tma_copy_add_kernel.ttgir"
+          },
+          {
+            "path": "triton-1.ptx",
+            "sha256": "sha256:19af6c986f89e8d42268e36a38ac4bac8da2332ed2b7323a3c77a8bb0934147e",
+            "size_bytes": 18559,
+            "source_cache_path": "/workspace/infraswe/runs/h100-sxm-2gpu-features-20260903/features/triton-cache/replay-1/IGNDEK5Y5QH3UR6KMQYKDFXQTQRGREYLTH2XAHX7P3EJZGZJSKSQ/tma_copy_add_kernel.ptx"
+          },
+          {
+            "path": "triton-1.cubin",
+            "sha256": "sha256:3162e18730095efd12ff6df27999267c625581a700ccc3afd17d5ef50ab0ea0c",
+            "size_bytes": 28296,
+            "source_cache_path": "/workspace/infraswe/runs/h100-sxm-2gpu-features-20260903/features/triton-cache/replay-1/IGNDEK5Y5QH3UR6KMQYKDFXQTQRGREYLTH2XAHX7P3EJZGZJSKSQ/tma_copy_add_kernel.cubin"
+          }
+        ],
+        "cache_root": "/workspace/infraswe/runs/h100-sxm-2gpu-features-20260903/features/triton-cache/replay-1",
+        "instruction_gate_passed": true,
+        "ptx_instruction_lines": [
+          "@%p2 tensormap.replace.tile.global_address.shared::cta.b1024.b64 [ %rd1 + 0 ], %rd2;",
+          "@%p2 tensormap.replace.tile.rank.shared::cta.b1024.b32 [ %rd1 + 0 ], 0x1;",
+          "@%p2 tensormap.replace.tile.box_dim.shared::cta.b1024.b32 [ %rd1 + 0 ], 0x0, %r3;",
+          "@%p2 tensormap.replace.tile.box_dim.shared::cta.b1024.b32 [ %rd1 + 0 ], 0x1, %r4;",
+          "@%p2 tensormap.replace.tile.global_dim.shared::cta.b1024.b32 [ %rd1 + 0 ], 0x0, %r5;",
+          "@%p2 tensormap.replace.tile.global_dim.shared::cta.b1024.b32 [ %rd1 + 0 ], 0x1, %r6;",
+          "@%p2 tensormap.replace.tile.global_stride.shared::cta.b1024.b64 [ %rd1 + 0 ], 0x0, %rd27;",
+          "@%p2 tensormap.replace.tile.element_stride.shared::cta.b1024.b32 [ %rd1 + 0 ], 0x0, %r7;",
+          "@%p2 tensormap.replace.tile.element_stride.shared::cta.b1024.b32 [ %rd1 + 0 ], 0x1, %r7;",
+          "@%p2 tensormap.replace.tile.elemtype.shared::cta.b1024.b32 [ %rd1 + 0 ], 0xa;",
+          "@%p2 tensormap.replace.tile.interleave_layout.shared::cta.b1024.b32 [ %rd1 + 0 ], 0x0;",
+          "@%p2 tensormap.replace.tile.swizzle_mode.shared::cta.b1024.b32 [ %rd1 + 0 ], 0x3;",
+          "@%p2 tensormap.replace.tile.fill_mode.shared::cta.b1024.b32 [ %rd1 + 0 ], 0x0;",
+          "@%p1 tensormap.cp_fenceproxy.global.shared::cta.tensormap::generic.release.gpu.sync.aligned [ %rd16 + 0 ], [ %rd1 + 0 ], 0x80;",
+          "@%p1 fence.proxy.tensormap::generic.acquire.gpu [ %rd16 + 0 ], 0x80;",
+          "@%p2 tensormap.replace.tile.global_address.shared::cta.b1024.b64 [ %rd1 + 0 ], %rd20;",
+          "@%p2 tensormap.replace.tile.rank.shared::cta.b1024.b32 [ %rd1 + 0 ], 0x1;",
+          "@%p2 tensormap.replace.tile.box_dim.shared::cta.b1024.b32 [ %rd1 + 0 ], 0x0, %r3;",
+          "@%p2 tensormap.replace.tile.box_dim.shared::cta.b1024.b32 [ %rd1 + 0 ], 0x1, %r4;",
+          "@%p2 tensormap.replace.tile.global_dim.shared::cta.b1024.b32 [ %rd1 + 0 ], 0x0, %r5;",
+          "@%p2 tensormap.replace.tile.global_dim.shared::cta.b1024.b32 [ %rd1 + 0 ], 0x1, %r6;",
+          "@%p2 tensormap.replace.tile.global_stride.shared::cta.b1024.b64 [ %rd1 + 0 ], 0x0, %rd27;",
+          "@%p2 tensormap.replace.tile.element_stride.shared::cta.b1024.b32 [ %rd1 + 0 ], 0x0, %r7;",
+          "@%p2 tensormap.replace.tile.element_stride.shared::cta.b1024.b32 [ %rd1 + 0 ], 0x1, %r7;",
+          "@%p2 tensormap.replace.tile.elemtype.shared::cta.b1024.b32 [ %rd1 + 0 ], 0xa;",
+          "@%p2 tensormap.replace.tile.interleave_layout.shared::cta.b1024.b32 [ %rd1 + 0 ], 0x0;",
+          "@%p2 tensormap.replace.tile.swizzle_mode.shared::cta.b1024.b32 [ %rd1 + 0 ], 0x3;",
+          "@%p2 tensormap.replace.tile.fill_mode.shared::cta.b1024.b32 [ %rd1 + 0 ], 0x0;",
+          "@%p1 tensormap.cp_fenceproxy.global.shared::cta.tensormap::generic.release.gpu.sync.aligned [ %rd34 + 0 ], [ %rd1 + 0 ], 0x80;",
+          "@%p1 fence.proxy.tensormap::generic.acquire.gpu [ %rd34 + 0 ], 0x80;",
+          "@%p35 cp.async.bulk.tensor.2d.shared::cluster.global.mbarrier::complete_tx::bytes [%r19], [%rd37, {%r20, %r21}], [%r17];",
+          "@%p37 cp.async.bulk.tensor.2d.global.shared::cta.bulk_group [%rd38, {%r20, %r21}], [%r19];"
+        ],
+        "sass_artifacts": [
+          {
+            "path": "triton-1.sass.txt",
+            "returncode": 0,
+            "sha256": "sha256:edfc97ceccb40308a0e727913532a29ad4077da5cff83bf100421cdbaaaf7652",
+            "size_bytes": 121636
+          }
+        ],
+        "sass_instruction_lines": [
+          "/*1070*/                   @UP0 UTMALDG.2D [UR12], [UR4] ;                        /* 0x0000000c040005b4 */",
+          "/*1fc0*/                   @UP1 UTMASTG.2D [UR16], [UR6] ;                        /* 0x00000010060013b5 */"
+        ],
+        "ttgir_tma_lines": [
+          "ttng.async_tma_copy_global_to_local %3[%8, %10] %11, %12, %true : !tt.tensordesc<tensor<32x128xbf16, #shared>>, !ttg.memdesc<1xi64, #shared1, #smem, mutable> -> !ttg.memdesc<32x128xbf16, #shared, #smem, mutable> loc(#loc8)",
+          "ttng.async_tma_copy_local_to_global %6[%8, %10] %15 : !tt.tensordesc<tensor<32x128xbf16, #shared>>, !ttg.memdesc<32x128xbf16, #shared, #smem, mutable> loc(#loc10)",
+          "ttng.async_tma_store_wait {pendings = 0 : i32} loc(#loc10)"
+        ]
+      },
+      "correctness": {
+        "cosine_similarity": 1.0,
+        "dynamic_input_changes_output": true,
+        "initial_errors": {
+          "cosine_similarity": 1.0,
+          "max_abs_error": 0.0,
+          "mean_abs_error": 0.0,
+          "relative_l2_error": 0.0
+        },
+        "max_abs_error": 0.0,
+        "mean_abs_error": 0.0,
+        "passed": true,
+        "relative_l2_error": 0.0
+      },
+      "driver_attribute": {
+        "attribute_id": 127,
+        "returncode": 0,
+        "value": 1
+      },
+      "dtype": "bfloat16",
+      "measurement": {
+        "blocks": [
+          {
+            "block_index": 1,
+            "candidate_latency_us": 30.351627691799603,
+            "candidate_positions_us": [
+              30.37500436980455,
+              30.328251013794656
+            ],
+            "order": "ABBA",
+            "reference_latency_us": 25.607561771585907,
+            "reference_positions_us": [
+              25.60553700751058,
+              25.60958653566123
+            ]
+          },
+          {
+            "block_index": 2,
+            "candidate_latency_us": 30.407394879910665,
+            "candidate_positions_us": [
+              30.43367698944767,
+              30.38111277037366
+            ],
+            "order": "ABBA",
+            "reference_latency_us": 25.609860505027093,
+            "reference_positions_us": [
+              25.60039421112854,
+              25.61932679892565
+            ]
+          },
+          {
+            "block_index": 3,
+            "candidate_latency_us": 30.360642634115344,
+            "candidate_positions_us": [
+              30.367292819395054,
+              30.35399244883563
+            ],
+            "order": "ABBA",
+            "reference_latency_us": 25.606270201718267,
+            "reference_positions_us": [
+              25.598993053514555,
+              25.613547349921983
+            ]
+          },
+          {
+            "block_index": 4,
+            "candidate_latency_us": 30.356823495991435,
+            "candidate_positions_us": [
+              30.367030808756322,
+              30.346616183226544
+            ],
+            "order": "ABBA",
+            "reference_latency_us": 25.610364086813867,
+            "reference_positions_us": [
+              25.600897792915312,
+              25.619830380712422
+            ]
+          },
+          {
+            "block_index": 5,
+            "candidate_latency_us": 30.385750136636325,
+            "candidate_positions_us": [
+              30.415160830834136,
+              30.356339442438518
+            ],
+            "order": "ABBA",
+            "reference_latency_us": 25.619020214159086,
+            "reference_positions_us": [
+              25.609696123407574,
+              25.6283443049106
+            ]
+          },
+          {
+            "block_index": 6,
+            "candidate_latency_us": 30.363659087104487,
+            "candidate_positions_us": [
+              30.36349144470428,
+              30.363826729504694
+            ],
+            "order": "BAAB",
+            "reference_latency_us": 25.5981398346323,
+            "reference_positions_us": [
+              25.606150177043702,
+              25.5901294922209
+            ]
+          },
+          {
+            "block_index": 7,
+            "candidate_latency_us": 30.553796654946588,
+            "candidate_positions_us": [
+              30.348106091180696,
+              30.759487218712483
+            ],
+            "order": "ABBA",
+            "reference_latency_us": 25.677417436800642,
+            "reference_positions_us": [
+              25.591572397547772,
+              25.763262476053512
+            ]
+          },
+          {
+            "block_index": 8,
+            "candidate_latency_us": 30.40357685200133,
+            "candidate_positions_us": [
+              30.422836854377366,
+              30.38431684962529
+            ],
+            "order": "BAAB",
+            "reference_latency_us": 25.60411497604015,
+            "reference_positions_us": [
+              25.612868949587465,
+              25.59536100249284
+            ]
+          },
+          {
+            "block_index": 9,
+            "candidate_latency_us": 30.356320568790814,
+            "candidate_positions_us": [
+              30.363529191999692,
+              30.349111945581935
+            ],
+            "order": "ABBA",
+            "reference_latency_us": 25.600983897573155,
+            "reference_positions_us": [
+              25.598335527036486,
+              25.603632268109823
+            ]
+          },
+          {
+            "block_index": 10,
+            "candidate_latency_us": 30.4900214891356,
+            "candidate_positions_us": [
+              30.432335850246016,
+              30.547707128025184
+            ],
+            "order": "BAAB",
+            "reference_latency_us": 25.640984729605073,
+            "reference_positions_us": [
+              25.655485536755354,
+              25.626483922454792
+            ]
+          },
+          {
+            "block_index": 11,
+            "candidate_latency_us": 30.542230439546916,
+            "candidate_positions_us": [
+              30.707706811125536,
+              30.376754067968296
+            ],
+            "order": "BAAB",
+            "reference_latency_us": 25.638149798976414,
+            "reference_positions_us": [
+              25.682472823908814,
+              25.59382677404401
+            ]
+          },
+          {
+            "block_index": 12,
+            "candidate_latency_us": 30.369975097798356,
+            "candidate_positions_us": [
+              30.354925029075186,
+              30.385025166521526
+            ],
+            "order": "BAAB",
+            "reference_latency_us": 25.607167777545474,
+            "reference_positions_us": [
+              25.61033016679714,
+              25.604005388293807
+            ]
+          },
+          {
+            "block_index": 13,
+            "candidate_latency_us": 30.362094794774084,
+            "candidate_positions_us": [
+              30.345648076120717,
+              30.37854151342745
+            ],
+            "order": "BAAB",
+            "reference_latency_us": 25.605514829038107,
+            "reference_positions_us": [
+              25.60452984393703,
+              25.606499814139184
+            ]
+          },
+          {
+            "block_index": 14,
+            "candidate_latency_us": 30.35475738667498,
+            "candidate_positions_us": [
+              30.356117399524337,
+              30.353397373825622
+            ],
+            "order": "ABBA",
+            "reference_latency_us": 25.60097476526096,
+            "reference_positions_us": [
+              25.603765338944672,
+              25.59818419157725
+            ]
+          },
+          {
+            "block_index": 15,
+            "candidate_latency_us": 30.37289940297812,
+            "candidate_positions_us": [
+              30.368447442548796,
+              30.377351363407442
+            ],
+            "order": "BAAB",
+            "reference_latency_us": 25.597888043738912,
+            "reference_positions_us": [
+              25.59958534919123,
+              25.596190738286595
+            ]
+          },
+          {
+            "block_index": 16,
+            "candidate_latency_us": 30.36097680870118,
+            "candidate_positions_us": [
+              30.368669485462974,
+              30.353284131939393
+            ],
+            "order": "ABBA",
+            "reference_latency_us": 25.602385055187135,
+            "reference_positions_us": [
+              25.595621925698424,
+              25.60914818467585
+            ]
+          },
+          {
+            "block_index": 17,
+            "candidate_latency_us": 30.38120602839762,
+            "candidate_positions_us": [
+              30.38539597818821,
+              30.377016078607028
+            ],
+            "order": "BAAB",
+            "reference_latency_us": 25.60245159060456,
+            "reference_positions_us": [
+              25.60113784226445,
+              25.603765338944672
+            ]
+          },
+          {
+            "block_index": 18,
+            "candidate_latency_us": 30.339278775127443,
+            "candidate_positions_us": [
+              30.349858009773584,
+              30.328699540481303
+            ],
+            "order": "ABBA",
+            "reference_latency_us": 25.61076851778252,
+            "reference_positions_us": [
+              25.611052924076606,
+              25.610484111488436
+            ]
+          },
+          {
+            "block_index": 19,
+            "candidate_latency_us": 30.380590969525336,
+            "candidate_positions_us": [
+              30.364199761600517,
+              30.39698217745016
+            ],
+            "order": "BAAB",
+            "reference_latency_us": 25.604224563786495,
+            "reference_positions_us": [
+              25.60455332702553,
+              25.603895800547463
+            ]
+          },
+          {
+            "block_index": 20,
+            "candidate_latency_us": 30.35790373476892,
+            "candidate_positions_us": [
+              30.369004770263388,
+              30.346802699274456
+            ],
+            "order": "ABBA",
+            "reference_latency_us": 25.602069338108382,
+            "reference_positions_us": [
+              25.598468597871335,
+              25.60567007834543
+            ]
+          },
+          {
+            "block_index": 21,
+            "candidate_latency_us": 30.629755315458677,
+            "candidate_positions_us": [
+              30.893931982819776,
+              30.36557864809758
+            ],
+            "order": "BAAB",
+            "reference_latency_us": 25.59997803861563,
+            "reference_positions_us": [
+              25.59039041542648,
+              25.609565661804783
+            ]
+          },
+          {
+            "block_index": 22,
+            "candidate_latency_us": 30.332610826414594,
+            "candidate_positions_us": [
+              30.339726191599517,
+              30.32549546122967
+            ],
+            "order": "ABBA",
+            "reference_latency_us": 25.600952586788488,
+            "reference_positions_us": [
+              25.60100738066166,
+              25.600897792915312
+            ]
+          },
+          {
+            "block_index": 23,
+            "candidate_latency_us": 30.371017589280434,
+            "candidate_positions_us": [
+              30.38342201668114,
+              30.35861316187973
+            ],
+            "order": "ABBA",
+            "reference_latency_us": 25.60653373415591,
+            "reference_positions_us": [
+              25.601991061146705,
+              25.61107640716511
+            ]
+          },
+          {
+            "block_index": 24,
+            "candidate_latency_us": 30.381616807788852,
+            "candidate_positions_us": [
+              30.39005443852772,
+              30.373179177049984
+            ],
+            "order": "BAAB",
+            "reference_latency_us": 25.599584044575202,
+            "reference_positions_us": [
+              25.610943336330262,
+              25.588224752820143
+            ]
+          },
+          {
+            "block_index": 25,
+            "candidate_latency_us": 30.370253761655654,
+            "candidate_positions_us": [
+              30.379249830323687,
+              30.36125769298762
+            ],
+            "order": "ABBA",
+            "reference_latency_us": 25.612531054036236,
+            "reference_positions_us": [
+              25.60540654590779,
+              25.61965556216468
+            ]
+          },
+          {
+            "block_index": 26,
+            "candidate_latency_us": 30.37027263530336,
+            "candidate_positions_us": [
+              30.38867555203066,
+              30.35186971857606
+            ],
+            "order": "ABBA",
+            "reference_latency_us": 25.6016636025237,
+            "reference_positions_us": [
+              25.59848947172778,
+              25.604837733319616
+            ]
+          },
+          {
+            "block_index": 27,
+            "candidate_latency_us": 30.373774252059988,
+            "candidate_positions_us": [
+              30.372657376201662,
+              30.374891127918318
+            ],
+            "order": "BAAB",
+            "reference_latency_us": 25.60375359740042,
+            "reference_positions_us": [
+              25.598510345584227,
+              25.608996849216613
+            ]
+          },
+          {
+            "block_index": 28,
+            "candidate_latency_us": 30.483036019055476,
+            "candidate_positions_us": [
+              30.641695673168748,
+              30.324376364942204
+            ],
+            "order": "ABBA",
+            "reference_latency_us": 25.61097595173096,
+            "reference_positions_us": [
+              25.602779049227568,
+              25.619172854234353
+            ]
+          },
+          {
+            "block_index": 29,
+            "candidate_latency_us": 30.368055536805265,
+            "candidate_positions_us": [
+              30.400148509406378,
+              30.335962564204152
+            ],
+            "order": "ABBA",
+            "reference_latency_us": 25.60636935253639,
+            "reference_positions_us": [
+              25.61085723167242,
+              25.60188147340036
+            ]
+          },
+          {
+            "block_index": 30,
+            "candidate_latency_us": 30.38236065155136,
+            "candidate_positions_us": [
+              30.375785960862466,
+              30.38893534224025
+            ],
+            "order": "BAAB",
+            "reference_latency_us": 25.606184097060428,
+            "reference_positions_us": [
+              25.60724605450715,
+              25.6051221396137
+            ]
+          }
+        ],
+        "candidate": "triton-tensor-descriptor-copy-add",
+        "candidate_pilot_us": 58.27200040221214,
+        "candidate_repetitions": 859,
+        "reference": "torch.add-out",
+        "reference_pilot_us": 34.20799970626831,
+        "reference_repetitions": 1462
+      },
+      "profiler": {
+        "captured": true,
+        "cuda_events": [
+          {
+            "count": 1,
+            "device_time_us": 28.28800000000001,
+            "name": "tma_copy_add_kernel",
+            "self_device_time_us": 28.28800000000001
+          }
+        ],
+        "device_event_runtime": "cuda",
+        "device_events": [
+          {
+            "count": 1,
+            "device_time_us": 28.28800000000001,
+            "name": "tma_copy_add_kernel",
+            "self_device_time_us": 28.28800000000001
+          }
+        ]
+      },
+      "shape": [
+        4096,
+        4096
+      ],
+      "status": "passed"
+    },
+    "wgmma": {
+      "block_shape": [
+        128,
+        128,
+        64
+      ],
+      "compiler_evidence": {
+        "artifacts": [
+          {
+            "path": "triton-1.ttgir",
+            "sha256": "sha256:ad308e4d00a5cee8b190c68c3170502c9ae4e6de332ead228025b1e4c20dadd4",
+            "size_bytes": 5404,
+            "source_cache_path": "/workspace/infraswe/runs/h100-sxm-2gpu-features-20260903/features/triton-cache/replay-1/IGNDEK5Y5QH3UR6KMQYKDFXQTQRGREYLTH2XAHX7P3EJZGZJSKSQ/tma_copy_add_kernel.ttgir"
+          },
+          {
+            "path": "triton-2.ttgir",
+            "sha256": "sha256:c2dfd6f8774ab39b57800171c8f4846864edb096ff7f4c02b7eaf3a33bc1b7b9",
+            "size_bytes": 16142,
+            "source_cache_path": "/workspace/infraswe/runs/h100-sxm-2gpu-features-20260903/features/triton-cache/replay-1/QFUCZEBODGM7GOCYPJ7Q7W6K5WJYKJXRB5ESRHHK5EECHFOMWIEQ/wgmma_matmul_kernel.ttgir"
+          },
+          {
+            "path": "triton-1.ptx",
+            "sha256": "sha256:19af6c986f89e8d42268e36a38ac4bac8da2332ed2b7323a3c77a8bb0934147e",
+            "size_bytes": 18559,
+            "source_cache_path": "/workspace/infraswe/runs/h100-sxm-2gpu-features-20260903/features/triton-cache/replay-1/IGNDEK5Y5QH3UR6KMQYKDFXQTQRGREYLTH2XAHX7P3EJZGZJSKSQ/tma_copy_add_kernel.ptx"
+          },
+          {
+            "path": "triton-2.ptx",
+            "sha256": "sha256:58ab24959e75f30d12c959a1942618adf68c4680a5145160c0ed8a8672070f55",
+            "size_bytes": 29991,
+            "source_cache_path": "/workspace/infraswe/runs/h100-sxm-2gpu-features-20260903/features/triton-cache/replay-1/QFUCZEBODGM7GOCYPJ7Q7W6K5WJYKJXRB5ESRHHK5EECHFOMWIEQ/wgmma_matmul_kernel.ptx"
+          },
+          {
+            "path": "triton-1.cubin",
+            "sha256": "sha256:3162e18730095efd12ff6df27999267c625581a700ccc3afd17d5ef50ab0ea0c",
+            "size_bytes": 28296,
+            "source_cache_path": "/workspace/infraswe/runs/h100-sxm-2gpu-features-20260903/features/triton-cache/replay-1/IGNDEK5Y5QH3UR6KMQYKDFXQTQRGREYLTH2XAHX7P3EJZGZJSKSQ/tma_copy_add_kernel.cubin"
+          },
+          {
+            "path": "triton-2.cubin",
+            "sha256": "sha256:25cf93fc38abc39383ccb024795e54e9563d189898d2458952821951db7e63fd",
+            "size_bytes": 54792,
+            "source_cache_path": "/workspace/infraswe/runs/h100-sxm-2gpu-features-20260903/features/triton-cache/replay-1/QFUCZEBODGM7GOCYPJ7Q7W6K5WJYKJXRB5ESRHHK5EECHFOMWIEQ/wgmma_matmul_kernel.cubin"
+          }
+        ],
+        "cache_root": "/workspace/infraswe/runs/h100-sxm-2gpu-features-20260903/features/triton-cache/replay-1",
+        "instruction_gate_passed": true,
+        "ptx_instruction_lines": [
+          "wgmma.mma_async.sync.aligned.m64n128k16.f32.f16.f16 {%r1258,%r1259,%r1260,%r1261,%r1262,%r1263,%r1264,%r1265,%r1266,%r1267,%r1268,%r1269,%r1270,%r1271,%r1272,%r1273,%r1274,%r1275,%r1276,%r1277,%r1278,%r1279,%r1280,%r1281,%r1282,%r1283,%r1284,%r1285,%r1286,%r1287,%r1288,%r1289,%r1290,%r1291,%r1292,%r1293,%r1294,%r1295,%r1296,%r1297,%r1298,%r1299,%r1300,%r1301,%r1302,%r1303,%r1304,%r1305,%r1306,%r1307,%r1308,%r1309,%r1310,%r1311,%r1312,%r1313,%r1314,%r1315,%r1316,%r1317,%r1318,%r1319,%r1320,%r1321}, %rd57, %rd58, %p1, 1, 1, 0, 1;",
+          "wgmma.mma_async.sync.aligned.m64n128k16.f32.f16.f16 {%r1258,%r1259,%r1260,%r1261,%r1262,%r1263,%r1264,%r1265,%r1266,%r1267,%r1268,%r1269,%r1270,%r1271,%r1272,%r1273,%r1274,%r1275,%r1276,%r1277,%r1278,%r1279,%r1280,%r1281,%r1282,%r1283,%r1284,%r1285,%r1286,%r1287,%r1288,%r1289,%r1290,%r1291,%r1292,%r1293,%r1294,%r1295,%r1296,%r1297,%r1298,%r1299,%r1300,%r1301,%r1302,%r1303,%r1304,%r1305,%r1306,%r1307,%r1308,%r1309,%r1310,%r1311,%r1312,%r1313,%r1314,%r1315,%r1316,%r1317,%r1318,%r1319,%r1320,%r1321}, %rd59, %rd60, %p1, 1, 1, 0, 1;",
+          "wgmma.mma_async.sync.aligned.m64n128k16.f32.f16.f16 {%r1258,%r1259,%r1260,%r1261,%r1262,%r1263,%r1264,%r1265,%r1266,%r1267,%r1268,%r1269,%r1270,%r1271,%r1272,%r1273,%r1274,%r1275,%r1276,%r1277,%r1278,%r1279,%r1280,%r1281,%r1282,%r1283,%r1284,%r1285,%r1286,%r1287,%r1288,%r1289,%r1290,%r1291,%r1292,%r1293,%r1294,%r1295,%r1296,%r1297,%r1298,%r1299,%r1300,%r1301,%r1302,%r1303,%r1304,%r1305,%r1306,%r1307,%r1308,%r1309,%r1310,%r1311,%r1312,%r1313,%r1314,%r1315,%r1316,%r1317,%r1318,%r1319,%r1320,%r1321}, %rd61, %rd62, %p1, 1, 1, 0, 1;",
+          "wgmma.mma_async.sync.aligned.m64n128k16.f32.f16.f16 {%r1258,%r1259,%r1260,%r1261,%r1262,%r1263,%r1264,%r1265,%r1266,%r1267,%r1268,%r1269,%r1270,%r1271,%r1272,%r1273,%r1274,%r1275,%r1276,%r1277,%r1278,%r1279,%r1280,%r1281,%r1282,%r1283,%r1284,%r1285,%r1286,%r1287,%r1288,%r1289,%r1290,%r1291,%r1292,%r1293,%r1294,%r1295,%r1296,%r1297,%r1298,%r1299,%r1300,%r1301,%r1302,%r1303,%r1304,%r1305,%r1306,%r1307,%r1308,%r1309,%r1310,%r1311,%r1312,%r1313,%r1314,%r1315,%r1316,%r1317,%r1318,%r1319,%r1320,%r1321}, %rd63, %rd64, %p1, 1, 1, 0, 1;"
+        ],
+        "sass_artifacts": [
+          {
+            "path": "triton-1.sass.txt",
+            "returncode": 0,
+            "sha256": "sha256:edfc97ceccb40308a0e727913532a29ad4077da5cff83bf100421cdbaaaf7652",
+            "size_bytes": 121636
+          },
+          {
+            "path": "triton-2.sass.txt",
+            "returncode": 0,
+            "sha256": "sha256:c1557321a84680d50c919a858caf3964926d8e7ce53aab93ae56b7b613417f40",
+            "size_bytes": 395460
+          }
+        ],
+        "sass_instruction_lines": [
+          "/*0c30*/                   HGMMA.64x128x16.F32 R24, gdesc[UR8].tnspB, RZ, !UPT ;               /* 0x41e00000081879f0 */",
+          "/*0ce0*/                   HGMMA.64x128x16.F32 R24, gdesc[UR8].tnspB, R24 ;                    /* 0x41e00000081879f0 */",
+          "/*0dc0*/                   HGMMA.64x128x16.F32 R24, gdesc[UR8].tnspB, R24 ;                    /* 0x41e00000081879f0 */",
+          "/*0e80*/                   HGMMA.64x128x16.F32 R24, gdesc[UR8].tnspB, R24, gsb0 ;              /* 0x41e00000081879f0 */",
+          "/*1120*/                   HGMMA.64x128x16.F32 R24, gdesc[UR8].tnspB, R24 ;                    /* 0x41e00000081879f0 */",
+          "/*11e0*/                   HGMMA.64x128x16.F32 R24, gdesc[UR8].tnspB, R24 ;                    /* 0x41e00000081879f0 */",
+          "/*1270*/                   HGMMA.64x128x16.F32 R24, gdesc[UR8].tnspB, R24 ;                    /* 0x41e00000081879f0 */",
+          "/*1340*/                   HGMMA.64x128x16.F32 R24, gdesc[UR8].tnspB, R24, gsb0 ;              /* 0x41e00000081879f0 */",
+          "/*15e0*/                   HGMMA.64x128x16.F32 R24, gdesc[UR8].tnspB, R24 ;                    /* 0x41e00000081879f0 */",
+          "/*16a0*/                   HGMMA.64x128x16.F32 R24, gdesc[UR8].tnspB, R24 ;                    /* 0x41e00000081879f0 */",
+          "/*1730*/                   HGMMA.64x128x16.F32 R24, gdesc[UR8].tnspB, R24 ;                    /* 0x41e00000081879f0 */",
+          "/*1800*/                   HGMMA.64x128x16.F32 R24, gdesc[UR8].tnspB, R24, gsb0 ;              /* 0x41e00000081879f0 */",
+          "/*1aa0*/                   HGMMA.64x128x16.F32 R24, gdesc[UR8].tnspB, R24 ;                    /* 0x41e00000081879f0 */",
+          "/*1b60*/                   HGMMA.64x128x16.F32 R24, gdesc[UR8].tnspB, R24 ;                    /* 0x41e00000081879f0 */",
+          "/*1bf0*/                   HGMMA.64x128x16.F32 R24, gdesc[UR8].tnspB, R24 ;                    /* 0x41e00000081879f0 */",
+          "/*1cb0*/                   HGMMA.64x128x16.F32 R24, gdesc[UR8].tnspB, R24, gsb0 ;              /* 0x41e00000081879f0 */",
+          "/*1f20*/                   HGMMA.64x128x16.F32 R24, gdesc[UR8].tnspB, R24 ;                    /* 0x41e00000081879f0 */",
+          "/*1fd0*/                   HGMMA.64x128x16.F32 R24, gdesc[UR8].tnspB, R24 ;                    /* 0x41e00000081879f0 */",
+          "/*20b0*/                   HGMMA.64x128x16.F32 R24, gdesc[UR8].tnspB, R24 ;                    /* 0x41e00000081879f0 */",
+          "/*2140*/                   HGMMA.64x128x16.F32 R24, gdesc[UR8].tnspB, R24, gsb0 ;              /* 0x41e00000081879f0 */",
+          "/*2410*/                   HGMMA.64x128x16.F32 R24, gdesc[UR8].tnspB, R24 ;                    /* 0x41e00000081879f0 */",
+          "/*24d0*/                   HGMMA.64x128x16.F32 R24, gdesc[UR8].tnspB, R24 ;                    /* 0x41e00000081879f0 */",
+          "/*2560*/                   HGMMA.64x128x16.F32 R24, gdesc[UR8].tnspB, R24 ;                    /* 0x41e00000081879f0 */",
+          "/*2600*/                   HGMMA.64x128x16.F32 R24, gdesc[UR8].tnspB, R24, gsb0 ;              /* 0x41e00000081879f0 */",
+          "/*28d0*/                   HGMMA.64x128x16.F32 R24, gdesc[UR8].tnspB, R24 ;                    /* 0x41e00000081879f0 */",
+          "/*2990*/                   HGMMA.64x128x16.F32 R24, gdesc[UR8].tnspB, R24 ;                    /* 0x41e00000081879f0 */",
+          "/*2a20*/                   HGMMA.64x128x16.F32 R24, gdesc[UR8].tnspB, R24 ;                    /* 0x41e00000081879f0 */",
+          "/*2ac0*/                   HGMMA.64x128x16.F32 R24, gdesc[UR8].tnspB, R24, gsb0 ;              /* 0x41e00000081879f0 */",
+          "/*2d90*/                   HGMMA.64x128x16.F32 R24, gdesc[UR8].tnspB, R24 ;                    /* 0x41e00000081879f0 */",
+          "/*2e50*/                   HGMMA.64x128x16.F32 R24, gdesc[UR8].tnspB, R24 ;                    /* 0x41e00000081879f0 */",
+          "/*2ee0*/                   HGMMA.64x128x16.F32 R24, gdesc[UR8].tnspB, R24 ;                    /* 0x41e00000081879f0 */",
+          "/*2fa0*/                   HGMMA.64x128x16.F32 R24, gdesc[UR8].tnspB, R24, gsb0 ;              /* 0x41e00000081879f0 */",
+          "/*3210*/                   HGMMA.64x128x16.F32 R24, gdesc[UR8].tnspB, R24 ;                    /* 0x41e00000081879f0 */",
+          "/*32c0*/                   HGMMA.64x128x16.F32 R24, gdesc[UR8].tnspB, R24 ;                    /* 0x41e00000081879f0 */",
+          "/*33a0*/                   HGMMA.64x128x16.F32 R24, gdesc[UR8].tnspB, R24 ;                    /* 0x41e00000081879f0 */",
+          "/*3430*/                   HGMMA.64x128x16.F32 R24, gdesc[UR8].tnspB, R24, gsb0 ;              /* 0x41e00000081879f0 */",
+          "/*3700*/                   HGMMA.64x128x16.F32 R24, gdesc[UR8].tnspB, R24 ;                    /* 0x41e00000081879f0 */",
+          "/*37c0*/                   HGMMA.64x128x16.F32 R24, gdesc[UR8].tnspB, R24 ;                    /* 0x41e00000081879f0 */",
+          "/*3850*/                   HGMMA.64x128x16.F32 R24, gdesc[UR8].tnspB, R24 ;                    /* 0x41e00000081879f0 */",
+          "/*38f0*/                   HGMMA.64x128x16.F32 R24, gdesc[UR8].tnspB, R24, gsb0 ;              /* 0x41e00000081879f0 */",
+          "/*3bc0*/                   HGMMA.64x128x16.F32 R24, gdesc[UR8].tnspB, R24 ;                    /* 0x41e00000081879f0 */",
+          "/*3c80*/                   HGMMA.64x128x16.F32 R24, gdesc[UR8].tnspB, R24 ;                    /* 0x41e00000081879f0 */",
+          "/*3d10*/                   HGMMA.64x128x16.F32 R24, gdesc[UR8].tnspB, R24 ;                    /* 0x41e00000081879f0 */",
+          "/*3db0*/                   HGMMA.64x128x16.F32 R24, gdesc[UR8].tnspB, R24, gsb0 ;              /* 0x41e00000081879f0 */",
+          "/*4080*/                   HGMMA.64x128x16.F32 R24, gdesc[UR8].tnspB, R24 ;                    /* 0x41e00000081879f0 */",
+          "/*4140*/                   HGMMA.64x128x16.F32 R24, gdesc[UR8].tnspB, R24 ;                    /* 0x41e00000081879f0 */",
+          "/*41d0*/                   HGMMA.64x128x16.F32 R24, gdesc[UR8].tnspB, R24 ;                    /* 0x41e00000081879f0 */",
+          "/*4290*/                   HGMMA.64x128x16.F32 R24, gdesc[UR8].tnspB, R24, gsb0 ;              /* 0x41e00000081879f0 */",
+          "/*4530*/                   HGMMA.64x128x16.F32 R24, gdesc[UR8].tnspB, R24 ;                    /* 0x41e00000081879f0 */",
+          "/*45f0*/                   HGMMA.64x128x16.F32 R24, gdesc[UR8].tnspB, R24 ;                    /* 0x41e00000081879f0 */",
+          "/*4680*/                   HGMMA.64x128x16.F32 R24, gdesc[UR8].tnspB, R24 ;                    /* 0x41e00000081879f0 */",
+          "/*4750*/                   HGMMA.64x128x16.F32 R24, gdesc[UR8].tnspB, R24, gsb0 ;              /* 0x41e00000081879f0 */",
+          "/*49f0*/                   HGMMA.64x128x16.F32 R24, gdesc[UR8].tnspB, R24 ;                    /* 0x41e00000081879f0 */",
+          "/*4ab0*/                   HGMMA.64x128x16.F32 R24, gdesc[UR8].tnspB, R24 ;                    /* 0x41e00000081879f0 */",
+          "/*4b40*/                   HGMMA.64x128x16.F32 R24, gdesc[UR8].tnspB, R24 ;                    /* 0x41e00000081879f0 */",
+          "/*4c20*/                   HGMMA.64x128x16.F32 R24, gdesc[UR8].tnspB, R24, gsb0 ;              /* 0x41e00000081879f0 */",
+          "/*4ee0*/                   HGMMA.64x128x16.F32 R24, gdesc[UR8].tnspB, R24 ;                    /* 0x41e00000081879f0 */",
+          "/*4fa0*/                   HGMMA.64x128x16.F32 R24, gdesc[UR8].tnspB, R24 ;                    /* 0x41e00000081879f0 */",
+          "/*5030*/                   HGMMA.64x128x16.F32 R24, gdesc[UR8].tnspB, R24 ;                    /* 0x41e00000081879f0 */",
+          "/*5130*/                   HGMMA.64x128x16.F32 R24, gdesc[UR8].tnspB, R24, gsb0 ;              /* 0x41e00000081879f0 */",
+          "/*5400*/                   HGMMA.64x128x16.F32 R24, gdesc[UR8].tnspB, R24 ;                    /* 0x41e00000081879f0 */",
+          "/*54c0*/                   HGMMA.64x128x16.F32 R24, gdesc[UR8].tnspB, R24 ;                    /* 0x41e00000081879f0 */",
+          "/*5560*/                   HGMMA.64x128x16.F32 R24, gdesc[UR8].tnspB, R24 ;                    /* 0x41e00000081879f0 */",
+          "/*55b0*/                   HGMMA.64x128x16.F32 R24, gdesc[UR8].tnspB, R24, gsb0 ;              /* 0x41e00000081879f0 */"
+        ],
+        "ttgir_wgmma_lines": [
+          "tt.func public @wgmma_matmul_kernel(%arg0: !tt.ptr<f16> {tt.divisibility = 16 : i32} loc(\"/workspace/infraswe/benchmarks/kernel_frontier/h200_feature_bench.py\":65:0), %arg1: !tt.ptr<f16> {tt.divisibility = 16 : i32} loc(\"/workspace/infraswe/benchmarks/kernel_frontier/h200_feature_bench.py\":65:0), %arg2: !tt.ptr<f16> {tt.divisibility = 16 : i32} loc(\"/workspace/infraswe/benchmarks/kernel_frontier/h200_feature_bench.py\":65:0)) attributes {noinline = false} {",
+          "%75 = ttng.warp_group_dot %73, %74, %arg4 {inputPrecision = 0 : i32, isAsync = true} : !ttg.memdesc<128x64xf16, #shared, #smem, mutable, 4x128x64> * !ttg.memdesc<64x128xf16, #shared, #smem, mutable, 4x64x128> -> tensor<128x128xf32, #mma> loc(#loc25)",
+          "%76:3 = ttng.warp_group_dot_wait %75, %73, %74 {pendings = 1 : i32} : tensor<128x128xf32, #mma>, !ttg.memdesc<128x64xf16, #shared, #smem, mutable, 4x128x64>, !ttg.memdesc<64x128xf16, #shared, #smem, mutable, 4x64x128> loc(#loc25)",
+          "%59 = ttng.warp_group_dot_wait %58#0 {pendings = 0 : i32} : tensor<128x128xf32, #mma> loc(#loc24)"
+        ]
+      },
+      "correctness": {
+        "cosine_similarity": 1.0,
+        "max_abs_error": 0.0,
+        "mean_abs_error": 0.0,
+        "passed": true,
+        "relative_l2_error": 0.0
+      },
+      "dtype": "float16",
+      "measurement": {
+        "blocks": [
+          {
+            "block_index": 1,
+            "candidate_latency_us": 18.066409338823696,
+            "candidate_positions_us": [
+              18.18942174255124,
+              17.943396935096153
+            ],
+            "order": "BAAB",
+            "reference_latency_us": 12.202594884727606,
+            "reference_positions_us": [
+              12.358713334131425,
+              12.046476435323786
+            ]
+          },
+          {
+            "block_index": 2,
+            "candidate_latency_us": 17.972080524151142,
+            "candidate_positions_us": [
+              17.976796385730328,
+              17.967364662571956
+            ],
+            "order": "ABBA",
+            "reference_latency_us": 12.185420769061821,
+            "reference_positions_us": [
+              12.193709266692055,
+              12.177132271431589
+            ]
+          },
+          {
+            "block_index": 3,
+            "candidate_latency_us": 17.948955273338658,
+            "candidate_positions_us": [
+              17.965292061871363,
+              17.932618484805953
+            ],
+            "order": "BAAB",
+            "reference_latency_us": 12.137379885640385,
+            "reference_positions_us": [
+              12.284211363724914,
+              11.990548407555854
+            ]
+          },
+          {
+            "block_index": 4,
+            "candidate_latency_us": 17.91882070935207,
+            "candidate_positions_us": [
+              17.967001725787576,
+              17.870639692916562
+            ],
+            "order": "ABBA",
+            "reference_latency_us": 12.152154473264245,
+            "reference_positions_us": [
+              12.127897147199516,
+              12.176411799328974
+            ]
+          },
+          {
+            "block_index": 5,
+            "candidate_latency_us": 17.901745691955814,
+            "candidate_positions_us": [
+              17.897483115254143,
+              17.906008268657484
+            ],
+            "order": "BAAB",
+            "reference_latency_us": 12.131500735092654,
+            "reference_positions_us": [
+              12.252767113645104,
+              12.010234356540204
+            ]
+          },
+          {
+            "block_index": 6,
+            "candidate_latency_us": 18.005104682706147,
+            "candidate_positions_us": [
+              17.98788680721391,
+              18.02232255819838
+            ],
+            "order": "BAAB",
+            "reference_latency_us": 12.121585958866232,
+            "reference_positions_us": [
+              12.195562610601673,
+              12.047609307130791
+            ]
+          },
+          {
+            "block_index": 7,
+            "candidate_latency_us": 17.976421093651158,
+            "candidate_positions_us": [
+              17.973817215274703,
+              17.979024972027613
+            ],
+            "order": "ABBA",
+            "reference_latency_us": 12.208072068301561,
+            "reference_positions_us": [
+              12.18611055666262,
+              12.230033579940502
+            ]
+          },
+          {
+            "block_index": 8,
+            "candidate_latency_us": 18.097554720365082,
+            "candidate_positions_us": [
+              17.99112543886007,
+              18.203984001870097
+            ],
+            "order": "BAAB",
+            "reference_latency_us": 13.387696009651881,
+            "reference_positions_us": [
+              14.69695706164975,
+              12.078434957654013
+            ]
+          },
+          {
+            "block_index": 9,
+            "candidate_latency_us": 18.05610965620651,
+            "candidate_positions_us": [
+              18.073444134793302,
+              18.03877517761972
+            ],
+            "order": "ABBA",
+            "reference_latency_us": 12.13890367800051,
+            "reference_positions_us": [
+              12.135948760475738,
+              12.141858595525283
+            ]
+          },
+          {
+            "block_index": 10,
+            "candidate_latency_us": 18.056538230494446,
+            "candidate_positions_us": [
+              18.03584851716694,
+              18.077227943821956
+            ],
+            "order": "BAAB",
+            "reference_latency_us": 12.104792944712989,
+            "reference_positions_us": [
+              12.154255134258491,
+              12.055330755167486
+            ]
+          },
+          {
+            "block_index": 11,
+            "candidate_latency_us": 17.97068128701646,
+            "candidate_positions_us": [
+              17.997835908341504,
+              17.943526665691422
+            ],
+            "order": "ABBA",
+            "reference_latency_us": 12.17802825888458,
+            "reference_positions_us": [
+              12.162492081925675,
+              12.193564435843488
+            ]
+          },
+          {
+            "block_index": 12,
+            "candidate_latency_us": 18.113476834316486,
+            "candidate_positions_us": [
+              18.073470389794725,
+              18.153483278838248
+            ],
+            "order": "BAAB",
+            "reference_latency_us": 12.132097855497971,
+            "reference_positions_us": [
+              12.167227314245746,
+              12.096968396750196
+            ]
+          },
+          {
+            "block_index": 13,
+            "candidate_latency_us": 17.968738416911137,
+            "candidate_positions_us": [
+              18.016025991092327,
+              17.921450842729946
+            ],
+            "order": "ABBA",
+            "reference_latency_us": 12.169256173505747,
+            "reference_positions_us": [
+              12.155160940752067,
+              12.183351406259426
+            ]
+          },
+          {
+            "block_index": 14,
+            "candidate_latency_us": 18.06232900272014,
+            "candidate_positions_us": [
+              18.100676748916687,
+              18.023981256523594
+            ],
+            "order": "BAAB",
+            "reference_latency_us": 12.133117194648262,
+            "reference_positions_us": [
+              12.211253437449727,
+              12.054980951846797
+            ]
+          },
+          {
+            "block_index": 15,
+            "candidate_latency_us": 18.015325600319063,
+            "candidate_positions_us": [
+              17.973168562298362,
+              18.057482638339764
+            ],
+            "order": "BAAB",
+            "reference_latency_us": 12.16406742424885,
+            "reference_positions_us": [
+              12.26648185857628,
+              12.061652989921422
+            ]
+          },
+          {
+            "block_index": 16,
+            "candidate_latency_us": 18.05547567514273,
+            "candidate_positions_us": [
+              18.102931590215398,
+              18.00801976007006
+            ],
+            "order": "BAAB",
+            "reference_latency_us": 12.13439366992376,
+            "reference_positions_us": [
+              12.180179856151842,
+              12.088607483695679
+            ]
+          },
+          {
+            "block_index": 17,
+            "candidate_latency_us": 18.173564493897473,
+            "candidate_positions_us": [
+              18.021000541656125,
+              18.32612844613882
+            ],
+            "order": "BAAB",
+            "reference_latency_us": 12.515366921246894,
+            "reference_positions_us": [
+              12.953266060336983,
+              12.077467782156807
+            ]
+          },
+          {
+            "block_index": 18,
+            "candidate_latency_us": 18.07085338391756,
+            "candidate_positions_us": [
+              18.105521568885216,
+              18.036185198949898
+            ],
+            "order": "ABBA",
+            "reference_latency_us": 12.208164735497041,
+            "reference_positions_us": [
+              12.205034302621888,
+              12.211295168372194
+            ]
+          },
+          {
+            "block_index": 19,
+            "candidate_latency_us": 18.073172318307975,
+            "candidate_positions_us": [
+              18.117751766312942,
+              18.02859287030301
+            ],
+            "order": "ABBA",
+            "reference_latency_us": 12.122934235875977,
+            "reference_positions_us": [
+              12.039083925146548,
+              12.206784546605409
+            ]
+          },
+          {
+            "block_index": 20,
+            "candidate_latency_us": 18.049113470533115,
+            "candidate_positions_us": [
+              18.08435231567877,
+              18.013874625387462
+            ],
+            "order": "ABBA",
+            "reference_latency_us": 12.18294943928565,
+            "reference_positions_us": [
+              12.077858089019893,
+              12.28804078955141
+            ]
+          },
+          {
+            "block_index": 21,
+            "candidate_latency_us": 18.20636780155815,
+            "candidate_positions_us": [
+              18.117208133342295,
+              18.295527469774008
+            ],
+            "order": "BAAB",
+            "reference_latency_us": 12.068447766003308,
+            "reference_positions_us": [
+              12.113152630387432,
+              12.023742901619183
+            ]
+          },
+          {
+            "block_index": 22,
+            "candidate_latency_us": 18.038503361134396,
+            "candidate_positions_us": [
+              18.064738285203696,
+              18.012268437065092
+            ],
+            "order": "ABBA",
+            "reference_latency_us": 12.240720378232584,
+            "reference_positions_us": [
+              12.225564689096183,
+              12.255876067368987
+            ]
+          },
+          {
+            "block_index": 23,
+            "candidate_latency_us": 18.125097761270005,
+            "candidate_positions_us": [
+              18.099666703567813,
+              18.150528818972198
+            ],
+            "order": "ABBA",
+            "reference_latency_us": 12.116386163188684,
+            "reference_positions_us": [
+              12.017770470185937,
+              12.215001856191432
+            ]
+          },
+          {
+            "block_index": 24,
+            "candidate_latency_us": 18.145100983530888,
+            "candidate_positions_us": [
+              18.180379211178675,
+              18.109822755883098
+            ],
+            "order": "BAAB",
+            "reference_latency_us": 12.136700530770202,
+            "reference_positions_us": [
+              12.266749427432107,
+              12.0066516341083
+            ]
+          },
+          {
+            "block_index": 25,
+            "candidate_latency_us": 18.090804868381515,
+            "candidate_positions_us": [
+              18.065671109960146,
+              18.115938626802883
+            ],
+            "order": "ABBA",
+            "reference_latency_us": 12.230744233002532,
+            "reference_positions_us": [
+              12.206868008450344,
+              12.254620457554722
+            ]
+          },
+          {
+            "block_index": 26,
+            "candidate_latency_us": 18.2946981206114,
+            "candidate_positions_us": [
+              18.294854106208092,
+              18.29454213501471
+            ],
+            "order": "BAAB",
+            "reference_latency_us": 12.457421080639616,
+            "reference_positions_us": [
+              12.960514967045729,
+              11.954327194233505
+            ]
+          },
+          {
+            "block_index": 27,
+            "candidate_latency_us": 18.156864768580387,
+            "candidate_positions_us": [
+              18.08702260376471,
+              18.226706933396066
+            ],
+            "order": "BAAB",
+            "reference_latency_us": 12.107994565632353,
+            "reference_positions_us": [
+              12.225935357878107,
+              11.990053773386599
+            ]
+          },
+          {
+            "block_index": 28,
+            "candidate_latency_us": 18.063650247056476,
+            "candidate_positions_us": [
+              17.997758687749084,
+              18.129541806363868
+            ],
+            "order": "ABBA",
+            "reference_latency_us": 12.196005081117843,
+            "reference_positions_us": [
+              12.199743067128932,
+              12.192267095106756
+            ]
+          },
+          {
+            "block_index": 29,
+            "candidate_latency_us": 18.052417739682834,
+            "candidate_positions_us": [
+              18.121949477716978,
+              17.98288600164869
+            ],
+            "order": "ABBA",
+            "reference_latency_us": 12.142033497185627,
+            "reference_positions_us": [
+              12.049709354435002,
+              12.234357639936253
+            ]
+          },
+          {
+            "block_index": 30,
+            "candidate_latency_us": 18.0298106390455,
+            "candidate_positions_us": [
+              18.06077377998877,
+              17.998847498102226
+            ],
+            "order": "ABBA",
+            "reference_latency_us": 12.086661472590581,
+            "reference_positions_us": [
+              11.987233253979776,
+              12.186089691201385
+            ]
+          }
+        ],
+        "candidate": "triton-tl-dot",
+        "candidate_pilot_us": 40.511999279260635,
+        "candidate_repetitions": 1235,
+        "reference": "torch-mm",
+        "reference_pilot_us": 32.19199925661087,
+        "reference_repetitions": 1554
+      },
+      "num_warps": 8,
+      "profiler": {
+        "captured": true,
+        "cuda_events": [
+          {
+            "count": 1,
+            "device_time_us": 7.6469999999999345,
+            "name": "wgmma_matmul_kernel",
+            "self_device_time_us": 7.6469999999999345
+          }
+        ],
+        "device_event_runtime": "cuda",
+        "device_events": [
+          {
+            "count": 1,
+            "device_time_us": 7.6469999999999345,
+            "name": "wgmma_matmul_kernel",
+            "self_device_time_us": 7.6469999999999345
+          }
+        ]
+      },
+      "shape": [
+        1024,
+        1024,
+        1024
+      ],
+      "status": "passed"
+    }
+  },
+  "finished_at": "2026-09-03T05:54:04.218940Z",
+  "hardware": {
+    "accelerator_vendor": "nvidia",
+    "architecture": "sm90",
+    "compute_capability": "9.0",
+    "compute_unit_count": 132,
+    "cudnn_version": 91002,
+    "driver_version": "595.71.05",
+    "gpu_name": "NVIDIA H100 80GB HBM3",
+    "nvidia_smi": {
+      "clocks.mem": "2619",
+      "clocks.sm": "345",
+      "driver_version": "595.71.05",
+      "memory.total": "81559",
+      "memory.used": "17",
+      "name": "NVIDIA H100 80GB HBM3",
+      "pci.bus_id": "00000000:09:00.0",
+      "power.draw": "71.85",
+      "power.limit": "700.00",
+      "pstate": "P0",
+      "temperature.gpu": "36",
+      "utilization.gpu": "0",
+      "uuid": "GPU-32d195bd-0c3b-8ddb-5ee6-d1863f7215e4"
+    },
+    "platform": "Linux-5.15.0-179-generic-x86_64-with-glibc2.39",
+    "python": "3.12.14",
+    "rocm_smi": {},
+    "runtime": "cuda",
+    "runtime_version": "12.8",
+    "sm_count": 132,
+    "torch_cuda": "12.8",
+    "torch_hip": null,
+    "torch_version": "2.8.0+cu128",
+    "total_memory_bytes": 85019590656
+  },
+  "protocol": {
+    "blocks": 30,
+    "fresh_process": true,
+    "min_timed_span_ms": 50.0,
+    "multimem_undefined_behavior_forbidden": true,
+    "paired_order": "randomized-ABBA-or-BAAB",
+    "timer": "evaluator-owned-cuda-events"
+  },
+  "replay_index": 1,
+  "schema_version": "0.3",
+  "started_at": "2026-09-03T05:53:48.086476Z",
+  "status": "passed"
+}

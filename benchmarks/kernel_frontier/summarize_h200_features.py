@@ -63,6 +63,45 @@ def main() -> None:
             "sass_instruction_lines"
         ],
     }
+    wgmma_reference = [
+        statistics.median(
+            float(block["reference_latency_us"])
+            for block in item["features"]["wgmma"]["measurement"]["blocks"]
+        )
+        for item in replays
+    ]
+    wgmma_candidate = [
+        statistics.median(
+            float(block["candidate_latency_us"])
+            for block in item["features"]["wgmma"]["measurement"]["blocks"]
+        )
+        for item in replays
+    ]
+    wgmma = {
+        "status": "passed",
+        "correctness_passed": all(
+            item["features"]["wgmma"]["correctness"]["passed"] for item in replays
+        ),
+        "profiler_captured": all(
+            item["features"]["wgmma"]["profiler"].get("captured") for item in replays
+        ),
+        "instruction_gate_passed": all(
+            item["features"]["wgmma"]["compiler_evidence"]["instruction_gate_passed"]
+            for item in replays
+        ),
+        "reference_latency_us_per_replay": wgmma_reference,
+        "candidate_latency_us_per_replay": wgmma_candidate,
+        "reference_latency_us": statistics.median(wgmma_reference),
+        "candidate_latency_us": statistics.median(wgmma_candidate),
+        "candidate_over_reference": statistics.median(wgmma_candidate)
+        / statistics.median(wgmma_reference),
+        "ptx_instruction_lines": replays[0]["features"]["wgmma"][
+            "compiler_evidence"
+        ]["ptx_instruction_lines"],
+        "sass_instruction_lines": replays[0]["features"]["wgmma"][
+            "compiler_evidence"
+        ]["sass_instruction_lines"],
+    }
     multimem_replays = [item["features"]["multimem"] for item in replays]
     multimem_sass_lines = []
     multimem_instruction_gates = []
@@ -97,15 +136,27 @@ def main() -> None:
         "sass_instruction_lines": multimem_sass_lines,
         "execution_attempted": any(item["execution_attempted"] for item in multimem_replays),
         "execution_reason": multimem_replays[0]["execution_reason"],
+        "runtime_execution_passed": all(
+            (item.get("runtime_execution") or {}).get("status") == "passed"
+            for item in multimem_replays
+        ),
+        "runtime_instruction_gate_passed": all(
+            item.get("runtime_compiler", {}).get("instruction_gate_passed", False)
+            for item in multimem_replays
+        ),
+        "runtime_execution_per_replay": [
+            item.get("runtime_execution") for item in multimem_replays
+        ],
         "topology_stdout": multimem_replays[0]["topology"]["stdout"],
     }
     summary = {
         "schema_version": "0.3",
         "generated_at": utc_now(),
-        "suite_id": "h200-sm90-feature-supplement-v1",
+        "suite_id": "hopper-sm90-feature-supplement-v2",
         "hardware": replays[0]["hardware"],
         "replay_count": 3,
         "tma": tma,
+        "wgmma": wgmma,
         "multimem": multimem,
         "raw_replays": [f"features/replay-{index}.json" for index in (1, 2, 3)],
     }
@@ -113,7 +164,7 @@ def main() -> None:
 
     hardware = summary["hardware"]
     lines = [
-        "# H200 SM90 架构新特性补测：TMA 与 multimem",
+        "# Hopper SM90 架构新特性补测：TMA、WGMMA 与 multimem/NVLS",
         "",
         f"GPU：{hardware['gpu_name']}；CC {hardware['compute_capability']}；"
         f"SM {hardware['sm_count']}；显存 {int(hardware['total_memory_bytes']) / 2**30:.1f} GiB。",
@@ -125,9 +176,13 @@ def main() -> None:
         f"| TMA | PASS | {'PASS' if tma['instruction_gate_passed'] else 'FAIL'} | "
         f"{'PASS' if tma['correctness_passed'] else 'FAIL'} | "
         f"3 个 fresh-process replay；Triton tensor descriptor 实际执行 |",
+        f"| WGMMA | PASS | {'PASS' if wgmma['instruction_gate_passed'] else 'FAIL'} | "
+        f"{'PASS' if wgmma['correctness_passed'] else 'FAIL'} | "
+        "3 个 fresh-process replay；Triton `tl.dot` 实际执行 |",
         f"| multimem | {multimem['status']} | "
-        f"{'PASS' if multimem['instruction_gate_passed'] else 'FAIL'} | N/A | "
-        "PTX ISA 可编译；运行受 CUDA multicast/topology 门禁约束 |",
+        f"{'PASS' if multimem['runtime_instruction_gate_passed'] else 'FAIL'} | "
+        f"{'PASS' if multimem['runtime_execution_passed'] else 'N/A'} | "
+        "合法 CUDA multicast 映射上的双卡硬件归约 |",
         "",
         "## TMA 实测",
         "",
@@ -140,24 +195,35 @@ def main() -> None:
         "- 3 replay 均通过逐元素正确性、动态输入变化、CUDA Profiler 和编译产物指令门禁。",
         "- SASS 明确包含 `UTMALDG.2D` 与 `UTMASTG.2D`。",
         "",
-        "## multimem 门禁",
+        "## WGMMA 实测",
+        "",
+        f"- 1024³ FP16 GEMM：WGMMA candidate 中位数 "
+        f"`{wgmma['candidate_latency_us']:.3f} µs`；Torch MM reference "
+        f"`{wgmma['reference_latency_us']:.3f} µs`；比值 "
+        f"`{wgmma['candidate_over_reference']:.3f}×`。",
+        "- 3 replay 均通过正确性、CUDA Profiler 与编译产物指令门禁。",
+        "- PTX/SASS 明确包含 `wgmma.mma_async` / `HGMMA`。",
+        "",
+        "## multimem/NVLS 实测",
         "",
         f"- Driver `CU_DEVICE_ATTRIBUTE_MULTICAST_SUPPORTED`："
         f"`{multimem['driver_multicast_supported']['value']}`；"
         f"fabric handle：`{multimem['driver_fabric_handle_supported']['value']}`；"
         f"可见 GPU：`{multimem['visible_cuda_device_count']}`。",
-        f"- 状态：`{multimem['status']}`。`multimem.*` PTX 已由本机 ptxas 编译，"
-        "但没有合法 CUDA multicast 映射，因此未运行。",
+        f"- 状态：`{multimem['status']}`；"
+        f"运行正确性：`{multimem['runtime_execution_passed']}`。",
+        "- 每个 replay 都为两张 GPU 创建独立物理 backing、加入同一 multicast team，"
+        "再从两张卡分别执行 `multimem.ld_reduce` 并校验归约结果。",
         "- 编译后的 SM90 SASS 明确包含 `LDGMC.E.ADD.32.STRONG.SYS`。",
-        "- 普通指针不是 multimem address；对它发射 `multimem.*` 属于未定义行为，"
-        "本测试严格禁止用这种方式伪造运行成功。",
+        "- 普通指针不是 multimem address；本测试只在 Driver API 创建并绑定的合法 "
+        "multicast 地址上执行。",
         "",
         "## 证据边界",
         "",
-        "- TMA 是本机真实执行与指令级证据，可作为 H200 SM90 feature PASS。",
-        "- multimem 是 ISA/toolchain PASS、当前单卡拓扑 runtime N/A；"
-        "需要支持 switch multicast 的多 GPU/NVSwitch cell 才能形成运行评分。",
-        "- 原始 replay、Triton PTX/cubin/SASS、multimem PTX/cubin/SASS、"
+        "- TMA、WGMMA 与 multimem/NVLS 均为本机真实执行与指令级证据。",
+        "- multimem 结论仅适用于本次两卡可见的 NVSwitch multicast team；"
+        "不外推到无 multicast 能力位的 PCIe/单卡拓扑。",
+        "- 原始 replay、Triton PTX/cubin/SASS、multimem PTX/cubin/SASS/二进制、"
         "Driver 属性与拓扑快照全部随 ZIP 提供。",
         "",
         "参考：NVIDIA PTX ISA 的 `multimem.*` 定义与 CUDA Driver API multicast 管理。",

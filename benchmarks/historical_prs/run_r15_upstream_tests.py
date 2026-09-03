@@ -6,6 +6,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import os
 import re
 import shlex
 import subprocess
@@ -18,9 +19,9 @@ from typing import Any
 from infraswe.history.blind import canonical_sha256
 from infraswe.io import atomic_write_json
 
-REMOTE = "root@38.49.42.120"
-PORT = 54270
-IDENTITY = "~/.ssh/id_ed25519_winpc"
+REMOTE = os.environ.get("INFRASWE_SSH_REMOTE", "root@38.49.42.120")
+PORT = int(os.environ.get("INFRASWE_SSH_PORT", "54270"))
+IDENTITY = os.environ.get("INFRASWE_SSH_IDENTITY", "~/.ssh/id_ed25519_winpc")
 PROJECT_RUNTIME = {
     "vllm": (
         "/workspace/r14-run-vllm",
@@ -30,7 +31,7 @@ PROJECT_RUNTIME = {
     ),
     "sglang": (
         "/workspace/r14-run-sglang",
-        "/venv/main/bin/python",
+        os.environ.get("INFRASWE_SGLANG_PYTHON", "/venv/main/bin/python"),
         "/workspace/r18-deps/common:/workspace/r17-deps/opencv:/workspace/r14-shims:python:.",
         "1",
     ),
@@ -38,7 +39,7 @@ PROJECT_RUNTIME = {
     "tensorrt-llm": (
         "/workspace/r19-tensorrt-wt",
         "/venv/main/bin/python",
-        "/workspace/r18-deps/common:/workspace/r17-deps/tensorrt:.",
+        "/workspace/r18-deps/common:/workspace/r17-deps/tensorrt:.:tests/integration",
         "1",
     ),
     "liger-kernel": ("/workspace/r13-run-liger", "/venv/main/bin/python", ".", "0"),
@@ -79,6 +80,22 @@ def _read(path: Path) -> dict[str, Any]:
     if not isinstance(payload, dict):
         raise ValueError(f"expected an object in {path}")
     return payload
+
+
+def _parse_project_timeouts(values: list[str]) -> dict[str, int]:
+    parsed: dict[str, int] = {}
+    for value in values:
+        project, separator, seconds = value.partition("=")
+        if not separator or project not in PROJECT_RUNTIME:
+            raise SystemExit("--project-test-timeout must be PROJECT=SECONDS for a known project")
+        try:
+            timeout = int(seconds)
+        except ValueError as error:
+            raise SystemExit("--project-test-timeout seconds must be an integer") from error
+        if timeout <= 0:
+            raise SystemExit("--project-test-timeout seconds must be positive")
+        parsed[project] = timeout
+    return parsed
 
 
 def _is_test_path(path: str) -> bool:
@@ -122,6 +139,8 @@ def _build_command(
     noconftest_projects: set[str],
 ) -> tuple[str | None, list[str], list[str]]:
     worktree, python, pythonpath, gpu = PROJECT_RUNTIME[case["project"]]
+    if case["project"] == "sglang" and case.get("temporal_band") == "recent":
+        python = os.environ.get("INFRASWE_SGLANG_RECENT_PYTHON", python)
     test_paths = [path for path in case["paths"] if _is_test_path(path)]
     test_names = static_case["candidate_test_functions_added"]
     if not test_paths:
@@ -156,7 +175,7 @@ def _build_command(
         f"{switch_prefix}git switch --detach "
         f"refs/{round_label.lower()}/pr-{case['pull_number']} "
         ">/dev/null && "
-        f"test \"$(git rev-parse HEAD)\" = {expected_head} && "
+        f'test "$(git rev-parse HEAD)" = {expected_head} && '
         f"{test_command}"
     )
     return command, test_paths, test_names
@@ -202,16 +221,14 @@ def _run_case(
         process = _ssh(command, timeout=test_timeout + 30)
         returncode = process.returncode
         output = process.stdout + process.stderr
-        status = "completed"
+        status = "abandoned-time-budget" if returncode == 124 else "completed"
     except subprocess.TimeoutExpired as error:
         returncode = 124
         output = str(error.stdout or "") + str(error.stderr or "")
         status = "ssh-timeout"
     duration = time.monotonic() - began
     summary_lines = [
-        line.strip()
-        for line in output.splitlines()
-        if SUMMARY_PATTERN.search(line.strip())
+        line.strip() for line in output.splitlines() if SUMMARY_PATTERN.search(line.strip())
     ][-20:]
     print(
         f"[{index}/{total}] {case['case_id']}: rc={returncode} {duration:.1f}s",
@@ -234,10 +251,13 @@ def main(round_label: str = "R15") -> int:
     parser.add_argument("--selection-lock", type=Path, required=True)
     parser.add_argument("--static-evidence", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
-    parser.add_argument("--test-timeout", type=int, default=180)
+    parser.add_argument("--test-timeout", type=int, default=60)
+    parser.add_argument("--project-test-timeout", action="append", default=[])
+    parser.add_argument("--project", action="append", default=[])
     parser.add_argument("--only", action="append", default=[])
     parser.add_argument("--noconftest-project", action="append", default=[])
     args = parser.parse_args()
+    project_timeouts = _parse_project_timeouts(args.project_test_timeout)
 
     selection = _read(args.selection_lock)
     selection_material = selection["selection_material"]
@@ -251,6 +271,12 @@ def main(round_label: str = "R15") -> int:
         raise SystemExit(f"{round_label} static/selection binding mismatch")
     static_by_id = {item["case_id"]: item for item in static["cases"]}
     selected_cases = selection_material["cases"]
+    if args.project:
+        requested_projects = set(args.project)
+        unknown_projects = requested_projects - PROJECT_RUNTIME.keys()
+        if unknown_projects:
+            raise SystemExit(f"unknown --project values: {sorted(unknown_projects)}")
+        selected_cases = [item for item in selected_cases if item["project"] in requested_projects]
     if args.only:
         requested = set(args.only)
         selected_cases = [item for item in selected_cases if item["case_id"] in requested]
@@ -274,7 +300,7 @@ def main(round_label: str = "R15") -> int:
                     case,
                     static_by_id[case["case_id"]],
                     round_label=round_label,
-                    test_timeout=args.test_timeout,
+                    test_timeout=project_timeouts.get(case["project"], args.test_timeout),
                     noconftest_projects=set(args.noconftest_project),
                 ),
             )
@@ -298,6 +324,8 @@ def main(round_label: str = "R15") -> int:
         "finished_at": datetime.now(UTC).isoformat(),
         "remote": {"host": REMOTE, "port": PORT, "gpu_lanes": [0, 1]},
         "test_timeout_seconds": args.test_timeout,
+        "project_test_timeout_seconds": project_timeouts,
+        "timeout_disposition": "abandon-case-neutral-and-continue",
         "noconftest_projects": sorted(set(args.noconftest_project)),
         "outcome_review_ci_fields_requested": False,
         "records": records,

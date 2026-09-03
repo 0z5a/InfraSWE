@@ -1,0 +1,176 @@
+{
+  "evidence_sha256": "sha256:70eb2023e6c184836a0dfd7e22b2d8325b405022d59f8393949b06fe9cfc03c8",
+  "finished_at": "2026-09-03T02:49:28.229913+00:00",
+  "noconftest_projects": [
+    "tensorrt-llm",
+    "vllm"
+  ],
+  "outcome_review_ci_fields_requested": false,
+  "project_test_timeout_seconds": {
+    "tensorrt-llm": 20
+  },
+  "protocol_id": "r21-exact-candidate-upstream-tests-v0.1",
+  "records": [
+    {
+      "case_id": "tensorrt_llm-pr-14343",
+      "duration_seconds": 15.571139375213534,
+      "head_sha": "52aab1a9fb006a7b8f07b0440fcf078c939d93cb",
+      "output_sha256": "sha256:e7800af734d47c868ef2323d496331eeafd28b8f41250ea817be7a16eb43361e",
+      "output_tail": "Connection closed by 194.228.55.129 port 31082\n",
+      "ref": "refs/r21/pr-14343",
+      "remote_command": "cd /workspace/r19-tensorrt-wt && GIT_LFS_SKIP_SMUDGE=1 git switch --detach refs/r21/pr-14343 >/dev/null && test \"$(git rev-parse HEAD)\" = 52aab1a9fb006a7b8f07b0440fcf078c939d93cb && timeout 20s env PYTHONDONTWRITEBYTECODE=1 CUDA_VISIBLE_DEVICES=1 PYTHONPATH=/workspace/r18-deps/common:/workspace/r17-deps/tensorrt:.:tests/integration /venv/main/bin/python -m pytest -q -rs --tb=short --maxfail=1 --noconftest tests/unittest/_torch/executor/test_adp_router.py -k 'test_attention_dp_relax_none_is_sortable or test_default_attention_dp_relax_is_relaxed'",
+      "returncode": 255,
+      "status": "completed",
+      "summary_lines": [],
+      "test_names": [
+        "test_attention_dp_relax_none_is_sortable",
+        "test_default_attention_dp_relax_is_relaxed"
+      ],
+      "test_paths": [
+        "tests/unittest/_torch/executor/test_adp_router.py"
+      ]
+    },
+    {
+      "case_id": "tensorrt_llm-pr-14548",
+      "duration_seconds": 24.168951916042715,
+      "head_sha": "314e38d31e04db1352f92a4462c100ae6cc48635",
+      "output_sha256": "sha256:00b140327c2133f46b2d4ad67ce8c65769a8faf428127deaa2f038a97834d7a8",
+      "output_tail": "ssssssssssssssssssssssssssssWelcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nPrevious HEAD position was 52aab1a9f [None][fix] Handle None attention_dp_relax in ADP router sort key\nHEAD is now at 314e38d31 [None][perf] Fuse FlashInfer GDN prefill state I/O into Triton kernels\n",
+      "ref": "refs/r21/pr-14548",
+      "remote_command": "cd /workspace/r19-tensorrt-wt && GIT_LFS_SKIP_SMUDGE=1 git switch --detach refs/r21/pr-14548 >/dev/null && test \"$(git rev-parse HEAD)\" = 314e38d31e04db1352f92a4462c100ae6cc48635 && timeout 20s env PYTHONDONTWRITEBYTECODE=1 CUDA_VISIBLE_DEVICES=1 PYTHONPATH=/workspace/r18-deps/common:/workspace/r17-deps/tensorrt:.:tests/integration /venv/main/bin/python -m pytest -q -rs --tb=short --maxfail=1 --noconftest tests/unittest/_torch/modules/mamba/test_fused_state_io.py -k 'test_gather_cast_transpose_matches_torch_ref or test_gather_cast_transpose_no_indices_full_pool or test_module_importable or test_roundtrip_gather_then_scatter_bitexact or test_transpose_cast_scatter_full_write or test_transpose_cast_scatter_inplace_preserves_untouched'",
+      "returncode": 124,
+      "status": "completed",
+      "summary_lines": [],
+      "test_names": [
+        "test_gather_cast_transpose_matches_torch_ref",
+        "test_gather_cast_transpose_no_indices_full_pool",
+        "test_module_importable",
+        "test_roundtrip_gather_then_scatter_bitexact",
+        "test_transpose_cast_scatter_full_write",
+        "test_transpose_cast_scatter_inplace_preserves_untouched"
+      ],
+      "test_paths": [
+        "tests/unittest/_torch/modules/mamba/test_fused_state_io.py"
+      ]
+    },
+    {
+      "case_id": "tensorrt_llm-pr-14950",
+      "duration_seconds": 24.029276499990374,
+      "head_sha": "e048c95d3997c82944c1ba3d1a9c230606a22a16",
+      "output_sha256": "sha256:f6df2a4a40ea1574a0c1be05822ecb05ba4613163fcad75a6be23c0b95541ad4",
+      "output_tail": "Welcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nPrevious HEAD position was 314e38d31 [None][perf] Fuse FlashInfer GDN prefill state I/O into Triton kernels\nHEAD is now at e048c95d3 revert the trade-off logics\n",
+      "ref": "refs/r21/pr-14950",
+      "remote_command": "cd /workspace/r19-tensorrt-wt && GIT_LFS_SKIP_SMUDGE=1 git switch --detach refs/r21/pr-14950 >/dev/null && test \"$(git rev-parse HEAD)\" = e048c95d3997c82944c1ba3d1a9c230606a22a16 && timeout 20s env PYTHONDONTWRITEBYTECODE=1 CUDA_VISIBLE_DEVICES=1 PYTHONPATH=/workspace/r18-deps/common:/workspace/r17-deps/tensorrt:.:tests/integration /venv/main/bin/python -m pytest -q -rs --tb=short --maxfail=1 --noconftest tests/unittest/_torch/modeling/test_modeling_deepseekv4.py tests/unittest/disaggregated/test_disagg_utils.py tests/unittest/disaggregated/test_openai_server_info.py tests/unittest/disaggregated/test_router.py -k 'test_extract_router_config_propagates_tokens_per_block or test_get_server_configs_dict or test_kv_cache_aware_router_backfill_disabled_skips_pending or test_kv_cache_aware_router_backfill_drops_on_failure or test_kv_cache_aware_router_backfill_inserts_blocks_on_finish or test_kv_cache_aware_router_backfill_stashes_flat_list_at_routing or test_kv_cache_aware_router_load_cap_excludes_overloaded or test_kv_cache_aware_router_load_cap_fallback_when_all_overloaded or test_kv_cache_aware_router_load_weight_scales_load_penalty or test_kv_cache_aware_router_prepare_server_keeps_on_tpb_match or test_kv_cache_aware_router_prepare_server_keeps_when_worker_omits_tpb or test_kv_cache_aware_router_prepare_server_persists_algo_for_lock_free_read or test_kv_cache_aware_router_prepare_server_raises_on_tpb_mismatch or test_kv_cache_aware_router_prepare_server_raises_on_unknown_algo or test_kv_cache_aware_router_prepare_server_warns_on_missing_algo or test_kv_cache_aware_server_state_add_blocks_set_update_fast_path or test_kv_cache_aware_server_state_cancel_poll_task or test_kv_cache_aware_server_state_remove_blocks_silent_on_missing or test_kv_cache_aware_server_state_schedule_poll_coalesces or test_kv_cache_aware_server_state_schedule_poll_rearms_pending or test_kv_cache_aware_server_state_schedule_poll_relaunches_after_done or test_server_info_includes_effective_kv_cache_hash_algo or test_server_info_includes_max_batch_size_for_router_normalization or test_server_info_includes_tokens_per_block_from_kv_cache_config or test_server_info_omits_max_batch_size_when_none'",
+      "returncode": 124,
+      "status": "completed",
+      "summary_lines": [],
+      "test_names": [
+        "test_extract_router_config_propagates_tokens_per_block",
+        "test_get_server_configs_dict",
+        "test_kv_cache_aware_router_backfill_disabled_skips_pending",
+        "test_kv_cache_aware_router_backfill_drops_on_failure",
+        "test_kv_cache_aware_router_backfill_inserts_blocks_on_finish",
+        "test_kv_cache_aware_router_backfill_stashes_flat_list_at_routing",
+        "test_kv_cache_aware_router_load_cap_excludes_overloaded",
+        "test_kv_cache_aware_router_load_cap_fallback_when_all_overloaded",
+        "test_kv_cache_aware_router_load_weight_scales_load_penalty",
+        "test_kv_cache_aware_router_prepare_server_keeps_on_tpb_match",
+        "test_kv_cache_aware_router_prepare_server_keeps_when_worker_omits_tpb",
+        "test_kv_cache_aware_router_prepare_server_persists_algo_for_lock_free_read",
+        "test_kv_cache_aware_router_prepare_server_raises_on_tpb_mismatch",
+        "test_kv_cache_aware_router_prepare_server_raises_on_unknown_algo",
+        "test_kv_cache_aware_router_prepare_server_warns_on_missing_algo",
+        "test_kv_cache_aware_server_state_add_blocks_set_update_fast_path",
+        "test_kv_cache_aware_server_state_cancel_poll_task",
+        "test_kv_cache_aware_server_state_remove_blocks_silent_on_missing",
+        "test_kv_cache_aware_server_state_schedule_poll_coalesces",
+        "test_kv_cache_aware_server_state_schedule_poll_rearms_pending",
+        "test_kv_cache_aware_server_state_schedule_poll_relaunches_after_done",
+        "test_server_info_includes_effective_kv_cache_hash_algo",
+        "test_server_info_includes_max_batch_size_for_router_normalization",
+        "test_server_info_includes_tokens_per_block_from_kv_cache_config",
+        "test_server_info_omits_max_batch_size_when_none"
+      ],
+      "test_paths": [
+        "tests/unittest/_torch/modeling/test_modeling_deepseekv4.py",
+        "tests/unittest/disaggregated/test_disagg_utils.py",
+        "tests/unittest/disaggregated/test_openai_server_info.py",
+        "tests/unittest/disaggregated/test_router.py"
+      ]
+    },
+    {
+      "case_id": "tensorrt_llm-pr-14775",
+      "duration_seconds": 24.438151457812637,
+      "head_sha": "b23cffd7a1df49a87a1525b5cfbaea21aca6993d",
+      "output_sha256": "sha256:80a8828f578741c6980232ef4f10051e1d3fc4e811edea9c9fcf88f674b10a67",
+      "output_tail": "Welcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nPrevious HEAD position was e048c95d3 revert the trade-off logics\nHEAD is now at b23cffd7a Merge branch 'main' into support_nemotron_nvfp4_on_hopper\n",
+      "ref": "refs/r21/pr-14775",
+      "remote_command": "cd /workspace/r19-tensorrt-wt && GIT_LFS_SKIP_SMUDGE=1 git switch --detach refs/r21/pr-14775 >/dev/null && test \"$(git rev-parse HEAD)\" = b23cffd7a1df49a87a1525b5cfbaea21aca6993d && timeout 20s env PYTHONDONTWRITEBYTECODE=1 CUDA_VISIBLE_DEVICES=1 PYTHONPATH=/workspace/r18-deps/common:/workspace/r17-deps/tensorrt:.:tests/integration /venv/main/bin/python -m pytest -q -rs --tb=short --maxfail=1 --noconftest tests/integration/defs/accuracy/test_llm_api_pytorch.py -k test_nvfp4_4gpus_hopper_w4a16",
+      "returncode": 124,
+      "status": "completed",
+      "summary_lines": [],
+      "test_names": [
+        "test_nvfp4_4gpus_hopper_w4a16"
+      ],
+      "test_paths": [
+        "tests/integration/defs/accuracy/test_llm_api_pytorch.py"
+      ]
+    },
+    {
+      "case_id": "tensorrt_llm-pr-14725",
+      "duration_seconds": 22.84075350011699,
+      "head_sha": "2664aa921477538912a1e0a2cf3d343c699ff718",
+      "output_sha256": "sha256:85159765c3d59f592c3f647d2eae1218d4c6b700635b9473318e613d064b8a94",
+      "output_tail": "Welcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nPrevious HEAD position was b23cffd7a Merge branch 'main' into support_nemotron_nvfp4_on_hopper\nHEAD is now at 2664aa921 [None][fix] Release stale-range holder after _commit_block in KVCache\u2026 (#14478)\n",
+      "ref": "refs/r21/pr-14725",
+      "remote_command": "cd /workspace/r19-tensorrt-wt && GIT_LFS_SKIP_SMUDGE=1 git switch --detach refs/r21/pr-14725 >/dev/null && test \"$(git rev-parse HEAD)\" = 2664aa921477538912a1e0a2cf3d343c699ff718 && timeout 20s env PYTHONDONTWRITEBYTECODE=1 CUDA_VISIBLE_DEVICES=1 PYTHONPATH=/workspace/r18-deps/common:/workspace/r17-deps/tensorrt:.:tests/integration /venv/main/bin/python -m pytest -q -rs --tb=short --maxfail=1 --noconftest tests/unittest/kv_cache_manager_v2_tests/test_kv_cache_manager_v2.py -k test_naive",
+      "returncode": 124,
+      "status": "completed",
+      "summary_lines": [],
+      "test_names": [
+        "test_naive"
+      ],
+      "test_paths": [
+        "tests/unittest/kv_cache_manager_v2_tests/test_kv_cache_manager_v2.py"
+      ]
+    },
+    {
+      "case_id": "vllm-pr-44093",
+      "duration_seconds": 28.569680458167568,
+      "head_sha": "78798f88c73873ad73bd9c73e0387189e3121b13",
+      "output_sha256": "sha256:74f455e28375028f84c5b5c741279da75e67d3db151b39112b657aeb0277a824",
+      "output_tail": ".......                                                                  [100%]\n=============================== warnings summary ===============================\nvllm/__init__.py:7\n  /workspace/r14-run-vllm/vllm/__init__.py:7: RuntimeWarning: Failed to read commit hash:\n  No module named 'vllm._version'\n    from .version import __version__, __version_tuple__  # isort:skip\n\n../../venv/main/lib/python3.12/site-packages/torch/jit/_script.py:365: 14 warnings\n  /venv/main/lib/python3.12/site-packages/torch/jit/_script.py:365: DeprecationWarning: `torch.jit.script_method` is deprecated. Please switch to `torch.compile` or `torch.export`.\n    warnings.warn(\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n7 passed, 143 deselected, 15 warnings in 24.30s\nWelcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nPrevious HEAD position was 0cbc7cfb2 Merge branch 'main' into lookup\nHEAD is now at 78798f88c fix negative config validation\n",
+      "ref": "refs/r21/pr-44093",
+      "remote_command": "cd /workspace/r14-run-vllm && git switch --detach refs/r21/pr-44093 >/dev/null && test \"$(git rev-parse HEAD)\" = 78798f88c73873ad73bd9c73e0387189e3121b13 && timeout 180s env PYTHONDONTWRITEBYTECODE=1 INFRASWE_R15_VLLM_SOURCE_IMPORT_SHIM=1 CUDA_VISIBLE_DEVICES=0 PYTHONPATH=/workspace/r17-deps/vllm:/workspace/r18-deps/common:/workspace/r15-vllm-shim:/workspace/r14-shims:. /venv/main/bin/python -m pytest -q -rs --tb=short --maxfail=1 --noconftest tests/test_config.py -k 'test_model_config_accepts_valid_max_logprobs or test_model_config_rejects_negative_max_logprobs or test_scheduler_config_accepts_valid_long_prefill_token_threshold or test_scheduler_config_rejects_negative_long_prefill_token_threshold'",
+      "returncode": 0,
+      "status": "completed",
+      "summary_lines": [
+        "/workspace/r14-run-vllm/vllm/__init__.py:7: RuntimeWarning: Failed to read commit hash:",
+        "7 passed, 143 deselected, 15 warnings in 24.30s"
+      ],
+      "test_names": [
+        "test_model_config_accepts_valid_max_logprobs",
+        "test_model_config_rejects_negative_max_logprobs",
+        "test_scheduler_config_accepts_valid_long_prefill_token_threshold",
+        "test_scheduler_config_rejects_negative_long_prefill_token_threshold"
+      ],
+      "test_paths": [
+        "tests/test_config.py"
+      ]
+    }
+  ],
+  "remote": {
+    "gpu_lanes": [
+      0,
+      1
+    ],
+    "host": "root@194.228.55.129",
+    "port": 31082
+  },
+  "schema_version": "0.1",
+  "selection_lock_sha256": "sha256:4590b7667b2e0d1b73b91ccf4f54ff1682cd20d98e10aa612d910419a4695372",
+  "started_at": "2026-09-03T02:47:37.176418+00:00",
+  "static_evidence_sha256": "sha256:ca1ca920facc83a8debf771ffddef25fe2d15064eb81252ba10822e23ef7e09f",
+  "test_plan_sha256": "sha256:904a8448d639cd8fe5899f1e0602497f13ecae5287520dc812c8258af126e63c",
+  "test_timeout_seconds": 180
+}

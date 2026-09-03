@@ -1,0 +1,45 @@
+{
+  "evidence_sha256": "sha256:2040c2a8894e64f4cb1e1b3fe44474ca389f3036e725988c2294e85305aec008",
+  "finished_at": "2026-09-03T02:50:07.692428+00:00",
+  "noconftest_projects": [
+    "tensorrt-llm"
+  ],
+  "outcome_review_ci_fields_requested": false,
+  "project_test_timeout_seconds": {},
+  "protocol_id": "r21-exact-candidate-upstream-tests-v0.1",
+  "records": [
+    {
+      "case_id": "tensorrt_llm-pr-14343",
+      "duration_seconds": 23.6416958339978,
+      "head_sha": "52aab1a9fb006a7b8f07b0440fcf078c939d93cb",
+      "output_sha256": "sha256:71f1069e0fa0521e32e69cbc61875b6fd2f6ccd29ff15c5ba32223304177cd6d",
+      "output_tail": "Welcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nPrevious HEAD position was 2664aa921 [None][fix] Release stale-range holder after _commit_block in KVCache\u2026 (#14478)\nHEAD is now at 52aab1a9f [None][fix] Handle None attention_dp_relax in ADP router sort key\n",
+      "ref": "refs/r21/pr-14343",
+      "remote_command": "cd /workspace/r19-tensorrt-wt && GIT_LFS_SKIP_SMUDGE=1 git switch --detach refs/r21/pr-14343 >/dev/null && test \"$(git rev-parse HEAD)\" = 52aab1a9fb006a7b8f07b0440fcf078c939d93cb && timeout 20s env PYTHONDONTWRITEBYTECODE=1 CUDA_VISIBLE_DEVICES=1 PYTHONPATH=/workspace/r18-deps/common:/workspace/r17-deps/tensorrt:.:tests/integration /venv/main/bin/python -m pytest -q -rs --tb=short --maxfail=1 --noconftest tests/unittest/_torch/executor/test_adp_router.py -k 'test_attention_dp_relax_none_is_sortable or test_default_attention_dp_relax_is_relaxed'",
+      "returncode": 124,
+      "status": "completed",
+      "summary_lines": [],
+      "test_names": [
+        "test_attention_dp_relax_none_is_sortable",
+        "test_default_attention_dp_relax_is_relaxed"
+      ],
+      "test_paths": [
+        "tests/unittest/_torch/executor/test_adp_router.py"
+      ]
+    }
+  ],
+  "remote": {
+    "gpu_lanes": [
+      0,
+      1
+    ],
+    "host": "root@194.228.55.129",
+    "port": 31082
+  },
+  "schema_version": "0.1",
+  "selection_lock_sha256": "sha256:4590b7667b2e0d1b73b91ccf4f54ff1682cd20d98e10aa612d910419a4695372",
+  "started_at": "2026-09-03T02:49:44.048077+00:00",
+  "static_evidence_sha256": "sha256:ca1ca920facc83a8debf771ffddef25fe2d15064eb81252ba10822e23ef7e09f",
+  "test_plan_sha256": "sha256:904a8448d639cd8fe5899f1e0602497f13ecae5287520dc812c8258af126e63c",
+  "test_timeout_seconds": 20
+}

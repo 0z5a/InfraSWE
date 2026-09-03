@@ -44,6 +44,8 @@ def roughly_eligible(
     node: dict[str, Any], domain: str, project: dict[str, Any], policy: dict[str, Any]
 ) -> bool:
     rules = policy["eligibility"]
+    if not isinstance(node.get("files"), dict):
+        return False
     paths = _paths(node)
     changed_files = int(node.get("changedFiles") or 0)
     changed_lines = int(node.get("additions") or 0) + int(node.get("deletions") or 0)

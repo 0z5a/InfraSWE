@@ -1,0 +1,1340 @@
+{
+  "evidence_sha256": "sha256:d8dabf1ae7e1e5ee00f2bcb7b6a9fd5e4eb183a506e31428b6dcbb5ca1d8f865",
+  "finished_at": "2026-09-03T02:47:23.877859+00:00",
+  "noconftest_projects": [
+    "vllm"
+  ],
+  "outcome_review_ci_fields_requested": false,
+  "project_test_timeout_seconds": {},
+  "protocol_id": "r21-exact-candidate-upstream-tests-v0.1",
+  "records": [
+    {
+      "case_id": "sglang-pr-37659",
+      "duration_seconds": 18.500314708100632,
+      "head_sha": "6c81f5782b2268e245af262294148af1ddaa5597",
+      "output_sha256": "sha256:b57b6057210c115b8d4514192c2daa91649b180eb969b368ec26a22e479d01bb",
+      "output_tail": "...                                                                      [100%]\n=============================== warnings summary ===============================\n../../venv/sglang/lib/python3.12/site-packages/torch/jit/_script.py:365: 14 warnings\n  /venv/sglang/lib/python3.12/site-packages/torch/jit/_script.py:365: DeprecationWarning: `torch.jit.script_method` is deprecated. Please switch to `torch.compile` or `torch.export`.\n    warnings.warn(\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n3 passed, 14 warnings in 12.74s\nWelcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nPrevious HEAD position was 1f44eff0a [srt] batch SWA pool gather/mask/scatter + MambaPool free in free_group context\nHEAD is now at 6c81f5782 Parallelize aiter spec-decode KV index building over token blocks\n",
+      "ref": "refs/r21/pr-37659",
+      "remote_command": "cd /workspace/r14-run-sglang && git switch --detach refs/r21/pr-37659 >/dev/null && test \"$(git rev-parse HEAD)\" = 6c81f5782b2268e245af262294148af1ddaa5597 && timeout 180s env PYTHONDONTWRITEBYTECODE=1 CUDA_VISIBLE_DEVICES=1 PYTHONPATH=/workspace/r18-deps/common:/workspace/r17-deps/opencv:/workspace/r14-shims:python:. /venv/sglang/bin/python -m pytest -q -rs --tb=short --maxfail=1 test/registered/attention/test_spec_kv_indices_grid.py -k 'test_draft_grid_equivalence or test_draft_reference or test_flat_grid_equivalence'",
+      "returncode": 0,
+      "status": "completed",
+      "summary_lines": [
+        "3 passed, 14 warnings in 12.74s"
+      ],
+      "test_names": [
+        "test_draft_grid_equivalence",
+        "test_draft_reference",
+        "test_flat_grid_equivalence"
+      ],
+      "test_paths": [
+        "test/registered/attention/test_spec_kv_indices_grid.py"
+      ]
+    },
+    {
+      "case_id": "sglang-pr-26988",
+      "duration_seconds": 18.385952916927636,
+      "head_sha": "1f44eff0a926ba4bfe9ceb177c504b51c65368e3",
+      "output_sha256": "sha256:c4190fd67d8e6cc61f84898569af112f9aa994aa8a22299fcc67555cad006df8",
+      "output_tail": "..                                                                       [100%]\n=============================== warnings summary ===============================\n../../venv/main/lib/python3.12/site-packages/flashinfer/cute_dsl/availability.py:135\n  /venv/main/lib/python3.12/site-packages/flashinfer/cute_dsl/availability.py:135: DeprecationWarning: Arch from arch.py is deprecated. Use Arch from enums.py instead.\n    from cutlass.base_dsl.arch import Arch\n\n../../venv/main/lib/python3.12/site-packages/torch/jit/_script.py:365: 14 warnings\n  /venv/main/lib/python3.12/site-packages/torch/jit/_script.py:365: DeprecationWarning: `torch.jit.script_method` is deprecated. Please switch to `torch.compile` or `torch.export`.\n    warnings.warn(\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n2 passed, 10 deselected, 15 warnings in 12.81s\nWelcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nPrevious HEAD position was 6c81f5782 Parallelize aiter spec-decode KV index building over token blocks\nHEAD is now at 1f44eff0a [srt] batch SWA pool gather/mask/scatter + MambaPool free in free_group context\n",
+      "ref": "refs/r21/pr-26988",
+      "remote_command": "cd /workspace/r14-run-sglang && git switch --detach refs/r21/pr-26988 >/dev/null && test \"$(git rev-parse HEAD)\" = 1f44eff0a926ba4bfe9ceb177c504b51c65368e3 && timeout 180s env PYTHONDONTWRITEBYTECODE=1 CUDA_VISIBLE_DEVICES=1 PYTHONPATH=/workspace/r18-deps/common:/workspace/r17-deps/opencv:/workspace/r14-shims:python:. /venv/main/bin/python -m pytest -q -rs --tb=short --maxfail=1 test/registered/unit/mem_cache/test_swa_unittest.py -k 'test_free_swa_free_group_batches or test_swa_radix_cache_1'",
+      "returncode": 0,
+      "status": "completed",
+      "summary_lines": [
+        "2 passed, 10 deselected, 15 warnings in 12.81s"
+      ],
+      "test_names": [
+        "test_free_swa_free_group_batches",
+        "test_swa_radix_cache_1"
+      ],
+      "test_paths": [
+        "test/registered/unit/mem_cache/test_swa_unittest.py"
+      ]
+    },
+    {
+      "case_id": "sglang-pr-26852",
+      "duration_seconds": 17.04257974983193,
+      "head_sha": "d2eca415be7aea07810f1f10aca373781bb1af42",
+      "output_sha256": "sha256:d62fd1721fad6b99b9d45e25ac455d36b29fdd893cf28a82bf5e1f6ce5cd9e93",
+      "output_tail": "F\n=================================== FAILURES ===================================\n____________ TestFusedFp8KvWrite.test_matches_fp32_divide_reference ____________\ntest/registered/attention/test_fused_fp8_kv_write.py:88: in test_matches_fp32_divide_reference\n    r = self._run(num_tokens=32, num_heads=1, head_dim=256)\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntest/registered/attention/test_fused_fp8_kv_write.py:65: in _run\n    launch_reshape_and_cache_flash(\npython/sglang/srt/layers/attention/utils.py:444: in launch_reshape_and_cache_flash\n    reshape_and_cache_flash[grid](\n/venv/main/lib/python3.12/site-packages/triton/runtime/jit.py:370: in <lambda>\n    return lambda *args, **kwargs: self.run(grid=grid, warmup=False, *args, **kwargs)\n                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n/venv/main/lib/python3.12/site-packages/triton/runtime/jit.py:720: in run\n    kernel = self._do_compile(key, signature, device, constexprs, options, attrs, warmup)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n/venv/main/lib/python3.12/site-packages/triton/runtime/jit.py:849: in _do_compile\n    kernel = self.compile(src, target=target, options=options.__dict__)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n/venv/main/lib/python3.12/site-packages/triton/compiler/compiler.py:304: in compile\n    module = src.make_ir(target, options, codegen_fns, module_map, context)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n/venv/main/lib/python3.12/site-packages/triton/compiler/compiler.py:80: in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\nE   triton.compiler.errors.CompilationError: at 1:0:\nE   def reshape_and_cache_flash(\nE   ^\nE   ValueError(\"type fp8e4nv not supported in this architecture. The supported fp8 dtypes are ('fp8e4b15', 'fp8e5')\")\n=============================== warnings summary ===============================\n../../venv/main/lib/python3.12/site-packages/flashinfer/cute_dsl/availability.py:135\n  /venv/main/lib/python3.12/site-packages/flashinfer/cute_dsl/availability.py:135: DeprecationWarning: Arch from arch.py is deprecated. Use Arch from enums.py instead.\n    from cutlass.base_dsl.arch import Arch\n\nregistered/attention/test_fused_fp8_kv_write.py: 14 warnings\n  /venv/main/lib/python3.12/site-packages/torch/jit/_script.py:365: DeprecationWarning: `torch.jit.script_method` is deprecated. Please switch to `torch.compile` or `torch.export`.\n    warnings.warn(\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!\n1 failed, 15 warnings in 12.14s\nWelcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nPrevious HEAD position was 1f44eff0a [srt] batch SWA pool gather/mask/scatter + MambaPool free in free_group context\nHEAD is now at d2eca415b Add FP8 KV write accuracy + dispatch tests\n",
+      "ref": "refs/r21/pr-26852",
+      "remote_command": "cd /workspace/r14-run-sglang && git switch --detach refs/r21/pr-26852 >/dev/null && test \"$(git rev-parse HEAD)\" = d2eca415be7aea07810f1f10aca373781bb1af42 && timeout 180s env PYTHONDONTWRITEBYTECODE=1 CUDA_VISIBLE_DEVICES=1 PYTHONPATH=/workspace/r18-deps/common:/workspace/r17-deps/opencv:/workspace/r14-shims:python:. /venv/main/bin/python -m pytest -q -rs --tb=short --maxfail=1 test/registered/attention/test_fused_fp8_kv_write.py -k 'test_decode_head_dim_mismatch_falls_back_to_set_kv_buffer or test_decode_mla_uses_set_kv_buffer_without_scales or test_decode_uses_fused_and_v_scale_falls_back_to_self or test_matches_fp32_divide_reference or test_no_precision_regression_vs_naive or test_predicate or test_writes_only_target_slots'",
+      "returncode": 1,
+      "status": "completed",
+      "summary_lines": [
+        "E   triton.compiler.errors.CompilationError: at 1:0:",
+        "E   ValueError(\"type fp8e4nv not supported in this architecture. The supported fp8 dtypes are ('fp8e4b15', 'fp8e5')\")",
+        "1 failed, 15 warnings in 12.14s"
+      ],
+      "test_names": [
+        "test_decode_head_dim_mismatch_falls_back_to_set_kv_buffer",
+        "test_decode_mla_uses_set_kv_buffer_without_scales",
+        "test_decode_uses_fused_and_v_scale_falls_back_to_self",
+        "test_matches_fp32_divide_reference",
+        "test_no_precision_regression_vs_naive",
+        "test_predicate",
+        "test_writes_only_target_slots"
+      ],
+      "test_paths": [
+        "test/registered/attention/test_fused_fp8_kv_write.py"
+      ]
+    },
+    {
+      "case_id": "sglang-pr-27029",
+      "duration_seconds": 18.486189916962758,
+      "head_sha": "cbfbd563742fc3976c5a46ac1256c79fe54a2e8d",
+      "output_sha256": "sha256:9635edb978504c96cf257730958f2321b9f1d3d4c4d77d14cc997711b93deee0",
+      "output_tail": "...........                                                              [100%]\n=============================== warnings summary ===============================\n../../venv/main/lib/python3.12/site-packages/flashinfer/cute_dsl/availability.py:135\n  /venv/main/lib/python3.12/site-packages/flashinfer/cute_dsl/availability.py:135: DeprecationWarning: Arch from arch.py is deprecated. Use Arch from enums.py instead.\n    from cutlass.base_dsl.arch import Arch\n\n../../venv/main/lib/python3.12/site-packages/torch/jit/_script.py:365: 14 warnings\n  /venv/main/lib/python3.12/site-packages/torch/jit/_script.py:365: DeprecationWarning: `torch.jit.script_method` is deprecated. Please switch to `torch.compile` or `torch.export`.\n    warnings.warn(\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n11 passed, 87 deselected, 15 warnings in 13.23s\nWelcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nPrevious HEAD position was d2eca415b Add FP8 KV write accuracy + dispatch tests\nHEAD is now at cbfbd5637 Merge remote-tracking branch 'origin/main' into reasoning-dynamo-call-chain\n",
+      "ref": "refs/r21/pr-27029",
+      "remote_command": "cd /workspace/r14-run-sglang && git switch --detach refs/r21/pr-27029 >/dev/null && test \"$(git rev-parse HEAD)\" = cbfbd563742fc3976c5a46ac1256c79fe54a2e8d && timeout 180s env PYTHONDONTWRITEBYTECODE=1 CUDA_VISIBLE_DEVICES=1 PYTHONPATH=/workspace/r18-deps/common:/workspace/r17-deps/opencv:/workspace/r14-shims:python:. /venv/main/bin/python -m pytest -q -rs --tb=short --maxfail=1 test/registered/unit/entrypoints/openai/test_serving_chat.py test/registered/unit/managers/test_io_struct.py test/registered/unit/test_reasoning_utils.py -k 'test_deepseek_requires_explicit_thinking or test_hunyuan_uses_reasoning_effort or test_no_parser_disables_reasoning or test_qwen3_enable_thinking_false_disables_reasoning or test_qwen3_enable_thinking_true_requires_reasoning or test_qwen3_reasoning_dispatch_uses_shared_resolver or test_qwen3_thinks_by_default or test_reasoning_config_default_disabled_toggle or test_reasoning_config_default_enabled_toggle or test_reasoning_default_detector_mode or test_unknown_parser_defaults_to_reasoning'",
+      "returncode": 0,
+      "status": "completed",
+      "summary_lines": [
+        "11 passed, 87 deselected, 15 warnings in 13.23s"
+      ],
+      "test_names": [
+        "test_deepseek_requires_explicit_thinking",
+        "test_hunyuan_uses_reasoning_effort",
+        "test_no_parser_disables_reasoning",
+        "test_qwen3_enable_thinking_false_disables_reasoning",
+        "test_qwen3_enable_thinking_true_requires_reasoning",
+        "test_qwen3_reasoning_dispatch_uses_shared_resolver",
+        "test_qwen3_thinks_by_default",
+        "test_reasoning_config_default_disabled_toggle",
+        "test_reasoning_config_default_enabled_toggle",
+        "test_reasoning_default_detector_mode",
+        "test_unknown_parser_defaults_to_reasoning"
+      ],
+      "test_paths": [
+        "test/registered/unit/entrypoints/openai/test_serving_chat.py",
+        "test/registered/unit/managers/test_io_struct.py",
+        "test/registered/unit/test_reasoning_utils.py"
+      ]
+    },
+    {
+      "case_id": "sglang-pr-26924",
+      "duration_seconds": 17.4138652079273,
+      "head_sha": "a165e33ab700414f0e99c25e33d184418b4e995b",
+      "output_sha256": "sha256:6e70a9a3804265c8344456617db3a0865d2517a580384e40fc9a89ab8d27b889",
+      "output_tail": "........................................................................ [ 24%]\n........................................................................ [ 49%]\n........................................................................ [ 73%]\n........................................................................ [ 98%]\n....                                                                     [100%]\n=============================== warnings summary ===============================\n../../venv/main/lib/python3.12/site-packages/flashinfer/cute_dsl/availability.py:135\n  /venv/main/lib/python3.12/site-packages/flashinfer/cute_dsl/availability.py:135: DeprecationWarning: Arch from arch.py is deprecated. Use Arch from enums.py instead.\n    from cutlass.base_dsl.arch import Arch\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n292 passed, 1 warning in 13.00s\nWelcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nPrevious HEAD position was cbfbd5637 Merge remote-tracking branch 'origin/main' into reasoning-dynamo-call-chain\nHEAD is now at a165e33ab Wrap pytest.main in sys.exit for CI exit code propagation\n",
+      "ref": "refs/r21/pr-26924",
+      "remote_command": "cd /workspace/r14-run-sglang && git switch --detach refs/r21/pr-26924 >/dev/null && test \"$(git rev-parse HEAD)\" = a165e33ab700414f0e99c25e33d184418b4e995b && timeout 180s env PYTHONDONTWRITEBYTECODE=1 CUDA_VISIBLE_DEVICES=1 PYTHONPATH=/workspace/r18-deps/common:/workspace/r17-deps/opencv:/workspace/r14-shims:python:. /venv/main/bin/python -m pytest -q -rs --tb=short --maxfail=1 test/manual/layers/test_fused_gate_sigmoid_mul_add.py test/manual/layers/test_fused_sigmoid_mul.py -k 'test_3d_shape or test_correctness or test_gate_near_zero or test_inplace_semantics or test_qwen3_5_moe_target_strided_gate or test_returns_new_tensor or test_strided_gate'",
+      "returncode": 0,
+      "status": "completed",
+      "summary_lines": [
+        "292 passed, 1 warning in 13.00s"
+      ],
+      "test_names": [
+        "test_3d_shape",
+        "test_correctness",
+        "test_gate_near_zero",
+        "test_inplace_semantics",
+        "test_qwen3_5_moe_target_strided_gate",
+        "test_returns_new_tensor",
+        "test_strided_gate"
+      ],
+      "test_paths": [
+        "test/manual/layers/test_fused_gate_sigmoid_mul_add.py",
+        "test/manual/layers/test_fused_sigmoid_mul.py"
+      ]
+    },
+    {
+      "case_id": "sglang-pr-26892",
+      "duration_seconds": 15.047825042158365,
+      "head_sha": "71323434936b78aa84c84cc82a312ada0d533767",
+      "output_sha256": "sha256:426a9f1bfa42464f5d6935a8d9a622d340006205b69c9b994b6ed4f30362a14a",
+      "output_tail": "..                                                                       [100%]\n=============================== warnings summary ===============================\n../../venv/main/lib/python3.12/site-packages/flashinfer/cute_dsl/availability.py:135\n  /venv/main/lib/python3.12/site-packages/flashinfer/cute_dsl/availability.py:135: DeprecationWarning: Arch from arch.py is deprecated. Use Arch from enums.py instead.\n    from cutlass.base_dsl.arch import Arch\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n2 passed, 66 deselected, 1 warning in 10.52s\nWelcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nPrevious HEAD position was a165e33ab Wrap pytest.main in sys.exit for CI exit code propagation\nHEAD is now at 713234349 sampling: speed up get_max_seq_length()\n",
+      "ref": "refs/r21/pr-26892",
+      "remote_command": "cd /workspace/r14-run-sglang && git switch --detach refs/r21/pr-26892 >/dev/null && test \"$(git rev-parse HEAD)\" = 71323434936b78aa84c84cc82a312ada0d533767 && timeout 180s env PYTHONDONTWRITEBYTECODE=1 CUDA_VISIBLE_DEVICES=1 PYTHONPATH=/workspace/r18-deps/common:/workspace/r17-deps/opencv:/workspace/r14-shims:python:. /venv/main/bin/python -m pytest -q -rs --tb=short --maxfail=1 test/registered/unit/sampling/test_sampling_params.py -k 'test_long_literal_does_not_overflow or test_unbounded_repeat_short_circuits_at_max_len'",
+      "returncode": 0,
+      "status": "completed",
+      "summary_lines": [
+        "2 passed, 66 deselected, 1 warning in 10.52s"
+      ],
+      "test_names": [
+        "test_long_literal_does_not_overflow",
+        "test_unbounded_repeat_short_circuits_at_max_len"
+      ],
+      "test_paths": [
+        "test/registered/unit/sampling/test_sampling_params.py"
+      ]
+    },
+    {
+      "case_id": "sglang-pr-27164",
+      "duration_seconds": 15.2482617078349,
+      "head_sha": "dfc93d9be591880fd07ca7c2d6cc264eab0fa768",
+      "output_sha256": "sha256:0d36f8c294136ade47c39811ca9f1b26e9d65eb754c7eb24c3a66c4410f4a522",
+      "output_tail": "\n==================================== ERRORS ====================================\n_ ERROR collecting registered/unit/managers/test_scheduler_abort_tp_consistency.py _\nImportError while importing test module '/workspace/r14-run-sglang/test/registered/unit/managers/test_scheduler_abort_tp_consistency.py'.\nHint: make sure your test modules/packages have valid Python names.\nTraceback:\n/venv/main/lib/python3.12/importlib/__init__.py:90: in import_module\n    return _bootstrap._gcd_import(name[level:], package, level)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntest/registered/unit/managers/test_scheduler_abort_tp_consistency.py:26: in <module>\n    from sglang.srt.managers.scheduler import Scheduler\npython/sglang/srt/managers/scheduler.py:35: in <module>\n    import setproctitle\nE   ModuleNotFoundError: No module named 'setproctitle'\n=============================== warnings summary ===============================\n../../venv/main/lib/python3.12/site-packages/flashinfer/cute_dsl/availability.py:135\n  /venv/main/lib/python3.12/site-packages/flashinfer/cute_dsl/availability.py:135: DeprecationWarning: Arch from arch.py is deprecated. Use Arch from enums.py instead.\n    from cutlass.base_dsl.arch import Arch\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!\n!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!\n1 warning, 1 error in 10.66s\nWelcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nPrevious HEAD position was 713234349 sampling: speed up get_max_seq_length()\nHEAD is now at dfc93d9be Merge branch 'main' into fix/abort-timeout-tp-rank-divergence\n",
+      "ref": "refs/r21/pr-27164",
+      "remote_command": "cd /workspace/r14-run-sglang && git switch --detach refs/r21/pr-27164 >/dev/null && test \"$(git rev-parse HEAD)\" = dfc93d9be591880fd07ca7c2d6cc264eab0fa768 && timeout 180s env PYTHONDONTWRITEBYTECODE=1 CUDA_VISIBLE_DEVICES=1 PYTHONPATH=/workspace/r18-deps/common:/workspace/r17-deps/opencv:/workspace/r14-shims:python:. /venv/main/bin/python -m pytest -q -rs --tb=short --maxfail=1 test/registered/unit/managers/test_scheduler_abort_tp_consistency.py -k 'test_negative_control_naive_per_rank_clocks_would_diverge or test_running_timeout_empty_batch_still_enters_broadcast or test_running_timeout_marks_identical_rids_across_ranks or test_single_rank_aborts_locally_without_broadcast or test_timeout_off_is_noop_and_does_not_broadcast or test_waiting_timeout_aborts_identical_rids_across_ranks'",
+      "returncode": 2,
+      "status": "completed",
+      "summary_lines": [
+        "==================================== ERRORS ====================================",
+        "_ ERROR collecting registered/unit/managers/test_scheduler_abort_tp_consistency.py _",
+        "ImportError while importing test module '/workspace/r14-run-sglang/test/registered/unit/managers/test_scheduler_abort_tp_consistency.py'.",
+        "E   ModuleNotFoundError: No module named 'setproctitle'",
+        "!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!",
+        "1 warning, 1 error in 10.66s"
+      ],
+      "test_names": [
+        "test_negative_control_naive_per_rank_clocks_would_diverge",
+        "test_running_timeout_empty_batch_still_enters_broadcast",
+        "test_running_timeout_marks_identical_rids_across_ranks",
+        "test_single_rank_aborts_locally_without_broadcast",
+        "test_timeout_off_is_noop_and_does_not_broadcast",
+        "test_waiting_timeout_aborts_identical_rids_across_ranks"
+      ],
+      "test_paths": [
+        "test/registered/unit/managers/test_scheduler_abort_tp_consistency.py"
+      ]
+    },
+    {
+      "case_id": "sglang-pr-27103",
+      "duration_seconds": 19.19477849989198,
+      "head_sha": "41847d6d06c731fe1e5471b9d53e77a226cc3794",
+      "output_sha256": "sha256:45939b6431ad7e86801fb7954dd446a669e3b005228f07070e7b03ec85ea0567",
+      "output_tail": "\n==================================== ERRORS ====================================\n_____ ERROR collecting registered/attention/unittests/mamba/test_mamba2.py _____\nImportError while importing test module '/workspace/r14-run-sglang/test/registered/attention/unittests/mamba/test_mamba2.py'.\nHint: make sure your test modules/packages have valid Python names.\nTraceback:\n/venv/main/lib/python3.12/importlib/__init__.py:90: in import_module\n    return _bootstrap._gcd_import(name[level:], package, level)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntest/registered/attention/unittests/mamba/test_mamba2.py:36: in <module>\n    from sglang.test.kits.attention_unittest.runner_modes.speculative_draft_extend_runner import (\npython/sglang/test/kits/attention_unittest/runner_modes/speculative_draft_extend_runner.py:130: in <module>\n    from .speculative_draft_runner import (\npython/sglang/test/kits/attention_unittest/runner_modes/speculative_draft_runner.py:24: in <module>\n    from sglang.srt.speculative.eagle_worker import EAGLEWorker\npython/sglang/srt/speculative/eagle_worker.py:22: in <module>\n    from sglang.srt.managers.scheduler import GenerationBatchResult\npython/sglang/srt/managers/scheduler.py:35: in <module>\n    import setproctitle\nE   ModuleNotFoundError: No module named 'setproctitle'\n=============================== warnings summary ===============================\n../../venv/main/lib/python3.12/site-packages/flashinfer/cute_dsl/availability.py:135\n  /venv/main/lib/python3.12/site-packages/flashinfer/cute_dsl/availability.py:135: DeprecationWarning: Arch from arch.py is deprecated. Use Arch from enums.py instead.\n    from cutlass.base_dsl.arch import Arch\n\n../../venv/main/lib/python3.12/site-packages/torch/jit/_script.py:365: 14 warnings\n  /venv/main/lib/python3.12/site-packages/torch/jit/_script.py:365: DeprecationWarning: `torch.jit.script_method` is deprecated. Please switch to `torch.compile` or `torch.export`.\n    warnings.warn(\n\n<frozen importlib._bootstrap_external>:1301\n  <frozen importlib._bootstrap_external>:1301: FutureWarning: The cuda.cudart module is deprecated and will be removed in a future release, please switch to use the cuda.bindings.runtime module instead.\n\n<frozen importlib._bootstrap_external>:1301\n  <frozen importlib._bootstrap_external>:1301: FutureWarning: The cuda.nvrtc module is deprecated and will be removed in a future release, please switch to use the cuda.bindings.nvrtc module instead.\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!\n!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!\n17 warnings, 1 error in 14.23s\nWelcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nPrevious HEAD position was dfc93d9be Merge branch 'main' into fix/abort-timeout-tp-rank-divergence\nHEAD is now at 41847d6d0 Fix hybrid attention routing for speculative draft layers\n",
+      "ref": "refs/r21/pr-27103",
+      "remote_command": "cd /workspace/r14-run-sglang && git switch --detach refs/r21/pr-27103 >/dev/null && test \"$(git rev-parse HEAD)\" = 41847d6d06c731fe1e5471b9d53e77a226cc3794 && timeout 180s env PYTHONDONTWRITEBYTECODE=1 CUDA_VISIBLE_DEVICES=1 PYTHONPATH=/workspace/r18-deps/common:/workspace/r17-deps/opencv:/workspace/r14-shims:python:. /venv/main/bin/python -m pytest -q -rs --tb=short --maxfail=1 test/registered/attention/unittests/mamba/test_mamba2.py -k 'test_hybrid_dispatch_full_qkv_payload_overrides_layer_id or test_hybrid_dispatch_plain_radix_attention_linear_by_layer_id or test_hybrid_dispatch_replay_init_forward_metadata_fan_out'",
+      "returncode": 2,
+      "status": "completed",
+      "summary_lines": [
+        "==================================== ERRORS ====================================",
+        "_____ ERROR collecting registered/attention/unittests/mamba/test_mamba2.py _____",
+        "ImportError while importing test module '/workspace/r14-run-sglang/test/registered/attention/unittests/mamba/test_mamba2.py'.",
+        "E   ModuleNotFoundError: No module named 'setproctitle'",
+        "!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!",
+        "17 warnings, 1 error in 14.23s"
+      ],
+      "test_names": [
+        "test_hybrid_dispatch_full_qkv_payload_overrides_layer_id",
+        "test_hybrid_dispatch_plain_radix_attention_linear_by_layer_id",
+        "test_hybrid_dispatch_replay_init_forward_metadata_fan_out"
+      ],
+      "test_paths": [
+        "test/registered/attention/unittests/mamba/test_mamba2.py"
+      ]
+    },
+    {
+      "case_id": "sglang-pr-27053",
+      "duration_seconds": 15.790964083978906,
+      "head_sha": "5c99accf2c7719b589495cf5b7323e4adca49a92",
+      "output_sha256": "sha256:d8d21ec1f78cc23a678655c18b6e0202b4bd5fe438ebb83bb74dd64f589d6157",
+      "output_tail": "E\n==================================== ERRORS ====================================\n________________ ERROR at setup of TestBCGGlm5Fp8TP8.test_gsm8k ________________\ntest/registered/cuda_graph/piecewise/test_pcg_glm5_fp8_tp8.py:26: in setUpClass\n    cls.process = popen_launch_server(\npython/sglang/test/test_utils.py:969: in popen_launch_server\n    process = _launch_server_process(command, env, return_stdout_stderr, model)\n              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\npython/sglang/test/test_utils.py:817: in _launch_server_process\n    return _subprocess_popen_with_outputs(\npython/sglang/test/test_utils.py:764: in _subprocess_popen_with_outputs\n    return subprocess.Popen(command, stdout=None, stderr=None, env=env)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n/venv/main/lib/python3.12/subprocess.py:1026: in __init__\n    self._execute_child(args, executable, preexec_fn, close_fds,\n/venv/main/lib/python3.12/subprocess.py:1955: in _execute_child\n    raise child_exception_type(errno_num, err_msg, err_filename)\nE   FileNotFoundError: [Errno 2] No such file or directory: 'sglang'\n---------------------------- Captured stdout setup -----------------------------\ncommand=sglang serve --model-path zai-org/GLM-5-FP8 --tp-size 8 --trust-remote-code --reasoning-parser glm45 --tool-call-parser glm47 --mem-fraction-static 0.8 --disable-flashinfer-autotune --cuda-graph-backend-prefill=breakable --chunked-prefill-size 512 --model-loader-extra-config '{\"enable_multithread_load\": true, \"num_threads\": 64}' --device cuda --host 127.0.0.1 --port 22000\nCI_OFFLINE: Launching server HF_HUB_OFFLINE=0 model=zai-org/GLM-5-FP8\n=============================== warnings summary ===============================\n../../venv/main/lib/python3.12/site-packages/flashinfer/cute_dsl/availability.py:135\n  /venv/main/lib/python3.12/site-packages/flashinfer/cute_dsl/availability.py:135: DeprecationWarning: Arch from arch.py is deprecated. Use Arch from enums.py instead.\n    from cutlass.base_dsl.arch import Arch\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!\n1 warning, 1 error in 10.79s\nWelcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nPrevious HEAD position was 41847d6d0 Fix hybrid attention routing for speculative draft layers\nHEAD is now at 5c99accf2 Merge branch 'main' into bcg-pcg-nsa\n",
+      "ref": "refs/r21/pr-27053",
+      "remote_command": "cd /workspace/r14-run-sglang && git switch --detach refs/r21/pr-27053 >/dev/null && test \"$(git rev-parse HEAD)\" = 5c99accf2c7719b589495cf5b7323e4adca49a92 && timeout 180s env PYTHONDONTWRITEBYTECODE=1 CUDA_VISIBLE_DEVICES=1 PYTHONPATH=/workspace/r18-deps/common:/workspace/r17-deps/opencv:/workspace/r14-shims:python:. /venv/main/bin/python -m pytest -q -rs --tb=short --maxfail=1 test/registered/cuda_graph/piecewise/test_pcg_glm5_fp8_tp8.py -k test_gsm8k",
+      "returncode": 1,
+      "status": "completed",
+      "summary_lines": [
+        "==================================== ERRORS ====================================",
+        "________________ ERROR at setup of TestBCGGlm5Fp8TP8.test_gsm8k ________________",
+        "E   FileNotFoundError: [Errno 2] No such file or directory: 'sglang'",
+        "1 warning, 1 error in 10.79s"
+      ],
+      "test_names": [
+        "test_gsm8k"
+      ],
+      "test_paths": [
+        "test/registered/cuda_graph/piecewise/test_pcg_glm5_fp8_tp8.py"
+      ]
+    },
+    {
+      "case_id": "sglang-pr-26997",
+      "duration_seconds": 16.16621383302845,
+      "head_sha": "9cfd11533a8b9db41794f44b7facf0873f109d58",
+      "output_sha256": "sha256:f0cda10667a8f8c14c992de7164a4e0e2dcdc29481d33cec15e0e9691ac27fe5",
+      "output_tail": "E\n==================================== ERRORS ====================================\n_____________ ERROR at setup of TestEagle3Perf.test_max_token_one ______________\n/venv/main/lib/python3.12/site-packages/pytest_asyncio/plugin.py:926: in pytest_fixture_setup\n    return (yield)\n            ^^^^^\npython/sglang/test/test_utils.py:2188: in safe_setUpClass\n    orig_func(klass)\npython/sglang/test/server_fixtures/spec_eagle_fixture.py:121: in setUpClass\n    cls.process = popen_launch_server(\npython/sglang/test/test_utils.py:969: in popen_launch_server\n    process = _launch_server_process(command, env, return_stdout_stderr, model)\n              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\npython/sglang/test/test_utils.py:817: in _launch_server_process\n    return _subprocess_popen_with_outputs(\npython/sglang/test/test_utils.py:764: in _subprocess_popen_with_outputs\n    return subprocess.Popen(command, stdout=None, stderr=None, env=env)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n/venv/main/lib/python3.12/subprocess.py:1026: in __init__\n    self._execute_child(args, executable, preexec_fn, close_fds,\n/venv/main/lib/python3.12/subprocess.py:1955: in _execute_child\n    raise child_exception_type(errno_num, err_msg, err_filename)\nE   FileNotFoundError: [Errno 2] No such file or directory: 'sglang'\n---------------------------- Captured stdout setup -----------------------------\ncommand=sglang serve --model-path meta-llama/Llama-3.1-8B-Instruct --speculative-algorithm EAGLE3 --speculative-draft-model-path lmsys/sglang-EAGLE3-LLaMA3.1-Instruct-8B --speculative-num-steps 5 --speculative-eagle-topk 1 --speculative-num-draft-tokens 6 --page-size 1 --attention-backend flashinfer --mem-fraction-static 0.75 --max-running-requests 8 --chunked-prefill-size 1024 --dtype float16 --trust-remote-code --device cuda --host 127.0.0.1 --port 22000\nCI_OFFLINE: Launching server HF_HUB_OFFLINE=0 model=meta-llama/Llama-3.1-8B-Instruct\n=============================== warnings summary ===============================\n../../venv/main/lib/python3.12/site-packages/flashinfer/cute_dsl/availability.py:135\n  /venv/main/lib/python3.12/site-packages/flashinfer/cute_dsl/availability.py:135: DeprecationWarning: Arch from arch.py is deprecated. Use Arch from enums.py instead.\n    from cutlass.base_dsl.arch import Arch\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!\n1 warning, 1 error in 11.50s\nWelcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nPrevious HEAD position was 5c99accf2 Merge branch 'main' into bcg-pcg-nsa\nHEAD is now at 9cfd11533 triton idle metadata: ub-allocate on None seq_lens_sum; drop dp-pad D2H sync\n",
+      "ref": "refs/r21/pr-26997",
+      "remote_command": "cd /workspace/r14-run-sglang && git switch --detach refs/r21/pr-26997 >/dev/null && test \"$(git rev-parse HEAD)\" = 9cfd11533a8b9db41794f44b7facf0873f109d58 && timeout 180s env PYTHONDONTWRITEBYTECODE=1 CUDA_VISIBLE_DEVICES=1 PYTHONPATH=/workspace/r18-deps/common:/workspace/r17-deps/opencv:/workspace/r14-shims:python:. /venv/main/bin/python -m pytest -q -rs --tb=short --maxfail=1 test/registered/spec/eagle/test_spec_eagle_stress.py test/registered/spec/eagle/test_spec_eagle_topk.py",
+      "returncode": 1,
+      "status": "completed",
+      "summary_lines": [
+        "==================================== ERRORS ====================================",
+        "_____________ ERROR at setup of TestEagle3Perf.test_max_token_one ______________",
+        "E   FileNotFoundError: [Errno 2] No such file or directory: 'sglang'",
+        "1 warning, 1 error in 11.50s"
+      ],
+      "test_names": [],
+      "test_paths": [
+        "test/registered/spec/eagle/test_spec_eagle_stress.py",
+        "test/registered/spec/eagle/test_spec_eagle_topk.py"
+      ]
+    },
+    {
+      "case_id": "sglang-pr-26981",
+      "duration_seconds": 16.563130667200312,
+      "head_sha": "438d951777a82276198f7fc01af3ae88d47a4221",
+      "output_sha256": "sha256:7cebc873d7f6651802fc30703a08b0d676d886b83572539f8027448aae179679",
+      "output_tail": "E\n==================================== ERRORS ====================================\n_____________ ERROR at setup of TestEagle3Perf.test_max_token_one ______________\n/venv/main/lib/python3.12/site-packages/pytest_asyncio/plugin.py:926: in pytest_fixture_setup\n    return (yield)\n            ^^^^^\npython/sglang/test/test_utils.py:2188: in safe_setUpClass\n    orig_func(klass)\npython/sglang/test/server_fixtures/spec_eagle_fixture.py:121: in setUpClass\n    cls.process = popen_launch_server(\npython/sglang/test/test_utils.py:969: in popen_launch_server\n    process = _launch_server_process(command, env, return_stdout_stderr, model)\n              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\npython/sglang/test/test_utils.py:817: in _launch_server_process\n    return _subprocess_popen_with_outputs(\npython/sglang/test/test_utils.py:764: in _subprocess_popen_with_outputs\n    return subprocess.Popen(command, stdout=None, stderr=None, env=env)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n/venv/main/lib/python3.12/subprocess.py:1026: in __init__\n    self._execute_child(args, executable, preexec_fn, close_fds,\n/venv/main/lib/python3.12/subprocess.py:1955: in _execute_child\n    raise child_exception_type(errno_num, err_msg, err_filename)\nE   FileNotFoundError: [Errno 2] No such file or directory: 'sglang'\n---------------------------- Captured stdout setup -----------------------------\ncommand=sglang serve --model-path meta-llama/Llama-3.1-8B-Instruct --speculative-algorithm EAGLE3 --speculative-draft-model-path lmsys/sglang-EAGLE3-LLaMA3.1-Instruct-8B --speculative-num-steps 5 --speculative-eagle-topk 1 --speculative-num-draft-tokens 6 --page-size 1 --attention-backend flashinfer --mem-fraction-static 0.75 --max-running-requests 8 --chunked-prefill-size 1024 --dtype float16 --trust-remote-code --device cuda --host 127.0.0.1 --port 22000\nCI_OFFLINE: Launching server HF_HUB_OFFLINE=0 model=meta-llama/Llama-3.1-8B-Instruct\n=============================== warnings summary ===============================\n../../venv/main/lib/python3.12/site-packages/flashinfer/cute_dsl/availability.py:135\n  /venv/main/lib/python3.12/site-packages/flashinfer/cute_dsl/availability.py:135: DeprecationWarning: Arch from arch.py is deprecated. Use Arch from enums.py instead.\n    from cutlass.base_dsl.arch import Arch\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!\n1 warning, 1 error in 10.57s\nWelcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nPrevious HEAD position was 9cfd11533 triton idle metadata: ub-allocate on None seq_lens_sum; drop dp-pad D2H sync\nHEAD is now at 438d95177 Revert \"Support spec v2 tree drafting (eagle topk>1) with page_size==1 (#26866)\"\n",
+      "ref": "refs/r21/pr-26981",
+      "remote_command": "cd /workspace/r14-run-sglang && git switch --detach refs/r21/pr-26981 >/dev/null && test \"$(git rev-parse HEAD)\" = 438d951777a82276198f7fc01af3ae88d47a4221 && timeout 180s env PYTHONDONTWRITEBYTECODE=1 CUDA_VISIBLE_DEVICES=1 PYTHONPATH=/workspace/r18-deps/common:/workspace/r17-deps/opencv:/workspace/r14-shims:python:. /venv/main/bin/python -m pytest -q -rs --tb=short --maxfail=1 test/registered/spec/eagle/test_spec_eagle_stress.py test/registered/spec/eagle/test_spec_eagle_topk.py",
+      "returncode": 1,
+      "status": "completed",
+      "summary_lines": [
+        "==================================== ERRORS ====================================",
+        "_____________ ERROR at setup of TestEagle3Perf.test_max_token_one ______________",
+        "E   FileNotFoundError: [Errno 2] No such file or directory: 'sglang'",
+        "1 warning, 1 error in 10.57s"
+      ],
+      "test_names": [],
+      "test_paths": [
+        "test/registered/spec/eagle/test_spec_eagle_stress.py",
+        "test/registered/spec/eagle/test_spec_eagle_topk.py"
+      ]
+    },
+    {
+      "case_id": "sglang-pr-26972",
+      "duration_seconds": 15.223719416884705,
+      "head_sha": "538142b97a1734af4db819f51bcb7ef1212a0f73",
+      "output_sha256": "sha256:a26c91972b8167d377f89f1582a47c836628f1e12a4459e63a6658bf691d7d9a",
+      "output_tail": "E\n==================================== ERRORS ====================================\n_________ ERROR at setup of TestEagle3Page64.test_constrained_decoding _________\n/venv/main/lib/python3.12/site-packages/pytest_asyncio/plugin.py:926: in pytest_fixture_setup\n    return (yield)\n            ^^^^^\npython/sglang/test/test_utils.py:2188: in safe_setUpClass\n    orig_func(klass)\npython/sglang/test/server_fixtures/spec_eagle_fixture.py:131: in setUpClass\n    cls.process = popen_launch_server(\npython/sglang/test/test_utils.py:969: in popen_launch_server\n    process = _launch_server_process(command, env, return_stdout_stderr, model)\n              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\npython/sglang/test/test_utils.py:817: in _launch_server_process\n    return _subprocess_popen_with_outputs(\npython/sglang/test/test_utils.py:764: in _subprocess_popen_with_outputs\n    return subprocess.Popen(command, stdout=None, stderr=None, env=env)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n/venv/main/lib/python3.12/subprocess.py:1026: in __init__\n    self._execute_child(args, executable, preexec_fn, close_fds,\n/venv/main/lib/python3.12/subprocess.py:1955: in _execute_child\n    raise child_exception_type(errno_num, err_msg, err_filename)\nE   FileNotFoundError: [Errno 2] No such file or directory: 'sglang'\n---------------------------- Captured stdout setup -----------------------------\ncommand=sglang serve --model-path meta-llama/Llama-3.1-8B-Instruct --speculative-algorithm EAGLE3 --speculative-draft-model-path lmsys/sglang-EAGLE3-LLaMA3.1-Instruct-8B --speculative-num-steps 5 --speculative-eagle-topk 1 --speculative-num-draft-tokens 6 --page-size 64 --attention-backend flashinfer --mem-fraction-static 0.75 --max-running-requests 8 --chunked-prefill-size 1024 --dtype float16 --trust-remote-code --device cuda --host 127.0.0.1 --port 22000\nCI_OFFLINE: Launching server HF_HUB_OFFLINE=0 model=meta-llama/Llama-3.1-8B-Instruct\n=============================== warnings summary ===============================\n../../venv/main/lib/python3.12/site-packages/flashinfer/cute_dsl/availability.py:135\n  /venv/main/lib/python3.12/site-packages/flashinfer/cute_dsl/availability.py:135: DeprecationWarning: Arch from arch.py is deprecated. Use Arch from enums.py instead.\n    from cutlass.base_dsl.arch import Arch\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!\n1 warning, 1 error in 10.70s\nWelcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nPrevious HEAD position was 438d95177 Revert \"Support spec v2 tree drafting (eagle topk>1) with page_size==1 (#26866)\"\nHEAD is now at 538142b97 add page>1 topk>1 eagle tests\n",
+      "ref": "refs/r21/pr-26972",
+      "remote_command": "cd /workspace/r14-run-sglang && git switch --detach refs/r21/pr-26972 >/dev/null && test \"$(git rev-parse HEAD)\" = 538142b97a1734af4db819f51bcb7ef1212a0f73 && timeout 180s env PYTHONDONTWRITEBYTECODE=1 CUDA_VISIBLE_DEVICES=1 PYTHONPATH=/workspace/r18-deps/common:/workspace/r17-deps/opencv:/workspace/r14-shims:python:. /venv/main/bin/python -m pytest -q -rs --tb=short --maxfail=1 test/registered/spec/eagle/test_spec_eagle_page.py test/registered/spec/eagle/test_spec_eagle_topk_page.py",
+      "returncode": 1,
+      "status": "completed",
+      "summary_lines": [
+        "==================================== ERRORS ====================================",
+        "_________ ERROR at setup of TestEagle3Page64.test_constrained_decoding _________",
+        "E   FileNotFoundError: [Errno 2] No such file or directory: 'sglang'",
+        "1 warning, 1 error in 10.70s"
+      ],
+      "test_names": [],
+      "test_paths": [
+        "test/registered/spec/eagle/test_spec_eagle_page.py",
+        "test/registered/spec/eagle/test_spec_eagle_topk_page.py"
+      ]
+    },
+    {
+      "case_id": "sglang-pr-26952",
+      "duration_seconds": 17.006214166991413,
+      "head_sha": "90484498fabf4acd944f6a5d2a66903ed284c1f4",
+      "output_sha256": "sha256:213875f08f7db591ad419a5a0f85e31e9814f3586faa3d6de0df5fe991f99e4d",
+      "output_tail": "..                                                                       [100%]\n=============================== warnings summary ===============================\n../../venv/main/lib/python3.12/site-packages/flashinfer/cute_dsl/availability.py:135\n  /venv/main/lib/python3.12/site-packages/flashinfer/cute_dsl/availability.py:135: DeprecationWarning: Arch from arch.py is deprecated. Use Arch from enums.py instead.\n    from cutlass.base_dsl.arch import Arch\n\n../../venv/main/lib/python3.12/site-packages/torch/jit/_script.py:365: 14 warnings\n  /venv/main/lib/python3.12/site-packages/torch/jit/_script.py:365: DeprecationWarning: `torch.jit.script_method` is deprecated. Please switch to `torch.compile` or `torch.export`.\n    warnings.warn(\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n2 passed, 15 warnings in 12.15s\nWelcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nPrevious HEAD position was 538142b97 add page>1 topk>1 eagle tests\nHEAD is now at 90484498f Merge branch 'main' into main\n",
+      "ref": "refs/r21/pr-26952",
+      "remote_command": "cd /workspace/r14-run-sglang && git switch --detach refs/r21/pr-26952 >/dev/null && test \"$(git rev-parse HEAD)\" = 90484498fabf4acd944f6a5d2a66903ed284c1f4 && timeout 180s env PYTHONDONTWRITEBYTECODE=1 CUDA_VISIBLE_DEVICES=1 PYTHONPATH=/workspace/r18-deps/common:/workspace/r17-deps/opencv:/workspace/r14-shims:python:. /venv/main/bin/python -m pytest -q -rs --tb=short --maxfail=1 test/registered/unit/hardware_backend/mlx/test_scheduler_logic.py -k 'test_resolve_forward_inputs_mlx_mixed_no_future_map or test_resolve_forward_inputs_mlx_prefill'",
+      "returncode": 0,
+      "status": "completed",
+      "summary_lines": [
+        "2 passed, 15 warnings in 12.15s"
+      ],
+      "test_names": [
+        "test_resolve_forward_inputs_mlx_mixed_no_future_map",
+        "test_resolve_forward_inputs_mlx_prefill"
+      ],
+      "test_paths": [
+        "test/registered/unit/hardware_backend/mlx/test_scheduler_logic.py"
+      ]
+    },
+    {
+      "case_id": "sglang-pr-26928",
+      "duration_seconds": 17.71992295817472,
+      "head_sha": "065b57c3d370f3bdfaf4d6daf89af7be6d771efd",
+      "output_sha256": "sha256:389325727603005721b9a6954d4bfa02cd5fd5eed7043e70c99b7eb4a9eb27be",
+      "output_tail": "s....                                                                [100%]\n=============================== warnings summary ===============================\n../../venv/main/lib/python3.12/site-packages/flashinfer/cute_dsl/availability.py:135\n  /venv/main/lib/python3.12/site-packages/flashinfer/cute_dsl/availability.py:135: DeprecationWarning: Arch from arch.py is deprecated. Use Arch from enums.py instead.\n    from cutlass.base_dsl.arch import Arch\n\n../../venv/main/lib/python3.12/site-packages/torch/jit/_script.py:365: 14 warnings\n  /venv/main/lib/python3.12/site-packages/torch/jit/_script.py:365: DeprecationWarning: `torch.jit.script_method` is deprecated. Please switch to `torch.compile` or `torch.export`.\n    warnings.warn(\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n=========================== short test summary info ============================\nSKIPPED [1] test/registered/unit/model_executor/test_pool_configurator.py: Temporarily skipped during the ServerArgs config-namespace migration; re-enabled once the runtime-config accessor API stabilizes.\n4 passed, 1 skipped, 110 deselected, 15 warnings, 4 subtests passed in 12.62s\nWelcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nPrevious HEAD position was 90484498f Merge branch 'main' into main\nHEAD is now at 065b57c3d feat: update GLM DSA support for SM120\n",
+      "ref": "refs/r21/pr-26928",
+      "remote_command": "cd /workspace/r14-run-sglang && git switch --detach refs/r21/pr-26928 >/dev/null && test \"$(git rev-parse HEAD)\" = 065b57c3d370f3bdfaf4d6daf89af7be6d771efd && timeout 180s env PYTHONDONTWRITEBYTECODE=1 CUDA_VISIBLE_DEVICES=1 PYTHONPATH=/workspace/r18-deps/common:/workspace/r17-deps/opencv:/workspace/r14-shims:python:. /venv/main/bin/python -m pytest -q -rs --tb=short --maxfail=1 test/manual/test_dsa_alias_cli_registry_env.py test/registered/unit/model_executor/test_pool_configurator.py test/registered/unit/test_flashinfer_sparse_mla.py test/registered/unit/test_model_overrides.py -k 'test_accepts_flashinfer_for_both_phases or test_dsa_mla_cell_size_uses_backend_kv_layout or test_maps_sglang_layout_to_public_flashinfer_api or test_rejects_other_or_mixed_backends or test_reports_unsupported_configuration'",
+      "returncode": 0,
+      "status": "completed",
+      "summary_lines": [
+        "SKIPPED [1] test/registered/unit/model_executor/test_pool_configurator.py: Temporarily skipped during the ServerArgs config-namespace migration; re-enabled once the runtime-config accessor API stabilizes.",
+        "4 passed, 1 skipped, 110 deselected, 15 warnings, 4 subtests passed in 12.62s"
+      ],
+      "test_names": [
+        "test_accepts_flashinfer_for_both_phases",
+        "test_dsa_mla_cell_size_uses_backend_kv_layout",
+        "test_maps_sglang_layout_to_public_flashinfer_api",
+        "test_rejects_other_or_mixed_backends",
+        "test_reports_unsupported_configuration"
+      ],
+      "test_paths": [
+        "test/manual/test_dsa_alias_cli_registry_env.py",
+        "test/registered/unit/model_executor/test_pool_configurator.py",
+        "test/registered/unit/test_flashinfer_sparse_mla.py",
+        "test/registered/unit/test_model_overrides.py"
+      ]
+    },
+    {
+      "case_id": "sglang-pr-26888",
+      "duration_seconds": 18.111381500028074,
+      "head_sha": "539169d3e58742e87a93cbe27d5fa404d41e486c",
+      "output_sha256": "sha256:fd341c59742231cf9660994df6e872010c14de5d8ae7a448665695222fe44da0",
+      "output_tail": "F\n=================================== FAILURES ===================================\n_____________________ test_normal_inference_no_regression ______________________\n/venv/main/lib/python3.12/site-packages/urllib3/connection.py:204: in _new_conn\n    sock = connection.create_connection(\n/venv/main/lib/python3.12/site-packages/urllib3/util/connection.py:85: in create_connection\n    raise err\n/venv/main/lib/python3.12/site-packages/urllib3/util/connection.py:73: in create_connection\n    sock.connect(sa)\nE   ConnectionRefusedError: [Errno 111] Connection refused\n\nThe above exception was the direct cause of the following exception:\n/venv/main/lib/python3.12/site-packages/urllib3/connectionpool.py:788: in urlopen\n    response = self._make_request(\n/venv/main/lib/python3.12/site-packages/urllib3/connectionpool.py:493: in _make_request\n    conn.request(\n/venv/main/lib/python3.12/site-packages/urllib3/connection.py:500: in request\n    self.endheaders()\n/venv/main/lib/python3.12/http/client.py:1381: in endheaders\n    self._send_output(message_body, encode_chunked=encode_chunked)\n/venv/main/lib/python3.12/http/client.py:1141: in _send_output\n    self.send(msg)\n/venv/main/lib/python3.12/http/client.py:1085: in send\n    self.connect()\n/venv/main/lib/python3.12/site-packages/urllib3/connection.py:331: in connect\n    self.sock = self._new_conn()\n                ^^^^^^^^^^^^^^^^\n/venv/main/lib/python3.12/site-packages/urllib3/connection.py:219: in _new_conn\n    raise NewConnectionError(\nE   urllib3.exceptions.NewConnectionError: HTTPConnection(host='localhost', port=30000): Failed to establish a new connection: [Errno 111] Connection refused\n\nThe above exception was the direct cause of the following exception:\n/venv/main/lib/python3.12/site-packages/requests/adapters.py:696: in send\n    resp = conn.urlopen(\n/venv/main/lib/python3.12/site-packages/urllib3/connectionpool.py:842: in urlopen\n    retries = retries.increment(\n/venv/main/lib/python3.12/site-packages/urllib3/util/retry.py:543: in increment\n    raise MaxRetryError(_pool, url, reason) from reason  # type: ignore[arg-type]\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nE   urllib3.exceptions.MaxRetryError: HTTPConnectionPool(host='localhost', port=30000): Max retries exceeded with url: /generate (Caused by NewConnectionError(\"HTTPConnection(host='localhost', port=30000): Failed to establish a new connection: [Errno 111] Connection refused\"))\n\nDuring handling of the above exception, another exception occurred:\ntest/manual/test_kda_spec_integration.py:11: in test_normal_inference_no_regression\n    resp = requests.post(\n/venv/main/lib/python3.12/site-packages/requests/api.py:134: in post\n    return request(\"post\", url, data=data, json=json, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n/venv/main/lib/python3.12/site-packages/requests/api.py:71: in request\n    return session.request(method=method, url=url, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n/venv/main/lib/python3.12/site-packages/requests/sessions.py:651: in request\n    resp = self.send(prep, **send_kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n/venv/main/lib/python3.12/site-packages/requests/sessions.py:784: in send\n    r = adapter.send(request, **kwargs)\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n/venv/main/lib/python3.12/site-packages/requests/adapters.py:729: in send\n    raise ConnectionError(e, request=request)\nE   requests.exceptions.ConnectionError: HTTPConnectionPool(host='localhost', port=30000): Max retries exceeded with url: /generate (Caused by NewConnectionError(\"HTTPConnection(host='localhost', port=30000): Failed to establish a new connection: [Errno 111] Connection refused\"))\n=============================== warnings summary ===============================\n../../venv/main/lib/python3.12/site-packages/flashinfer/cute_dsl/availability.py:135\n  /venv/main/lib/python3.12/site-packages/flashinfer/cute_dsl/availability.py:135: DeprecationWarning: Arch from arch.py is deprecated. Use Arch from enums.py instead.\n    from cutlass.base_dsl.arch import Arch\n\n../../venv/main/lib/python3.12/site-packages/torch/jit/_script.py:365: 14 warnings\n  /venv/main/lib/python3.12/site-packages/torch/jit/_script.py:365: DeprecationWarning: `torch.jit.script_method` is deprecated. Please switch to `torch.compile` or `torch.export`.\n    warnings.warn(\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!\n1 failed, 15 warnings in 12.93s\nWelcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nPrevious HEAD position was 065b57c3d feat: update GLM DSA support for SM120\nHEAD is now at 539169d3e style: trim redundant KDA target-verify comments\n",
+      "ref": "refs/r21/pr-26888",
+      "remote_command": "cd /workspace/r14-run-sglang && git switch --detach refs/r21/pr-26888 >/dev/null && test \"$(git rev-parse HEAD)\" = 539169d3e58742e87a93cbe27d5fa404d41e486c && timeout 180s env PYTHONDONTWRITEBYTECODE=1 CUDA_VISIBLE_DEVICES=1 PYTHONPATH=/workspace/r18-deps/common:/workspace/r17-deps/opencv:/workspace/r14-shims:python:. /venv/main/bin/python -m pytest -q -rs --tb=short --maxfail=1 test/manual/test_kda_spec_integration.py test/manual/test_kda_target_verify.py test/registered/unit/spec/test_ngram_mamba_verify_update.py -k 'test_batch_inference or test_buggy_kda_view_aliases_step_onto_channel or test_gdn_channel_major_unchanged or test_kda_channel_axis_independent or test_kda_target_verify_bf16 or test_kda_target_verify_equivalence or test_kda_window_major_sliding_window or test_kda_window_shifts_by_one_per_step or test_linear_chain_all_accepted or test_linear_chain_partial_accept or test_mamba_verify_update_called_with_correct_indices or test_mamba_verify_update_not_called_for_non_mamba_model or test_mamba_verify_update_with_track_indices or test_normal_inference_no_regression or test_partial_accept_commit_reads_correct_window or test_prefix_caching_still_works or test_single_request_zero_drafts or test_tree_structure_non_sequential'",
+      "returncode": 1,
+      "status": "completed",
+      "summary_lines": [
+        "E   ConnectionRefusedError: [Errno 111] Connection refused",
+        "raise NewConnectionError(",
+        "E   urllib3.exceptions.NewConnectionError: HTTPConnection(host='localhost', port=30000): Failed to establish a new connection: [Errno 111] Connection refused",
+        "raise MaxRetryError(_pool, url, reason) from reason  # type: ignore[arg-type]",
+        "E   urllib3.exceptions.MaxRetryError: HTTPConnectionPool(host='localhost', port=30000): Max retries exceeded with url: /generate (Caused by NewConnectionError(\"HTTPConnection(host='localhost', port=30000): Failed to establish a new connection: [Errno 111] Connection refused\"))",
+        "raise ConnectionError(e, request=request)",
+        "E   requests.exceptions.ConnectionError: HTTPConnectionPool(host='localhost', port=30000): Max retries exceeded with url: /generate (Caused by NewConnectionError(\"HTTPConnection(host='localhost', port=30000): Failed to establish a new connection: [Errno 111] Connection refused\"))",
+        "1 failed, 15 warnings in 12.93s"
+      ],
+      "test_names": [
+        "test_batch_inference",
+        "test_buggy_kda_view_aliases_step_onto_channel",
+        "test_gdn_channel_major_unchanged",
+        "test_kda_channel_axis_independent",
+        "test_kda_target_verify_bf16",
+        "test_kda_target_verify_equivalence",
+        "test_kda_window_major_sliding_window",
+        "test_kda_window_shifts_by_one_per_step",
+        "test_linear_chain_all_accepted",
+        "test_linear_chain_partial_accept",
+        "test_mamba_verify_update_called_with_correct_indices",
+        "test_mamba_verify_update_not_called_for_non_mamba_model",
+        "test_mamba_verify_update_with_track_indices",
+        "test_normal_inference_no_regression",
+        "test_partial_accept_commit_reads_correct_window",
+        "test_prefix_caching_still_works",
+        "test_single_request_zero_drafts",
+        "test_tree_structure_non_sequential"
+      ],
+      "test_paths": [
+        "test/manual/test_kda_spec_integration.py",
+        "test/manual/test_kda_target_verify.py",
+        "test/registered/unit/spec/test_ngram_mamba_verify_update.py"
+      ]
+    },
+    {
+      "case_id": "sglang-pr-26880",
+      "duration_seconds": 18.121489459183067,
+      "head_sha": "53c7bc79da5056d1d05097f037b8b7e2a9272b40",
+      "output_sha256": "sha256:bfe0ddf71a79bd3afcb09804038f8578393c1eb114c4b9132fe8a185aab5a2ba",
+      "output_tail": "...                                                                      [100%]\n=============================== warnings summary ===============================\n../../venv/main/lib/python3.12/site-packages/flashinfer/cute_dsl/availability.py:135\n  /venv/main/lib/python3.12/site-packages/flashinfer/cute_dsl/availability.py:135: DeprecationWarning: Arch from arch.py is deprecated. Use Arch from enums.py instead.\n    from cutlass.base_dsl.arch import Arch\n\n../../venv/main/lib/python3.12/site-packages/torch/jit/_script.py:365: 14 warnings\n  /venv/main/lib/python3.12/site-packages/torch/jit/_script.py:365: DeprecationWarning: `torch.jit.script_method` is deprecated. Please switch to `torch.compile` or `torch.export`.\n    warnings.warn(\n\n<frozen importlib._bootstrap_external>:1301\n  <frozen importlib._bootstrap_external>:1301: FutureWarning: The cuda.cudart module is deprecated and will be removed in a future release, please switch to use the cuda.bindings.runtime module instead.\n\n<frozen importlib._bootstrap_external>:1301\n  <frozen importlib._bootstrap_external>:1301: FutureWarning: The cuda.nvrtc module is deprecated and will be removed in a future release, please switch to use the cuda.bindings.nvrtc module instead.\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n3 passed, 17 warnings in 13.16s\nWelcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nPrevious HEAD position was 539169d3e style: trim redundant KDA target-verify comments\nHEAD is now at 53c7bc79d rework eagle draft seq_lens_sum test; assert invariant, cover none/unpadded\n",
+      "ref": "refs/r21/pr-26880",
+      "remote_command": "cd /workspace/r14-run-sglang && git switch --detach refs/r21/pr-26880 >/dev/null && test \"$(git rev-parse HEAD)\" = 53c7bc79da5056d1d05097f037b8b7e2a9272b40 && timeout 180s env PYTHONDONTWRITEBYTECODE=1 CUDA_VISIBLE_DEVICES=1 PYTHONPATH=/workspace/r18-deps/common:/workspace/r17-deps/opencv:/workspace/r14-shims:python:. /venv/main/bin/python -m pytest -q -rs --tb=short --maxfail=1 test/registered/unit/spec/test_eagle_draft_cuda_graph_runner.py -k 'test_none_seq_lens_sum_is_preserved or test_padded_replay_keeps_seq_lens_sum_consistent or test_unpadded_replay_leaves_seq_lens_sum_untouched'",
+      "returncode": 0,
+      "status": "completed",
+      "summary_lines": [
+        "3 passed, 17 warnings in 13.16s"
+      ],
+      "test_names": [
+        "test_none_seq_lens_sum_is_preserved",
+        "test_padded_replay_keeps_seq_lens_sum_consistent",
+        "test_unpadded_replay_leaves_seq_lens_sum_untouched"
+      ],
+      "test_paths": [
+        "test/registered/unit/spec/test_eagle_draft_cuda_graph_runner.py"
+      ]
+    },
+    {
+      "case_id": "sglang-pr-26878",
+      "duration_seconds": 15.562593208858743,
+      "head_sha": "ae4167cf61b0b9e137274e5738806bc3dc07a923",
+      "output_sha256": "sha256:af208d37d0ac5e7edc8a235db99528e303c60eaf2ad3256179b9aa21fa46eeff",
+      "output_tail": "Welcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nPrevious HEAD position was 53c7bc79d rework eagle draft seq_lens_sum test; assert invariant, cover none/unpadded\nHEAD is now at ae4167cf6 Fix LTX2 decode test import after stage move\nImportError while loading conftest '/workspace/r14-run-sglang/python/sglang/multimodal_gen/test/unit/conftest.py'.\npython/sglang/multimodal_gen/test/unit/conftest.py:7: in <module>\n    from sglang.multimodal_gen.runtime import server_args as server_args_module\npython/sglang/multimodal_gen/__init__.py:2: in <module>\n    from sglang.multimodal_gen.configs.pipeline_configs import PipelineConfig\npython/sglang/multimodal_gen/configs/pipeline_configs/__init__.py:3: in <module>\n    from sglang.multimodal_gen.configs.pipeline_configs.base import (\npython/sglang/multimodal_gen/configs/pipeline_configs/base.py:38: in <module>\n    from sglang.multimodal_gen.runtime.models.vision_utils import get_default_height_width\npython/sglang/multimodal_gen/runtime/models/vision_utils.py:11: in <module>\n    import imageio\nE   ModuleNotFoundError: No module named 'imageio'\n",
+      "ref": "refs/r21/pr-26878",
+      "remote_command": "cd /workspace/r14-run-sglang && git switch --detach refs/r21/pr-26878 >/dev/null && test \"$(git rev-parse HEAD)\" = ae4167cf61b0b9e137274e5738806bc3dc07a923 && timeout 180s env PYTHONDONTWRITEBYTECODE=1 CUDA_VISIBLE_DEVICES=1 PYTHONPATH=/workspace/r18-deps/common:/workspace/r17-deps/opencv:/workspace/r14-shims:python:. /venv/main/bin/python -m pytest -q -rs --tb=short --maxfail=1 python/sglang/multimodal_gen/test/unit/test_ltx2_decode_performance.py -k 'test_forced_untiled_failure_falls_back_to_tiled_and_latches or test_off_mode_skips_untiled_and_uses_tiled or test_postprocess_matches_legacy_videoprocessor_plus_save_path or test_postprocess_rejects_non_5d'",
+      "returncode": 4,
+      "status": "completed",
+      "summary_lines": [
+        "ImportError while loading conftest '/workspace/r14-run-sglang/python/sglang/multimodal_gen/test/unit/conftest.py'.",
+        "E   ModuleNotFoundError: No module named 'imageio'"
+      ],
+      "test_names": [
+        "test_forced_untiled_failure_falls_back_to_tiled_and_latches",
+        "test_off_mode_skips_untiled_and_uses_tiled",
+        "test_postprocess_matches_legacy_videoprocessor_plus_save_path",
+        "test_postprocess_rejects_non_5d"
+      ],
+      "test_paths": [
+        "python/sglang/multimodal_gen/test/unit/test_ltx2_decode_performance.py"
+      ]
+    },
+    {
+      "case_id": "sglang-pr-26866",
+      "duration_seconds": 15.978953375015408,
+      "head_sha": "98f79f423b9b682fb34b7712f793d4069a4398c8",
+      "output_sha256": "sha256:0224c9078b378e70f5d4b1019aff40c57a139113d5222f1fb83dab58641a7c14",
+      "output_tail": "E\n==================================== ERRORS ====================================\n_____________ ERROR at setup of TestEagle3Perf.test_max_token_one ______________\n/venv/main/lib/python3.12/site-packages/pytest_asyncio/plugin.py:926: in pytest_fixture_setup\n    return (yield)\n            ^^^^^\npython/sglang/test/test_utils.py:2188: in safe_setUpClass\n    orig_func(klass)\npython/sglang/test/server_fixtures/spec_eagle_fixture.py:121: in setUpClass\n    cls.process = popen_launch_server(\npython/sglang/test/test_utils.py:969: in popen_launch_server\n    process = _launch_server_process(command, env, return_stdout_stderr, model)\n              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\npython/sglang/test/test_utils.py:817: in _launch_server_process\n    return _subprocess_popen_with_outputs(\npython/sglang/test/test_utils.py:764: in _subprocess_popen_with_outputs\n    return subprocess.Popen(command, stdout=None, stderr=None, env=env)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n/venv/main/lib/python3.12/subprocess.py:1026: in __init__\n    self._execute_child(args, executable, preexec_fn, close_fds,\n/venv/main/lib/python3.12/subprocess.py:1955: in _execute_child\n    raise child_exception_type(errno_num, err_msg, err_filename)\nE   FileNotFoundError: [Errno 2] No such file or directory: 'sglang'\n---------------------------- Captured stdout setup -----------------------------\ncommand=sglang serve --model-path meta-llama/Llama-3.1-8B-Instruct --speculative-algorithm EAGLE3 --speculative-draft-model-path lmsys/sglang-EAGLE3-LLaMA3.1-Instruct-8B --speculative-num-steps 5 --speculative-eagle-topk 1 --speculative-num-draft-tokens 6 --page-size 1 --attention-backend flashinfer --mem-fraction-static 0.75 --max-running-requests 8 --chunked-prefill-size 1024 --dtype float16 --trust-remote-code --device cuda --host 127.0.0.1 --port 22000\nCI_OFFLINE: Launching server HF_HUB_OFFLINE=0 model=meta-llama/Llama-3.1-8B-Instruct\n=============================== warnings summary ===============================\n../../venv/main/lib/python3.12/site-packages/flashinfer/cute_dsl/availability.py:135\n  /venv/main/lib/python3.12/site-packages/flashinfer/cute_dsl/availability.py:135: DeprecationWarning: Arch from arch.py is deprecated. Use Arch from enums.py instead.\n    from cutlass.base_dsl.arch import Arch\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!\n1 warning, 1 error in 11.16s\nWelcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nPrevious HEAD position was ae4167cf6 Fix LTX2 decode test import after stage move\nHEAD is now at 98f79f423 Merge branch 'main' into lsyin/spec-v2-topk\n",
+      "ref": "refs/r21/pr-26866",
+      "remote_command": "cd /workspace/r14-run-sglang && git switch --detach refs/r21/pr-26866 >/dev/null && test \"$(git rev-parse HEAD)\" = 98f79f423b9b682fb34b7712f793d4069a4398c8 && timeout 180s env PYTHONDONTWRITEBYTECODE=1 CUDA_VISIBLE_DEVICES=1 PYTHONPATH=/workspace/r18-deps/common:/workspace/r17-deps/opencv:/workspace/r14-shims:python:. /venv/main/bin/python -m pytest -q -rs --tb=short --maxfail=1 test/registered/spec/eagle/test_spec_eagle_stress.py test/registered/spec/eagle/test_spec_eagle_topk.py",
+      "returncode": 1,
+      "status": "completed",
+      "summary_lines": [
+        "==================================== ERRORS ====================================",
+        "_____________ ERROR at setup of TestEagle3Perf.test_max_token_one ______________",
+        "E   FileNotFoundError: [Errno 2] No such file or directory: 'sglang'",
+        "1 warning, 1 error in 11.16s"
+      ],
+      "test_names": [],
+      "test_paths": [
+        "test/registered/spec/eagle/test_spec_eagle_stress.py",
+        "test/registered/spec/eagle/test_spec_eagle_topk.py"
+      ]
+    },
+    {
+      "case_id": "sglang-pr-26859",
+      "duration_seconds": 17.240975082851946,
+      "head_sha": "3a9280c10b6680da51f6031ad6f7383cd8e9d076",
+      "output_sha256": "sha256:ecec42fb58331f0ee18a0babf2a0f866c163ce46ea091302f46e079667966506",
+      "output_tail": "\n==================================== ERRORS ====================================\n_ ERROR collecting registered/unit/spec/test_frozen_kv_mtp_all_reqs_finish_in_verify.py _\nImportError while importing test module '/workspace/r14-run-sglang/test/registered/unit/spec/test_frozen_kv_mtp_all_reqs_finish_in_verify.py'.\nHint: make sure your test modules/packages have valid Python names.\nTraceback:\n/venv/main/lib/python3.12/importlib/__init__.py:90: in import_module\n    return _bootstrap._gcd_import(name[level:], package, level)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntest/registered/unit/spec/test_frozen_kv_mtp_all_reqs_finish_in_verify.py:12: in <module>\n    from sglang.srt.speculative.frozen_kv_mtp_worker import FrozenKVMTPWorker\npython/sglang/srt/speculative/frozen_kv_mtp_worker.py:35: in <module>\n    from sglang.srt.managers.scheduler import GenerationBatchResult\npython/sglang/srt/managers/scheduler.py:35: in <module>\n    import setproctitle\nE   ModuleNotFoundError: No module named 'setproctitle'\n=============================== warnings summary ===============================\n../../venv/main/lib/python3.12/site-packages/flashinfer/cute_dsl/availability.py:135\n  /venv/main/lib/python3.12/site-packages/flashinfer/cute_dsl/availability.py:135: DeprecationWarning: Arch from arch.py is deprecated. Use Arch from enums.py instead.\n    from cutlass.base_dsl.arch import Arch\n\n../../venv/main/lib/python3.12/site-packages/torch/jit/_script.py:365: 14 warnings\n  /venv/main/lib/python3.12/site-packages/torch/jit/_script.py:365: DeprecationWarning: `torch.jit.script_method` is deprecated. Please switch to `torch.compile` or `torch.export`.\n    warnings.warn(\n\n<frozen importlib._bootstrap_external>:1301\n  <frozen importlib._bootstrap_external>:1301: FutureWarning: The cuda.cudart module is deprecated and will be removed in a future release, please switch to use the cuda.bindings.runtime module instead.\n\n<frozen importlib._bootstrap_external>:1301\n  <frozen importlib._bootstrap_external>:1301: FutureWarning: The cuda.nvrtc module is deprecated and will be removed in a future release, please switch to use the cuda.bindings.nvrtc module instead.\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!\n!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!\n17 warnings, 1 error in 12.49s\nWelcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nPrevious HEAD position was 98f79f423 Merge branch 'main' into lsyin/spec-v2-topk\nHEAD is now at 3a9280c10 Merge branch 'main' into adamk/frozen-kv-mtp-merge-batch-err\n",
+      "ref": "refs/r21/pr-26859",
+      "remote_command": "cd /workspace/r14-run-sglang && git switch --detach refs/r21/pr-26859 >/dev/null && test \"$(git rev-parse HEAD)\" = 3a9280c10b6680da51f6031ad6f7383cd8e9d076 && timeout 180s env PYTHONDONTWRITEBYTECODE=1 CUDA_VISIBLE_DEVICES=1 PYTHONPATH=/workspace/r18-deps/common:/workspace/r17-deps/opencv:/workspace/r14-shims:python:. /venv/main/bin/python -m pytest -q -rs --tb=short --maxfail=1 test/registered/unit/spec/test_frozen_kv_mtp_all_reqs_finish_in_verify.py -k 'test_forward_generation_installs_idle_draft_when_verify_finishes_all_reqs or test_idle_draft_input_accepts_next_iter_prefill_merge'",
+      "returncode": 2,
+      "status": "completed",
+      "summary_lines": [
+        "==================================== ERRORS ====================================",
+        "_ ERROR collecting registered/unit/spec/test_frozen_kv_mtp_all_reqs_finish_in_verify.py _",
+        "ImportError while importing test module '/workspace/r14-run-sglang/test/registered/unit/spec/test_frozen_kv_mtp_all_reqs_finish_in_verify.py'.",
+        "E   ModuleNotFoundError: No module named 'setproctitle'",
+        "!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!",
+        "17 warnings, 1 error in 12.49s"
+      ],
+      "test_names": [
+        "test_forward_generation_installs_idle_draft_when_verify_finishes_all_reqs",
+        "test_idle_draft_input_accepts_next_iter_prefill_merge"
+      ],
+      "test_paths": [
+        "test/registered/unit/spec/test_frozen_kv_mtp_all_reqs_finish_in_verify.py"
+      ]
+    },
+    {
+      "case_id": "sglang-pr-26858",
+      "duration_seconds": 14.331920041935518,
+      "head_sha": "2dfdbf76fd197c1e5388034f8d0255c8e3301d11",
+      "output_sha256": "sha256:4b657982b8351b7ffbba9e014cf63f0d857a382fd608adcd8df42dc795d318ce",
+      "output_tail": "....                           [100%]\n=============================== warnings summary ===============================\n../../venv/main/lib/python3.12/site-packages/flashinfer/cute_dsl/availability.py:135\n  /venv/main/lib/python3.12/site-packages/flashinfer/cute_dsl/availability.py:135: DeprecationWarning: Arch from arch.py is deprecated. Use Arch from enums.py instead.\n    from cutlass.base_dsl.arch import Arch\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n4 passed, 1 warning, 42 subtests passed in 9.90s\nWelcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nPrevious HEAD position was 3a9280c10 Merge branch 'main' into adamk/frozen-kv-mtp-merge-batch-err\nHEAD is now at 2dfdbf76f [4/N] Qwen3.5Opt: Skip redundant cu_seqlens_q recomputation in draft_extend_v2 replay\n",
+      "ref": "refs/r21/pr-26858",
+      "remote_command": "cd /workspace/r14-run-sglang && git switch --detach refs/r21/pr-26858 >/dev/null && test \"$(git rev-parse HEAD)\" = 2dfdbf76fd197c1e5388034f8d0255c8e3301d11 && timeout 180s env PYTHONDONTWRITEBYTECODE=1 CUDA_VISIBLE_DEVICES=1 PYTHONPATH=/workspace/r18-deps/common:/workspace/r17-deps/opencv:/workspace/r14-shims:python:. /venv/main/bin/python -m pytest -q -rs --tb=short --maxfail=1 test/registered/unit/layers/test_fused_gate_sigmoid_mul_add.py -k 'test_correctness_bf16 or test_correctness_fp16 or test_gate_near_zero or test_inplace_semantics'",
+      "returncode": 0,
+      "status": "completed",
+      "summary_lines": [
+        "4 passed, 1 warning, 42 subtests passed in 9.90s"
+      ],
+      "test_names": [
+        "test_correctness_bf16",
+        "test_correctness_fp16",
+        "test_gate_near_zero",
+        "test_inplace_semantics"
+      ],
+      "test_paths": [
+        "test/registered/unit/layers/test_fused_gate_sigmoid_mul_add.py"
+      ]
+    },
+    {
+      "case_id": "sglang-pr-26857",
+      "duration_seconds": 13.34269433398731,
+      "head_sha": "bcecfe4f9ff2d8d91c905aef0722b034a9d978a5",
+      "output_sha256": "sha256:c4779dc0194cfbb9718ef52c0fb9a6d9dfc9d2972b33825f3831698f0657f0de",
+      "output_tail": "....                           [100%]\n=============================== warnings summary ===============================\n../../venv/main/lib/python3.12/site-packages/flashinfer/cute_dsl/availability.py:135\n  /venv/main/lib/python3.12/site-packages/flashinfer/cute_dsl/availability.py:135: DeprecationWarning: Arch from arch.py is deprecated. Use Arch from enums.py instead.\n    from cutlass.base_dsl.arch import Arch\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n4 passed, 1 warning, 42 subtests passed in 9.27s\nWelcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nPrevious HEAD position was 2dfdbf76f [4/N] Qwen3.5Opt: Skip redundant cu_seqlens_q recomputation in draft_extend_v2 replay\nHEAD is now at bcecfe4f9 [3/N] Qwen3.5Opt: Fuse sigmoid-mul for attention output gate\n",
+      "ref": "refs/r21/pr-26857",
+      "remote_command": "cd /workspace/r14-run-sglang && git switch --detach refs/r21/pr-26857 >/dev/null && test \"$(git rev-parse HEAD)\" = bcecfe4f9ff2d8d91c905aef0722b034a9d978a5 && timeout 180s env PYTHONDONTWRITEBYTECODE=1 CUDA_VISIBLE_DEVICES=1 PYTHONPATH=/workspace/r18-deps/common:/workspace/r17-deps/opencv:/workspace/r14-shims:python:. /venv/main/bin/python -m pytest -q -rs --tb=short --maxfail=1 test/registered/unit/layers/test_fused_gate_sigmoid_mul_add.py -k 'test_correctness_bf16 or test_correctness_fp16 or test_gate_near_zero or test_inplace_semantics'",
+      "returncode": 0,
+      "status": "completed",
+      "summary_lines": [
+        "4 passed, 1 warning, 42 subtests passed in 9.27s"
+      ],
+      "test_names": [
+        "test_correctness_bf16",
+        "test_correctness_fp16",
+        "test_gate_near_zero",
+        "test_inplace_semantics"
+      ],
+      "test_paths": [
+        "test/registered/unit/layers/test_fused_gate_sigmoid_mul_add.py"
+      ]
+    },
+    {
+      "case_id": "sglang-pr-26856",
+      "duration_seconds": 13.293355958769098,
+      "head_sha": "a26f0022e556870afcdd4c7eb29c62f9f03d7695",
+      "output_sha256": "sha256:851f3db933900f4497742630d8b6f0151f0bff201783b454ab10193f060e0403",
+      "output_tail": "....                           [100%]\n=============================== warnings summary ===============================\n../../venv/main/lib/python3.12/site-packages/flashinfer/cute_dsl/availability.py:135\n  /venv/main/lib/python3.12/site-packages/flashinfer/cute_dsl/availability.py:135: DeprecationWarning: Arch from arch.py is deprecated. Use Arch from enums.py instead.\n    from cutlass.base_dsl.arch import Arch\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n4 passed, 1 warning, 42 subtests passed in 9.33s\nWelcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nPrevious HEAD position was bcecfe4f9 [3/N] Qwen3.5Opt: Fuse sigmoid-mul for attention output gate\nHEAD is now at a26f0022e [2/N] Qwen3.5Opt: Add fused gate-sigmoid-mul-add kernel\n",
+      "ref": "refs/r21/pr-26856",
+      "remote_command": "cd /workspace/r14-run-sglang && git switch --detach refs/r21/pr-26856 >/dev/null && test \"$(git rev-parse HEAD)\" = a26f0022e556870afcdd4c7eb29c62f9f03d7695 && timeout 180s env PYTHONDONTWRITEBYTECODE=1 CUDA_VISIBLE_DEVICES=1 PYTHONPATH=/workspace/r18-deps/common:/workspace/r17-deps/opencv:/workspace/r14-shims:python:. /venv/main/bin/python -m pytest -q -rs --tb=short --maxfail=1 test/registered/unit/layers/test_fused_gate_sigmoid_mul_add.py -k 'test_correctness_bf16 or test_correctness_fp16 or test_gate_near_zero or test_inplace_semantics'",
+      "returncode": 0,
+      "status": "completed",
+      "summary_lines": [
+        "4 passed, 1 warning, 42 subtests passed in 9.33s"
+      ],
+      "test_names": [
+        "test_correctness_bf16",
+        "test_correctness_fp16",
+        "test_gate_near_zero",
+        "test_inplace_semantics"
+      ],
+      "test_paths": [
+        "test/registered/unit/layers/test_fused_gate_sigmoid_mul_add.py"
+      ]
+    },
+    {
+      "case_id": "sglang-pr-26813",
+      "duration_seconds": 18.02324170898646,
+      "head_sha": "cfab8dd460a13c15b52f68c159915eb48c8d5739",
+      "output_sha256": "sha256:254a7f8ac64cb237fe1daf2222c211d7aa41499465d38b25eb21c3a5ffd5f28d",
+      "output_tail": "..F\n=================================== FAILURES ===================================\n_________ TestE2ESpeculativeEagle.test_spec_eagle_no_canary_violation __________\ntest/registered/mock_model/test_e2e_spec_eagle.py:14: in test_spec_eagle_no_canary_violation\n    run_mock_model_bench_serving(\npython/sglang/test/mock_model/utils.py:70: in run_mock_model_bench_serving\n    process = popen_launch_server(\npython/sglang/test/test_utils.py:969: in popen_launch_server\n    process = _launch_server_process(command, env, return_stdout_stderr, model)\n              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\npython/sglang/test/test_utils.py:817: in _launch_server_process\n    return _subprocess_popen_with_outputs(\npython/sglang/test/test_utils.py:766: in _subprocess_popen_with_outputs\n    process = subprocess.Popen(\n/venv/main/lib/python3.12/subprocess.py:1026: in __init__\n    self._execute_child(args, executable, preexec_fn, close_fds,\n/venv/main/lib/python3.12/subprocess.py:1955: in _execute_child\n    raise child_exception_type(errno_num, err_msg, err_filename)\nE   FileNotFoundError: [Errno 2] No such file or directory: 'sglang'\n\nDuring handling of the above exception, another exception occurred:\npython/sglang/test/test_utils.py:2207: in _callTestMethod\n    retry(\npython/sglang/srt/utils/common.py:2803: in retry\n    raise Exception(f\"retry() exceed maximum number of retries.\")\nE   Exception: retry() exceed maximum number of retries.\n----------------------------- Captured stdout call -----------------------------\n[CI Test Method] TestE2ESpeculativeEagle.test_spec_eagle_no_canary_violation\ncommand=sglang serve --model-path Qwen/Qwen3-0.6B --load-format dummy --sampling-backend pytorch --disable-piecewise-cuda-graph --kv-canary raise --speculative-algorithm EAGLE --speculative-draft-model-path Qwen/Qwen3-0.6B --speculative-num-steps 1 --speculative-eagle-topk 1 --speculative-num-draft-tokens 2 --mem-fraction-static 0.45 --device cuda --host 127.0.0.1 --port 22000\nCI_OFFLINE: Launching server HF_HUB_OFFLINE=0 model=Qwen/Qwen3-0.6B\n----------------------------- Captured stderr call -----------------------------\nTraceback (most recent call last):\n  File \"/workspace/r14-run-sglang/python/sglang/srt/utils/common.py\", line 2788, in retry\n    return fn()\n           ^^^^\n  File \"/workspace/r14-run-sglang/python/sglang/test/test_utils.py\", line 2208, in <lambda>\n    lambda: super(CustomTestCase, self)._callTestMethod(method),\n            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/venv/main/lib/python3.12/unittest/case.py\", line 589, in _callTestMethod\n    if method() is not None:\n       ^^^^^^^^\n  File \"/workspace/r14-run-sglang/test/registered/mock_model/test_e2e_spec_eagle.py\", line 14, in test_spec_eagle_no_canary_violation\n    run_mock_model_bench_serving(\n  File \"/workspace/r14-run-sglang/python/sglang/test/mock_model/utils.py\", line 70, in run_mock_model_bench_serving\n    process = popen_launch_server(\n              ^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/r14-run-sglang/python/sglang/test/test_utils.py\", line 969, in popen_launch_server\n    process = _launch_server_process(command, env, return_stdout_stderr, model)\n              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/r14-run-sglang/python/sglang/test/test_utils.py\", line 817, in _launch_server_process\n    return _subprocess_popen_with_outputs(\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/r14-run-sglang/python/sglang/test/test_utils.py\", line 766, in _subprocess_popen_with_outputs\n    process = subprocess.Popen(\n              ^^^^^^^^^^^^^^^^^\n  File \"/venv/main/lib/python3.12/subprocess.py\", line 1026, in __init__\n    self._execute_child(args, executable, preexec_fn, close_fds,\n  File \"/venv/main/lib/python3.12/subprocess.py\", line 1955, in _execute_child\n    raise child_exception_type(errno_num, err_msg, err_filename)\nFileNotFoundError: [Errno 2] No such file or directory: 'sglang'\n=============================== warnings summary ===============================\n../../venv/main/lib/python3.12/site-packages/flashinfer/cute_dsl/availability.py:135\n  /venv/main/lib/python3.12/site-packages/flashinfer/cute_dsl/availability.py:135: DeprecationWarning: Arch from arch.py is deprecated. Use Arch from enums.py instead.\n    from cutlass.base_dsl.arch import Arch\n\n../../venv/main/lib/python3.12/site-packages/torch/jit/_script.py:365: 14 warnings\n  /venv/main/lib/python3.12/site-packages/torch/jit/_script.py:365: DeprecationWarning: `torch.jit.script_method` is deprecated. Please switch to `torch.compile` or `torch.export`.\n    warnings.warn(\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!\n1 failed, 2 passed, 7 deselected, 15 warnings in 13.31s\nWelcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nPrevious HEAD position was a26f0022e [2/N] Qwen3.5Opt: Add fused gate-sigmoid-mul-add kernel\nHEAD is now at cfab8dd46 Support EAGLE speculative decoding in the KV-canary\n",
+      "ref": "refs/r21/pr-26813",
+      "remote_command": "cd /workspace/r14-run-sglang && git switch --detach refs/r21/pr-26813 >/dev/null && test \"$(git rev-parse HEAD)\" = cfab8dd460a13c15b52f68c159915eb48c8d5739 && timeout 180s env PYTHONDONTWRITEBYTECODE=1 CUDA_VISIBLE_DEVICES=1 PYTHONPATH=/workspace/r18-deps/common:/workspace/r17-deps/opencv:/workspace/r14-shims:python:. /venv/main/bin/python -m pytest -q -rs --tb=short --maxfail=1 python/sglang/test/kv_canary/runner_test_base.py test/registered/kv_canary/test_self_unit_runner_per_forward.py test/registered/mock_model/test_e2e_spec_eagle.py -k 'test_pre_ops_maybe_inside_graph_asserts_outside_bracket or test_pre_ops_maybe_inside_graph_dispatches_to_bracketed_sfm or test_spec_eagle_no_canary_violation'",
+      "returncode": 1,
+      "status": "completed",
+      "summary_lines": [
+        "E   FileNotFoundError: [Errno 2] No such file or directory: 'sglang'",
+        "FileNotFoundError: [Errno 2] No such file or directory: 'sglang'",
+        "1 failed, 2 passed, 7 deselected, 15 warnings in 13.31s"
+      ],
+      "test_names": [
+        "test_pre_ops_maybe_inside_graph_asserts_outside_bracket",
+        "test_pre_ops_maybe_inside_graph_dispatches_to_bracketed_sfm",
+        "test_spec_eagle_no_canary_violation"
+      ],
+      "test_paths": [
+        "python/sglang/test/kv_canary/runner_test_base.py",
+        "test/registered/kv_canary/test_self_unit_runner_per_forward.py",
+        "test/registered/mock_model/test_e2e_spec_eagle.py"
+      ]
+    },
+    {
+      "case_id": "sglang-pr-27141",
+      "duration_seconds": 17.94356400007382,
+      "head_sha": "13c646bb05401087c9572f61f16a4eb46c2e9d9d",
+      "output_sha256": "sha256:0a33b67f9a57f318e56d2cfc9b34250423ad4458e2f5f75ac65584aec35ee721",
+      "output_tail": "E\n==================================== ERRORS ====================================\n____ ERROR at setup of TestQwen35ExtraBufferMTPMI35x.test_gsm8k_radix_spec _____\ntest/registered/amd/accuracy/mi35x/test_qwen35_extra_buffer_mtp_mi35x.py:68: in setUpClass\n    envs.SGLANG_ENABLE_SPEC_V2.set(True)\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^\nE   AttributeError: 'Envs' object has no attribute 'SGLANG_ENABLE_SPEC_V2'. Did you mean: 'SGLANG_ENABLE_CP_V2'?\n=============================== warnings summary ===============================\n../../venv/main/lib/python3.12/site-packages/flashinfer/cute_dsl/availability.py:135\n  /venv/main/lib/python3.12/site-packages/flashinfer/cute_dsl/availability.py:135: DeprecationWarning: Arch from arch.py is deprecated. Use Arch from enums.py instead.\n    from cutlass.base_dsl.arch import Arch\n\n../../venv/main/lib/python3.12/site-packages/torch/jit/_script.py:365: 14 warnings\n  /venv/main/lib/python3.12/site-packages/torch/jit/_script.py:365: DeprecationWarning: `torch.jit.script_method` is deprecated. Please switch to `torch.compile` or `torch.export`.\n    warnings.warn(\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!\n15 warnings, 1 error in 12.81s\nWelcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nPrevious HEAD position was cfab8dd46 Support EAGLE speculative decoding in the KV-canary\nHEAD is now at 13c646bb0 Add request timeouts in extra_buffer MTP test (address gemini-code-assist review)\n",
+      "ref": "refs/r21/pr-27141",
+      "remote_command": "cd /workspace/r14-run-sglang && git switch --detach refs/r21/pr-27141 >/dev/null && test \"$(git rev-parse HEAD)\" = 13c646bb05401087c9572f61f16a4eb46c2e9d9d && timeout 180s env PYTHONDONTWRITEBYTECODE=1 CUDA_VISIBLE_DEVICES=1 PYTHONPATH=/workspace/r18-deps/common:/workspace/r17-deps/opencv:/workspace/r14-shims:python:. /venv/main/bin/python -m pytest -q -rs --tb=short --maxfail=1 test/registered/amd/accuracy/mi35x/test_qwen35_extra_buffer_mtp_mi35x.py -k test_gsm8k_radix_spec",
+      "returncode": 1,
+      "status": "completed",
+      "summary_lines": [
+        "==================================== ERRORS ====================================",
+        "____ ERROR at setup of TestQwen35ExtraBufferMTPMI35x.test_gsm8k_radix_spec _____",
+        "E   AttributeError: 'Envs' object has no attribute 'SGLANG_ENABLE_SPEC_V2'. Did you mean: 'SGLANG_ENABLE_CP_V2'?",
+        "15 warnings, 1 error in 12.81s"
+      ],
+      "test_names": [
+        "test_gsm8k_radix_spec"
+      ],
+      "test_paths": [
+        "test/registered/amd/accuracy/mi35x/test_qwen35_extra_buffer_mtp_mi35x.py"
+      ]
+    },
+    {
+      "case_id": "sglang-pr-27113",
+      "duration_seconds": 16.761391750071198,
+      "head_sha": "fc032ef9ed1dbdf3fef005935d5a86f7f0ecf4ef",
+      "output_sha256": "sha256:f608708b7b0cdc3910b4d3bf5403d346571d77e186d21b1479d6817a0f36f43e",
+      "output_tail": "\n==================================== ERRORS ====================================\n_______ ERROR collecting registered/tokenizer/test_multi_detokenizer.py ________\nImportError while importing test module '/workspace/r14-run-sglang/test/registered/tokenizer/test_multi_detokenizer.py'.\nHint: make sure your test modules/packages have valid Python names.\nTraceback:\n/venv/main/lib/python3.12/importlib/__init__.py:90: in import_module\n    return _bootstrap._gcd_import(name[level:], package, level)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntest/registered/tokenizer/test_multi_detokenizer.py:10: in <module>\n    from sglang.test.send_one import BenchArgs, send_one_prompt\npython/sglang/test/send_one.py:18: in <module>\n    import tabulate\nE   ModuleNotFoundError: No module named 'tabulate'\n=============================== warnings summary ===============================\n../../venv/main/lib/python3.12/site-packages/flashinfer/cute_dsl/availability.py:135\n  /venv/main/lib/python3.12/site-packages/flashinfer/cute_dsl/availability.py:135: DeprecationWarning: Arch from arch.py is deprecated. Use Arch from enums.py instead.\n    from cutlass.base_dsl.arch import Arch\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!\n1 warning, 1 error in 11.17s\nWelcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nPrevious HEAD position was 13c646bb0 Add request timeouts in extra_buffer MTP test (address gemini-code-assist review)\nHEAD is now at fc032ef9e Merge branch 'main' into feature/multi-detokenizer-dp-routing\n",
+      "ref": "refs/r21/pr-27113",
+      "remote_command": "cd /workspace/r14-run-sglang && git switch --detach refs/r21/pr-27113 >/dev/null && test \"$(git rev-parse HEAD)\" = fc032ef9ed1dbdf3fef005935d5a86f7f0ecf4ef && timeout 180s env PYTHONDONTWRITEBYTECODE=1 CUDA_VISIBLE_DEVICES=1 PYTHONPATH=/workspace/r18-deps/common:/workspace/r17-deps/opencv:/workspace/r14-shims:python:. /venv/main/bin/python -m pytest -q -rs --tb=short --maxfail=1 test/registered/tokenizer/test_multi_detokenizer.py test/registered/tokenizer/test_multi_detokenizer_router_unit.py -k 'test_allocates_four_per_dp_router_ipc_names or test_allocates_per_dp_router_ipc_names or test_default_single_sharding_is_disabled or test_dp_attention_tcp_mode_dp_size_three or test_dp_attention_tcp_mode_uses_dist_init_port_offset or test_dp_rank_router_generation or test_dp_rank_router_ttft or test_dp_rank_sharding_disabled_with_dp_size_one or test_dp_rank_sharding_disabled_with_single_worker or test_dp_rank_sharding_enabled_with_dp_size_four or test_dp_rank_sharding_enabled_with_dp_size_three or test_dp_rank_sharding_requires_multi_workers_and_dp or test_dp_size_four_launches_four_routers or test_falls_back_to_global_detokenizer_ipc or test_freeze_gc_broadcasts_to_all_workers or test_ipc_mode_allocates_one_socket_per_dp_rank or test_ipc_mode_allocates_one_socket_per_dp_rank_when_dp_size_four or test_per_rank_init_does_not_allocate_router_ipc_names or test_pick_is_deterministic_and_within_worker_pool or test_route_batch_invalid_ipcs_falls_back_to_first_worker or test_route_batch_splits_per_item_by_ipc or test_route_single_request_by_http_worker_ipc or test_scheduler_detokenizer_ipc_for_all_ranks_when_dp_size_four or test_server_reports_expected_dp_size or test_single_node_dp_attention_without_dist_init_addr or test_single_sharding_uses_global_detokenizer_ipc or test_uses_per_dp_router_ipc_when_configured'",
+      "returncode": 1,
+      "status": "completed",
+      "summary_lines": [
+        "==================================== ERRORS ====================================",
+        "_______ ERROR collecting registered/tokenizer/test_multi_detokenizer.py ________",
+        "ImportError while importing test module '/workspace/r14-run-sglang/test/registered/tokenizer/test_multi_detokenizer.py'.",
+        "E   ModuleNotFoundError: No module named 'tabulate'",
+        "1 warning, 1 error in 11.17s"
+      ],
+      "test_names": [
+        "test_allocates_four_per_dp_router_ipc_names",
+        "test_allocates_per_dp_router_ipc_names",
+        "test_default_single_sharding_is_disabled",
+        "test_dp_attention_tcp_mode_dp_size_three",
+        "test_dp_attention_tcp_mode_uses_dist_init_port_offset",
+        "test_dp_rank_router_generation",
+        "test_dp_rank_router_ttft",
+        "test_dp_rank_sharding_disabled_with_dp_size_one",
+        "test_dp_rank_sharding_disabled_with_single_worker",
+        "test_dp_rank_sharding_enabled_with_dp_size_four",
+        "test_dp_rank_sharding_enabled_with_dp_size_three",
+        "test_dp_rank_sharding_requires_multi_workers_and_dp",
+        "test_dp_size_four_launches_four_routers",
+        "test_falls_back_to_global_detokenizer_ipc",
+        "test_freeze_gc_broadcasts_to_all_workers",
+        "test_ipc_mode_allocates_one_socket_per_dp_rank",
+        "test_ipc_mode_allocates_one_socket_per_dp_rank_when_dp_size_four",
+        "test_per_rank_init_does_not_allocate_router_ipc_names",
+        "test_pick_is_deterministic_and_within_worker_pool",
+        "test_route_batch_invalid_ipcs_falls_back_to_first_worker",
+        "test_route_batch_splits_per_item_by_ipc",
+        "test_route_single_request_by_http_worker_ipc",
+        "test_scheduler_detokenizer_ipc_for_all_ranks_when_dp_size_four",
+        "test_server_reports_expected_dp_size",
+        "test_single_node_dp_attention_without_dist_init_addr",
+        "test_single_sharding_uses_global_detokenizer_ipc",
+        "test_uses_per_dp_router_ipc_when_configured"
+      ],
+      "test_paths": [
+        "test/registered/tokenizer/test_multi_detokenizer.py",
+        "test/registered/tokenizer/test_multi_detokenizer_router_unit.py"
+      ]
+    },
+    {
+      "case_id": "vllm-pr-54952",
+      "duration_seconds": 16.989754166919738,
+      "head_sha": "3d045d61f24257cac4896d9de847a605fea4d523",
+      "output_sha256": "sha256:62719a34c6c90bbfbd314975414dab71cdc18785a725c0e1d095f56df0c55543",
+      "output_tail": "ss                                                                       [100%]\n=============================== warnings summary ===============================\nvllm/__init__.py:7\n  /workspace/r14-run-vllm/vllm/__init__.py:7: RuntimeWarning: Failed to read commit hash:\n  No module named 'vllm._version'\n    from .version import __version__, __version_tuple__  # isort:skip\n\n../../venv/main/lib/python3.12/site-packages/torch/jit/_script.py:365: 14 warnings\n  /venv/main/lib/python3.12/site-packages/torch/jit/_script.py:365: DeprecationWarning: `torch.jit.script_method` is deprecated. Please switch to `torch.compile` or `torch.export`.\n    warnings.warn(\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n=========================== short test summary info ============================\nSKIPPED [2] tests/v1/sample/test_rejection_sampler.py:1002: exercises the CPU fallback kernel for sample_recovered_tokens\n2 skipped, 75 deselected, 15 warnings in 11.07s\nWelcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nPrevious HEAD position was 3f4a5937b Fix FlashInfer attention auto-selection on SM75 GPUs\nHEAD is now at 3d045d61f Merge branch 'main' into fix/cpu-fp64-gumbel-recovered-tokens\n",
+      "ref": "refs/r21/pr-54952",
+      "remote_command": "cd /workspace/r14-run-vllm && git switch --detach refs/r21/pr-54952 >/dev/null && test \"$(git rev-parse HEAD)\" = 3d045d61f24257cac4896d9de847a605fea4d523 && timeout 180s env PYTHONDONTWRITEBYTECODE=1 INFRASWE_R15_VLLM_SOURCE_IMPORT_SHIM=1 CUDA_VISIBLE_DEVICES=0 PYTHONPATH=/workspace/r17-deps/vllm:/workspace/r18-deps/common:/workspace/r15-vllm-shim:/workspace/r14-shims:. /venv/main/bin/python -m pytest -q -rs --tb=short --maxfail=1 --noconftest tests/v1/sample/test_rejection_sampler.py -k test_cpu_sample_recovered_tokens_preserves_fp64_inv_q",
+      "returncode": 0,
+      "status": "completed",
+      "summary_lines": [
+        "/workspace/r14-run-vllm/vllm/__init__.py:7: RuntimeWarning: Failed to read commit hash:",
+        "SKIPPED [2] tests/v1/sample/test_rejection_sampler.py:1002: exercises the CPU fallback kernel for sample_recovered_tokens",
+        "2 skipped, 75 deselected, 15 warnings in 11.07s"
+      ],
+      "test_names": [
+        "test_cpu_sample_recovered_tokens_preserves_fp64_inv_q"
+      ],
+      "test_paths": [
+        "tests/v1/sample/test_rejection_sampler.py"
+      ]
+    },
+    {
+      "case_id": "vllm-pr-44243",
+      "duration_seconds": 4.431110250065103,
+      "head_sha": "2ea9e6a4729e44587448f1e3cf14751766507b87",
+      "output_sha256": "sha256:991cfa3fe4acef7a0ebf6ae3b73784e19f176574c5c5574b96e437e7c34e486c",
+      "output_tail": "\n==================================== ERRORS ====================================\n_ ERROR collecting tests/v1/kv_connector/nixl_integration/test_mamba_prefix_cache.py _\ntests/v1/kv_connector/nixl_integration/test_mamba_prefix_cache.py:17: in <module>\n    PREFILL_PORT = os.environ[\"PREFILL_PORT\"]\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^\n<frozen os>:714: in __getitem__\n    ???\nE   KeyError: 'PREFILL_PORT'\n!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!\n!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!\n1 error in 1.13s\nWelcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nPrevious HEAD position was 3d045d61f Merge branch 'main' into fix/cpu-fp64-gumbel-recovered-tokens\nHEAD is now at 2ea9e6a47 Merge branch 'main' into zhanqiu/fix-pd-mamba-prefix-cache\n",
+      "ref": "refs/r21/pr-44243",
+      "remote_command": "cd /workspace/r14-run-vllm && git switch --detach refs/r21/pr-44243 >/dev/null && test \"$(git rev-parse HEAD)\" = 2ea9e6a4729e44587448f1e3cf14751766507b87 && timeout 180s env PYTHONDONTWRITEBYTECODE=1 INFRASWE_R15_VLLM_SOURCE_IMPORT_SHIM=1 CUDA_VISIBLE_DEVICES=0 PYTHONPATH=/workspace/r17-deps/vllm:/workspace/r18-deps/common:/workspace/r15-vllm-shim:/workspace/r14-shims:. /venv/main/bin/python -m pytest -q -rs --tb=short --maxfail=1 --noconftest tests/v1/kv_connector/nixl_integration/test_mamba_prefix_cache.py -k test_mamba_prefix_cache_hit",
+      "returncode": 2,
+      "status": "completed",
+      "summary_lines": [
+        "==================================== ERRORS ====================================",
+        "_ ERROR collecting tests/v1/kv_connector/nixl_integration/test_mamba_prefix_cache.py _",
+        "E   KeyError: 'PREFILL_PORT'",
+        "!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!",
+        "1 error in 1.13s"
+      ],
+      "test_names": [
+        "test_mamba_prefix_cache_hit"
+      ],
+      "test_paths": [
+        "tests/v1/kv_connector/nixl_integration/test_mamba_prefix_cache.py"
+      ]
+    },
+    {
+      "case_id": "vllm-pr-44409",
+      "duration_seconds": 16.75460045901127,
+      "head_sha": "9f72693a3f6c55452149fe0981917cc3c614f0a5",
+      "output_sha256": "sha256:e20963d26b92895418fc5f526fefc4812a0ca7c923cb330c68650070b776381e",
+      "output_tail": ".....                                                                    [100%]\n=============================== warnings summary ===============================\nvllm/__init__.py:7\n  /workspace/r14-run-vllm/vllm/__init__.py:7: RuntimeWarning: Failed to read commit hash:\n  No module named 'vllm._version'\n    from .version import __version__, __version_tuple__  # isort:skip\n\n../../venv/main/lib/python3.12/site-packages/torch/jit/_script.py:365: 14 warnings\n  /venv/main/lib/python3.12/site-packages/torch/jit/_script.py:365: DeprecationWarning: `torch.jit.script_method` is deprecated. Please switch to `torch.compile` or `torch.export`.\n    warnings.warn(\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n5 passed, 83 deselected, 15 warnings in 12.22s\nWelcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nPrevious HEAD position was 2ea9e6a47 Merge branch 'main' into zhanqiu/fix-pd-mamba-prefix-cache\nHEAD is now at 9f72693a3 [Bugfix] Inline the running-request guard in allocate_new_computed_blocks\n",
+      "ref": "refs/r21/pr-44409",
+      "remote_command": "cd /workspace/r14-run-vllm && git switch --detach refs/r21/pr-44409 >/dev/null && test \"$(git rev-parse HEAD)\" = 9f72693a3f6c55452149fe0981917cc3c614f0a5 && timeout 180s env PYTHONDONTWRITEBYTECODE=1 INFRASWE_R15_VLLM_SOURCE_IMPORT_SHIM=1 CUDA_VISIBLE_DEVICES=0 PYTHONPATH=/workspace/r17-deps/vllm:/workspace/r18-deps/common:/workspace/r15-vllm-shim:/workspace/r14-shims:. /venv/main/bin/python -m pytest -q -rs --tb=short --maxfail=1 --noconftest tests/v1/core/test_prefix_caching.py tests/v1/core/test_single_type_kv_cache_manager.py -k 'test_cache_hit_local_and_external or test_cache_hit_local_and_external_three_groups or test_cache_hit_local_and_external_three_groups_preempt_and_reallocate or test_cache_hit_local_and_external_two_groups_preempt_and_reallocate or test_swa_free_split_keeps_cached_tail_ahead_of_scratch'",
+      "returncode": 0,
+      "status": "completed",
+      "summary_lines": [
+        "/workspace/r14-run-vllm/vllm/__init__.py:7: RuntimeWarning: Failed to read commit hash:",
+        "5 passed, 83 deselected, 15 warnings in 12.22s"
+      ],
+      "test_names": [
+        "test_cache_hit_local_and_external",
+        "test_cache_hit_local_and_external_three_groups",
+        "test_cache_hit_local_and_external_three_groups_preempt_and_reallocate",
+        "test_cache_hit_local_and_external_two_groups_preempt_and_reallocate",
+        "test_swa_free_split_keeps_cached_tail_ahead_of_scratch"
+      ],
+      "test_paths": [
+        "tests/v1/core/test_prefix_caching.py",
+        "tests/v1/core/test_single_type_kv_cache_manager.py"
+      ]
+    },
+    {
+      "case_id": "vllm-pr-44214",
+      "duration_seconds": 17.99848529184237,
+      "head_sha": "63cdee5ec79ab797a7aacdb435d6aa47a65fa97d",
+      "output_sha256": "sha256:e5a859ab6176e53fb272d77bed204b6469ef6a2f48ea0cd458049409577c34e7",
+      "output_tail": "...                                                                      [100%]\n=============================== warnings summary ===============================\nvllm/__init__.py:7\n  /workspace/r14-run-vllm/vllm/__init__.py:7: RuntimeWarning: Failed to read commit hash:\n  No module named 'vllm._version'\n    from .version import __version__, __version_tuple__  # isort:skip\n\n../../venv/main/lib/python3.12/site-packages/torch/jit/_script.py:365: 14 warnings\n  /venv/main/lib/python3.12/site-packages/torch/jit/_script.py:365: DeprecationWarning: `torch.jit.script_method` is deprecated. Please switch to `torch.compile` or `torch.export`.\n    warnings.warn(\n\n../../venv/main/lib/python3.12/site-packages/flashinfer/cute_dsl/availability.py:135\n  /venv/main/lib/python3.12/site-packages/flashinfer/cute_dsl/availability.py:135: DeprecationWarning: Arch from arch.py is deprecated. Use Arch from enums.py instead.\n    from cutlass.base_dsl.arch import Arch\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n=========================== short test summary info ============================\nSKIPPED [1] tests/kernels/moe/test_routed_experts_capture_monolithic.py:49: Requires FlashInfer TRT-LLM fused MoE on CUDA\n3 passed, 1 skipped, 7 deselected, 16 warnings in 13.18s\nWelcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nPrevious HEAD position was 9f72693a3 [Bugfix] Inline the running-request guard in allocate_new_computed_blocks\nHEAD is now at 63cdee5ec Merge pull request #4 from aoshen02/agent/fix-pr44214-ci\n",
+      "ref": "refs/r21/pr-44214",
+      "remote_command": "cd /workspace/r14-run-vllm && git switch --detach refs/r21/pr-44214 >/dev/null && test \"$(git rev-parse HEAD)\" = 63cdee5ec79ab797a7aacdb435d6aa47a65fa97d && timeout 180s env PYTHONDONTWRITEBYTECODE=1 INFRASWE_R15_VLLM_SOURCE_IMPORT_SHIM=1 CUDA_VISIBLE_DEVICES=0 PYTHONPATH=/workspace/r17-deps/vllm:/workspace/r18-deps/common:/workspace/r15-vllm-shim:/workspace/r14-shims:. /venv/main/bin/python -m pytest -q -rs --tb=short --maxfail=1 --noconftest tests/kernels/moe/test_routed_experts_capture_monolithic.py tests/model_executor/test_routed_experts_capture.py -k 'test_base_router_capture_pre_eplb_mapping or test_gpu_model_runner_rejects_monolithic_without_replay_support or test_routed_experts_capturer_e2e_via_monolithic_experts or test_routed_experts_capturer_single_dp_no_metadata or test_trtllm_bf16_monolithic_capture_buffer_shape_and_dtype or test_trtllm_bf16_monolithic_capture_disabled_skips_buffer_alloc or test_trtllm_bf16_monolithic_routing_replay_non_dsv3 or test_trtllm_bf16_monolithic_routing_replay_records_valid_experts or test_trtllm_bf16_monolithic_supports_capture_for_all_routing or test_trtllm_fp8_block_scale_monolithic_routing_replay_records_valid_experts or test_trtllm_nvfp4_monolithic_routing_replay_records_valid_experts'",
+      "returncode": 0,
+      "status": "completed",
+      "summary_lines": [
+        "/workspace/r14-run-vllm/vllm/__init__.py:7: RuntimeWarning: Failed to read commit hash:",
+        "SKIPPED [1] tests/kernels/moe/test_routed_experts_capture_monolithic.py:49: Requires FlashInfer TRT-LLM fused MoE on CUDA",
+        "3 passed, 1 skipped, 7 deselected, 16 warnings in 13.18s"
+      ],
+      "test_names": [
+        "test_base_router_capture_pre_eplb_mapping",
+        "test_gpu_model_runner_rejects_monolithic_without_replay_support",
+        "test_routed_experts_capturer_e2e_via_monolithic_experts",
+        "test_routed_experts_capturer_single_dp_no_metadata",
+        "test_trtllm_bf16_monolithic_capture_buffer_shape_and_dtype",
+        "test_trtllm_bf16_monolithic_capture_disabled_skips_buffer_alloc",
+        "test_trtllm_bf16_monolithic_routing_replay_non_dsv3",
+        "test_trtllm_bf16_monolithic_routing_replay_records_valid_experts",
+        "test_trtllm_bf16_monolithic_supports_capture_for_all_routing",
+        "test_trtllm_fp8_block_scale_monolithic_routing_replay_records_valid_experts",
+        "test_trtllm_nvfp4_monolithic_routing_replay_records_valid_experts"
+      ],
+      "test_paths": [
+        "tests/kernels/moe/test_routed_experts_capture_monolithic.py",
+        "tests/model_executor/test_routed_experts_capture.py"
+      ]
+    },
+    {
+      "case_id": "vllm-pr-44383",
+      "duration_seconds": 4.221043791854754,
+      "head_sha": "b555f9e0fc77affc8f70cd25b60c29baa314a91b",
+      "output_sha256": "sha256:d2fe5483b69e5738bf3d742b4022e1139e73333762392ec1eb8a61a4051e2557",
+      "output_tail": "\n==================================== ERRORS ====================================\n___ ERROR collecting tests/entrypoints/openai/completion/test_completion.py ____\nImportError while importing test module '/workspace/r14-run-vllm/tests/entrypoints/openai/completion/test_completion.py'.\nHint: make sure your test modules/packages have valid Python names.\nTraceback:\n/venv/main/lib/python3.12/importlib/__init__.py:90: in import_module\n    return _bootstrap._gcd_import(name[level:], package, level)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntests/entrypoints/openai/completion/test_completion.py:11: in <module>\n    from tests.utils import RemoteOpenAIServer\ntests/utils.py:28: in <module>\n    import anthropic\nE   ModuleNotFoundError: No module named 'anthropic'\n!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!\n1 error in 1.03s\nWelcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nPrevious HEAD position was 63cdee5ec Merge pull request #4 from aoshen02/agent/fix-pr44214-ci\nHEAD is now at b555f9e0f Merge branch 'main' into fix/prompt-tokens-details-zero-cached\n",
+      "ref": "refs/r21/pr-44383",
+      "remote_command": "cd /workspace/r14-run-vllm && git switch --detach refs/r21/pr-44383 >/dev/null && test \"$(git rev-parse HEAD)\" = b555f9e0fc77affc8f70cd25b60c29baa314a91b && timeout 180s env PYTHONDONTWRITEBYTECODE=1 INFRASWE_R15_VLLM_SOURCE_IMPORT_SHIM=1 CUDA_VISIBLE_DEVICES=0 PYTHONPATH=/workspace/r17-deps/vllm:/workspace/r18-deps/common:/workspace/r15-vllm-shim:/workspace/r14-shims:. /venv/main/bin/python -m pytest -q -rs --tb=short --maxfail=1 --noconftest tests/entrypoints/openai/completion/test_completion.py tests/entrypoints/serve/disagg/test_generate_stream.py -k test_stream_prompt_tokens_details_zero_cached",
+      "returncode": 1,
+      "status": "completed",
+      "summary_lines": [
+        "==================================== ERRORS ====================================",
+        "___ ERROR collecting tests/entrypoints/openai/completion/test_completion.py ____",
+        "ImportError while importing test module '/workspace/r14-run-vllm/tests/entrypoints/openai/completion/test_completion.py'.",
+        "E   ModuleNotFoundError: No module named 'anthropic'",
+        "1 error in 1.03s"
+      ],
+      "test_names": [
+        "test_stream_prompt_tokens_details_zero_cached"
+      ],
+      "test_paths": [
+        "tests/entrypoints/openai/completion/test_completion.py",
+        "tests/entrypoints/serve/disagg/test_generate_stream.py"
+      ]
+    },
+    {
+      "case_id": "vllm-pr-44403",
+      "duration_seconds": 11.633477583061904,
+      "head_sha": "3f4a5937b761076ac87b71b063b15c9df8f4502a",
+      "output_sha256": "sha256:eef532aa1cf87ab62d743044781842378cd9c86ff83ed3e50db86161aeabaaeb",
+      "output_tail": "s                                                                        [100%]\n=============================== warnings summary ===============================\nvllm/__init__.py:7\n  /workspace/r14-run-vllm/vllm/__init__.py:7: RuntimeWarning: Failed to read commit hash:\n  No module named 'vllm._version'\n    from .version import __version__, __version_tuple__  # isort:skip\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n=========================== short test summary info ============================\nSKIPPED [1] tests/kernels/attention/test_attention_selector.py:377: CudaPlatform not available\n1 skipped, 39 deselected, 1 warning in 7.69s\nWelcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nPrevious HEAD position was b555f9e0f Merge branch 'main' into fix/prompt-tokens-details-zero-cached\nHEAD is now at 3f4a5937b Fix FlashInfer attention auto-selection on SM75 GPUs\n",
+      "ref": "refs/r21/pr-44403",
+      "remote_command": "cd /workspace/r14-run-vllm && git switch --detach refs/r21/pr-44403 >/dev/null && test \"$(git rev-parse HEAD)\" = 3f4a5937b761076ac87b71b063b15c9df8f4502a && timeout 180s env PYTHONDONTWRITEBYTECODE=1 INFRASWE_R15_VLLM_SOURCE_IMPORT_SHIM=1 CUDA_VISIBLE_DEVICES=0 PYTHONPATH=/workspace/r17-deps/vllm:/workspace/r18-deps/common:/workspace/r15-vllm-shim:/workspace/r14-shims:. /venv/main/bin/python -m pytest -q -rs --tb=short --maxfail=1 --noconftest tests/kernels/attention/test_attention_selector.py -k test_cuda_sm75_auto_selects_triton_attn",
+      "returncode": 0,
+      "status": "completed",
+      "summary_lines": [
+        "/workspace/r14-run-vllm/vllm/__init__.py:7: RuntimeWarning: Failed to read commit hash:",
+        "SKIPPED [1] tests/kernels/attention/test_attention_selector.py:377: CudaPlatform not available",
+        "1 skipped, 39 deselected, 1 warning in 7.69s"
+      ],
+      "test_names": [
+        "test_cuda_sm75_auto_selects_triton_attn"
+      ],
+      "test_paths": [
+        "tests/kernels/attention/test_attention_selector.py"
+      ]
+    },
+    {
+      "case_id": "vllm-pr-44292",
+      "duration_seconds": 31.279094459023327,
+      "head_sha": "da24e0f880dfe71b3d5c47079bea796540e9a3ae",
+      "output_sha256": "sha256:aa80271d5acb23baf8664988ef7d3d53d1d63a518500d7c644715c6d23903a11",
+      "output_tail": "F\n=================================== FAILURES ===================================\n___________________ test_bitmask_with_padded_invalid_drafts ____________________\ntests/v1/spec_decode/test_mtp_structured_output.py:80: in test_bitmask_with_padded_invalid_drafts\n    tokenizer, manager, request, prompt = _make_manager_and_request()\n                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntests/v1/spec_decode/test_mtp_structured_output.py:44: in _make_manager_and_request\n    vllm_config = VllmConfig(\nvllm/config/device.py:56: in __post_init__\n    raise RuntimeError(\nE   RuntimeError: Failed to infer device type, please set the environment variable `VLLM_LOGGING_LEVEL=DEBUG` to turn on verbose logging to help debug the issue.\n----------------------------- Captured stdout call -----------------------------\nWARNING 09-03 02:41:51 [interface.py:247] Failed to import from vllm._C: ModuleNotFoundError(\"No module named 'vllm._C'\")\nWARNING 09-03 02:41:54 [interface.py:247] Failed to import from vllm._C: ModuleNotFoundError(\"No module named 'vllm._C'\")\nWARNING 09-03 02:41:54 [interface.py:247] Failed to import from vllm._C: ModuleNotFoundError(\"No module named 'vllm._C'\")\nWARNING 09-03 02:41:54 [interface.py:247] Failed to import from vllm._C: ModuleNotFoundError(\"No module named 'vllm._C'\")\nINFO 09-03 02:41:54 [model.py:576] Resolved architecture: Qwen3ForCausalLM\nINFO 09-03 02:41:54 [model.py:1711] Using max model len 40960\nINFO 09-03 02:41:54 [scheduler.py:239] Chunked prefill is enabled with max_num_batched_tokens=2048.\n----------------------------- Captured stderr call -----------------------------\nWarning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.\n------------------------------ Captured log call -------------------------------\nWARNING  huggingface_hub.utils._http:_http.py:955 Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.\nWARNING  vllm.platforms.interface:interface.py:247 Failed to import from vllm._C: ModuleNotFoundError(\"No module named 'vllm._C'\")\nWARNING  vllm.platforms.interface:interface.py:247 Failed to import from vllm._C: ModuleNotFoundError(\"No module named 'vllm._C'\")\nWARNING  vllm.platforms.interface:interface.py:247 Failed to import from vllm._C: ModuleNotFoundError(\"No module named 'vllm._C'\")\nWARNING  vllm.platforms.interface:interface.py:247 Failed to import from vllm._C: ModuleNotFoundError(\"No module named 'vllm._C'\")\nINFO     vllm.config.model:model.py:576 Resolved architecture: Qwen3ForCausalLM\nINFO     vllm.config.model:model.py:1711 Using max model len 40960\nINFO     vllm.config.scheduler:scheduler.py:239 Chunked prefill is enabled with max_num_batched_tokens=2048.\n=============================== warnings summary ===============================\nvllm/__init__.py:7\n  /workspace/r14-run-vllm/vllm/__init__.py:7: RuntimeWarning: Failed to read commit hash:\n  No module named 'vllm._version'\n    from .version import __version__, __version_tuple__  # isort:skip\n\ntests/v1/spec_decode/test_mtp_structured_output.py: 14 warnings\n  /venv/main/lib/python3.12/site-packages/torch/jit/_script.py:365: DeprecationWarning: `torch.jit.script_method` is deprecated. Please switch to `torch.compile` or `torch.export`.\n    warnings.warn(\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!\n1 failed, 15 warnings in 26.89s\nWelcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nPrevious HEAD position was 3f4a5937b Fix FlashInfer attention auto-selection on SM75 GPUs\nHEAD is now at da24e0f88 [Bugfix][Structured Output][Spec Decode] Constrain bonus-token bitmask after padded invalid drafts\n",
+      "ref": "refs/r21/pr-44292",
+      "remote_command": "cd /workspace/r14-run-vllm && git switch --detach refs/r21/pr-44292 >/dev/null && test \"$(git rev-parse HEAD)\" = da24e0f880dfe71b3d5c47079bea796540e9a3ae && timeout 180s env PYTHONDONTWRITEBYTECODE=1 INFRASWE_R15_VLLM_SOURCE_IMPORT_SHIM=1 CUDA_VISIBLE_DEVICES=0 PYTHONPATH=/workspace/r17-deps/vllm:/workspace/r18-deps/common:/workspace/r15-vllm-shim:/workspace/r14-shims:. /venv/main/bin/python -m pytest -q -rs --tb=short --maxfail=1 --noconftest tests/v1/spec_decode/test_mtp_structured_output.py -k 'test_bitmask_idempotent_across_calls or test_bitmask_when_grammar_terminates_mid_window or test_bitmask_with_padded_invalid_drafts or test_bonus_position_constrained_after_invalid_drafts or test_validate_tokens_then_bitmask_round_trip'",
+      "returncode": 1,
+      "status": "completed",
+      "summary_lines": [
+        "raise RuntimeError(",
+        "E   RuntimeError: Failed to infer device type, please set the environment variable `VLLM_LOGGING_LEVEL=DEBUG` to turn on verbose logging to help debug the issue.",
+        "WARNING 09-03 02:41:51 [interface.py:247] Failed to import from vllm._C: ModuleNotFoundError(\"No module named 'vllm._C'\")",
+        "WARNING 09-03 02:41:54 [interface.py:247] Failed to import from vllm._C: ModuleNotFoundError(\"No module named 'vllm._C'\")",
+        "WARNING 09-03 02:41:54 [interface.py:247] Failed to import from vllm._C: ModuleNotFoundError(\"No module named 'vllm._C'\")",
+        "WARNING 09-03 02:41:54 [interface.py:247] Failed to import from vllm._C: ModuleNotFoundError(\"No module named 'vllm._C'\")",
+        "WARNING  vllm.platforms.interface:interface.py:247 Failed to import from vllm._C: ModuleNotFoundError(\"No module named 'vllm._C'\")",
+        "WARNING  vllm.platforms.interface:interface.py:247 Failed to import from vllm._C: ModuleNotFoundError(\"No module named 'vllm._C'\")",
+        "WARNING  vllm.platforms.interface:interface.py:247 Failed to import from vllm._C: ModuleNotFoundError(\"No module named 'vllm._C'\")",
+        "WARNING  vllm.platforms.interface:interface.py:247 Failed to import from vllm._C: ModuleNotFoundError(\"No module named 'vllm._C'\")",
+        "/workspace/r14-run-vllm/vllm/__init__.py:7: RuntimeWarning: Failed to read commit hash:",
+        "1 failed, 15 warnings in 26.89s"
+      ],
+      "test_names": [
+        "test_bitmask_idempotent_across_calls",
+        "test_bitmask_when_grammar_terminates_mid_window",
+        "test_bitmask_with_padded_invalid_drafts",
+        "test_bonus_position_constrained_after_invalid_drafts",
+        "test_validate_tokens_then_bitmask_round_trip"
+      ],
+      "test_paths": [
+        "tests/v1/spec_decode/test_mtp_structured_output.py"
+      ]
+    },
+    {
+      "case_id": "vllm-pr-44165",
+      "duration_seconds": 17.825592041946948,
+      "head_sha": "8c8a6e5c90056107e73042416f235a5964b36bc1",
+      "output_sha256": "sha256:5d12d525a78f70ecbf65238669f0ee385402d0cbd9d5d3a953ce45d203bd3183",
+      "output_tail": "..........................F\n=================================== FAILURES ===================================\n__________________ test_get_kv_cache_configs_multiple_workers __________________\ntests/v1/core/test_kv_cache_utils.py:768: in test_get_kv_cache_configs_multiple_workers\n    vllm_config = VllmConfig(model_config=model_config)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nvllm/config/device.py:56: in __post_init__\n    raise RuntimeError(\nE   RuntimeError: Failed to infer device type, please set the environment variable `VLLM_LOGGING_LEVEL=DEBUG` to turn on verbose logging to help debug the issue.\n----------------------------- Captured stdout call -----------------------------\nINFO 09-03 02:42:12 [model.py:617] Resolved architecture: Qwen3ForCausalLM\nINFO 09-03 02:42:12 [model.py:1751] Using max model len 16\nINFO 09-03 02:42:12 [scheduler.py:239] Chunked prefill is enabled with max_num_batched_tokens=2048.\n----------------------------- Captured stderr call -----------------------------\nWarning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.\n------------------------------ Captured log call -------------------------------\nWARNING  huggingface_hub.utils._http:_http.py:955 Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.\nINFO     vllm.config.model:model.py:617 Resolved architecture: Qwen3ForCausalLM\nINFO     vllm.config.model:model.py:1751 Using max model len 16\nINFO     vllm.config.scheduler:scheduler.py:239 Chunked prefill is enabled with max_num_batched_tokens=2048.\n=============================== warnings summary ===============================\nvllm/__init__.py:7\n  /workspace/r14-run-vllm/vllm/__init__.py:7: RuntimeWarning: Failed to read commit hash:\n  No module named 'vllm._version'\n    from .version import __version__, __version_tuple__  # isort:skip\n\n../../venv/main/lib/python3.12/site-packages/torch/jit/_script.py:365: 14 warnings\n  /venv/main/lib/python3.12/site-packages/torch/jit/_script.py:365: DeprecationWarning: `torch.jit.script_method` is deprecated. Please switch to `torch.compile` or `torch.export`.\n    warnings.warn(\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!\n1 failed, 26 passed, 15 warnings in 13.34s\nWelcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nPrevious HEAD position was da24e0f88 [Bugfix][Structured Output][Spec Decode] Constrain bonus-token bitmask after padded invalid drafts\nHEAD is now at 8c8a6e5c9 fix: test mismatches\n",
+      "ref": "refs/r21/pr-44165",
+      "remote_command": "cd /workspace/r14-run-vllm && git switch --detach refs/r21/pr-44165 >/dev/null && test \"$(git rev-parse HEAD)\" = 8c8a6e5c90056107e73042416f235a5964b36bc1 && timeout 180s env PYTHONDONTWRITEBYTECODE=1 INFRASWE_R15_VLLM_SOURCE_IMPORT_SHIM=1 CUDA_VISIBLE_DEVICES=0 PYTHONPATH=/workspace/r17-deps/vllm:/workspace/r18-deps/common:/workspace/r15-vllm-shim:/workspace/r14-shims:. /venv/main/bin/python -m pytest -q -rs --tb=short --maxfail=1 --noconftest tests/v1/core/test_kv_cache_utils.py tests/v1/core/test_prefix_caching.py tests/v1/core/test_single_type_kv_cache_manager.py tests/v1/kv_connector/unit/offloading_connector/utils.py",
+      "returncode": 1,
+      "status": "completed",
+      "summary_lines": [
+        "raise RuntimeError(",
+        "E   RuntimeError: Failed to infer device type, please set the environment variable `VLLM_LOGGING_LEVEL=DEBUG` to turn on verbose logging to help debug the issue.",
+        "/workspace/r14-run-vllm/vllm/__init__.py:7: RuntimeWarning: Failed to read commit hash:",
+        "1 failed, 26 passed, 15 warnings in 13.34s"
+      ],
+      "test_names": [],
+      "test_paths": [
+        "tests/v1/core/test_kv_cache_utils.py",
+        "tests/v1/core/test_prefix_caching.py",
+        "tests/v1/core/test_single_type_kv_cache_manager.py",
+        "tests/v1/kv_connector/unit/offloading_connector/utils.py"
+      ]
+    },
+    {
+      "case_id": "vllm-pr-44125",
+      "duration_seconds": 15.272213625023142,
+      "head_sha": "b74da73e3ebe484bc7240022f45c9d405738583b",
+      "output_sha256": "sha256:f3254905a93d6b815e52ac9cf6386c2546a5f454db79ae50e234241b4ae9a57f",
+      "output_tail": "F\n=================================== FAILURES ===================================\n______________________ test_compile_config_repr_succeeds _______________________\ntests/test_config.py:43: in test_compile_config_repr_succeeds\n    config = VllmConfig()\n             ^^^^^^^^^^^^\nvllm/config/device.py:56: in __post_init__\n    raise RuntimeError(\nE   RuntimeError: Failed to infer device type, please set the environment variable `VLLM_LOGGING_LEVEL=DEBUG` to turn on verbose logging to help debug the issue.\n----------------------------- Captured stdout call -----------------------------\nINFO 09-03 02:42:27 [scheduler.py:239] Chunked prefill is enabled with max_num_batched_tokens=2048.\n------------------------------ Captured log call -------------------------------\nINFO     vllm.config.scheduler:scheduler.py:239 Chunked prefill is enabled with max_num_batched_tokens=2048.\n=============================== warnings summary ===============================\nvllm/__init__.py:7\n  /workspace/r14-run-vllm/vllm/__init__.py:7: RuntimeWarning: Failed to read commit hash:\n  No module named 'vllm._version'\n    from .version import __version__, __version_tuple__  # isort:skip\n\n../../venv/main/lib/python3.12/site-packages/torch/jit/_script.py:365: 14 warnings\n  /venv/main/lib/python3.12/site-packages/torch/jit/_script.py:365: DeprecationWarning: `torch.jit.script_method` is deprecated. Please switch to `torch.compile` or `torch.export`.\n    warnings.warn(\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!\n1 failed, 15 warnings in 10.78s\nWelcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nPrevious HEAD position was 8c8a6e5c9 fix: test mismatches\nHEAD is now at b74da73e3 fix(scheduler): reject non-positive max_num_scheduled_tokens at construction time\n",
+      "ref": "refs/r21/pr-44125",
+      "remote_command": "cd /workspace/r14-run-vllm && git switch --detach refs/r21/pr-44125 >/dev/null && test \"$(git rev-parse HEAD)\" = b74da73e3ebe484bc7240022f45c9d405738583b && timeout 180s env PYTHONDONTWRITEBYTECODE=1 INFRASWE_R15_VLLM_SOURCE_IMPORT_SHIM=1 CUDA_VISIBLE_DEVICES=0 PYTHONPATH=/workspace/r17-deps/vllm:/workspace/r18-deps/common:/workspace/r15-vllm-shim:/workspace/r14-shims:. /venv/main/bin/python -m pytest -q -rs --tb=short --maxfail=1 --noconftest tests/test_config.py",
+      "returncode": 1,
+      "status": "completed",
+      "summary_lines": [
+        "raise RuntimeError(",
+        "E   RuntimeError: Failed to infer device type, please set the environment variable `VLLM_LOGGING_LEVEL=DEBUG` to turn on verbose logging to help debug the issue.",
+        "/workspace/r14-run-vllm/vllm/__init__.py:7: RuntimeWarning: Failed to read commit hash:",
+        "1 failed, 15 warnings in 10.78s"
+      ],
+      "test_names": [],
+      "test_paths": [
+        "tests/test_config.py"
+      ]
+    },
+    {
+      "case_id": "vllm-pr-44466",
+      "duration_seconds": 14.405405582860112,
+      "head_sha": "3a669cce7871cdf252f580d766132b10e4a7e250",
+      "output_sha256": "sha256:2e7a05b9817f29d3e36d7e9d42aa6b524cf0017048e58cba2fa18975e2e4470e",
+      "output_tail": "\n==================================== ERRORS ====================================\n__________ ERROR collecting tests/distributed/test_ray_v2_executor.py __________\ntests/distributed/test_ray_v2_executor.py:181: in <module>\n    [create_vllm_config(tensor_parallel_size=2)],\n     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntests/distributed/test_ray_v2_executor.py:44: in create_vllm_config\n    vllm_config = engine_args.create_engine_config()\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nvllm/engine/arg_utils.py:1714: in create_engine_config\n    device_config = DeviceConfig(device=cast(Device, current_platform.device_type))\n                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nvllm/config/device.py:78: in __post_init__\n    self.device = torch.device(self.device_type)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nE   RuntimeError: Device string must not be empty\n------------------------------- Captured stdout --------------------------------\nWARNING 09-03 02:42:36 [__init__.py:28] The vLLM package was not found, so its version could not be inspected. This may cause platform detection to fail.\nWARNING 09-03 02:42:36 [__init__.py:28] The vLLM package was not found, so its version could not be inspected. This may cause platform detection to fail.\nWARNING 09-03 02:42:39 [importing.py:66] Triton is installed, but `triton.backends` could not be imported. Disabling Triton.\nINFO 09-03 02:42:39 [importing.py:81] Triton not installed or not compatible; certain GPU-related functions will not be available.\n=============================== warnings summary ===============================\nvllm/__init__.py:7\n  /workspace/r14-run-vllm/vllm/__init__.py:7: RuntimeWarning: Failed to read commit hash:\n  No module named 'vllm._version'\n    from .version import __version__, __version_tuple__  # isort:skip\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!\n!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!\n1 warning, 1 error in 9.72s\nWelcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nPrevious HEAD position was b74da73e3 fix(scheduler): reject non-positive max_num_scheduled_tokens at construction time\nHEAD is now at 3a669cce7 Fail fast if cuda context is set too early\n",
+      "ref": "refs/r21/pr-44466",
+      "remote_command": "cd /workspace/r14-run-vllm && git switch --detach refs/r21/pr-44466 >/dev/null && test \"$(git rev-parse HEAD)\" = 3a669cce7871cdf252f580d766132b10e4a7e250 && timeout 180s env PYTHONDONTWRITEBYTECODE=1 INFRASWE_R15_VLLM_SOURCE_IMPORT_SHIM=1 CUDA_VISIBLE_DEVICES=0 PYTHONPATH=/workspace/r17-deps/vllm:/workspace/r18-deps/common:/workspace/r15-vllm-shim:/workspace/r14-shims:. /venv/main/bin/python -m pytest -q -rs --tb=short --maxfail=1 --noconftest tests/distributed/test_ray_v2_executor.py -k test_ray_v2_config_deserialized_after_cuda_visible_devices",
+      "returncode": 2,
+      "status": "completed",
+      "summary_lines": [
+        "==================================== ERRORS ====================================",
+        "__________ ERROR collecting tests/distributed/test_ray_v2_executor.py __________",
+        "E   RuntimeError: Device string must not be empty",
+        "/workspace/r14-run-vllm/vllm/__init__.py:7: RuntimeWarning: Failed to read commit hash:",
+        "!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!",
+        "1 warning, 1 error in 9.72s"
+      ],
+      "test_names": [
+        "test_ray_v2_config_deserialized_after_cuda_visible_devices"
+      ],
+      "test_paths": [
+        "tests/distributed/test_ray_v2_executor.py"
+      ]
+    },
+    {
+      "case_id": "vllm-pr-44410",
+      "duration_seconds": 13.344410249963403,
+      "head_sha": "bbf851ff24a8e0d2659de107889d3330aa3bb53d",
+      "output_sha256": "sha256:501dd11a04966148816ce31efe9ad114bfd9e0908dfa2f1744a88cbc499c2e15",
+      "output_tail": "..                                                                       [100%]\n=============================== warnings summary ===============================\nvllm/__init__.py:7\n  /workspace/r14-run-vllm/vllm/__init__.py:7: RuntimeWarning: Failed to read commit hash:\n  No module named 'vllm._version'\n    from .version import __version__, __version_tuple__  # isort:skip\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n2 passed, 7 deselected, 1 warning in 9.24s\nWelcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nPrevious HEAD position was 3a669cce7 Fail fast if cuda context is set too early\nHEAD is now at bbf851ff2 Merge branch 'main' into main\n",
+      "ref": "refs/r21/pr-44410",
+      "remote_command": "cd /workspace/r14-run-vllm && git switch --detach refs/r21/pr-44410 >/dev/null && test \"$(git rev-parse HEAD)\" = bbf851ff24a8e0d2659de107889d3330aa3bb53d && timeout 180s env PYTHONDONTWRITEBYTECODE=1 INFRASWE_R15_VLLM_SOURCE_IMPORT_SHIM=1 CUDA_VISIBLE_DEVICES=0 PYTHONPATH=/workspace/r17-deps/vllm:/workspace/r18-deps/common:/workspace/r15-vllm-shim:/workspace/r14-shims:. /venv/main/bin/python -m pytest -q -rs --tb=short --maxfail=1 --noconftest tests/entrypoints/serve/lora/test_serving_models.py -k 'test_pooling_maybe_get_adapters_lora_name_sets_lora_request or test_pooling_maybe_get_adapters_unknown_model_raises'",
+      "returncode": 0,
+      "status": "completed",
+      "summary_lines": [
+        "/workspace/r14-run-vllm/vllm/__init__.py:7: RuntimeWarning: Failed to read commit hash:",
+        "2 passed, 7 deselected, 1 warning in 9.24s"
+      ],
+      "test_names": [
+        "test_pooling_maybe_get_adapters_lora_name_sets_lora_request",
+        "test_pooling_maybe_get_adapters_unknown_model_raises"
+      ],
+      "test_paths": [
+        "tests/entrypoints/serve/lora/test_serving_models.py"
+      ]
+    },
+    {
+      "case_id": "vllm-pr-44401",
+      "duration_seconds": 29.48944849986583,
+      "head_sha": "1c6ebf2c6b4f0604b68a07980ab01791671ba52c",
+      "output_sha256": "sha256:782ce4eef7e407f72de5ed54f1dd5be2faa761cc8af868597a5b68c24489f0bd",
+      "output_tail": "F\n=================================== FAILURES ===================================\n____________ test_grammar_compilation_failure_does_not_crash_engine ____________\ntests/v1/core/test_scheduler.py:3877: in test_grammar_compilation_failure_does_not_crash_engine\n    scheduler = create_scheduler()\n                ^^^^^^^^^^^^^^^^^^\ntests/v1/core/utils.py:139: in create_scheduler\n    vllm_config = VllmConfig(\nvllm/config/device.py:56: in __post_init__\n    raise RuntimeError(\nE   RuntimeError: Failed to infer device type, please set the environment variable `VLLM_LOGGING_LEVEL=DEBUG` to turn on verbose logging to help debug the issue.\n----------------------------- Captured stdout call -----------------------------\nINFO 09-03 02:43:24 [model.py:610] Resolved architecture: OPTForCausalLM\nINFO 09-03 02:43:24 [model.py:1744] Using max model len 2048\nINFO 09-03 02:43:24 [scheduler.py:239] Chunked prefill is enabled with max_num_batched_tokens=8192.\n----------------------------- Captured stderr call -----------------------------\nWarning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.\n------------------------------ Captured log call -------------------------------\nWARNING  huggingface_hub.utils._http:_http.py:955 Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.\nINFO     vllm.config.model:model.py:610 Resolved architecture: OPTForCausalLM\nINFO     vllm.config.model:model.py:1744 Using max model len 2048\nINFO     vllm.config.scheduler:scheduler.py:239 Chunked prefill is enabled with max_num_batched_tokens=8192.\n=============================== warnings summary ===============================\nvllm/__init__.py:7\n  /workspace/r14-run-vllm/vllm/__init__.py:7: RuntimeWarning: Failed to read commit hash:\n  No module named 'vllm._version'\n    from .version import __version__, __version_tuple__  # isort:skip\n\n../../venv/main/lib/python3.12/site-packages/torch/jit/_script.py:365: 14 warnings\n  /venv/main/lib/python3.12/site-packages/torch/jit/_script.py:365: DeprecationWarning: `torch.jit.script_method` is deprecated. Please switch to `torch.compile` or `torch.export`.\n    warnings.warn(\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!\n1 failed, 100 deselected, 15 warnings in 25.05s\nWelcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nPrevious HEAD position was bbf851ff2 Merge branch 'main' into main\nHEAD is now at 1c6ebf2c6 Merge remote-tracking branch 'upstream/main' into fix/43920-grammar-compilation-crash\n",
+      "ref": "refs/r21/pr-44401",
+      "remote_command": "cd /workspace/r14-run-vllm && git switch --detach refs/r21/pr-44401 >/dev/null && test \"$(git rev-parse HEAD)\" = 1c6ebf2c6b4f0604b68a07980ab01791671ba52c && timeout 180s env PYTHONDONTWRITEBYTECODE=1 INFRASWE_R15_VLLM_SOURCE_IMPORT_SHIM=1 CUDA_VISIBLE_DEVICES=0 PYTHONPATH=/workspace/r17-deps/vllm:/workspace/r18-deps/common:/workspace/r15-vllm-shim:/workspace/r14-shims:. /venv/main/bin/python -m pytest -q -rs --tb=short --maxfail=1 --noconftest tests/v1/core/test_scheduler.py -k 'test_fcfs_mixed_skipped_waiting_types_keep_order or test_grammar_compilation_failure_does_not_crash_engine'",
+      "returncode": 1,
+      "status": "completed",
+      "summary_lines": [
+        "raise RuntimeError(",
+        "E   RuntimeError: Failed to infer device type, please set the environment variable `VLLM_LOGGING_LEVEL=DEBUG` to turn on verbose logging to help debug the issue.",
+        "/workspace/r14-run-vllm/vllm/__init__.py:7: RuntimeWarning: Failed to read commit hash:",
+        "1 failed, 100 deselected, 15 warnings in 25.05s"
+      ],
+      "test_names": [
+        "test_fcfs_mixed_skipped_waiting_types_keep_order",
+        "test_grammar_compilation_failure_does_not_crash_engine"
+      ],
+      "test_paths": [
+        "tests/v1/core/test_scheduler.py"
+      ]
+    },
+    {
+      "case_id": "vllm-pr-44394",
+      "duration_seconds": 14.202518125064671,
+      "head_sha": "41d4ac11217aff2d3ef539b818a6b1a1d831c4e8",
+      "output_sha256": "sha256:c417202efab29d9817375f5a1943c72486fe49f11eb9864f677996094a578302",
+      "output_tail": "ssssssssssss                                                             [100%]\n=============================== warnings summary ===============================\nvllm/__init__.py:7\n  /workspace/r14-run-vllm/vllm/__init__.py:7: RuntimeWarning: Failed to read commit hash:\n  No module named 'vllm._version'\n    from .version import __version__, __version_tuple__  # isort:skip\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n=========================== short test summary info ============================\nSKIPPED [6] tests/models/multimodal/generation/test_vit_cudagraph.py:166: Requires CUDA\nSKIPPED [6] tests/models/multimodal/generation/test_vit_cudagraph.py:207: Requires CUDA\n12 skipped, 1 warning in 9.74s\nWelcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nPrevious HEAD position was 1c6ebf2c6 Merge remote-tracking branch 'upstream/main' into fix/43920-grammar-compilation-crash\nHEAD is now at 41d4ac112 Merge branch 'main' into paddleocr-vl-encoder-cudagraph\n",
+      "ref": "refs/r21/pr-44394",
+      "remote_command": "cd /workspace/r14-run-vllm && git switch --detach refs/r21/pr-44394 >/dev/null && test \"$(git rev-parse HEAD)\" = 41d4ac11217aff2d3ef539b818a6b1a1d831c4e8 && timeout 180s env PYTHONDONTWRITEBYTECODE=1 INFRASWE_R15_VLLM_SOURCE_IMPORT_SHIM=1 CUDA_VISIBLE_DEVICES=0 PYTHONPATH=/workspace/r17-deps/vllm:/workspace/r18-deps/common:/workspace/r15-vllm-shim:/workspace/r14-shims:. /venv/main/bin/python -m pytest -q -rs --tb=short --maxfail=1 --noconftest tests/models/multimodal/generation/test_vit_cudagraph.py",
+      "returncode": 0,
+      "status": "completed",
+      "summary_lines": [
+        "/workspace/r14-run-vllm/vllm/__init__.py:7: RuntimeWarning: Failed to read commit hash:",
+        "SKIPPED [6] tests/models/multimodal/generation/test_vit_cudagraph.py:166: Requires CUDA",
+        "SKIPPED [6] tests/models/multimodal/generation/test_vit_cudagraph.py:207: Requires CUDA",
+        "12 skipped, 1 warning in 9.74s"
+      ],
+      "test_names": [],
+      "test_paths": [
+        "tests/models/multimodal/generation/test_vit_cudagraph.py"
+      ]
+    },
+    {
+      "case_id": "vllm-pr-44393",
+      "duration_seconds": 11.227232707897201,
+      "head_sha": "579c124c374efb64e95cddc23fa321b363d49d05",
+      "output_sha256": "sha256:6612260795bc9483ea862bd017ba1823750c7c6d62792660e19de43066ec4bdb",
+      "output_tail": "\n=============================== warnings summary ===============================\nvllm/__init__.py:7\n  /workspace/r14-run-vllm/vllm/__init__.py:7: RuntimeWarning: Failed to read commit hash:\n  No module named 'vllm._version'\n    from .version import __version__, __version_tuple__  # isort:skip\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n=========================== short test summary info ============================\nSKIPPED [1] tests/kernels/attention/test_cpu_attn.py:15: skipping CPU-only tests\n1 skipped, 1 warning in 7.44s\nWelcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nPrevious HEAD position was 41d4ac112 Merge branch 'main' into paddleocr-vl-encoder-cudagraph\nHEAD is now at 579c124c3 change layout\n",
+      "ref": "refs/r21/pr-44393",
+      "remote_command": "cd /workspace/r14-run-vllm && git switch --detach refs/r21/pr-44393 >/dev/null && test \"$(git rev-parse HEAD)\" = 579c124c374efb64e95cddc23fa321b363d49d05 && timeout 180s env PYTHONDONTWRITEBYTECODE=1 INFRASWE_R15_VLLM_SOURCE_IMPORT_SHIM=1 CUDA_VISIBLE_DEVICES=0 PYTHONPATH=/workspace/r17-deps/vllm:/workspace/r18-deps/common:/workspace/r15-vllm-shim:/workspace/r14-shims:. /venv/main/bin/python -m pytest -q -rs --tb=short --maxfail=1 --noconftest tests/kernels/attention/test_cpu_attn.py",
+      "returncode": 5,
+      "status": "completed",
+      "summary_lines": [
+        "/workspace/r14-run-vllm/vllm/__init__.py:7: RuntimeWarning: Failed to read commit hash:",
+        "SKIPPED [1] tests/kernels/attention/test_cpu_attn.py:15: skipping CPU-only tests",
+        "1 skipped, 1 warning in 7.44s"
+      ],
+      "test_names": [],
+      "test_paths": [
+        "tests/kernels/attention/test_cpu_attn.py"
+      ]
+    },
+    {
+      "case_id": "vllm-pr-44297",
+      "duration_seconds": 31.55632562492974,
+      "head_sha": "76f7e9384259c125580bf8529c40b792cedd8625",
+      "output_sha256": "sha256:9139d15abe02027bcc9ad4bc9755f10621d540fd288b5f6b80de1f8b4e6694d8",
+      "output_tail": "F\n=================================== FAILURES ===================================\n______________ test_bitmask_with_padded_invalid_drafts[xgrammar] _______________\ntests/v1/spec_decode/test_mtp_structured_output.py:54: in test_bitmask_with_padded_invalid_drafts\n    tokenizer, manager, request, prompt = _make_manager_and_request(\ntests/v1/spec_decode/test_mtp_structured_output.py:23: in _make_manager_and_request\n    vllm_config = VllmConfig(\nvllm/config/device.py:56: in __post_init__\n    raise RuntimeError(\nE   RuntimeError: Failed to infer device type, please set the environment variable `VLLM_LOGGING_LEVEL=DEBUG` to turn on verbose logging to help debug the issue.\n----------------------------- Captured stdout call -----------------------------\nINFO 09-03 02:44:21 [model.py:606] Resolved architecture: Qwen3ForCausalLM\nINFO 09-03 02:44:21 [model.py:1736] Using max model len 40960\nINFO 09-03 02:44:21 [scheduler.py:252] Chunked prefill is enabled with max_num_batched_tokens=2048.\n----------------------------- Captured stderr call -----------------------------\nWarning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.\n------------------------------ Captured log call -------------------------------\nWARNING  huggingface_hub.utils._http:_http.py:955 Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.\nINFO     vllm.config.model:model.py:606 Resolved architecture: Qwen3ForCausalLM\nINFO     vllm.config.model:model.py:1736 Using max model len 40960\nINFO     vllm.config.scheduler:scheduler.py:252 Chunked prefill is enabled with max_num_batched_tokens=2048.\n=============================== warnings summary ===============================\nvllm/__init__.py:7\n  /workspace/r14-run-vllm/vllm/__init__.py:7: RuntimeWarning: Failed to read commit hash:\n  No module named 'vllm._version'\n    from .version import __version__, __version_tuple__  # isort:skip\n\n../../venv/main/lib/python3.12/site-packages/torch/jit/_script.py:365: 14 warnings\n  /venv/main/lib/python3.12/site-packages/torch/jit/_script.py:365: DeprecationWarning: `torch.jit.script_method` is deprecated. Please switch to `torch.compile` or `torch.export`.\n    warnings.warn(\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!\n1 failed, 132 deselected, 15 warnings in 26.87s\nWelcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nPrevious HEAD position was 579c124c3 change layout\nHEAD is now at 76f7e9384 Merge branch 'main' into fix/44006-structured-output-spec-decode-bonus-bitmask\n",
+      "ref": "refs/r21/pr-44297",
+      "remote_command": "cd /workspace/r14-run-vllm && git switch --detach refs/r21/pr-44297 >/dev/null && test \"$(git rev-parse HEAD)\" = 76f7e9384259c125580bf8529c40b792cedd8625 && timeout 180s env PYTHONDONTWRITEBYTECODE=1 INFRASWE_R15_VLLM_SOURCE_IMPORT_SHIM=1 CUDA_VISIBLE_DEVICES=0 PYTHONPATH=/workspace/r17-deps/vllm:/workspace/r18-deps/common:/workspace/r15-vllm-shim:/workspace/r14-shims:. /venv/main/bin/python -m pytest -q -rs --tb=short --maxfail=1 --noconftest tests/v1/core/test_async_scheduler.py tests/v1/core/test_scheduler.py tests/v1/spec_decode/test_mtp_structured_output.py -k 'test_bitmask_constrained_when_reasoning_ends_midwindow or test_bitmask_idempotent_across_calls or test_bitmask_post_reasoning_end_drafts_skip_grammar_advance or test_bitmask_when_grammar_terminates_mid_window or test_bitmask_with_padded_invalid_drafts or test_bonus_position_constrained_after_invalid_drafts or test_should_advance_records_reasoning_end_index or test_trim_reasoning_for_advance or test_validate_tokens_then_bitmask_round_trip'",
+      "returncode": 1,
+      "status": "completed",
+      "summary_lines": [
+        "raise RuntimeError(",
+        "E   RuntimeError: Failed to infer device type, please set the environment variable `VLLM_LOGGING_LEVEL=DEBUG` to turn on verbose logging to help debug the issue.",
+        "/workspace/r14-run-vllm/vllm/__init__.py:7: RuntimeWarning: Failed to read commit hash:",
+        "1 failed, 132 deselected, 15 warnings in 26.87s"
+      ],
+      "test_names": [
+        "test_bitmask_constrained_when_reasoning_ends_midwindow",
+        "test_bitmask_idempotent_across_calls",
+        "test_bitmask_post_reasoning_end_drafts_skip_grammar_advance",
+        "test_bitmask_when_grammar_terminates_mid_window",
+        "test_bitmask_with_padded_invalid_drafts",
+        "test_bonus_position_constrained_after_invalid_drafts",
+        "test_should_advance_records_reasoning_end_index",
+        "test_trim_reasoning_for_advance",
+        "test_validate_tokens_then_bitmask_round_trip"
+      ],
+      "test_paths": [
+        "tests/v1/core/test_async_scheduler.py",
+        "tests/v1/core/test_scheduler.py",
+        "tests/v1/spec_decode/test_mtp_structured_output.py"
+      ]
+    },
+    {
+      "case_id": "vllm-pr-44208",
+      "duration_seconds": 14.47036829101853,
+      "head_sha": "49322694141e87664b5ff182b76031bbfe8b5b8c",
+      "output_sha256": "sha256:a6db3a6b6f0674f9638248f080afd13abcd7272cde75b948bc1d73167b94788a",
+      "output_tail": "..........................F\n=================================== FAILURES ===================================\n____ test_attention_flex_attn_logical_block_size_rejects_non_power_of_2[0] _____\ntests/test_config.py:1555: in test_attention_flex_attn_logical_block_size_rejects_non_power_of_2\n    with pytest.raises(ValidationError, match=\"power of 2\"):\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nE   Failed: DID NOT RAISE ValidationError\n=============================== warnings summary ===============================\nvllm/__init__.py:7\n  /workspace/r14-run-vllm/vllm/__init__.py:7: RuntimeWarning: Failed to read commit hash:\n  No module named 'vllm._version'\n    from .version import __version__, __version_tuple__  # isort:skip\n\n../../venv/main/lib/python3.12/site-packages/torch/jit/_script.py:365: 14 warnings\n  /venv/main/lib/python3.12/site-packages/torch/jit/_script.py:365: DeprecationWarning: `torch.jit.script_method` is deprecated. Please switch to `torch.compile` or `torch.export`.\n    warnings.warn(\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!\n1 failed, 26 passed, 143 deselected, 15 warnings in 10.12s\nWelcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nPrevious HEAD position was 76f7e9384 Merge branch 'main' into fix/44006-structured-output-spec-decode-bonus-bitmask\nHEAD is now at 493226941 [Tests] Add comprehensive tests for config field validators\n",
+      "ref": "refs/r21/pr-44208",
+      "remote_command": "cd /workspace/r14-run-vllm && git switch --detach refs/r21/pr-44208 >/dev/null && test \"$(git rev-parse HEAD)\" = 49322694141e87664b5ff182b76031bbfe8b5b8c && timeout 180s env PYTHONDONTWRITEBYTECODE=1 INFRASWE_R15_VLLM_SOURCE_IMPORT_SHIM=1 CUDA_VISIBLE_DEVICES=0 PYTHONPATH=/workspace/r17-deps/vllm:/workspace/r18-deps/common:/workspace/r15-vllm-shim:/workspace/r14-shims:. /venv/main/bin/python -m pytest -q -rs --tb=short --maxfail=1 --noconftest tests/test_config.py -k 'test_attention_flash_attn_max_num_splits_accepts_positive or test_attention_flash_attn_max_num_splits_rejects_non_positive or test_attention_flex_attn_block_size_accepts_valid or test_attention_flex_attn_block_size_rejects_invalid or test_attention_flex_attn_logical_block_size_accepts_power_of_2 or test_attention_flex_attn_logical_block_size_rejects_non_power_of_2 or test_attention_tq_max_kv_splits_accepts_positive or test_attention_tq_max_kv_splits_rejects_non_positive or test_ec_transfer_buffer_size_accepts_positive or test_ec_transfer_buffer_size_rejects_non_positive or test_ec_transfer_parallel_size_accepts_positive or test_ec_transfer_parallel_size_rejects_non_positive or test_ec_transfer_port_accepts_valid_range or test_ec_transfer_port_rejects_invalid_range or test_ec_transfer_rank_accepts_non_negative or test_ec_transfer_rank_rejects_negative or test_kv_events_buffer_steps_accepts_positive or test_kv_events_buffer_steps_rejects_non_positive or test_kv_events_hwm_accepts_positive or test_kv_events_hwm_rejects_non_positive or test_kv_events_max_queue_size_accepts_positive or test_kv_events_max_queue_size_rejects_non_positive or test_kv_transfer_buffer_size_accepts_positive or test_kv_transfer_buffer_size_rejects_non_positive or test_kv_transfer_parallel_size_accepts_positive or test_kv_transfer_parallel_size_rejects_non_positive or test_kv_transfer_port_accepts_valid_range or test_kv_transfer_port_rejects_invalid_range or test_kv_transfer_rank_accepts_non_negative or test_kv_transfer_rank_accepts_none or test_kv_transfer_rank_rejects_negative'",
+      "returncode": 1,
+      "status": "completed",
+      "summary_lines": [
+        "with pytest.raises(ValidationError, match=\"power of 2\"):",
+        "E   Failed: DID NOT RAISE ValidationError",
+        "/workspace/r14-run-vllm/vllm/__init__.py:7: RuntimeWarning: Failed to read commit hash:",
+        "1 failed, 26 passed, 143 deselected, 15 warnings in 10.12s"
+      ],
+      "test_names": [
+        "test_attention_flash_attn_max_num_splits_accepts_positive",
+        "test_attention_flash_attn_max_num_splits_rejects_non_positive",
+        "test_attention_flex_attn_block_size_accepts_valid",
+        "test_attention_flex_attn_block_size_rejects_invalid",
+        "test_attention_flex_attn_logical_block_size_accepts_power_of_2",
+        "test_attention_flex_attn_logical_block_size_rejects_non_power_of_2",
+        "test_attention_tq_max_kv_splits_accepts_positive",
+        "test_attention_tq_max_kv_splits_rejects_non_positive",
+        "test_ec_transfer_buffer_size_accepts_positive",
+        "test_ec_transfer_buffer_size_rejects_non_positive",
+        "test_ec_transfer_parallel_size_accepts_positive",
+        "test_ec_transfer_parallel_size_rejects_non_positive",
+        "test_ec_transfer_port_accepts_valid_range",
+        "test_ec_transfer_port_rejects_invalid_range",
+        "test_ec_transfer_rank_accepts_non_negative",
+        "test_ec_transfer_rank_rejects_negative",
+        "test_kv_events_buffer_steps_accepts_positive",
+        "test_kv_events_buffer_steps_rejects_non_positive",
+        "test_kv_events_hwm_accepts_positive",
+        "test_kv_events_hwm_rejects_non_positive",
+        "test_kv_events_max_queue_size_accepts_positive",
+        "test_kv_events_max_queue_size_rejects_non_positive",
+        "test_kv_transfer_buffer_size_accepts_positive",
+        "test_kv_transfer_buffer_size_rejects_non_positive",
+        "test_kv_transfer_parallel_size_accepts_positive",
+        "test_kv_transfer_parallel_size_rejects_non_positive",
+        "test_kv_transfer_port_accepts_valid_range",
+        "test_kv_transfer_port_rejects_invalid_range",
+        "test_kv_transfer_rank_accepts_non_negative",
+        "test_kv_transfer_rank_accepts_none",
+        "test_kv_transfer_rank_rejects_negative"
+      ],
+      "test_paths": [
+        "tests/test_config.py"
+      ]
+    },
+    {
+      "case_id": "vllm-pr-44201",
+      "duration_seconds": 15.225302041042596,
+      "head_sha": "3c233a0a0db585c31549c56b3eae38e36bcbf6b3",
+      "output_sha256": "sha256:f3d4abdb39d3b0f24dc5cb6ce04c58a6b98727d19a0229fccc74fb7b25af1aa1",
+      "output_tail": "\n=============================== warnings summary ===============================\nvllm/__init__.py:7\n  /workspace/r14-run-vllm/vllm/__init__.py:7: RuntimeWarning: Failed to read commit hash:\n  No module named 'vllm._version'\n    from .version import __version__, __version_tuple__  # isort:skip\n\n../../venv/main/lib/python3.12/site-packages/torch/jit/_script.py:365: 14 warnings\n  /venv/main/lib/python3.12/site-packages/torch/jit/_script.py:365: DeprecationWarning: `torch.jit.script_method` is deprecated. Please switch to `torch.compile` or `torch.export`.\n    warnings.warn(\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n=========================== short test summary info ============================\nSKIPPED [1] tests/kernels/moe/test_cpu_fused_moe.py:35: skipping CPU-only tests\n1 skipped, 15 warnings in 10.65s\nWelcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nPrevious HEAD position was 493226941 [Tests] Add comprehensive tests for config field validators\nHEAD is now at 3c233a0a0 Merge branch 'main' into zentorch_replace_bf16_moe\n",
+      "ref": "refs/r21/pr-44201",
+      "remote_command": "cd /workspace/r14-run-vllm && git switch --detach refs/r21/pr-44201 >/dev/null && test \"$(git rev-parse HEAD)\" = 3c233a0a0db585c31549c56b3eae38e36bcbf6b3 && timeout 180s env PYTHONDONTWRITEBYTECODE=1 INFRASWE_R15_VLLM_SOURCE_IMPORT_SHIM=1 CUDA_VISIBLE_DEVICES=0 PYTHONPATH=/workspace/r17-deps/vllm:/workspace/r18-deps/common:/workspace/r15-vllm-shim:/workspace/r14-shims:. /venv/main/bin/python -m pytest -q -rs --tb=short --maxfail=1 --noconftest tests/kernels/moe/test_zen_cpu_fused_moe.py -k 'test_zen_cpu_fused_moe_config_supported_unaligned_intermediate or test_zen_cpu_fused_moe_dispatches_to_zentorch or test_zen_cpu_fused_moe_forward or test_zen_cpu_fused_moe_skips_without_activation'",
+      "returncode": 5,
+      "status": "completed",
+      "summary_lines": [
+        "/workspace/r14-run-vllm/vllm/__init__.py:7: RuntimeWarning: Failed to read commit hash:",
+        "SKIPPED [1] tests/kernels/moe/test_cpu_fused_moe.py:35: skipping CPU-only tests",
+        "1 skipped, 15 warnings in 10.65s"
+      ],
+      "test_names": [
+        "test_zen_cpu_fused_moe_config_supported_unaligned_intermediate",
+        "test_zen_cpu_fused_moe_dispatches_to_zentorch",
+        "test_zen_cpu_fused_moe_forward",
+        "test_zen_cpu_fused_moe_skips_without_activation"
+      ],
+      "test_paths": [
+        "tests/kernels/moe/test_zen_cpu_fused_moe.py"
+      ]
+    },
+    {
+      "case_id": "vllm-pr-44166",
+      "duration_seconds": 29.073974875034764,
+      "head_sha": "5cc14a22876e24fbef459560a50889b4e0d6c4e9",
+      "output_sha256": "sha256:bad26a8d19b654cc2aa2feb9ad80bd8d048d39d2c225773c6e3d8b21e4d53b27",
+      "output_tail": "F\n=================================== FAILURES ===================================\n___________________ test_priority_scheduling_float_ordering ____________________\ntests/v1/core/test_scheduler.py:2819: in test_priority_scheduling_float_ordering\n    scheduler = create_scheduler_with_priority()\n                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntests/v1/core/test_scheduler.py:2643: in create_scheduler_with_priority\n    vllm_config = VllmConfig(\nvllm/config/device.py:56: in __post_init__\n    raise RuntimeError(\nE   RuntimeError: Failed to infer device type, please set the environment variable `VLLM_LOGGING_LEVEL=DEBUG` to turn on verbose logging to help debug the issue.\n----------------------------- Captured stdout call -----------------------------\nINFO 09-03 02:45:20 [model.py:684] Resolved architecture: OPTForCausalLM\nINFO 09-03 02:45:20 [model.py:2017] Using max model len 2048\nINFO 09-03 02:45:20 [scheduler.py:242] Chunked prefill is enabled with max_num_batched_tokens=8192.\n------------------------------ Captured log call -------------------------------\nINFO     vllm.config.model:model.py:684 Resolved architecture: OPTForCausalLM\nINFO     vllm.config.model:model.py:2017 Using max model len 2048\nINFO     vllm.config.scheduler:scheduler.py:242 Chunked prefill is enabled with max_num_batched_tokens=8192.\n=============================== warnings summary ===============================\nvllm/__init__.py:7\n  /workspace/r14-run-vllm/vllm/__init__.py:7: RuntimeWarning: Failed to read commit hash:\n  No module named 'vllm._version'\n    from .version import __version__, __version_tuple__  # isort:skip\n\n../../venv/main/lib/python3.12/site-packages/torch/jit/_script.py:365: 14 warnings\n  /venv/main/lib/python3.12/site-packages/torch/jit/_script.py:365: DeprecationWarning: `torch.jit.script_method` is deprecated. Please switch to `torch.compile` or `torch.export`.\n    warnings.warn(\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!\n1 failed, 149 deselected, 15 warnings in 24.23s\nWelcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nPrevious HEAD position was 3c233a0a0 Merge branch 'main' into zentorch_replace_bf16_moe\nHEAD is now at 5cc14a228 Merge branch 'main' into float-priority\n",
+      "ref": "refs/r21/pr-44166",
+      "remote_command": "cd /workspace/r14-run-vllm && git switch --detach refs/r21/pr-44166 >/dev/null && test \"$(git rev-parse HEAD)\" = 5cc14a22876e24fbef459560a50889b4e0d6c4e9 && timeout 180s env PYTHONDONTWRITEBYTECODE=1 INFRASWE_R15_VLLM_SOURCE_IMPORT_SHIM=1 CUDA_VISIBLE_DEVICES=0 PYTHONPATH=/workspace/r17-deps/vllm:/workspace/r18-deps/common:/workspace/r15-vllm-shim:/workspace/r14-shims:. /venv/main/bin/python -m pytest -q -rs --tb=short --maxfail=1 --noconftest tests/v1/core/test_scheduler.py -k 'test_priority_scheduling_arrival_time_tiebreaker or test_priority_scheduling_float_between_integers or test_priority_scheduling_float_ordering'",
+      "returncode": 1,
+      "status": "completed",
+      "summary_lines": [
+        "raise RuntimeError(",
+        "E   RuntimeError: Failed to infer device type, please set the environment variable `VLLM_LOGGING_LEVEL=DEBUG` to turn on verbose logging to help debug the issue.",
+        "/workspace/r14-run-vllm/vllm/__init__.py:7: RuntimeWarning: Failed to read commit hash:",
+        "1 failed, 149 deselected, 15 warnings in 24.23s"
+      ],
+      "test_names": [
+        "test_priority_scheduling_arrival_time_tiebreaker",
+        "test_priority_scheduling_float_between_integers",
+        "test_priority_scheduling_float_ordering"
+      ],
+      "test_paths": [
+        "tests/v1/core/test_scheduler.py"
+      ]
+    },
+    {
+      "case_id": "vllm-pr-44151",
+      "duration_seconds": 31.341170250205323,
+      "head_sha": "64348e38e2d6c8c6eb128ebd564624ed57e0442a",
+      "output_sha256": "sha256:84ad5ed6aa5fc97686db9473bb60e73bb1ce7dad8b91805cff645de2f6bfb94f",
+      "output_tail": "......                                                                   [100%]\n=============================== warnings summary ===============================\nvllm/__init__.py:7\n  /workspace/r14-run-vllm/vllm/__init__.py:7: RuntimeWarning: Failed to read commit hash:\n  No module named 'vllm._version'\n    from .version import __version__, __version_tuple__  # isort:skip\n\n../../venv/main/lib/python3.12/site-packages/torch/jit/_script.py:365: 14 warnings\n  /venv/main/lib/python3.12/site-packages/torch/jit/_script.py:365: DeprecationWarning: `torch.jit.script_method` is deprecated. Please switch to `torch.compile` or `torch.export`.\n    warnings.warn(\n\ntests/v1/kv_connector/unit/test_remote_decode_lifecycle.py::test_remote_decode_drops_lookahead_blocks\n  /venv/main/lib/python3.12/site-packages/transformers/models/gpt2/tokenization_gpt2.py:110: DeprecationWarning: Deprecated in 0.9.0: BPE.__init__ will not create from files anymore, try `BPE.from_file` instead\n    BPE(\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n6 passed, 3 deselected, 16 warnings in 26.04s\nWelcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nPrevious HEAD position was 5cc14a228 Merge branch 'main' into float-priority\nHEAD is now at 64348e38e trim comments\n",
+      "ref": "refs/r21/pr-44151",
+      "remote_command": "cd /workspace/r14-run-vllm && git switch --detach refs/r21/pr-44151 >/dev/null && test \"$(git rev-parse HEAD)\" = 64348e38e2d6c8c6eb128ebd564624ed57e0442a && timeout 180s env PYTHONDONTWRITEBYTECODE=1 INFRASWE_R15_VLLM_SOURCE_IMPORT_SHIM=1 CUDA_VISIBLE_DEVICES=0 PYTHONPATH=/workspace/r17-deps/vllm:/workspace/r18-deps/common:/workspace/r15-vllm-shim:/workspace/r14-shims:. /venv/main/bin/python -m pytest -q -rs --tb=short --maxfail=1 --noconftest tests/v1/kv_connector/unit/test_remote_decode_lifecycle.py -k 'test_abort_during_kv_transfer or test_clip_uncomputed_blocks or test_clip_uncomputed_blocks_is_per_group or test_remote_decode_drops_lookahead_blocks'",
+      "returncode": 0,
+      "status": "completed",
+      "summary_lines": [
+        "/workspace/r14-run-vllm/vllm/__init__.py:7: RuntimeWarning: Failed to read commit hash:",
+        "6 passed, 3 deselected, 16 warnings in 26.04s"
+      ],
+      "test_names": [
+        "test_abort_during_kv_transfer",
+        "test_clip_uncomputed_blocks",
+        "test_clip_uncomputed_blocks_is_per_group",
+        "test_remote_decode_drops_lookahead_blocks"
+      ],
+      "test_paths": [
+        "tests/v1/kv_connector/unit/test_remote_decode_lifecycle.py"
+      ]
+    },
+    {
+      "case_id": "vllm-pr-44132",
+      "duration_seconds": 16.68606691597961,
+      "head_sha": "d3a3855428cd2fde8f6ad576911307de9420c4b1",
+      "output_sha256": "sha256:29dfc72780526f7f99568edee8de0d38c5ce334c7c8027ff0ba637af62e3364f",
+      "output_tail": "ss.ss                                                                    [100%]\n=============================== warnings summary ===============================\nvllm/__init__.py:7\n  /workspace/r14-run-vllm/vllm/__init__.py:7: RuntimeWarning: Failed to read commit hash:\n  No module named 'vllm._version'\n    from .version import __version__, __version_tuple__  # isort:skip\n\ntests/models/quantization/test_fp8_per_channel.py:36\n  /workspace/r14-run-vllm/tests/models/quantization/test_fp8_per_channel.py:36: PytestUnknownMarkWarning: Unknown pytest.mark.quant_model - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html\n    @pytest.mark.quant_model\n\n../../venv/main/lib/python3.12/site-packages/torch/jit/_script.py:365: 14 warnings\n  /venv/main/lib/python3.12/site-packages/torch/jit/_script.py:365: DeprecationWarning: `torch.jit.script_method` is deprecated. Please switch to `torch.compile` or `torch.export`.\n    warnings.warn(\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n=========================== short test summary info ============================\nSKIPPED [2] tests/models/quantization/test_fp8_per_channel.py:32: fp8 is not supported on this GPU type.\nSKIPPED [1] tests/quantization/test_fp8_per_channel.py:55: FP8 is not supported on this GPU type.\nSKIPPED [1] tests/quantization/test_fp8_per_channel.py:72: FP8 is not supported on this GPU type.\n1 passed, 4 skipped, 16 warnings in 12.06s\nWelcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nPrevious HEAD position was 64348e38e trim comments\nHEAD is now at d3a385542 Merge branch 'main' into cohere/add-online-fp8-ptpc\n",
+      "ref": "refs/r21/pr-44132",
+      "remote_command": "cd /workspace/r14-run-vllm && git switch --detach refs/r21/pr-44132 >/dev/null && test \"$(git rev-parse HEAD)\" = d3a3855428cd2fde8f6ad576911307de9420c4b1 && timeout 180s env PYTHONDONTWRITEBYTECODE=1 INFRASWE_R15_VLLM_SOURCE_IMPORT_SHIM=1 CUDA_VISIBLE_DEVICES=0 PYTHONPATH=/workspace/r17-deps/vllm:/workspace/r18-deps/common:/workspace/r15-vllm-shim:/workspace/r14-shims:. /venv/main/bin/python -m pytest -q -rs --tb=short --maxfail=1 --noconftest tests/models/quantization/test_fp8_per_channel.py tests/quantization/test_fp8_per_channel.py -k 'test_fp8_per_channel_logprobs or test_fp8_per_channel_online_quantization or test_fp8_per_channel_shorthand_registered or test_scaled_fp8_quant_per_channel_shape'",
+      "returncode": 0,
+      "status": "completed",
+      "summary_lines": [
+        "/workspace/r14-run-vllm/vllm/__init__.py:7: RuntimeWarning: Failed to read commit hash:",
+        "SKIPPED [2] tests/models/quantization/test_fp8_per_channel.py:32: fp8 is not supported on this GPU type.",
+        "SKIPPED [1] tests/quantization/test_fp8_per_channel.py:55: FP8 is not supported on this GPU type.",
+        "SKIPPED [1] tests/quantization/test_fp8_per_channel.py:72: FP8 is not supported on this GPU type.",
+        "1 passed, 4 skipped, 16 warnings in 12.06s"
+      ],
+      "test_names": [
+        "test_fp8_per_channel_logprobs",
+        "test_fp8_per_channel_online_quantization",
+        "test_fp8_per_channel_shorthand_registered",
+        "test_scaled_fp8_quant_per_channel_shape"
+      ],
+      "test_paths": [
+        "tests/models/quantization/test_fp8_per_channel.py",
+        "tests/quantization/test_fp8_per_channel.py"
+      ]
+    },
+    {
+      "case_id": "vllm-pr-44120",
+      "duration_seconds": 15.676188874989748,
+      "head_sha": "b4efaa4fb8be190e839c438090dadecdffc06d90",
+      "output_sha256": "sha256:e72647d9ef52444587a2ed1f123b2986fdc21442b3ef25f5236ced0da81f231e",
+      "output_tail": "............                                                             [100%]\n=============================== warnings summary ===============================\nvllm/__init__.py:7\n  /workspace/r14-run-vllm/vllm/__init__.py:7: RuntimeWarning: Failed to read commit hash:\n  No module named 'vllm._version'\n    from .version import __version__, __version_tuple__  # isort:skip\n\n../../venv/main/lib/python3.12/site-packages/torch/jit/_script.py:365: 14 warnings\n  /venv/main/lib/python3.12/site-packages/torch/jit/_script.py:365: DeprecationWarning: `torch.jit.script_method` is deprecated. Please switch to `torch.compile` or `torch.export`.\n    warnings.warn(\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n12 passed, 2 deselected, 15 warnings in 10.87s\nWelcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nPrevious HEAD position was d3a385542 Merge branch 'main' into cohere/add-online-fp8-ptpc\nHEAD is now at b4efaa4fb Fix WNA16 MoE backend compatibility\n",
+      "ref": "refs/r21/pr-44120",
+      "remote_command": "cd /workspace/r14-run-vllm && git switch --detach refs/r21/pr-44120 >/dev/null && test \"$(git rev-parse HEAD)\" = b4efaa4fb8be190e839c438090dadecdffc06d90 && timeout 180s env PYTHONDONTWRITEBYTECODE=1 INFRASWE_R15_VLLM_SOURCE_IMPORT_SHIM=1 CUDA_VISIBLE_DEVICES=0 PYTHONPATH=/workspace/r17-deps/vllm:/workspace/r18-deps/common:/workspace/r15-vllm-shim:/workspace/r14-shims:. /venv/main/bin/python -m pytest -q -rs --tb=short --maxfail=1 --noconftest tests/quantization/test_auto_gptq.py tests/quantization/test_moe_wna16.py -k 'test_auto_gptq_moe_creates_zero_initialized_expert_biases or test_compressed_tensors_weights_are_transposed_for_triton or test_map_wna16_backend_supports_triton or test_moe_wna16_humming_adapter_repacks_uint8_tensors or test_moe_wna16_setup_forwards_selected_backend or test_moe_wna16_uses_humming_quant_config or test_routed_experts_loads_per_expert_biases or test_wna16_oracle_rejects_incompatible_quant_structures'",
+      "returncode": 0,
+      "status": "completed",
+      "summary_lines": [
+        "/workspace/r14-run-vllm/vllm/__init__.py:7: RuntimeWarning: Failed to read commit hash:",
+        "12 passed, 2 deselected, 15 warnings in 10.87s"
+      ],
+      "test_names": [
+        "test_auto_gptq_moe_creates_zero_initialized_expert_biases",
+        "test_compressed_tensors_weights_are_transposed_for_triton",
+        "test_map_wna16_backend_supports_triton",
+        "test_moe_wna16_humming_adapter_repacks_uint8_tensors",
+        "test_moe_wna16_setup_forwards_selected_backend",
+        "test_moe_wna16_uses_humming_quant_config",
+        "test_routed_experts_loads_per_expert_biases",
+        "test_wna16_oracle_rejects_incompatible_quant_structures"
+      ],
+      "test_paths": [
+        "tests/quantization/test_auto_gptq.py",
+        "tests/quantization/test_moe_wna16.py"
+      ]
+    },
+    {
+      "case_id": "vllm-pr-44093",
+      "duration_seconds": 15.503898082999513,
+      "head_sha": "78798f88c73873ad73bd9c73e0387189e3121b13",
+      "output_sha256": "sha256:e7800af734d47c868ef2323d496331eeafd28b8f41250ea817be7a16eb43361e",
+      "output_tail": "Connection closed by 194.228.55.129 port 31082\n",
+      "ref": "refs/r21/pr-44093",
+      "remote_command": "cd /workspace/r14-run-vllm && git switch --detach refs/r21/pr-44093 >/dev/null && test \"$(git rev-parse HEAD)\" = 78798f88c73873ad73bd9c73e0387189e3121b13 && timeout 180s env PYTHONDONTWRITEBYTECODE=1 INFRASWE_R15_VLLM_SOURCE_IMPORT_SHIM=1 CUDA_VISIBLE_DEVICES=0 PYTHONPATH=/workspace/r17-deps/vllm:/workspace/r18-deps/common:/workspace/r15-vllm-shim:/workspace/r14-shims:. /venv/main/bin/python -m pytest -q -rs --tb=short --maxfail=1 --noconftest tests/test_config.py -k 'test_model_config_accepts_valid_max_logprobs or test_model_config_rejects_negative_max_logprobs or test_scheduler_config_accepts_valid_long_prefill_token_threshold or test_scheduler_config_rejects_negative_long_prefill_token_threshold'",
+      "returncode": 255,
+      "status": "completed",
+      "summary_lines": [],
+      "test_names": [
+        "test_model_config_accepts_valid_max_logprobs",
+        "test_model_config_rejects_negative_max_logprobs",
+        "test_scheduler_config_accepts_valid_long_prefill_token_threshold",
+        "test_scheduler_config_rejects_negative_long_prefill_token_threshold"
+      ],
+      "test_paths": [
+        "tests/test_config.py"
+      ]
+    },
+    {
+      "case_id": "vllm-pr-44053",
+      "duration_seconds": 13.2434895420447,
+      "head_sha": "30d4b6f04f21e178fec4ec71b99dcb460759e533",
+      "output_sha256": "sha256:de5196e5bc415937516a5658c8595c73fe55f8bfaccf1395531da9d0a3d2e86f",
+      "output_tail": "..                                                                       [100%]\n=============================== warnings summary ===============================\nvllm/__init__.py:7\n  /workspace/r14-run-vllm/vllm/__init__.py:7: RuntimeWarning: Failed to read commit hash:\n  No module named 'vllm._version'\n    from .version import __version__, __version_tuple__  # isort:skip\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n2 passed, 121 deselected, 1 warning in 9.10s\nWelcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nPrevious HEAD position was b4efaa4fb Fix WNA16 MoE backend compatibility\nHEAD is now at 30d4b6f04 Merge branch 'main' into tq-workspace-manager-main-signed\n",
+      "ref": "refs/r21/pr-44053",
+      "remote_command": "cd /workspace/r14-run-vllm && git switch --detach refs/r21/pr-44053 >/dev/null && test \"$(git rev-parse HEAD)\" = 30d4b6f04f21e178fec4ec71b99dcb460759e533 && timeout 180s env PYTHONDONTWRITEBYTECODE=1 INFRASWE_R15_VLLM_SOURCE_IMPORT_SHIM=1 CUDA_VISIBLE_DEVICES=0 PYTHONPATH=/workspace/r17-deps/vllm:/workspace/r18-deps/common:/workspace/r15-vllm-shim:/workspace/r14-shims:. /venv/main/bin/python -m pytest -q -rs --tb=short --maxfail=1 --noconftest tests/quantization/test_turboquant.py -k 'test_metadata_builder_reserves_decode_and_continuation_prefill_workspace or test_metadata_builder_skips_continuation_prefill_when_disabled'",
+      "returncode": 0,
+      "status": "completed",
+      "summary_lines": [
+        "/workspace/r14-run-vllm/vllm/__init__.py:7: RuntimeWarning: Failed to read commit hash:",
+        "2 passed, 121 deselected, 1 warning in 9.10s"
+      ],
+      "test_names": [
+        "test_metadata_builder_reserves_decode_and_continuation_prefill_workspace",
+        "test_metadata_builder_skips_continuation_prefill_when_disabled"
+      ],
+      "test_paths": [
+        "tests/quantization/test_turboquant.py"
+      ]
+    },
+    {
+      "case_id": "vllm-pr-44317",
+      "duration_seconds": 14.776254125172272,
+      "head_sha": "b55c07d305898b239a99ee56683a9fbc98974242",
+      "output_sha256": "sha256:1c161a1ff76f0bed4c3dcf9d6f0587957d9c340aaf01e140056cd78002aeaf77",
+      "output_tail": "..                                                                       [100%]\n=============================== warnings summary ===============================\nvllm/__init__.py:7\n  /workspace/r14-run-vllm/vllm/__init__.py:7: RuntimeWarning: Failed to read commit hash:\n  No module named 'vllm._version'\n    from .version import __version__, __version_tuple__  # isort:skip\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n2 passed, 23 deselected, 1 warning in 10.43s\nWelcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nPrevious HEAD position was 30d4b6f04 Merge branch 'main' into tq-workspace-manager-main-signed\nHEAD is now at b55c07d30 Merge branch 'main' into fix/lmcache-degraded-mode\n",
+      "ref": "refs/r21/pr-44317",
+      "remote_command": "cd /workspace/r14-run-vllm && git switch --detach refs/r21/pr-44317 >/dev/null && test \"$(git rev-parse HEAD)\" = b55c07d305898b239a99ee56683a9fbc98974242 && timeout 180s env PYTHONDONTWRITEBYTECODE=1 INFRASWE_R15_VLLM_SOURCE_IMPORT_SHIM=1 CUDA_VISIBLE_DEVICES=0 PYTHONPATH=/workspace/r17-deps/vllm:/workspace/r18-deps/common:/workspace/r15-vllm-shim:/workspace/r14-shims:. /venv/main/bin/python -m pytest -q -rs --tb=short --maxfail=1 --noconftest tests/v1/kv_connector/unit/test_lmcache_connector.py -k 'test_worker_methods_forward_when_engine_is_available or test_worker_methods_noop_when_engine_is_unavailable'",
+      "returncode": 0,
+      "status": "completed",
+      "summary_lines": [
+        "/workspace/r14-run-vllm/vllm/__init__.py:7: RuntimeWarning: Failed to read commit hash:",
+        "2 passed, 23 deselected, 1 warning in 10.43s"
+      ],
+      "test_names": [
+        "test_worker_methods_forward_when_engine_is_available",
+        "test_worker_methods_noop_when_engine_is_unavailable"
+      ],
+      "test_paths": [
+        "tests/v1/kv_connector/unit/test_lmcache_connector.py"
+      ]
+    },
+    {
+      "case_id": "vllm-pr-44193",
+      "duration_seconds": 14.582983792060986,
+      "head_sha": "0cbc7cfb22bce818f5a3bdb69bc5d64ca238b5c9",
+      "output_sha256": "sha256:a011635c0ea5a93c4bc5bc06685a03547f9fea27d05645f26e223c9680d450b5",
+      "output_tail": "...........                                                              [100%]\n=============================== warnings summary ===============================\nvllm/__init__.py:7\n  /workspace/r14-run-vllm/vllm/__init__.py:7: RuntimeWarning: Failed to read commit hash:\n  No module named 'vllm._version'\n    from .version import __version__, __version_tuple__  # isort:skip\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n11 passed, 25 deselected, 1 warning in 10.06s\nWelcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nPrevious HEAD position was b55c07d30 Merge branch 'main' into fix/lmcache-degraded-mode\nHEAD is now at 0cbc7cfb2 Merge branch 'main' into lookup\n",
+      "ref": "refs/r21/pr-44193",
+      "remote_command": "cd /workspace/r14-run-vllm && git switch --detach refs/r21/pr-44193 >/dev/null && test \"$(git rev-parse HEAD)\" = 0cbc7cfb22bce818f5a3bdb69bc5d64ca238b5c9 && timeout 180s env PYTHONDONTWRITEBYTECODE=1 INFRASWE_R15_VLLM_SOURCE_IMPORT_SHIM=1 CUDA_VISIBLE_DEVICES=0 PYTHONPATH=/workspace/r17-deps/vllm:/workspace/r18-deps/common:/workspace/r15-vllm-shim:/workspace/r14-shims:. /venv/main/bin/python -m pytest -q -rs --tb=short --maxfail=1 --noconftest tests/v1/kv_offload/tiering/test_async_lookup.py tests/v1/kv_offload/tiering/test_fs_tier.py tests/v1/kv_offload/tiering/test_obj_tier.py -k 'test_cleanup_preserves_shared_entries or test_cleanup_removes_entries or test_cleanup_unknown_req_id_is_noop or test_flush_no_queue_post_when_empty or test_found_key_returns_true or test_multiple_flushes_across_steps or test_multiple_keys_single_step or test_new_key_returns_none or test_not_found_key_returns_false or test_repeated_lookup_same_key_no_duplicate_batch or test_shutdown_unblocks_worker'",
+      "returncode": 0,
+      "status": "completed",
+      "summary_lines": [
+        "/workspace/r14-run-vllm/vllm/__init__.py:7: RuntimeWarning: Failed to read commit hash:",
+        "11 passed, 25 deselected, 1 warning in 10.06s"
+      ],
+      "test_names": [
+        "test_cleanup_preserves_shared_entries",
+        "test_cleanup_removes_entries",
+        "test_cleanup_unknown_req_id_is_noop",
+        "test_flush_no_queue_post_when_empty",
+        "test_found_key_returns_true",
+        "test_multiple_flushes_across_steps",
+        "test_multiple_keys_single_step",
+        "test_new_key_returns_none",
+        "test_not_found_key_returns_false",
+        "test_repeated_lookup_same_key_no_duplicate_batch",
+        "test_shutdown_unblocks_worker"
+      ],
+      "test_paths": [
+        "tests/v1/kv_offload/tiering/test_async_lookup.py",
+        "tests/v1/kv_offload/tiering/test_fs_tier.py",
+        "tests/v1/kv_offload/tiering/test_obj_tier.py"
+      ]
+    }
+  ],
+  "remote": {
+    "gpu_lanes": [
+      0,
+      1
+    ],
+    "host": "root@194.228.55.129",
+    "port": 31082
+  },
+  "schema_version": "0.1",
+  "selection_lock_sha256": "sha256:4590b7667b2e0d1b73b91ccf4f54ff1682cd20d98e10aa612d910419a4695372",
+  "started_at": "2026-09-03T02:40:12.643619+00:00",
+  "static_evidence_sha256": "sha256:ca1ca920facc83a8debf771ffddef25fe2d15064eb81252ba10822e23ef7e09f",
+  "test_plan_sha256": "sha256:904a8448d639cd8fe5899f1e0602497f13ecae5287520dc812c8258af126e63c",
+  "test_timeout_seconds": 180
+}

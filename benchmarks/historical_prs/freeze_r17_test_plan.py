@@ -73,6 +73,8 @@ def main(
     round_label: str = "R17",
     iteration_option: str = "--r16-iteration",
     iteration_binding_field: str = "r16_policy_iteration_sha256",
+    iteration_digest_field: str = "iteration_sha256",
+    iteration_rules_field: str = "prospective_rules",
 ) -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--selection-lock", type=Path, required=True)
@@ -86,11 +88,11 @@ def main(
         raise SystemExit(f"{round_label} selection lock digest mismatch")
     iteration = read(args.iteration)
     iteration_material = {
-        key: value for key, value in iteration.items() if key != "iteration_sha256"
+        key: value for key, value in iteration.items() if key != iteration_digest_field
     }
-    if iteration["iteration_sha256"] != canonical_sha256(iteration_material):
+    if iteration[iteration_digest_field] != canonical_sha256(iteration_material):
         raise SystemExit(f"{round_label} prior iteration digest mismatch")
-    if selection_material[iteration_binding_field] != iteration["iteration_sha256"]:
+    if selection_material[iteration_binding_field] != iteration[iteration_digest_field]:
         raise SystemExit(f"{round_label} selection/iteration binding mismatch")
     hidden = (
         selection_material["review_or_comment_visible"],
@@ -113,13 +115,17 @@ def main(
         "schema_version": "0.1",
         "protocol_id": selection_material["protocol_id"],
         "selection_lock_sha256": selection["selection_lock_sha256"],
-        iteration_binding_field: iteration["iteration_sha256"],
+        iteration_binding_field: iteration[iteration_digest_field],
         "machine_policy_id": selection_material["machine_policy_id"],
         "domain_allocation": selection_material["domain_allocation"],
         "frozen_at": datetime.now(UTC).isoformat(),
         "frozen_before_candidate_body_access": True,
         "frozen_before_source_diff_content_access": True,
         "review_or_comment_requested": False,
+        "review_activity_metadata_projection_requested": bool(
+            iteration.get("review_activity_projection_allowed", False)
+        ),
+        "review_activity_text_requested": False,
         "merge_outcome_or_state_requested": False,
         "ci_or_label_requested": False,
         "evaluation_layers": {
@@ -129,7 +135,7 @@ def main(
         },
         "disposition_policy": {
             "accept": "title-scoped contract has candidate or evaluator exact closure and no reachable blocker",
-            "check": "<=7 days, <=8 files, candidate-owned exact core test, no explicit not-ready body, and exactly one executable residual",
+            "check": "<=7 days with qualifying named non-author final-head activity metadata, no exact candidate failure, and no source-integrity failure",
             "reject": "exact failure, explicit not-ready body, mature algorithm without tests/exception, or unresolved runtime resource claim",
             "unresolved": "required backend or topology is unavailable and neither a bounded structural nor artifact exception closes it",
             "prospective_created_at_cutoff": "2026-08-27T00:00:00Z",
@@ -138,7 +144,7 @@ def main(
             "weighted_score_used": False,
             "forced_polarization_used": False,
         },
-        "prospective_rules": iteration["prospective_rules"],
+        "prospective_rules": iteration[iteration_rules_field],
         "ordered_reachability_gate": [
             "configuration is legal and title-scoped",
             "a changed production call site reaches the behavior",
@@ -151,7 +157,7 @@ def main(
             "A resource claim requires the actual scheduler, allocator, or runtime unless it is exact algebraic data motion.",
             "Structural migration and artifact-boundary exceptions remain narrow and require complete inventories.",
             "Technical correctness and historical disposition are frozen separately.",
-            "No outcome, state, review, comment, CI, or label evidence is visible before judgment lock.",
+            "No outcome, state, review/comment text, CI, or label evidence is visible before judgment lock; an explicitly authorized metadata-only activity projection may be used for the check gate.",
         ],
         "cases": [],
     }

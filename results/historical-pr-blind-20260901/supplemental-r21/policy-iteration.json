@@ -1,0 +1,128 @@
+{
+  "derived_after_r21_reveal": true,
+  "generated_at": "2026-09-03T03:32:41.356264+00:00",
+  "iteration_sha256": "sha256:1226b9024b51a15003ee3c6c11d935599c7ecbc9b136b662eb8285a7a9ab2939",
+  "known_limitations": [
+    "Historical merge disposition is only partly identifiable from code and test evidence.",
+    "The activity projection observes event metadata and derived booleans but intentionally withholds review text and all terminal outcome fields.",
+    "Precedent consensus is conservative and may abstain frequently when prior outcomes conflict.",
+    "R21 and later rounds remain explicitly nonweighted, so the legacy numeric merged-score floor is not directly auditable."
+  ],
+  "next_group": {
+    "allocation": {
+      "inference": 100
+    },
+    "case_count": 100,
+    "future_groups_preselected": false,
+    "inference_project_allocation": {
+      "flashinfer": 25,
+      "sglang": 25,
+      "tensorrt_llm": 25,
+      "vllm": 25
+    },
+    "round": "R22"
+  },
+  "observed_metrics": {
+    "binary_direction_matches": 68,
+    "cases": 100,
+    "exact_label_matches": 67,
+    "legacy_exact_label_matches": 64,
+    "machine_check_precision": null,
+    "machine_reject_precision": 0.8,
+    "merged_cases": 63,
+    "merged_machine_accepts": 63,
+    "oracle_decisions": {
+      "accept": 63,
+      "check": 1,
+      "reject": 36
+    },
+    "same_cohort_exact_accuracy_gain": 0.030000000000000027
+  },
+  "prospective_rules": [
+    {
+      "evidence": [
+        "The R21 execution gate bounded tail latency without converting timeouts into exact failures."
+      ],
+      "id": "R22-TIME-BUDGET-GATE",
+      "rule": "Abandon an individual normal PR test after 60 seconds and a TensorRT-LLM PR test after 20 seconds. Record abandoned-time-budget as a neutral capability gap; timeout alone is never a candidate failure and does not trigger a retry loop."
+    },
+    {
+      "evidence": [
+        "R21 contained one check oracle, TensorRT-LLM #18614, distinguished by fresh final-head collaborator activity; the other recent cases were reject."
+      ],
+      "id": "R22-CHECK-REQUIRES-ACTIVE-REVIEW",
+      "rule": "Use check only for a <=7-day PR with outcome-free evidence of substantive named non-author activity after the frozen head. Review text, state, merge outcome, labels, and CI status remain hidden; absent qualifying activity, a recent PR predicts reject."
+    },
+    {
+      "evidence": [
+        "The two R21 bracketed-draft cases, FlashInfer #3015 and TensorRT-LLM #14605, were both oracle-reject; the narrow prefix rule avoids conflating speculative draft tokens."
+      ],
+      "id": "R22-BRACKETED-DRAFT-VETO",
+      "rule": "A title beginning with an explicit [Draft] marker predicts reject unless an exact evaluator-owned closure supersedes the declared readiness state. Incidental uses of draft for speculative decoding do not match this rule."
+    },
+    {
+      "evidence": [
+        "Leave-one-out application to R21 identified the three abandoned Qwen3.5Opt stack members and introduced no merged false reject."
+      ],
+      "id": "R22-NEGATIVE-PRECEDENT-CONSENSUS",
+      "rule": "For a mature otherwise-acceptable PR, reject on precedent only when at least two prior revealed cases from the same project and risk family pass a frozen close-neighbor gate and every such neighbor is reject. Any accepted close neighbor vetoes this negative inference."
+    },
+    {
+      "evidence": [
+        "The frozen thresholds improved R21 leave-one-out exact labels from 67 to 70 before the independent bracketed-draft rule, with 63/63 merged recall preserved."
+      ],
+      "id": "R22-PRECEDENT-NEIGHBOR-GATE",
+      "rule": "A close neighbor requires title-token Jaccard >=0.35, non-test source-path Jaccard >=0.40, or source-directory-prefix Jaccard >=0.75. Retrieval ranking is evidence selection, not a weighted disposition score."
+    },
+    {
+      "evidence": [
+        "R21 preserved all 63 merged cases while project and runtime-pass rates were too mixed for a safe universal threshold."
+      ],
+      "id": "R22-MERGED-RECALL-GUARD",
+      "rule": "Do not apply broad project, platform, test-count, or runtime-pass rejection heuristics. Exact candidate failure, explicit readiness veto, source-integrity failure, or unanimous negative precedent is required to overturn mature technical closure."
+    },
+    {
+      "evidence": [
+        "R21 runtime success was not itself disposition-predictive, while exact candidate failure remained a high-precision reject signal."
+      ],
+      "id": "R22-TECHNICAL-DISPOSITION-SPLIT",
+      "rule": "Keep technical_contract separate from disposition. Abandoned, dependency-blocked, and unavailable-capability runs remain bounded-gap unless an exact candidate-owned assertion fails."
+    }
+  ],
+  "protocol_id": "historical-pr-iterative-policy-r21-to-r22-v0.1",
+  "retrospective_leave_one_out_check": {
+    "cases": 100,
+    "exact_label_matches": 72,
+    "merged_cases": 63,
+    "merged_machine_accepts": 63,
+    "new_correct_rejects": [
+      "flashinfer-pr-3015",
+      "sglang-pr-26856",
+      "sglang-pr-26857",
+      "sglang-pr-26858",
+      "tensorrt_llm-pr-14605"
+    ],
+    "new_incorrect_rejects": [],
+    "not_a_rescore": true,
+    "purpose": "validate only the general rules proposed for R22; R21 locks remain unchanged"
+  },
+  "retrospective_r21_locks_changed": false,
+  "review_activity_projection_allowed": true,
+  "schema_version": "0.1",
+  "source_audit_sha256": "sha256:ec931542f586ba7434fa431618ecb22c338460bb19f4a9d6d1003b0fb1e79184",
+  "source_lock_set_sha256": "sha256:e8067ed6c73b9c7a0c3784d73c9cceb9f47a474e65e5724796fbd3a81c0eafc1",
+  "source_selection_lock_sha256": "sha256:4590b7667b2e0d1b73b91ccf4f54ff1682cd20d98e10aa612d910419a4695372",
+  "workload_ledger": {
+    "completed_through_r21": {
+      "inference": 100
+    },
+    "remaining_after_r21": {
+      "inference": 400
+    },
+    "requested": {
+      "group_size": 100,
+      "groups": 5,
+      "inference": 500
+    }
+  }
+}

@@ -78,7 +78,10 @@ def _query(query_string: str, cursor: str | None) -> dict[str, Any]:
 
 
 def _paths(node: dict[str, Any]) -> list[str]:
-    return [str(item["path"]) for item in node["files"]["nodes"]]
+    files = node.get("files")
+    if not isinstance(files, dict):
+        return []
+    return [str(item["path"]) for item in files.get("nodes") or []]
 
 
 def _first_commit(node: dict[str, Any]) -> dict[str, Any] | None:
@@ -106,6 +109,8 @@ def _roughly_eligible(
     node: dict[str, Any], project: dict[str, Any], policy: dict[str, Any]
 ) -> bool:
     rules = policy["eligibility"]
+    if not isinstance(node.get("files"), dict):
+        return False
     paths = _paths(node)
     changed_files = int(node.get("changedFiles") or 0)
     changed_lines = int(node.get("additions") or 0) + int(node.get("deletions") or 0)
@@ -145,6 +150,7 @@ def _roughly_eligible(
 def _project_node(node: dict[str, Any], band: str) -> dict[str, Any]:
     commit = _first_commit(node)
     paths = _paths(node)
+    files = node.get("files") or {}
     return {
         "number": int(node["number"]),
         "title": node["title"],
@@ -159,7 +165,7 @@ def _project_node(node: dict[str, Any], band: str) -> dict[str, Any]:
         "additions": int(node["additions"]),
         "deletions": int(node["deletions"]),
         "paths": paths,
-        "path_list_complete": node["files"]["totalCount"] == len(paths),
+        "path_list_complete": files.get("totalCount") == len(paths),
     }
 
 

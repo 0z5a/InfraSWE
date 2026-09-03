@@ -28,6 +28,8 @@ REPOSITORY_ALIASES = {
     "liger": "linkedin/Liger-Kernel",
     "cutlass": "NVIDIA/cutlass",
     "deepgemm": "deepseek-ai/DeepGEMM",
+    "tensorrt_llm": "NVIDIA/TensorRT-LLM",
+    "tensorrt-llm": "NVIDIA/TensorRT-LLM",
 }
 MODEL_PROJECT_ALIASES = {"megatron": "megatron-core", "liger": "liger-kernel"}
 
@@ -64,6 +66,8 @@ def identity(item: Any) -> tuple[str, int] | None:
     if not isinstance(case_id, str):
         return None
     prefix, separator, raw_number = case_id.rpartition("-pr-")
+    if not separator:
+        prefix, separator, raw_number = case_id.rpartition("#")
     if not separator or not raw_number.isdigit() or prefix not in REPOSITORY_ALIASES:
         return None
     return REPOSITORY_ALIASES[prefix].lower(), int(raw_number)

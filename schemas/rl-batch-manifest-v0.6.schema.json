@@ -1,0 +1,213 @@
+{
+  "$defs": {
+    "RLBatchMember": {
+      "additionalProperties": false,
+      "properties": {
+        "behavior_policy_snapshot_sha256": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Behavior Policy Snapshot Sha256",
+          "type": "string"
+        },
+        "benchmark_cell_sha256": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Benchmark Cell Sha256",
+          "type": "string"
+        },
+        "episode_outcome_sha256": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Episode Outcome Sha256",
+          "type": "string"
+        },
+        "episode_seal_sha256": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Episode Seal Sha256",
+          "type": "string"
+        },
+        "episode_status": {
+          "enum": [
+            "VALID_PASS",
+            "VALID_FAIL",
+            "POLICY_BUDGET_EXCEEDED",
+            "INFRA_INVALID",
+            "BENCHMARK_DEFECT",
+            "ROLLOUT_DEFECT",
+            "JUDGE_UNRESOLVED",
+            "STALE_REJECTED",
+            "SECURITY_REJECTED",
+            "CENSORED"
+          ],
+          "title": "Episode Status",
+          "type": "string"
+        },
+        "feedback_leakage_blocked": {
+          "default": false,
+          "title": "Feedback Leakage Blocked",
+          "type": "boolean"
+        },
+        "policy_gradient_eligible": {
+          "title": "Policy Gradient Eligible",
+          "type": "boolean"
+        },
+        "policy_lag": {
+          "minimum": 0,
+          "title": "Policy Lag",
+          "type": "integer"
+        },
+        "reward_pack_sha256": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Reward Pack Sha256",
+          "type": "string"
+        },
+        "reward_revoked": {
+          "default": false,
+          "title": "Reward Revoked",
+          "type": "boolean"
+        },
+        "reward_schema_version": {
+          "const": "0.6",
+          "default": "0.6",
+          "title": "Reward Schema Version",
+          "type": "string"
+        },
+        "task_seal_sha256": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Task Seal Sha256",
+          "type": "string"
+        },
+        "training_mask": {
+          "enum": [
+            0,
+            1
+          ],
+          "title": "Training Mask",
+          "type": "integer"
+        },
+        "trajectory_sha256": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Trajectory Sha256",
+          "type": "string"
+        },
+        "valid_step_count": {
+          "minimum": 0,
+          "title": "Valid Step Count",
+          "type": "integer"
+        },
+        "valid_token_count": {
+          "minimum": 0,
+          "title": "Valid Token Count",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "episode_outcome_sha256",
+        "episode_seal_sha256",
+        "trajectory_sha256",
+        "reward_pack_sha256",
+        "task_seal_sha256",
+        "behavior_policy_snapshot_sha256",
+        "benchmark_cell_sha256",
+        "episode_status",
+        "training_mask",
+        "policy_gradient_eligible",
+        "valid_token_count",
+        "valid_step_count",
+        "policy_lag"
+      ],
+      "title": "RLBatchMember",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "algorithm_profile_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Algorithm Profile Sha256",
+      "type": "string"
+    },
+    "batch_id": {
+      "title": "Batch Id",
+      "type": "string"
+    },
+    "batch_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Batch Sha256",
+      "type": "string"
+    },
+    "group_manifest_sha256s": {
+      "items": {
+        "pattern": "^sha256:[0-9a-f]{64}$",
+        "type": "string"
+      },
+      "minItems": 1,
+      "title": "Group Manifest Sha256S",
+      "type": "array"
+    },
+    "members": {
+      "items": {
+        "$ref": "#/$defs/RLBatchMember"
+      },
+      "minItems": 1,
+      "title": "Members",
+      "type": "array"
+    },
+    "policy_lag_distribution": {
+      "additionalProperties": {
+        "type": "number"
+      },
+      "title": "Policy Lag Distribution",
+      "type": "object"
+    },
+    "proximal_policy_snapshot_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Proximal Policy Snapshot Sha256",
+      "type": "string"
+    },
+    "sampler_selection_log_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Sampler Selection Log Sha256",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "0.6",
+      "default": "0.6",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "target_policy_snapshot_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Target Policy Snapshot Sha256",
+      "type": "string"
+    },
+    "training_run_seal_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Training Run Seal Sha256",
+      "type": "string"
+    },
+    "valid_step_count": {
+      "minimum": 0,
+      "title": "Valid Step Count",
+      "type": "integer"
+    },
+    "valid_token_count": {
+      "minimum": 0,
+      "title": "Valid Token Count",
+      "type": "integer"
+    }
+  },
+  "required": [
+    "batch_id",
+    "training_run_seal_sha256",
+    "target_policy_snapshot_sha256",
+    "proximal_policy_snapshot_sha256",
+    "algorithm_profile_sha256",
+    "members",
+    "group_manifest_sha256s",
+    "valid_token_count",
+    "valid_step_count",
+    "policy_lag_distribution",
+    "sampler_selection_log_sha256",
+    "batch_sha256"
+  ],
+  "title": "RLBatchManifest",
+  "type": "object"
+}

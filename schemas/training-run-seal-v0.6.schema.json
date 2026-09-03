@@ -1,0 +1,193 @@
+{
+  "$defs": {
+    "TrainingBudgets": {
+      "additionalProperties": false,
+      "properties": {
+        "environment_gpu_hours": {
+          "minimum": 0,
+          "title": "Environment Gpu Hours",
+          "type": "number"
+        },
+        "judge_gpu_hours": {
+          "minimum": 0,
+          "title": "Judge Gpu Hours",
+          "type": "number"
+        },
+        "learner_gpu_hours": {
+          "minimum": 0,
+          "title": "Learner Gpu Hours",
+          "type": "number"
+        },
+        "total_episode_attempts": {
+          "minimum": 1,
+          "title": "Total Episode Attempts",
+          "type": "integer"
+        },
+        "valid_episodes": {
+          "minimum": 1,
+          "title": "Valid Episodes",
+          "type": "integer"
+        },
+        "wall_time_s": {
+          "minimum": 1,
+          "title": "Wall Time S",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "valid_episodes",
+        "total_episode_attempts",
+        "environment_gpu_hours",
+        "learner_gpu_hours",
+        "judge_gpu_hours",
+        "wall_time_s"
+      ],
+      "title": "TrainingBudgets",
+      "type": "object"
+    },
+    "TrainingInfrastructure": {
+      "additionalProperties": false,
+      "properties": {
+        "learner_fabric_sha256": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Learner Fabric Sha256",
+          "type": "string"
+        },
+        "rollout_fabric_sha256": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Rollout Fabric Sha256",
+          "type": "string"
+        },
+        "runner_pool_policy_sha256": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Runner Pool Policy Sha256",
+          "type": "string"
+        }
+      },
+      "required": [
+        "rollout_fabric_sha256",
+        "learner_fabric_sha256",
+        "runner_pool_policy_sha256"
+      ],
+      "title": "TrainingInfrastructure",
+      "type": "object"
+    },
+    "TrainingSplits": {
+      "additionalProperties": false,
+      "properties": {
+        "dev_set_sha256": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Dev Set Sha256",
+          "type": "string"
+        },
+        "heldout_set_sha256": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Heldout Set Sha256",
+          "type": "string"
+        },
+        "train_set_sha256": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Train Set Sha256",
+          "type": "string"
+        }
+      },
+      "required": [
+        "train_set_sha256",
+        "dev_set_sha256",
+        "heldout_set_sha256"
+      ],
+      "title": "TrainingSplits",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "algorithm_profile_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Algorithm Profile Sha256",
+      "type": "string"
+    },
+    "budgets": {
+      "$ref": "#/$defs/TrainingBudgets"
+    },
+    "checkpoint_policy_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Checkpoint Policy Sha256",
+      "type": "string"
+    },
+    "credit_profile_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Credit Profile Sha256",
+      "type": "string"
+    },
+    "feedback_profile_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Feedback Profile Sha256",
+      "type": "string"
+    },
+    "heldout_checkpoint_selection": {
+      "const": "forbidden",
+      "default": "forbidden",
+      "title": "Heldout Checkpoint Selection",
+      "type": "string"
+    },
+    "infrastructure": {
+      "$ref": "#/$defs/TrainingInfrastructure"
+    },
+    "initial_policy_snapshot_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Initial Policy Snapshot Sha256",
+      "type": "string"
+    },
+    "reward_profile_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Reward Profile Sha256",
+      "type": "string"
+    },
+    "run_id": {
+      "title": "Run Id",
+      "type": "string"
+    },
+    "sampler_profile_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Sampler Profile Sha256",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "0.6",
+      "default": "0.6",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "stop_policy_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Stop Policy Sha256",
+      "type": "string"
+    },
+    "task_splits": {
+      "$ref": "#/$defs/TrainingSplits"
+    },
+    "training_run_seal_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Training Run Seal Sha256",
+      "type": "string"
+    }
+  },
+  "required": [
+    "run_id",
+    "initial_policy_snapshot_sha256",
+    "algorithm_profile_sha256",
+    "sampler_profile_sha256",
+    "reward_profile_sha256",
+    "credit_profile_sha256",
+    "feedback_profile_sha256",
+    "task_splits",
+    "infrastructure",
+    "budgets",
+    "checkpoint_policy_sha256",
+    "stop_policy_sha256",
+    "training_run_seal_sha256"
+  ],
+  "title": "TrainingRunSeal",
+  "type": "object"
+}

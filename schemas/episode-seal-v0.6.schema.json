@@ -1,0 +1,180 @@
+{
+  "additionalProperties": false,
+  "description": "Immutable execution/evidence seal created before a RewardPack.\n\nRewardPack points to this seal. EpisodeOutcomeSeal then binds both objects, avoiding\nthe impossible mutual-digest cycle in the prose RFC example.",
+  "properties": {
+    "benchmark_cell_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Benchmark Cell Sha256",
+      "type": "string"
+    },
+    "candidate_artifact_manifest_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Candidate Artifact Manifest Sha256",
+      "type": "string"
+    },
+    "capability_resolution_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Capability Resolution Sha256",
+      "type": "string"
+    },
+    "draft_seal_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Draft Seal Sha256",
+      "type": "string"
+    },
+    "episode_id": {
+      "title": "Episode Id",
+      "type": "string"
+    },
+    "episode_seal_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Episode Seal Sha256",
+      "type": "string"
+    },
+    "evidence_pack_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Evidence Pack Sha256",
+      "type": "string"
+    },
+    "external_policy_state_sha256": {
+      "anyOf": [
+        {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "External Policy State Sha256"
+    },
+    "failure_code": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Failure Code"
+    },
+    "failure_owner": {
+      "enum": [
+        "candidate",
+        "policy",
+        "task",
+        "benchmark",
+        "infrastructure",
+        "sandbox",
+        "rollout",
+        "judge",
+        "teacher",
+        "trainer",
+        "none"
+      ],
+      "title": "Failure Owner",
+      "type": "string"
+    },
+    "harness_profile_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Harness Profile Sha256",
+      "type": "string"
+    },
+    "policy_cell_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Policy Cell Sha256",
+      "type": "string"
+    },
+    "policy_snapshot_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Policy Snapshot Sha256",
+      "type": "string"
+    },
+    "resource_lease_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Resource Lease Sha256",
+      "type": "string"
+    },
+    "sandbox_profile_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Sandbox Profile Sha256",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "0.6",
+      "default": "0.6",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "sealed_at": {
+      "format": "date-time",
+      "title": "Sealed At",
+      "type": "string"
+    },
+    "started_at": {
+      "format": "date-time",
+      "title": "Started At",
+      "type": "string"
+    },
+    "status": {
+      "enum": [
+        "VALID_PASS",
+        "VALID_FAIL",
+        "POLICY_BUDGET_EXCEEDED",
+        "INFRA_INVALID",
+        "BENCHMARK_DEFECT",
+        "ROLLOUT_DEFECT",
+        "JUDGE_UNRESOLVED",
+        "STALE_REJECTED",
+        "SECURITY_REJECTED",
+        "CENSORED"
+      ],
+      "title": "Status",
+      "type": "string"
+    },
+    "task_seal_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Task Seal Sha256",
+      "type": "string"
+    },
+    "training_mask": {
+      "enum": [
+        0,
+        1
+      ],
+      "title": "Training Mask",
+      "type": "integer"
+    },
+    "trajectory_envelope_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Trajectory Envelope Sha256",
+      "type": "string"
+    }
+  },
+  "required": [
+    "episode_id",
+    "task_seal_sha256",
+    "draft_seal_sha256",
+    "policy_snapshot_sha256",
+    "policy_cell_sha256",
+    "harness_profile_sha256",
+    "sandbox_profile_sha256",
+    "capability_resolution_sha256",
+    "resource_lease_sha256",
+    "benchmark_cell_sha256",
+    "trajectory_envelope_sha256",
+    "candidate_artifact_manifest_sha256",
+    "evidence_pack_sha256",
+    "status",
+    "failure_owner",
+    "training_mask",
+    "started_at",
+    "sealed_at",
+    "episode_seal_sha256"
+  ],
+  "title": "EpisodeSeal",
+  "type": "object"
+}

@@ -1,0 +1,159 @@
+{
+  "$defs": {
+    "CreditStepAssignment": {
+      "additionalProperties": false,
+      "properties": {
+        "evidence_refs": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Evidence Refs",
+          "type": "array"
+        },
+        "reason_code": {
+          "title": "Reason Code",
+          "type": "string"
+        },
+        "role": {
+          "enum": [
+            "causal-candidate",
+            "pivotal-suspect",
+            "detection-only",
+            "reusable-positive",
+            "unresolved"
+          ],
+          "title": "Role",
+          "type": "string"
+        },
+        "step_id": {
+          "minimum": 0,
+          "title": "Step Id",
+          "type": "integer"
+        },
+        "weight": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Weight",
+          "type": "number"
+        }
+      },
+      "required": [
+        "step_id",
+        "role",
+        "weight",
+        "reason_code"
+      ],
+      "title": "CreditStepAssignment",
+      "type": "object"
+    },
+    "TokenModulation": {
+      "additionalProperties": false,
+      "properties": {
+        "modulated_advantage": {
+          "title": "Modulated Advantage",
+          "type": "number"
+        },
+        "multiplier": {
+          "exclusiveMinimum": 0,
+          "title": "Multiplier",
+          "type": "number"
+        },
+        "span": {
+          "$ref": "#/$defs/TokenRange"
+        },
+        "verifier_advantage": {
+          "title": "Verifier Advantage",
+          "type": "number"
+        }
+      },
+      "required": [
+        "span",
+        "verifier_advantage",
+        "multiplier",
+        "modulated_advantage"
+      ],
+      "title": "TokenModulation",
+      "type": "object"
+    },
+    "TokenRange": {
+      "additionalProperties": false,
+      "properties": {
+        "end": {
+          "exclusiveMinimum": 0,
+          "title": "End",
+          "type": "integer"
+        },
+        "start": {
+          "minimum": 0,
+          "title": "Start",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "start",
+        "end"
+      ],
+      "title": "TokenRange",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "anchor_reward_event_ids": {
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1,
+      "title": "Anchor Reward Event Ids",
+      "type": "array"
+    },
+    "credit_map_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Credit Map Sha256",
+      "type": "string"
+    },
+    "episode_id": {
+      "title": "Episode Id",
+      "type": "string"
+    },
+    "profile_id": {
+      "title": "Profile Id",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "0.6",
+      "default": "0.6",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "step_assignments": {
+      "items": {
+        "$ref": "#/$defs/CreditStepAssignment"
+      },
+      "title": "Step Assignments",
+      "type": "array"
+    },
+    "token_modulations": {
+      "items": {
+        "$ref": "#/$defs/TokenModulation"
+      },
+      "title": "Token Modulations",
+      "type": "array"
+    },
+    "unresolved_credit_mass": {
+      "maximum": 1,
+      "minimum": 0,
+      "title": "Unresolved Credit Mass",
+      "type": "number"
+    }
+  },
+  "required": [
+    "profile_id",
+    "episode_id",
+    "anchor_reward_event_ids",
+    "unresolved_credit_mass",
+    "credit_map_sha256"
+  ],
+  "title": "CreditAssignmentMap",
+  "type": "object"
+}

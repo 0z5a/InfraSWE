@@ -1,0 +1,189 @@
+{
+  "$defs": {
+    "RewardScope": {
+      "additionalProperties": false,
+      "properties": {
+        "comparison_cell_sha256": {
+          "anyOf": [
+            {
+              "pattern": "^sha256:[0-9a-f]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Comparison Cell Sha256"
+        },
+        "episode_id": {
+          "title": "Episode Id",
+          "type": "string"
+        },
+        "obligation_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Obligation Id"
+        },
+        "step_ids": {
+          "items": {
+            "type": "integer"
+          },
+          "title": "Step Ids",
+          "type": "array"
+        },
+        "token_ranges": {
+          "items": {
+            "$ref": "#/$defs/TokenRange"
+          },
+          "title": "Token Ranges",
+          "type": "array"
+        }
+      },
+      "required": [
+        "episode_id"
+      ],
+      "title": "RewardScope",
+      "type": "object"
+    },
+    "TokenRange": {
+      "additionalProperties": false,
+      "properties": {
+        "end": {
+          "exclusiveMinimum": 0,
+          "title": "End",
+          "type": "integer"
+        },
+        "start": {
+          "minimum": 0,
+          "title": "Start",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "start",
+        "end"
+      ],
+      "title": "TokenRange",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "authority": {
+      "enum": [
+        "OFFICIAL_HARD",
+        "OFFICIAL_COMPONENT",
+        "VALIDITY",
+        "AUDIT_ONLY",
+        "TRAINING_SHAPING",
+        "DIAGNOSTIC",
+        "NONE"
+      ],
+      "title": "Authority",
+      "type": "string"
+    },
+    "event_id": {
+      "title": "Event Id",
+      "type": "string"
+    },
+    "event_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Event Sha256",
+      "type": "string"
+    },
+    "evidence_refs": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Evidence Refs",
+      "type": "array"
+    },
+    "fact_id": {
+      "title": "Fact Id",
+      "type": "string"
+    },
+    "kind": {
+      "enum": [
+        "correctness",
+        "regression",
+        "negative-boundary",
+        "mechanism-proof",
+        "safety-liveness",
+        "environment-validity",
+        "performance",
+        "official-semantic",
+        "teacher-shaping",
+        "trajectory-critic",
+        "policy-cost",
+        "process-shaping",
+        "candidate-self-report"
+      ],
+      "title": "Kind",
+      "type": "string"
+    },
+    "owner": {
+      "title": "Owner",
+      "type": "string"
+    },
+    "producer_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Producer Sha256",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "0.6",
+      "default": "0.6",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "scope": {
+      "$ref": "#/$defs/RewardScope"
+    },
+    "status": {
+      "enum": [
+        "VALID",
+        "INVALID",
+        "UNRESOLVED"
+      ],
+      "title": "Status",
+      "type": "string"
+    },
+    "value": {
+      "title": "Value",
+      "type": "number"
+    },
+    "visibility": {
+      "enum": [
+        "POLICY_VISIBLE",
+        "TEACHER_VISIBLE_REDACTED",
+        "ADVANTAGE_ONLY",
+        "PRIVATE_AUDIT_ONLY"
+      ],
+      "title": "Visibility",
+      "type": "string"
+    }
+  },
+  "required": [
+    "event_id",
+    "fact_id",
+    "kind",
+    "value",
+    "status",
+    "authority",
+    "owner",
+    "visibility",
+    "scope",
+    "producer_sha256",
+    "event_sha256"
+  ],
+  "title": "RewardEvent",
+  "type": "object"
+}

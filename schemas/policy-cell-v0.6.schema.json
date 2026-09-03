@@ -1,0 +1,99 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "compaction_policy_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Compaction Policy Sha256",
+      "type": "string"
+    },
+    "decoding_policy_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Decoding Policy Sha256",
+      "type": "string"
+    },
+    "external_policy_state_sha256": {
+      "anyOf": [
+        {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "External Policy State Sha256"
+    },
+    "feedback_visibility_policy_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Feedback Visibility Policy Sha256",
+      "type": "string"
+    },
+    "harness_profile_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Harness Profile Sha256",
+      "type": "string"
+    },
+    "policy_cell_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Policy Cell Sha256",
+      "type": "string"
+    },
+    "policy_snapshot_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Policy Snapshot Sha256",
+      "type": "string"
+    },
+    "prompt_policy_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Prompt Policy Sha256",
+      "type": "string"
+    },
+    "sandbox_profile_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Sandbox Profile Sha256",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "0.6",
+      "default": "0.6",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "skill_pack_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Skill Pack Sha256",
+      "type": "string"
+    },
+    "tool_policy_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Tool Policy Sha256",
+      "type": "string"
+    },
+    "update_mode": {
+      "enum": [
+        "none",
+        "external-state",
+        "adapter",
+        "full-parameter"
+      ],
+      "title": "Update Mode",
+      "type": "string"
+    }
+  },
+  "required": [
+    "policy_snapshot_sha256",
+    "update_mode",
+    "harness_profile_sha256",
+    "skill_pack_sha256",
+    "tool_policy_sha256",
+    "prompt_policy_sha256",
+    "compaction_policy_sha256",
+    "decoding_policy_sha256",
+    "feedback_visibility_policy_sha256",
+    "sandbox_profile_sha256",
+    "policy_cell_sha256"
+  ],
+  "title": "PolicyCell",
+  "type": "object"
+}

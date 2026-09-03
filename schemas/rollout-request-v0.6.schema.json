@@ -1,0 +1,147 @@
+{
+  "$defs": {
+    "RolloutBudget": {
+      "additionalProperties": false,
+      "properties": {
+        "environment_gpu_s": {
+          "minimum": 0,
+          "title": "Environment Gpu S",
+          "type": "integer"
+        },
+        "generated_tokens": {
+          "minimum": 1,
+          "title": "Generated Tokens",
+          "type": "integer"
+        },
+        "model_calls": {
+          "minimum": 1,
+          "title": "Model Calls",
+          "type": "integer"
+        },
+        "tool_calls": {
+          "minimum": 0,
+          "title": "Tool Calls",
+          "type": "integer"
+        },
+        "wall_time_s": {
+          "minimum": 1,
+          "title": "Wall Time S",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "generated_tokens",
+        "model_calls",
+        "tool_calls",
+        "wall_time_s",
+        "environment_gpu_s"
+      ],
+      "title": "RolloutBudget",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "algorithm_profile_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Algorithm Profile Sha256",
+      "type": "string"
+    },
+    "budget": {
+      "$ref": "#/$defs/RolloutBudget"
+    },
+    "draft_seal_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Draft Seal Sha256",
+      "type": "string"
+    },
+    "external_policy_state_sha256": {
+      "anyOf": [
+        {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "External Policy State Sha256"
+    },
+    "feedback_visibility_policy_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Feedback Visibility Policy Sha256",
+      "type": "string"
+    },
+    "group_id": {
+      "title": "Group Id",
+      "type": "string"
+    },
+    "group_index": {
+      "minimum": 0,
+      "title": "Group Index",
+      "type": "integer"
+    },
+    "harness_profile_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Harness Profile Sha256",
+      "type": "string"
+    },
+    "policy_snapshot_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Policy Snapshot Sha256",
+      "type": "string"
+    },
+    "request_id": {
+      "title": "Request Id",
+      "type": "string"
+    },
+    "request_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Request Sha256",
+      "type": "string"
+    },
+    "requested_resource_class": {
+      "title": "Requested Resource Class",
+      "type": "string"
+    },
+    "sandbox_profile_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Sandbox Profile Sha256",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "0.6",
+      "default": "0.6",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "seed": {
+      "title": "Seed",
+      "type": "integer"
+    },
+    "task_seal_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Task Seal Sha256",
+      "type": "string"
+    }
+  },
+  "required": [
+    "request_id",
+    "task_seal_sha256",
+    "draft_seal_sha256",
+    "policy_snapshot_sha256",
+    "harness_profile_sha256",
+    "sandbox_profile_sha256",
+    "algorithm_profile_sha256",
+    "feedback_visibility_policy_sha256",
+    "seed",
+    "group_id",
+    "group_index",
+    "budget",
+    "requested_resource_class",
+    "request_sha256"
+  ],
+  "title": "RolloutRequest",
+  "type": "object"
+}

@@ -1,0 +1,270 @@
+{
+  "$defs": {
+    "SandboxDevicePolicy": {
+      "additionalProperties": false,
+      "properties": {
+        "device_control": {
+          "const": "restricted",
+          "default": "restricted",
+          "title": "Device Control",
+          "type": "string"
+        },
+        "unallocated_peer_access": {
+          "const": "forbidden",
+          "default": "forbidden",
+          "title": "Unallocated Peer Access",
+          "type": "string"
+        },
+        "visibility": {
+          "const": "exact-lease",
+          "default": "exact-lease",
+          "title": "Visibility",
+          "type": "string"
+        }
+      },
+      "title": "SandboxDevicePolicy",
+      "type": "object"
+    },
+    "SandboxFilesystemPolicy": {
+      "additionalProperties": false,
+      "properties": {
+        "base": {
+          "const": "read-only",
+          "default": "read-only",
+          "title": "Base",
+          "type": "string"
+        },
+        "host_mounts": {
+          "const": "forbidden",
+          "default": "forbidden",
+          "title": "Host Mounts",
+          "type": "string"
+        },
+        "shared_cache_write": {
+          "const": "forbidden",
+          "default": "forbidden",
+          "title": "Shared Cache Write",
+          "type": "string"
+        },
+        "verifier_assets": {
+          "const": "not-mounted",
+          "default": "not-mounted",
+          "title": "Verifier Assets",
+          "type": "string"
+        },
+        "workspace": {
+          "const": "copy-on-write",
+          "default": "copy-on-write",
+          "title": "Workspace",
+          "type": "string"
+        }
+      },
+      "title": "SandboxFilesystemPolicy",
+      "type": "object"
+    },
+    "SandboxNetworkPolicy": {
+      "additionalProperties": false,
+      "properties": {
+        "destinations": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Destinations",
+          "type": "array"
+        },
+        "mode": {
+          "enum": [
+            "disabled",
+            "allowlist"
+          ],
+          "title": "Mode",
+          "type": "string"
+        },
+        "public_web": {
+          "const": "forbidden",
+          "default": "forbidden",
+          "title": "Public Web",
+          "type": "string"
+        }
+      },
+      "required": [
+        "mode"
+      ],
+      "title": "SandboxNetworkPolicy",
+      "type": "object"
+    },
+    "SandboxProcessPolicy": {
+      "additionalProperties": false,
+      "properties": {
+        "capability_policy": {
+          "const": "minimal",
+          "default": "minimal",
+          "title": "Capability Policy",
+          "type": "string"
+        },
+        "pid_namespace": {
+          "const": "isolated",
+          "default": "isolated",
+          "title": "Pid Namespace",
+          "type": "string"
+        },
+        "seccomp_policy_sha256": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Seccomp Policy Sha256",
+          "type": "string"
+        }
+      },
+      "required": [
+        "seccomp_policy_sha256"
+      ],
+      "title": "SandboxProcessPolicy",
+      "type": "object"
+    },
+    "SandboxSnapshotPolicy": {
+      "additionalProperties": false,
+      "properties": {
+        "gpu_context_snapshot": {
+          "const": "forbidden",
+          "default": "forbidden",
+          "title": "Gpu Context Snapshot",
+          "type": "string"
+        },
+        "host_sockets": {
+          "const": "forbidden",
+          "default": "forbidden",
+          "title": "Host Sockets",
+          "type": "string"
+        },
+        "live_process_memory": {
+          "const": "forbidden",
+          "default": "forbidden",
+          "title": "Live Process Memory",
+          "type": "string"
+        },
+        "mode": {
+          "const": "cow-filesystem-plus-logical-state",
+          "default": "cow-filesystem-plus-logical-state",
+          "title": "Mode",
+          "type": "string"
+        },
+        "secret_credentials": {
+          "const": "forbidden",
+          "default": "forbidden",
+          "title": "Secret Credentials",
+          "type": "string"
+        },
+        "verifier_private_files": {
+          "const": "forbidden",
+          "default": "forbidden",
+          "title": "Verifier Private Files",
+          "type": "string"
+        }
+      },
+      "title": "SandboxSnapshotPolicy",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "devices": {
+      "$ref": "#/$defs/SandboxDevicePolicy"
+    },
+    "enforcement": {
+      "enum": [
+        "declarative-only",
+        "runtime-attested"
+      ],
+      "title": "Enforcement",
+      "type": "string"
+    },
+    "filesystem": {
+      "$ref": "#/$defs/SandboxFilesystemPolicy"
+    },
+    "image_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Image Sha256",
+      "type": "string"
+    },
+    "mode": {
+      "enum": [
+        "agent-rootless",
+        "replay-rootless",
+        "pristine",
+        "shared-legacy"
+      ],
+      "title": "Mode",
+      "type": "string"
+    },
+    "network": {
+      "$ref": "#/$defs/SandboxNetworkPolicy"
+    },
+    "privileged": {
+      "title": "Privileged",
+      "type": "boolean"
+    },
+    "process": {
+      "$ref": "#/$defs/SandboxProcessPolicy"
+    },
+    "reward_authority": {
+      "enum": [
+        "none",
+        "diagnostic",
+        "official-pristine"
+      ],
+      "title": "Reward Authority",
+      "type": "string"
+    },
+    "rootless": {
+      "title": "Rootless",
+      "type": "boolean"
+    },
+    "runtime_attestation_sha256": {
+      "anyOf": [
+        {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Runtime Attestation Sha256"
+    },
+    "sandbox_id": {
+      "title": "Sandbox Id",
+      "type": "string"
+    },
+    "sandbox_profile_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Sandbox Profile Sha256",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "0.6",
+      "default": "0.6",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "snapshots": {
+      "$ref": "#/$defs/SandboxSnapshotPolicy"
+    }
+  },
+  "required": [
+    "sandbox_id",
+    "mode",
+    "image_sha256",
+    "rootless",
+    "privileged",
+    "filesystem",
+    "network",
+    "devices",
+    "process",
+    "snapshots",
+    "enforcement",
+    "reward_authority",
+    "sandbox_profile_sha256"
+  ],
+  "title": "SandboxProfile",
+  "type": "object"
+}

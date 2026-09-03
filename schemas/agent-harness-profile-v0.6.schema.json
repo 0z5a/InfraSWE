@@ -1,0 +1,178 @@
+{
+  "$defs": {
+    "HarnessLimits": {
+      "additionalProperties": false,
+      "properties": {
+        "max_generated_tokens": {
+          "minimum": 1,
+          "title": "Max Generated Tokens",
+          "type": "integer"
+        },
+        "max_model_calls": {
+          "minimum": 1,
+          "title": "Max Model Calls",
+          "type": "integer"
+        },
+        "max_tool_calls": {
+          "minimum": 0,
+          "title": "Max Tool Calls",
+          "type": "integer"
+        },
+        "wall_time_s": {
+          "minimum": 1,
+          "title": "Wall Time S",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "max_model_calls",
+        "max_tool_calls",
+        "max_generated_tokens",
+        "wall_time_s"
+      ],
+      "title": "HarnessLimits",
+      "type": "object"
+    },
+    "ModelBoundaryPolicy": {
+      "additionalProperties": false,
+      "properties": {
+        "capture_raw_token_ids": {
+          "const": true,
+          "default": true,
+          "title": "Capture Raw Token Ids",
+          "type": "boolean"
+        },
+        "capture_rollout_logprobs": {
+          "default": "optional",
+          "enum": [
+            "required",
+            "optional"
+          ],
+          "title": "Capture Rollout Logprobs",
+          "type": "string"
+        },
+        "capture_sampling_metadata": {
+          "const": true,
+          "default": true,
+          "title": "Capture Sampling Metadata",
+          "type": "boolean"
+        },
+        "maximum_mean_abs_delta_logp": {
+          "default": 0.05,
+          "minimum": 0,
+          "title": "Maximum Mean Abs Delta Logp",
+          "type": "number"
+        },
+        "minimum_logprob_correlation": {
+          "default": 0.99,
+          "maximum": 1,
+          "minimum": -1,
+          "title": "Minimum Logprob Correlation",
+          "type": "number"
+        },
+        "minimum_mask_alignment_rate": {
+          "default": 1.0,
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Minimum Mask Alignment Rate",
+          "type": "number"
+        },
+        "protocol": {
+          "title": "Protocol",
+          "type": "string"
+        },
+        "trainer_recompute_required": {
+          "const": true,
+          "default": true,
+          "title": "Trainer Recompute Required",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "protocol"
+      ],
+      "title": "ModelBoundaryPolicy",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "context_compaction_policy_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Context Compaction Policy Sha256",
+      "type": "string"
+    },
+    "control_flow_version": {
+      "minimum": 1,
+      "title": "Control Flow Version",
+      "type": "integer"
+    },
+    "harness_id": {
+      "title": "Harness Id",
+      "type": "string"
+    },
+    "harness_image_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Harness Image Sha256",
+      "type": "string"
+    },
+    "harness_profile_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Harness Profile Sha256",
+      "type": "string"
+    },
+    "hidden_chain_of_thought_capture": {
+      "const": false,
+      "default": false,
+      "title": "Hidden Chain Of Thought Capture",
+      "type": "boolean"
+    },
+    "limits": {
+      "$ref": "#/$defs/HarnessLimits"
+    },
+    "model_boundary": {
+      "$ref": "#/$defs/ModelBoundaryPolicy"
+    },
+    "prompt_builder_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Prompt Builder Sha256",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "0.6",
+      "default": "0.6",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "skill_pack_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Skill Pack Sha256",
+      "type": "string"
+    },
+    "tool_result_serialization_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Tool Result Serialization Sha256",
+      "type": "string"
+    },
+    "tool_schema_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Tool Schema Sha256",
+      "type": "string"
+    }
+  },
+  "required": [
+    "harness_id",
+    "harness_image_sha256",
+    "control_flow_version",
+    "prompt_builder_sha256",
+    "context_compaction_policy_sha256",
+    "tool_schema_sha256",
+    "tool_result_serialization_sha256",
+    "skill_pack_sha256",
+    "model_boundary",
+    "limits",
+    "harness_profile_sha256"
+  ],
+  "title": "AgentHarnessProfile",
+  "type": "object"
+}

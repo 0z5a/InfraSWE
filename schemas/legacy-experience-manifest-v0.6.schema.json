@@ -1,0 +1,292 @@
+{
+  "$defs": {
+    "LegacyExperienceRecord": {
+      "additionalProperties": false,
+      "properties": {
+        "acquisition_status": {
+          "enum": [
+            "acquired",
+            "invalid"
+          ],
+          "title": "Acquisition Status",
+          "type": "string"
+        },
+        "allowed_uses": {
+          "items": {
+            "enum": [
+              "external-policy",
+              "curriculum",
+              "offline-retrieval",
+              "qualitative-audit"
+            ],
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Allowed Uses",
+          "type": "array"
+        },
+        "case_id": {
+          "title": "Case Id",
+          "type": "string"
+        },
+        "domain": {
+          "enum": [
+            "training",
+            "inference",
+            "communication",
+            "other"
+          ],
+          "title": "Domain",
+          "type": "string"
+        },
+        "exact_token_ids_available": {
+          "const": false,
+          "default": false,
+          "title": "Exact Token Ids Available",
+          "type": "boolean"
+        },
+        "execution_status": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Execution Status"
+        },
+        "experience_status": {
+          "enum": [
+            "valid",
+            "invalid"
+          ],
+          "title": "Experience Status",
+          "type": "string"
+        },
+        "group_id": {
+          "title": "Group Id",
+          "type": "string"
+        },
+        "harness_fidelity": {
+          "const": "transcript-only",
+          "default": "transcript-only",
+          "title": "Harness Fidelity",
+          "type": "string"
+        },
+        "invalid_reason": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Invalid Reason"
+        },
+        "machine_decision": {
+          "anyOf": [
+            {
+              "enum": [
+                "accept",
+                "check",
+                "reject",
+                "unresolved"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Machine Decision"
+        },
+        "oracle_availability": {
+          "enum": [
+            "available",
+            "invalid"
+          ],
+          "title": "Oracle Availability",
+          "type": "string"
+        },
+        "oracle_decision": {
+          "anyOf": [
+            {
+              "enum": [
+                "accept",
+                "check",
+                "reject",
+                "unresolved"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Oracle Decision"
+        },
+        "policy_gradient_eligible": {
+          "const": false,
+          "default": false,
+          "title": "Policy Gradient Eligible",
+          "type": "boolean"
+        },
+        "project": {
+          "title": "Project",
+          "type": "string"
+        },
+        "pull_number": {
+          "minimum": 1,
+          "title": "Pull Number",
+          "type": "integer"
+        },
+        "record_sha256": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Record Sha256",
+          "type": "string"
+        },
+        "repository": {
+          "title": "Repository",
+          "type": "string"
+        },
+        "reward_pack_sha256": {
+          "default": null,
+          "title": "Reward Pack Sha256",
+          "type": "null"
+        },
+        "reward_qualification": {
+          "const": "not-qualified",
+          "default": "not-qualified",
+          "title": "Reward Qualification",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "0.6",
+          "default": "0.6",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "source_artifact_sha256s": {
+          "additionalProperties": {
+            "pattern": "^sha256:[0-9a-f]{64}$",
+            "type": "string"
+          },
+          "title": "Source Artifact Sha256S",
+          "type": "object"
+        },
+        "trajectory_fidelity": {
+          "const": "reconstructed",
+          "default": "reconstructed",
+          "title": "Trajectory Fidelity",
+          "type": "string"
+        }
+      },
+      "required": [
+        "case_id",
+        "domain",
+        "project",
+        "repository",
+        "pull_number",
+        "group_id",
+        "source_artifact_sha256s",
+        "acquisition_status",
+        "oracle_availability",
+        "experience_status",
+        "allowed_uses",
+        "record_sha256"
+      ],
+      "title": "LegacyExperienceRecord",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "attempted_records": {
+      "minimum": 1,
+      "title": "Attempted Records",
+      "type": "integer"
+    },
+    "fabricated_token_records": {
+      "const": 0,
+      "default": 0,
+      "title": "Fabricated Token Records",
+      "type": "integer"
+    },
+    "generated_at": {
+      "format": "date-time",
+      "title": "Generated At",
+      "type": "string"
+    },
+    "invalid_records": {
+      "minimum": 0,
+      "title": "Invalid Records",
+      "type": "integer"
+    },
+    "manifest_id": {
+      "title": "Manifest Id",
+      "type": "string"
+    },
+    "manifest_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Manifest Sha256",
+      "type": "string"
+    },
+    "policy_gradient_eligible_records": {
+      "const": 0,
+      "default": 0,
+      "title": "Policy Gradient Eligible Records",
+      "type": "integer"
+    },
+    "qualified_reward_records": {
+      "const": 0,
+      "default": 0,
+      "title": "Qualified Reward Records",
+      "type": "integer"
+    },
+    "records": {
+      "items": {
+        "$ref": "#/$defs/LegacyExperienceRecord"
+      },
+      "minItems": 1,
+      "title": "Records",
+      "type": "array"
+    },
+    "schema_version": {
+      "const": "0.6",
+      "default": "0.6",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "source_roots": {
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1,
+      "title": "Source Roots",
+      "type": "array"
+    },
+    "valid_records": {
+      "minimum": 0,
+      "title": "Valid Records",
+      "type": "integer"
+    }
+  },
+  "required": [
+    "manifest_id",
+    "generated_at",
+    "source_roots",
+    "records",
+    "attempted_records",
+    "valid_records",
+    "invalid_records",
+    "manifest_sha256"
+  ],
+  "title": "LegacyExperienceManifest",
+  "type": "object"
+}

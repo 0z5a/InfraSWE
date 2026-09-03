@@ -1,0 +1,70 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "duplicate_fact_policy": {
+      "const": "reject",
+      "default": "reject",
+      "title": "Duplicate Fact Policy",
+      "type": "string"
+    },
+    "hard_anchor": {
+      "const": "infra-cert",
+      "default": "infra-cert",
+      "title": "Hard Anchor",
+      "type": "string"
+    },
+    "hard_fail_ceiling": {
+      "default": -1.0,
+      "title": "Hard Fail Ceiling",
+      "type": "number"
+    },
+    "hard_fail_floor": {
+      "default": -2.0,
+      "title": "Hard Fail Floor",
+      "type": "number"
+    },
+    "hard_pass_ceiling": {
+      "default": 1.0,
+      "title": "Hard Pass Ceiling",
+      "type": "number"
+    },
+    "hard_pass_floor": {
+      "default": 0.0,
+      "title": "Hard Pass Floor",
+      "type": "number"
+    },
+    "performance_scope": {
+      "const": "same-comparison-cell",
+      "default": "same-comparison-cell",
+      "title": "Performance Scope",
+      "type": "string"
+    },
+    "process_shaping_cap": {
+      "default": 0.1,
+      "minimum": 0,
+      "title": "Process Shaping Cap",
+      "type": "number"
+    },
+    "profile_id": {
+      "title": "Profile Id",
+      "type": "string"
+    },
+    "reward_profile_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Reward Profile Sha256",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "0.6",
+      "default": "0.6",
+      "title": "Schema Version",
+      "type": "string"
+    }
+  },
+  "required": [
+    "profile_id",
+    "reward_profile_sha256"
+  ],
+  "title": "RewardProfile",
+  "type": "object"
+}

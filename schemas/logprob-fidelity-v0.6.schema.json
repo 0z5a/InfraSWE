@@ -1,0 +1,80 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "fidelity_report_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Fidelity Report Sha256",
+      "type": "string"
+    },
+    "importance_ratio_quantiles": {
+      "additionalProperties": {
+        "type": "number"
+      },
+      "title": "Importance Ratio Quantiles",
+      "type": "object"
+    },
+    "mask_alignment_rate": {
+      "maximum": 1,
+      "minimum": 0,
+      "title": "Mask Alignment Rate",
+      "type": "number"
+    },
+    "maximum_mean_abs_delta_logp": {
+      "minimum": 0,
+      "title": "Maximum Mean Abs Delta Logp",
+      "type": "number"
+    },
+    "mean_abs_delta_logp": {
+      "minimum": 0,
+      "title": "Mean Abs Delta Logp",
+      "type": "number"
+    },
+    "minimum_correlation": {
+      "maximum": 1,
+      "minimum": -1,
+      "title": "Minimum Correlation",
+      "type": "number"
+    },
+    "minimum_mask_alignment_rate": {
+      "maximum": 1,
+      "minimum": 0,
+      "title": "Minimum Mask Alignment Rate",
+      "type": "number"
+    },
+    "policy_gradient_eligible": {
+      "title": "Policy Gradient Eligible",
+      "type": "boolean"
+    },
+    "rollout_train_logprob_correlation": {
+      "maximum": 1,
+      "minimum": -1,
+      "title": "Rollout Train Logprob Correlation",
+      "type": "number"
+    },
+    "schema_version": {
+      "const": "0.6",
+      "default": "0.6",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "trajectory_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Trajectory Sha256",
+      "type": "string"
+    }
+  },
+  "required": [
+    "trajectory_sha256",
+    "rollout_train_logprob_correlation",
+    "mean_abs_delta_logp",
+    "importance_ratio_quantiles",
+    "mask_alignment_rate",
+    "minimum_correlation",
+    "maximum_mean_abs_delta_logp",
+    "minimum_mask_alignment_rate",
+    "policy_gradient_eligible",
+    "fidelity_report_sha256"
+  ],
+  "title": "LogprobFidelityReport",
+  "type": "object"
+}

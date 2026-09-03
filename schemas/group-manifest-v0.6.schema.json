@@ -1,0 +1,95 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "attempts": {
+      "minimum": 1,
+      "title": "Attempts",
+      "type": "integer"
+    },
+    "benchmark_cell_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Benchmark Cell Sha256",
+      "type": "string"
+    },
+    "final_episode_outcome_sha256s": {
+      "items": {
+        "pattern": "^sha256:[0-9a-f]{64}$",
+        "type": "string"
+      },
+      "title": "Final Episode Outcome Sha256S",
+      "type": "array"
+    },
+    "group_id": {
+      "title": "Group Id",
+      "type": "string"
+    },
+    "group_manifest_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Group Manifest Sha256",
+      "type": "string"
+    },
+    "invalid_infra": {
+      "minimum": 0,
+      "title": "Invalid Infra",
+      "type": "integer"
+    },
+    "policy_snapshot_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Policy Snapshot Sha256",
+      "type": "string"
+    },
+    "requested_size": {
+      "minimum": 1,
+      "title": "Requested Size",
+      "type": "integer"
+    },
+    "reward_profile_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Reward Profile Sha256",
+      "type": "string"
+    },
+    "sampling_probability_log_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Sampling Probability Log Sha256",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "0.6",
+      "default": "0.6",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "task_seal_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Task Seal Sha256",
+      "type": "string"
+    },
+    "valid_members": {
+      "minimum": 0,
+      "title": "Valid Members",
+      "type": "integer"
+    },
+    "zero_variance_replenished": {
+      "minimum": 0,
+      "title": "Zero Variance Replenished",
+      "type": "integer"
+    }
+  },
+  "required": [
+    "group_id",
+    "task_seal_sha256",
+    "policy_snapshot_sha256",
+    "benchmark_cell_sha256",
+    "reward_profile_sha256",
+    "requested_size",
+    "attempts",
+    "valid_members",
+    "invalid_infra",
+    "zero_variance_replenished",
+    "final_episode_outcome_sha256s",
+    "sampling_probability_log_sha256",
+    "group_manifest_sha256"
+  ],
+  "title": "GroupManifest",
+  "type": "object"
+}

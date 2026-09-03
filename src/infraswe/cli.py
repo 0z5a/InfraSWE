@@ -8,10 +8,18 @@ from typing import Annotated, Any
 
 import typer
 import yaml
+from pydantic import BaseModel, ValidationError
 from rich.console import Console
 from rich.table import Table
 
 from infraswe import __version__
+from infraswe.agentic import (
+    audit_episode_outcome_seal,
+    audit_sealed,
+    build_legacy_experience_manifest,
+    build_runtime_capability_report,
+    validate_rl_batch,
+)
 from infraswe.agents import CliAgent, NoopAgent, OracleAgent
 from infraswe.artifact_boundary import (
     audit_artifact_policy,
@@ -43,6 +51,17 @@ from infraswe.judge import (
     build_score_projection,
     build_trust_card,
     validate_judge_output,
+)
+from infraswe.models.agentic import (
+    AgentHarnessProfile,
+    AlgorithmProfile,
+    EpisodeOutcomeSeal,
+    EpisodeSeal,
+    PolicySnapshot,
+    RewardPack,
+    RLBatchManifest,
+    RolloutFabricProfile,
+    TrainingRunSeal,
 )
 from infraswe.models.artifact_boundary import (
     ArtifactPolicy,
@@ -180,6 +199,15 @@ capability_app = typer.Typer(
     no_args_is_help=True, help="Resolve v0.1 capability/resource/topology contracts."
 )
 cell_app = typer.Typer(no_args_is_help=True, help="Audit BenchmarkCell comparability.")
+rl_app = typer.Typer(no_args_is_help=True, help="Audit v0.6 agentic RL protocol artifacts.")
+rl_policy_app = typer.Typer(no_args_is_help=True, help="Validate immutable policy snapshots.")
+rl_harness_app = typer.Typer(no_args_is_help=True, help="Validate exact-token harness profiles.")
+rl_episode_app = typer.Typer(no_args_is_help=True, help="Inspect sealed agentic episodes.")
+rl_reward_app = typer.Typer(no_args_is_help=True, help="Inspect verifier-anchored rewards.")
+rl_batch_app = typer.Typer(no_args_is_help=True, help="Validate trainer-neutral RL batches.")
+rl_legacy_app = typer.Typer(no_args_is_help=True, help="Migrate legacy offline experience.")
+rl_fabric_app = typer.Typer(no_args_is_help=True, help="Audit rollout fabric capabilities.")
+rl_train_app = typer.Typer(no_args_is_help=True, help="Audit immutable training run seals.")
 app.add_typer(task_app, name="task")
 app.add_typer(schema_app, name="schema")
 app.add_typer(lease_app, name="lease")
@@ -191,9 +219,18 @@ app.add_typer(artifact_app, name="artifact")
 app.add_typer(evidence_app, name="evidence")
 app.add_typer(capability_app, name="capability")
 app.add_typer(cell_app, name="cell")
+app.add_typer(rl_app, name="rl")
 judge_app.add_typer(judge_profile_app, name="profile")
 judge_app.add_typer(judge_cell_app, name="cell")
 judge_app.add_typer(judge_pack_app, name="pack")
+rl_app.add_typer(rl_policy_app, name="policy")
+rl_app.add_typer(rl_harness_app, name="harness")
+rl_app.add_typer(rl_episode_app, name="episode")
+rl_app.add_typer(rl_reward_app, name="reward")
+rl_app.add_typer(rl_batch_app, name="batch")
+rl_app.add_typer(rl_legacy_app, name="legacy")
+rl_app.add_typer(rl_fabric_app, name="fabric")
+rl_app.add_typer(rl_train_app, name="train")
 console = Console()
 
 
@@ -215,6 +252,25 @@ def _read_sequence(path: Path) -> list[Any]:
     if not isinstance(payload, list):
         raise typer.BadParameter(f"{path} must contain an array")
     return payload
+
+
+def _read_sealed[ModelT: BaseModel](
+    path: Path,
+    model_type: type[ModelT],
+    *,
+    exit_code: int,
+) -> ModelT:
+    try:
+        model = model_type.model_validate(_read_mapping(path))
+        failures = audit_sealed(model)
+    except (TypeError, ValueError, ValidationError) as error:
+        console.print(f"[red]INVALID[/red] {error}")
+        raise typer.Exit(exit_code) from error
+    if failures:
+        for failure in failures:
+            console.print(f"[red]FAIL[/red] {failure}")
+        raise typer.Exit(exit_code)
+    return model
 
 
 def _select_agent(name: str, command: str | None, task: TaskPackage):
@@ -1431,6 +1487,195 @@ def lease_preflight(
         console.print(f"[red]ERROR[/red] {error}")
     if not validation["passed"]:
         raise typer.Exit(1)
+
+
+@rl_policy_app.command("validate")
+def validate_rl_policy(
+    policy_path: Annotated[Path, typer.Argument(exists=True, readable=True)],
+) -> None:
+    policy = _read_sealed(policy_path, PolicySnapshot, exit_code=4)
+    console.print(
+        f"[green]valid-policy[/green] id={policy.policy_id} "
+        f"version={policy.policy_version} digest={policy.policy_snapshot_sha256}"
+    )
+
+
+@rl_harness_app.command("validate")
+def validate_rl_harness(
+    harness_path: Annotated[Path, typer.Argument(exists=True, readable=True)],
+) -> None:
+    harness = _read_sealed(harness_path, AgentHarnessProfile, exit_code=4)
+    console.print(
+        f"[green]valid-harness[/green] id={harness.harness_id} "
+        f"digest={harness.harness_profile_sha256}"
+    )
+
+
+@rl_episode_app.command("inspect")
+def inspect_rl_episode(
+    episode_path: Annotated[Path, typer.Argument(exists=True, readable=True)],
+) -> None:
+    episode = _read_sealed(episode_path, EpisodeSeal, exit_code=6)
+    console.print(
+        f"[green]valid-episode-seal[/green] id={episode.episode_id} "
+        f"status={episode.status} mask={episode.training_mask}"
+    )
+
+
+@rl_episode_app.command("inspect-outcome")
+def inspect_rl_episode_outcome(
+    outcome_path: Annotated[Path, typer.Argument(exists=True, readable=True)],
+    episode_path: Annotated[Path, typer.Option("--episode", exists=True, readable=True)],
+    reward_path: Annotated[Path, typer.Option("--reward", exists=True, readable=True)],
+) -> None:
+    outcome = _read_sealed(outcome_path, EpisodeOutcomeSeal, exit_code=6)
+    episode = _read_sealed(episode_path, EpisodeSeal, exit_code=6)
+    reward = _read_sealed(reward_path, RewardPack, exit_code=6)
+    failures = audit_episode_outcome_seal(
+        outcome,
+        episode_seal=episode,
+        reward_pack=reward,
+    )
+    if failures:
+        for failure in failures:
+            console.print(f"[red]FAIL[/red] {failure}")
+        raise typer.Exit(6)
+    console.print(
+        "[green]valid-episode-outcome[/green] "
+        f"episode={outcome.episode_seal_sha256} reward={outcome.reward_pack_sha256}"
+    )
+
+
+@rl_reward_app.command("inspect")
+def inspect_rl_reward(
+    reward_path: Annotated[Path, typer.Argument(exists=True, readable=True)],
+) -> None:
+    reward = _read_sealed(reward_path, RewardPack, exit_code=3)
+    console.print(
+        f"[green]valid-reward-pack[/green] validity={reward.validity} "
+        f"band={reward.anchor.scalar_band} mask={reward.training_mask} "
+        f"official-score-affected={reward.training_reward_affects_official_score}"
+    )
+
+
+@rl_batch_app.command("validate")
+def validate_rl_batch_command(
+    batch_path: Annotated[Path, typer.Argument(exists=True, readable=True)],
+    training_run_path: Annotated[Path, typer.Option("--training-run", exists=True, readable=True)],
+    algorithm_path: Annotated[Path, typer.Option("--algorithm", exists=True, readable=True)],
+    known_policy_snapshot: Annotated[
+        list[str] | None, typer.Option("--known-policy-snapshot")
+    ] = None,
+    revoked_reward_pack: Annotated[list[str] | None, typer.Option("--revoked-reward-pack")] = None,
+) -> None:
+    batch = _read_sealed(batch_path, RLBatchManifest, exit_code=10)
+    training_run = _read_sealed(training_run_path, TrainingRunSeal, exit_code=10)
+    algorithm = _read_sealed(algorithm_path, AlgorithmProfile, exit_code=10)
+    known = set(known_policy_snapshot or ())
+    known.update(
+        {
+            batch.target_policy_snapshot_sha256,
+            batch.proximal_policy_snapshot_sha256,
+        }
+    )
+    failures = validate_rl_batch(
+        batch,
+        training_run=training_run,
+        algorithm=algorithm,
+        known_policy_snapshots=known,
+        revoked_reward_packs=set(revoked_reward_pack or ()),
+    )
+    if failures:
+        for failure in failures:
+            console.print(f"[red]FAIL[/red] {failure}")
+        raise typer.Exit(10)
+    console.print(
+        f"[green]valid-rl-batch[/green] members={len(batch.members)} "
+        f"tokens={batch.valid_token_count} steps={batch.valid_step_count}"
+    )
+
+
+@rl_legacy_app.command("migrate")
+def migrate_rl_legacy_experience(
+    source_root: Annotated[
+        list[Path], typer.Option("--source-root", exists=True, file_okay=False, readable=True)
+    ],
+    manifest_id: Annotated[str, typer.Option("--manifest-id")],
+    output: Annotated[Path, typer.Option("--output")] = Path(
+        "legacy-experience-manifest-v0.6.json"
+    ),
+) -> None:
+    try:
+        manifest = build_legacy_experience_manifest(
+            source_root,
+            manifest_id=manifest_id,
+        )
+    except ValueError as error:
+        console.print(f"[red]INVALID[/red] {error}")
+        raise typer.Exit(2) from error
+    atomic_write_json(output, manifest.model_dump(mode="json"))
+    console.print(
+        f"[green]migrated-legacy-experience[/green] attempts={manifest.attempted_records} "
+        f"valid={manifest.valid_records} invalid={manifest.invalid_records} "
+        f"policy-gradient={manifest.policy_gradient_eligible_records} "
+        f"output={output.resolve()}"
+    )
+
+
+@rl_fabric_app.command("validate")
+def validate_rl_fabric(
+    fabric_path: Annotated[Path, typer.Argument(exists=True, readable=True)],
+) -> None:
+    fabric = _read_sealed(fabric_path, RolloutFabricProfile, exit_code=5)
+    console.print(
+        f"[green]valid-rollout-fabric[/green] id={fabric.fabric_id} "
+        f"pools={len(fabric.pools)} isolation={fabric.measurement_isolation}"
+    )
+
+
+@rl_fabric_app.command("preflight")
+def preflight_rl_fabric(
+    gpu_count: Annotated[int, typer.Option("--gpu-count", min=0)],
+    gpu_topology_attested: Annotated[bool, typer.Option("--gpu-topology-attested")] = False,
+    rootless_sandbox_enforced: Annotated[bool, typer.Option("--rootless-sandbox-enforced")] = False,
+    exact_token_gateway_available: Annotated[
+        bool, typer.Option("--exact-token-gateway-available")
+    ] = False,
+    hosted_policy_exact_tokens_available: Annotated[
+        bool, typer.Option("--hosted-policy-exact-tokens-available")
+    ] = False,
+    trainer_adapter_available: Annotated[bool, typer.Option("--trainer-adapter-available")] = False,
+    distributed_gang_enforced: Annotated[bool, typer.Option("--distributed-gang-enforced")] = False,
+    output: Annotated[Path, typer.Option("--output")] = Path("runtime-capability-report-v0.6.json"),
+) -> None:
+    report = build_runtime_capability_report(
+        gpu_count=gpu_count,
+        gpu_topology_attested=gpu_topology_attested,
+        rootless_sandbox_enforced=rootless_sandbox_enforced,
+        exact_token_gateway_available=exact_token_gateway_available,
+        hosted_policy_exact_tokens_available=hosted_policy_exact_tokens_available,
+        trainer_adapter_available=trainer_adapter_available,
+        distributed_gang_enforced=distributed_gang_enforced,
+    )
+    atomic_write_json(output, report.model_dump(mode="json"))
+    console.print(
+        f"production-ready={str(report.production_ready).lower()} "
+        f"gpu-count={report.gpu_count} reasons={','.join(report.unavailable_reasons) or 'none'} "
+        f"output={output.resolve()}"
+    )
+    if not report.production_ready:
+        raise typer.Exit(5)
+
+
+@rl_train_app.command("validate-seal")
+def validate_rl_training_seal(
+    training_run_path: Annotated[Path, typer.Argument(exists=True, readable=True)],
+) -> None:
+    training_run = _read_sealed(training_run_path, TrainingRunSeal, exit_code=11)
+    console.print(
+        f"[green]valid-training-run-seal[/green] id={training_run.run_id} "
+        f"attempts={training_run.budgets.total_episode_attempts}"
+    )
 
 
 @training_app.command("probe")

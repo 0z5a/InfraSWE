@@ -1,0 +1,199 @@
+{
+  "$defs": {
+    "VerifierObligationOutcome": {
+      "additionalProperties": false,
+      "properties": {
+        "bucket": {
+          "enum": [
+            "CO",
+            "RI",
+            "NB",
+            "MP",
+            "SL",
+            "ES",
+            "MT"
+          ],
+          "title": "Bucket",
+          "type": "string"
+        },
+        "evidence_refs": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Evidence Refs",
+          "type": "array"
+        },
+        "failure_code": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Failure Code"
+        },
+        "obligation_id": {
+          "title": "Obligation Id",
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "pass",
+            "fail",
+            "partial",
+            "unresolved",
+            "not-applicable"
+          ],
+          "title": "Status",
+          "type": "string"
+        }
+      },
+      "required": [
+        "obligation_id",
+        "bucket",
+        "status",
+        "evidence_refs"
+      ],
+      "title": "VerifierObligationOutcome",
+      "type": "object"
+    },
+    "VerifierValidity": {
+      "additionalProperties": false,
+      "properties": {
+        "artifact_boundary": {
+          "enum": [
+            "pass",
+            "fail",
+            "unresolved"
+          ],
+          "title": "Artifact Boundary",
+          "type": "string"
+        },
+        "environment_sentinel": {
+          "enum": [
+            "pass",
+            "fail",
+            "unresolved"
+          ],
+          "title": "Environment Sentinel",
+          "type": "string"
+        },
+        "trial_seal": {
+          "enum": [
+            "pass",
+            "fail",
+            "unresolved"
+          ],
+          "title": "Trial Seal",
+          "type": "string"
+        }
+      },
+      "required": [
+        "environment_sentinel",
+        "artifact_boundary",
+        "trial_seal"
+      ],
+      "title": "VerifierValidity",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "benchmark_cell_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Benchmark Cell Sha256",
+      "type": "string"
+    },
+    "episode_seal_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Episode Seal Sha256",
+      "type": "string"
+    },
+    "evidence_pack_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Evidence Pack Sha256",
+      "type": "string"
+    },
+    "failure_owner": {
+      "default": "none",
+      "enum": [
+        "candidate",
+        "policy",
+        "task",
+        "benchmark",
+        "infrastructure",
+        "sandbox",
+        "rollout",
+        "judge",
+        "teacher",
+        "trainer",
+        "none"
+      ],
+      "title": "Failure Owner",
+      "type": "string"
+    },
+    "first_failure": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "First Failure"
+    },
+    "infra_cert": {
+      "enum": [
+        0,
+        1
+      ],
+      "title": "Infra Cert",
+      "type": "integer"
+    },
+    "obligations": {
+      "items": {
+        "$ref": "#/$defs/VerifierObligationOutcome"
+      },
+      "minItems": 1,
+      "title": "Obligations",
+      "type": "array"
+    },
+    "outcome_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Outcome Sha256",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "0.6",
+      "default": "0.6",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "task_seal_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Task Seal Sha256",
+      "type": "string"
+    },
+    "validity": {
+      "$ref": "#/$defs/VerifierValidity"
+    }
+  },
+  "required": [
+    "task_seal_sha256",
+    "episode_seal_sha256",
+    "evidence_pack_sha256",
+    "benchmark_cell_sha256",
+    "validity",
+    "obligations",
+    "infra_cert",
+    "outcome_sha256"
+  ],
+  "title": "VerifierOutcomePack",
+  "type": "object"
+}

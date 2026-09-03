@@ -1,0 +1,170 @@
+{
+  "$defs": {
+    "BackpressureProfile": {
+      "additionalProperties": false,
+      "properties": {
+        "environment_gpu_seconds_limit": {
+          "minimum": 1,
+          "title": "Environment Gpu Seconds Limit",
+          "type": "integer"
+        },
+        "maximum_policy_lag": {
+          "minimum": 0,
+          "title": "Maximum Policy Lag",
+          "type": "integer"
+        },
+        "reward_queue_limit": {
+          "minimum": 1,
+          "title": "Reward Queue Limit",
+          "type": "integer"
+        },
+        "rollout_admission_limit": {
+          "minimum": 1,
+          "title": "Rollout Admission Limit",
+          "type": "integer"
+        },
+        "sandbox_concurrency_limit": {
+          "minimum": 1,
+          "title": "Sandbox Concurrency Limit",
+          "type": "integer"
+        },
+        "trajectory_buffer_high_water": {
+          "minimum": 1,
+          "title": "Trajectory Buffer High Water",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "rollout_admission_limit",
+        "sandbox_concurrency_limit",
+        "environment_gpu_seconds_limit",
+        "trajectory_buffer_high_water",
+        "reward_queue_limit",
+        "maximum_policy_lag"
+      ],
+      "title": "BackpressureProfile",
+      "type": "object"
+    },
+    "FabricPool": {
+      "additionalProperties": false,
+      "properties": {
+        "device_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Device Ids",
+          "type": "array"
+        },
+        "independently_deployable": {
+          "const": true,
+          "default": true,
+          "title": "Independently Deployable",
+          "type": "boolean"
+        },
+        "kind": {
+          "enum": [
+            "policy",
+            "environment",
+            "learner",
+            "judge",
+            "build-cpu",
+            "metadata"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "node_ids": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Node Ids",
+          "type": "array"
+        },
+        "pool_id": {
+          "title": "Pool Id",
+          "type": "string"
+        },
+        "worker_profile_sha256": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Worker Profile Sha256",
+          "type": "string"
+        }
+      },
+      "required": [
+        "pool_id",
+        "kind",
+        "worker_profile_sha256",
+        "node_ids"
+      ],
+      "title": "FabricPool",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "backpressure": {
+      "$ref": "#/$defs/BackpressureProfile"
+    },
+    "fabric_id": {
+      "title": "Fabric Id",
+      "type": "string"
+    },
+    "fabric_profile_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Fabric Profile Sha256",
+      "type": "string"
+    },
+    "measurement_isolation": {
+      "enum": [
+        "MI0",
+        "MI1",
+        "MI2",
+        "MI3"
+      ],
+      "title": "Measurement Isolation",
+      "type": "string"
+    },
+    "pools": {
+      "items": {
+        "$ref": "#/$defs/FabricPool"
+      },
+      "minItems": 2,
+      "title": "Pools",
+      "type": "array"
+    },
+    "schema_version": {
+      "const": "0.6",
+      "default": "0.6",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "topology_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Topology Sha256",
+      "type": "string"
+    },
+    "trainer_direct_sandbox_control": {
+      "const": false,
+      "default": false,
+      "title": "Trainer Direct Sandbox Control",
+      "type": "boolean"
+    },
+    "trainer_direct_verifier_control": {
+      "const": false,
+      "default": false,
+      "title": "Trainer Direct Verifier Control",
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "fabric_id",
+    "pools",
+    "backpressure",
+    "measurement_isolation",
+    "topology_sha256",
+    "fabric_profile_sha256"
+  ],
+  "title": "RolloutFabricProfile",
+  "type": "object"
+}

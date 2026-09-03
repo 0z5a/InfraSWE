@@ -1,0 +1,266 @@
+{
+  "$defs": {
+    "AdapterIdentity": {
+      "additionalProperties": false,
+      "properties": {
+        "config_sha256": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Config Sha256",
+          "type": "string"
+        },
+        "kind": {
+          "enum": [
+            "lora",
+            "adapter",
+            "prefix",
+            "policy-head"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "weights_sha256": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Weights Sha256",
+          "type": "string"
+        }
+      },
+      "required": [
+        "kind",
+        "weights_sha256",
+        "config_sha256"
+      ],
+      "title": "AdapterIdentity",
+      "type": "object"
+    },
+    "DecodingPolicy": {
+      "additionalProperties": false,
+      "properties": {
+        "max_new_tokens": {
+          "minimum": 1,
+          "title": "Max New Tokens",
+          "type": "integer"
+        },
+        "stop_policy_sha256": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Stop Policy Sha256",
+          "type": "string"
+        },
+        "temperature": {
+          "minimum": 0,
+          "title": "Temperature",
+          "type": "number"
+        },
+        "top_p": {
+          "exclusiveMinimum": 0,
+          "maximum": 1,
+          "title": "Top P",
+          "type": "number"
+        }
+      },
+      "required": [
+        "temperature",
+        "top_p",
+        "max_new_tokens",
+        "stop_policy_sha256"
+      ],
+      "title": "DecodingPolicy",
+      "type": "object"
+    },
+    "ModelArtifactIdentity": {
+      "additionalProperties": false,
+      "properties": {
+        "chat_template_sha256": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Chat Template Sha256",
+          "type": "string"
+        },
+        "config_sha256": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Config Sha256",
+          "type": "string"
+        },
+        "family": {
+          "title": "Family",
+          "type": "string"
+        },
+        "tokenizer_sha256": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Tokenizer Sha256",
+          "type": "string"
+        },
+        "weights_sha256": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Weights Sha256",
+          "type": "string"
+        }
+      },
+      "required": [
+        "family",
+        "weights_sha256",
+        "config_sha256",
+        "tokenizer_sha256",
+        "chat_template_sha256"
+      ],
+      "title": "ModelArtifactIdentity",
+      "type": "object"
+    },
+    "ServingIdentity": {
+      "additionalProperties": false,
+      "properties": {
+        "capacity_policy_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Capacity Policy Id"
+        },
+        "dtype": {
+          "title": "Dtype",
+          "type": "string"
+        },
+        "engine_sha256": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Engine Sha256",
+          "type": "string"
+        },
+        "expert_parallel": {
+          "default": 1,
+          "minimum": 1,
+          "title": "Expert Parallel",
+          "type": "integer"
+        },
+        "quantization_sha256": {
+          "anyOf": [
+            {
+              "pattern": "^sha256:[0-9a-f]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Quantization Sha256"
+        },
+        "router_dtype": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Router Dtype"
+        },
+        "routing_replay_policy_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Routing Replay Policy Id"
+        },
+        "tensor_parallel": {
+          "default": 1,
+          "minimum": 1,
+          "title": "Tensor Parallel",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "engine_sha256",
+        "dtype"
+      ],
+      "title": "ServingIdentity",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "adapter": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/AdapterIdentity"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "base_model": {
+      "$ref": "#/$defs/ModelArtifactIdentity"
+    },
+    "created_from_training_run_sha256": {
+      "anyOf": [
+        {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Created From Training Run Sha256"
+    },
+    "decoding_defaults": {
+      "$ref": "#/$defs/DecodingPolicy"
+    },
+    "policy_id": {
+      "title": "Policy Id",
+      "type": "string"
+    },
+    "policy_snapshot_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Policy Snapshot Sha256",
+      "type": "string"
+    },
+    "policy_version": {
+      "minimum": 0,
+      "title": "Policy Version",
+      "type": "integer"
+    },
+    "schema_version": {
+      "const": "0.6",
+      "default": "0.6",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "serving": {
+      "$ref": "#/$defs/ServingIdentity"
+    },
+    "update_mode": {
+      "enum": [
+        "none",
+        "external-state",
+        "adapter",
+        "full-parameter"
+      ],
+      "title": "Update Mode",
+      "type": "string"
+    }
+  },
+  "required": [
+    "policy_id",
+    "policy_version",
+    "update_mode",
+    "base_model",
+    "serving",
+    "decoding_defaults",
+    "policy_snapshot_sha256"
+  ],
+  "title": "PolicySnapshot",
+  "type": "object"
+}

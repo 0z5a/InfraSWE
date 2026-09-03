@@ -1,0 +1,151 @@
+{
+  "$defs": {
+    "FeedbackItem": {
+      "additionalProperties": false,
+      "properties": {
+        "evidence_ref": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Evidence Ref"
+        },
+        "hidden_details_included": {
+          "const": false,
+          "default": false,
+          "title": "Hidden Details Included",
+          "type": "boolean"
+        },
+        "kind": {
+          "enum": [
+            "obligation-failure",
+            "compiler-diagnostic",
+            "runtime-diagnostic",
+            "semantic-judge-critique",
+            "sibling-summary"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "normalized_code": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Normalized Code"
+        },
+        "public_summary": {
+          "title": "Public Summary",
+          "type": "string"
+        },
+        "source_excerpt_policy": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Excerpt Policy"
+        }
+      },
+      "required": [
+        "kind",
+        "public_summary"
+      ],
+      "title": "FeedbackItem",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "episode_seal_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Episode Seal Sha256",
+      "type": "string"
+    },
+    "feedback_pack_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Feedback Pack Sha256",
+      "type": "string"
+    },
+    "feedback_profile_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Feedback Profile Sha256",
+      "type": "string"
+    },
+    "items": {
+      "items": {
+        "$ref": "#/$defs/FeedbackItem"
+      },
+      "title": "Items",
+      "type": "array"
+    },
+    "leakage_scan": {
+      "enum": [
+        "pass",
+        "blocked"
+      ],
+      "title": "Leakage Scan",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "0.6",
+      "default": "0.6",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "task_seal_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Task Seal Sha256",
+      "type": "string"
+    },
+    "task_split": {
+      "enum": [
+        "train",
+        "dev",
+        "heldout"
+      ],
+      "title": "Task Split",
+      "type": "string"
+    },
+    "teacher_eligible": {
+      "title": "Teacher Eligible",
+      "type": "boolean"
+    },
+    "visibility": {
+      "enum": [
+        "POLICY_VISIBLE",
+        "TEACHER_VISIBLE_REDACTED",
+        "ADVANTAGE_ONLY",
+        "PRIVATE_AUDIT_ONLY"
+      ],
+      "title": "Visibility",
+      "type": "string"
+    }
+  },
+  "required": [
+    "task_seal_sha256",
+    "episode_seal_sha256",
+    "feedback_profile_sha256",
+    "visibility",
+    "task_split",
+    "leakage_scan",
+    "teacher_eligible",
+    "feedback_pack_sha256"
+  ],
+  "title": "FeedbackPack",
+  "type": "object"
+}

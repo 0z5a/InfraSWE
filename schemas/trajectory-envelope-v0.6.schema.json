@@ -1,0 +1,625 @@
+{
+  "$defs": {
+    "BranchRecord": {
+      "additionalProperties": false,
+      "properties": {
+        "branch_id": {
+          "title": "Branch Id",
+          "type": "string"
+        },
+        "branch_sha256": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Branch Sha256",
+          "type": "string"
+        },
+        "episode_id": {
+          "title": "Episode Id",
+          "type": "string"
+        },
+        "independent_trajectory": {
+          "const": true,
+          "default": true,
+          "title": "Independent Trajectory",
+          "type": "boolean"
+        },
+        "parent_branch_id": {
+          "title": "Parent Branch Id",
+          "type": "string"
+        },
+        "pivotal_step_id": {
+          "minimum": 0,
+          "title": "Pivotal Step Id",
+          "type": "integer"
+        },
+        "prefix_sha256": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Prefix Sha256",
+          "type": "string"
+        },
+        "restored_workspace_sha256": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Restored Workspace Sha256",
+          "type": "string"
+        },
+        "runtime_reinitialized": {
+          "const": true,
+          "default": true,
+          "title": "Runtime Reinitialized",
+          "type": "boolean"
+        },
+        "schema_version": {
+          "const": "0.6",
+          "default": "0.6",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "snapshot_sha256": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Snapshot Sha256",
+          "type": "string"
+        }
+      },
+      "required": [
+        "episode_id",
+        "parent_branch_id",
+        "branch_id",
+        "snapshot_sha256",
+        "pivotal_step_id",
+        "prefix_sha256",
+        "restored_workspace_sha256",
+        "branch_sha256"
+      ],
+      "title": "BranchRecord",
+      "type": "object"
+    },
+    "ExcludedTokenRange": {
+      "additionalProperties": false,
+      "properties": {
+        "reason": {
+          "enum": [
+            "system",
+            "tool-serialization",
+            "environment",
+            "padding",
+            "untrusted-mask"
+          ],
+          "title": "Reason",
+          "type": "string"
+        },
+        "span": {
+          "$ref": "#/$defs/TokenRange"
+        }
+      },
+      "required": [
+        "reason",
+        "span"
+      ],
+      "title": "ExcludedTokenRange",
+      "type": "object"
+    },
+    "ModelBoundaryTrace": {
+      "additionalProperties": false,
+      "properties": {
+        "behavior_policy_version": {
+          "minimum": 0,
+          "title": "Behavior Policy Version",
+          "type": "integer"
+        },
+        "compaction_applied": {
+          "default": false,
+          "title": "Compaction Applied",
+          "type": "boolean"
+        },
+        "history_after_sha256": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "History After Sha256",
+          "type": "string"
+        },
+        "history_before_sha256": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "History Before Sha256",
+          "type": "string"
+        },
+        "input_token_ids": {
+          "items": {
+            "type": "integer"
+          },
+          "title": "Input Token Ids",
+          "type": "array"
+        },
+        "logical_turn_id": {
+          "title": "Logical Turn Id",
+          "type": "string"
+        },
+        "model_call_id": {
+          "title": "Model Call Id",
+          "type": "string"
+        },
+        "output_token_ids": {
+          "items": {
+            "type": "integer"
+          },
+          "title": "Output Token Ids",
+          "type": "array"
+        },
+        "output_token_roles": {
+          "items": {
+            "enum": [
+              "assistant",
+              "tool-serialization",
+              "system",
+              "user",
+              "environment",
+              "padding"
+            ],
+            "type": "string"
+          },
+          "title": "Output Token Roles",
+          "type": "array"
+        },
+        "policy_snapshot_sha256": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Policy Snapshot Sha256",
+          "type": "string"
+        },
+        "pre_compaction_history_sha256": {
+          "anyOf": [
+            {
+              "pattern": "^sha256:[0-9a-f]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Pre Compaction History Sha256"
+        },
+        "request_sha256": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Request Sha256",
+          "type": "string"
+        },
+        "response_sha256": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Response Sha256",
+          "type": "string"
+        },
+        "rollout_logprobs": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "number"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Rollout Logprobs"
+        },
+        "sampling": {
+          "$ref": "#/$defs/SamplingMetadata"
+        },
+        "schema_version": {
+          "const": "0.6",
+          "default": "0.6",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "trace_sha256": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Trace Sha256",
+          "type": "string"
+        },
+        "trainable_mask": {
+          "items": {
+            "type": "boolean"
+          },
+          "title": "Trainable Mask",
+          "type": "array"
+        }
+      },
+      "required": [
+        "model_call_id",
+        "logical_turn_id",
+        "policy_snapshot_sha256",
+        "behavior_policy_version",
+        "request_sha256",
+        "response_sha256",
+        "input_token_ids",
+        "output_token_ids",
+        "output_token_roles",
+        "trainable_mask",
+        "sampling",
+        "history_before_sha256",
+        "history_after_sha256",
+        "trace_sha256"
+      ],
+      "title": "ModelBoundaryTrace",
+      "type": "object"
+    },
+    "SamplingMetadata": {
+      "additionalProperties": false,
+      "properties": {
+        "extra": {
+          "additionalProperties": true,
+          "title": "Extra",
+          "type": "object"
+        },
+        "max_new_tokens": {
+          "minimum": 1,
+          "title": "Max New Tokens",
+          "type": "integer"
+        },
+        "seed": {
+          "title": "Seed",
+          "type": "integer"
+        },
+        "temperature": {
+          "minimum": 0,
+          "title": "Temperature",
+          "type": "number"
+        },
+        "top_p": {
+          "exclusiveMinimum": 0,
+          "maximum": 1,
+          "title": "Top P",
+          "type": "number"
+        }
+      },
+      "required": [
+        "temperature",
+        "top_p",
+        "max_new_tokens",
+        "seed"
+      ],
+      "title": "SamplingMetadata",
+      "type": "object"
+    },
+    "StepTokenSpan": {
+      "additionalProperties": false,
+      "properties": {
+        "excluded_ranges": {
+          "items": {
+            "$ref": "#/$defs/ExcludedTokenRange"
+          },
+          "title": "Excluded Ranges",
+          "type": "array"
+        },
+        "global_span": {
+          "$ref": "#/$defs/TokenRange"
+        },
+        "model_call_id": {
+          "title": "Model Call Id",
+          "type": "string"
+        },
+        "step_id": {
+          "minimum": 0,
+          "title": "Step Id",
+          "type": "integer"
+        },
+        "trainable_ranges": {
+          "items": {
+            "$ref": "#/$defs/TokenRange"
+          },
+          "title": "Trainable Ranges",
+          "type": "array"
+        }
+      },
+      "required": [
+        "step_id",
+        "model_call_id",
+        "global_span"
+      ],
+      "title": "StepTokenSpan",
+      "type": "object"
+    },
+    "TokenRange": {
+      "additionalProperties": false,
+      "properties": {
+        "end": {
+          "exclusiveMinimum": 0,
+          "title": "End",
+          "type": "integer"
+        },
+        "start": {
+          "minimum": 0,
+          "title": "Start",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "start",
+        "end"
+      ],
+      "title": "TokenRange",
+      "type": "object"
+    },
+    "ToolEvent": {
+      "additionalProperties": false,
+      "properties": {
+        "args_sha256": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Args Sha256",
+          "type": "string"
+        },
+        "authority": {
+          "default": "DIAGNOSTIC",
+          "enum": [
+            "NONE",
+            "DIAGNOSTIC",
+            "CANDIDATE_CLAIM"
+          ],
+          "title": "Authority",
+          "type": "string"
+        },
+        "exit_status": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Exit Status"
+        },
+        "result_sha256": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Result Sha256",
+          "type": "string"
+        },
+        "tool": {
+          "title": "Tool",
+          "type": "string"
+        },
+        "tool_call_id": {
+          "title": "Tool Call Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "tool_call_id",
+        "tool",
+        "args_sha256",
+        "result_sha256"
+      ],
+      "title": "ToolEvent",
+      "type": "object"
+    },
+    "TrajectoryStep": {
+      "additionalProperties": false,
+      "properties": {
+        "branch_id": {
+          "title": "Branch Id",
+          "type": "string"
+        },
+        "model_call_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Model Call Id"
+        },
+        "observation_sha256": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Observation Sha256",
+          "type": "string"
+        },
+        "parent_step_id": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Parent Step Id"
+        },
+        "phase": {
+          "enum": [
+            "INSPECT",
+            "EDIT",
+            "BUILD",
+            "PUBLIC_VERIFY",
+            "PROFILE_DIAGNOSTIC",
+            "ROLLBACK",
+            "FINALIZE"
+          ],
+          "title": "Phase",
+          "type": "string"
+        },
+        "policy_snapshot_sha256": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Policy Snapshot Sha256",
+          "type": "string"
+        },
+        "snapshot_sha256": {
+          "anyOf": [
+            {
+              "pattern": "^sha256:[0-9a-f]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Snapshot Sha256"
+        },
+        "step_id": {
+          "minimum": 0,
+          "title": "Step Id",
+          "type": "integer"
+        },
+        "tool_calls": {
+          "items": {
+            "$ref": "#/$defs/ToolEvent"
+          },
+          "title": "Tool Calls",
+          "type": "array"
+        },
+        "wall_time_ms": {
+          "minimum": 0,
+          "title": "Wall Time Ms",
+          "type": "integer"
+        },
+        "workspace_after_sha256": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Workspace After Sha256",
+          "type": "string"
+        },
+        "workspace_before_sha256": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Workspace Before Sha256",
+          "type": "string"
+        }
+      },
+      "required": [
+        "step_id",
+        "branch_id",
+        "policy_snapshot_sha256",
+        "observation_sha256",
+        "workspace_before_sha256",
+        "workspace_after_sha256",
+        "phase",
+        "wall_time_ms"
+      ],
+      "title": "TrajectoryStep",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "allowed_uses": {
+      "items": {
+        "enum": [
+          "policy-gradient",
+          "external-policy",
+          "curriculum",
+          "offline-retrieval",
+          "qualitative-audit",
+          "human-study"
+        ],
+        "type": "string"
+      },
+      "minItems": 1,
+      "title": "Allowed Uses",
+      "type": "array"
+    },
+    "branches": {
+      "items": {
+        "$ref": "#/$defs/BranchRecord"
+      },
+      "title": "Branches",
+      "type": "array"
+    },
+    "episode_id": {
+      "title": "Episode Id",
+      "type": "string"
+    },
+    "exact_token_ids_available": {
+      "title": "Exact Token Ids Available",
+      "type": "boolean"
+    },
+    "harness_fidelity": {
+      "enum": [
+        "native-exact",
+        "transcript-only"
+      ],
+      "title": "Harness Fidelity",
+      "type": "string"
+    },
+    "harness_profile_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Harness Profile Sha256",
+      "type": "string"
+    },
+    "policy_gradient_eligible": {
+      "title": "Policy Gradient Eligible",
+      "type": "boolean"
+    },
+    "policy_snapshot_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Policy Snapshot Sha256",
+      "type": "string"
+    },
+    "sandbox_profile_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Sandbox Profile Sha256",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "0.6",
+      "default": "0.6",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "step_token_spans": {
+      "items": {
+        "$ref": "#/$defs/StepTokenSpan"
+      },
+      "title": "Step Token Spans",
+      "type": "array"
+    },
+    "steps": {
+      "items": {
+        "$ref": "#/$defs/TrajectoryStep"
+      },
+      "title": "Steps",
+      "type": "array"
+    },
+    "task_seal_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Task Seal Sha256",
+      "type": "string"
+    },
+    "traces": {
+      "items": {
+        "$ref": "#/$defs/ModelBoundaryTrace"
+      },
+      "title": "Traces",
+      "type": "array"
+    },
+    "trajectory_fidelity": {
+      "enum": [
+        "exact-model-boundary",
+        "reconstructed"
+      ],
+      "title": "Trajectory Fidelity",
+      "type": "string"
+    },
+    "trajectory_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Trajectory Sha256",
+      "type": "string"
+    }
+  },
+  "required": [
+    "episode_id",
+    "task_seal_sha256",
+    "policy_snapshot_sha256",
+    "harness_profile_sha256",
+    "sandbox_profile_sha256",
+    "trajectory_fidelity",
+    "harness_fidelity",
+    "exact_token_ids_available",
+    "policy_gradient_eligible",
+    "allowed_uses",
+    "trajectory_sha256"
+  ],
+  "title": "TrajectoryEnvelope",
+  "type": "object"
+}

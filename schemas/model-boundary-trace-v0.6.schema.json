@@ -1,0 +1,184 @@
+{
+  "$defs": {
+    "SamplingMetadata": {
+      "additionalProperties": false,
+      "properties": {
+        "extra": {
+          "additionalProperties": true,
+          "title": "Extra",
+          "type": "object"
+        },
+        "max_new_tokens": {
+          "minimum": 1,
+          "title": "Max New Tokens",
+          "type": "integer"
+        },
+        "seed": {
+          "title": "Seed",
+          "type": "integer"
+        },
+        "temperature": {
+          "minimum": 0,
+          "title": "Temperature",
+          "type": "number"
+        },
+        "top_p": {
+          "exclusiveMinimum": 0,
+          "maximum": 1,
+          "title": "Top P",
+          "type": "number"
+        }
+      },
+      "required": [
+        "temperature",
+        "top_p",
+        "max_new_tokens",
+        "seed"
+      ],
+      "title": "SamplingMetadata",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "behavior_policy_version": {
+      "minimum": 0,
+      "title": "Behavior Policy Version",
+      "type": "integer"
+    },
+    "compaction_applied": {
+      "default": false,
+      "title": "Compaction Applied",
+      "type": "boolean"
+    },
+    "history_after_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "History After Sha256",
+      "type": "string"
+    },
+    "history_before_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "History Before Sha256",
+      "type": "string"
+    },
+    "input_token_ids": {
+      "items": {
+        "type": "integer"
+      },
+      "title": "Input Token Ids",
+      "type": "array"
+    },
+    "logical_turn_id": {
+      "title": "Logical Turn Id",
+      "type": "string"
+    },
+    "model_call_id": {
+      "title": "Model Call Id",
+      "type": "string"
+    },
+    "output_token_ids": {
+      "items": {
+        "type": "integer"
+      },
+      "title": "Output Token Ids",
+      "type": "array"
+    },
+    "output_token_roles": {
+      "items": {
+        "enum": [
+          "assistant",
+          "tool-serialization",
+          "system",
+          "user",
+          "environment",
+          "padding"
+        ],
+        "type": "string"
+      },
+      "title": "Output Token Roles",
+      "type": "array"
+    },
+    "policy_snapshot_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Policy Snapshot Sha256",
+      "type": "string"
+    },
+    "pre_compaction_history_sha256": {
+      "anyOf": [
+        {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Pre Compaction History Sha256"
+    },
+    "request_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Request Sha256",
+      "type": "string"
+    },
+    "response_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Response Sha256",
+      "type": "string"
+    },
+    "rollout_logprobs": {
+      "anyOf": [
+        {
+          "items": {
+            "type": "number"
+          },
+          "type": "array"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Rollout Logprobs"
+    },
+    "sampling": {
+      "$ref": "#/$defs/SamplingMetadata"
+    },
+    "schema_version": {
+      "const": "0.6",
+      "default": "0.6",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "trace_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Trace Sha256",
+      "type": "string"
+    },
+    "trainable_mask": {
+      "items": {
+        "type": "boolean"
+      },
+      "title": "Trainable Mask",
+      "type": "array"
+    }
+  },
+  "required": [
+    "model_call_id",
+    "logical_turn_id",
+    "policy_snapshot_sha256",
+    "behavior_policy_version",
+    "request_sha256",
+    "response_sha256",
+    "input_token_ids",
+    "output_token_ids",
+    "output_token_roles",
+    "trainable_mask",
+    "sampling",
+    "history_before_sha256",
+    "history_after_sha256",
+    "trace_sha256"
+  ],
+  "title": "ModelBoundaryTrace",
+  "type": "object"
+}

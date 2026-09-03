@@ -1,0 +1,94 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "after_step_id": {
+      "minimum": 0,
+      "title": "After Step Id",
+      "type": "integer"
+    },
+    "allowlisted_dependency_sha256s": {
+      "items": {
+        "pattern": "^sha256:[0-9a-f]{64}$",
+        "type": "string"
+      },
+      "title": "Allowlisted Dependency Sha256S",
+      "type": "array"
+    },
+    "branch_id": {
+      "title": "Branch Id",
+      "type": "string"
+    },
+    "episode_id": {
+      "title": "Episode Id",
+      "type": "string"
+    },
+    "gpu_context_included": {
+      "const": false,
+      "default": false,
+      "title": "Gpu Context Included",
+      "type": "boolean"
+    },
+    "live_process_memory_included": {
+      "const": false,
+      "default": false,
+      "title": "Live Process Memory Included",
+      "type": "boolean"
+    },
+    "logical_harness_state_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Logical Harness State Sha256",
+      "type": "string"
+    },
+    "public_tool_output_sha256s": {
+      "items": {
+        "pattern": "^sha256:[0-9a-f]{64}$",
+        "type": "string"
+      },
+      "title": "Public Tool Output Sha256S",
+      "type": "array"
+    },
+    "schema_version": {
+      "const": "0.6",
+      "default": "0.6",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "secret_credentials_included": {
+      "const": false,
+      "default": false,
+      "title": "Secret Credentials Included",
+      "type": "boolean"
+    },
+    "snapshot_id": {
+      "title": "Snapshot Id",
+      "type": "string"
+    },
+    "snapshot_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Snapshot Sha256",
+      "type": "string"
+    },
+    "verifier_private_files_included": {
+      "const": false,
+      "default": false,
+      "title": "Verifier Private Files Included",
+      "type": "boolean"
+    },
+    "workspace_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Workspace Sha256",
+      "type": "string"
+    }
+  },
+  "required": [
+    "snapshot_id",
+    "episode_id",
+    "branch_id",
+    "after_step_id",
+    "workspace_sha256",
+    "logical_harness_state_sha256",
+    "snapshot_sha256"
+  ],
+  "title": "SandboxSnapshot",
+  "type": "object"
+}

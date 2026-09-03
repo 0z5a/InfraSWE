@@ -1,0 +1,132 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "cost_dominance_audit": {
+      "enum": [
+        "pass",
+        "fail"
+      ],
+      "title": "Cost Dominance Audit",
+      "type": "string"
+    },
+    "feedback_leakage_audit": {
+      "enum": [
+        "pass",
+        "fail"
+      ],
+      "title": "Feedback Leakage Audit",
+      "type": "string"
+    },
+    "group_variance_feasibility": {
+      "enum": [
+        "pass",
+        "fail"
+      ],
+      "title": "Group Variance Feasibility",
+      "type": "string"
+    },
+    "hard_outcome_monotonicity": {
+      "enum": [
+        "pass",
+        "fail"
+      ],
+      "title": "Hard Outcome Monotonicity",
+      "type": "string"
+    },
+    "invalid_censoring_audit": {
+      "enum": [
+        "pass",
+        "fail"
+      ],
+      "title": "Invalid Censoring Audit",
+      "type": "string"
+    },
+    "performance_noise_audit": {
+      "enum": [
+        "pass",
+        "fail"
+      ],
+      "title": "Performance Noise Audit",
+      "type": "string"
+    },
+    "qualification_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Qualification Sha256",
+      "type": "string"
+    },
+    "reward_hack_mutation_audit": {
+      "enum": [
+        "pass",
+        "fail"
+      ],
+      "title": "Reward Hack Mutation Audit",
+      "type": "string"
+    },
+    "reward_profile_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Reward Profile Sha256",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "0.6",
+      "default": "0.6",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "source_authority_audit": {
+      "enum": [
+        "pass",
+        "fail"
+      ],
+      "title": "Source Authority Audit",
+      "type": "string"
+    },
+    "status": {
+      "enum": [
+        "qualified",
+        "rejected"
+      ],
+      "title": "Status",
+      "type": "string"
+    },
+    "task_seal_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Task Seal Sha256",
+      "type": "string"
+    },
+    "teacher_sign_anchor_audit": {
+      "enum": [
+        "pass",
+        "fail"
+      ],
+      "title": "Teacher Sign Anchor Audit",
+      "type": "string"
+    },
+    "training_replay_stability": {
+      "enum": [
+        "pass",
+        "fail"
+      ],
+      "title": "Training Replay Stability",
+      "type": "string"
+    }
+  },
+  "required": [
+    "task_seal_sha256",
+    "reward_profile_sha256",
+    "source_authority_audit",
+    "hard_outcome_monotonicity",
+    "invalid_censoring_audit",
+    "performance_noise_audit",
+    "group_variance_feasibility",
+    "feedback_leakage_audit",
+    "reward_hack_mutation_audit",
+    "cost_dominance_audit",
+    "teacher_sign_anchor_audit",
+    "training_replay_stability",
+    "status",
+    "qualification_sha256"
+  ],
+  "title": "RewardQualification",
+  "type": "object"
+}

@@ -1,0 +1,113 @@
+{
+  "$defs": {
+    "GangDeviceAllocation": {
+      "additionalProperties": false,
+      "properties": {
+        "device_id": {
+          "title": "Device Id",
+          "type": "string"
+        },
+        "nic_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Nic Id"
+        },
+        "node_id": {
+          "title": "Node Id",
+          "type": "string"
+        },
+        "numa_node": {
+          "minimum": 0,
+          "title": "Numa Node",
+          "type": "integer"
+        },
+        "rank": {
+          "minimum": 0,
+          "title": "Rank",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "rank",
+        "device_id",
+        "node_id",
+        "numa_node"
+      ],
+      "title": "GangDeviceAllocation",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "allocations": {
+      "items": {
+        "$ref": "#/$defs/GangDeviceAllocation"
+      },
+      "title": "Allocations",
+      "type": "array"
+    },
+    "atomic_allocation": {
+      "const": true,
+      "default": true,
+      "title": "Atomic Allocation",
+      "type": "boolean"
+    },
+    "lease_id": {
+      "title": "Lease Id",
+      "type": "string"
+    },
+    "lease_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Lease Sha256",
+      "type": "string"
+    },
+    "requested_gpu_count": {
+      "minimum": 1,
+      "title": "Requested Gpu Count",
+      "type": "integer"
+    },
+    "schema_version": {
+      "const": "0.6",
+      "default": "0.6",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "status": {
+      "enum": [
+        "active",
+        "unschedulable",
+        "capacity-unavailable",
+        "broken",
+        "released"
+      ],
+      "title": "Status",
+      "type": "string"
+    },
+    "topology_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Topology Sha256",
+      "type": "string"
+    },
+    "workload_started": {
+      "title": "Workload Started",
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "lease_id",
+    "requested_gpu_count",
+    "status",
+    "topology_sha256",
+    "workload_started",
+    "lease_sha256"
+  ],
+  "title": "GangLeaseRecord",
+  "type": "object"
+}

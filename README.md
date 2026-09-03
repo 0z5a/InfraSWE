@@ -124,6 +124,16 @@ Benchmark Cell comparability. It is a reference protocol/controller implementati
 production cloud scheduler or container-enforcement plane. See
 [`TRUST_BOUNDARY_RFC_IMPLEMENTATION_STATUS_20260902_ZH.md`](TRUST_BOUNDARY_RFC_IMPLEMENTATION_STATUS_20260902_ZH.md).
 
+The v0.6 Agentic RL reference slice adds content-addressed PolicySnapshot/PolicyCell and harness
+identity, exact model-boundary tokens/logprobs/masks, sandbox/snapshot/branch contracts,
+verifier-anchored RewardPack compilation, leakage-safe feedback and sign-preserving credit,
+trainer-neutral DAPO/GSPO/StepPO batch manifests, atomic multi-GPU gang leases, rollout-pool
+isolation, and fail-closed runtime capability reports. Legacy historical-PR groups can be wrapped
+for external-policy/curriculum/retrieval analysis, but are explicitly reconstructed,
+transcript-only, reward-unqualified, and never policy-gradient eligible. The repository does not
+yet ship a production sandbox, model gateway, trainer adapter, or distributed scheduler. See
+[`AGENTIC_RL_V06_IMPLEMENTATION_STATUS_20260903_ZH.md`](AGENTIC_RL_V06_IMPLEMENTATION_STATUS_20260903_ZH.md).
+
 Formal mergeability still requires an official, sealed ProjectFit before an `>=85` acceptance
 claim. Historical PR calibration does not synthesize that score from coarse static features: the
 R8 polarized 30-PR cohort is retained as a negative control after producing the same score for all
@@ -192,6 +202,14 @@ uv run infraswe evidence verify evidence-pack.json --trial-seal trial-seal.json
 uv run infraswe capability registry-validate capability-registry.json
 uv run infraswe capability audit-resolution capability-resolution-v0.1.json
 uv run infraswe cell compare cell-a.json cell-b.json
+uv run infraswe rl policy validate policy-snapshot.json
+uv run infraswe rl harness validate agent-harness-profile.json
+uv run infraswe rl fabric preflight --gpu-count 2 \
+  --output runtime-capability-report-v0.6.json
+uv run infraswe rl legacy migrate \
+  --source-root results/historical-pr-blind-20260901/training-bulk-8000 \
+  --manifest-id historical-training-v0.6 \
+  --output legacy-experience-manifest-v0.6.json
 ```
 
 The `oracle` baseline should pass three fresh replays. The `noop` baseline should fail the target

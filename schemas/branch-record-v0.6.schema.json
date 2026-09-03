@@ -1,0 +1,72 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "branch_id": {
+      "title": "Branch Id",
+      "type": "string"
+    },
+    "branch_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Branch Sha256",
+      "type": "string"
+    },
+    "episode_id": {
+      "title": "Episode Id",
+      "type": "string"
+    },
+    "independent_trajectory": {
+      "const": true,
+      "default": true,
+      "title": "Independent Trajectory",
+      "type": "boolean"
+    },
+    "parent_branch_id": {
+      "title": "Parent Branch Id",
+      "type": "string"
+    },
+    "pivotal_step_id": {
+      "minimum": 0,
+      "title": "Pivotal Step Id",
+      "type": "integer"
+    },
+    "prefix_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Prefix Sha256",
+      "type": "string"
+    },
+    "restored_workspace_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Restored Workspace Sha256",
+      "type": "string"
+    },
+    "runtime_reinitialized": {
+      "const": true,
+      "default": true,
+      "title": "Runtime Reinitialized",
+      "type": "boolean"
+    },
+    "schema_version": {
+      "const": "0.6",
+      "default": "0.6",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "snapshot_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Snapshot Sha256",
+      "type": "string"
+    }
+  },
+  "required": [
+    "episode_id",
+    "parent_branch_id",
+    "branch_id",
+    "snapshot_sha256",
+    "pivotal_step_id",
+    "prefix_sha256",
+    "restored_workspace_sha256",
+    "branch_sha256"
+  ],
+  "title": "BranchRecord",
+  "type": "object"
+}

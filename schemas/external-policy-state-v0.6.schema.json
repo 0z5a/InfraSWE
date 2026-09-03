@@ -1,0 +1,68 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "action_taxonomy_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Action Taxonomy Sha256",
+      "type": "string"
+    },
+    "base_policy_snapshot_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Base Policy Snapshot Sha256",
+      "type": "string"
+    },
+    "external_policy_state_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "External Policy State Sha256",
+      "type": "string"
+    },
+    "feature_schema_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Feature Schema Sha256",
+      "type": "string"
+    },
+    "kind": {
+      "enum": [
+        "contextual-bandit",
+        "mcts",
+        "tactic-value",
+        "precedent-memory",
+        "reranker"
+      ],
+      "title": "Kind",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "0.6",
+      "default": "0.6",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "state_blob_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "State Blob Sha256",
+      "type": "string"
+    },
+    "state_id": {
+      "title": "State Id",
+      "type": "string"
+    },
+    "update_count": {
+      "minimum": 0,
+      "title": "Update Count",
+      "type": "integer"
+    }
+  },
+  "required": [
+    "state_id",
+    "kind",
+    "base_policy_snapshot_sha256",
+    "feature_schema_sha256",
+    "action_taxonomy_sha256",
+    "state_blob_sha256",
+    "update_count",
+    "external_policy_state_sha256"
+  ],
+  "title": "ExternalPolicyState",
+  "type": "object"
+}

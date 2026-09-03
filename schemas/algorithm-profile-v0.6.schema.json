@@ -1,0 +1,268 @@
+{
+  "$defs": {
+    "ClippingProfile": {
+      "additionalProperties": false,
+      "properties": {
+        "lower": {
+          "exclusiveMinimum": 0,
+          "title": "Lower",
+          "type": "number"
+        },
+        "upper": {
+          "exclusiveMinimum": 0,
+          "title": "Upper",
+          "type": "number"
+        }
+      },
+      "required": [
+        "lower",
+        "upper"
+      ],
+      "title": "ClippingProfile",
+      "type": "object"
+    },
+    "OverlongPolicy": {
+      "additionalProperties": false,
+      "properties": {
+        "controller_cancelled": {
+          "const": "mask",
+          "default": "mask",
+          "title": "Controller Cancelled",
+          "type": "string"
+        },
+        "infrastructure_preempted": {
+          "const": "mask",
+          "default": "mask",
+          "title": "Infrastructure Preempted",
+          "type": "string"
+        },
+        "policy_budget_exceeded": {
+          "enum": [
+            "soft-shape",
+            "hard-fail",
+            "mask"
+          ],
+          "title": "Policy Budget Exceeded",
+          "type": "string"
+        }
+      },
+      "required": [
+        "policy_budget_exceeded"
+      ],
+      "title": "OverlongPolicy",
+      "type": "object"
+    },
+    "PolicyStalenessProfile": {
+      "additionalProperties": false,
+      "properties": {
+        "max_versions": {
+          "minimum": 0,
+          "title": "Max Versions",
+          "type": "integer"
+        },
+        "measure": {
+          "const": "completed-learner-updates",
+          "default": "completed-learner-updates",
+          "title": "Measure",
+          "type": "string"
+        },
+        "mixed_policy_episode": {
+          "const": "forbidden",
+          "default": "forbidden",
+          "title": "Mixed Policy Episode",
+          "type": "string"
+        },
+        "over_limit": {
+          "enum": [
+            "reject",
+            "off-policy-correction"
+          ],
+          "title": "Over Limit",
+          "type": "string"
+        }
+      },
+      "required": [
+        "max_versions",
+        "over_limit"
+      ],
+      "title": "PolicyStalenessProfile",
+      "type": "object"
+    },
+    "TrainingLossProfile": {
+      "additionalProperties": false,
+      "properties": {
+        "invalid_trajectory_masking": {
+          "const": "required",
+          "default": "required",
+          "title": "Invalid Trajectory Masking",
+          "type": "string"
+        },
+        "normalization": {
+          "enum": [
+            "valid-trainable-token",
+            "valid-step",
+            "valid-sequence",
+            "external-policy-update"
+          ],
+          "title": "Normalization",
+          "type": "string"
+        },
+        "security_rejected_training": {
+          "default": "mask",
+          "enum": [
+            "mask",
+            "valid-negative"
+          ],
+          "title": "Security Rejected Training",
+          "type": "string"
+        }
+      },
+      "required": [
+        "normalization"
+      ],
+      "title": "TrainingLossProfile",
+      "type": "object"
+    },
+    "TrainingSamplingProfile": {
+      "additionalProperties": false,
+      "properties": {
+        "dynamic_replenishment": {
+          "title": "Dynamic Replenishment",
+          "type": "boolean"
+        },
+        "group_size": {
+          "minimum": 1,
+          "title": "Group Size",
+          "type": "integer"
+        },
+        "official_dynamic_dropping": {
+          "const": false,
+          "default": false,
+          "title": "Official Dynamic Dropping",
+          "type": "boolean"
+        },
+        "preserve_attempt_ledger": {
+          "const": true,
+          "default": true,
+          "title": "Preserve Attempt Ledger",
+          "type": "boolean"
+        },
+        "require_nonzero_valid_reward_variance": {
+          "title": "Require Nonzero Valid Reward Variance",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "group_size",
+        "dynamic_replenishment",
+        "require_nonzero_valid_reward_variance"
+      ],
+      "title": "TrainingSamplingProfile",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "advantage_granularity": {
+      "enum": [
+        "token",
+        "step",
+        "episode",
+        "group"
+      ],
+      "title": "Advantage Granularity",
+      "type": "string"
+    },
+    "algorithm_profile_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Algorithm Profile Sha256",
+      "type": "string"
+    },
+    "clipping": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/ClippingProfile"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "credit_overlay": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Credit Overlay"
+    },
+    "family": {
+      "enum": [
+        "dapo",
+        "gspo",
+        "steppo",
+        "ppo",
+        "grpo",
+        "rloo",
+        "external-policy"
+      ],
+      "title": "Family",
+      "type": "string"
+    },
+    "llm_weights_update": {
+      "title": "Llm Weights Update",
+      "type": "boolean"
+    },
+    "loss": {
+      "$ref": "#/$defs/TrainingLossProfile"
+    },
+    "overlong": {
+      "$ref": "#/$defs/OverlongPolicy"
+    },
+    "policy_granularity": {
+      "enum": [
+        "token",
+        "step",
+        "episode",
+        "external-action"
+      ],
+      "title": "Policy Granularity",
+      "type": "string"
+    },
+    "policy_staleness": {
+      "$ref": "#/$defs/PolicyStalenessProfile"
+    },
+    "profile_id": {
+      "title": "Profile Id",
+      "type": "string"
+    },
+    "sampling": {
+      "$ref": "#/$defs/TrainingSamplingProfile"
+    },
+    "schema_version": {
+      "const": "0.6",
+      "default": "0.6",
+      "title": "Schema Version",
+      "type": "string"
+    }
+  },
+  "required": [
+    "profile_id",
+    "family",
+    "policy_granularity",
+    "advantage_granularity",
+    "sampling",
+    "loss",
+    "overlong",
+    "policy_staleness",
+    "llm_weights_update",
+    "algorithm_profile_sha256"
+  ],
+  "title": "AlgorithmProfile",
+  "type": "object"
+}

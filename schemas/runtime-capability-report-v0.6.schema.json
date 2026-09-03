@@ -1,0 +1,76 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "distributed_gang_enforced": {
+      "title": "Distributed Gang Enforced",
+      "type": "boolean"
+    },
+    "exact_token_gateway_available": {
+      "title": "Exact Token Gateway Available",
+      "type": "boolean"
+    },
+    "gpu_count": {
+      "minimum": 0,
+      "title": "Gpu Count",
+      "type": "integer"
+    },
+    "gpu_topology_attested": {
+      "title": "Gpu Topology Attested",
+      "type": "boolean"
+    },
+    "hosted_policy_exact_tokens_available": {
+      "title": "Hosted Policy Exact Tokens Available",
+      "type": "boolean"
+    },
+    "observed_at": {
+      "format": "date-time",
+      "title": "Observed At",
+      "type": "string"
+    },
+    "production_ready": {
+      "title": "Production Ready",
+      "type": "boolean"
+    },
+    "report_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Report Sha256",
+      "type": "string"
+    },
+    "rootless_sandbox_enforced": {
+      "title": "Rootless Sandbox Enforced",
+      "type": "boolean"
+    },
+    "schema_version": {
+      "const": "0.6",
+      "default": "0.6",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "trainer_adapter_available": {
+      "title": "Trainer Adapter Available",
+      "type": "boolean"
+    },
+    "unavailable_reasons": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Unavailable Reasons",
+      "type": "array"
+    }
+  },
+  "required": [
+    "observed_at",
+    "gpu_count",
+    "gpu_topology_attested",
+    "rootless_sandbox_enforced",
+    "exact_token_gateway_available",
+    "hosted_policy_exact_tokens_available",
+    "trainer_adapter_available",
+    "distributed_gang_enforced",
+    "production_ready",
+    "unavailable_reasons",
+    "report_sha256"
+  ],
+  "title": "RuntimeCapabilityReport",
+  "type": "object"
+}

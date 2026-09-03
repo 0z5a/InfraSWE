@@ -1,0 +1,203 @@
+{
+  "$defs": {
+    "RewardAnchor": {
+      "additionalProperties": false,
+      "properties": {
+        "infra_cert": {
+          "anyOf": [
+            {
+              "enum": [
+                0,
+                1
+              ],
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Infra Cert"
+        },
+        "scalar_band": {
+          "enum": [
+            "masked",
+            "hard-fail",
+            "pass-no-attainment",
+            "pass-attainment"
+          ],
+          "title": "Scalar Band",
+          "type": "string"
+        },
+        "scalar_value": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Scalar Value"
+        }
+      },
+      "required": [
+        "infra_cert",
+        "scalar_band",
+        "scalar_value"
+      ],
+      "title": "RewardAnchor",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "anchor": {
+      "$ref": "#/$defs/RewardAnchor"
+    },
+    "credit_map_sha256": {
+      "anyOf": [
+        {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Credit Map Sha256"
+    },
+    "credit_profile_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Credit Profile Sha256",
+      "type": "string"
+    },
+    "episode_seal_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Episode Seal Sha256",
+      "type": "string"
+    },
+    "event_sha256s": {
+      "items": {
+        "pattern": "^sha256:[0-9a-f]{64}$",
+        "type": "string"
+      },
+      "title": "Event Sha256S",
+      "type": "array"
+    },
+    "evidence_pack_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Evidence Pack Sha256",
+      "type": "string"
+    },
+    "feedback_pack_sha256": {
+      "anyOf": [
+        {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Feedback Pack Sha256"
+    },
+    "official_projection_independently_reproducible": {
+      "const": true,
+      "default": true,
+      "title": "Official Projection Independently Reproducible",
+      "type": "boolean"
+    },
+    "official_projection_path": {
+      "title": "Official Projection Path",
+      "type": "string"
+    },
+    "revocation_reason": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Revocation Reason"
+    },
+    "revoked": {
+      "default": false,
+      "title": "Revoked",
+      "type": "boolean"
+    },
+    "reward_pack_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Reward Pack Sha256",
+      "type": "string"
+    },
+    "reward_profile_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Reward Profile Sha256",
+      "type": "string"
+    },
+    "reward_qualification_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Reward Qualification Sha256",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "0.6",
+      "default": "0.6",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "training_mask": {
+      "enum": [
+        0,
+        1
+      ],
+      "title": "Training Mask",
+      "type": "integer"
+    },
+    "training_projection_path": {
+      "title": "Training Projection Path",
+      "type": "string"
+    },
+    "training_reward_affects_official_score": {
+      "const": false,
+      "default": false,
+      "title": "Training Reward Affects Official Score",
+      "type": "boolean"
+    },
+    "validity": {
+      "enum": [
+        "valid",
+        "invalid"
+      ],
+      "title": "Validity",
+      "type": "string"
+    },
+    "verifier_outcome_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Verifier Outcome Sha256",
+      "type": "string"
+    }
+  },
+  "required": [
+    "episode_seal_sha256",
+    "evidence_pack_sha256",
+    "verifier_outcome_sha256",
+    "reward_profile_sha256",
+    "reward_qualification_sha256",
+    "credit_profile_sha256",
+    "validity",
+    "training_mask",
+    "anchor",
+    "event_sha256s",
+    "official_projection_path",
+    "training_projection_path",
+    "reward_pack_sha256"
+  ],
+  "title": "RewardPack",
+  "type": "object"
+}

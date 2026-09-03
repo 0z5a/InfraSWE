@@ -183,9 +183,7 @@ def _run_case(
         status = "ssh-timeout"
     duration = time.monotonic() - began
     summary_lines = [
-        line.strip()
-        for line in output.splitlines()
-        if SUMMARY_PATTERN.search(line.strip())
+        line.strip() for line in output.splitlines() if SUMMARY_PATTERN.search(line.strip())
     ][-20:]
     print(
         f"[{index}/{total}] {case['case_id']}: rc={returncode} {duration:.1f}s",
@@ -218,9 +216,7 @@ def main() -> int:
     if selection["selection_lock_sha256"] != canonical_sha256(selection_material):
         raise SystemExit("R16 selection digest mismatch")
     static = _read(args.static_evidence)
-    static_material = {
-        key: value for key, value in static.items() if key != "evidence_sha256"
-    }
+    static_material = {key: value for key, value in static.items() if key != "evidence_sha256"}
     if static["evidence_sha256"] != canonical_sha256(static_material):
         raise SystemExit("R16 static evidence digest mismatch")
     if static["selection_lock_sha256"] != selection["selection_lock_sha256"]:
@@ -229,20 +225,14 @@ def main() -> int:
     selected_cases = selection_material["cases"]
     if args.only:
         requested = set(args.only)
-        selected_cases = [
-            item for item in selected_cases if item["case_id"] in requested
-        ]
+        selected_cases = [item for item in selected_cases if item["case_id"] in requested]
         missing = requested - {item["case_id"] for item in selected_cases}
         if missing:
             raise SystemExit(f"unknown --only case IDs: {sorted(missing)}")
 
     indexed = list(enumerate(selected_cases, 1))
     lanes = {
-        lane: [
-            (index, case)
-            for index, case in indexed
-            if LANE[case["project"]] == lane
-        ]
+        lane: [(index, case) for index, case in indexed if LANE[case["project"]] == lane]
         for lane in (0, 1)
     }
 

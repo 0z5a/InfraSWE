@@ -22,9 +22,7 @@ def _read(path: Path) -> dict[str, Any]:
     return payload
 
 
-def _checked(
-    path: Path, digest_field: str, *, material_field: str | None = None
-) -> dict[str, Any]:
+def _checked(path: Path, digest_field: str, *, material_field: str | None = None) -> dict[str, Any]:
     payload = _read(path)
     material = (
         payload[material_field]
@@ -62,9 +60,7 @@ def main() -> int:
     )
     reveal = _checked(root / "revealed-outcomes-reviews.json", "reveal_sha256")
     static = _checked(root / "static-evidence.json", "evidence_sha256")
-    activity = _checked(
-        root / "review-activity-projection.json", "activity_projection_sha256"
-    )
+    activity = _checked(root / "review-activity-projection.json", "activity_projection_sha256")
     review_state = _checked(args.review_state_metadata, "metadata_sha256")
     if audit["source_digests"]["machine_judgment_locks"] != canonical_sha256(locks):
         raise SystemExit("audit/judgment binding mismatch")
@@ -81,9 +77,7 @@ def main() -> int:
     if review_state["review_text_requested"] is not False:
         raise SystemExit("review-state artifact requested review text")
 
-    selected = {
-        item["case_id"]: item for item in selection["selection_material"]["cases"]
-    }
+    selected = {item["case_id"]: item for item in selection["selection_material"]["cases"]}
     statics = {item["case_id"]: item for item in static["cases"]}
     review_states = {item["case_id"]: item for item in review_state["cases"]}
     audited = {item["case_id"]: item for item in audit["cases"]}
@@ -132,30 +126,19 @@ def main() -> int:
             )
 
     projected_exact = sum(
-        _label(projected[case_id]) == row["oracle_decision"]
-        for case_id, row in audited.items()
+        _label(projected[case_id]) == row["oracle_decision"] for case_id, row in audited.items()
     )
-    projected_rejects = [
-        case_id for case_id, decision in projected.items() if decision == "reject"
-    ]
-    projected_checks = [
-        case_id for case_id, decision in projected.items() if decision == "check"
-    ]
-    merged_ids = {
-        case_id
-        for case_id, item in revealed.items()
-        if item["outcome"]["merged"]
-    }
+    projected_rejects = [case_id for case_id, decision in projected.items() if decision == "reject"]
+    projected_checks = [case_id for case_id, decision in projected.items() if decision == "check"]
+    merged_ids = {case_id for case_id, item in revealed.items() if item["outcome"]["merged"]}
     projected_merged_accepts = sum(
         projected[case_id] == "accept_with_scope" for case_id in merged_ids
     )
     projected_reject_correct = sum(
-        audited[case_id]["oracle_decision"] == "reject"
-        for case_id in projected_rejects
+        audited[case_id]["oracle_decision"] == "reject" for case_id in projected_rejects
     )
     projected_check_correct = sum(
-        audited[case_id]["oracle_decision"] == "check"
-        for case_id in projected_checks
+        audited[case_id]["oracle_decision"] == "check" for case_id in projected_checks
     )
     if projected_exact <= int(audit["summary"]["exact_label_matches"]):
         raise SystemExit("prospective R25 rules do not improve the sealed R24 cohort")
@@ -168,8 +151,7 @@ def main() -> int:
         "cases": len(projected),
         "exact_label_matches": projected_exact,
         "exact_accuracy": projected_exact / len(projected),
-        "gain_over_frozen": projected_exact
-        - int(audit["summary"]["exact_label_matches"]),
+        "gain_over_frozen": projected_exact - int(audit["summary"]["exact_label_matches"]),
         "gain_over_same_cohort_legacy": projected_exact
         - int(audit["summary"]["legacy_exact_label_matches"]),
         "merged_cases": len(merged_ids),
@@ -180,9 +162,7 @@ def main() -> int:
         "check_predictions": len(projected_checks),
         "check_correct": projected_check_correct,
         "check_precision": (
-            projected_check_correct / len(projected_checks)
-            if projected_checks
-            else None
+            projected_check_correct / len(projected_checks) if projected_checks else None
         ),
         "changed_cases": changes,
     }

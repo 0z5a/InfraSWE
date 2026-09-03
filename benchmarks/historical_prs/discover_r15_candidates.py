@@ -49,9 +49,7 @@ def roughly_eligible(
     paths = _paths(node)
     changed_files = int(node.get("changedFiles") or 0)
     changed_lines = int(node.get("additions") or 0) + int(node.get("deletions") or 0)
-    if not int(rules["changed_files_min"]) <= changed_files <= int(
-        rules["changed_files_max"]
-    ):
+    if not int(rules["changed_files_min"]) <= changed_files <= int(rules["changed_files_max"]):
         return False
     if changed_lines > int(rules["changed_lines_max"]):
         return False
@@ -103,9 +101,7 @@ def acquire_band(
                 "end_cursor": search["pageInfo"]["endCursor"],
             }
         )
-        eligible_count = sum(
-            roughly_eligible(node, domain, project, policy) for node in nodes
-        )
+        eligible_count = sum(roughly_eligible(node, domain, project, policy) for node in nodes)
         page_info = search["pageInfo"]
         if eligible_count >= eligible_target:
             break
@@ -150,9 +146,7 @@ def main() -> int:
         raise SystemExit("R15 policy exposes forbidden evidence")
 
     window = policy["created_at_window"]
-    discoveries: dict[str, Any] = {
-        domain: {} for domain in policy["domains_in_order"]
-    }
+    discoveries: dict[str, Any] = {domain: {} for domain in policy["domains_in_order"]}
     tasks: list[tuple[str, str, dict[str, Any]]] = []
     for domain in policy["domains_in_order"]:
         for project_name, project in policy["projects"][domain].items():

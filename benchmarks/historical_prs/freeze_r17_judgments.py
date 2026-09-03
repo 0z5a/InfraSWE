@@ -29,9 +29,15 @@ EXPECTED_FILE_SHA256 = {
     "rerun_v4": "6e9c58eac5fbfe3d61f420ee6aa86a65e2c9761f662c3b9c43ed4d353740364d",
     "sglang_final": "c5a944ff6b50bf44314ee64a652d98857b9d4f847c9a997ee3efd45636e0b732",
 }
-EXPECTED_SELECTION_SHA256 = "sha256:ede934e0bf3af3c15bbba5bc5f55696077605fc48cbff23e4abce485a6f953fb"
-EXPECTED_TEST_PLAN_SHA256 = "sha256:1d9cd3d63d09f97af0c86164a4b537f6a2054d11f4a0acbe7a9e5eb548335a58"
-EXPECTED_SOURCE_BUNDLE_SHA256 = "sha256:4458a431ef57c673fa188b8453ba3d1379074652003eed4d720532795ee47c71"
+EXPECTED_SELECTION_SHA256 = (
+    "sha256:ede934e0bf3af3c15bbba5bc5f55696077605fc48cbff23e4abce485a6f953fb"
+)
+EXPECTED_TEST_PLAN_SHA256 = (
+    "sha256:1d9cd3d63d09f97af0c86164a4b537f6a2054d11f4a0acbe7a9e5eb548335a58"
+)
+EXPECTED_SOURCE_BUNDLE_SHA256 = (
+    "sha256:4458a431ef57c673fa188b8453ba3d1379074652003eed4d720532795ee47c71"
+)
 POLICY_ID = "mixed-contract-disposition-split-v0.1-r17"
 
 
@@ -312,7 +318,8 @@ def validate_digest(payload: dict[str, Any], field: str, label: str) -> None:
 def binding(path: Path, payload: dict[str, Any]) -> dict[str, Any]:
     return {
         "path": path.name,
-        "evidence_sha256": payload.get("evidence_sha256") or payload.get("evidence_manifest_sha256"),
+        "evidence_sha256": payload.get("evidence_sha256")
+        or payload.get("evidence_manifest_sha256"),
         "artifact_sha256": canonical_sha256(payload),
     }
 
@@ -325,13 +332,30 @@ def main() -> int:
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
 
-    require(file_sha256(args.selection_lock) == EXPECTED_FILE_SHA256["selection"], "R17 selection file digest mismatch")
-    require(file_sha256(args.test_plan) == EXPECTED_FILE_SHA256["plan"], "R17 plan file digest mismatch")
+    require(
+        file_sha256(args.selection_lock) == EXPECTED_FILE_SHA256["selection"],
+        "R17 selection file digest mismatch",
+    )
+    require(
+        file_sha256(args.test_plan) == EXPECTED_FILE_SHA256["plan"], "R17 plan file digest mismatch"
+    )
     selection = read(args.selection_lock)
     plan = read(args.test_plan)
-    require(selection["selection_lock_sha256"] == canonical_sha256(selection["selection_material"]), "R17 embedded selection digest mismatch")
-    require(selection["selection_lock_sha256"] == EXPECTED_SELECTION_SHA256, "R17 selection identity changed")
-    require(plan["test_plan_sha256"] == canonical_sha256({key: value for key, value in plan.items() if key != "test_plan_sha256"}), "R17 embedded plan digest mismatch")
+    require(
+        selection["selection_lock_sha256"] == canonical_sha256(selection["selection_material"]),
+        "R17 embedded selection digest mismatch",
+    )
+    require(
+        selection["selection_lock_sha256"] == EXPECTED_SELECTION_SHA256,
+        "R17 selection identity changed",
+    )
+    require(
+        plan["test_plan_sha256"]
+        == canonical_sha256(
+            {key: value for key, value in plan.items() if key != "test_plan_sha256"}
+        ),
+        "R17 embedded plan digest mismatch",
+    )
     require(plan["test_plan_sha256"] == EXPECTED_TEST_PLAN_SHA256, "R17 plan identity changed")
     require(plan["selection_lock_sha256"] == EXPECTED_SELECTION_SHA256, "R17 plan binding mismatch")
     blind_flags = (
@@ -364,19 +388,39 @@ def main() -> int:
     validate_digest(evidence["manifest"], "evidence_manifest_sha256", "manifest")
     for name in filenames.keys() - {"manifest"}:
         validate_digest(evidence[name], "evidence_sha256", name)
-    require(evidence["manifest"]["source_bundle_sha256"] == EXPECTED_SOURCE_BUNDLE_SHA256, "R17 source bundle changed")
-    require(evidence["static"]["source_bundle_sha256"] == EXPECTED_SOURCE_BUNDLE_SHA256, "R17 static/source binding mismatch")
+    require(
+        evidence["manifest"]["source_bundle_sha256"] == EXPECTED_SOURCE_BUNDLE_SHA256,
+        "R17 source bundle changed",
+    )
+    require(
+        evidence["static"]["source_bundle_sha256"] == EXPECTED_SOURCE_BUNDLE_SHA256,
+        "R17 static/source binding mismatch",
+    )
 
     initial = {record["case_id"]: record for record in evidence["initial"]["records"]}
     followup = {record["case_id"]: record for record in evidence["followup"]["records"]}
     rerun_v2 = {record["case_id"]: record for record in evidence["rerun_v2"]["records"]}
     sglang_final = {record["case_id"]: record for record in evidence["sglang_final"]["records"]}
-    require(initial["megatron-pr-7013"]["returncode"] == 0, "R17 Megatron FP32-shard result changed")
-    require("each row must sample" in followup["flashinfer-pr-4861"]["output_tail"], "R17 FlashInfer seed failure changed")
-    require("4 passed" in rerun_v2["torchtitan-pr-4398"]["output_tail"], "R17 TorchTitan result changed")
+    require(
+        initial["megatron-pr-7013"]["returncode"] == 0, "R17 Megatron FP32-shard result changed"
+    )
+    require(
+        "each row must sample" in followup["flashinfer-pr-4861"]["output_tail"],
+        "R17 FlashInfer seed failure changed",
+    )
+    require(
+        "4 passed" in rerun_v2["torchtitan-pr-4398"]["output_tail"], "R17 TorchTitan result changed"
+    )
     require("leaf Variable" in followup["verl-pr-7685"]["output_tail"], "R17 verl failure changed")
-    require("assert not True" in followup["vllm-pr-44544"]["output_tail"], "R17 vLLM AITER failure changed")
-    require("tensor model parallel group is not initialized" in sglang_final["sglang-pr-27203"]["output_tail"], "R17 SGLang failure changed")
+    require(
+        "assert not True" in followup["vllm-pr-44544"]["output_tail"],
+        "R17 vLLM AITER failure changed",
+    )
+    require(
+        "tensor model parallel group is not initialized"
+        in sglang_final["sglang-pr-27203"]["output_tail"],
+        "R17 SGLang failure changed",
+    )
 
     selected = {case["case_id"]: case for case in selection["selection_material"]["cases"]}
     planned = {case["case_id"]: case for case in plan["cases"]}
@@ -390,7 +434,10 @@ def main() -> int:
         assessed = ASSESSMENTS[case_id]
         result = classify_case_contract(assessed.triage)
         if result.decision == "check":
-            require(selected_case["temporal_band"] == "recent", f"{case_id}: mature case cannot be check")
+            require(
+                selected_case["temporal_band"] == "recent",
+                f"{case_id}: mature case cannot be check",
+            )
             require(len(selected_case["paths"]) <= 8, f"{case_id}: check exceeds eight files")
             require(bool(initial[case_id]["test_paths"]), f"{case_id}: check lacks candidate test")
         legacy = "accept_with_scope" if assessed.triage.contract_satisfied else "check"
@@ -398,19 +445,23 @@ def main() -> int:
         for name in filenames.keys() - {"manifest", "static"}:
             for index, record in enumerate(evidence[name].get("records", [])):
                 if record.get("case_id") == case_id:
-                    records.append({
-                        "artifact": common_bindings[name],
-                        "record_index": index,
-                        "returncode": record.get("returncode"),
-                        "status": record.get("status"),
-                        "output_sha256": record.get("output_sha256"),
-                    })
+                    records.append(
+                        {
+                            "artifact": common_bindings[name],
+                            "record_index": index,
+                            "returncode": record.get("returncode"),
+                            "status": record.get("status"),
+                            "output_sha256": record.get("output_sha256"),
+                        }
+                    )
         require(records, f"{case_id}: no execution record")
         lock_material = {
             "schema_version": "0.1",
             "policy_id": POLICY_ID,
             "case_id": case_id,
-            "candidate_sha256": canonical_sha256({"selection": selected_case, "test_plan": planned_case}),
+            "candidate_sha256": canonical_sha256(
+                {"selection": selected_case, "test_plan": planned_case}
+            ),
             "selection_lock_sha256": EXPECTED_SELECTION_SHA256,
             "test_plan_sha256": EXPECTED_TEST_PLAN_SHA256,
             "source_bundle_sha256": EXPECTED_SOURCE_BUNDLE_SHA256,
@@ -422,7 +473,9 @@ def main() -> int:
             "rationale_codes": list(result.rationale_codes),
             "technical_findings": list(assessed.findings),
             "residual_contract": assessed.residual,
-            "hot_window_check_eligible": selected_case["temporal_band"] == "recent" and len(selected_case["paths"]) <= 8 and bool(initial[case_id]["test_paths"]),
+            "hot_window_check_eligible": selected_case["temporal_band"] == "recent"
+            and len(selected_case["paths"]) <= 8
+            and bool(initial[case_id]["test_paths"]),
             "legacy_r10_style_decision": legacy,
             "frozen_at": frozen_at,
         }
@@ -454,18 +507,31 @@ def main() -> int:
         "frozen_at": frozen_at,
         "decision_counts": decision_counts,
         "legacy_r10_style_decision_counts": {
-            "accept_with_scope": sum(lock["material"]["legacy_r10_style_decision"] == "accept_with_scope" for lock in locks),
-            "check": sum(lock["material"]["legacy_r10_style_decision"] == "check" for lock in locks),
+            "accept_with_scope": sum(
+                lock["material"]["legacy_r10_style_decision"] == "accept_with_scope"
+                for lock in locks
+            ),
+            "check": sum(
+                lock["material"]["legacy_r10_style_decision"] == "check" for lock in locks
+            ),
         },
         "locks": locks,
     }
     output = {**output_material, "lock_set_sha256": canonical_sha256(output_material)}
     atomic_write_json(args.output, output)
-    print(json.dumps({
-        "lock_set_sha256": output["lock_set_sha256"],
-        "decision_counts": decision_counts,
-        "decisions": {lock["material"]["case_id"]: lock["material"]["decision"] for lock in locks},
-    }, indent=2, sort_keys=True))
+    print(
+        json.dumps(
+            {
+                "lock_set_sha256": output["lock_set_sha256"],
+                "decision_counts": decision_counts,
+                "decisions": {
+                    lock["material"]["case_id"]: lock["material"]["decision"] for lock in locks
+                },
+            },
+            indent=2,
+            sort_keys=True,
+        )
+    )
     return 0
 
 

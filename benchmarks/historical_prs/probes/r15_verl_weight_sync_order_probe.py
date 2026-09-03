@@ -39,9 +39,7 @@ async def run_case(strategy: str, enabled: bool) -> dict[str, object]:
     worker = ActorRolloutRefWorker.__new__(ActorRolloutRefWorker)
     worker.config = SimpleNamespace(
         actor=SimpleNamespace(strategy=strategy),
-        rollout=SimpleNamespace(
-            checkpoint_engine=SimpleNamespace(backend="modelexpress")
-        ),
+        rollout=SimpleNamespace(checkpoint_engine=SimpleNamespace(backend="modelexpress")),
     )
     worker.actor = SimpleNamespace(engine=FakeEngine(events, enabled=enabled))
     worker.checkpoint_engine = FakeCheckpointEngine(events)

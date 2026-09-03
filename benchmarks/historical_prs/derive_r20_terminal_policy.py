@@ -31,7 +31,9 @@ def main() -> int:
     args = parser.parse_args()
 
     audit = read(args.audit)
-    if audit["audit_sha256"] != canonical_sha256({key: value for key, value in audit.items() if key != "audit_sha256"}):
+    if audit["audit_sha256"] != canonical_sha256(
+        {key: value for key, value in audit.items() if key != "audit_sha256"}
+    ):
         raise SystemExit("R20 audit digest mismatch")
     if audit["audit_sha256"] != EXPECTED_AUDIT_SHA256:
         raise SystemExit("R20 audit identity changed")
@@ -73,7 +75,12 @@ def main() -> int:
             "requested_after_r13": {"communication": 50, "training": 50, "inference": 100},
             "completed_through_r20": {"communication": 50, "training": 50, "inference": 100},
             "remaining_after_r20": {"communication": 0, "training": 0, "inference": 0},
-            "inference_project_totals": {"vllm": 25, "sglang": 25, "tensorrt_llm": 25, "flashinfer": 25},
+            "inference_project_totals": {
+                "vllm": 25,
+                "sglang": 25,
+                "tensorrt_llm": 25,
+                "flashinfer": 25,
+            },
         },
         "terminal_rules": [
             {

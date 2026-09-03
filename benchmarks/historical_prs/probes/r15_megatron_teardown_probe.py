@@ -46,9 +46,7 @@ def main() -> int:
             default_value = torch.tensor([rank + 1.0], device=f"cuda:{local_rank}")
             dist.all_reduce(default_value)
             if default_value.item() != 3.0:
-                raise AssertionError(
-                    f"generation {generation}: default group was damaged"
-                )
+                raise AssertionError(f"generation {generation}: default group was damaged")
             cycles.append(
                 {
                     "generation": generation,

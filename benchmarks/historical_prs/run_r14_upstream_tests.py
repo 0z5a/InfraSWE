@@ -67,14 +67,11 @@ def _read(path: Path) -> dict[str, Any]:
 
 def _is_test_path(path: str) -> bool:
     lowered = path.lower()
-    return (
-        lowered.endswith(".py")
-        and (
-            lowered.startswith(("test/", "tests/"))
-            or "/test/" in lowered
-            or "/tests/" in lowered
-            or lowered.endswith("_test.py")
-        )
+    return lowered.endswith(".py") and (
+        lowered.startswith(("test/", "tests/"))
+        or "/test/" in lowered
+        or "/tests/" in lowered
+        or lowered.endswith("_test.py")
     )
 
 
@@ -140,7 +137,7 @@ def _command(
     command = (
         f"cd {shlex.quote(worktree)} && "
         f"git switch --detach refs/r14/pr-{number} >/dev/null && "
-        f"test \"$(git rev-parse HEAD)\" = {expected_head} && "
+        f'test "$(git rev-parse HEAD)" = {expected_head} && '
         f"{test_command}"
     )
     return command, test_paths, test_names
@@ -216,9 +213,7 @@ def main() -> int:
             status = "ssh-timeout"
         duration = time.monotonic() - began
         summary_lines = [
-            line.strip()
-            for line in output.splitlines()
-            if SUMMARY_PATTERN.search(line.strip())
+            line.strip() for line in output.splitlines() if SUMMARY_PATTERN.search(line.strip())
         ][-20:]
         records.append(
             {
@@ -231,16 +226,12 @@ def main() -> int:
                 "remote_command": command,
                 "returncode": returncode,
                 "duration_seconds": duration,
-                "output_sha256": "sha256:"
-                + hashlib.sha256(output.encode("utf-8")).hexdigest(),
+                "output_sha256": "sha256:" + hashlib.sha256(output.encode("utf-8")).hexdigest(),
                 "output_tail": output[-12000:],
                 "summary_lines": summary_lines,
             }
         )
-        print(
-            f"[{index}/{len(selected_cases)}] {case['case_id']}: "
-            f"rc={returncode} {duration:.1f}s"
-        )
+        print(f"[{index}/{len(selected_cases)}] {case['case_id']}: rc={returncode} {duration:.1f}s")
 
     material = {
         "schema_version": "0.1",

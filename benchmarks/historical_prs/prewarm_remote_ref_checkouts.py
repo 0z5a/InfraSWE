@@ -43,9 +43,7 @@ def _hydrate_raw_missing_blob(
     if match is None:
         return None
     missing_sha = match.group(1)
-    tree = subprocess.check_output(
-        ["git", "-C", str(repo_path), "ls-tree", "-r", "-z", ref]
-    )
+    tree = subprocess.check_output(["git", "-C", str(repo_path), "ls-tree", "-r", "-z", ref])
     matching_paths: list[str] = []
     for entry in tree.split(b"\0"):
         if not entry:
@@ -61,23 +59,22 @@ def _hydrate_raw_missing_blob(
     encoded_path = urllib.parse.quote(path, safe="/")
     encoded_repository = urllib.parse.quote(case["repository"], safe="/")
     url = (
-        f"https://raw.githubusercontent.com/{encoded_repository}/"
-        f"{case['head_sha']}/{encoded_path}"
+        f"https://raw.githubusercontent.com/{encoded_repository}/{case['head_sha']}/{encoded_path}"
     )
-    request = urllib.request.Request(
-        url, headers={"User-Agent": "InfraSWE-source-hydrator"}
-    )
+    request = urllib.request.Request(url, headers={"User-Agent": "InfraSWE-source-hydrator"})
     with urllib.request.urlopen(request, timeout=30) as response:
         data = response.read()
-    written_sha = subprocess.check_output(
-        ["git", "-C", str(repo_path), "hash-object", "-w", "--stdin"],
-        input=data,
-        text=False,
-    ).decode().strip()
-    if written_sha != missing_sha:
-        raise SystemExit(
-            f"{case['case_id']} {path}: raw blob hash {written_sha} != {missing_sha}"
+    written_sha = (
+        subprocess.check_output(
+            ["git", "-C", str(repo_path), "hash-object", "-w", "--stdin"],
+            input=data,
+            text=False,
         )
+        .decode()
+        .strip()
+    )
+    if written_sha != missing_sha:
+        raise SystemExit(f"{case['case_id']} {path}: raw blob hash {written_sha} != {missing_sha}")
     return missing_sha, path
 
 
@@ -127,9 +124,7 @@ def main() -> int:
                 break
             output = switch.stdout + switch.stderr
             if args.hydrate_raw_missing and hydration_count < args.max_hydrations_per_case:
-                hydrated = _hydrate_raw_missing_blob(
-                    projects[project], case, ref, output
-                )
+                hydrated = _hydrate_raw_missing_blob(projects[project], case, ref, output)
                 if hydrated is not None:
                     hydration_count += 1
                     _sha, path = hydrated
@@ -141,8 +136,7 @@ def main() -> int:
             failures.append(f"{case['case_id']}:rc={switch.returncode}")
             tail = output.strip().splitlines()[-1:]
             print(
-                f"[{index}/{len(cases)}] {case['case_id']}: rc={switch.returncode} "
-                f"tail={tail}",
+                f"[{index}/{len(cases)}] {case['case_id']}: rc={switch.returncode} tail={tail}",
                 flush=True,
             )
             break

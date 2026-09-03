@@ -80,8 +80,7 @@ def main() -> int:
                 if side_name == "head" and expected_head_sha:
                     if blob_sha != expected_head_sha:
                         raise SystemExit(
-                            f"{case['case_id']} {file_evidence['filename']}: "
-                            "Git head blob mismatch"
+                            f"{case['case_id']} {file_evidence['filename']}: Git head blob mismatch"
                         )
                     verified_head_blob_count += 1
                 written.add(content_key)

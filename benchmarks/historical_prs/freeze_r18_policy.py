@@ -94,11 +94,17 @@ def main() -> int:
         raise SystemExit("R18 project allocation changed")
     payload = {**policy, "policy_sha256": canonical_sha256(policy)}
     atomic_write_json(args.output, payload)
-    print(json.dumps({
-        "policy_sha256": payload["policy_sha256"],
-        "domain_allocation": payload["domain_allocation"],
-        "project_allocation": allocation,
-    }, indent=2, sort_keys=True))
+    print(
+        json.dumps(
+            {
+                "policy_sha256": payload["policy_sha256"],
+                "domain_allocation": payload["domain_allocation"],
+                "project_allocation": allocation,
+            },
+            indent=2,
+            sort_keys=True,
+        )
+    )
     return 0
 
 

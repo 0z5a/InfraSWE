@@ -23,9 +23,7 @@ def _read(path: Path) -> dict[str, Any]:
     return payload
 
 
-def _checked(
-    path: Path, digest_field: str, *, material_field: str | None = None
-) -> dict[str, Any]:
+def _checked(path: Path, digest_field: str, *, material_field: str | None = None) -> dict[str, Any]:
     payload = _read(path)
     material = (
         payload[material_field]
@@ -49,10 +47,7 @@ def _label(decision: str) -> str:
 def _has_critical_missing_patch(static: dict[str, Any]) -> bool:
     return any(
         not item["patch_available"]
-        and (
-            item["is_test"]
-            or str(item["path"]).lower().endswith(CRITICAL_SUFFIXES)
-        )
+        and (item["is_test"] or str(item["path"]).lower().endswith(CRITICAL_SUFFIXES))
         for item in static["files"]
     )
 
@@ -87,9 +82,7 @@ def main() -> int:
     if metadata["reveal_sha256"] != reveal["reveal_sha256"]:
         raise SystemExit("metadata/reveal binding mismatch")
 
-    selected = {
-        item["case_id"]: item for item in selection["selection_material"]["cases"]
-    }
+    selected = {item["case_id"]: item for item in selection["selection_material"]["cases"]}
     statics = {item["case_id"]: item for item in static["cases"]}
     audited = {item["case_id"]: item for item in audit["cases"]}
     revealed = {item["case_id"]: item for item in reveal["cases"]}
@@ -103,10 +96,9 @@ def main() -> int:
         case = selected[case_id]
         decision = material["decision"]
         new_reason: str | None = None
-        if (
-            material["rationale_codes"][0] == "SOURCE_INTEGRITY_FAILURE"
-            and not _has_critical_missing_patch(statics[case_id])
-        ):
+        if material["rationale_codes"][
+            0
+        ] == "SOURCE_INTEGRITY_FAILURE" and not _has_critical_missing_patch(statics[case_id]):
             decision = "accept_with_scope"
             new_reason = "ANCILLARY_PATCH_GAP_NEUTRALIZED"
         elif case["temporal_band"] == "mature":
@@ -133,28 +125,19 @@ def main() -> int:
             )
 
     projected_exact = sum(
-        _label(projected[case_id]) == row["oracle_decision"]
-        for case_id, row in audited.items()
+        _label(projected[case_id]) == row["oracle_decision"] for case_id, row in audited.items()
     )
-    projected_rejects = [
-        case_id for case_id, decision in projected.items() if decision == "reject"
-    ]
-    projected_checks = [
-        case_id for case_id, decision in projected.items() if decision == "check"
-    ]
-    merged_ids = {
-        item["case_id"] for item in reveal["cases"] if item["outcome"]["merged"]
-    }
+    projected_rejects = [case_id for case_id, decision in projected.items() if decision == "reject"]
+    projected_checks = [case_id for case_id, decision in projected.items() if decision == "check"]
+    merged_ids = {item["case_id"] for item in reveal["cases"] if item["outcome"]["merged"]}
     projected_merged_accepts = sum(
         projected[case_id] == "accept_with_scope" for case_id in merged_ids
     )
     projected_reject_correct = sum(
-        audited[case_id]["oracle_decision"] == "reject"
-        for case_id in projected_rejects
+        audited[case_id]["oracle_decision"] == "reject" for case_id in projected_rejects
     )
     projected_check_correct = sum(
-        audited[case_id]["oracle_decision"] == "check"
-        for case_id in projected_checks
+        audited[case_id]["oracle_decision"] == "check" for case_id in projected_checks
     )
     if projected_exact <= int(audit["summary"]["exact_label_matches"]):
         raise SystemExit("interim prospective rules do not improve the sealed cohort")
@@ -170,8 +153,7 @@ def main() -> int:
         "cases": len(projected),
         "exact_label_matches": projected_exact,
         "exact_accuracy": projected_exact / len(projected),
-        "gain_over_frozen": projected_exact
-        - int(audit["summary"]["exact_label_matches"]),
+        "gain_over_frozen": projected_exact - int(audit["summary"]["exact_label_matches"]),
         "gain_over_same_cohort_legacy": projected_exact
         - int(audit["summary"]["legacy_exact_label_matches"]),
         "merged_cases": len(merged_ids),
@@ -182,9 +164,7 @@ def main() -> int:
         "check_predictions": len(projected_checks),
         "check_correct": projected_check_correct,
         "check_precision": (
-            projected_check_correct / len(projected_checks)
-            if projected_checks
-            else None
+            projected_check_correct / len(projected_checks) if projected_checks else None
         ),
         "changed_cases": changes,
     }

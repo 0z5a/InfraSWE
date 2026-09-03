@@ -61,7 +61,7 @@ def main() -> int:
         return (
             f"cd {shlex.quote(worktree)} && {lfs}git switch --detach "
             f"refs/r19/pr-{int(case['pull_number'])} >/dev/null && "
-            f"test \"$(git rev-parse HEAD)\" = {shlex.quote(case['head_sha'])} && "
+            f'test "$(git rev-parse HEAD)" = {shlex.quote(case["head_sha"])} && '
         )
 
     sglang_env = "env CUDA_VISIBLE_DEVICES=1 PYTHONPATH=/workspace/r18-deps/common:/workspace/r17-deps/opencv:/workspace/r14-shims:python:."
@@ -91,7 +91,9 @@ def main() -> int:
             "purpose": "rerun the exact added matrix with a unique JIT workspace to exclude cross-head module-cache contamination",
             "command": switch("/workspace/r14-run-flashinfer", "flashinfer-pr-4900")
             + "timeout 630s env CUDA_VISIBLE_DEVICES=0 FLASHINFER_WORKSPACE_BASE=/workspace/r19-cache/flashinfer-4900-v2 PYTHONPATH=. /venv/main/bin/python -m pytest -q -rs --tb=short --maxfail=1 tests/attention/test_block_sparse.py -k "
-            + shlex.quote("test_a_second_plan_still_takes_a_page_size_after_auto_resolved or test_block_sparse_paged_route or test_block_sparse_paged_route_rejects_bad_geometry or test_paged_fp8_cache_sizes_its_default_scales_by_the_head_count or test_paged_route_reads_a_wide_quantized_head"),
+            + shlex.quote(
+                "test_a_second_plan_still_takes_a_page_size_after_auto_resolved or test_block_sparse_paged_route or test_block_sparse_paged_route_rejects_bad_geometry or test_paged_fp8_cache_sizes_its_default_scales_by_the_head_count or test_paged_route_reads_a_wide_quantized_head"
+            ),
         },
         {
             "case_id": "sglang-pr-37638",
@@ -108,7 +110,10 @@ def main() -> int:
             "purpose": "isolate the candidate unified-radix unit path from an unrelated installed sgl-kernel API mismatch",
             "command": switch("/workspace/r14-run-sglang", "sglang-pr-27285")
             + f"timeout 180s {sglang_env} /venv/main/bin/python -c "
-            + shlex.quote(optional_kernel_driver + "raise SystemExit(pytest.main(['-q','-rs','--tb=short','--maxfail=1','test/registered/unit/mem_cache/test_unified_radix_cache_unittest.py']))"),
+            + shlex.quote(
+                optional_kernel_driver
+                + "raise SystemExit(pytest.main(['-q','-rs','--tb=short','--maxfail=1','test/registered/unit/mem_cache/test_unified_radix_cache_unittest.py']))"
+            ),
         },
         {
             "case_id": "sglang-pr-27297",
@@ -117,7 +122,10 @@ def main() -> int:
             "purpose": "run the two candidate LingBot transport/cache unit files behind fail-closed unrelated kernel imports",
             "command": switch("/workspace/r14-run-sglang", "sglang-pr-27297")
             + f"timeout 180s {sglang_env} /venv/main/bin/python -c "
-            + shlex.quote(optional_kernel_driver + "raise SystemExit(pytest.main(['-q','-rs','--tb=short','--maxfail=1','python/sglang/multimodal_gen/test/unit/realtime/test_lingbot_causal_denoising.py','python/sglang/multimodal_gen/test/unit/realtime/test_realtime_output_transport.py']))"),
+            + shlex.quote(
+                optional_kernel_driver
+                + "raise SystemExit(pytest.main(['-q','-rs','--tb=short','--maxfail=1','python/sglang/multimodal_gen/test/unit/realtime/test_lingbot_causal_denoising.py','python/sglang/multimodal_gen/test/unit/realtime/test_realtime_output_transport.py']))"
+            ),
         },
         {
             "case_id": "sglang-pr-27174",
@@ -126,7 +134,10 @@ def main() -> int:
             "purpose": "run the load-metric unit route behind fail-closed unrelated kernel imports",
             "command": switch("/workspace/r14-run-sglang", "sglang-pr-27174")
             + f"timeout 180s {sglang_env} /venv/main/bin/python -c "
-            + shlex.quote(optional_kernel_driver + "raise SystemExit(pytest.main(['-q','-rs','--tb=short','--maxfail=1','test/registered/unit/mem_cache/test_radix_force_miss.py']))"),
+            + shlex.quote(
+                optional_kernel_driver
+                + "raise SystemExit(pytest.main(['-q','-rs','--tb=short','--maxfail=1','test/registered/unit/mem_cache/test_radix_force_miss.py']))"
+            ),
         },
         {
             "case_id": "sglang-pr-27298",
@@ -135,7 +146,10 @@ def main() -> int:
             "purpose": "run the serving-chat unit route behind fail-closed unrelated kernel imports",
             "command": switch("/workspace/r14-run-sglang", "sglang-pr-27298")
             + f"timeout 180s {sglang_env} /venv/main/bin/python -c "
-            + shlex.quote(optional_kernel_driver + "raise SystemExit(pytest.main(['-q','-rs','--tb=short','--maxfail=1','test/registered/unit/entrypoints/openai/test_serving_chat.py']))"),
+            + shlex.quote(
+                optional_kernel_driver
+                + "raise SystemExit(pytest.main(['-q','-rs','--tb=short','--maxfail=1','test/registered/unit/entrypoints/openai/test_serving_chat.py']))"
+            ),
         },
         {
             "case_id": "tensorrt_llm-pr-14764",
@@ -194,7 +208,13 @@ def main() -> int:
     }
     payload = {**material, "evidence_sha256": canonical_sha256(material)}
     atomic_write_json(args.output, payload)
-    print(json.dumps({record["case_id"]: record["returncode"] for record in records}, indent=2, sort_keys=True))
+    print(
+        json.dumps(
+            {record["case_id"]: record["returncode"] for record in records},
+            indent=2,
+            sort_keys=True,
+        )
+    )
     print(f"evidence_sha256={payload['evidence_sha256']}")
     return 0
 

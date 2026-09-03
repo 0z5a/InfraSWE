@@ -607,8 +607,7 @@ def main() -> int:
                 "decision_counts": decision_counts,
                 "legacy_r10_style_decision_counts": legacy_counts,
                 "decisions": {
-                    lock["material"]["case_id"]: lock["material"]["decision"]
-                    for lock in locks
+                    lock["material"]["case_id"]: lock["material"]["decision"] for lock in locks
                 },
             },
             indent=2,

@@ -251,7 +251,10 @@ def main() -> int:
         "test_plan_sha256": plan["test_plan_sha256"],
         "static_evidence_sha256": static["evidence_sha256"],
         "probe_hashes": probe_hashes,
-        "environment_repairs": ["pylatexenc==2.11 in /venv/main", "grain==0.2.18 in /workspace/venv-tt"],
+        "environment_repairs": [
+            "pylatexenc==2.11 in /venv/main",
+            "grain==0.2.18 in /workspace/venv-tt",
+        ],
         "started_at": started_at,
         "finished_at": datetime.now(UTC).isoformat(),
         "outcome_review_ci_fields_requested": False,

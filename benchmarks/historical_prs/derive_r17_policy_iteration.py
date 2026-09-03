@@ -60,7 +60,9 @@ def main() -> int:
             "same_cohort_exact_accuracy_gain": summary["same_cohort_exact_accuracy_gain"],
             "binary_direction_matches": summary["binary_direction_matches"],
             "frozen_nonaccept_exact_matches": summary["frozen_nonaccept_exact_matches"],
-            "legacy_frozen_nonaccept_exact_matches": summary["legacy_frozen_nonaccept_exact_matches"],
+            "legacy_frozen_nonaccept_exact_matches": summary[
+                "legacy_frozen_nonaccept_exact_matches"
+            ],
             "machine_reject_precision": summary["machine_reject_precision"],
             "machine_check_precision": summary["machine_check_precision"],
             "oracle_decisions": summary["oracle_decisions"],
@@ -73,7 +75,12 @@ def main() -> int:
         "r18_group": {
             "case_count": 30,
             "allocation": {"inference": 30},
-            "inference_project_allocation": {"vllm": 8, "sglang": 8, "tensorrt_llm": 7, "flashinfer": 7},
+            "inference_project_allocation": {
+                "vllm": 8,
+                "sglang": 8,
+                "tensorrt_llm": 7,
+                "flashinfer": 7,
+            },
             "reason": "continue the four-draft inference tranche; rotate the 8/8 shares in R19 and retain five each for R20",
             "future_groups_preselected": False,
         },

@@ -27,9 +27,15 @@ EXPECTED_FILE_SHA256 = {
     "checkpoint_retry": "f25ce5ca82a27cd4dfabd232cd19c9b08871d1a9b51db9194eb4e36ba0eeeb94",
     "checkpoint_focused": "f96ba5d65224891b2553a8e5c6be63b3549d951f306daf387782c13551e8532a",
 }
-EXPECTED_SELECTION_SHA256 = "sha256:e62dfd65af89ec1b75847d007c2a3f1d4ff0d37e8ac5f6ed792df7193e4c24fa"
-EXPECTED_TEST_PLAN_SHA256 = "sha256:1bf58d5803699b63323b7ab09feb2f5c599fa4368efa7527025c8f6172d5f2a0"
-EXPECTED_SOURCE_BUNDLE_SHA256 = "sha256:09e279a10bb85a5dfe9dbf56a4009f1f2c987380e8f137e168a5d60be9d1dbbf"
+EXPECTED_SELECTION_SHA256 = (
+    "sha256:e62dfd65af89ec1b75847d007c2a3f1d4ff0d37e8ac5f6ed792df7193e4c24fa"
+)
+EXPECTED_TEST_PLAN_SHA256 = (
+    "sha256:1bf58d5803699b63323b7ab09feb2f5c599fa4368efa7527025c8f6172d5f2a0"
+)
+EXPECTED_SOURCE_BUNDLE_SHA256 = (
+    "sha256:09e279a10bb85a5dfe9dbf56a4009f1f2c987380e8f137e168a5d60be9d1dbbf"
+)
 POLICY_ID = "training-contract-disposition-split-v0.1-r16"
 
 
@@ -305,7 +311,8 @@ def validate_digest(payload: dict[str, Any], field: str, label: str) -> None:
 def binding(path: Path, payload: dict[str, Any]) -> dict[str, Any]:
     return {
         "path": path.name,
-        "evidence_sha256": payload.get("evidence_sha256") or payload.get("evidence_manifest_sha256"),
+        "evidence_sha256": payload.get("evidence_sha256")
+        or payload.get("evidence_manifest_sha256"),
         "artifact_sha256": canonical_sha256(payload),
     }
 
@@ -335,17 +342,44 @@ def main() -> int:
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
 
-    require(file_sha256(args.selection_lock) == EXPECTED_FILE_SHA256["selection"], "R16 selection file digest mismatch")
-    require(file_sha256(args.test_plan) == EXPECTED_FILE_SHA256["plan"], "R16 test-plan file digest mismatch")
+    require(
+        file_sha256(args.selection_lock) == EXPECTED_FILE_SHA256["selection"],
+        "R16 selection file digest mismatch",
+    )
+    require(
+        file_sha256(args.test_plan) == EXPECTED_FILE_SHA256["plan"],
+        "R16 test-plan file digest mismatch",
+    )
     selection = read(args.selection_lock)
     plan = read(args.test_plan)
-    require(selection["selection_lock_sha256"] == canonical_sha256(selection["selection_material"]), "R16 embedded selection digest mismatch")
-    require(selection["selection_lock_sha256"] == EXPECTED_SELECTION_SHA256, "R16 selection identity changed")
-    require(plan["test_plan_sha256"] == canonical_sha256({key: value for key, value in plan.items() if key != "test_plan_sha256"}), "R16 embedded test-plan digest mismatch")
+    require(
+        selection["selection_lock_sha256"] == canonical_sha256(selection["selection_material"]),
+        "R16 embedded selection digest mismatch",
+    )
+    require(
+        selection["selection_lock_sha256"] == EXPECTED_SELECTION_SHA256,
+        "R16 selection identity changed",
+    )
+    require(
+        plan["test_plan_sha256"]
+        == canonical_sha256(
+            {key: value for key, value in plan.items() if key != "test_plan_sha256"}
+        ),
+        "R16 embedded test-plan digest mismatch",
+    )
     require(plan["test_plan_sha256"] == EXPECTED_TEST_PLAN_SHA256, "R16 test-plan identity changed")
-    require(plan["selection_lock_sha256"] == EXPECTED_SELECTION_SHA256, "R16 plan/selection binding mismatch")
-    require(plan["disposition_policy"]["weighted_score_used"] is False, "R16 unexpectedly uses weighted scoring")
-    require(plan["disposition_policy"]["forced_polarization_used"] is False, "R16 unexpectedly forces polarization")
+    require(
+        plan["selection_lock_sha256"] == EXPECTED_SELECTION_SHA256,
+        "R16 plan/selection binding mismatch",
+    )
+    require(
+        plan["disposition_policy"]["weighted_score_used"] is False,
+        "R16 unexpectedly uses weighted scoring",
+    )
+    require(
+        plan["disposition_policy"]["forced_polarization_used"] is False,
+        "R16 unexpectedly forces polarization",
+    )
     blind_flags = (
         selection["selection_material"]["review_or_comment_visible"],
         selection["selection_material"]["merge_outcomes_visible"],
@@ -377,47 +411,111 @@ def main() -> int:
     for name, path in evidence_paths.items():
         require(file_sha256(path) == EXPECTED_FILE_SHA256[name], f"{name} file digest mismatch")
     validate_digest(evidence["manifest"], "evidence_manifest_sha256", "manifest")
-    for name in ("static", "initial", "followup", "orpo_retry", "checkpoint_retry", "checkpoint_focused"):
+    for name in (
+        "static",
+        "initial",
+        "followup",
+        "orpo_retry",
+        "checkpoint_retry",
+        "checkpoint_focused",
+    ):
         validate_digest(evidence[name], "evidence_sha256", name)
-    require(evidence["manifest"]["source_bundle_sha256"] == EXPECTED_SOURCE_BUNDLE_SHA256, "R16 source bundle identity changed")
-    require(evidence["static"]["source_bundle_sha256"] == EXPECTED_SOURCE_BUNDLE_SHA256, "R16 static/source binding mismatch")
+    require(
+        evidence["manifest"]["source_bundle_sha256"] == EXPECTED_SOURCE_BUNDLE_SHA256,
+        "R16 source bundle identity changed",
+    )
+    require(
+        evidence["static"]["source_bundle_sha256"] == EXPECTED_SOURCE_BUNDLE_SHA256,
+        "R16 static/source binding mismatch",
+    )
 
     initial_by_id = {record["case_id"]: record for record in evidence["initial"]["records"]}
     followup_by_id = {record["case_id"]: record for record in evidence["followup"]["records"]}
-    require(initial_by_id["liger-pr-1204"]["returncode"] == 0 and "322 passed" in initial_by_id["liger-pr-1204"]["output_tail"], "R16 DPO evidence changed")
-    require(initial_by_id["liger-pr-1202"]["returncode"] == 0 and "69 passed" in initial_by_id["liger-pr-1202"]["output_tail"], "R16 GRPO evidence changed")
-    require(followup_by_id["liger-pr-1208"]["returncode"] == 0 and "24 passed" in followup_by_id["liger-pr-1208"]["output_tail"], "R16 DyT evidence changed")
-    require('"mode": "base", "first_yield_peak_bytes": 163577856' in followup_by_id["slime-pr-2010"]["output_tail"], "R16 slime base peak changed")
-    require('"mode": "head", "first_yield_peak_bytes": 46137344' in followup_by_id["slime-pr-2010"]["output_tail"], "R16 slime head peak changed")
-    require("8 passed" in followup_by_id["torchtitan-pr-4358"]["output_tail"], "R16 TorchTitan replay evidence changed")
-    require("SyntaxError: '(' was never closed" in followup_by_id["verl-pr-6558"]["output_tail"], "R16 verl syntax counterexample changed")
-    require(evidence["orpo_retry"]["records"][0]["returncode"] == 0 and "current_trl_orpo_import=pass" in evidence["orpo_retry"]["records"][0]["output_tail"], "R16 ORPO retry changed")
+    require(
+        initial_by_id["liger-pr-1204"]["returncode"] == 0
+        and "322 passed" in initial_by_id["liger-pr-1204"]["output_tail"],
+        "R16 DPO evidence changed",
+    )
+    require(
+        initial_by_id["liger-pr-1202"]["returncode"] == 0
+        and "69 passed" in initial_by_id["liger-pr-1202"]["output_tail"],
+        "R16 GRPO evidence changed",
+    )
+    require(
+        followup_by_id["liger-pr-1208"]["returncode"] == 0
+        and "24 passed" in followup_by_id["liger-pr-1208"]["output_tail"],
+        "R16 DyT evidence changed",
+    )
+    require(
+        '"mode": "base", "first_yield_peak_bytes": 163577856'
+        in followup_by_id["slime-pr-2010"]["output_tail"],
+        "R16 slime base peak changed",
+    )
+    require(
+        '"mode": "head", "first_yield_peak_bytes": 46137344'
+        in followup_by_id["slime-pr-2010"]["output_tail"],
+        "R16 slime head peak changed",
+    )
+    require(
+        "8 passed" in followup_by_id["torchtitan-pr-4358"]["output_tail"],
+        "R16 TorchTitan replay evidence changed",
+    )
+    require(
+        "SyntaxError: '(' was never closed" in followup_by_id["verl-pr-6558"]["output_tail"],
+        "R16 verl syntax counterexample changed",
+    )
+    require(
+        evidence["orpo_retry"]["records"][0]["returncode"] == 0
+        and "current_trl_orpo_import=pass" in evidence["orpo_retry"]["records"][0]["output_tail"],
+        "R16 ORPO retry changed",
+    )
 
-    execution_artifacts = ("initial", "followup", "orpo_retry", "checkpoint_retry", "checkpoint_focused")
+    execution_artifacts = (
+        "initial",
+        "followup",
+        "orpo_retry",
+        "checkpoint_retry",
+        "checkpoint_focused",
+    )
     execution_bindings: dict[str, list[dict[str, Any]]] = {case_id: [] for case_id in selected}
     for name in execution_artifacts:
         for case_id in selected:
-            execution_bindings[case_id].extend(record_bindings(evidence_paths[name], evidence[name], case_id))
+            execution_bindings[case_id].extend(
+                record_bindings(evidence_paths[name], evidence[name], case_id)
+            )
     require(all(execution_bindings.values()), "R16 case missing execution record")
 
-    common_evidence = {name: binding(evidence_paths[name], evidence[name]) for name in evidence_paths}
+    common_evidence = {
+        name: binding(evidence_paths[name], evidence[name]) for name in evidence_paths
+    }
     frozen_at = datetime.now(UTC).isoformat()
     locks: list[dict[str, Any]] = []
     for case_id, selected_case in selected.items():
         planned_case = planned[case_id]
-        require(selected_case["base_sha"] == planned_case["base_sha"] and selected_case["head_sha"] == planned_case["head_sha"], f"{case_id}: selection/test-plan SHA mismatch")
+        require(
+            selected_case["base_sha"] == planned_case["base_sha"]
+            and selected_case["head_sha"] == planned_case["head_sha"],
+            f"{case_id}: selection/test-plan SHA mismatch",
+        )
         assessed = ASSESSMENTS[case_id]
         result = classify_case_contract(assessed.triage)
         if result.decision == "check":
-            require(selected_case["temporal_band"] == "recent", f"{case_id}: mature case cannot be check")
-            require(len(selected_case["paths"]) <= 8, f"{case_id}: check exceeds eight changed paths")
+            require(
+                selected_case["temporal_band"] == "recent",
+                f"{case_id}: mature case cannot be check",
+            )
+            require(
+                len(selected_case["paths"]) <= 8, f"{case_id}: check exceeds eight changed paths"
+            )
         legacy = "accept_with_scope" if assessed.triage.contract_satisfied else "check"
         supplemental = execution_bindings[case_id]
         lock_material = {
             "schema_version": "0.1",
             "policy_id": POLICY_ID,
             "case_id": case_id,
-            "candidate_sha256": canonical_sha256({"selection": selected_case, "test_plan": planned_case}),
+            "candidate_sha256": canonical_sha256(
+                {"selection": selected_case, "test_plan": planned_case}
+            ),
             "selection_lock_sha256": EXPECTED_SELECTION_SHA256,
             "test_plan_sha256": EXPECTED_TEST_PLAN_SHA256,
             "source_bundle_sha256": EXPECTED_SOURCE_BUNDLE_SHA256,
@@ -429,7 +527,8 @@ def main() -> int:
             "rationale_codes": list(result.rationale_codes),
             "technical_findings": list(assessed.findings),
             "residual_contract": assessed.residual,
-            "hot_window_check_eligible": selected_case["temporal_band"] == "recent" and len(selected_case["paths"]) <= 8,
+            "hot_window_check_eligible": selected_case["temporal_band"] == "recent"
+            and len(selected_case["paths"]) <= 8,
             "legacy_r10_style_decision": legacy,
             "frozen_at": frozen_at,
         }
@@ -461,18 +560,31 @@ def main() -> int:
         "frozen_at": frozen_at,
         "decision_counts": decision_counts,
         "legacy_r10_style_decision_counts": {
-            "accept_with_scope": sum(lock["material"]["legacy_r10_style_decision"] == "accept_with_scope" for lock in locks),
-            "check": sum(lock["material"]["legacy_r10_style_decision"] == "check" for lock in locks),
+            "accept_with_scope": sum(
+                lock["material"]["legacy_r10_style_decision"] == "accept_with_scope"
+                for lock in locks
+            ),
+            "check": sum(
+                lock["material"]["legacy_r10_style_decision"] == "check" for lock in locks
+            ),
         },
         "locks": locks,
     }
     output = {**output_material, "lock_set_sha256": canonical_sha256(output_material)}
     atomic_write_json(args.output, output)
-    print(json.dumps({
-        "lock_set_sha256": output["lock_set_sha256"],
-        "decision_counts": decision_counts,
-        "decisions": {lock["material"]["case_id"]: lock["material"]["decision"] for lock in locks},
-    }, indent=2, sort_keys=True))
+    print(
+        json.dumps(
+            {
+                "lock_set_sha256": output["lock_set_sha256"],
+                "decision_counts": decision_counts,
+                "decisions": {
+                    lock["material"]["case_id"]: lock["material"]["decision"] for lock in locks
+                },
+            },
+            indent=2,
+            sort_keys=True,
+        )
+    )
     return 0
 
 

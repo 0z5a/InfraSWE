@@ -73,9 +73,7 @@ def _read(path: Path) -> dict[str, Any]:
 def _run_gh(arguments: list[str], *, binary: bool = False) -> tuple[int, bytes, bytes]:
     process: subprocess.CompletedProcess[bytes] | None = None
     for attempt in range(4):
-        process = subprocess.run(
-            ["gh", "api", *arguments], check=False, capture_output=True
-        )
+        process = subprocess.run(["gh", "api", *arguments], check=False, capture_output=True)
         if process.returncode == 0:
             break
         if attempt < 3 and process.returncode not in {1, 4}:
@@ -136,10 +134,7 @@ def _body_projection(case: dict[str, Any]) -> dict[str, Any]:
 
 
 def _compare_projection(case: dict[str, Any]) -> dict[str, Any]:
-    endpoint = (
-        f"repos/{case['repository']}/compare/"
-        f"{case['base_tip_sha']}...{case['head_sha']}"
-    )
+    endpoint = f"repos/{case['repository']}/compare/{case['base_tip_sha']}...{case['head_sha']}"
     payload = _json_gh([endpoint])
     files = []
     for item in payload.get("files", []):
@@ -254,9 +249,7 @@ def main() -> int:
                 "head_matches_selection_at_acquisition": (
                     body["current_head_ref_oid"] == case["head_sha"]
                 ),
-                "compare": {
-                    key: value for key, value in compare.items() if key != "files"
-                },
+                "compare": {key: value for key, value in compare.items() if key != "files"},
                 "files": file_records,
             }
         )

@@ -15,47 +15,92 @@ from infraswe.io import atomic_write_json
 
 FAMILY_CONTRACTS: dict[str, dict[str, Any]] = {
     "optimizer-state": {
-        "matrix": ["one/two steps", "fresh/resumed state", "mixed/full precision", "enabled/disabled path"],
+        "matrix": [
+            "one/two steps",
+            "fresh/resumed state",
+            "mixed/full precision",
+            "enabled/disabled path",
+        ],
         "runtime": "candidate exact tests plus parameter, gradient, optimizer-state, and continuous-versus-resumed base/head oracle",
         "closure": "each trainable parameter and state slot has one owner and the head trajectory matches the independent reference",
     },
     "loss-gradient": {
-        "matrix": ["forward/backward", "boundary/normal shape", "FP32/mixed precision", "feature on/off"],
+        "matrix": [
+            "forward/backward",
+            "boundary/normal shape",
+            "FP32/mixed precision",
+            "feature on/off",
+        ],
         "runtime": "candidate exact tests plus independent value/gradient base-head comparison on available accelerator",
         "closure": "loss or operator values and every reachable gradient meet the frozen reference tolerances",
     },
     "checkpoint-resume": {
-        "matrix": ["save/load", "fresh/resumed", "complete/partial state", "single/distributed owner"],
+        "matrix": [
+            "save/load",
+            "fresh/resumed",
+            "complete/partial state",
+            "single/distributed owner",
+        ],
         "runtime": "candidate exact tests plus key, tensor, shard/index, and resumed-trajectory parity checks",
         "closure": "all state is uniquely represented, atomically finalized, reloadable, and equivalent after resume",
     },
     "scheduling-pipeline": {
-        "matrix": ["one/multiple microbatches", "first/steady/last", "single/reduced topology", "normal/delayed peer"],
+        "matrix": [
+            "one/multiple microbatches",
+            "first/steady/last",
+            "single/reduced topology",
+            "normal/delayed peer",
+        ],
         "runtime": "candidate exact tests plus timeout-protected progress, ordering, cardinality, and payload oracle",
         "closure": "the schedule completes with balanced ownership and reference-equivalent outputs or gradients",
     },
     "scheduler-progress": {
-        "matrix": ["empty/one/many requests", "prefill/decode", "normal/preempted/aborted", "single/repeated batch"],
+        "matrix": [
+            "empty/one/many requests",
+            "prefill/decode",
+            "normal/preempted/aborted",
+            "single/repeated batch",
+        ],
         "runtime": "candidate exact tests plus request-state transition, progress, output, and cleanup base/head oracle",
         "closure": "every request reaches exactly one legal terminal or continuation state without starvation, leak, or changed output",
     },
     "cache-state-layout": {
-        "matrix": ["empty/partial/full cache", "allocate/free/reuse", "contiguous/paged layout", "single/multiple owners"],
+        "matrix": [
+            "empty/partial/full cache",
+            "allocate/free/reuse",
+            "contiguous/paged layout",
+            "single/multiple owners",
+        ],
         "runtime": "candidate exact tests plus offset, ownership, eviction, reuse, and byte/value reconstruction oracle",
         "closure": "cache regions are complete, in bounds, non-overlapping, correctly owned, and reconstruct reference values",
     },
     "attention-numerics": {
-        "matrix": ["prefill/decode", "short/boundary/long sequence", "one/multiple heads", "supported dtype/backend"],
+        "matrix": [
+            "prefill/decode",
+            "short/boundary/long sequence",
+            "one/multiple heads",
+            "supported dtype/backend",
+        ],
         "runtime": "candidate exact tests plus independent attention or sampling value oracle and target-kernel execution where available",
         "closure": "outputs and declared metadata match the reference across boundary shapes and supported numeric modes",
     },
     "model-runtime-integration": {
-        "matrix": ["feature on/off", "one/repeated request", "supported model/config", "success/invalid input"],
+        "matrix": [
+            "feature on/off",
+            "one/repeated request",
+            "supported model/config",
+            "success/invalid input",
+        ],
         "runtime": "candidate exact tests plus import/configuration, production reachability, state ownership, and output oracle",
         "closure": "the production runtime reaches the new path, preserves the control path, and fails invalid configurations closed",
     },
     "memory-performance": {
-        "matrix": ["small/large shape", "cold/warm run", "feature on/off", "forward/repeated execution"],
+        "matrix": [
+            "small/large shape",
+            "cold/warm run",
+            "feature on/off",
+            "forward/repeated execution",
+        ],
         "runtime": "candidate exact tests plus value parity and measured allocator, workspace, latency, or throughput comparison matching the claim",
         "closure": "reference values are preserved and the named resource metric improves without hidden lifetime or synchronization debt",
     },
@@ -163,25 +208,27 @@ def main(
     }
     for item in cases:
         contract = FAMILY_CONTRACTS[item["risk_family"]]
-        plan_material["cases"].append({
-            "case_id": item["case_id"],
-            "project": item["project"],
-            "repository": item["repository"],
-            "pull_number": item["pull_number"],
-            "title": item["title"],
-            "created_at": item["created_at"],
-            "temporal_band": item["temporal_band"],
-            "benchmark_domain": item["benchmark_domain"],
-            "base_sha": item["base_sha"],
-            "head_sha": item["head_sha"],
-            "changed_paths": item["paths"],
-            "risk_family": item["risk_family"],
-            "claim": (
-                f"The production change titled {item['title']!r} preserves all unchanged "
-                f"{item['risk_family']} behavior while satisfying its named direction."
-            ),
-            **contract,
-        })
+        plan_material["cases"].append(
+            {
+                "case_id": item["case_id"],
+                "project": item["project"],
+                "repository": item["repository"],
+                "pull_number": item["pull_number"],
+                "title": item["title"],
+                "created_at": item["created_at"],
+                "temporal_band": item["temporal_band"],
+                "benchmark_domain": item["benchmark_domain"],
+                "base_sha": item["base_sha"],
+                "head_sha": item["head_sha"],
+                "changed_paths": item["paths"],
+                "risk_family": item["risk_family"],
+                "claim": (
+                    f"The production change titled {item['title']!r} preserves all unchanged "
+                    f"{item['risk_family']} behavior while satisfying its named direction."
+                ),
+                **contract,
+            }
+        )
 
     payload = {**plan_material, "test_plan_sha256": canonical_sha256(plan_material)}
     atomic_write_json(args.output, payload)

@@ -39,9 +39,7 @@ def main() -> int:
         {key: value for key, value in discovery.items() if key != "discovery_sha256"}
     ):
         raise SystemExit("R16 discovery digest mismatch")
-    if selection["selection_lock_sha256"] != canonical_sha256(
-        selection["selection_material"]
-    ):
+    if selection["selection_lock_sha256"] != canonical_sha256(selection["selection_material"]):
         raise SystemExit("R16 initial selection digest mismatch")
     if selection["selection_material"]["candidate_body_visible"] is not False:
         raise SystemExit("R16 initial selection crossed the source boundary")
@@ -63,7 +61,12 @@ def main() -> int:
                 ),
                 "inference_path_fragments": ["/inference/", "/generation/", "text_generation"],
                 "training_override_title_terms": [
-                    "train", "trainer", "optimizer", "checkpoint", "backward", "gradient",
+                    "train",
+                    "trainer",
+                    "optimizer",
+                    "checkpoint",
+                    "backward",
+                    "gradient",
                 ],
             },
             "deduplicate_metadata_signature": {
@@ -90,10 +93,16 @@ def main() -> int:
     }
     payload = {**material, "amendment_sha256": canonical_sha256(material)}
     atomic_write_json(args.output, payload)
-    print(json.dumps({
-        "amendment_sha256": payload["amendment_sha256"],
-        "superseded_selection_lock_sha256": material["superseded_selection_lock_sha256"],
-    }, indent=2, sort_keys=True))
+    print(
+        json.dumps(
+            {
+                "amendment_sha256": payload["amendment_sha256"],
+                "superseded_selection_lock_sha256": material["superseded_selection_lock_sha256"],
+            },
+            indent=2,
+            sort_keys=True,
+        )
+    )
     return 0
 
 

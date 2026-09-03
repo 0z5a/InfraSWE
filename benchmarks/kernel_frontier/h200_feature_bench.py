@@ -349,18 +349,11 @@ def run_tma(
 def run_wgmma(
     *, replay_index: int, blocks: int, min_timed_span_ms: float, artifact_root: Path
 ) -> dict[str, Any]:
-    left = torch.randn(
-        (MATMUL_SIZE, MATMUL_SIZE), device="cuda", dtype=torch.float16
-    )
-    right = torch.randn(
-        (MATMUL_SIZE, MATMUL_SIZE), device="cuda", dtype=torch.float16
-    )
+    left = torch.randn((MATMUL_SIZE, MATMUL_SIZE), device="cuda", dtype=torch.float16)
+    right = torch.randn((MATMUL_SIZE, MATMUL_SIZE), device="cuda", dtype=torch.float16)
     reference_output = torch.empty_like(left)
     candidate_output = torch.empty_like(left)
-    grid = (
-        triton.cdiv(MATMUL_SIZE, MATMUL_BLOCK)
-        * triton.cdiv(MATMUL_SIZE, MATMUL_BLOCK),
-    )
+    grid = (triton.cdiv(MATMUL_SIZE, MATMUL_BLOCK) * triton.cdiv(MATMUL_SIZE, MATMUL_BLOCK),)
 
     def reference():
         torch.mm(left, right, out=reference_output)
@@ -386,9 +379,7 @@ def run_wgmma(
     candidate()
     torch.cuda.synchronize()
     errors = tensor_correctness(reference_output, candidate_output)
-    errors["passed"] = bool(
-        torch.allclose(reference_output, candidate_output, rtol=0.02, atol=0.5)
-    )
+    errors["passed"] = bool(torch.allclose(reference_output, candidate_output, rtol=0.02, atol=0.5))
     reference_repetitions, reference_pilot_us = choose_repetitions(
         reference, min_timed_span_ms=min_timed_span_ms
     )
@@ -403,16 +394,12 @@ def run_wgmma(
         blocks=blocks,
         seed=92_000 + replay_index,
     )
-    compiler = copy_wgmma_artifacts(
-        Path(os.environ["TRITON_CACHE_DIR"]), artifact_root / "wgmma"
-    )
+    compiler = copy_wgmma_artifacts(Path(os.environ["TRITON_CACHE_DIR"]), artifact_root / "wgmma")
     profile = profiler_evidence(candidate)
     return {
         "status": (
             "passed"
-            if errors["passed"]
-            and profile.get("captured")
-            and compiler["instruction_gate_passed"]
+            if errors["passed"] and profile.get("captured") and compiler["instruction_gate_passed"]
             else "failed"
         ),
         "shape": [MATMUL_SIZE, MATMUL_SIZE, MATMUL_SIZE],
@@ -527,9 +514,7 @@ def probe_multimem(artifact_root: Path, replay_index: int) -> dict[str, Any]:
     if execution_attempted:
         first = 7 + replay_index
         second = 11 + 2 * replay_index
-        execution_command = command(
-            "timeout", "30s", str(runtime_binary), str(first), str(second)
-        )
+        execution_command = command("timeout", "30s", str(runtime_binary), str(first), str(second))
         try:
             execution_payload = json.loads(execution_command["stdout"].strip())
         except json.JSONDecodeError:
@@ -566,17 +551,13 @@ def probe_multimem(artifact_root: Path, replay_index: int) -> dict[str, Any]:
             "source_path": runtime_source.name,
             "source_sha256": sha256_file(runtime_source),
             "binary_path": str(runtime_binary.relative_to(artifact_root)),
-            "binary_sha256": (
-                sha256_file(runtime_binary) if runtime_binary.exists() else None
-            ),
+            "binary_sha256": (sha256_file(runtime_binary) if runtime_binary.exists() else None),
             "sass_path": (
                 str(runtime_sass_path.relative_to(artifact_root))
                 if runtime_sass_path.exists()
                 else None
             ),
-            "sass_sha256": (
-                sha256_file(runtime_sass_path) if runtime_sass_path.exists() else None
-            ),
+            "sass_sha256": (sha256_file(runtime_sass_path) if runtime_sass_path.exists() else None),
             "sass_instruction_lines": runtime_sass_lines,
             "instruction_gate_passed": bool(runtime_sass_lines),
         },
@@ -647,9 +628,7 @@ def main() -> None:
             min_timed_span_ms=args.min_timed_span_ms,
             artifact_root=args.artifact_root,
         )
-        payload["features"]["multimem"] = probe_multimem(
-            args.artifact_root, args.replay_index
-        )
+        payload["features"]["multimem"] = probe_multimem(args.artifact_root, args.replay_index)
         payload["status"] = (
             "passed"
             if payload["features"]["tma"]["status"] == "passed"

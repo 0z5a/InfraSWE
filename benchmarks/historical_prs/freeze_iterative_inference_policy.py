@@ -68,9 +68,7 @@ def main() -> int:
     machine_policy = copy.deepcopy(previous_policy["machine_policy"])
     machine_policy.update(
         {
-            "policy_id": (
-                f"inference-contract-disposition-split-v0.1-{round_label.lower()}"
-            ),
+            "policy_id": (f"inference-contract-disposition-split-v0.1-{round_label.lower()}"),
             "outcome_free_review_activity_projection_allowed": bool(
                 iteration.get("review_activity_projection_allowed", False)
             ),
@@ -86,9 +84,7 @@ def main() -> int:
     )
     policy = {
         "schema_version": "0.1",
-        "protocol_id": (
-            f"inference-iterative-contract-v0.1-{round_label.lower()}-{case_count}"
-        ),
+        "protocol_id": (f"inference-iterative-contract-v0.1-{round_label.lower()}-{case_count}"),
         "round": round_label,
         "case_count": case_count,
         "domain_allocation": {"inference": case_count},
@@ -99,9 +95,7 @@ def main() -> int:
         "grouping_policy": copy.deepcopy(previous_policy["grouping_policy"]),
         "execution_reordering": {
             "excluded_projects": sorted(set(args.exclude_project) | inherited_deferred),
-            "deferred_to_tail_group": sorted(
-                set(args.exclude_project) | inherited_deferred
-            ),
+            "deferred_to_tail_group": sorted(set(args.exclude_project) | inherited_deferred),
             "user_directed": bool(args.exclude_project) or bool(inherited_deferred),
             "inherited_from_previous_round": sorted(inherited_deferred),
         },

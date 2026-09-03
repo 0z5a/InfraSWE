@@ -128,9 +128,7 @@ def _slime_2152_tp2(rank: int) -> dict[str, Any]:
         "entropy_max_abs": float((entropy - oracle_entropy).abs().max().item()),
         "gradient_max_abs": float((local.grad.float() - oracle_local).abs().max().item()),
         "gradient_finite": bool(torch.isfinite(local.grad).all().item()),
-        "target_ownership": [
-            bool(rank * 3 <= int(target) < (rank + 1) * 3) for target in targets
-        ],
+        "target_ownership": [bool(rank * 3 <= int(target) < (rank + 1) * 3) for target in targets],
     }
 
 

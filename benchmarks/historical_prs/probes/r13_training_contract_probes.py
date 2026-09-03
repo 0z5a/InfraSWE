@@ -130,9 +130,7 @@ def _is_text_probe_path(path: str) -> bool:
 def _acquire(cases: list[dict[str, Any]]) -> dict[str, Any]:
     bundle: dict[str, Any] = {}
     for case in cases:
-        projection, raw_projection = _candidate_projection(
-            case["repository"], case["pull_number"]
-        )
+        projection, raw_projection = _candidate_projection(case["repository"], case["pull_number"])
         if projection["title"] != case["title"]:
             raise RuntimeError(f"candidate title changed for {case['case_id']}")
         if projection["head_sha"] != case["head_sha"]:
@@ -219,7 +217,9 @@ def _candidate_evidence(item: dict[str, Any]) -> dict[str, Any]:
         "mentions_benchmark": bool(
             re.search(r"\b(benchmark|throughput|latency|speed|memory|oom|nsys)\b", body, re.I)
         ),
-        "mentions_multi_gpu": bool(re.search(r"\b([248]-?gpu|multi-?gpu|world.?size)\b", body, re.I)),
+        "mentions_multi_gpu": bool(
+            re.search(r"\b([248]-?gpu|multi-?gpu|world.?size)\b", body, re.I)
+        ),
         "line_count": len(body.splitlines()),
     }
 
@@ -291,7 +291,10 @@ def _extract_top_level(source: str, names: set[str]) -> str:
     tree = ast.parse(source)
     segments = []
     for node in tree.body:
-        if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)) and node.name in names:
+        if (
+            isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef))
+            and node.name in names
+        ):
             segment = ast.get_source_segment(source, node)
             if segment is None:
                 raise AssertionError(f"could not extract {node.name}")
@@ -338,12 +341,19 @@ def _probe_flashattention_2654(item: dict[str, Any]) -> dict[str, Any]:
                 token in backward for token in ("q_idx", "kv_idx", "head_idx", "batch_idx")
             ),
             "head_interface_sm80_or_sm120_score_mod_rejection_present": bool(
-                re.search(r"sm_(?:80|120).{0,160}(?:score_mod|score mod).{0,80}(?:raise|assert)", interface, re.S | re.I)
+                re.search(
+                    r"sm_(?:80|120).{0,160}(?:score_mod|score mod).{0,80}(?:raise|assert)",
+                    interface,
+                    re.S | re.I,
+                )
             ),
             "candidate_validation_architectures": sorted(
-                set(re.findall(r"\b(?:sm\d{2,3}[a-z]?|RTX\s*\d+\s*Ti|A100|H100|B200)\b", body, re.I))
+                set(
+                    re.findall(r"\b(?:sm\d{2,3}[a-z]?|RTX\s*\d+\s*Ti|A100|H100|B200)\b", body, re.I)
+                )
             ),
-            "candidate_says_local_uncommitted_prerequisite_fixes": "locally modified" in body.lower()
+            "candidate_says_local_uncommitted_prerequisite_fixes": "locally modified"
+            in body.lower()
             and "not part of this feature pr" in body.lower(),
             "candidate_mentions_ignored_errors": "were ignored" in body.lower(),
         }
@@ -420,12 +430,10 @@ def _probe_liger_1274(item: dict[str, Any]) -> dict[str, Any]:
         {
             "eager_base_head_numeric_matrix": numeric,
             "fullgraph_compile": compile_results,
-            "head_uses_boolean_index_assignment": "per_token_loss[positive_advantages_mask]" in _source(
-                item, "src/liger_kernel/chunked_loss/grpo_loss.py"
-            ),
-            "head_uses_torch_where": "per_token_loss = torch.where(" in _source(
-                item, "src/liger_kernel/chunked_loss/grpo_loss.py"
-            ),
+            "head_uses_boolean_index_assignment": "per_token_loss[positive_advantages_mask]"
+            in _source(item, "src/liger_kernel/chunked_loss/grpo_loss.py"),
+            "head_uses_torch_where": "per_token_loss = torch.where("
+            in _source(item, "src/liger_kernel/chunked_loss/grpo_loss.py"),
         }
     )
     return facts
@@ -454,8 +462,14 @@ def _probe_liger_1268(item: dict[str, Any]) -> dict[str, Any]:
                         if weighted
                         else torch.ones(4, dtype=torch.float64, device=device)
                     )
-                    transformed = original if softcap is None else softcap * torch.tanh(original / softcap)
-                    chain = torch.ones_like(original) if softcap is None else 1 - torch.tanh(original / softcap) ** 2
+                    transformed = (
+                        original if softcap is None else softcap * torch.tanh(original / softcap)
+                    )
+                    chain = (
+                        torch.ones_like(original)
+                        if softcap is None
+                        else 1 - torch.tanh(original / softcap) ** 2
+                    )
                     probs = transformed.softmax(dim=-1)
                     valid = labels != -100
                     safe_labels = labels.clone()
@@ -518,7 +532,8 @@ def _probe_liger_1268(item: dict[str, Any]) -> dict[str, Any]:
             "max_independent_oracle_gradient_error": max_oracle_error,
             "ignore_index_returns_before_target_correction": source.index("if y == ignore_index:")
             < source.index("# dx_y correction"),
-            "softcap_target_chain_uses_softcapped_value_over_softcap": "t_y = ori_X_y / softcap" in source,
+            "softcap_target_chain_uses_softcapped_value_over_softcap": "t_y = ori_X_y / softcap"
+            in source,
             "target_correction_barrier_present": "tl.debug_barrier()\n        dxy" in source,
         }
     )
@@ -548,9 +563,11 @@ def _probe_liger_1230(item: dict[str, Any]) -> dict[str, Any]:
         {
             "base_plain_model_redirection_fails": base_plain_failed,
             "head_plain_model_direct_result": list(head_plain_result),
-            "isinstance_fsdp_branch_present": "isinstance(model, FullyShardedDataParallel)" in source,
+            "isinstance_fsdp_branch_present": "isinstance(model, FullyShardedDataParallel)"
+            in source,
             "fsdp_branch_still_calls_redirection": "_FSDPForwardRedirection()(" in source,
-            "trl_new_location_with_old_fallback": "from trl.experimental.orpo import ORPOTrainer" in source
+            "trl_new_location_with_old_fallback": "from trl.experimental.orpo import ORPOTrainer"
+            in source
             and "from trl.trainer import ORPOTrainer" in source,
             "simulated_call_trace": calls,
         }
@@ -586,12 +603,8 @@ def _probe_megatron_5808(item: dict[str, Any]) -> dict[str, Any]:
     grad_direct = torch.autograd.grad(
         direct.sum(), (*tuple(model.parameters()), value), retain_graph=True
     )
-    grad_called = torch.autograd.grad(
-        called.sum(), (*tuple(model.parameters()), value)
-    )
-    source = _source(
-        item, "megatron/core/distributed/fsdp/src/megatron_fsdp/megatron_fsdp.py"
-    )
+    grad_called = torch.autograd.grad(called.sum(), (*tuple(model.parameters()), value))
+    source = _source(item, "megatron/core/distributed/fsdp/src/megatron_fsdp/megatron_fsdp.py")
     facts.update(
         {
             "direct_forward_events": direct_events,
@@ -642,7 +655,8 @@ def _probe_megatron_5798(item: dict[str, Any]) -> dict[str, Any]:
                 row["head_mbs1"] == row["head_mbs4"] for row in layouts
             ),
             "base_distinguishes_mbs4": all(row["base_mbs1"] != row["base_mbs4"] for row in layouts),
-            "source_multiplies_mean_count_by_batch_size": "valid_token_count=local_num_tokens * bsz" in source,
+            "source_multiplies_mean_count_by_batch_size": "valid_token_count=local_num_tokens * bsz"
+            in source,
         }
     )
     return facts
@@ -671,7 +685,8 @@ def _probe_megatron_5743(item: dict[str, Any]) -> dict[str, Any]:
             "last_microbatch_threaded_from_context": "self.context.is_last_microbatch" in module,
             "outer_finalize_is_last_gated": "if is_last_microbatch:" in parameter_group
             and "self.main_grad.redistribute(self.main_weight.placements)" in parameter_group,
-            "replicate_to_partial_rejects_non_avg": "Replicate -> Partial redistribute supports AVG only" in dbuffer,
+            "replicate_to_partial_rejects_non_avg": "Replicate -> Partial redistribute supports AVG only"
+            in dbuffer,
             "partial_dtensor_roundtrip_supported": "dist_tensor.Partial(reduce_op)" in dbuffer,
             "accumulation_placements_persisted": "self._accumulation_placements" in parameter_group,
         }
@@ -716,16 +731,15 @@ def _probe_megatron_5742(item: dict[str, Any]) -> dict[str, Any]:
         )
         restored = torch.load(checkpoint, weights_only=True)
     for gradient in gradients[2:]:
-        resumed_param, resumed_moment = lion_step(
-            restored["param"], restored["exp_avg"], gradient
-        )
+        resumed_param, resumed_moment = lion_step(restored["param"], restored["exp_avg"], gradient)
         restored = {"param": resumed_param, "exp_avg": resumed_moment}
     facts.update(
         {
             "continuous_resume_param_max_abs": _max_abs(continuous_param, resumed_param),
             "continuous_resume_moment_max_abs": _max_abs(continuous_moment, resumed_moment),
             "lion_state_key_property_present": '"lion": ("exp_avg",)' in source,
-            "muon_scalar_optimizer_resolution_present": "self.config.muon_scalar_optimizer" in source,
+            "muon_scalar_optimizer_resolution_present": "self.config.muon_scalar_optimizer"
+            in source,
             "dynamic_state_key_loop_count": source.count("self.optimizer_state_keys"),
             "constructor_accepts_init_state_fn": "or init_state_fn is not None" in source,
         }
@@ -735,21 +749,15 @@ def _probe_megatron_5742(item: dict[str, Any]) -> dict[str, Any]:
 
 def _probe_torchtitan_3841(item: dict[str, Any]) -> dict[str, Any]:
     facts = _common_facts(item)
-    source = _source(
-        item, "torchtitan/experiments/graph_trainer/graph_pp/split_di_dw.py"
-    )
-    tests = _source(
-        item, "torchtitan/experiments/graph_trainer/tests/test_graph_pp_passes.py"
-    )
+    source = _source(item, "torchtitan/experiments/graph_trainer/graph_pp/split_di_dw.py")
+    tests = _source(item, "torchtitan/experiments/graph_trainer/tests/test_graph_pp_passes.py")
     tree = ast.parse(source)
     functions = {
         node.name
         for node in ast.walk(tree)
         if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef))
     }
-    candidate_tests = sorted(
-        set(re.findall(r"def (test_[A-Za-z0-9_]*split[A-Za-z0-9_]*)", tests))
-    )
+    candidate_tests = sorted(set(re.findall(r"def (test_[A-Za-z0-9_]*split[A-Za-z0-9_]*)", tests)))
     facts.update(
         {
             "split_source_lines": len(source.splitlines()),
@@ -767,10 +775,9 @@ def _probe_torchtitan_3841(item: dict[str, Any]) -> dict[str, Any]:
             ),
             "graphs_linted_and_recompiled": source.count(".graph.lint()") >= 2
             and source.count(".recompile()") >= 2,
-            "get_attr_kept_as_graph_constant": "if node.op == \"get_attr\"" in source,
+            "get_attr_kept_as_graph_constant": 'if node.op == "get_attr"' in source,
             "symbolic_shape_liveins_separated": "saved_sym_nodes" in source,
-            "no_input_grad_returns_none": "if num_input_grads == 0:\n        return None"
-            in source,
+            "no_input_grad_returns_none": "if num_input_grads == 0:\n        return None" in source,
         }
     )
     return facts
@@ -781,9 +788,7 @@ def _probe_torchtitan_3897(item: dict[str, Any]) -> dict[str, Any]:
     trainer = _source(item, "torchtitan/experiments/rl/actors/trainer.py")
     loss = _source(item, "torchtitan/components/loss.py")
     attention = _source(item, "torchtitan/models/common/attention.py")
-    integration = _source(
-        item, "torchtitan/experiments/rl/tests/integration_tests.py"
-    )
+    integration = _source(item, "torchtitan/experiments/rl/tests/integration_tests.py")
     facts.update(
         {
             "head_parse_error_count": sum(
@@ -894,29 +899,19 @@ def _probe_verl_7014(item: dict[str, Any]) -> dict[str, Any]:
     expected_base = torch.tensor([2.0, -1.0], device=device)
     source = _source(item, "verl/workers/engine/fsdp/transformer_impl.py")
     return_position = source.index("return self._merged_lora_per_tensor_param(), None")
-    qat_positions = [
-        match.start() for match in re.finditer(r"(?:qat|quantization)", source, re.I)
-    ]
+    qat_positions = [match.start() for match in re.finditer(r"(?:qat|quantization)", source, re.I)]
     facts.update(
         {
-            "old_delayed_export_max_abs_from_base": _max_abs(
-                old_delayed_value, expected_base
-            ),
-            "old_delayed_export_max_abs_from_merged": _max_abs(
-                old_delayed_value, expected_merged
-            ),
+            "old_delayed_export_max_abs_from_base": _max_abs(old_delayed_value, expected_base),
+            "old_delayed_export_max_abs_from_merged": _max_abs(old_delayed_value, expected_merged),
             "head_streamed_export_max_abs_from_merged": _max_abs(
                 streamed["weight"], expected_merged
             ),
-            "head_post_context_restore_max_abs": _max_abs(
-                new_module.weight, expected_base
-            ),
-            "plain_tensor_is_cloned_inside_generator": "else param.detach().clone()"
-            in source,
+            "head_post_context_restore_max_abs": _max_abs(new_module.weight, expected_base),
+            "plain_tensor_is_cloned_inside_generator": "else param.detach().clone()" in source,
             "dtensor_is_materialized_inside_generator": ".full_tensor()" in source,
-            "try_finally_offload_cleanup_present": "finally:" in source[
-                source.index("def _merged_lora_per_tensor_param"):
-            ],
+            "try_finally_offload_cleanup_present": "finally:"
+            in source[source.index("def _merged_lora_per_tensor_param") :],
             "early_return_precedes_later_qat_or_quantization_references": any(
                 position > return_position for position in qat_positions
             ),
@@ -1016,12 +1011,11 @@ def _probe_verl_6984(item: dict[str, Any]) -> dict[str, Any]:
             "head_retained_model_output_tensor_count": head_live,
             "base_retained_numel": base_numel,
             "head_retained_numel": head_numel,
-            "pop_occurs_only_after_backward": source.index(
-                'meta_info.pop("model_output", None)'
-            )
+            "pop_occurs_only_after_backward": source.index('meta_info.pop("model_output", None)')
             > source.index("loss.backward()"),
-            "forward_only_guard_preserves_output": "if not forward_only:" in source[
-                max(0, source.index('meta_info.pop("model_output", None)') - 1600): source.index(
+            "forward_only_guard_preserves_output": "if not forward_only:"
+            in source[
+                max(0, source.index('meta_info.pop("model_output", None)') - 1600) : source.index(
                     'meta_info.pop("model_output", None)'
                 )
             ],
@@ -1055,15 +1049,17 @@ def _probe_megatron_5819(item: dict[str, Any]) -> dict[str, Any]:
         {
             "base_destructive_consumer_corrupts_static_cache": "tokens"
             not in base_cache["batch"][0],
-            "head_destructive_consumer_preserves_static_cache": "tokens"
-            in head_cache["batch"][0],
-            "head_nested_dict_is_distinct": head_result["batch"][0]
-            is not head_cache["batch"][0],
+            "head_destructive_consumer_preserves_static_cache": "tokens" in head_cache["batch"][0],
+            "head_nested_dict_is_distinct": head_result["batch"][0] is not head_cache["batch"][0],
             "head_tensor_identity_is_preserved": head_cache["batch"][0]["labels"]
             is head_result["batch"][0]["labels"],
             "recursive_tuple_list_dict_copy_present": all(
                 token in source
-                for token in ("isinstance(src, tuple)", "isinstance(src, list)", "isinstance(src, dict)")
+                for token in (
+                    "isinstance(src, tuple)",
+                    "isinstance(src, list)",
+                    "isinstance(src, dict)",
+                )
             ),
             "candidate_changed_test_count": facts["changed_test_count"],
         }
@@ -1088,7 +1084,7 @@ def _probe_megatron_5761(item: dict[str, Any]) -> dict[str, Any]:
 
     autocast = Recorder("autocast")
     fp8 = Recorder("fp8")
-    with (autocast and fp8):
+    with autocast and fp8:
         events.append("body")
     base_events = list(events)
     events.clear()
@@ -1137,16 +1133,16 @@ def _probe_megatron_5724(item: dict[str, Any]) -> dict[str, Any]:
         {
             "padding_resolution_matrix": matrix,
             "eager_explicit_capacity_matches_graph": all(
-                resolve(alignment, 2048, 32, False)[2]
-                == resolve(alignment, 2048, 32, True)[2]
+                resolve(alignment, 2048, 32, False)[2] == resolve(alignment, 2048, 32, True)[2]
                 for alignment in ("max", 128)
             ),
             "eager_default_preserves_dynamic_cu_seqlens": all(
-                resolve(alignment, 2048, None, False)[2] is None
-                for alignment in ("max", 128)
+                resolve(alignment, 2048, None, False)[2] is None for alignment in ("max", 128)
             ),
             "config_default_is_none": bool(
-                re.search(r"thd_max_packed_sequences:\s*Optional\[int\].*?default=None", config, re.S)
+                re.search(
+                    r"thd_max_packed_sequences:\s*Optional\[int\].*?default=None", config, re.S
+                )
             ),
             "graph_without_capacity_fails_closed": "THD CUDA Graph requires --thd-max-packed-sequences to be set."
             in config,
@@ -1175,10 +1171,7 @@ def _probe_megatron_5714(item: dict[str, Any]) -> dict[str, Any]:
         offsets = []
         if completely_inside_half:
             shards_per_half = half_axis_size // int(local_value)
-            offsets = [
-                (rank // shards_per_half, rank % shards_per_half)
-                for rank in range(dp_size)
-            ]
+            offsets = [(rank // shards_per_half, rank % shards_per_half) for rank in range(dp_size)]
         matrix.append(
             {
                 "dp_size": dp_size,
@@ -1191,17 +1184,14 @@ def _probe_megatron_5714(item: dict[str, Any]) -> dict[str, Any]:
         {
             "dp_mapping_matrix": matrix,
             "all_even_divisors_supported": all(
-                row["mapping_supported"]
-                for row in matrix
-                if row["dp_size"] in (2, 4, 6, 8)
+                row["mapping_supported"] for row in matrix if row["dp_size"] in (2, 4, 6, 8)
             ),
             "odd_dp3_rejected_by_mapping": not next(
                 row["mapping_supported"] for row in matrix if row["dp_size"] == 3
             ),
             "source_asserts_each_shard_inside_one_half": "completely inside either the W or V half"
             in mlp,
-            "source_asserts_two_halves_cover_dp": "assert dp_size == 2 * shards_per_half"
-            in mlp,
+            "source_asserts_two_halves_cover_dp": "assert dp_size == 2 * shards_per_half" in mlp,
             "candidate_test_topology_mentions_tp2_dp4": "TP2 DP{N}" in _patches(item)
             and "dp_cp_size" in _patches(item),
         }
@@ -1273,9 +1263,7 @@ def _probe_slime_2207(item: dict[str, Any]) -> dict[str, Any]:
     facts.update(
         {
             "valid_input_base_head_equivalence": equivalence,
-            "all_valid_inputs_semantically_identical": all(
-                row["equal"] for row in equivalence
-            ),
+            "all_valid_inputs_semantically_identical": all(row["equal"] for row in equivalence),
             "base_invalid_metadata_is_silent": base_invalid_silent,
             "head_invalid_metadata_fails_closed": head_invalid_failed_closed,
             "production_change_is_assignment_to_helper_only": "sample.mask_response_tokens(0)"
@@ -1390,9 +1378,8 @@ def _probe_slime_2205(item: dict[str, Any]) -> dict[str, Any]:
                 "scalar_recurrence": recurrence_ms,
                 "speedup": recurrence_ms / vectorized_ms if vectorized_ms else None,
             },
-            "candidate_function_present": "def chunked_discounted_returns(" in _source(
-                item, "slime/utils/ppo_utils.py"
-            ),
+            "candidate_function_present": "def chunked_discounted_returns("
+            in _source(item, "slime/utils/ppo_utils.py"),
         }
     )
     return facts
@@ -1433,9 +1420,7 @@ def _probe_slime_2204(item: dict[str, Any]) -> dict[str, Any]:
             "permutation_invariance_max_abs": max(
                 abs(left - right) for left, right in zip(original, restored, strict=True)
             ),
-            "singleton_groups_zero": all(
-                abs(original[index]) == 0 for index in (3, 6)
-            ),
+            "singleton_groups_zero": all(abs(original[index]) == 0 for index in (3, 6)),
             "each_group_zero_mean": {
                 str(group): abs(
                     sum(original[index] for index, value in enumerate(groups) if value == group)
@@ -1487,9 +1472,7 @@ def _probe_slime_2198(item: dict[str, Any]) -> dict[str, Any]:
                 "healthy_ratio_max_abs": _max_abs(head_healthy, base_healthy),
                 "output_dtype": str(loss.dtype),
                 "gradient_dtype": str(ppo_kl.grad.dtype),
-                "far_tail_zero_gradient_count": int(
-                    (ppo_kl.grad[[0, 1, 7, 8]] == 0).sum().item()
-                ),
+                "far_tail_zero_gradient_count": int((ppo_kl.grad[[0, 1, 7, 8]] == 0).sum().item()),
             }
         )
     nan = torch.tensor([float("nan")], device=device)
@@ -1497,13 +1480,10 @@ def _probe_slime_2198(item: dict[str, Any]) -> dict[str, Any]:
     facts.update(
         {
             "dtype_matrix": matrix,
-            "nan_remains_visible": bool(
-                torch.isnan(nan.float().clamp(-20, 20).exp()).all().item()
-            ),
+            "nan_remains_visible": bool(torch.isnan(nan.float().clamp(-20, 20).exp()).all().item()),
             "clamp_bound": 20.0,
             "helper_casts_to_float32": "return log_ratio.float().clamp" in source,
-            "all_policy_ratio_call_sites_changed": "ratio = _clamped_exp(-ppo_kl)"
-            in source,
+            "all_policy_ratio_call_sites_changed": "ratio = _clamped_exp(-ppo_kl)" in source,
             "low_variance_kl_only_is_clamped": 'if kl_loss_type == "low_var_kl"' in source,
         }
     )
@@ -1533,13 +1513,9 @@ def _probe_slime_2152(item: dict[str, Any]) -> dict[str, Any]:
     scenarios = []
     for with_entropy_grad in (False, True):
         logits = base_logits.clone().requires_grad_(True)
-        log_prob, entropy = operation.apply(
-            logits, targets, None, None, True, with_entropy_grad
-        )
+        log_prob, entropy = operation.apply(logits, targets, None, None, True, with_entropy_grad)
         oracle_logits = base_logits.clone().requires_grad_(True)
-        oracle_log_prob = oracle_logits.log_softmax(-1).gather(
-            1, targets[:, None]
-        )
+        oracle_log_prob = oracle_logits.log_softmax(-1).gather(1, targets[:, None])
         oracle_entropy = -(oracle_logits.softmax(-1) * oracle_logits.log_softmax(-1)).sum(-1)
         loss = -log_prob.sum()
         oracle_loss = -oracle_log_prob.sum()
@@ -1572,8 +1548,7 @@ def _probe_slime_2152(item: dict[str, Any]) -> dict[str, Any]:
     facts.update(
         {
             "tp1_value_gradient_and_repeat_matrix": scenarios,
-            "backward_mutates_saved_logprob_softmax_inplace": "log_prob_softmax.neg_()"
-            in source,
+            "backward_mutates_saved_logprob_softmax_inplace": "log_prob_softmax.neg_()" in source,
             "metric_only_entropy_marked_non_differentiable": "ctx.mark_non_differentiable(entropy)"
             in source,
             "metric_only_entropy_avoids_full_vocab_saved_tensors": "saved_entropy_softmax = entropy_softmax if with_entropy_grad"
@@ -1604,9 +1579,7 @@ def _probe_verl_7012(item: dict[str, Any]) -> dict[str, Any]:
     facts.update(
         {
             "shape_alignment_matrix": alignment_matrix,
-            "all_integer_local_lengths_align": all(
-                row["aligned"] for row in alignment_matrix
-            ),
+            "all_integer_local_lengths_align": all(row["aligned"] for row in alignment_matrix),
             "forced_length_derived_from_student_and_cp": "student_logits.shape[1] * cp_size"
             in source,
             "forced_length_applied_to_both_teacher_values_and_ids": source.count(
@@ -1680,9 +1653,7 @@ def _probe_verl_6996(item: dict[str, Any]) -> dict[str, Any]:
 def _probe_verl_6963(item: dict[str, Any]) -> dict[str, Any]:
     facts = _common_facts(item)
     detach = _source(item, "verl/experimental/fully_async_policy/detach_utils.py")
-    rollouter = _source(
-        item, "verl/experimental/fully_async_policy/fully_async_rollouter.py"
-    )
+    rollouter = _source(item, "verl/experimental/fully_async_policy/fully_async_rollouter.py")
     trainer = _source(item, "verl/experimental/separation/ray_trainer.py")
     losses = _source(item, "verl/workers/utils/losses.py")
     changed = [detach, rollouter, trainer, losses]
@@ -1703,8 +1674,7 @@ def _probe_verl_6963(item: dict[str, Any]) -> dict[str, Any]:
                 source.count("missing") + source.count("returned no") for source in changed
             ),
             "present_empty_not_rejected_by_presence_checks": all(
-                '"rollout_log_probs" not in' in source
-                for source in (detach, rollouter, trainer)
+                '"rollout_log_probs" not in' in source for source in (detach, rollouter, trainer)
             ),
             "request_config_checks_both_producer_and_actor_flags": all(
                 "calculate_log_probs" in source and "use_rollout_log_probs" in source
@@ -1740,8 +1710,7 @@ def _probe_verl_6960(item: dict[str, Any]) -> dict[str, Any]:
                 _max_abs(dlogprobs, fixed_logprobs),
                 _max_abs(dentropy, fixed_entropy),
             ),
-            "both_kernel_grad_inputs_normalized": "dlogprobs = dlogprobs.contiguous()"
-            in source
+            "both_kernel_grad_inputs_normalized": "dlogprobs = dlogprobs.contiguous()" in source
             and "dentropy = dentropy.contiguous()" in source,
             "normalization_precedes_fused_kernel_call": source.index(
                 "dlogprobs = dlogprobs.contiguous()"

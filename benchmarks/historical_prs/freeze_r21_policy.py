@@ -13,9 +13,7 @@ from typing import Any
 from infraswe.history.blind import canonical_sha256
 from infraswe.io import atomic_write_json
 
-EXPECTED_TERMINAL_SHA256 = (
-    "sha256:aed8331c6099b99d99e9b0bc083057f24c19df4231207ab9bc13d6bff9064451"
-)
+EXPECTED_TERMINAL_SHA256 = "sha256:aed8331c6099b99d99e9b0bc083057f24c19df4231207ab9bc13d6bff9064451"
 EXPECTED_R20_POLICY_SHA256 = (
     "sha256:d24295227b1de65bb214193c361c1f3fad97c839e4b83deaff1a79489af38a99"
 )
@@ -45,9 +43,7 @@ def main() -> int:
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
 
-    terminal = checked(
-        args.r20_terminal, "recommendation_sha256", EXPECTED_TERMINAL_SHA256
-    )
+    terminal = checked(args.r20_terminal, "recommendation_sha256", EXPECTED_TERMINAL_SHA256)
     prior = checked(args.r20_policy, "policy_sha256", EXPECTED_R20_POLICY_SHA256)
     if not terminal["release_gate"]["eligible_for_commit"]:
         raise SystemExit("R20 terminal policy did not clear the release gate")
@@ -105,11 +101,17 @@ def main() -> int:
         raise SystemExit("R21 project allocation changed")
     payload = {**policy, "policy_sha256": canonical_sha256(policy)}
     atomic_write_json(args.output, payload)
-    print(json.dumps({
-        "policy_sha256": payload["policy_sha256"],
-        "domain_allocation": payload["domain_allocation"],
-        "project_allocation": policy["grouping_policy"]["per_group_project_allocation"],
-    }, indent=2, sort_keys=True))
+    print(
+        json.dumps(
+            {
+                "policy_sha256": payload["policy_sha256"],
+                "domain_allocation": payload["domain_allocation"],
+                "project_allocation": policy["grouping_policy"]["per_group_project_allocation"],
+            },
+            indent=2,
+            sort_keys=True,
+        )
+    )
     return 0
 
 

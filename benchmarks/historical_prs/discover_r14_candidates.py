@@ -114,9 +114,7 @@ def _roughly_eligible(
     paths = _paths(node)
     changed_files = int(node.get("changedFiles") or 0)
     changed_lines = int(node.get("additions") or 0) + int(node.get("deletions") or 0)
-    if not int(rules["changed_files_min"]) <= changed_files <= int(
-        rules["changed_files_max"]
-    ):
+    if not int(rules["changed_files_min"]) <= changed_files <= int(rules["changed_files_max"]):
         return False
     if changed_lines > int(rules["changed_lines_max"]):
         return False
@@ -196,9 +194,7 @@ def _acquire_band(
                 "end_cursor": search["pageInfo"]["endCursor"],
             }
         )
-        eligible_count = sum(
-            _roughly_eligible(node, project, policy) for node in nodes
-        )
+        eligible_count = sum(_roughly_eligible(node, project, policy) for node in nodes)
         page_info = search["pageInfo"]
         if eligible_count >= eligible_target:
             break
@@ -213,9 +209,7 @@ def _acquire_band(
         "page_count": len(pages),
         "pages": pages,
         "returned_count": len(projected),
-        "rough_eligible_count": sum(
-            _roughly_eligible(node, project, policy) for node in nodes
-        ),
+        "rough_eligible_count": sum(_roughly_eligible(node, project, policy) for node in nodes),
     }
     return projected, metadata
 
@@ -288,9 +282,7 @@ def main() -> int:
     }
     payload = {**material, "discovery_sha256": canonical_sha256(material)}
     atomic_write_json(args.output, payload)
-    counts = {
-        project: len(item["candidates"]) for project, item in discoveries.items()
-    }
+    counts = {project: len(item["candidates"]) for project, item in discoveries.items()}
     print(json.dumps(counts, sort_keys=True))
     print(f"discovery_sha256={payload['discovery_sha256']}")
     return 0

@@ -209,8 +209,7 @@ def _native_trace_passed(
         native_tokens = ("aotriton", "attn_fwd", "fmha_fwd", "flash")
         return all(
             any(
-                not name.startswith("aten::")
-                and any(token in name for token in native_tokens)
+                not name.startswith("aten::") and any(token in name for token in native_tokens)
                 for name in names
             )
             for names in names_by_case.values()

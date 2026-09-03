@@ -34,9 +34,7 @@ def main(round_label: str = "R16") -> int:
     if selection["selection_lock_sha256"] != canonical_sha256(selection_material):
         raise SystemExit(f"{round_label} selection digest mismatch")
     plan = _read(args.test_plan)
-    plan_material = {
-        key: value for key, value in plan.items() if key != "test_plan_sha256"
-    }
+    plan_material = {key: value for key, value in plan.items() if key != "test_plan_sha256"}
     if plan["test_plan_sha256"] != canonical_sha256(plan_material):
         raise SystemExit(f"{round_label} test-plan digest mismatch")
     if plan["selection_lock_sha256"] != selection["selection_lock_sha256"]:
@@ -79,9 +77,7 @@ def main(round_label: str = "R16") -> int:
                     "base_path": base_path,
                     "head_path": item["filename"],
                     "patch_sha256": (
-                        canonical_sha256(item["patch"])
-                        if item.get("patch") is not None
-                        else None
+                        canonical_sha256(item["patch"]) if item.get("patch") is not None else None
                     ),
                     "base": None,
                     "head": None,
@@ -101,9 +97,7 @@ def main(round_label: str = "R16") -> int:
                 "head_matches_selection_at_acquisition": (
                     body["current_head_ref_oid"] == case["head_sha"]
                 ),
-                "compare": {
-                    key: value for key, value in compare.items() if key != "files"
-                },
+                "compare": {key: value for key, value in compare.items() if key != "files"},
                 "files": file_records,
             }
         )
@@ -124,8 +118,7 @@ def main(round_label: str = "R16") -> int:
     bundle_material = {
         "schema_version": "0.1",
         "protocol_id": (
-            f"{round_label.lower()}-exact-candidate-evidence-v0.1-"
-            "sanitized-before-storage"
+            f"{round_label.lower()}-exact-candidate-evidence-v0.1-sanitized-before-storage"
         ),
         "selection_lock_sha256": selection["selection_lock_sha256"],
         "test_plan_sha256": plan["test_plan_sha256"],
@@ -199,8 +192,7 @@ def main(round_label: str = "R16") -> int:
         {**manifest_material, "evidence_manifest_sha256": manifest_sha256},
     )
     redactions = sum(
-        bool(case["body_projection"]["body_sanitization"]["redactions"])
-        for case in bundle_cases
+        bool(case["body_projection"]["body_sanitization"]["redactions"]) for case in bundle_cases
     )
     print(f"case_count={len(bundle_cases)}")
     print(f"sanitized_body_case_count={redactions}")

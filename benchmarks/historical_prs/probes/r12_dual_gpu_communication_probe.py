@@ -163,8 +163,7 @@ def _bucket_equivalence(rank: int) -> dict[str, Any]:
     dist.all_reduce(flat, op=dist.ReduceOp.SUM)
     bucketed = list(flat.split([tensor.numel() for tensor in tensors]))
     bucketed = [
-        value.view_as(reference)
-        for value, reference in zip(bucketed, tensors, strict=True)
+        value.view_as(reference) for value, reference in zip(bucketed, tensors, strict=True)
     ]
     return {
         "tensor_count": len(tensors),
@@ -258,8 +257,7 @@ def main() -> int:
         ranks = [_read(Path(temporary) / f"rank-{rank}.json") for rank in range(2)]
 
     smoke_ok = all(
-        row["all_reduce_sum"] == 3.0 and row["all_gather_values"] == [0.0, 1.0]
-        for row in ranks
+        row["all_reduce_sum"] == 3.0 and row["all_gather_values"] == [0.0, 1.0] for row in ranks
     )
     destination_ok = all(row["destination_cp_reduce_values"][0] == 3.0 for row in ranks)
     paired_rows = []
@@ -293,12 +291,9 @@ def main() -> int:
         "nccl_two_rank_smoke_passed": smoke_ok,
         "megatron_5720_destination_cp_sum_reaches_leader": destination_ok,
         "torchtitan_3821_bucket_equivalence_all_ranks": all(
-            row["torchtitan_3821_bucket_equivalence"]["all_outputs_exactly_equal"]
-            for row in ranks
+            row["torchtitan_3821_bucket_equivalence"]["all_outputs_exactly_equal"] for row in ranks
         ),
-        "torchtitan_3821_bucket_rows": [
-            row["torchtitan_3821_bucket_equivalence"] for row in ranks
-        ],
+        "torchtitan_3821_bucket_rows": [row["torchtitan_3821_bucket_equivalence"] for row in ranks],
         "vllm_48763_paired_payload_rows": paired_rows,
         "vllm_48763_all_shapes_equivalent": all(
             row["all_ranks_outputs_exactly_equal"] for row in paired_rows
@@ -312,9 +307,7 @@ def main() -> int:
         "exact_candidate_runtime_imported": False,
     }
     correctness_ok = (
-        smoke_ok
-        and destination_ok
-        and facts["torchtitan_3821_bucket_equivalence_all_ranks"]
+        smoke_ok and destination_ok and facts["torchtitan_3821_bucket_equivalence_all_ranks"]
     )
     if not correctness_ok:
         raise SystemExit("R12 dual-GPU correctness control failed")

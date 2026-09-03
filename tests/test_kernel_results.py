@@ -290,9 +290,7 @@ def test_mi300x_aotriton_rejects_framework_flash_wrapper_without_native_kernel()
 
     suite = assemble_suite(payloads)
     candidate = next(
-        item
-        for item in suite["cells"][0]["candidates"]
-        if item["backend"] == "torch-sdpa-aotriton"
+        item for item in suite["cells"][0]["candidates"] if item["backend"] == "torch-sdpa-aotriton"
     )
 
     assert candidate["certified"] is False

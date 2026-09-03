@@ -81,9 +81,7 @@ def main() -> int:
 
     material = {
         **{
-            key: value
-            for key, value in raw_material.items()
-            if key not in {"protocol_id", "cases"}
+            key: value for key, value in raw_material.items() if key not in {"protocol_id", "cases"}
         },
         "protocol_id": "r14-exact-candidate-evidence-v0.2-sanitized-body",
         "raw_source_bundle_sha256": raw["source_bundle_sha256"],
@@ -106,8 +104,7 @@ def main() -> int:
         "cases": manifest_cases,
         "redacted_case_count": sum(bool(case["redactions"]) for case in manifest_cases),
         "redacted_block_count": sum(
-            sum(item["count"] for item in case["redactions"])
-            for case in manifest_cases
+            sum(item["count"] for item in case["redactions"]) for case in manifest_cases
         ),
         "integrity_note": (
             "The evaluator noticed one embedded SGLang CI block before this sanitizer was "

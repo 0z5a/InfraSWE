@@ -18,7 +18,9 @@ from infraswe.io import atomic_write_json
 
 EXPECTED_SELECTION_FILE_SHA256 = "aec3143512d7e3a1e6959345828ce65ac0aaeec9ae2a59d25e621ef9b6e73741"
 EXPECTED_TEST_PLAN_FILE_SHA256 = "6efde3d21be30233f70da8abc3491828d43ec9396cecc56917126425297797b2"
-EXPECTED_SOURCE_BUNDLE_SHA256 = "sha256:dc0cab095afa903e0780196b8511b4a8a935d41aeff85ca400293c4fbb525ee7"
+EXPECTED_SOURCE_BUNDLE_SHA256 = (
+    "sha256:dc0cab095afa903e0780196b8511b4a8a935d41aeff85ca400293c4fbb525ee7"
+)
 POLICY_ID = "training-case-contract-v0.1-r13"
 
 
@@ -200,7 +202,10 @@ FACT_CHECKS: dict[str, tuple[tuple[str, Any], ...]] = {
         ("backward_mutates_saved_logprob_softmax_inplace", True),
         ("metric_only_entropy_avoids_full_vocab_saved_tensors", True),
         ("metric_only_entropy_marked_non_differentiable", True),
-        ("tp1_value_gradient_and_repeat_matrix", lambda rows: all(row["repeat_backward_exception"] for row in rows)),
+        (
+            "tp1_value_gradient_and_repeat_matrix",
+            lambda rows: all(row["repeat_backward_exception"] for row in rows),
+        ),
     ),
     "verl-pr-7012": (
         ("all_integer_local_lengths_align", True),
@@ -243,7 +248,10 @@ def _validate_facts(case_id: str, facts: dict[str, Any]) -> None:
             _require(bool(expected(actual)), f"{case_id}: fact predicate failed for {path}")
         else:
             _require(actual == expected, f"{case_id}: {path} changed: {actual!r}")
-    _require(facts["head_conflict_marker_free"] is (case_id != "torchtitan-pr-3897"), f"{case_id}: conflict-marker status changed")
+    _require(
+        facts["head_conflict_marker_free"] is (case_id != "torchtitan-pr-3897"),
+        f"{case_id}: conflict-marker status changed",
+    )
 
 
 def _validate_probe(
@@ -270,7 +278,10 @@ def _validate_probe(
     environment = payload["environment"]
     _require(environment["torch_cuda_available"] is True, f"{case_id}: CUDA unavailable")
     _require(environment["gpu_count"] == 2, f"{case_id}: expected two GPUs")
-    _require(environment["gpu_names"] == ["NVIDIA A100-SXM4-40GB"] * 2, f"{case_id}: GPU identity changed")
+    _require(
+        environment["gpu_names"] == ["NVIDIA A100-SXM4-40GB"] * 2,
+        f"{case_id}: GPU identity changed",
+    )
     _validate_facts(case_id, payload["facts"])
 
 
@@ -566,9 +577,13 @@ def _validate_execution_artifact(
     payload: dict[str, Any], selection_sha256: str, test_plan_sha256: str, label: str
 ) -> None:
     _validate_digest(payload, "evidence_sha256", label)
-    _require(payload["selection_lock_sha256"] == selection_sha256, f"{label}: selection binding mismatch")
+    _require(
+        payload["selection_lock_sha256"] == selection_sha256, f"{label}: selection binding mismatch"
+    )
     _require(payload["test_plan_sha256"] == test_plan_sha256, f"{label}: plan binding mismatch")
-    _require(payload["outcome_review_ci_fields_requested"] is False, f"{label}: blind boundary changed")
+    _require(
+        payload["outcome_review_ci_fields_requested"] is False, f"{label}: blind boundary changed"
+    )
 
 
 def _artifact_binding(path: Path, payload: dict[str, Any]) -> dict[str, Any]:
@@ -593,14 +608,29 @@ def main() -> int:
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
 
-    _require(_file_sha256(args.selection_lock) == EXPECTED_SELECTION_FILE_SHA256, "R13 selection file digest mismatch")
-    _require(_file_sha256(args.test_plan) == EXPECTED_TEST_PLAN_FILE_SHA256, "R13 test-plan file digest mismatch")
+    _require(
+        _file_sha256(args.selection_lock) == EXPECTED_SELECTION_FILE_SHA256,
+        "R13 selection file digest mismatch",
+    )
+    _require(
+        _file_sha256(args.test_plan) == EXPECTED_TEST_PLAN_FILE_SHA256,
+        "R13 test-plan file digest mismatch",
+    )
     selection = _read(args.selection_lock)
     plan = _read(args.test_plan)
-    _require(selection["selection_lock_sha256"] == canonical_sha256(selection["selection_material"]), "R13 embedded selection digest mismatch")
+    _require(
+        selection["selection_lock_sha256"] == canonical_sha256(selection["selection_material"]),
+        "R13 embedded selection digest mismatch",
+    )
     plan_material = {key: value for key, value in plan.items() if key != "test_plan_sha256"}
-    _require(plan["test_plan_sha256"] == canonical_sha256(plan_material), "R13 embedded test-plan digest mismatch")
-    _require(plan["selection_lock_sha256"] == selection["selection_lock_sha256"], "R13 plan/selection binding mismatch")
+    _require(
+        plan["test_plan_sha256"] == canonical_sha256(plan_material),
+        "R13 embedded test-plan digest mismatch",
+    )
+    _require(
+        plan["selection_lock_sha256"] == selection["selection_lock_sha256"],
+        "R13 plan/selection binding mismatch",
+    )
     blind_flags = (
         selection["selection_material"]["review_text_visible_to_machine_judge"],
         selection["selection_material"]["merge_outcomes_visible_to_machine_judge"],
@@ -611,19 +641,34 @@ def main() -> int:
         plan["review_text_requested"],
     )
     _require(all(value is False for value in blind_flags), "R13 blind boundary is not intact")
-    _require(plan["scoring_policy"]["weighted_score_used"] is False, "R13 unexpectedly uses weighted scoring")
-    _require(plan["scoring_policy"]["forced_polarization_used"] is False, "R13 unexpectedly forces polarization")
+    _require(
+        plan["scoring_policy"]["weighted_score_used"] is False,
+        "R13 unexpectedly uses weighted scoring",
+    )
+    _require(
+        plan["scoring_policy"]["forced_polarization_used"] is False,
+        "R13 unexpectedly forces polarization",
+    )
 
     selected = {case["case_id"]: case for case in selection["selection_material"]["cases"]}
     planned = {case["case_id"]: case for case in plan["cases"]}
     _require(len(selected) == 29, "R13 expanded cohort is not 29 cases")
-    _require(selected.keys() == planned.keys() == ASSESSMENTS.keys() == FACT_CHECKS.keys(), "R13 case sets differ")
+    _require(
+        selected.keys() == planned.keys() == ASSESSMENTS.keys() == FACT_CHECKS.keys(),
+        "R13 case sets differ",
+    )
 
     evidence: dict[str, dict[str, Any]] = {}
     evidence_bindings: dict[str, dict[str, Any]] = {}
     for case_id, selected_case in selected.items():
-        _require(selected_case["base_sha"] == planned[case_id]["base_sha"], f"{case_id}: base SHA differs")
-        _require(selected_case["head_sha"] == planned[case_id]["head_sha"], f"{case_id}: head SHA differs")
+        _require(
+            selected_case["base_sha"] == planned[case_id]["base_sha"],
+            f"{case_id}: base SHA differs",
+        )
+        _require(
+            selected_case["head_sha"] == planned[case_id]["head_sha"],
+            f"{case_id}: head SHA differs",
+        )
         path = args.result_root / "probes" / f"{case_id}.json"
         payload = _read(path)
         _validate_probe(
@@ -642,9 +687,14 @@ def main() -> int:
 
     dual = _read(args.dual_gpu_evidence)
     _validate_digest(dual, "evidence_sha256", "R13 dual-GPU evidence")
-    _require(dual["selection_lock_sha256"] == selection["selection_lock_sha256"], "R13 dual selection mismatch")
+    _require(
+        dual["selection_lock_sha256"] == selection["selection_lock_sha256"],
+        "R13 dual selection mismatch",
+    )
     _require(dual["test_plan_sha256"] == plan["test_plan_sha256"], "R13 dual plan mismatch")
-    _require(dual["source_bundle_sha256"] == EXPECTED_SOURCE_BUNDLE_SHA256, "R13 dual source mismatch")
+    _require(
+        dual["source_bundle_sha256"] == EXPECTED_SOURCE_BUNDLE_SHA256, "R13 dual source mismatch"
+    )
     dual_facts = dual["facts"]
     _require(
         dual_facts["two_rank_nccl_smoke"]
@@ -669,7 +719,9 @@ def main() -> int:
     execution_bindings: dict[str, dict[str, Any]] = {}
     for path in execution_paths:
         payload = _read(path)
-        _validate_execution_artifact(payload, selection["selection_lock_sha256"], plan["test_plan_sha256"], path.name)
+        _validate_execution_artifact(
+            payload, selection["selection_lock_sha256"], plan["test_plan_sha256"], path.name
+        )
         execution_payloads[path.name] = payload
         execution_bindings[path.name] = _artifact_binding(path, payload)
 
@@ -714,16 +766,26 @@ def main() -> int:
         "verl-pr-7013",
     }
     for case_id in expected_passing_native:
-        _require(case_id in native_case_bindings, f"{case_id}: missing authoritative upstream record")
-        _require(all(record["returncode"] == 0 for record in native_case_bindings[case_id]), f"{case_id}: authoritative upstream test failed")
+        _require(
+            case_id in native_case_bindings, f"{case_id}: missing authoritative upstream record"
+        )
+        _require(
+            all(record["returncode"] == 0 for record in native_case_bindings[case_id]),
+            f"{case_id}: authoritative upstream test failed",
+        )
     for case_id, expected_code in {
         "torchtitan-pr-3897": 1,
         "megatron-pr-5808": 2,
         "megatron-pr-5714": 1,
         "flashattention-pr-2654": 1,
     }.items():
-        _require(len(native_case_bindings[case_id]) == 1, f"{case_id}: unexpected native record count")
-        _require(native_case_bindings[case_id][0]["returncode"] == expected_code, f"{case_id}: native status changed")
+        _require(
+            len(native_case_bindings[case_id]) == 1, f"{case_id}: unexpected native record count"
+        )
+        _require(
+            native_case_bindings[case_id][0]["returncode"] == expected_code,
+            f"{case_id}: native status changed",
+        )
 
     frozen_at = datetime.now(UTC).isoformat()
     locks: list[dict[str, Any]] = []
@@ -741,7 +803,9 @@ def main() -> int:
             "schema_version": "0.1",
             "policy_id": POLICY_ID,
             "case_id": case_id,
-            "candidate_sha256": canonical_sha256({"selection": selected_case, "test_plan": planned[case_id]}),
+            "candidate_sha256": canonical_sha256(
+                {"selection": selected_case, "test_plan": planned[case_id]}
+            ),
             "selection_lock_sha256": selection["selection_lock_sha256"],
             "test_plan_sha256": plan["test_plan_sha256"],
             "evidence_binding_sha256": canonical_sha256(evidence_bindings[case_id]),
@@ -796,7 +860,9 @@ def main() -> int:
                 "lock_set_sha256": output["lock_set_sha256"],
                 "decision_counts": decision_counts,
                 "legacy_r10_style_decision_counts": legacy_counts,
-                "decisions": {lock["material"]["case_id"]: lock["material"]["decision"] for lock in locks},
+                "decisions": {
+                    lock["material"]["case_id"]: lock["material"]["decision"] for lock in locks
+                },
             },
             indent=2,
             sort_keys=True,

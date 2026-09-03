@@ -21,9 +21,7 @@ def read(path: Path) -> dict[str, Any]:
     return payload
 
 
-def checked(
-    path: Path, digest_field: str, *, material_field: str | None = None
-) -> dict[str, Any]:
+def checked(path: Path, digest_field: str, *, material_field: str | None = None) -> dict[str, Any]:
     payload = read(path)
     material = (
         payload[material_field]

@@ -60,7 +60,7 @@ def main() -> int:
         return (
             f"cd {shlex.quote(worktree)} && git switch --detach "
             f"refs/r20/pr-{int(case['pull_number'])} >/dev/null && "
-            f"test \"$(git rev-parse HEAD)\" = {shlex.quote(case['head_sha'])} && "
+            f'test "$(git rev-parse HEAD)" = {shlex.quote(case["head_sha"])} && '
         )
 
     flashinfer_env = "env CUDA_VISIBLE_DEVICES=0 PYTHONPATH=."
@@ -128,7 +128,10 @@ def main() -> int:
             "purpose": "run the candidate request-slicing regressions behind fail-closed unrelated optional-kernel imports",
             "command": switch("/workspace/r14-run-sglang", "sglang-pr-27257")
             + f"timeout 180s {sglang_env} /venv/main/bin/python -c "
-            + shlex.quote(optional_kernel_driver + "raise SystemExit(pytest.main(['-q','-rs','--tb=short','--maxfail=1','test/registered/unit/managers/test_io_struct.py','-k','test_getitem']))"),
+            + shlex.quote(
+                optional_kernel_driver
+                + "raise SystemExit(pytest.main(['-q','-rs','--tb=short','--maxfail=1','test/registered/unit/managers/test_io_struct.py','-k','test_getitem']))"
+            ),
         },
         {
             "case_id": "sglang-pr-27290",
@@ -137,7 +140,10 @@ def main() -> int:
             "purpose": "run the candidate EAGLE-v2 custom-logit-processor regression behind fail-closed unrelated optional-kernel imports",
             "command": switch("/workspace/r14-run-sglang", "sglang-pr-27290")
             + f"timeout 180s {sglang_env} /venv/main/bin/python -c "
-            + shlex.quote(optional_kernel_driver + "raise SystemExit(pytest.main(['-q','-rs','--tb=short','--maxfail=1','test/registered/unit/spec/test_eagle_v2_custom_logit_processor.py']))"),
+            + shlex.quote(
+                optional_kernel_driver
+                + "raise SystemExit(pytest.main(['-q','-rs','--tb=short','--maxfail=1','test/registered/unit/spec/test_eagle_v2_custom_logit_processor.py']))"
+            ),
         },
         {
             "case_id": "vllm-pr-44526",
@@ -213,7 +219,13 @@ def main() -> int:
     }
     payload = {**material, "evidence_sha256": canonical_sha256(material)}
     atomic_write_json(args.output, payload)
-    print(json.dumps({record["case_id"]: record["returncode"] for record in records}, indent=2, sort_keys=True))
+    print(
+        json.dumps(
+            {record["case_id"]: record["returncode"] for record in records},
+            indent=2,
+            sort_keys=True,
+        )
+    )
     print(f"evidence_sha256={payload['evidence_sha256']}")
     return 0
 

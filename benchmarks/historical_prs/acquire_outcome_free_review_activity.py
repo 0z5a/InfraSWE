@@ -171,27 +171,13 @@ def main() -> int:
             raise SystemExit(f"{case['case_id']}: head commit metadata unavailable")
         head_committed_at = commits[-1]["commit"]["committedDate"]
         prefix = f"repos/{case['repository']}"
-        reviews = api(
-            [f"{prefix}/pulls/{case['pull_number']}/reviews"], paginate=True
-        )
-        inline = api(
-            [f"{prefix}/pulls/{case['pull_number']}/comments"], paginate=True
-        )
-        issue = api(
-            [f"{prefix}/issues/{case['pull_number']}/comments"], paginate=True
-        )
+        reviews = api([f"{prefix}/pulls/{case['pull_number']}/reviews"], paginate=True)
+        inline = api([f"{prefix}/pulls/{case['pull_number']}/comments"], paginate=True)
+        issue = api([f"{prefix}/issues/{case['pull_number']}/comments"], paginate=True)
         events = [
             *(projected_event("review", item) for item in reviews if item.get("body")),
-            *(
-                projected_event("review-comment", item)
-                for item in inline
-                if item.get("body")
-            ),
-            *(
-                projected_event("issue-comment", item)
-                for item in issue
-                if item.get("body")
-            ),
+            *(projected_event("review-comment", item) for item in inline if item.get("body")),
+            *(projected_event("issue-comment", item) for item in issue if item.get("body")),
         ]
         explicit = [
             event
@@ -221,10 +207,7 @@ def main() -> int:
             event
             for event in explicit
             if event["commit_id"] == case["head_sha"]
-            or (
-                event["created_at"] is not None
-                and parse_time(event["created_at"]) >= head_time
-            )
+            or (event["created_at"] is not None and parse_time(event["created_at"]) >= head_time)
         ]
         cases.append(
             {
@@ -234,9 +217,7 @@ def main() -> int:
                 "locked_head_sha": case["head_sha"],
                 "head_committed_at": head_committed_at,
                 "pr_author": author,
-                "pr_author_association": str(
-                    pull.get("authorAssociation") or "UNKNOWN"
-                ),
+                "pr_author_association": str(pull.get("authorAssociation") or "UNKNOWN"),
                 "human_non_author_review_count": len(human_non_author_reviews),
                 "human_non_author_review_state_counts": review_state_counts(
                     human_non_author_reviews

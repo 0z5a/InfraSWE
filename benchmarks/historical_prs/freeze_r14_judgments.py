@@ -18,10 +18,18 @@ from infraswe.io import atomic_write_json
 
 EXPECTED_SELECTION_FILE_SHA256 = "3adfd8fddcf1b86dcc4e8bd222af32180818d55e5c0e069ff7565272f84779f2"
 EXPECTED_TEST_PLAN_FILE_SHA256 = "8069c032f6a774f05dabb5e21ff1f360783feaba3943020695c50f4f0187b828"
-EXPECTED_SELECTION_SHA256 = "sha256:bcbc9038eb7facae3cdd5ea1278927227908e552f7eaadfe9b97ace920dcce76"
-EXPECTED_TEST_PLAN_SHA256 = "sha256:8c1ea5cb3abf130dd41b7771097dc5c9f75c848be9f5ef523326619eb2a20077"
-EXPECTED_RAW_SOURCE_BUNDLE_SHA256 = "sha256:463ab53517f96a54b22ec32942316506525804a2ba3b8fb099db4ddcf5fe68f2"
-EXPECTED_SOURCE_BUNDLE_SHA256 = "sha256:1efdbfc09c8ba05fa183c1e6e702ef423b30f54b6e18cba94abe8c87630cdcbd"
+EXPECTED_SELECTION_SHA256 = (
+    "sha256:bcbc9038eb7facae3cdd5ea1278927227908e552f7eaadfe9b97ace920dcce76"
+)
+EXPECTED_TEST_PLAN_SHA256 = (
+    "sha256:8c1ea5cb3abf130dd41b7771097dc5c9f75c848be9f5ef523326619eb2a20077"
+)
+EXPECTED_RAW_SOURCE_BUNDLE_SHA256 = (
+    "sha256:463ab53517f96a54b22ec32942316506525804a2ba3b8fb099db4ddcf5fe68f2"
+)
+EXPECTED_SOURCE_BUNDLE_SHA256 = (
+    "sha256:1efdbfc09c8ba05fa183c1e6e702ef423b30f54b6e18cba94abe8c87630cdcbd"
+)
 CHECK_CUTOFF = datetime.fromisoformat("2026-08-03T00:00:00+00:00")
 POLICY_ID = "communication-contract-disposition-split-v0.2-r14"
 
@@ -365,18 +373,42 @@ def main() -> int:
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
 
-    require(file_sha256(args.selection_lock) == EXPECTED_SELECTION_FILE_SHA256, "R14 selection file digest mismatch")
-    require(file_sha256(args.test_plan) == EXPECTED_TEST_PLAN_FILE_SHA256, "R14 test-plan file digest mismatch")
+    require(
+        file_sha256(args.selection_lock) == EXPECTED_SELECTION_FILE_SHA256,
+        "R14 selection file digest mismatch",
+    )
+    require(
+        file_sha256(args.test_plan) == EXPECTED_TEST_PLAN_FILE_SHA256,
+        "R14 test-plan file digest mismatch",
+    )
     selection = read(args.selection_lock)
     plan = read(args.test_plan)
-    require(selection["selection_lock_sha256"] == canonical_sha256(selection["selection_material"]), "R14 embedded selection digest mismatch")
-    require(selection["selection_lock_sha256"] == EXPECTED_SELECTION_SHA256, "R14 selection identity changed")
+    require(
+        selection["selection_lock_sha256"] == canonical_sha256(selection["selection_material"]),
+        "R14 embedded selection digest mismatch",
+    )
+    require(
+        selection["selection_lock_sha256"] == EXPECTED_SELECTION_SHA256,
+        "R14 selection identity changed",
+    )
     plan_material = {key: value for key, value in plan.items() if key != "test_plan_sha256"}
-    require(plan["test_plan_sha256"] == canonical_sha256(plan_material), "R14 embedded test-plan digest mismatch")
+    require(
+        plan["test_plan_sha256"] == canonical_sha256(plan_material),
+        "R14 embedded test-plan digest mismatch",
+    )
     require(plan["test_plan_sha256"] == EXPECTED_TEST_PLAN_SHA256, "R14 test-plan identity changed")
-    require(plan["selection_lock_sha256"] == selection["selection_lock_sha256"], "R14 plan/selection binding mismatch")
-    require(plan["disposition_policy"]["weighted_score_used"] is False, "R14 unexpectedly uses weighted scoring")
-    require(plan["disposition_policy"]["forced_polarization_used"] is False, "R14 unexpectedly forces polarization")
+    require(
+        plan["selection_lock_sha256"] == selection["selection_lock_sha256"],
+        "R14 plan/selection binding mismatch",
+    )
+    require(
+        plan["disposition_policy"]["weighted_score_used"] is False,
+        "R14 unexpectedly uses weighted scoring",
+    )
+    require(
+        plan["disposition_policy"]["forced_polarization_used"] is False,
+        "R14 unexpectedly forces polarization",
+    )
     blind_flags = (
         selection["selection_material"]["review_or_comment_visible"],
         selection["selection_material"]["merge_outcomes_visible"],
@@ -392,7 +424,10 @@ def main() -> int:
     selected = {case["case_id"]: case for case in selection["selection_material"]["cases"]}
     planned = {case["case_id"]: case for case in plan["cases"]}
     require(len(selected) == 30, "R14 cohort is not exactly 30 cases")
-    require(selected.keys() == planned.keys() == ASSESSMENTS.keys() == FACT_CHECKS.keys(), "R14 case sets differ")
+    require(
+        selected.keys() == planned.keys() == ASSESSMENTS.keys() == FACT_CHECKS.keys(),
+        "R14 case sets differ",
+    )
 
     evidence_paths = {
         name: args.result_root / filename
@@ -421,23 +456,45 @@ def main() -> int:
     for name, payload in evidence.items():
         if "evidence_sha256" in payload:
             validate_digest(payload, "evidence_sha256", name)
-        require(payload.get("outcome_review_ci_fields_requested") is False or name in {"sanitization", "static"}, f"{name}: blind evidence flag changed")
+        require(
+            payload.get("outcome_review_ci_fields_requested") is False
+            or name in {"sanitization", "static"},
+            f"{name}: blind evidence flag changed",
+        )
 
     sanitization = evidence["sanitization"]
-    require(sanitization["sanitized_source_bundle_sha256"] == EXPECTED_SOURCE_BUNDLE_SHA256, "R14 sanitized source identity changed")
-    require(sanitization["redacted_case_count"] == 5 and sanitization["redacted_block_count"] == 5, "R14 body sanitization scope changed")
+    require(
+        sanitization["sanitized_source_bundle_sha256"] == EXPECTED_SOURCE_BUNDLE_SHA256,
+        "R14 sanitized source identity changed",
+    )
+    require(
+        sanitization["redacted_case_count"] == 5 and sanitization["redacted_block_count"] == 5,
+        "R14 body sanitization scope changed",
+    )
     for name in ("static", "contract", "dual_gpu"):
         payload = evidence[name]
-        require(payload["selection_lock_sha256"] == EXPECTED_SELECTION_SHA256, f"{name}: selection binding mismatch")
-        require(payload["test_plan_sha256"] == EXPECTED_TEST_PLAN_SHA256, f"{name}: test-plan binding mismatch")
-        expected_source = EXPECTED_RAW_SOURCE_BUNDLE_SHA256 if name == "static" else EXPECTED_SOURCE_BUNDLE_SHA256
-        require(payload["source_bundle_sha256"] == expected_source, f"{name}: source binding mismatch")
+        require(
+            payload["selection_lock_sha256"] == EXPECTED_SELECTION_SHA256,
+            f"{name}: selection binding mismatch",
+        )
+        require(
+            payload["test_plan_sha256"] == EXPECTED_TEST_PLAN_SHA256,
+            f"{name}: test-plan binding mismatch",
+        )
+        expected_source = (
+            EXPECTED_RAW_SOURCE_BUNDLE_SHA256 if name == "static" else EXPECTED_SOURCE_BUNDLE_SHA256
+        )
+        require(
+            payload["source_bundle_sha256"] == expected_source, f"{name}: source binding mismatch"
+        )
 
     contract_cases = {row["case_id"]: row["facts"] for row in evidence["contract"]["cases"]}
     require(contract_cases.keys() == selected.keys(), "R14 contract-probe case set differs")
     for case_id, checks in FACT_CHECKS.items():
         for key, expected in checks:
-            require(contract_cases[case_id][key] == expected, f"{case_id}: contract fact {key} changed")
+            require(
+                contract_cases[case_id][key] == expected, f"{case_id}: contract fact {key} changed"
+            )
 
     dual = evidence["dual_gpu"]["facts"]
     require(
@@ -451,47 +508,137 @@ def main() -> int:
         and dual["verl_7107_all_boundaries_exact"],
         "R14 two-GPU facts changed",
     )
-    require(evidence["torchtitan_4051"]["facts"]["all_ranks_match_reference"], "TorchTitan #4051 TP2 probe changed")
-    require(evidence["verl_7591_shm"]["all_passed"] and evidence["verl_7589_shm"]["all_passed"], "verl SHM probe changed")
+    require(
+        evidence["torchtitan_4051"]["facts"]["all_ranks_match_reference"],
+        "TorchTitan #4051 TP2 probe changed",
+    )
+    require(
+        evidence["verl_7591_shm"]["all_passed"] and evidence["verl_7589_shm"]["all_passed"],
+        "verl SHM probe changed",
+    )
 
     execution_bindings: dict[str, list[dict[str, Any]]] = {
-        "vllm-pr-54643": [record_binding(evidence_paths["vllm_final"], evidence["vllm_final"], "vllm-pr-54643")],
-        "vllm-pr-50775": [record_binding(evidence_paths["vllm_50775"], evidence["vllm_50775"], "vllm-pr-50775")],
-        "vllm-pr-50658": [record_binding(evidence_paths["vllm_final"], evidence["vllm_final"], "vllm-pr-50658")],
-        "vllm-pr-54619": [record_binding(evidence_paths["vllm_54619"], evidence["vllm_54619"], "vllm-pr-54619")],
-        "vllm-pr-50754": [record_binding(evidence_paths["vllm_final"], evidence["vllm_final"], "vllm-pr-50754")],
+        "vllm-pr-54643": [
+            record_binding(evidence_paths["vllm_final"], evidence["vllm_final"], "vllm-pr-54643")
+        ],
+        "vllm-pr-50775": [
+            record_binding(evidence_paths["vllm_50775"], evidence["vllm_50775"], "vllm-pr-50775")
+        ],
+        "vllm-pr-50658": [
+            record_binding(evidence_paths["vllm_final"], evidence["vllm_final"], "vllm-pr-50658")
+        ],
+        "vllm-pr-54619": [
+            record_binding(evidence_paths["vllm_54619"], evidence["vllm_54619"], "vllm-pr-54619")
+        ],
+        "vllm-pr-50754": [
+            record_binding(evidence_paths["vllm_final"], evidence["vllm_final"], "vllm-pr-50754")
+        ],
     }
     for case_id in ("sglang-pr-37261", "sglang-pr-33029", "sglang-pr-33220", "sglang-pr-33228"):
-        execution_bindings[case_id] = [record_binding(evidence_paths["sglang_final"], evidence["sglang_final"], case_id)]
-    execution_bindings["sglang-pr-33053"] = [record_binding(evidence_paths["sglang_33053"], evidence["sglang_33053"], "sglang-pr-33053")]
+        execution_bindings[case_id] = [
+            record_binding(evidence_paths["sglang_final"], evidence["sglang_final"], case_id)
+        ]
+    execution_bindings["sglang-pr-33053"] = [
+        record_binding(evidence_paths["sglang_33053"], evidence["sglang_33053"], "sglang-pr-33053")
+    ]
     for case_id in ("flashinfer-pr-4302", "flashinfer-pr-4296"):
-        execution_bindings[case_id] = [record_binding(evidence_paths["flashinfer_final"], evidence["flashinfer_final"], case_id)]
-    execution_bindings["flashinfer-pr-4139"] = [record_binding(evidence_paths["flashinfer_4139"], evidence["flashinfer_4139"], "flashinfer-pr-4139")]
-    for case_id in ("megatron-pr-6955", "megatron-pr-6200", "megatron-pr-6963", "megatron-pr-7000", "megatron-pr-6973", "torchtitan-pr-3953", "torchtitan-pr-4051", "torchtitan-pr-3955", "torchtitan-pr-4018", "torchtitan-pr-3980", "verl-pr-7045", "verl-pr-7161"):
-        execution_bindings[case_id] = [record_binding(evidence_paths["vllm_initial"], evidence["vllm_initial"], case_id)]
-    for case_id in ("megatron-pr-6973", "torchtitan-pr-3955", "torchtitan-pr-4051", "verl-pr-7591", "verl-pr-7589", "verl-pr-7045"):
-        execution_bindings.setdefault(case_id, []).append(record_binding(evidence_paths["followup"], evidence["followup"], case_id))
-    execution_bindings["torchtitan-pr-3980"].append(record_binding(evidence_paths["followup_v3"], evidence["followup_v3"], "torchtitan-pr-3980"))
+        execution_bindings[case_id] = [
+            record_binding(
+                evidence_paths["flashinfer_final"], evidence["flashinfer_final"], case_id
+            )
+        ]
+    execution_bindings["flashinfer-pr-4139"] = [
+        record_binding(
+            evidence_paths["flashinfer_4139"], evidence["flashinfer_4139"], "flashinfer-pr-4139"
+        )
+    ]
+    for case_id in (
+        "megatron-pr-6955",
+        "megatron-pr-6200",
+        "megatron-pr-6963",
+        "megatron-pr-7000",
+        "megatron-pr-6973",
+        "torchtitan-pr-3953",
+        "torchtitan-pr-4051",
+        "torchtitan-pr-3955",
+        "torchtitan-pr-4018",
+        "torchtitan-pr-3980",
+        "verl-pr-7045",
+        "verl-pr-7161",
+    ):
+        execution_bindings[case_id] = [
+            record_binding(evidence_paths["vllm_initial"], evidence["vllm_initial"], case_id)
+        ]
+    for case_id in (
+        "megatron-pr-6973",
+        "torchtitan-pr-3955",
+        "torchtitan-pr-4051",
+        "verl-pr-7591",
+        "verl-pr-7589",
+        "verl-pr-7045",
+    ):
+        execution_bindings.setdefault(case_id, []).append(
+            record_binding(evidence_paths["followup"], evidence["followup"], case_id)
+        )
+    execution_bindings["torchtitan-pr-3980"].append(
+        record_binding(evidence_paths["followup_v3"], evidence["followup_v3"], "torchtitan-pr-3980")
+    )
     for case_id in ("flashinfer-pr-4240", "flashinfer-pr-4174", "verl-pr-7107"):
         execution_bindings.setdefault(case_id, [])
 
     expected_zero = {
-        "vllm-pr-54643", "vllm-pr-50775", "vllm-pr-50658", "vllm-pr-54619", "vllm-pr-50754",
-        "sglang-pr-37261", "sglang-pr-33029", "sglang-pr-33220", "sglang-pr-33228", "sglang-pr-33053",
-        "flashinfer-pr-4302", "flashinfer-pr-4139", "flashinfer-pr-4296",
-        "megatron-pr-6955", "megatron-pr-6200", "megatron-pr-6963", "megatron-pr-7000", "megatron-pr-6973",
-        "torchtitan-pr-3953", "torchtitan-pr-3955", "torchtitan-pr-4018", "torchtitan-pr-3980",
-        "verl-pr-7591", "verl-pr-7589",
+        "vllm-pr-54643",
+        "vllm-pr-50775",
+        "vllm-pr-50658",
+        "vllm-pr-54619",
+        "vllm-pr-50754",
+        "sglang-pr-37261",
+        "sglang-pr-33029",
+        "sglang-pr-33220",
+        "sglang-pr-33228",
+        "sglang-pr-33053",
+        "flashinfer-pr-4302",
+        "flashinfer-pr-4139",
+        "flashinfer-pr-4296",
+        "megatron-pr-6955",
+        "megatron-pr-6200",
+        "megatron-pr-6963",
+        "megatron-pr-7000",
+        "megatron-pr-6973",
+        "torchtitan-pr-3953",
+        "torchtitan-pr-3955",
+        "torchtitan-pr-4018",
+        "torchtitan-pr-3980",
+        "verl-pr-7591",
+        "verl-pr-7589",
     }
     for case_id in expected_zero:
-        require(any(item["returncode"] == 0 for item in execution_bindings[case_id]), f"{case_id}: missing successful or clean-skip execution record")
+        require(
+            any(item["returncode"] == 0 for item in execution_bindings[case_id]),
+            f"{case_id}: missing successful or clean-skip execution record",
+        )
 
     frozen_at = datetime.now(UTC).isoformat()
-    common_evidence = {name: binding(evidence_paths[name], evidence[name]) for name in ("sanitization", "static", "contract", "dual_gpu", "torchtitan_4051", "verl_7591_shm", "verl_7589_shm")}
+    common_evidence = {
+        name: binding(evidence_paths[name], evidence[name])
+        for name in (
+            "sanitization",
+            "static",
+            "contract",
+            "dual_gpu",
+            "torchtitan_4051",
+            "verl_7591_shm",
+            "verl_7589_shm",
+        )
+    }
     locks: list[dict[str, Any]] = []
     for case_id, selected_case in selected.items():
         planned_case = planned[case_id]
-        require(selected_case["base_sha"] == planned_case["base_sha"] and selected_case["head_sha"] == planned_case["head_sha"], f"{case_id}: selection/test-plan SHA mismatch")
+        require(
+            selected_case["base_sha"] == planned_case["base_sha"]
+            and selected_case["head_sha"] == planned_case["head_sha"],
+            f"{case_id}: selection/test-plan SHA mismatch",
+        )
         assessed = ASSESSMENTS[case_id]
         result = classify_case_contract(assessed.triage)
         created_at = datetime.fromisoformat(selected_case["created_at"].replace("Z", "+00:00"))
@@ -509,7 +656,9 @@ def main() -> int:
             "schema_version": "0.1",
             "policy_id": POLICY_ID,
             "case_id": case_id,
-            "candidate_sha256": canonical_sha256({"selection": selected_case, "test_plan": planned_case}),
+            "candidate_sha256": canonical_sha256(
+                {"selection": selected_case, "test_plan": planned_case}
+            ),
             "selection_lock_sha256": EXPECTED_SELECTION_SHA256,
             "test_plan_sha256": EXPECTED_TEST_PLAN_SHA256,
             "source_bundle_sha256": EXPECTED_SOURCE_BUNDLE_SHA256,
@@ -561,12 +710,20 @@ def main() -> int:
     }
     output = {**lock_material, "lock_set_sha256": canonical_sha256(lock_material)}
     atomic_write_json(args.output, output)
-    print(json.dumps({
-        "lock_set_sha256": output["lock_set_sha256"],
-        "decision_counts": decision_counts,
-        "legacy_r10_style_decision_counts": legacy_counts,
-        "decisions": {lock["material"]["case_id"]: lock["material"]["decision"] for lock in locks},
-    }, indent=2, sort_keys=True))
+    print(
+        json.dumps(
+            {
+                "lock_set_sha256": output["lock_set_sha256"],
+                "decision_counts": decision_counts,
+                "legacy_r10_style_decision_counts": legacy_counts,
+                "decisions": {
+                    lock["material"]["case_id"]: lock["material"]["decision"] for lock in locks
+                },
+            },
+            indent=2,
+            sort_keys=True,
+        )
+    )
     return 0
 
 

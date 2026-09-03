@@ -124,17 +124,12 @@ def _patch_lines(patch: str | None) -> tuple[list[str], list[str]]:
 def _conflict_counts(text: str | None) -> dict[str, int | None]:
     if text is None:
         return {marker: None for marker in CONFLICT_MARKERS}
-    return {
-        marker: len(CONFLICT_PATTERNS[marker].findall(text))
-        for marker in CONFLICT_MARKERS
-    }
+    return {marker: len(CONFLICT_PATTERNS[marker].findall(text)) for marker in CONFLICT_MARKERS}
 
 
 def _signature_counts(lines: list[str]) -> dict[str, int]:
     text = "\n".join(lines)
-    return {
-        name: len(pattern.findall(text)) for name, pattern in SIGNATURE_PATTERNS.items()
-    }
+    return {name: len(pattern.findall(text)) for name, pattern in SIGNATURE_PATTERNS.items()}
 
 
 def _file_evidence(item: dict[str, Any]) -> dict[str, Any]:
@@ -208,9 +203,7 @@ def main() -> int:
     args = parser.parse_args()
 
     bundle = _read(args.bundle)
-    bundle_material = {
-        key: value for key, value in bundle.items() if key != "source_bundle_sha256"
-    }
+    bundle_material = {key: value for key, value in bundle.items() if key != "source_bundle_sha256"}
     if bundle["source_bundle_sha256"] != canonical_sha256(bundle_material):
         raise SystemExit("R14 source bundle digest mismatch")
     hidden = (
@@ -229,8 +222,7 @@ def main() -> int:
         head_syntax_failures = [
             item["path"]
             for item in files
-            if item["head_python_parse"] is not None
-            and not item["head_python_parse"]["ok"]
+            if item["head_python_parse"] is not None and not item["head_python_parse"]["ok"]
         ]
         head_conflict_files = []
         for item in files:
@@ -286,9 +278,7 @@ def main() -> int:
     payload = {**material, "evidence_sha256": canonical_sha256(material)}
     atomic_write_json(args.output, payload)
     print(f"case_count={len(cases)}")
-    syntax_failure_count = sum(
-        bool(case["head_python_syntax_failures"]) for case in cases
-    )
+    syntax_failure_count = sum(bool(case["head_python_syntax_failures"]) for case in cases)
     print(f"syntax_failure_count={syntax_failure_count}")
     print(f"conflict_case_count={sum(bool(case['head_conflict_marker_files']) for case in cases)}")
     print(f"evidence_sha256={payload['evidence_sha256']}")

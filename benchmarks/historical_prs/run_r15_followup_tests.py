@@ -133,9 +133,7 @@ def main() -> int:
         args.vllm_shim_dir / "vllm-0.0.0.dist-info" / "top_level.txt",
     ]
     shim_hashes = _copy_files(shim_paths[:1], "/workspace/r15-vllm-shim")
-    shim_hashes.update(
-        _copy_files(shim_paths[1:], "/workspace/r15-vllm-shim/vllm-0.0.0.dist-info")
-    )
+    shim_hashes.update(_copy_files(shim_paths[1:], "/workspace/r15-vllm-shim/vllm-0.0.0.dist-info"))
 
     cases = {case["case_id"]: case for case in material["cases"]}
     static_cases = {case["case_id"]: case for case in static["cases"]}

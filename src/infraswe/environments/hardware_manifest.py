@@ -246,9 +246,7 @@ def collect_hardware_manifest(profile: str) -> dict[str, Any]:
     manifest["accelerator_vendor"] = accelerators[0]["vendor"] if accelerators else None
     manifest["runtime"] = accelerators[0].get("runtime") if accelerators else None
     manifest["runtime_version"] = accelerators[0].get("runtime_version") if accelerators else None
-    manifest["compiler_version"] = (
-        accelerators[0].get("compiler_version") if accelerators else None
-    )
+    manifest["compiler_version"] = accelerators[0].get("compiler_version") if accelerators else None
     framework = manifest["commands"].get("framework_runtime", {}).get("json", {})
     framework_runtime = manifest["runtime"]
     manifest["framework"] = framework.get("framework") if isinstance(framework, dict) else None

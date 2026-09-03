@@ -73,7 +73,12 @@ def main() -> int:
         "r17_group": {
             "case_count": 30,
             "allocation": {"training": 10, "inference": 20},
-            "inference_project_allocation": {"vllm": 5, "sglang": 5, "tensorrt_llm": 5, "flashinfer": 5},
+            "inference_project_allocation": {
+                "vllm": 5,
+                "sglang": 5,
+                "tensorrt_llm": 5,
+                "flashinfer": 5,
+            },
             "reason": "finish the final ten training cases and begin the four-draft inference tranche without preselecting R18",
             "future_groups_preselected": False,
         },

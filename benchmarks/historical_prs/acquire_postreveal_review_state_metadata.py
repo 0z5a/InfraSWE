@@ -23,9 +23,7 @@ def _read(path: Path) -> dict[str, Any]:
     return payload
 
 
-def _checked(
-    path: Path, digest_field: str, *, material_field: str | None = None
-) -> dict[str, Any]:
+def _checked(path: Path, digest_field: str, *, material_field: str | None = None) -> dict[str, Any]:
     payload = _read(path)
     material = (
         payload[material_field]
@@ -85,9 +83,7 @@ def main() -> int:
     if locks["selection_lock_sha256"] != selection["selection_lock_sha256"]:
         raise SystemExit("judgment/selection binding mismatch")
 
-    selected = {
-        item["case_id"]: item for item in selection["selection_material"]["cases"]
-    }
+    selected = {item["case_id"]: item for item in selection["selection_material"]["cases"]}
     locked = {item["material"]["case_id"]: item["material"] for item in locks["locks"]}
     if not locked.keys() <= selected.keys():
         raise SystemExit("judgment contains an unknown selected case")
@@ -106,10 +102,7 @@ def main() -> int:
             "commit{oid}}}}"
             for case in cases
         )
-        fields.append(
-            f'r{repo_index}:repository(owner:"{owner}",name:"{name}")'
-            f"{{{pulls}}}"
-        )
+        fields.append(f'r{repo_index}:repository(owner:"{owner}",name:"{name}"){{{pulls}}}')
     query = "query {" + " ".join(fields) + "}"
     data, raw = _graphql(query)
 
@@ -135,9 +128,7 @@ def main() -> int:
                 reviews.append(
                     {
                         "reviewer": str(reviewer.get("login") or "unknown"),
-                        "reviewer_association": str(
-                            item.get("authorAssociation") or "UNKNOWN"
-                        ),
+                        "reviewer_association": str(item.get("authorAssociation") or "UNKNOWN"),
                         "state": str(item.get("state") or "UNKNOWN"),
                         "submitted_at": submitted_at,
                         "commit_id": (item.get("commit") or {}).get("oid"),
@@ -147,9 +138,7 @@ def main() -> int:
             for item in sorted(reviews, key=lambda value: value["submitted_at"]):
                 latest_by_reviewer[item["reviewer"]] = item
             latest = list(latest_by_reviewer.values())
-            final_head = [
-                item for item in reviews if item["commit_id"] == case["head_sha"]
-            ]
+            final_head = [item for item in reviews if item["commit_id"] == case["head_sha"]]
             records[case["case_id"]] = {
                 "case_id": case["case_id"],
                 "locked_head_sha": case["head_sha"],

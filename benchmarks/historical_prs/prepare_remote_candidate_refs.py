@@ -49,8 +49,7 @@ def main() -> int:
                 f"pull/{int(case['pull_number'])}/head:{shlex.quote(ref)}"
             )
             commands.append(
-                f"test \"$(git rev-parse {shlex.quote(ref)})\" = "
-                f"{shlex.quote(case['head_sha'])}"
+                f'test "$(git rev-parse {shlex.quote(ref)})" = {shlex.quote(case["head_sha"])}'
             )
         process = _ssh(" && ".join(commands), timeout=max(180, 45 * len(project_cases)))
         if process.returncode != 0:

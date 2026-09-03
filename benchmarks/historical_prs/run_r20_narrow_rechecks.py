@@ -40,7 +40,9 @@ def main() -> int:
     focused = read(args.focused_tests)
     if selection["selection_lock_sha256"] != canonical_sha256(selection["selection_material"]):
         raise SystemExit("R20 selection digest mismatch")
-    if focused["evidence_sha256"] != canonical_sha256({key: value for key, value in focused.items() if key != "evidence_sha256"}):
+    if focused["evidence_sha256"] != canonical_sha256(
+        {key: value for key, value in focused.items() if key != "evidence_sha256"}
+    ):
         raise SystemExit("R20 focused evidence digest mismatch")
     if focused["selection_lock_sha256"] != selection["selection_lock_sha256"]:
         raise SystemExit("R20 focused/selection binding mismatch")
@@ -52,7 +54,7 @@ def main() -> int:
         return (
             f"cd {shlex.quote(worktree)} && {lfs}git switch --detach "
             f"refs/r20/pr-{int(case['pull_number'])} >/dev/null && "
-            f"test \"$(git rev-parse HEAD)\" = {shlex.quote(case['head_sha'])} && "
+            f'test "$(git rev-parse HEAD)" = {shlex.quote(case["head_sha"])} && '
         )
 
     vllm_driver = (
@@ -125,7 +127,13 @@ def main() -> int:
     }
     payload = {**material, "evidence_sha256": canonical_sha256(material)}
     atomic_write_json(args.output, payload)
-    print(json.dumps({record["case_id"]: record["returncode"] for record in records}, indent=2, sort_keys=True))
+    print(
+        json.dumps(
+            {record["case_id"]: record["returncode"] for record in records},
+            indent=2,
+            sort_keys=True,
+        )
+    )
     print(f"evidence_sha256={payload['evidence_sha256']}")
     return 0
 

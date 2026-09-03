@@ -42,8 +42,7 @@ def main() -> int:
         raise SystemExit("R13 expanded components must contain 14 and 15 cases")
     case_ids = [case["case_id"] for case in [*base_cases, *extension_cases]]
     identities = [
-        (case["repository"], case["pull_number"])
-        for case in [*base_cases, *extension_cases]
+        (case["repository"], case["pull_number"]) for case in [*base_cases, *extension_cases]
     ]
     if len(set(case_ids)) != 29 or len(set(identities)) != 29:
         raise SystemExit("R13 expanded selection contains duplicates")

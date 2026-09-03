@@ -165,7 +165,7 @@ TESTS = (
         "flashattention-pr-2654",
         "/workspace/r13-run-flash",
         "refs/r13/pr-2654",
-        "/venv/main/bin/python -c \"import flash_attn.cute.interface\"",
+        '/venv/main/bin/python -c "import flash_attn.cute.interface"',
         "exact-source runtime-import preflight before the SM80 score-mod test",
     ),
     UpstreamTest(
@@ -205,9 +205,7 @@ def _remote_command(test: UpstreamTest) -> str:
     )
 
 
-def _run(
-    args: argparse.Namespace, test: UpstreamTest, ordinal: int, total: int
-) -> dict[str, Any]:
+def _run(args: argparse.Namespace, test: UpstreamTest, ordinal: int, total: int) -> dict[str, Any]:
     command = [
         "ssh",
         "-p",
@@ -227,8 +225,7 @@ def _run(
     duration = time.monotonic() - start
     output = process.stdout + process.stderr
     print(
-        f"[{ordinal:02d}/{total}] {test.case_id}: "
-        f"rc={process.returncode} duration={duration:.1f}s",
+        f"[{ordinal:02d}/{total}] {test.case_id}: rc={process.returncode} duration={duration:.1f}s",
         flush=True,
     )
     return {
@@ -259,12 +256,8 @@ def main() -> int:
 
     selection = json.loads(args.selection_lock.read_text(encoding="utf-8"))
     plan = json.loads(args.test_plan.read_text(encoding="utf-8"))
-    selected = {
-        case["case_id"]: case for case in selection["selection_material"]["cases"]
-    }
-    if selection["selection_lock_sha256"] != canonical_sha256(
-        selection["selection_material"]
-    ):
+    selected = {case["case_id"]: case for case in selection["selection_material"]["cases"]}
+    if selection["selection_lock_sha256"] != canonical_sha256(selection["selection_material"]):
         raise SystemExit("selection lock digest mismatch")
     plan_material = {key: value for key, value in plan.items() if key != "test_plan_sha256"}
     if plan["test_plan_sha256"] != canonical_sha256(plan_material):
@@ -281,9 +274,7 @@ def main() -> int:
     missing = requested - {test.case_id for test in tests}
     if missing:
         raise SystemExit(f"unknown --only case IDs: {sorted(missing)}")
-    records = [
-        _run(args, test, index, len(tests)) for index, test in enumerate(tests, start=1)
-    ]
+    records = [_run(args, test, index, len(tests)) for index, test in enumerate(tests, start=1)]
     material: dict[str, Any] = {
         "schema_version": "0.1",
         "protocol_id": "r13-exact-candidate-upstream-tests-v0.1",

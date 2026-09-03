@@ -23,9 +23,7 @@ def _read(path: Path) -> dict[str, Any]:
     return payload
 
 
-def _checked(
-    path: Path, digest_field: str, *, material_field: str | None = None
-) -> dict[str, Any]:
+def _checked(path: Path, digest_field: str, *, material_field: str | None = None) -> dict[str, Any]:
     payload = _read(path)
     material = (
         payload[material_field]
@@ -77,9 +75,7 @@ def main() -> int:
         raise SystemExit("judgment/selection binding mismatch")
 
     locked_ids = [item["material"]["case_id"] for item in locks["locks"]]
-    selected = {
-        item["case_id"]: item for item in selection["selection_material"]["cases"]
-    }
+    selected = {item["case_id"]: item for item in selection["selection_material"]["cases"]}
     if not set(locked_ids) <= selected.keys():
         raise SystemExit("judgment contains an unknown selected case")
 
@@ -95,10 +91,7 @@ def main() -> int:
             "{authorAssociation author{login}}"
             for case in cases
         )
-        fields.append(
-            f'r{repo_index}:repository(owner:"{owner}",name:"{name}")'
-            f"{{{pulls}}}"
-        )
+        fields.append(f'r{repo_index}:repository(owner:"{owner}",name:"{name}"){{{pulls}}}')
     query = "query {" + " ".join(fields) + "}"
     data, raw = _graphql(query)
 
@@ -112,9 +105,7 @@ def main() -> int:
                 {
                     "case_id": case["case_id"],
                     "author": str((pull.get("author") or {}).get("login") or "unknown"),
-                    "author_association": str(
-                        pull.get("authorAssociation") or "UNKNOWN"
-                    ),
+                    "author_association": str(pull.get("authorAssociation") or "UNKNOWN"),
                 }
             )
 
@@ -141,12 +132,8 @@ def main() -> int:
             {
                 "cases": len(cases),
                 "association_counts": {
-                    association: sum(
-                        item["author_association"] == association for item in cases
-                    )
-                    for association in sorted(
-                        {item["author_association"] for item in cases}
-                    )
+                    association: sum(item["author_association"] == association for item in cases)
+                    for association in sorted({item["author_association"] for item in cases})
                 },
                 "metadata_sha256": payload["metadata_sha256"],
             },

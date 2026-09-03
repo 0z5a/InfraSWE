@@ -135,18 +135,12 @@ def contains_term(text: str, term: str) -> bool:
     return re.search(prefix + escaped + suffix, text.lower()) is not None
 
 
-def has_domain_anchor(
-    item: dict[str, Any], domain: str, amendment: dict[str, Any]
-) -> bool:
+def has_domain_anchor(item: dict[str, Any], domain: str, amendment: dict[str, Any]) -> bool:
     rule = amendment["rule"]
     title = item["title"].strip().lower()
-    if rule["title_docs_prefix_is_excluded"] and re.match(
-        r"^(docs?\b|docs?\(|\[docs?\])", title
-    ):
+    if rule["title_docs_prefix_is_excluded"] and re.match(r"^(docs?\b|docs?\(|\[docs?\])", title):
         return False
-    source_paths = " ".join(
-        path for path in item["paths"] if not _is_test_path(path)
-    ).lower()
+    source_paths = " ".join(path for path in item["paths"] if not _is_test_path(path)).lower()
     domain_rule = rule[domain]
     if domain == "communication":
         if any(
@@ -155,16 +149,13 @@ def has_domain_anchor(
         ):
             return True
         title_has_topology = any(
-            contains_term(title, term)
-            for term in domain_rule["topology_title_terms"]
+            contains_term(title, term) for term in domain_rule["topology_title_terms"]
         )
-        path_has_runtime = any(
-            term in source_paths for term in domain_rule["runtime_path_terms"]
-        )
+        path_has_runtime = any(term in source_paths for term in domain_rule["runtime_path_terms"])
         return title_has_topology and path_has_runtime
-    return any(
-        contains_term(title, term) for term in domain_rule["direct_terms"]
-    ) or any(term in source_paths for term in domain_rule["source_path_terms"])
+    return any(contains_term(title, term) for term in domain_rule["direct_terms"]) or any(
+        term in source_paths for term in domain_rule["source_path_terms"]
+    )
 
 
 def communication_family(item: dict[str, Any]) -> str:
@@ -172,16 +163,31 @@ def communication_family(item: dict[str, Any]) -> str:
     if any(
         term in text
         for term in (
-            "all_reduce", "all-reduce", "allreduce", "all_gather", "all-gather",
-            "reduce_scatter", "all_to_all", "all-to-all", "broadcast", "collective",
+            "all_reduce",
+            "all-reduce",
+            "allreduce",
+            "all_gather",
+            "all-gather",
+            "reduce_scatter",
+            "all_to_all",
+            "all-to-all",
+            "broadcast",
+            "collective",
         )
     ):
         return "collective-numerics"
     if any(
         term in text
         for term in (
-            "p2p", "send/recv", "send_recv", "cuda ipc", "cuda_ipc",
-            "weight transfer", "weight_transfer", "weight sync", "weight_sync",
+            "p2p",
+            "send/recv",
+            "send_recv",
+            "cuda ipc",
+            "cuda_ipc",
+            "weight transfer",
+            "weight_transfer",
+            "weight sync",
+            "weight_sync",
         )
     ):
         return "p2p-transfer"
@@ -190,8 +196,14 @@ def communication_family(item: dict[str, Any]) -> str:
     if any(
         term in text
         for term in (
-            "communicator", "process_group", "process group", "initialize",
-            "destroy", "teardown", "lifecycle", "ipc cache",
+            "communicator",
+            "process_group",
+            "process group",
+            "initialize",
+            "destroy",
+            "teardown",
+            "lifecycle",
+            "ipc cache",
         )
     ):
         return "resource-lifecycle"
@@ -208,8 +220,7 @@ def training_family(item: dict[str, Any]) -> str:
     if any(term in text for term in ("optimizer", "adam", "lion", "muon", "learning rate", "lr_")):
         return "optimizer-state"
     if any(
-        term in text
-        for term in ("loss", "gradient", "backward", "reward", "ppo", "grpo", "dpo")
+        term in text for term in ("loss", "gradient", "backward", "reward", "ppo", "grpo", "dpo")
     ):
         return "loss-gradient"
     if any(term in text for term in ("pipeline", "schedule", "microbatch", "micro-batch")):
@@ -232,8 +243,10 @@ def eligibility_reasons(
     paths = item["paths"]
     reasons: list[str] = []
     changed_lines = int(item["additions"]) + int(item["deletions"])
-    if not int(rules["changed_files_min"]) <= int(item["changed_files"]) <= int(
-        rules["changed_files_max"]
+    if (
+        not int(rules["changed_files_min"])
+        <= int(item["changed_files"])
+        <= int(rules["changed_files_max"])
     ):
         reasons.append("changed-file-count-out-of-range")
     if changed_lines > int(rules["changed_lines_max"]):
@@ -303,8 +316,7 @@ def select_project(
             (
                 item
                 for item in remaining
-                if int(item["number"]) not in numbers
-                and risk_family(item, domain) == family
+                if int(item["number"]) not in numbers and risk_family(item, domain) == family
             ),
             None,
         )
@@ -319,9 +331,7 @@ def select_project(
             selected.append(item)
             numbers.add(int(item["number"]))
     if len(selected) != required:
-        raise SystemExit(
-            f"{domain}: only {len(selected)} eligible cases, need {required}"
-        )
+        raise SystemExit(f"{domain}: only {len(selected)} eligible cases, need {required}")
     return selected
 
 
@@ -391,9 +401,7 @@ def main() -> int:
             exclusions: list[dict[str, Any]] = []
             candidates = discovery["discoveries"][domain][project_name]["candidates"]
             for item in candidates:
-                reasons = eligibility_reasons(
-                    item, domain, project, policy, amendment
-                )
+                reasons = eligibility_reasons(item, domain, project, policy, amendment)
                 candidate_identity = (repository_key, int(item["number"]))
                 if candidate_identity in prior:
                     reasons.append("previously-scored")
@@ -423,8 +431,7 @@ def main() -> int:
             if any(item["temporal_band"] == "recent" for item in selected):
                 recent_repositories.add(repository_key)
             query_strings = [
-                item["query"]
-                for item in discovery["discoveries"][domain][project_name]["queries"]
+                item["query"] for item in discovery["discoveries"][domain][project_name]["queries"]
             ]
             diagnostics[domain][project_name] = {
                 "repository": repository,
@@ -440,8 +447,7 @@ def main() -> int:
                     for family in policy["domain_signals"][domain]["risk_families"]
                 },
                 "excluded_identity_count": sum(
-                    "previously-scored" in item["exclusion_reasons"]
-                    for item in exclusions
+                    "previously-scored" in item["exclusion_reasons"] for item in exclusions
                 ),
             }
             for item in selected:
@@ -489,9 +495,7 @@ def main() -> int:
         "discovery_sha256": discovery["discovery_sha256"],
         "r14_policy_iteration_sha256": policy["r14_policy_iteration_sha256"],
         "domain_amendment_sha256": amendment["amendment_sha256"],
-        "supersedes_invalid_selection_lock_sha256": amendment[
-            "superseded_selection_lock_sha256"
-        ],
+        "supersedes_invalid_selection_lock_sha256": amendment["superseded_selection_lock_sha256"],
         "supersession_reason": amendment["reason"],
         "prior_lock_bindings": prior_bindings,
         "prior_identity_count": len(prior),
@@ -513,15 +517,20 @@ def main() -> int:
         "selection_lock_sha256": canonical_sha256(material),
     }
     atomic_write_json(args.output, payload)
-    print(json.dumps([
-        {
-            "case_id": item["case_id"],
-            "domain": item["benchmark_domain"],
-            "band": item["temporal_band"],
-            "risk_family": item["risk_family"],
-        }
-        for item in chosen
-    ], indent=2))
+    print(
+        json.dumps(
+            [
+                {
+                    "case_id": item["case_id"],
+                    "domain": item["benchmark_domain"],
+                    "band": item["temporal_band"],
+                    "risk_family": item["risk_family"],
+                }
+                for item in chosen
+            ],
+            indent=2,
+        )
+    )
     print(f"selection_lock_sha256={payload['selection_lock_sha256']}")
     return 0
 

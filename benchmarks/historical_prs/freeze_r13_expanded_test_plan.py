@@ -255,8 +255,9 @@ def main() -> int:
         "schema_version": "0.1",
         "protocol_id": expanded["selection_material"]["protocol_id"],
         "selection_lock_sha256": expanded["selection_lock_sha256"],
-        "component_selection_lock_sha256": expanded["selection_material"]
-        ["component_selection_lock_sha256"],
+        "component_selection_lock_sha256": expanded["selection_material"][
+            "component_selection_lock_sha256"
+        ],
         "base_r13_test_plan_sha256": base_plan["test_plan_sha256"],
         "frozen_at": datetime.now(UTC).isoformat(),
         "review_text_visible_to_machine_judge": False,

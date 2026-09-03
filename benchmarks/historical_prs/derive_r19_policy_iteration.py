@@ -76,7 +76,12 @@ def main() -> int:
         "r20_group": {
             "case_count": 20,
             "allocation": {"inference": 20},
-            "inference_project_allocation": {"vllm": 5, "sglang": 5, "tensorrt_llm": 5, "flashinfer": 5},
+            "inference_project_allocation": {
+                "vllm": 5,
+                "sglang": 5,
+                "tensorrt_llm": 5,
+                "flashinfer": 5,
+            },
             "reason": "complete the requested 100 inference PRs with 25 cases from each main draft",
             "future_groups_preselected": False,
         },

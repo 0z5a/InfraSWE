@@ -62,9 +62,7 @@ SELF_DECLARED_INCOMPLETE_MARKERS = (
     "not ready for review",
     "todo before merge",
 )
-TITLE_READINESS_RE = re.compile(
-    r"(?:^\s*\[draft\]|^\s*draft\s*[-:]|\bwip\b)", re.IGNORECASE
-)
+TITLE_READINESS_RE = re.compile(r"(?:^\s*\[draft\]|^\s*draft\s*[-:]|\bwip\b)", re.IGNORECASE)
 
 
 def read(path: Path) -> dict[str, Any]:
@@ -231,11 +229,7 @@ def _title_tokens(title: str) -> set[str]:
 
 
 def _source_paths(paths: list[str]) -> set[str]:
-    return {
-        path
-        for path in paths
-        if not _is_test_path(path) and not path.endswith(".md")
-    }
+    return {path for path in paths if not _is_test_path(path) and not path.endswith(".md")}
 
 
 def _directory_prefixes(paths: set[str]) -> set[str]:
@@ -266,14 +260,11 @@ def precedent_consensus(
             continue
         title_similarity = _jaccard(title, set(precedent["title_tokens"]))
         path_similarity = _jaccard(paths, set(precedent["source_paths"]))
-        directory_similarity = _jaccard(
-            directories, set(precedent["source_directory_prefixes"])
-        )
+        directory_similarity = _jaccard(directories, set(precedent["source_directory_prefixes"]))
         if (
             title_similarity >= float(policy["title_token_jaccard_min"])
             or path_similarity >= float(policy["source_path_jaccard_min"])
-            or directory_similarity
-            >= float(policy["source_directory_prefix_jaccard_min"])
+            or directory_similarity >= float(policy["source_directory_prefix_jaccard_min"])
         ):
             matches.append(
                 {
@@ -285,10 +276,9 @@ def precedent_consensus(
                 }
             )
     dispositions = {item["oracle_decision"] for item in matches}
-    negative = (
-        len(matches) >= int(policy["negative_consensus_minimum"])
-        and dispositions == {"reject"}
-    )
+    negative = len(matches) >= int(policy["negative_consensus_minimum"]) and dispositions == {
+        "reject"
+    }
     return {
         "negative": negative,
         "matches": sorted(matches, key=lambda item: item["precedent_id"]),
@@ -307,9 +297,7 @@ def decision_for(
     executor_architecture: str,
 ) -> dict[str, Any]:
     test_names = list(static["candidate_test_functions_added"])
-    technical, counts, exact_failure = technical_contract(
-        record, test_names, executor_architecture
-    )
+    technical, counts, exact_failure = technical_contract(record, test_names, executor_architecture)
     body = body_text(bundle_case)
     body_lower = body.lower()
     incomplete = any(marker in body_lower for marker in SELF_DECLARED_INCOMPLETE_MARKERS)
@@ -317,13 +305,10 @@ def decision_for(
     precedent = precedent_consensus(selected, precedents, precedent_policy)
     explicit_readiness = TITLE_READINESS_RE.search(selected["title"]) is not None
     review_state_counts = (
-        review_activity.get("human_non_author_review_state_counts", {})
-        if review_activity
-        else {}
+        review_activity.get("human_non_author_review_state_counts", {}) if review_activity else {}
     )
     review_state_metadata_available = bool(
-        review_activity
-        and "human_non_author_review_state_counts" in review_activity
+        review_activity and "human_non_author_review_state_counts" in review_activity
     )
     approved_reviews = int(review_state_counts.get("APPROVED", 0))
 
@@ -340,14 +325,12 @@ def decision_for(
             decision = "check"
             code = "ACTIVE_FINAL_HEAD_REVIEW_ACTIVITY"
             residual = (
-                "Complete the active final-head review handoff and freeze its "
-                "terminal disposition."
+                "Complete the active final-head review handoff and freeze its terminal disposition."
             )
         elif (
             technical == "pass"
             and review_activity
-            and review_activity.get("pr_author_association")
-            in {"COLLABORATOR", "MEMBER", "OWNER"}
+            and review_activity.get("pr_author_association") in {"COLLABORATOR", "MEMBER", "OWNER"}
             and selected["additions"] + selected["deletions"] <= 120
         ):
             decision = "accept_with_scope"
@@ -392,8 +375,7 @@ def decision_for(
         and review_activity.get("human_non_author_review_count", 0) == 0
         and not (
             selected["project"] == "sglang"
-            and review_activity.get("pr_author_association")
-            in {"COLLABORATOR", "MEMBER", "OWNER"}
+            and review_activity.get("pr_author_association") in {"COLLABORATOR", "MEMBER", "OWNER"}
         )
     ):
         decision = "reject"
@@ -517,9 +499,7 @@ def main() -> int:
     bundle = checked_payload(args.source_bundle, "source_bundle_sha256")
     evidence_payloads = [checked_payload(path, "evidence_sha256") for path in args.evidence]
     precedent_payload = (
-        checked_payload(args.precedents, "precedent_set_sha256")
-        if args.precedents
-        else None
+        checked_payload(args.precedents, "precedent_set_sha256") if args.precedents else None
     )
     activity_payload = (
         checked_payload(args.review_activity, "activity_projection_sha256")
@@ -580,9 +560,7 @@ def main() -> int:
     )
     require(all(value is False for value in hidden), "blind boundary is not intact")
 
-    all_selected = {
-        item["case_id"]: item for item in selection["selection_material"]["cases"]
-    }
+    all_selected = {item["case_id"]: item for item in selection["selection_material"]["cases"]}
     planned = {item["case_id"]: item for item in plan["cases"]}
     statics = {item["case_id"]: item for item in static_payload["cases"]}
     bundles = {item["case_id"]: item for item in bundle["cases"]}
@@ -615,9 +593,7 @@ def main() -> int:
         else {}
     )
     all_recent_ids = {
-        case_id
-        for case_id, item in all_selected.items()
-        if item["temporal_band"] == "recent"
+        case_id for case_id, item in all_selected.items() if item["temporal_band"] == "recent"
     }
     if activity_payload is not None:
         if activity_payload.get("recent_cases_only", True):
@@ -630,11 +606,7 @@ def main() -> int:
                 if not activity_projects or item["project"] in activity_projects
             }
         require(all_activities.keys() == expected_activity_ids, "review activity case set differs")
-    activities = {
-        case_id: item
-        for case_id, item in all_activities.items()
-        if case_id in selected
-    }
+    activities = {case_id: item for case_id, item in all_activities.items() if case_id in selected}
 
     bindings: dict[str, dict[str, Any]] = {
         "manifest": {
@@ -746,9 +718,7 @@ def main() -> int:
         "protocol_id": plan["protocol_id"],
         "policy_id": f"inference-contract-disposition-cascade-v0.1-{round_label.lower()}",
         "review_text_visible_during_machine_judgment": False,
-        "review_activity_metadata_visible_during_machine_judgment": (
-            activity_payload is not None
-        ),
+        "review_activity_metadata_visible_during_machine_judgment": (activity_payload is not None),
         "merge_outcomes_visible_during_machine_judgment": False,
         "ci_fields_visible_during_machine_judgment": False,
         "learned_model_used": False,

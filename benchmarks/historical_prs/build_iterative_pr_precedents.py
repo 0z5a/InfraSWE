@@ -101,31 +101,23 @@ def main() -> int:
     bindings: list[dict[str, Any]] = []
     records: list[dict[str, Any]] = []
     seen: set[str] = set()
-    for selection_path, audit_path in zip(
-        args.source_selection, args.source_audit, strict=True
-    ):
+    for selection_path, audit_path in zip(args.source_selection, args.source_audit, strict=True):
         selection = checked(
             selection_path, "selection_lock_sha256", material_field="selection_material"
         )
         audit = checked(audit_path, "audit_sha256")
         if audit["source_digests"]["selection_lock"] != canonical_sha256(selection):
             raise SystemExit(f"{audit_path.name} is not bound to {selection_path.name}")
-        selected = {
-            item["case_id"]: item for item in selection["selection_material"]["cases"]
-        }
+        selected = {item["case_id"]: item for item in selection["selection_material"]["cases"]}
         audited = {item["case_id"]: item for item in audit["cases"]}
         if selected.keys() != audited.keys():
             lock_path = audit_path.parent / "machine-judgment-locks.json"
             locks = checked(lock_path, "lock_set_sha256")
-            if audit["source_digests"]["machine_judgment_locks"] != canonical_sha256(
-                locks
-            ):
+            if audit["source_digests"]["machine_judgment_locks"] != canonical_sha256(locks):
                 raise SystemExit(f"{audit_path.name} is not bound to {lock_path.name}")
             locked_ids = {item["material"]["case_id"] for item in locks["locks"]}
             if audited.keys() != locked_ids or not locked_ids <= selected.keys():
-                raise SystemExit(
-                    f"case mismatch between {selection_path} and {audit_path}"
-                )
+                raise SystemExit(f"case mismatch between {selection_path} and {audit_path}")
         for case_id in audited:
             case = selected[case_id]
             if case_id in seen:

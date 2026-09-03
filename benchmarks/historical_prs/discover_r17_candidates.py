@@ -38,9 +38,7 @@ def main(round_label: str = "R17", mature_eligible_multiplier: int = 8) -> int:
         raise SystemExit(f"{round_label} policy exposes forbidden evidence")
 
     window = policy["created_at_window"]
-    discoveries: dict[str, Any] = {
-        domain: {} for domain in policy["domains_in_order"]
-    }
+    discoveries: dict[str, Any] = {domain: {} for domain in policy["domains_in_order"]}
     tasks = [
         (domain, project_name, project)
         for domain in policy["domains_in_order"]
@@ -76,11 +74,15 @@ def main(round_label: str = "R17", mature_eligible_multiplier: int = 8) -> int:
         )
         by_number = {item["number"]: item for item in mature}
         by_number.update({item["number"]: item for item in recent})
-        return domain, project_name, {
-            "repository": repository,
-            "queries": [recent_metadata, mature_metadata],
-            "candidates": list(by_number.values()),
-        }
+        return (
+            domain,
+            project_name,
+            {
+                "repository": repository,
+                "queries": [recent_metadata, mature_metadata],
+                "candidates": list(by_number.values()),
+            },
+        )
 
     with ThreadPoolExecutor(max_workers=4) as executor:
         acquired = list(executor.map(acquire_slice, tasks))
@@ -119,6 +121,7 @@ def main(round_label: str = "R17", mature_eligible_multiplier: int = 8) -> int:
     print(json.dumps(counts, indent=2, sort_keys=True))
     print(f"discovery_sha256={payload['discovery_sha256']}")
     return 0
+
 
 if __name__ == "__main__":
     raise SystemExit(main())

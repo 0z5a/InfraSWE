@@ -41,13 +41,9 @@ def contains_term(text: str, term: str) -> bool:
 def has_training_anchor(item: dict[str, Any], policy: dict[str, Any]) -> bool:
     anchor = policy["domain_anchor"]
     title = item["title"].strip().lower()
-    if anchor["title_docs_prefix_is_excluded"] and re.match(
-        r"^(docs?\b|docs?\(|\[docs?\])", title
-    ):
+    if anchor["title_docs_prefix_is_excluded"] and re.match(r"^(docs?\b|docs?\(|\[docs?\])", title):
         return False
-    source_paths = " ".join(
-        path for path in item["paths"] if not _is_test_path(path)
-    ).lower()
+    source_paths = " ".join(path for path in item["paths"] if not _is_test_path(path)).lower()
     return any(contains_term(title, term) for term in anchor["direct_terms"]) or any(
         term in source_paths for term in anchor["source_path_terms"]
     )
@@ -63,8 +59,10 @@ def eligibility_reasons(
     paths = item["paths"]
     reasons: list[str] = []
     changed_lines = int(item["additions"]) + int(item["deletions"])
-    if not int(rules["changed_files_min"]) <= int(item["changed_files"]) <= int(
-        rules["changed_files_max"]
+    if (
+        not int(rules["changed_files_min"])
+        <= int(item["changed_files"])
+        <= int(rules["changed_files_max"])
     ):
         reasons.append("changed-file-count-out-of-range")
     if changed_lines > int(rules["changed_lines_max"]):
@@ -210,8 +208,7 @@ def main() -> int:
             allow_recent=True,
         )
         queries = [
-            item["query"]
-            for item in discovery["discoveries"]["training"][project_name]["queries"]
+            item["query"] for item in discovery["discoveries"]["training"][project_name]["queries"]
         ]
         diagnostics[project_name] = {
             "repository": repository,
@@ -219,9 +216,7 @@ def main() -> int:
             "eligible_count": len(eligible),
             "excluded_count": len(exclusions),
             "selected_numbers": [int(item["number"]) for item in selected],
-            "selected_recent_count": sum(
-                item["temporal_band"] == "recent" for item in selected
-            ),
+            "selected_recent_count": sum(item["temporal_band"] == "recent" for item in selected),
             "selected_risk_families": {
                 family: sum(item["risk_family"] == family for item in selected)
                 for family in policy["domain_signals"]["training"]["risk_families"]
@@ -294,15 +289,20 @@ def main() -> int:
         "selection_lock_sha256": canonical_sha256(material),
     }
     atomic_write_json(args.output, payload)
-    print(json.dumps([
-        {
-            "case_id": item["case_id"],
-            "band": item["temporal_band"],
-            "risk_family": item["risk_family"],
-            "changed_files": item["changed_files"],
-        }
-        for item in chosen
-    ], indent=2))
+    print(
+        json.dumps(
+            [
+                {
+                    "case_id": item["case_id"],
+                    "band": item["temporal_band"],
+                    "risk_family": item["risk_family"],
+                    "changed_files": item["changed_files"],
+                }
+                for item in chosen
+            ],
+            indent=2,
+        )
+    )
     print(f"selection_lock_sha256={payload['selection_lock_sha256']}")
     return 0
 

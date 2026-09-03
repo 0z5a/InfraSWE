@@ -59,9 +59,9 @@ def _worker(rank: int, world_size: int, port: int, checkout: str, output_dir: st
     )
     from torch.utils.checkpoint import checkpoint
 
-    scheduler_compatibility_shim = "bucket_mode" not in inspect.signature(
-        ManualOverlapScheduler.__init__
-    ).parameters
+    scheduler_compatibility_shim = (
+        "bucket_mode" not in inspect.signature(ManualOverlapScheduler.__init__).parameters
+    )
     if scheduler_compatibility_shim:
         original_scheduler_init = ManualOverlapScheduler.__init__
 
@@ -86,9 +86,7 @@ def _worker(rank: int, world_size: int, port: int, checkout: str, output_dir: st
         ManualOverlapScheduler.__init__ = compatible_scheduler_init
 
     manual_bucketer_source = inspect.getsource(ManualOverlapPreservingBucketer)
-    bucket_metadata_compatibility_shim = (
-        "self.bucketed_node_types" not in manual_bucketer_source
-    )
+    bucket_metadata_compatibility_shim = "self.bucketed_node_types" not in manual_bucketer_source
     manual_bucketing_source = inspect.getsource(
         ManualOverlapPreservingBucketer.manual_bucket_collectives
     )
@@ -204,14 +202,10 @@ def _worker(rank: int, world_size: int, port: int, checkout: str, output_dir: st
             "scheduler_bucket_mode_compatibility_shim": scheduler_compatibility_shim,
             "bucket_metadata_compatibility_shim": bucket_metadata_compatibility_shim,
             "graph_annotations_compatibility_shim": graph_annotations_compatibility_shim,
-            "upstream_all_reduce_bucketing_supported": (
-                upstream_all_reduce_bucketing_supported
-            ),
+            "upstream_all_reduce_bucketing_supported": (upstream_all_reduce_bucketing_supported),
             "candidate_contract_observable": upstream_all_reduce_bucketing_supported,
             "candidate_contract_passed": (
-                upstream_all_reduce_bucketing_supported
-                and before == parameter_count
-                and after == 1
+                upstream_all_reduce_bucketing_supported and before == parameter_count and after == 1
             ),
         }
         (Path(output_dir) / f"rank-{rank}.json").write_text(
@@ -241,9 +235,7 @@ def main() -> int:
         raise SystemExit(f"TorchTitan checkout mismatch: {observed_sha}")
     selection = _read(args.selection)
     plan = _read(args.plan)
-    selected = {
-        item["case_id"]: item for item in selection["selection_material"]["cases"]
-    }
+    selected = {item["case_id"]: item for item in selection["selection_material"]["cases"]}
     if selected["torchtitan-pr-3821"]["head_sha"] != args.expected_sha:
         raise SystemExit("TorchTitan expected SHA is not bound to the R12 selection")
     if plan["selection_lock_sha256"] != selection["selection_lock_sha256"]:

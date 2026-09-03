@@ -32,18 +32,12 @@ def _is_test_path(path: str) -> bool:
 
 def _has_anchor(item: dict[str, Any], rule: dict[str, Any]) -> bool:
     title = item["title"].lower()
-    paths = " ".join(
-        path for path in item["paths"] if not _is_test_path(path)
-    ).lower()
+    paths = " ".join(path for path in item["paths"] if not _is_test_path(path)).lower()
     direct = rule["direct_anchor_terms"]
     if any(term in title or term in paths for term in direct):
         return True
-    title_has_topology = any(
-        term in title for term in rule["coupled_topology_title_terms"]
-    )
-    path_has_runtime = any(
-        term in paths for term in rule["coupled_runtime_path_terms"]
-    )
+    title_has_topology = any(term in title for term in rule["coupled_topology_title_terms"])
+    path_has_runtime = any(term in paths for term in rule["coupled_runtime_path_terms"])
     return title_has_topology and path_has_runtime
 
 
@@ -67,9 +61,7 @@ def main() -> int:
         raise SystemExit("R14 policy digest mismatch")
     if discovery["discovery_sha256"] != canonical_sha256(discovery_material):
         raise SystemExit("R14 discovery digest mismatch")
-    if selection["selection_lock_sha256"] != canonical_sha256(
-        selection["selection_material"]
-    ):
+    if selection["selection_lock_sha256"] != canonical_sha256(selection["selection_material"]):
         raise SystemExit("R14 initial selection digest mismatch")
 
     rule = {
@@ -166,9 +158,7 @@ def main() -> int:
     if args.superseded_amendment is not None:
         superseded = _read(args.superseded_amendment)
         superseded_material = {
-            key: value
-            for key, value in superseded.items()
-            if key != "amendment_sha256"
+            key: value for key, value in superseded.items() if key != "amendment_sha256"
         }
         if superseded["amendment_sha256"] != canonical_sha256(superseded_material):
             raise SystemExit("R14 superseded amendment digest mismatch")

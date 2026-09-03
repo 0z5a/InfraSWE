@@ -198,7 +198,7 @@ def main() -> int:
             "purpose": "validate exact head syntax and enumerate the declared eight-rank TP/CP matrix",
             "timeout": 120,
             "command": switch("/workspace/r13-run-megatron", "megatron-pr-5047")
-            + "timeout 60s env CUDA_VISIBLE_DEVICES=1 PYTHONPATH=. /venv/main/bin/python -m py_compile megatron/core/transformer/moe/router.py tests/unit_tests/transformer/moe/test_aux_loss.py && grep -n \"(8, 1, 1).*2, 2, 2\" tests/unit_tests/transformer/moe/test_aux_loss.py",
+            + 'timeout 60s env CUDA_VISIBLE_DEVICES=1 PYTHONPATH=. /venv/main/bin/python -m py_compile megatron/core/transformer/moe/router.py tests/unit_tests/transformer/moe/test_aux_loss.py && grep -n "(8, 1, 1).*2, 2, 2" tests/unit_tests/transformer/moe/test_aux_loss.py',
         },
         {
             "case_id": "slime-pr-1959",
@@ -254,7 +254,9 @@ def main() -> int:
             + shlex.quote(
                 sglang_driver
                 + "raise SystemExit(pytest.main(['-q','-rs','--tb=short','--maxfail=1','--noconftest','test/registered/lora/test_virtual_experts_kernels.py','-k',"
-                + repr(" or ".join(static_cases["sglang-pr-27274"]["candidate_test_functions_added"]))
+                + repr(
+                    " or ".join(static_cases["sglang-pr-27274"]["candidate_test_functions_added"])
+                )
                 + "]))"
             ),
         },
@@ -268,7 +270,9 @@ def main() -> int:
             + shlex.quote(
                 sglang_driver
                 + "raise SystemExit(pytest.main(['-q','-rs','--tb=short','--maxfail=1','python/sglang/multimodal_gen/test/unit/realtime/test_lingbot_causal_denoising.py','-k',"
-                + repr(" or ".join(static_cases["sglang-pr-27203"]["candidate_test_functions_added"]))
+                + repr(
+                    " or ".join(static_cases["sglang-pr-27203"]["candidate_test_functions_added"])
+                )
                 + "]))"
             ),
         },

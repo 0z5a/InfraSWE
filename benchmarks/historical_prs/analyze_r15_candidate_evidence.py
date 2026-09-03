@@ -49,8 +49,7 @@ def main() -> int:
         head_syntax_failures = [
             item["path"]
             for item in files
-            if item["head_python_parse"] is not None
-            and not item["head_python_parse"]["ok"]
+            if item["head_python_parse"] is not None and not item["head_python_parse"]["ok"]
         ]
         head_conflict_files = []
         for item in files:

@@ -95,12 +95,12 @@ def main() -> None:
         "candidate_latency_us": statistics.median(wgmma_candidate),
         "candidate_over_reference": statistics.median(wgmma_candidate)
         / statistics.median(wgmma_reference),
-        "ptx_instruction_lines": replays[0]["features"]["wgmma"][
-            "compiler_evidence"
-        ]["ptx_instruction_lines"],
-        "sass_instruction_lines": replays[0]["features"]["wgmma"][
-            "compiler_evidence"
-        ]["sass_instruction_lines"],
+        "ptx_instruction_lines": replays[0]["features"]["wgmma"]["compiler_evidence"][
+            "ptx_instruction_lines"
+        ],
+        "sass_instruction_lines": replays[0]["features"]["wgmma"]["compiler_evidence"][
+            "sass_instruction_lines"
+        ],
     }
     multimem_replays = [item["features"]["multimem"] for item in replays]
     multimem_sass_lines = []
@@ -210,8 +210,7 @@ def main() -> None:
         f"`{multimem['driver_multicast_supported']['value']}`；"
         f"fabric handle：`{multimem['driver_fabric_handle_supported']['value']}`；"
         f"可见 GPU：`{multimem['visible_cuda_device_count']}`。",
-        f"- 状态：`{multimem['status']}`；"
-        f"运行正确性：`{multimem['runtime_execution_passed']}`。",
+        f"- 状态：`{multimem['status']}`；运行正确性：`{multimem['runtime_execution_passed']}`。",
         "- 每个 replay 都为两张 GPU 创建独立物理 backing、加入同一 multicast team，"
         "再从两张卡分别执行 `multimem.ld_reduce` 并校验归约结果。",
         "- 编译后的 SM90 SASS 明确包含 `LDGMC.E.ADD.32.STRONG.SYS`。",

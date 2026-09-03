@@ -22,8 +22,7 @@ def main() -> int:
     nodes = [
         node
         for node in tree.body
-        if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef))
-        and node.name in wanted
+        if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)) and node.name in wanted
     ]
     if {node.name for node in nodes} != wanted:
         raise RuntimeError("exact candidate functions not found")
@@ -40,9 +39,9 @@ def main() -> int:
         module = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(module)
 
-        intermediate = torch.arange(
-            2 * 6 * 4 * 64, device="cuda", dtype=torch.float32
-        ).reshape(2, 6, 4, 64)
+        intermediate = torch.arange(2 * 6 * 4 * 64, device="cuda", dtype=torch.float32).reshape(
+            2, 6, 4, 64
+        )
         pool = torch.full((2, 8, 2, 64), -7.0, device="cuda")
         destination = pool[:, :, 0, :]
         source_rows = torch.tensor([1, 4, 2], device="cuda")
@@ -61,9 +60,7 @@ def main() -> int:
         for generation in range(3):
             assert torch.equal(
                 destination[:, int(destination_blocks[generation])],
-                intermediate[
-                    :, int(source_rows[generation]), int(accepted_steps[generation])
-                ],
+                intermediate[:, int(source_rows[generation]), int(accepted_steps[generation])],
             )
         assert bool(torch.all(pool[:, :, 1, :] == -7))
         assert bool(torch.all(destination[:, [1, 2, 4, 5, 7], :] == -7))

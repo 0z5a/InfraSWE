@@ -61,7 +61,7 @@ def main() -> int:
         return (
             f"cd {shlex.quote(worktree)} && {lfs}git switch --detach "
             f"refs/r18/pr-{int(case['pull_number'])} >/dev/null && "
-            f"test \"$(git rev-parse HEAD)\" = {shlex.quote(case['head_sha'])} && "
+            f'test "$(git rev-parse HEAD)" = {shlex.quote(case["head_sha"])} && '
         )
 
     sglang_env = "env CUDA_VISIBLE_DEVICES=1 PYTHONPATH=/workspace/r18-deps/common:/workspace/r17-deps/opencv:/workspace/r14-shims:python:."
@@ -110,7 +110,9 @@ def main() -> int:
             "purpose": "run the two candidate model-runner LoRA tests with a minimal tests.utils boundary",
             "command": switch("/workspace/r14-run-vllm", "vllm-pr-44450")
             + f"timeout 180s {vllm_env} /venv/main/bin/python /workspace/r15-probes/r15_vllm_pytest_driver.py --stub-tests-utils -- -q -rs --tb=short --maxfail=1 tests/v1/worker/test_gpu_model_runner.py -k "
-            + shlex.quote("test_set_active_mm_loras_builds_tower_and_connector_mappings or test_update_states_new_request"),
+            + shlex.quote(
+                "test_set_active_mm_loras_builds_tower_and_connector_mappings or test_update_states_new_request"
+            ),
         },
         {
             "case_id": "vllm-pr-44518",
@@ -118,7 +120,9 @@ def main() -> int:
             "purpose": "run the five candidate native packed-audio attention contracts with an inert unrelated asset prewarm",
             "command": switch("/workspace/r14-run-vllm", "vllm-pr-44518")
             + f"timeout 180s {vllm_env} /venv/main/bin/python /workspace/r15-probes/r15_vllm_pytest_driver.py --stub-tests-utils -- -q -rs --tb=short --maxfail=1 tests/models/multimodal/processing/test_qwen2_5_omni_audio_tower.py -k "
-            + shlex.quote("test_audio_attention_forwards_varlen_metadata_to_mm_encoder_attention or test_audio_encoder_forward_uses_mm_encoder_attention or test_audio_encoder_load_weights_remaps_hf_qkv_to_packed_qkv or test_audio_encoder_uses_packed_qkv_weight_structure or test_qwen2_5_omni_audio_tower_is_vllm_native"),
+            + shlex.quote(
+                "test_audio_attention_forwards_varlen_metadata_to_mm_encoder_attention or test_audio_encoder_forward_uses_mm_encoder_attention or test_audio_encoder_load_weights_remaps_hf_qkv_to_packed_qkv or test_audio_encoder_uses_packed_qkv_weight_structure or test_qwen2_5_omni_audio_tower_is_vllm_native"
+            ),
         },
         {
             "case_id": "tensorrt_llm-pr-14849",
@@ -154,7 +158,13 @@ def main() -> int:
     lanes = [[spec for spec in commands if spec["lane"] == lane] for lane in (0, 1)]
     with ThreadPoolExecutor(max_workers=2) as executor:
         lane_results = list(executor.map(lambda specs: [execute(spec) for spec in specs], lanes))
-    records = [record for spec in commands for lane in lane_results for record in lane if record["case_id"] == spec["case_id"]]
+    records = [
+        record
+        for spec in commands
+        for lane in lane_results
+        for record in lane
+        if record["case_id"] == spec["case_id"]
+    ]
     material = {
         "schema_version": "0.1",
         "protocol_id": "r18-focused-outcome-free-followups-v0.1",
@@ -169,7 +179,13 @@ def main() -> int:
     }
     payload = {**material, "evidence_sha256": canonical_sha256(material)}
     atomic_write_json(args.output, payload)
-    print(json.dumps({record["case_id"]: record["returncode"] for record in records}, indent=2, sort_keys=True))
+    print(
+        json.dumps(
+            {record["case_id"]: record["returncode"] for record in records},
+            indent=2,
+            sort_keys=True,
+        )
+    )
     print(f"evidence_sha256={payload['evidence_sha256']}")
     return 0
 

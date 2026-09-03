@@ -77,9 +77,7 @@ def main() -> int:
                     "base_path": base_path,
                     "head_path": item["filename"],
                     "patch_sha256": (
-                        canonical_sha256(item["patch"])
-                        if item.get("patch") is not None
-                        else None
+                        canonical_sha256(item["patch"]) if item.get("patch") is not None else None
                     ),
                     "base": None,
                     "head": None,
@@ -188,8 +186,7 @@ def main() -> int:
         },
     )
     redactions = sum(
-        bool(case["body_projection"]["body_sanitization"]["redactions"])
-        for case in bundle_cases
+        bool(case["body_projection"]["body_sanitization"]["redactions"]) for case in bundle_cases
     )
     print(f"case_count={len(bundle_cases)}")
     print(f"sanitized_body_case_count={redactions}")

@@ -170,9 +170,7 @@ def main(*, round_label: str = "R11", selection_name: str = "selection-lock.json
                 "oracle_binary_label": oracle_binary,
                 "oracle_reason": reason,
                 "oracle_evaluation_at": evaluation_at.isoformat(),
-                "oracle_final_head_explicit_human_feedback_count": len(
-                    final_head_feedback
-                ),
+                "oracle_final_head_explicit_human_feedback_count": len(final_head_feedback),
                 "post_lock_feedback_ignored": sum(
                     feedback["created_at"] is not None
                     and _time(feedback["created_at"]) > evaluation_at

@@ -118,9 +118,7 @@ def _is_test_path(path: str) -> bool:
 def _ssh(remote_command: str, timeout: int) -> subprocess.CompletedProcess[str]:
     connection_options = ["-o", f"ControlPath={SSH_CONTROL_PATH}"] if SSH_CONTROL_PATH else []
     known_hosts_options = (
-        ["-o", f"UserKnownHostsFile={SSH_KNOWN_HOSTS_FILE}"]
-        if SSH_KNOWN_HOSTS_FILE
-        else []
+        ["-o", f"UserKnownHostsFile={SSH_KNOWN_HOSTS_FILE}"] if SSH_KNOWN_HOSTS_FILE else []
     )
     return subprocess.run(
         [
@@ -168,9 +166,7 @@ def _executor_metadata() -> dict[str, Any]:
         for capability in capabilities
         if re.fullmatch(r"\d+\.\d+", capability)
     }
-    architecture = override or (
-        next(iter(architectures)) if len(architectures) == 1 else "unknown"
-    )
+    architecture = override or (next(iter(architectures)) if len(architectures) == 1 else "unknown")
     return {
         "accelerator_vendor": "nvidia",
         "executor_architecture": architecture,

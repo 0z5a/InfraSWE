@@ -60,9 +60,7 @@ def _case_collections(payload: dict[str, Any]) -> list[list[dict[str, Any]]]:
             collections.append([item for item in value if isinstance(item, dict)])
     material = payload.get("selection_material")
     if isinstance(material, dict) and isinstance(material.get("cases"), list):
-        collections.append(
-            [item for item in material["cases"] if isinstance(item, dict)]
-        )
+        collections.append([item for item in material["cases"] if isinstance(item, dict)])
     return collections
 
 
@@ -196,17 +194,11 @@ def _risk_family(item: dict[str, Any]) -> str:
 def _has_domain_anchor(item: dict[str, Any], amendment: dict[str, Any]) -> bool:
     rule = amendment["rule"]
     title = item["title"].lower()
-    paths = " ".join(
-        path for path in item["paths"] if not _is_test_path(path)
-    ).lower()
+    paths = " ".join(path for path in item["paths"] if not _is_test_path(path)).lower()
     if any(term in title or term in paths for term in rule["direct_anchor_terms"]):
         return True
-    title_has_topology = any(
-        term in title for term in rule["coupled_topology_title_terms"]
-    )
-    path_has_runtime = any(
-        term in paths for term in rule["coupled_runtime_path_terms"]
-    )
+    title_has_topology = any(term in title for term in rule["coupled_topology_title_terms"])
+    path_has_runtime = any(term in paths for term in rule["coupled_runtime_path_terms"])
     return title_has_topology and path_has_runtime
 
 
@@ -217,8 +209,10 @@ def _eligibility_reasons(
     paths = item["paths"]
     changed_lines = int(item["additions"]) + int(item["deletions"])
     reasons: list[str] = []
-    if not int(rules["changed_files_min"]) <= int(item["changed_files"]) <= int(
-        rules["changed_files_max"]
+    if (
+        not int(rules["changed_files_min"])
+        <= int(item["changed_files"])
+        <= int(rules["changed_files_max"])
     ):
         reasons.append("changed-file-count-out-of-range")
     if changed_lines > int(rules["changed_lines_max"]):
@@ -278,8 +272,7 @@ def _select_project(
             (
                 item
                 for item in ranked
-                if int(item["number"]) not in selected_numbers
-                and _risk_family(item) == family
+                if int(item["number"]) not in selected_numbers and _risk_family(item) == family
             ),
             None,
         )
@@ -389,16 +382,13 @@ def main() -> int:
                 family: sum(item["risk_family"] == family for item in selected)
                 for family in policy["risk_families_in_order"]
             },
-            "selected_recent_count": sum(
-                item["temporal_band"] == "recent" for item in selected
-            ),
+            "selected_recent_count": sum(item["temporal_band"] == "recent" for item in selected),
             "excluded_identity_count": sum(
                 "previously-scored" in item["exclusion_reasons"] for item in exclusions
             ),
         }
         query_strings = [
-            item["query"]
-            for item in discovery["discoveries"][project_name]["queries"]
+            item["query"] for item in discovery["discoveries"][project_name]["queries"]
         ]
         for item in selected:
             chosen.append(
@@ -438,9 +428,7 @@ def main() -> int:
             amendment["amendment_sha256"] if amendment is not None else None
         ),
         "supersedes_selection_lock_sha256": (
-            amendment["superseded_selection_lock_sha256"]
-            if amendment is not None
-            else None
+            amendment["superseded_selection_lock_sha256"] if amendment is not None else None
         ),
         "prior_lock_bindings": prior_bindings,
         "prior_identity_count": len(prior),

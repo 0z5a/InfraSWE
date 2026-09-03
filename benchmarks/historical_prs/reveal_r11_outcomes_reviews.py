@@ -135,7 +135,12 @@ def main(*, round_label: str = "R11") -> int:
         raise SystemExit(f"{round_label} machine lock is not bound to test plan")
     selected = {item["case_id"]: item for item in selection["selection_material"]["cases"]}
     planned = {item["case_id"]: item for item in plan["cases"]}
-    if locks.keys() != selected.keys() or locks.keys() != planned.keys():
+    expected_case_ids = set(lock_payload.get("selected_case_ids", selected))
+    if (
+        locks.keys() != expected_case_ids
+        or not expected_case_ids <= selected.keys()
+        or not expected_case_ids <= planned.keys()
+    ):
         raise SystemExit(f"{round_label} selection, plan, and judgment case sets differ")
 
     cases: list[dict[str, Any]] = []

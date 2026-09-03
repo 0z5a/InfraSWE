@@ -1,0 +1,62 @@
+{
+  "evidence_sha256": "sha256:4b2171dc7e661bca0ccea85f2fad06c847607dadb757a3b292dc1dfe0dd43333",
+  "finished_at": "2026-09-03T09:45:49.951044+00:00",
+  "noconftest_projects": [],
+  "outcome_review_ci_fields_requested": false,
+  "project_test_timeout_seconds": {},
+  "protocol_id": "r25-exact-candidate-upstream-tests-v0.1",
+  "records": [
+    {
+      "case_id": "sglang-pr-27313",
+      "duration_seconds": 11.198232624912634,
+      "head_sha": "4bfe349365bac77536f2a8dddf55a37e73548997",
+      "output_sha256": "sha256:c9f260e1b61dca5712513ea0f0d51a4e292914e58216e41223b10474048c2f08",
+      "output_tail": ".....                                                               [100%]\n5 passed, 63 deselected, 5 subtests passed in 6.81s\nWelcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nPrevious HEAD position was e946a24a63 Clean up DiT layerwise offload naming\nHEAD is now at 4bfe349365 Fix CP base lint annotations\n",
+      "ref": "refs/r25/pr-27313",
+      "remote_command": "cd /workspace/r14-run-sglang && GIT_NO_LAZY_FETCH=1 GIT_TERMINAL_PROMPT=0 git switch --detach refs/r25/pr-27313 >/dev/null && test \"$(git rev-parse HEAD)\" = 4bfe349365bac77536f2a8dddf55a37e73548997 && timeout 60s env PYTHONDONTWRITEBYTECODE=1 CUDA_VISIBLE_DEVICES=1 PYTHONPATH=/workspace/r18-deps/common:/workspace/r17-deps/opencv:/workspace/r14-shims:python:. PATH=/venv/main/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin /venv/main/bin/python -m pytest -q -rs --tb=short --maxfail=1 test/registered/cp/test_cp_strategy_unit.py test/registered/unit/server_args/test_server_args.py -k 'test_context_parallel_handler_initializes_cp_strategy or test_get_cp_strategy_is_initialized_under_cp_v1_and_cp_v2 or test_init_cp_strategy_binds_zigzag_strategy or test_registered_cp_legacy_args_map_to_unified_strategy or test_strategy_kind_maps_cli_values'",
+      "returncode": 0,
+      "status": "completed",
+      "summary_lines": [
+        "5 passed, 63 deselected, 5 subtests passed in 6.81s"
+      ],
+      "test_names": [
+        "test_context_parallel_handler_initializes_cp_strategy",
+        "test_get_cp_strategy_is_initialized_under_cp_v1_and_cp_v2",
+        "test_init_cp_strategy_binds_zigzag_strategy",
+        "test_registered_cp_legacy_args_map_to_unified_strategy",
+        "test_strategy_kind_maps_cli_values"
+      ],
+      "test_paths": [
+        "test/registered/cp/test_cp_strategy_unit.py",
+        "test/registered/unit/server_args/test_server_args.py"
+      ],
+      "time_budget_seconds": 60
+    }
+  ],
+  "remote": {
+    "accelerator_vendor": "nvidia",
+    "compute_capabilities": [
+      "8.0",
+      "8.0"
+    ],
+    "executor_architecture": "sm80",
+    "gpu_lanes": [
+      0,
+      1
+    ],
+    "gpu_models": [
+      "NVIDIA A100-SXM4-40GB",
+      "NVIDIA A100-SXM4-40GB"
+    ],
+    "host": "root@194.228.55.129",
+    "port": 31396,
+    "query_returncode": 0
+  },
+  "schema_version": "0.1",
+  "selection_lock_sha256": "sha256:0b7669db93f687afaf1e3a72590d480c5d60eeb1f10d450f40296697b26dab14",
+  "started_at": "2026-09-03T09:45:36.333283+00:00",
+  "static_evidence_sha256": "sha256:4d005a1440b91e8ec883b13954f81ad0431efa807673e3916c614fb827a705c0",
+  "test_plan_sha256": "sha256:a5d7043240d3986a0e8e1607a6e762edd733de48f589c957ea02117a79816c5c",
+  "test_timeout_seconds": 60,
+  "timeout_disposition": "abandon-case-neutral-and-continue"
+}

@@ -104,11 +104,21 @@ def parse_time(value: str) -> datetime:
     return datetime.fromisoformat(value.replace("Z", "+00:00"))
 
 
+def review_state_counts(reviews: list[dict[str, Any]]) -> dict[str, int]:
+    states = ("APPROVED", "CHANGES_REQUESTED", "COMMENTED", "DISMISSED", "PENDING")
+    return {
+        state: sum(str(item.get("state") or "UNKNOWN").upper() == state for item in reviews)
+        for state in states
+    }
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--round", required=True)
     parser.add_argument("--selection-lock", type=Path, required=True)
     parser.add_argument("--test-plan", type=Path, required=True)
+    parser.add_argument("--project", action="append", default=[])
+    parser.add_argument("--all-cases", action="store_true")
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
 
@@ -125,9 +135,18 @@ def main() -> int:
     if plan.get("review_activity_text_requested") is not False:
         raise SystemExit("test plan unexpectedly requests review text")
 
+    selected_cases = selection["selection_material"]["cases"]
+    known_projects = {case["project"] for case in selected_cases}
+    requested_projects = set(args.project)
+    unknown_projects = requested_projects - known_projects
+    if unknown_projects:
+        raise SystemExit(f"unknown --project values: {sorted(unknown_projects)}")
+
     cases: list[dict[str, Any]] = []
-    for case in selection["selection_material"]["cases"]:
-        if case["temporal_band"] != "recent":
+    for case in selected_cases:
+        if requested_projects and case["project"] not in requested_projects:
+            continue
+        if not args.all_cases and case["temporal_band"] != "recent":
             continue
         owner, name = case["repository"].split("/", 1)
         identity_payload = api(
@@ -185,6 +204,18 @@ def main() -> int:
                 or event["author_association"] in {"COLLABORATOR", "MEMBER", "OWNER"}
             )
         ]
+        human_non_author_reviews = [
+            item
+            for item in reviews
+            if not is_bot(item)
+            and str((item.get("user") or {}).get("login") or "unknown") != author
+        ]
+        final_head_human_non_author_reviews = [
+            item
+            for item in human_non_author_reviews
+            if item.get("commit_id") == case["head_sha"]
+            or item.get("original_commit_id") == case["head_sha"]
+        ]
         head_time = parse_time(head_committed_at)
         final_head = [
             event
@@ -206,6 +237,13 @@ def main() -> int:
                 "pr_author_association": str(
                     pull.get("authorAssociation") or "UNKNOWN"
                 ),
+                "human_non_author_review_count": len(human_non_author_reviews),
+                "human_non_author_review_state_counts": review_state_counts(
+                    human_non_author_reviews
+                ),
+                "final_head_human_non_author_review_state_counts": (
+                    review_state_counts(final_head_human_non_author_reviews)
+                ),
                 "projected_events": events,
                 "explicit_human_non_author_activity_count": len(explicit),
                 "final_head_explicit_human_non_author_activity_count": len(final_head),
@@ -220,10 +258,12 @@ def main() -> int:
         "selection_lock_sha256": selection["selection_lock_sha256"],
         "test_plan_sha256": plan["test_plan_sha256"],
         "acquired_at": datetime.now(UTC).isoformat(),
-        "recent_cases_only": True,
+        "recent_cases_only": not args.all_cases,
+        "case_filter_projects": sorted(requested_projects),
         "state_or_merge_fields_requested": False,
         "ci_or_label_fields_requested": False,
         "review_or_comment_text_stored": False,
+        "review_state_metadata_stored": True,
         "raw_api_responses_stored": False,
         "judgment_consumes_derived_activity_only": True,
         "cases": cases,

@@ -23,10 +23,11 @@ REMOTE = os.environ.get("INFRASWE_SSH_REMOTE", "root@38.49.42.120")
 PORT = int(os.environ.get("INFRASWE_SSH_PORT", "54270"))
 IDENTITY = os.environ.get("INFRASWE_SSH_IDENTITY", "~/.ssh/id_ed25519_winpc")
 SSH_CONTROL_PATH = os.environ.get("INFRASWE_SSH_CONTROL_PATH")
+SSH_KNOWN_HOSTS_FILE = os.environ.get("INFRASWE_SSH_KNOWN_HOSTS_FILE")
 PROJECT_RUNTIME = {
     "vllm": (
         "/workspace/r14-run-vllm",
-        "/venv/main/bin/python",
+        os.environ.get("INFRASWE_VLLM_PYTHON", "/venv/main/bin/python"),
         "/workspace/r17-deps/vllm:/workspace/r18-deps/common:/workspace/r15-vllm-shim:/workspace/r14-shims:.",
         "0",
     ),
@@ -36,10 +37,15 @@ PROJECT_RUNTIME = {
         "/workspace/r18-deps/common:/workspace/r17-deps/opencv:/workspace/r14-shims:python:.",
         "1",
     ),
-    "flashinfer": ("/workspace/r14-run-flashinfer", "/venv/main/bin/python", ".", "0"),
+    "flashinfer": (
+        "/workspace/r14-run-flashinfer",
+        os.environ.get("INFRASWE_FLASHINFER_PYTHON", "/venv/main/bin/python"),
+        ".",
+        "0",
+    ),
     "tensorrt-llm": (
         "/workspace/r19-tensorrt-wt",
-        "/venv/main/bin/python",
+        os.environ.get("INFRASWE_TENSORRT_LLM_PYTHON", "/venv/main/bin/python"),
         "/workspace/r18-deps/common:/workspace/r17-deps/tensorrt:.:tests/integration",
         "1",
     ),
@@ -111,6 +117,11 @@ def _is_test_path(path: str) -> bool:
 
 def _ssh(remote_command: str, timeout: int) -> subprocess.CompletedProcess[str]:
     connection_options = ["-o", f"ControlPath={SSH_CONTROL_PATH}"] if SSH_CONTROL_PATH else []
+    known_hosts_options = (
+        ["-o", f"UserKnownHostsFile={SSH_KNOWN_HOSTS_FILE}"]
+        if SSH_KNOWN_HOSTS_FILE
+        else []
+    )
     return subprocess.run(
         [
             "ssh",
@@ -119,10 +130,15 @@ def _ssh(remote_command: str, timeout: int) -> subprocess.CompletedProcess[str]:
             "-i",
             str(Path(IDENTITY).expanduser()),
             *connection_options,
+            *known_hosts_options,
             "-o",
             "BatchMode=yes",
             "-o",
             "IdentitiesOnly=yes",
+            "-o",
+            "ServerAliveInterval=3",
+            "-o",
+            "ServerAliveCountMax=10",
             REMOTE,
             remote_command,
         ],
@@ -131,6 +147,37 @@ def _ssh(remote_command: str, timeout: int) -> subprocess.CompletedProcess[str]:
         text=True,
         timeout=timeout,
     )
+
+
+def _executor_metadata() -> dict[str, Any]:
+    override = os.environ.get("INFRASWE_EXECUTOR_ARCHITECTURE")
+    query = _ssh(
+        "nvidia-smi --query-gpu=name,compute_cap --format=csv,noheader",
+        timeout=15,
+    )
+    rows = [line.strip() for line in query.stdout.splitlines() if line.strip()]
+    models: list[str] = []
+    capabilities: list[str] = []
+    for row in rows:
+        fields = [field.strip() for field in row.split(",", maxsplit=1)]
+        if len(fields) == 2:
+            models.append(fields[0])
+            capabilities.append(fields[1])
+    architectures = {
+        "sm" + capability.replace(".", "")
+        for capability in capabilities
+        if re.fullmatch(r"\d+\.\d+", capability)
+    }
+    architecture = override or (
+        next(iter(architectures)) if len(architectures) == 1 else "unknown"
+    )
+    return {
+        "accelerator_vendor": "nvidia",
+        "executor_architecture": architecture,
+        "gpu_models": models,
+        "compute_capabilities": capabilities,
+        "query_returncode": query.returncode,
+    }
 
 
 def _build_command(
@@ -142,8 +189,9 @@ def _build_command(
     noconftest_projects: set[str],
 ) -> tuple[str | None, list[str], list[str]]:
     worktree, python, pythonpath, gpu = PROJECT_RUNTIME[case["project"]]
-    if case["project"] == "sglang" and case.get("temporal_band") == "recent":
-        python = os.environ.get("INFRASWE_SGLANG_RECENT_PYTHON", python)
+    if case.get("temporal_band") == "recent":
+        project_key = case["project"].upper().replace("-", "_")
+        python = os.environ.get(f"INFRASWE_{project_key}_RECENT_PYTHON", python)
     test_paths = [path for path in case["paths"] if _is_test_path(path)]
     test_names = static_case["candidate_test_functions_added"]
     if not test_paths:
@@ -173,7 +221,10 @@ def _build_command(
         arguments.extend(["-k", " or ".join(test_names)])
     test_command = " ".join(shlex.quote(item) for item in arguments)
     expected_head = shlex.quote(case["head_sha"])
-    switch_prefix = "GIT_LFS_SKIP_SMUDGE=1 " if case["project"] == "tensorrt-llm" else ""
+    switch_environment = ["GIT_NO_LAZY_FETCH=1", "GIT_TERMINAL_PROMPT=0"]
+    if case["project"] == "tensorrt-llm":
+        switch_environment.append("GIT_LFS_SKIP_SMUDGE=1")
+    switch_prefix = " ".join(switch_environment) + " "
     command = (
         f"cd {shlex.quote(worktree)} && "
         f"{switch_prefix}git switch --detach "
@@ -313,6 +364,7 @@ def main(round_label: str = "R15") -> int:
         ]
 
     started_at = datetime.now(UTC).isoformat()
+    executor_metadata = _executor_metadata()
     indexed_records: list[tuple[int, dict[str, Any]]] = []
     with ThreadPoolExecutor(max_workers=2) as executor:
         futures = [executor.submit(run_lane, lanes[lane]) for lane in (0, 1)]
@@ -327,7 +379,12 @@ def main(round_label: str = "R15") -> int:
         "static_evidence_sha256": static["evidence_sha256"],
         "started_at": started_at,
         "finished_at": datetime.now(UTC).isoformat(),
-        "remote": {"host": REMOTE, "port": PORT, "gpu_lanes": [0, 1]},
+        "remote": {
+            "host": REMOTE,
+            "port": PORT,
+            "gpu_lanes": [0, 1],
+            **executor_metadata,
+        },
         "test_timeout_seconds": args.test_timeout,
         "project_test_timeout_seconds": project_timeouts,
         "timeout_disposition": "abandon-case-neutral-and-continue",

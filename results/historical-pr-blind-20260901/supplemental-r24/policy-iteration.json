@@ -1,0 +1,192 @@
+{
+  "derived_after_source_reveal": true,
+  "generated_at": "2026-09-03T09:03:27.938095+00:00",
+  "iteration_sha256": "sha256:dde6cd465a34634e6b05e54056f9cf33945ddb0caab2cfe55c1dcb58d62c1246",
+  "known_limitations": [
+    "Approval state is a strong but imperfect merge-readiness proxy; R25 remains a prospective validation cohort.",
+    "The review-state training artifact was acquired after R24 reveal, filtered to each pre-lock timestamp, and cannot change the sealed R24 locks.",
+    "Terminal PR state and merge outcome remain unavailable during judgment."
+  ],
+  "next_group": {
+    "case_count": 75,
+    "inference_project_allocation": {
+      "flashinfer": 25,
+      "sglang": 25,
+      "vllm": 25
+    },
+    "round": "R25",
+    "tensorrt_llm_deferred_to_final_tail_group": true
+  },
+  "next_round": "R25",
+  "observed_metrics": {
+    "binary_direction_matches": 61,
+    "cases": 75,
+    "exact_label_matches": 61,
+    "legacy_exact_label_matches": 26,
+    "machine_check_precision": null,
+    "machine_reject_precision": 0.9459459459459459,
+    "merged_cases": 28,
+    "merged_machine_accepts": 26,
+    "oracle_decisions": {
+      "accept": 28,
+      "check": 0,
+      "reject": 47
+    },
+    "same_cohort_exact_accuracy_gain": 0.4666666666666667
+  },
+  "prospective_policy_id": "inference-contract-disposition-cascade-v0.1-r25",
+  "prospective_rules": [
+    {
+      "id": "R25-TIME-BUDGET-GATE",
+      "rule": "Abandon normal PR tests after 60 seconds; timeout remains a neutral bounded gap."
+    },
+    {
+      "id": "R25-TEXT-FREE-REVIEW-STATE-PROJECTION",
+      "rule": "Acquire non-author review states just before judgment while keeping review text, PR state, merge outcome, CI, and labels hidden."
+    },
+    {
+      "id": "R25-MATURE-APPROVAL-RECEIPT",
+      "rule": "For an exact-source-complete mature PR without an explicit draft/WIP veto, any pre-lock non-author approval is an accept receipt."
+    },
+    {
+      "id": "R25-MATURE-REVIEW-WITHOUT-APPROVAL-REJECT",
+      "rule": "For an exact-source-complete mature PR with review records but no non-author approval, predict reject rather than treating comments alone as merge readiness."
+    },
+    {
+      "id": "R25-NO-REVIEW-DISPOSITION-CASCADE",
+      "rule": "When no review record exists, retain the affiliation and precedent cascade, including the SGLang maintainer self-merge workflow."
+    },
+    {
+      "id": "R25-CHECK-REMAINS-STRICT",
+      "rule": "Use check only for a <=7-day PR with substantive named non-author final-head activity; never use check for mature ambiguity."
+    },
+    {
+      "id": "R25-RECENT-MAINTAINER-SMALL-PASS",
+      "rule": "A recent maintainer-associated PR without active review may accept on an exact pass only when its total diff is at most 120 lines."
+    },
+    {
+      "id": "R25-EXACT-SIDE-SOURCE-INTEGRITY",
+      "rule": "Judge source integrity from the exact required base/head sides; a missing rendered patch alone, including an empty added file, is neutral."
+    },
+    {
+      "id": "R25-EXPLICIT-DRAFT-WIP-VETO",
+      "rule": "Treat explicit title-level draft/WIP markers as readiness vetoes."
+    }
+  ],
+  "protocol_id": "historical-pr-iterative-policy-r24-to-r25-nontrt-v0.1",
+  "retrospective_policy_projection": {
+    "cases": 75,
+    "changed_cases": [
+      {
+        "case_id": "flashinfer-pr-2603",
+        "from": "accept_with_scope",
+        "prospective_reason": "MATURE_REVIEW_WITHOUT_APPROVAL",
+        "source_reason": "MATURE_CONTRACT_CLOSED",
+        "to": "reject"
+      },
+      {
+        "case_id": "flashinfer-pr-2598",
+        "from": "accept_with_scope",
+        "prospective_reason": "MATURE_REVIEW_WITHOUT_APPROVAL",
+        "source_reason": "MATURE_CONTRACT_CLOSED",
+        "to": "reject"
+      },
+      {
+        "case_id": "flashinfer-pr-2185",
+        "from": "accept_with_scope",
+        "prospective_reason": "MATURE_REVIEW_WITHOUT_APPROVAL",
+        "source_reason": "MATURE_CONTRACT_CLOSED",
+        "to": "reject"
+      },
+      {
+        "case_id": "sglang-pr-37602",
+        "from": "accept_with_scope",
+        "prospective_reason": "RECENT_MAINTAINER_PASS_ABOVE_SMALL_CHANGE_BOUND",
+        "source_reason": "RECENT_MAINTAINER_EXACT_TEST_PASS",
+        "to": "reject"
+      },
+      {
+        "case_id": "sglang-pr-26274",
+        "from": "accept_with_scope",
+        "prospective_reason": "MATURE_REVIEW_WITHOUT_APPROVAL",
+        "source_reason": "MATURE_CONTRACT_CLOSED",
+        "to": "reject"
+      },
+      {
+        "case_id": "sglang-pr-26299",
+        "from": "reject",
+        "prospective_reason": "MATURE_NON_AUTHOR_APPROVAL_RECEIPT",
+        "source_reason": "MATURE_UNAFFILIATED_AUTHOR",
+        "to": "accept_with_scope"
+      },
+      {
+        "case_id": "vllm-pr-43471",
+        "from": "accept_with_scope",
+        "prospective_reason": "MATURE_REVIEW_WITHOUT_APPROVAL",
+        "source_reason": "MATURE_CONTRACT_CLOSED",
+        "to": "reject"
+      },
+      {
+        "case_id": "vllm-pr-43567",
+        "from": "accept_with_scope",
+        "prospective_reason": "MATURE_REVIEW_WITHOUT_APPROVAL",
+        "source_reason": "MATURE_CONTRACT_CLOSED",
+        "to": "reject"
+      },
+      {
+        "case_id": "vllm-pr-43718",
+        "from": "accept_with_scope",
+        "prospective_reason": "EXPLICIT_TITLE_READINESS_VETO",
+        "source_reason": "MATURE_CONTRACT_CLOSED",
+        "to": "reject"
+      },
+      {
+        "case_id": "vllm-pr-43604",
+        "from": "accept_with_scope",
+        "prospective_reason": "MATURE_REVIEW_WITHOUT_APPROVAL",
+        "source_reason": "MATURE_CONTRACT_CLOSED",
+        "to": "reject"
+      },
+      {
+        "case_id": "vllm-pr-43556",
+        "from": "reject",
+        "prospective_reason": "MATURE_NON_AUTHOR_APPROVAL_RECEIPT",
+        "source_reason": "SOURCE_INTEGRITY_FAILURE",
+        "to": "accept_with_scope"
+      }
+    ],
+    "check_correct": 0,
+    "check_precision": null,
+    "check_predictions": 0,
+    "exact_accuracy": 0.96,
+    "exact_label_matches": 72,
+    "gain_over_frozen": 11,
+    "gain_over_same_cohort_legacy": 46,
+    "merged_cases": 28,
+    "merged_machine_accepts": 28,
+    "not_a_rescore": true,
+    "purpose": "Validate general R25 rules; sealed R24 judgments remain unchanged.",
+    "reject_correct": 44,
+    "reject_precision": 1.0,
+    "reject_predictions": 44
+  },
+  "retrospective_source_locks_changed": false,
+  "review_activity_projection_allowed": true,
+  "review_state_metadata_acquired_after_reveal_for_learning_only": true,
+  "review_state_metadata_projection_allowed": true,
+  "schema_version": "0.1",
+  "source_activity_projection_sha256": "sha256:058b2feda7fbcb80b7dbb5db856c926122da345963533c545a13aca64cfc3b4a",
+  "source_audit_sha256": "sha256:64315ba626fff52ec8afa5a0936f95088f564ceb359322402c0ab084d9af1596",
+  "source_lock_set_sha256": "sha256:3bff7a773fcb42212befa9a0e79eb93d577e91c9248669ea9aea720806e2b8a3",
+  "source_review_state_metadata_sha256": "sha256:6d1d08f4b6876801acea4c0706201d4538c1132633d909f4e51d7323f54dcbf0",
+  "source_round": "R24",
+  "source_selection_lock_sha256": "sha256:d7910710b519857812ee08f6736582c59fd4beb4dca6dca878f2f0f3d7d3a82a",
+  "workload_ledger": {
+    "completed_full_groups": 200,
+    "completed_nontrt_tail_cases": 150,
+    "completed_total_cases": 350,
+    "deferred_tensorrt_llm_tail_cases_after_r25": 75,
+    "next_nontrt_group_cases": 75,
+    "requested_inference_prs": 500
+  }
+}

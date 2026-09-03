@@ -15,7 +15,7 @@ from infraswe.history.blind import canonical_sha256
 from infraswe.io import atomic_write_json
 
 
-def main(round_label: str = "R17") -> int:
+def main(round_label: str = "R17", mature_eligible_multiplier: int = 8) -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--policy", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
@@ -71,7 +71,7 @@ def main(round_label: str = "R17") -> int:
             band="mature",
             start=window["start"][:10],
             end=window["mature_end"][:10],
-            eligible_target=max(40, int(project["count"]) * 8),
+            eligible_target=max(40, int(project["count"]) * mature_eligible_multiplier),
             page_limit=20,
         )
         by_number = {item["number"]: item for item in mature}
@@ -98,6 +98,12 @@ def main(round_label: str = "R17") -> int:
         "candidate_body_requested": False,
         "diff_content_requested": False,
         "excluded_resolution_gray_zone_queried": False,
+        "discovery_acquisition_policy": {
+            "mature_eligible_multiplier": mature_eligible_multiplier,
+            "mature_page_limit": 20,
+            "recent_eligible_multiplier": 2,
+            "recent_page_limit": 8,
+        },
         "discoveries": discoveries,
     }
     payload = {

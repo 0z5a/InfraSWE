@@ -1,0 +1,269 @@
+{
+  "derived_after_fast_subcohort_reveal": true,
+  "fast_subcohort_locks_changed": false,
+  "generated_at": "2026-09-03T08:06:07.333052+00:00",
+  "iteration_sha256": "sha256:42e3596a74c4c9bbd7c35c4d9a1b60ef4d8a6059e364c4bba0ccb246d2837446",
+  "observed_metrics": {
+    "binary_direction_matches": 39,
+    "cases": 75,
+    "exact_label_matches": 39,
+    "legacy_exact_label_matches": 35,
+    "machine_check_precision": null,
+    "machine_reject_precision": 0.8,
+    "merged_cases": 36,
+    "merged_machine_accepts": 35,
+    "oracle_decisions": {
+      "accept": 36,
+      "check": 0,
+      "reject": 39
+    },
+    "same_cohort_exact_accuracy_gain": 0.053333333333333344
+  },
+  "prospective_policy_id": "inference-contract-disposition-cascade-v0.1-r23-trt",
+  "prospective_rules": [
+    {
+      "id": "R23-TRT-MATURE-NONE-REJECT",
+      "rule": "For a mature PR, an outcome-free authorAssociation of NONE predicts reject; terminal state, merge outcome, CI, labels, and text remain hidden."
+    },
+    {
+      "id": "R23-TRT-MATURE-NO-HUMAN-REVIEW",
+      "rule": "For a mature PR with zero non-author human review records, predict reject, except SGLang maintainer-associated self-merge workflows."
+    },
+    {
+      "id": "R23-TRT-ANCILLARY-PATCH-GAP-NEUTRAL",
+      "rule": "A missing patch for non-code ancillary metadata alone is not source integrity failure; code and test patch gaps remain vetoes."
+    },
+    {
+      "id": "R23-TRT-CHECK-REMAINS-STRICT",
+      "rule": "Use check only for a recent PR with substantive named non-author final-head activity; never manufacture check for mature ambiguity."
+    }
+  ],
+  "protocol_id": "historical-pr-interim-policy-r23-fast-to-r23-trt-v0.1",
+  "retrospective_policy_projection": {
+    "cases": 75,
+    "changed_cases": [
+      {
+        "case_id": "flashinfer-pr-2345",
+        "from": "accept_with_scope",
+        "prospective_reason": "MATURE_WITHOUT_HUMAN_REVIEW",
+        "source_reason": "MATURE_CONTRACT_CLOSED",
+        "to": "reject"
+      },
+      {
+        "case_id": "flashinfer-pr-2729",
+        "from": "accept_with_scope",
+        "prospective_reason": "MATURE_WITHOUT_HUMAN_REVIEW",
+        "source_reason": "MATURE_CONTRACT_CLOSED",
+        "to": "reject"
+      },
+      {
+        "case_id": "flashinfer-pr-2583",
+        "from": "accept_with_scope",
+        "prospective_reason": "MATURE_WITHOUT_HUMAN_REVIEW",
+        "source_reason": "MATURE_CONTRACT_CLOSED",
+        "to": "reject"
+      },
+      {
+        "case_id": "flashinfer-pr-2582",
+        "from": "accept_with_scope",
+        "prospective_reason": "MATURE_WITHOUT_HUMAN_REVIEW",
+        "source_reason": "MATURE_CONTRACT_CLOSED",
+        "to": "reject"
+      },
+      {
+        "case_id": "flashinfer-pr-2455",
+        "from": "accept_with_scope",
+        "prospective_reason": "MATURE_WITHOUT_HUMAN_REVIEW",
+        "source_reason": "MATURE_CONTRACT_CLOSED",
+        "to": "reject"
+      },
+      {
+        "case_id": "flashinfer-pr-2175",
+        "from": "reject",
+        "prospective_reason": "ANCILLARY_PATCH_GAP_NEUTRALIZED",
+        "source_reason": "SOURCE_INTEGRITY_FAILURE",
+        "to": "accept_with_scope"
+      },
+      {
+        "case_id": "sglang-pr-26568",
+        "from": "accept_with_scope",
+        "prospective_reason": "MATURE_UNAFFILIATED_AUTHOR",
+        "source_reason": "MATURE_CONTRACT_CLOSED",
+        "to": "reject"
+      },
+      {
+        "case_id": "sglang-pr-26585",
+        "from": "accept_with_scope",
+        "prospective_reason": "MATURE_UNAFFILIATED_AUTHOR",
+        "source_reason": "MATURE_CONTRACT_CLOSED",
+        "to": "reject"
+      },
+      {
+        "case_id": "sglang-pr-26557",
+        "from": "accept_with_scope",
+        "prospective_reason": "MATURE_UNAFFILIATED_AUTHOR",
+        "source_reason": "MATURE_CONTRACT_CLOSED",
+        "to": "reject"
+      },
+      {
+        "case_id": "sglang-pr-26763",
+        "from": "accept_with_scope",
+        "prospective_reason": "MATURE_UNAFFILIATED_AUTHOR",
+        "source_reason": "MATURE_CONTRACT_CLOSED",
+        "to": "reject"
+      },
+      {
+        "case_id": "sglang-pr-26752",
+        "from": "accept_with_scope",
+        "prospective_reason": "MATURE_UNAFFILIATED_AUTHOR",
+        "source_reason": "MATURE_CONTRACT_CLOSED",
+        "to": "reject"
+      },
+      {
+        "case_id": "sglang-pr-26543",
+        "from": "accept_with_scope",
+        "prospective_reason": "MATURE_UNAFFILIATED_AUTHOR",
+        "source_reason": "MATURE_CONTRACT_CLOSED",
+        "to": "reject"
+      },
+      {
+        "case_id": "sglang-pr-26594",
+        "from": "accept_with_scope",
+        "prospective_reason": "MATURE_WITHOUT_HUMAN_REVIEW",
+        "source_reason": "MATURE_CONTRACT_CLOSED",
+        "to": "reject"
+      },
+      {
+        "case_id": "sglang-pr-26776",
+        "from": "accept_with_scope",
+        "prospective_reason": "MATURE_WITHOUT_HUMAN_REVIEW",
+        "source_reason": "MATURE_CONTRACT_CLOSED",
+        "to": "reject"
+      },
+      {
+        "case_id": "vllm-pr-43822",
+        "from": "accept_with_scope",
+        "prospective_reason": "MATURE_WITHOUT_HUMAN_REVIEW",
+        "source_reason": "MATURE_CONTRACT_CLOSED",
+        "to": "reject"
+      },
+      {
+        "case_id": "vllm-pr-43882",
+        "from": "accept_with_scope",
+        "prospective_reason": "MATURE_UNAFFILIATED_AUTHOR",
+        "source_reason": "MATURE_CONTRACT_CLOSED",
+        "to": "reject"
+      },
+      {
+        "case_id": "vllm-pr-43796",
+        "from": "accept_with_scope",
+        "prospective_reason": "MATURE_UNAFFILIATED_AUTHOR",
+        "source_reason": "MATURE_CONTRACT_CLOSED",
+        "to": "reject"
+      },
+      {
+        "case_id": "vllm-pr-43793",
+        "from": "accept_with_scope",
+        "prospective_reason": "MATURE_WITHOUT_HUMAN_REVIEW",
+        "source_reason": "MATURE_CONTRACT_CLOSED",
+        "to": "reject"
+      },
+      {
+        "case_id": "vllm-pr-43741",
+        "from": "accept_with_scope",
+        "prospective_reason": "MATURE_UNAFFILIATED_AUTHOR",
+        "source_reason": "MATURE_CONTRACT_CLOSED",
+        "to": "reject"
+      },
+      {
+        "case_id": "vllm-pr-43687",
+        "from": "accept_with_scope",
+        "prospective_reason": "MATURE_WITHOUT_HUMAN_REVIEW",
+        "source_reason": "MATURE_CONTRACT_CLOSED",
+        "to": "reject"
+      },
+      {
+        "case_id": "vllm-pr-43970",
+        "from": "accept_with_scope",
+        "prospective_reason": "MATURE_UNAFFILIATED_AUTHOR",
+        "source_reason": "MATURE_CONTRACT_CLOSED",
+        "to": "reject"
+      },
+      {
+        "case_id": "vllm-pr-43966",
+        "from": "accept_with_scope",
+        "prospective_reason": "MATURE_UNAFFILIATED_AUTHOR",
+        "source_reason": "MATURE_CONTRACT_CLOSED",
+        "to": "reject"
+      },
+      {
+        "case_id": "vllm-pr-43878",
+        "from": "accept_with_scope",
+        "prospective_reason": "MATURE_WITHOUT_HUMAN_REVIEW",
+        "source_reason": "MATURE_CONTRACT_CLOSED",
+        "to": "reject"
+      },
+      {
+        "case_id": "vllm-pr-43832",
+        "from": "accept_with_scope",
+        "prospective_reason": "MATURE_UNAFFILIATED_AUTHOR",
+        "source_reason": "MATURE_CONTRACT_CLOSED",
+        "to": "reject"
+      },
+      {
+        "case_id": "vllm-pr-43776",
+        "from": "accept_with_scope",
+        "prospective_reason": "MATURE_UNAFFILIATED_AUTHOR",
+        "source_reason": "MATURE_CONTRACT_CLOSED",
+        "to": "reject"
+      },
+      {
+        "case_id": "vllm-pr-43772",
+        "from": "accept_with_scope",
+        "prospective_reason": "MATURE_UNAFFILIATED_AUTHOR",
+        "source_reason": "MATURE_CONTRACT_CLOSED",
+        "to": "reject"
+      },
+      {
+        "case_id": "vllm-pr-43760",
+        "from": "accept_with_scope",
+        "prospective_reason": "MATURE_WITHOUT_HUMAN_REVIEW",
+        "source_reason": "MATURE_CONTRACT_CLOSED",
+        "to": "reject"
+      },
+      {
+        "case_id": "vllm-pr-43747",
+        "from": "accept_with_scope",
+        "prospective_reason": "MATURE_WITHOUT_HUMAN_REVIEW",
+        "source_reason": "MATURE_CONTRACT_CLOSED",
+        "to": "reject"
+      }
+    ],
+    "check_correct": 0,
+    "check_precision": null,
+    "check_predictions": 0,
+    "exact_accuracy": 0.8933333333333333,
+    "exact_label_matches": 67,
+    "gain_over_frozen": 28,
+    "gain_over_same_cohort_legacy": 32,
+    "merged_cases": 36,
+    "merged_machine_accepts": 36,
+    "not_a_rescore": true,
+    "purpose": "Validate only the general rules proposed for the still-hidden TensorRT subcohort and later rounds; the fast-cohort locks remain unchanged.",
+    "reject_correct": 31,
+    "reject_precision": 1.0,
+    "reject_predictions": 31
+  },
+  "review_activity_projection_allowed": true,
+  "schema_version": "0.1",
+  "source_audit_sha256": "sha256:b30e81f075a927ff03233b35eab9014a075f74868bdd856a7a86699ab87342cc",
+  "source_author_metadata_sha256": "sha256:76f26e90e753aa512b82464d3ab601d7f45ed01c58046d3dd2d5ccd602ae5e01",
+  "source_lock_set_sha256": "sha256:651be8666ecd70c37e2369718e11e40fe396631eb0ce1639c9e0d3b1bbbd7c46",
+  "source_selection_lock_sha256": "sha256:1b228c2ec7c91829d49708ea83707b963e365a413e3833cc94b291eeaeb178fc",
+  "tensor_rt_outcomes_visible_during_derivation": false,
+  "workload_ledger": {
+    "fast_subcohort_completed": 75,
+    "r23_selected": 100,
+    "tensorrt_llm_subcohort_pending": 25
+  }
+}

@@ -1,0 +1,64 @@
+{
+  "evidence_sha256": "sha256:1462057d530be3956567ffc3b4a1218de478355b37d2a7cd18b4b033375a0b5a",
+  "finished_at": "2026-09-03T08:39:20.405226+00:00",
+  "noconftest_projects": [
+    "vllm"
+  ],
+  "outcome_review_ci_fields_requested": false,
+  "project_test_timeout_seconds": {},
+  "protocol_id": "r24-exact-candidate-upstream-tests-v0.1",
+  "records": [
+    {
+      "case_id": "vllm-pr-43434",
+      "duration_seconds": 15.388565249973908,
+      "head_sha": "48cb2f6b186e47b572b361cdaca5b13c88708513",
+      "output_sha256": "sha256:3c767affa11a278195a43526998a88ea99544c48c16e8351ff98ce71ad63e974",
+      "output_tail": ".....                                                                    [100%]\n=============================== warnings summary ===============================\nvllm/__init__.py:7\n  /workspace/r14-run-vllm/vllm/__init__.py:7: RuntimeWarning: Failed to read commit hash:\n  No module named 'vllm._version'\n    from .version import __version__, __version_tuple__  # isort:skip\n\n../../venv/main/lib/python3.12/site-packages/torch/jit/_script.py:365: 14 warnings\n  /venv/main/lib/python3.12/site-packages/torch/jit/_script.py:365: DeprecationWarning: `torch.jit.script_method` is deprecated. Please switch to `torch.compile` or `torch.export`.\n    warnings.warn(\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n5 passed, 30 deselected, 15 warnings in 9.44s\nWelcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nPrevious HEAD position was 6df1948004 some cleanup/simplification\nHEAD is now at 48cb2f6b18 fix gemini comment\n",
+      "ref": "refs/r24/pr-43434",
+      "remote_command": "cd /workspace/r14-run-vllm && GIT_NO_LAZY_FETCH=1 GIT_TERMINAL_PROMPT=0 git switch --detach refs/r24/pr-43434 >/dev/null && test \"$(git rev-parse HEAD)\" = 48cb2f6b186e47b572b361cdaca5b13c88708513 && timeout 60s env PYTHONDONTWRITEBYTECODE=1 INFRASWE_R15_VLLM_SOURCE_IMPORT_SHIM=1 CUDA_VISIBLE_DEVICES=0 PYTHONPATH=/workspace/r17-deps/vllm:/workspace/r18-deps/common:/workspace/r15-vllm-shim:/workspace/r14-shims:. PATH=/venv/main/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin /venv/main/bin/python -m pytest -q -rs --tb=short --maxfail=1 --noconftest tests/v1/worker/test_gpu_model_runner.py -k 'test_prepare_input_ids_allows_new_req_with_real_spec_tokens or test_prepare_input_ids_rejects_async_spec_placeholders_without_draft_cache or test_prepare_input_ids_rejects_async_spec_placeholders_without_sample_cache or test_prepare_input_ids_replaces_async_spec_placeholders or test_select_common_block_size_no_valid_option'",
+      "returncode": 0,
+      "status": "completed",
+      "summary_lines": [
+        "/workspace/r14-run-vllm/vllm/__init__.py:7: RuntimeWarning: Failed to read commit hash:",
+        "5 passed, 30 deselected, 15 warnings in 9.44s"
+      ],
+      "test_names": [
+        "test_prepare_input_ids_allows_new_req_with_real_spec_tokens",
+        "test_prepare_input_ids_rejects_async_spec_placeholders_without_draft_cache",
+        "test_prepare_input_ids_rejects_async_spec_placeholders_without_sample_cache",
+        "test_prepare_input_ids_replaces_async_spec_placeholders",
+        "test_select_common_block_size_no_valid_option"
+      ],
+      "test_paths": [
+        "tests/v1/worker/test_gpu_model_runner.py"
+      ],
+      "time_budget_seconds": 60
+    }
+  ],
+  "remote": {
+    "accelerator_vendor": "nvidia",
+    "compute_capabilities": [
+      "8.0",
+      "8.0"
+    ],
+    "executor_architecture": "sm80",
+    "gpu_lanes": [
+      0,
+      1
+    ],
+    "gpu_models": [
+      "NVIDIA A100-SXM4-40GB",
+      "NVIDIA A100-SXM4-40GB"
+    ],
+    "host": "root@194.228.55.129",
+    "port": 31396,
+    "query_returncode": 0
+  },
+  "schema_version": "0.1",
+  "selection_lock_sha256": "sha256:d7910710b519857812ee08f6736582c59fd4beb4dca6dca878f2f0f3d7d3a82a",
+  "started_at": "2026-09-03T08:39:02.442732+00:00",
+  "static_evidence_sha256": "sha256:75d344dca55dcda55c2d9ab1ce84c841ee170514859f1a12cb479c3df2b73266",
+  "test_plan_sha256": "sha256:ecf609c1a670879dc66f3aebb9e14436b8a86cb614fd728dc9d8d6d6facdfe4d",
+  "test_timeout_seconds": 60,
+  "timeout_disposition": "abandon-case-neutral-and-continue"
+}

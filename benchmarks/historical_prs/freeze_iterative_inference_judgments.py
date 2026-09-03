@@ -42,7 +42,7 @@ ENVIRONMENT_GAP_MARKERS = (
     "no tests collected",
     "unrecognized arguments",
 )
-FOREIGN_ACCELERATOR_PATH_MARKERS = (
+NON_NVIDIA_PATH_MARKERS = (
     "/amd/",
     "/ascend/",
     "/npu/",
@@ -50,15 +50,11 @@ FOREIGN_ACCELERATOR_PATH_MARKERS = (
     "mi325",
     "mi35",
     "rocm",
-    "sm90",
-    "sm100",
-    "sm120",
-    "blackwell",
-    "h100",
-    "h200",
-    "b200",
-    "gb200",
 )
+SM90_PATH_MARKERS = ("sm90", "h100", "h200", "hopper")
+SM100_PATH_MARKERS = ("sm100", "b200", "gb200")
+SM120_PATH_MARKERS = ("sm120",)
+BLACKWELL_PATH_MARKERS = ("blackwell",)
 SELF_DECLARED_INCOMPLETE_MARKERS = (
     "[wip]",
     "work in progress",
@@ -66,7 +62,9 @@ SELF_DECLARED_INCOMPLETE_MARKERS = (
     "not ready for review",
     "todo before merge",
 )
-BRACKETED_DRAFT_RE = re.compile(r"^\s*\[draft\]", re.IGNORECASE)
+TITLE_READINESS_RE = re.compile(
+    r"(?:^\s*\[draft\]|^\s*draft\s*[-:]|\bwip\b)", re.IGNORECASE
+)
 
 
 def read(path: Path) -> dict[str, Any]:
@@ -108,15 +106,28 @@ def summary_counts(output: str) -> dict[str, int]:
     return counts
 
 
-def exact_candidate_failure(record: dict[str, Any], test_names: list[str]) -> bool:
+def targets_foreign_accelerator(path: str, executor_architecture: str) -> bool:
+    lowered = path.lower()
+    if any(marker in lowered for marker in NON_NVIDIA_PATH_MARKERS):
+        return True
+    if any(marker in lowered for marker in SM90_PATH_MARKERS):
+        return executor_architecture != "sm90"
+    if any(marker in lowered for marker in SM100_PATH_MARKERS):
+        return executor_architecture != "sm100"
+    if any(marker in lowered for marker in SM120_PATH_MARKERS):
+        return executor_architecture != "sm120"
+    if any(marker in lowered for marker in BLACKWELL_PATH_MARKERS):
+        return executor_architecture not in {"sm100", "sm120"}
+    return False
+
+
+def exact_candidate_failure(
+    record: dict[str, Any], test_names: list[str], executor_architecture: str
+) -> bool:
     if record.get("returncode") != 1 or not test_names:
         return False
     test_paths = [str(path).lower() for path in record.get("test_paths", [])]
-    if any(
-        marker in path
-        for path in test_paths
-        for marker in FOREIGN_ACCELERATOR_PATH_MARKERS
-    ):
+    if any(targets_foreign_accelerator(path, executor_architecture) for path in test_paths):
         return False
     output = str(record.get("output_tail") or "")
     if not any(marker in output for marker in EXACT_FAILURE_MARKERS):
@@ -135,11 +146,11 @@ def exact_candidate_failure(record: dict[str, Any], test_names: list[str]) -> bo
 
 
 def technical_contract(
-    record: dict[str, Any], test_names: list[str]
+    record: dict[str, Any], test_names: list[str], executor_architecture: str
 ) -> tuple[str, dict[str, int], bool]:
     output = str(record.get("output_tail") or "")
     counts = summary_counts(output)
-    exact_failure = exact_candidate_failure(record, test_names)
+    exact_failure = exact_candidate_failure(record, test_names, executor_architecture)
     if exact_failure:
         return "fail", counts, True
     if record.get("returncode") == 0 and counts["passed"] > 0:
@@ -148,9 +159,24 @@ def technical_contract(
 
 
 def source_complete(static: dict[str, Any]) -> bool:
+    critical_suffixes = (".c", ".cc", ".cpp", ".cu", ".cuh", ".h", ".hpp", ".py")
+
+    def exact_sides_available(item: dict[str, Any]) -> bool:
+        change_type = str(item.get("change_type") or "modified")
+        if change_type == "added":
+            return bool(item.get("head_available"))
+        if change_type == "removed":
+            return bool(item.get("base_available"))
+        return bool(item.get("base_available")) and bool(item.get("head_available"))
+
+    critical_source_missing = any(
+        not exact_sides_available(item)
+        and (item["is_test"] or str(item["path"]).lower().endswith(critical_suffixes))
+        for item in static["files"]
+    )
     return (
         bool(static["head_matches_selection_at_acquisition"])
-        and static["patch_missing_count"] == 0
+        and not critical_source_missing
         and not static["head_conflict_marker_files"]
         and not static["head_python_syntax_failures"]
         and static["source_file_count"] > 0
@@ -278,15 +304,28 @@ def decision_for(
     precedents: list[dict[str, Any]],
     precedent_policy: dict[str, Any] | None,
     review_activity: dict[str, Any] | None,
+    executor_architecture: str,
 ) -> dict[str, Any]:
     test_names = list(static["candidate_test_functions_added"])
-    technical, counts, exact_failure = technical_contract(record, test_names)
+    technical, counts, exact_failure = technical_contract(
+        record, test_names, executor_architecture
+    )
     body = body_text(bundle_case)
     body_lower = body.lower()
     incomplete = any(marker in body_lower for marker in SELF_DECLARED_INCOMPLETE_MARKERS)
     closed = mature_contract_closed(selected, static, technical)
     precedent = precedent_consensus(selected, precedents, precedent_policy)
-    explicit_draft = BRACKETED_DRAFT_RE.search(selected["title"]) is not None
+    explicit_readiness = TITLE_READINESS_RE.search(selected["title"]) is not None
+    review_state_counts = (
+        review_activity.get("human_non_author_review_state_counts", {})
+        if review_activity
+        else {}
+    )
+    review_state_metadata_available = bool(
+        review_activity
+        and "human_non_author_review_state_counts" in review_activity
+    )
+    approved_reviews = int(review_state_counts.get("APPROVED", 0))
 
     if exact_failure:
         decision = "reject"
@@ -309,6 +348,7 @@ def decision_for(
             and review_activity
             and review_activity.get("pr_author_association")
             in {"COLLABORATOR", "MEMBER", "OWNER"}
+            and selected["additions"] + selected["deletions"] <= 120
         ):
             decision = "accept_with_scope"
             code = "RECENT_MAINTAINER_EXACT_TEST_PASS"
@@ -320,14 +360,45 @@ def decision_for(
                 "Obtain named non-author final-head review activity before using check, "
                 "or wait for a terminal disposition."
             )
-    elif explicit_draft and technical != "pass":
+    elif explicit_readiness and technical != "pass":
         decision = "reject"
-        code = "BRACKETED_DRAFT_READINESS_VETO"
-        residual = "Remove the explicit draft marker after closing the title-scoped contract."
+        code = "EXPLICIT_TITLE_READINESS_VETO"
+        residual = "Remove the explicit draft/WIP marker after closing the title-scoped contract."
     elif incomplete and technical != "pass":
         decision = "reject"
         code = "SELF_DECLARED_INCOMPLETE"
         residual = "Close the author-declared incomplete boundary and rerun the frozen plan."
+    elif approved_reviews > 0:
+        decision = "accept_with_scope"
+        code = "MATURE_HUMAN_APPROVAL"
+        residual = None
+    elif (
+        review_state_metadata_available
+        and review_activity
+        and review_activity.get("human_non_author_review_count", 0) > 0
+    ):
+        decision = "reject"
+        code = "MATURE_REVIEW_WITHOUT_APPROVAL"
+        residual = (
+            "Obtain a non-author approval on the candidate before treating review "
+            "activity as a merge-readiness receipt."
+        )
+    elif review_activity and review_activity.get("pr_author_association") == "NONE":
+        decision = "reject"
+        code = "MATURE_UNAFFILIATED_AUTHOR"
+        residual = "Obtain a non-NONE repository association or a terminal disposition."
+    elif (
+        review_activity
+        and review_activity.get("human_non_author_review_count", 0) == 0
+        and not (
+            selected["project"] == "sglang"
+            and review_activity.get("pr_author_association")
+            in {"COLLABORATOR", "MEMBER", "OWNER"}
+        )
+    ):
+        decision = "reject"
+        code = "MATURE_WITHOUT_HUMAN_REVIEW"
+        residual = "Obtain a named non-author human review or a terminal disposition."
     elif precedent["negative"]:
         decision = "reject"
         code = "UNANIMOUS_NEGATIVE_PRECEDENT_CLUSTER"
@@ -385,6 +456,16 @@ def decision_for(
             "before lock; check eligibility is therefore unobservable."
         )
         check_observability = "unavailable-by-blind-policy"
+    elif review_activity is not None:
+        disposition_finding = (
+            "The PR is in the mature band; the metadata-only projection found "
+            f"author association {review_activity.get('pr_author_association', 'UNKNOWN')} "
+            "and "
+            f"{review_activity.get('human_non_author_review_count', 0)} non-author human "
+            f"review(s), including {approved_reviews} approval(s), with all review text "
+            "and outcomes hidden."
+        )
+        check_observability = "outcome-free-activity-projection-mature"
     else:
         disposition_finding = (
             "The PR is in the mature band; the decision follows the frozen technical "
@@ -420,6 +501,7 @@ def main() -> int:
     parser.add_argument("--evidence", type=Path, action="append", required=True)
     parser.add_argument("--precedents", type=Path)
     parser.add_argument("--review-activity", type=Path)
+    parser.add_argument("--project", action="append", default=[])
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
 
@@ -498,14 +580,28 @@ def main() -> int:
     )
     require(all(value is False for value in hidden), "blind boundary is not intact")
 
-    selected = {item["case_id"]: item for item in selection["selection_material"]["cases"]}
+    all_selected = {
+        item["case_id"]: item for item in selection["selection_material"]["cases"]
+    }
     planned = {item["case_id"]: item for item in plan["cases"]}
     statics = {item["case_id"]: item for item in static_payload["cases"]}
     bundles = {item["case_id"]: item for item in bundle["cases"]}
     require(
-        selected.keys() == planned.keys() == statics.keys() == bundles.keys(),
+        all_selected.keys() == planned.keys() == statics.keys() == bundles.keys(),
         "selection, plan, static, and bundle case sets differ",
     )
+    requested_projects = set(args.project)
+    known_projects = {item["project"] for item in all_selected.values()}
+    require(
+        requested_projects <= known_projects,
+        f"unknown --project values: {sorted(requested_projects - known_projects)}",
+    )
+    selected = {
+        case_id: item
+        for case_id, item in all_selected.items()
+        if not requested_projects or item["project"] in requested_projects
+    }
+    require(bool(selected), "project filter selected no cases")
     precedents = precedent_payload["records"] if precedent_payload is not None else []
     precedent_policy = (
         precedent_payload["retrieval_policy"] if precedent_payload is not None else None
@@ -513,18 +609,32 @@ def main() -> int:
     target_ids = set(selected)
     precedent_ids = {item["precedent_id"] for item in precedents}
     require(not (target_ids & precedent_ids), "current target appears in prior precedent set")
-    activities = (
+    all_activities = (
         {item["case_id"]: item for item in activity_payload["cases"]}
         if activity_payload is not None
         else {}
     )
-    recent_ids = {
+    all_recent_ids = {
         case_id
-        for case_id, item in selected.items()
+        for case_id, item in all_selected.items()
         if item["temporal_band"] == "recent"
     }
     if activity_payload is not None:
-        require(activities.keys() == recent_ids, "review activity recent case set differs")
+        if activity_payload.get("recent_cases_only", True):
+            expected_activity_ids = all_recent_ids
+        else:
+            activity_projects = set(activity_payload.get("case_filter_projects", []))
+            expected_activity_ids = {
+                case_id
+                for case_id, item in all_selected.items()
+                if not activity_projects or item["project"] in activity_projects
+            }
+        require(all_activities.keys() == expected_activity_ids, "review activity case set differs")
+    activities = {
+        case_id: item
+        for case_id, item in all_activities.items()
+        if case_id in selected
+    }
 
     bindings: dict[str, dict[str, Any]] = {
         "manifest": {
@@ -565,6 +675,9 @@ def main() -> int:
                 {
                     "artifact": name,
                     "record_index": record_index,
+                    "executor_architecture": payload.get("remote", {}).get(
+                        "executor_architecture", "unknown"
+                    ),
                     "record": record,
                 }
             )
@@ -583,6 +696,7 @@ def main() -> int:
             precedents=precedents,
             precedent_policy=precedent_policy,
             review_activity=activities.get(case_id),
+            executor_architecture=preferred["executor_architecture"],
         )
         record_bindings = [
             {
@@ -608,6 +722,7 @@ def main() -> int:
             "supplemental_evidence_binding_sha256": canonical_sha256(record_bindings),
             "preferred_runtime_artifact": preferred["artifact"],
             "technical_contract": assessment["technical_contract"],
+            "executor_architecture": preferred["executor_architecture"],
             "decision": assessment["decision"],
             "rationale_codes": [assessment["rationale_code"]],
             "technical_findings": assessment["technical_findings"],
@@ -647,6 +762,8 @@ def main() -> int:
         },
         "selection_lock_file_sha256": file_sha256(args.selection_lock),
         "selection_lock_sha256": selection_sha,
+        "selected_case_ids": list(selected),
+        "case_filter_projects": sorted(requested_projects),
         "test_plan_file_sha256": file_sha256(args.test_plan),
         "test_plan_sha256": plan_sha,
         "source_bundle_sha256": source_sha,

@@ -35,6 +35,8 @@ def main() -> int:
     parser.add_argument("--previous-policy", type=Path, required=True)
     parser.add_argument("--previous-audit", type=Path, required=True)
     parser.add_argument("--previous-iteration", type=Path, required=True)
+    parser.add_argument("--exclude-project", action="append", default=[])
+    parser.add_argument("--per-project-count", type=int, default=25)
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
 
@@ -51,8 +53,18 @@ def main() -> int:
         raise SystemExit(f"{previous_round} did not clear the iteration gate")
 
     projects = copy.deepcopy(previous_policy["projects"]["inference"])
+    inherited_reordering = previous_policy.get("execution_reordering", {})
+    inherited_deferred = set(inherited_reordering.get("deferred_to_tail_group", []))
+    unknown_projects = set(args.exclude_project) - projects.keys() - inherited_deferred
+    if unknown_projects:
+        raise SystemExit(f"unknown --exclude-project values: {sorted(unknown_projects)}")
+    for project_name in args.exclude_project:
+        projects.pop(project_name, None)
     for project in projects.values():
-        project["count"] = 25
+        project["count"] = args.per_project_count
+    case_count = sum(int(project["count"]) for project in projects.values())
+    if case_count <= 0:
+        raise SystemExit("project allocation selected no cases")
     machine_policy = copy.deepcopy(previous_policy["machine_policy"])
     machine_policy.update(
         {
@@ -61,6 +73,9 @@ def main() -> int:
             ),
             "outcome_free_review_activity_projection_allowed": bool(
                 iteration.get("review_activity_projection_allowed", False)
+            ),
+            "outcome_free_review_state_metadata_projection_allowed": bool(
+                iteration.get("review_state_metadata_projection_allowed", False)
             ),
             "review_text_visible": False,
             "long_running_normal_pr_seconds": 60,
@@ -72,16 +87,24 @@ def main() -> int:
     policy = {
         "schema_version": "0.1",
         "protocol_id": (
-            f"inference-iterative-contract-v0.1-{round_label.lower()}-100"
+            f"inference-iterative-contract-v0.1-{round_label.lower()}-{case_count}"
         ),
         "round": round_label,
-        "case_count": 100,
-        "domain_allocation": {"inference": 100},
+        "case_count": case_count,
+        "domain_allocation": {"inference": case_count},
         "previous_round": previous_round,
         "previous_policy_sha256": previous_policy["policy_sha256"],
         "previous_audit_sha256": previous_audit["audit_sha256"],
         "previous_iteration_sha256": iteration["iteration_sha256"],
         "grouping_policy": copy.deepcopy(previous_policy["grouping_policy"]),
+        "execution_reordering": {
+            "excluded_projects": sorted(set(args.exclude_project) | inherited_deferred),
+            "deferred_to_tail_group": sorted(
+                set(args.exclude_project) | inherited_deferred
+            ),
+            "user_directed": bool(args.exclude_project) or bool(inherited_deferred),
+            "inherited_from_previous_round": sorted(inherited_deferred),
+        },
         "created_at_window": copy.deepcopy(previous_policy["created_at_window"]),
         "domains_in_order": ["inference"],
         "projects": {"inference": projects},
@@ -95,6 +118,9 @@ def main() -> int:
             "review_activity_metadata": bool(
                 iteration.get("review_activity_projection_allowed", False)
             ),
+            "review_state_metadata": bool(
+                iteration.get("review_state_metadata_projection_allowed", False)
+            ),
             "review_or_comment_text": False,
             "state_or_merge": False,
             "ci_or_label": False,
@@ -102,7 +128,7 @@ def main() -> int:
         "machine_policy": machine_policy,
         "frozen_at": datetime.now(UTC).isoformat(),
     }
-    if sum(project["count"] for project in projects.values()) != 100:
+    if sum(project["count"] for project in projects.values()) != case_count:
         raise SystemExit(f"{round_label} project allocation changed")
     payload = {**policy, "policy_sha256": canonical_sha256(policy)}
     atomic_write_json(args.output, payload)

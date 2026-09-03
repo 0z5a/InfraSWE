@@ -90,8 +90,11 @@ def main() -> int:
     parser.add_argument("--target-round", required=True)
     parser.add_argument("--source-selection", type=Path, action="append", required=True)
     parser.add_argument("--source-audit", type=Path, action="append", required=True)
+    parser.add_argument("--negative-consensus-minimum", type=int, default=2)
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
+    if args.negative_consensus_minimum < 2:
+        raise SystemExit("--negative-consensus-minimum must be at least 2")
     if len(args.source_selection) != len(args.source_audit):
         raise SystemExit("selection and audit source counts differ")
 
@@ -158,7 +161,7 @@ def main() -> int:
             "title_token_jaccard_min": 0.35,
             "source_path_jaccard_min": 0.4,
             "source_directory_prefix_jaccard_min": 0.75,
-            "negative_consensus_minimum": 2,
+            "negative_consensus_minimum": args.negative_consensus_minimum,
             "accepted_neighbor_vetoes_negative_consensus": True,
             "weighted_disposition_score_used": False,
         },

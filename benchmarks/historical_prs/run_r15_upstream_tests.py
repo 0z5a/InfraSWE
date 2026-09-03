@@ -22,6 +22,7 @@ from infraswe.io import atomic_write_json
 REMOTE = os.environ.get("INFRASWE_SSH_REMOTE", "root@38.49.42.120")
 PORT = int(os.environ.get("INFRASWE_SSH_PORT", "54270"))
 IDENTITY = os.environ.get("INFRASWE_SSH_IDENTITY", "~/.ssh/id_ed25519_winpc")
+SSH_CONTROL_PATH = os.environ.get("INFRASWE_SSH_CONTROL_PATH")
 PROJECT_RUNTIME = {
     "vllm": (
         "/workspace/r14-run-vllm",
@@ -109,6 +110,7 @@ def _is_test_path(path: str) -> bool:
 
 
 def _ssh(remote_command: str, timeout: int) -> subprocess.CompletedProcess[str]:
+    connection_options = ["-o", f"ControlPath={SSH_CONTROL_PATH}"] if SSH_CONTROL_PATH else []
     return subprocess.run(
         [
             "ssh",
@@ -116,6 +118,7 @@ def _ssh(remote_command: str, timeout: int) -> subprocess.CompletedProcess[str]:
             str(PORT),
             "-i",
             str(Path(IDENTITY).expanduser()),
+            *connection_options,
             "-o",
             "BatchMode=yes",
             "-o",
@@ -152,6 +155,7 @@ def _build_command(
         "PYTHONDONTWRITEBYTECODE=1",
         f"CUDA_VISIBLE_DEVICES={gpu}",
         f"PYTHONPATH={pythonpath}",
+        f"PATH={Path(python).parent}:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
         python,
         "-m",
         "pytest",
@@ -204,6 +208,7 @@ def _run_case(
         "head_sha": case["head_sha"],
         "test_paths": test_paths,
         "test_names": test_names,
+        "time_budget_seconds": test_timeout,
     }
     if command is None:
         print(f"[{index}/{total}] {case['case_id']}: no candidate Python test", flush=True)
@@ -225,7 +230,7 @@ def _run_case(
     except subprocess.TimeoutExpired as error:
         returncode = 124
         output = str(error.stdout or "") + str(error.stderr or "")
-        status = "ssh-timeout"
+        status = "abandoned-time-budget"
     duration = time.monotonic() - began
     summary_lines = [
         line.strip() for line in output.splitlines() if SUMMARY_PATTERN.search(line.strip())

@@ -1,0 +1,164 @@
+{
+  "derived_after_source_reveal": true,
+  "generated_at": "2026-09-03T05:55:02.321388+00:00",
+  "iteration_sha256": "sha256:d92424d9a811b29eab6d3fb0309604f26b385987c7ca99cbf8a2e458158a59a2",
+  "known_limitations": [
+    "Historical merge disposition remains only partly identifiable from outcome-blind code and runtime evidence.",
+    "The just-in-time activity projection stores metadata and derived booleans but no review text or terminal outcome fields.",
+    "The retrospective projection validates prospective rules but never changes the sealed source-round judgments.",
+    "The benchmark remains explicitly nonweighted, so the legacy numeric merged-score floor is not directly auditable."
+  ],
+  "next_group": {
+    "allocation": {
+      "inference": 100
+    },
+    "case_count": 100,
+    "future_groups_preselected": false,
+    "inference_project_allocation": {
+      "flashinfer": 25,
+      "sglang": 25,
+      "tensorrt_llm": 25,
+      "vllm": 25
+    },
+    "round": "R23"
+  },
+  "next_round": "R23",
+  "observed_metrics": {
+    "binary_direction_matches": 61,
+    "cases": 100,
+    "exact_label_matches": 60,
+    "legacy_exact_label_matches": 57,
+    "machine_check_precision": 1.0,
+    "machine_reject_precision": 0.4,
+    "merged_cases": 60,
+    "merged_machine_accepts": 55,
+    "oracle_decisions": {
+      "accept": 60,
+      "check": 2,
+      "reject": 38
+    },
+    "same_cohort_exact_accuracy_gain": 0.030000000000000027
+  },
+  "prospective_rules": [
+    {
+      "id": "R23-TIME-BUDGET-GATE",
+      "rule": "Abandon normal PR tests after 60 seconds and TensorRT-LLM tests after 20 seconds; timeout remains a neutral bounded gap."
+    },
+    {
+      "id": "R23-JUST-IN-TIME-ACTIVITY-REFRESH",
+      "rule": "Refresh the outcome-free review-activity projection immediately before freezing judgments so review that arrives during execution is observable without exposing state, outcome, CI, labels, or text."
+    },
+    {
+      "id": "R23-CHECK-REQUIRES-ACTIVE-REVIEW",
+      "rule": "Use check only for a <=7-day PR with substantive named non-author final-head activity; otherwise never use check."
+    },
+    {
+      "id": "R23-RECENT-MAINTAINER-PASS",
+      "rule": "A recent maintainer-associated PR with an exact candidate-owned pass may accept without non-author review; other recent PRs without active review reject."
+    },
+    {
+      "id": "R23-MATURE-RUNTIME-GAP-NEUTRAL",
+      "rule": "Do not reject a source-complete mature PR solely because it lacks a runnable candidate test or hits a bounded environment gap."
+    },
+    {
+      "id": "R23-PLATFORM-MATCHED-FAILURE-ONLY",
+      "rule": "A candidate assertion may trigger reject only when its declared accelerator target matches the executor architecture recorded by the test evidence; failures on foreign-only paths remain neutral."
+    },
+    {
+      "id": "R23-NEGATIVE-PRECEDENT-THREE-HIT-FLOOR",
+      "rule": "Negative precedent consensus requires at least three close same-project, same-risk reject precedents and no accept neighbor."
+    },
+    {
+      "id": "R23-EXPLICIT-READINESS-AND-INTEGRITY-VETOES",
+      "rule": "Retain narrow bracketed-draft, self-declared-incomplete, and source-integrity rejection vetoes."
+    }
+  ],
+  "protocol_id": "historical-pr-iterative-policy-r22-to-r23-v0.1",
+  "retrospective_policy_projection": {
+    "cases": 100,
+    "changed_cases": [
+      {
+        "case_id": "flashinfer-pr-4771",
+        "from": "reject",
+        "prospective_reason": "REFRESHED_FINAL_HEAD_REVIEW_ACTIVITY",
+        "source_reason": "RECENT_WITHOUT_ACTIVE_REVIEW",
+        "to": "check"
+      },
+      {
+        "case_id": "flashinfer-pr-2855",
+        "from": "reject",
+        "prospective_reason": "NEGATIVE_PRECEDENT_BELOW_THREE_HIT_FLOOR",
+        "source_reason": "UNANIMOUS_NEGATIVE_PRECEDENT_CLUSTER",
+        "to": "accept_with_scope"
+      },
+      {
+        "case_id": "flashinfer-pr-2799",
+        "from": "reject",
+        "prospective_reason": "MATURE_SOURCE_COMPLETE_RUNTIME_GAP",
+        "source_reason": "MATURE_EVIDENCE_INCOMPLETE",
+        "to": "accept_with_scope"
+      },
+      {
+        "case_id": "sglang-pr-37669",
+        "from": "reject",
+        "prospective_reason": "RECENT_MAINTAINER_EXACT_TEST_PASS",
+        "source_reason": "RECENT_WITHOUT_ACTIVE_REVIEW",
+        "to": "accept_with_scope"
+      },
+      {
+        "case_id": "sglang-pr-27131",
+        "from": "reject",
+        "prospective_reason": "MATURE_SOURCE_COMPLETE_RUNTIME_GAP",
+        "source_reason": "MATURE_EVIDENCE_INCOMPLETE",
+        "to": "accept_with_scope"
+      },
+      {
+        "case_id": "sglang-pr-27078",
+        "from": "reject",
+        "prospective_reason": "FOREIGN_ACCELERATOR_FAILURE_NEUTRALIZED",
+        "source_reason": "EXACT_CANDIDATE_FAILURE",
+        "to": "accept_with_scope"
+      },
+      {
+        "case_id": "sglang-pr-27204",
+        "from": "reject",
+        "prospective_reason": "FOREIGN_ACCELERATOR_FAILURE_NEUTRALIZED",
+        "source_reason": "EXACT_CANDIDATE_FAILURE",
+        "to": "accept_with_scope"
+      }
+    ],
+    "check_correct": 2,
+    "check_precision": 1.0,
+    "check_predictions": 2,
+    "exact_label_matches": 65,
+    "gain_over_frozen": 5,
+    "gain_over_same_cohort_legacy": 8,
+    "merged_cases": 60,
+    "merged_machine_accepts": 60,
+    "not_a_rescore": true,
+    "purpose": "validate only the general rules proposed for R23; R22 locks remain unchanged",
+    "reject_correct": 3,
+    "reject_precision": 1.0,
+    "reject_predictions": 3
+  },
+  "retrospective_source_locks_changed": false,
+  "review_activity_projection_allowed": true,
+  "schema_version": "0.1",
+  "source_audit_sha256": "sha256:7a4e99b1c1057f7a981335be526e6a5de5d0070b60215deb6e99e865559cd17e",
+  "source_lock_set_sha256": "sha256:5451fdec4480d0e9d0cc095aa986c7ec5a4f70ad0370aba15929e8b4c64f5182",
+  "source_round": "R22",
+  "source_selection_lock_sha256": "sha256:45361ae2bbb736e4e6126e32e4b6aa76dfff2bef2333a4f206869729a3549117",
+  "workload_ledger": {
+    "completed_through_r22": {
+      "inference": 200
+    },
+    "remaining_after_r22": {
+      "inference": 300
+    },
+    "requested": {
+      "group_size": 100,
+      "groups": 5,
+      "inference": 500
+    }
+  }
+}

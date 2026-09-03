@@ -42,6 +42,23 @@ ENVIRONMENT_GAP_MARKERS = (
     "no tests collected",
     "unrecognized arguments",
 )
+FOREIGN_ACCELERATOR_PATH_MARKERS = (
+    "/amd/",
+    "/ascend/",
+    "/npu/",
+    "mi300",
+    "mi325",
+    "mi35",
+    "rocm",
+    "sm90",
+    "sm100",
+    "sm120",
+    "blackwell",
+    "h100",
+    "h200",
+    "b200",
+    "gb200",
+)
 SELF_DECLARED_INCOMPLETE_MARKERS = (
     "[wip]",
     "work in progress",
@@ -93,6 +110,13 @@ def summary_counts(output: str) -> dict[str, int]:
 
 def exact_candidate_failure(record: dict[str, Any], test_names: list[str]) -> bool:
     if record.get("returncode") != 1 or not test_names:
+        return False
+    test_paths = [str(path).lower() for path in record.get("test_paths", [])]
+    if any(
+        marker in path
+        for path in test_paths
+        for marker in FOREIGN_ACCELERATOR_PATH_MARKERS
+    ):
         return False
     output = str(record.get("output_tail") or "")
     if not any(marker in output for marker in EXACT_FAILURE_MARKERS):
@@ -280,6 +304,15 @@ def decision_for(
                 "Complete the active final-head review handoff and freeze its "
                 "terminal disposition."
             )
+        elif (
+            technical == "pass"
+            and review_activity
+            and review_activity.get("pr_author_association")
+            in {"COLLABORATOR", "MEMBER", "OWNER"}
+        ):
+            decision = "accept_with_scope"
+            code = "RECENT_MAINTAINER_EXACT_TEST_PASS"
+            residual = None
         else:
             decision = "reject"
             code = "RECENT_WITHOUT_ACTIVE_REVIEW"
@@ -307,12 +340,9 @@ def decision_for(
         code = "MATURE_CONTRACT_CLOSED"
         residual = None
     else:
-        decision = "reject"
-        code = "MATURE_EVIDENCE_INCOMPLETE"
-        residual = (
-            "Add a candidate-owned test, executable integration route, benchmark receipt, "
-            "or a narrow independent invariant for the title-scoped change."
-        )
+        decision = "accept_with_scope"
+        code = "MATURE_SOURCE_COMPLETE_RUNTIME_GAP"
+        residual = "The exact runtime closure remains unavailable; source integrity is closed."
 
     status = str(record.get("status") or "unknown")
     returncode = record.get("returncode")

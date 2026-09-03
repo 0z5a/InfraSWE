@@ -1,0 +1,180 @@
+{
+  "evidence_sha256": "sha256:7ee7879a18b65e1878d984602beae6981cf640c2d352030eb3d44f8de819682c",
+  "finished_at": "2026-09-03T05:21:17.496529+00:00",
+  "noconftest_projects": [
+    "tensorrt-llm",
+    "vllm"
+  ],
+  "outcome_review_ci_fields_requested": false,
+  "project_test_timeout_seconds": {
+    "tensorrt-llm": 20
+  },
+  "protocol_id": "r22-exact-candidate-upstream-tests-v0.1",
+  "records": [
+    {
+      "case_id": "sglang-pr-27283",
+      "duration_seconds": 12.226238917093724,
+      "head_sha": "8a61e60725309c82510c4731a6088149ac8a1afc",
+      "output_sha256": "sha256:fc8bca331bc65ff0b0d79d683a4fe9d80ddeb09f2f6493da4b9670a8a4e854a9",
+      "output_tail": "[CONFTEST] Created perf_results_key: <_pytest.stash.StashKey object at 0x7f9ef9fa1960>\n\n[DEBUG] pytest_sessionfinish called, has 0 entries\n[DEBUG] No results collected, skipping summary output\n\n==================================== ERRORS ====================================\n_ ERROR collecting sglang/multimodal_gen/test/server/ascend/testcase_configs_npu.py _\nImportError while importing test module '/workspace/r14-run-sglang/python/sglang/multimodal_gen/test/server/ascend/testcase_configs_npu.py'.\nHint: make sure your test modules/packages have valid Python names.\nTraceback:\n/usr/lib/python3.12/importlib/__init__.py:90: in import_module\n    return _bootstrap._gcd_import(name[level:], package, level)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\npython/sglang/multimodal_gen/test/server/ascend/testcase_configs_npu.py:3: in <module>\n    from sglang.multimodal_gen.test.server.testcase_configs import (\npython/sglang/multimodal_gen/__init__.py:4: in <module>\n    from sglang.multimodal_gen.runtime.entrypoints.diffusion_generator import DiffGenerator\npython/sglang/multimodal_gen/runtime/entrypoints/diffusion_generator.py:22: in <module>\n    from sglang.multimodal_gen.runtime.entrypoints.utils import (\npython/sglang/multimodal_gen/runtime/entrypoints/utils.py:38: in <module>\n    from sglang.multimodal_gen.runtime.pipelines_core.schedule_batch import Req\npython/sglang/multimodal_gen/runtime/pipelines_core/__init__.py:12: in <module>\n    from sglang.multimodal_gen.registry import get_model_info\npython/sglang/multimodal_gen/registry.py:155: in <module>\n    from sglang.multimodal_gen.runtime.pipelines_core.composed_pipeline_base import (\npython/sglang/multimodal_gen/runtime/pipelines_core/composed_pipeline_base.py:21: in <module>\n    from sglang.multimodal_gen.runtime.layers.attention.selector import (\npython/sglang/multimodal_gen/runtime/layers/attention/__init__.py:10: in <module>\n    from sglang.multimodal_gen.runtime.layers.attention.layer import (\npython/sglang/multimodal_gen/runtime/layers/attention/layer.py:37: in <module>\n    from sglang.multimodal_gen.runtime.layers.attention.selector import get_attn_backend\npython/sglang/multimodal_gen/runtime/layers/attention/selector.py:19: in <module>\n    from sglang.multimodal_gen.runtime.server_args import get_global_server_args\npython/sglang/multimodal_gen/runtime/server_args.py:19: in <module>\n    import addict\nE   ModuleNotFoundError: No module named 'addict'\n------------------------------- Captured stdout --------------------------------\n[CONFTEST] Loading conftest.py at import time\n=============================== warnings summary ===============================\n../../venv/main/lib/python3.12/site-packages/torch/jit/_script.py:365: 14 warnings\n  /venv/main/lib/python3.12/site-packages/torch/jit/_script.py:365: DeprecationWarning: `torch.jit.script_method` is deprecated. Please switch to `torch.compile` or `torch.export`.\n    warnings.warn(\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!\n14 warnings, 1 error in 9.29s\nPrevious HEAD position was 4481d9df7d Update Cosmos3 packed-text consistency GT\nHEAD is now at 8a61e60725 Merge branch 'main' into diffusion_ci_npu_2\n",
+      "ref": "refs/r22/pr-27283",
+      "remote_command": "cd /workspace/r14-run-sglang && git switch --detach refs/r22/pr-27283 >/dev/null && test \"$(git rev-parse HEAD)\" = 8a61e60725309c82510c4731a6088149ac8a1afc && timeout 60s env PYTHONDONTWRITEBYTECODE=1 CUDA_VISIBLE_DEVICES=1 PYTHONPATH=/workspace/r18-deps/common:/workspace/r17-deps/opencv:/workspace/r14-shims:python:. PATH=/venv/sglang-mature/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin /venv/sglang-mature/bin/python -m pytest -q -rs --tb=short --maxfail=1 python/sglang/multimodal_gen/test/server/ascend/testcase_configs_npu.py python/sglang/multimodal_gen/test/test_utils.py",
+      "returncode": 1,
+      "status": "completed",
+      "summary_lines": [
+        "==================================== ERRORS ====================================",
+        "_ ERROR collecting sglang/multimodal_gen/test/server/ascend/testcase_configs_npu.py _",
+        "ImportError while importing test module '/workspace/r14-run-sglang/python/sglang/multimodal_gen/test/server/ascend/testcase_configs_npu.py'.",
+        "E   ModuleNotFoundError: No module named 'addict'",
+        "14 warnings, 1 error in 9.29s"
+      ],
+      "test_names": [],
+      "test_paths": [
+        "python/sglang/multimodal_gen/test/server/ascend/testcase_configs_npu.py",
+        "python/sglang/multimodal_gen/test/test_utils.py"
+      ],
+      "time_budget_seconds": 60
+    },
+    {
+      "case_id": "sglang-pr-27155",
+      "duration_seconds": 11.300296084024012,
+      "head_sha": "414145105af140b7728d8c16b9f7bbfbe672735b",
+      "output_sha256": "sha256:067fad776fa7a897323557c693d8590021ab48f2586ebf89d6d378a74150c4f0",
+      "output_tail": "\n==================================== ERRORS ====================================\n____ ERROR collecting sglang/multimodal_gen/test/unit/test_disagg_trace.py _____\nImportError while importing test module '/workspace/r14-run-sglang/python/sglang/multimodal_gen/test/unit/test_disagg_trace.py'.\nHint: make sure your test modules/packages have valid Python names.\nTraceback:\n/usr/lib/python3.12/importlib/__init__.py:90: in import_module\n    return _bootstrap._gcd_import(name[level:], package, level)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\npython/sglang/multimodal_gen/test/unit/test_disagg_trace.py:27: in <module>\n    from sglang.multimodal_gen.runtime.disaggregation.scheduler_mixin import (\npython/sglang/multimodal_gen/__init__.py:4: in <module>\n    from sglang.multimodal_gen.runtime.entrypoints.diffusion_generator import DiffGenerator\npython/sglang/multimodal_gen/runtime/entrypoints/diffusion_generator.py:22: in <module>\n    from sglang.multimodal_gen.runtime.entrypoints.utils import (\npython/sglang/multimodal_gen/runtime/entrypoints/utils.py:38: in <module>\n    from sglang.multimodal_gen.runtime.pipelines_core.schedule_batch import Req\npython/sglang/multimodal_gen/runtime/pipelines_core/__init__.py:12: in <module>\n    from sglang.multimodal_gen.registry import get_model_info\npython/sglang/multimodal_gen/registry.py:149: in <module>\n    from sglang.multimodal_gen.runtime.pipelines_core.composed_pipeline_base import (\npython/sglang/multimodal_gen/runtime/pipelines_core/composed_pipeline_base.py:21: in <module>\n    from sglang.multimodal_gen.runtime.layers.attention.selector import (\npython/sglang/multimodal_gen/runtime/layers/attention/__init__.py:10: in <module>\n    from sglang.multimodal_gen.runtime.layers.attention.layer import (\npython/sglang/multimodal_gen/runtime/layers/attention/layer.py:37: in <module>\n    from sglang.multimodal_gen.runtime.layers.attention.selector import get_attn_backend\npython/sglang/multimodal_gen/runtime/layers/attention/selector.py:19: in <module>\n    from sglang.multimodal_gen.runtime.server_args import get_global_server_args\npython/sglang/multimodal_gen/runtime/server_args.py:19: in <module>\n    import addict\nE   ModuleNotFoundError: No module named 'addict'\n=============================== warnings summary ===============================\n../../venv/main/lib/python3.12/site-packages/torch/jit/_script.py:365: 14 warnings\n  /venv/main/lib/python3.12/site-packages/torch/jit/_script.py:365: DeprecationWarning: `torch.jit.script_method` is deprecated. Please switch to `torch.compile` or `torch.export`.\n    warnings.warn(\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!\n!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!\n14 warnings, 1 error in 8.58s\nPrevious HEAD position was 8a61e60725 Merge branch 'main' into diffusion_ci_npu_2\nHEAD is now at 414145105a [diffusion] Initialize SRT trace args\n",
+      "ref": "refs/r22/pr-27155",
+      "remote_command": "cd /workspace/r14-run-sglang && git switch --detach refs/r22/pr-27155 >/dev/null && test \"$(git rev-parse HEAD)\" = 414145105af140b7728d8c16b9f7bbfbe672735b && timeout 60s env PYTHONDONTWRITEBYTECODE=1 CUDA_VISIBLE_DEVICES=1 PYTHONPATH=/workspace/r18-deps/common:/workspace/r17-deps/opencv:/workspace/r14-shims:python:. PATH=/venv/sglang-mature/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin /venv/sglang-mature/bin/python -m pytest -q -rs --tb=short --maxfail=1 python/sglang/multimodal_gen/test/unit/test_disagg_trace.py",
+      "returncode": 2,
+      "status": "completed",
+      "summary_lines": [
+        "==================================== ERRORS ====================================",
+        "____ ERROR collecting sglang/multimodal_gen/test/unit/test_disagg_trace.py _____",
+        "ImportError while importing test module '/workspace/r14-run-sglang/python/sglang/multimodal_gen/test/unit/test_disagg_trace.py'.",
+        "E   ModuleNotFoundError: No module named 'addict'",
+        "!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!",
+        "14 warnings, 1 error in 8.58s"
+      ],
+      "test_names": [],
+      "test_paths": [
+        "python/sglang/multimodal_gen/test/unit/test_disagg_trace.py"
+      ],
+      "time_budget_seconds": 60
+    },
+    {
+      "case_id": "sglang-pr-27059",
+      "duration_seconds": 13.682743125129491,
+      "head_sha": "921dc0f7d74ba478121083f1fd907a027b610c61",
+      "output_sha256": "sha256:0af8f4bb79b3cafdf052ef3491cd558eb2f31ff55bb4d630b80ed6d73cc821ad",
+      "output_tail": "..                                                                       [100%]\n=============================== warnings summary ===============================\n../../venv/main/lib/python3.12/site-packages/torch/jit/_script.py:365: 14 warnings\n  /venv/main/lib/python3.12/site-packages/torch/jit/_script.py:365: DeprecationWarning: `torch.jit.script_method` is deprecated. Please switch to `torch.compile` or `torch.export`.\n    warnings.warn(\n\n<frozen importlib._bootstrap_external>:1297\n  <frozen importlib._bootstrap_external>:1297: FutureWarning: The cuda.cudart module is deprecated and will be removed in a future release, please switch to use the cuda.bindings.runtime module instead.\n\n<frozen importlib._bootstrap_external>:1297\n  <frozen importlib._bootstrap_external>:1297: FutureWarning: The cuda.nvrtc module is deprecated and will be removed in a future release, please switch to use the cuda.bindings.nvrtc module instead.\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n2 passed, 5 deselected, 16 warnings in 10.42s\nPrevious HEAD position was 414145105a [diffusion] Initialize SRT trace args\nHEAD is now at 921dc0f7d7 Merge branch 'main' into sm12x-fp4-indexer-upstream\n",
+      "ref": "refs/r22/pr-27059",
+      "remote_command": "cd /workspace/r14-run-sglang && git switch --detach refs/r22/pr-27059 >/dev/null && test \"$(git rev-parse HEAD)\" = 921dc0f7d74ba478121083f1fd907a027b610c61 && timeout 60s env PYTHONDONTWRITEBYTECODE=1 CUDA_VISIBLE_DEVICES=1 PYTHONPATH=/workspace/r18-deps/common:/workspace/r17-deps/opencv:/workspace/r14-shims:python:. PATH=/venv/sglang-mature/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin /venv/sglang-mature/bin/python -m pytest -q -rs --tb=short --maxfail=1 test/registered/kernels/benchmark/attention/bench_dsv4_fp4_indexer.py test/registered/unit/layers/test_dsv4_nonpaged_indexer.py -k 'test_sm120_fp4_forces_deep_gemm_metadata or test_sm120_fp8_torch_fallback_keeps_metadata_none'",
+      "returncode": 0,
+      "status": "completed",
+      "summary_lines": [
+        "2 passed, 5 deselected, 16 warnings in 10.42s"
+      ],
+      "test_names": [
+        "test_sm120_fp4_forces_deep_gemm_metadata",
+        "test_sm120_fp8_torch_fallback_keeps_metadata_none"
+      ],
+      "test_paths": [
+        "test/registered/kernels/benchmark/attention/bench_dsv4_fp4_indexer.py",
+        "test/registered/unit/layers/test_dsv4_nonpaged_indexer.py"
+      ],
+      "time_budget_seconds": 60
+    },
+    {
+      "case_id": "sglang-pr-27026",
+      "duration_seconds": 12.892307791858912,
+      "head_sha": "ae371e8420c1ce1c1cda412caa157ba613df95d6",
+      "output_sha256": "sha256:4c7ff16e3fcbd0b0e76e6b344bfbd34b700c7c54223d8df73af54b23e843f71b",
+      "output_tail": "\n==================================== ERRORS ====================================\n_ ERROR collecting sglang/multimodal_gen/test/unit/realtime/test_output_materialization.py _\nImportError while importing test module '/workspace/r14-run-sglang/python/sglang/multimodal_gen/test/unit/realtime/test_output_materialization.py'.\nHint: make sure your test modules/packages have valid Python names.\nTraceback:\n/usr/lib/python3.12/importlib/__init__.py:90: in import_module\n    return _bootstrap._gcd_import(name[level:], package, level)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\npython/sglang/multimodal_gen/test/unit/realtime/test_output_materialization.py:6: in <module>\n    from sglang.multimodal_gen.configs.sample.sampling_params import DataType\npython/sglang/multimodal_gen/__init__.py:4: in <module>\n    from sglang.multimodal_gen.runtime.entrypoints.diffusion_generator import DiffGenerator\npython/sglang/multimodal_gen/runtime/entrypoints/diffusion_generator.py:22: in <module>\n    from sglang.multimodal_gen.runtime.entrypoints.utils import (\npython/sglang/multimodal_gen/runtime/entrypoints/utils.py:38: in <module>\n    from sglang.multimodal_gen.runtime.pipelines_core.schedule_batch import Req\npython/sglang/multimodal_gen/runtime/pipelines_core/__init__.py:12: in <module>\n    from sglang.multimodal_gen.registry import get_model_info\npython/sglang/multimodal_gen/registry.py:149: in <module>\n    from sglang.multimodal_gen.runtime.pipelines_core.composed_pipeline_base import (\npython/sglang/multimodal_gen/runtime/pipelines_core/composed_pipeline_base.py:21: in <module>\n    from sglang.multimodal_gen.runtime.layers.attention.selector import (\npython/sglang/multimodal_gen/runtime/layers/attention/__init__.py:10: in <module>\n    from sglang.multimodal_gen.runtime.layers.attention.layer import (\npython/sglang/multimodal_gen/runtime/layers/attention/layer.py:37: in <module>\n    from sglang.multimodal_gen.runtime.layers.attention.selector import get_attn_backend\npython/sglang/multimodal_gen/runtime/layers/attention/selector.py:19: in <module>\n    from sglang.multimodal_gen.runtime.server_args import get_global_server_args\npython/sglang/multimodal_gen/runtime/server_args.py:19: in <module>\n    import addict\nE   ModuleNotFoundError: No module named 'addict'\n=============================== warnings summary ===============================\n../../venv/main/lib/python3.12/site-packages/torch/jit/_script.py:365: 14 warnings\n  /venv/main/lib/python3.12/site-packages/torch/jit/_script.py:365: DeprecationWarning: `torch.jit.script_method` is deprecated. Please switch to `torch.compile` or `torch.export`.\n    warnings.warn(\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!\n14 warnings, 1 error in 9.39s\nPrevious HEAD position was 921dc0f7d7 Merge branch 'main' into sm12x-fp4-indexer-upstream\nHEAD is now at ae371e8420 lint\n",
+      "ref": "refs/r22/pr-27026",
+      "remote_command": "cd /workspace/r14-run-sglang && git switch --detach refs/r22/pr-27026 >/dev/null && test \"$(git rev-parse HEAD)\" = ae371e8420c1ce1c1cda412caa157ba613df95d6 && timeout 60s env PYTHONDONTWRITEBYTECODE=1 CUDA_VISIBLE_DEVICES=1 PYTHONPATH=/workspace/r18-deps/common:/workspace/r17-deps/opencv:/workspace/r14-shims:python:. PATH=/venv/sglang-mature/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin /venv/sglang-mature/bin/python -m pytest -q -rs --tb=short --maxfail=1 python/sglang/multimodal_gen/test/unit/realtime/test_output_materialization.py python/sglang/multimodal_gen/test/unit/realtime/test_realtime_webui.py -k test_raw_rgb_frame_batches_apply_realtime_upscaling",
+      "returncode": 1,
+      "status": "completed",
+      "summary_lines": [
+        "==================================== ERRORS ====================================",
+        "_ ERROR collecting sglang/multimodal_gen/test/unit/realtime/test_output_materialization.py _",
+        "ImportError while importing test module '/workspace/r14-run-sglang/python/sglang/multimodal_gen/test/unit/realtime/test_output_materialization.py'.",
+        "E   ModuleNotFoundError: No module named 'addict'",
+        "14 warnings, 1 error in 9.39s"
+      ],
+      "test_names": [
+        "test_raw_rgb_frame_batches_apply_realtime_upscaling"
+      ],
+      "test_paths": [
+        "python/sglang/multimodal_gen/test/unit/realtime/test_output_materialization.py",
+        "python/sglang/multimodal_gen/test/unit/realtime/test_realtime_webui.py"
+      ],
+      "time_budget_seconds": 60
+    },
+    {
+      "case_id": "sglang-pr-26950",
+      "duration_seconds": 11.012435582932085,
+      "head_sha": "4481d9df7dd82ab11e087d12907cc0069219153a",
+      "output_sha256": "sha256:d871eb8c7cd4ddee9a58620d48586caa6802ce1de88db919c7b396b5d9a69576",
+      "output_tail": "\n==================================== ERRORS ====================================\n__________ ERROR collecting sglang/multimodal_gen/test/test_utils.py ___________\nImportError while importing test module '/workspace/r14-run-sglang/python/sglang/multimodal_gen/test/test_utils.py'.\nHint: make sure your test modules/packages have valid Python names.\nTraceback:\n/usr/lib/python3.12/importlib/__init__.py:90: in import_module\n    return _bootstrap._gcd_import(name[level:], package, level)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\npython/sglang/multimodal_gen/__init__.py:4: in <module>\n    from sglang.multimodal_gen.runtime.entrypoints.diffusion_generator import DiffGenerator\npython/sglang/multimodal_gen/runtime/entrypoints/diffusion_generator.py:22: in <module>\n    from sglang.multimodal_gen.runtime.entrypoints.utils import (\npython/sglang/multimodal_gen/runtime/entrypoints/utils.py:38: in <module>\n    from sglang.multimodal_gen.runtime.pipelines_core.schedule_batch import Req\npython/sglang/multimodal_gen/runtime/pipelines_core/__init__.py:12: in <module>\n    from sglang.multimodal_gen.registry import get_model_info\npython/sglang/multimodal_gen/registry.py:143: in <module>\n    from sglang.multimodal_gen.runtime.pipelines_core.composed_pipeline_base import (\npython/sglang/multimodal_gen/runtime/pipelines_core/composed_pipeline_base.py:21: in <module>\n    from sglang.multimodal_gen.runtime.layers.attention.selector import (\npython/sglang/multimodal_gen/runtime/layers/attention/__init__.py:10: in <module>\n    from sglang.multimodal_gen.runtime.layers.attention.layer import (\npython/sglang/multimodal_gen/runtime/layers/attention/layer.py:37: in <module>\n    from sglang.multimodal_gen.runtime.layers.attention.selector import get_attn_backend\npython/sglang/multimodal_gen/runtime/layers/attention/selector.py:19: in <module>\n    from sglang.multimodal_gen.runtime.server_args import get_global_server_args\npython/sglang/multimodal_gen/runtime/server_args.py:19: in <module>\n    import addict\nE   ModuleNotFoundError: No module named 'addict'\n=============================== warnings summary ===============================\n../../venv/main/lib/python3.12/site-packages/torch/jit/_script.py:365: 14 warnings\n  /venv/main/lib/python3.12/site-packages/torch/jit/_script.py:365: DeprecationWarning: `torch.jit.script_method` is deprecated. Please switch to `torch.compile` or `torch.export`.\n    warnings.warn(\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!\n!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!\n14 warnings, 1 error in 8.39s\nPrevious HEAD position was ae371e8420 lint\nHEAD is now at 4481d9df7d Update Cosmos3 packed-text consistency GT\n",
+      "ref": "refs/r22/pr-26950",
+      "remote_command": "cd /workspace/r14-run-sglang && git switch --detach refs/r22/pr-26950 >/dev/null && test \"$(git rev-parse HEAD)\" = 4481d9df7dd82ab11e087d12907cc0069219153a && timeout 60s env PYTHONDONTWRITEBYTECODE=1 CUDA_VISIBLE_DEVICES=1 PYTHONPATH=/workspace/r18-deps/common:/workspace/r17-deps/opencv:/workspace/r14-shims:python:. PATH=/venv/sglang-mature/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin /venv/sglang-mature/bin/python -m pytest -q -rs --tb=short --maxfail=1 python/sglang/multimodal_gen/test/test_utils.py",
+      "returncode": 2,
+      "status": "completed",
+      "summary_lines": [
+        "==================================== ERRORS ====================================",
+        "__________ ERROR collecting sglang/multimodal_gen/test/test_utils.py ___________",
+        "ImportError while importing test module '/workspace/r14-run-sglang/python/sglang/multimodal_gen/test/test_utils.py'.",
+        "E   ModuleNotFoundError: No module named 'addict'",
+        "!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!",
+        "14 warnings, 1 error in 8.39s"
+      ],
+      "test_names": [],
+      "test_paths": [
+        "python/sglang/multimodal_gen/test/test_utils.py"
+      ],
+      "time_budget_seconds": 60
+    },
+    {
+      "case_id": "vllm-pr-44101",
+      "duration_seconds": 9.021317374892533,
+      "head_sha": "2bc3817741ec676fa71bac0a466a681e907fbb71",
+      "output_sha256": "sha256:f327268a26e566308ad853b5cc39cb79417def7565aaf5429dd42ff59433b926",
+      "output_tail": "\n==================================== ERRORS ====================================\n___ ERROR collecting tests/v1/kv_connector/unit/test_lmcache_mp_connector.py ___\nImportError while importing test module '/workspace/r14-run-vllm/tests/v1/kv_connector/unit/test_lmcache_mp_connector.py'.\nHint: make sure your test modules/packages have valid Python names.\nTraceback:\nvllm/distributed/kv_transfer/kv_connector/v1/lmcache_mp_connector.py:27: in <module>\n    from lmcache.integration.vllm.vllm_multi_process_adapter import (\nE   ModuleNotFoundError: No module named 'lmcache.integration.vllm.vllm_multi_process_adapter'\n\nDuring handling of the above exception, another exception occurred:\n/venv/main/lib/python3.12/importlib/__init__.py:90: in import_module\n    return _bootstrap._gcd_import(name[level:], package, level)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntests/v1/kv_connector/unit/test_lmcache_mp_connector.py:6: in <module>\n    from vllm.distributed.kv_transfer.kv_connector.v1.lmcache_mp_connector import (\nvllm/distributed/kv_transfer/kv_connector/v1/lmcache_mp_connector.py:41: in <module>\n    from lmcache.v1.multiprocess.custom_types import (\nE   ImportError: cannot import name 'BlockAllocationRecord' from 'lmcache.v1.multiprocess.custom_types' (/venv/main/lib/python3.12/site-packages/lmcache/v1/multiprocess/custom_types.py)\n=============================== warnings summary ===============================\nvllm/__init__.py:7\n  /workspace/r14-run-vllm/vllm/__init__.py:7: RuntimeWarning: Failed to read commit hash:\n  No module named 'vllm._version'\n    from .version import __version__, __version_tuple__  # isort:skip\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!\n!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!\n1 warning, 1 error in 5.40s\nHEAD is now at 2bc381774 test case\n",
+      "ref": "refs/r22/pr-44101",
+      "remote_command": "cd /workspace/r14-run-vllm && git switch --detach refs/r22/pr-44101 >/dev/null && test \"$(git rev-parse HEAD)\" = 2bc3817741ec676fa71bac0a466a681e907fbb71 && timeout 60s env PYTHONDONTWRITEBYTECODE=1 INFRASWE_R15_VLLM_SOURCE_IMPORT_SHIM=1 CUDA_VISIBLE_DEVICES=0 PYTHONPATH=/workspace/r17-deps/vllm:/workspace/r18-deps/common:/workspace/r15-vllm-shim:/workspace/r14-shims:. PATH=/venv/main/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin /venv/main/bin/python -m pytest -q -rs --tb=short --maxfail=1 --noconftest tests/v1/kv_connector/unit/test_lmcache_mp_connector.py -k 'test_no_double_release_after_alloc or test_prefetch_locks_released_on_abort'",
+      "returncode": 2,
+      "status": "completed",
+      "summary_lines": [
+        "==================================== ERRORS ====================================",
+        "___ ERROR collecting tests/v1/kv_connector/unit/test_lmcache_mp_connector.py ___",
+        "ImportError while importing test module '/workspace/r14-run-vllm/tests/v1/kv_connector/unit/test_lmcache_mp_connector.py'.",
+        "E   ModuleNotFoundError: No module named 'lmcache.integration.vllm.vllm_multi_process_adapter'",
+        "E   ImportError: cannot import name 'BlockAllocationRecord' from 'lmcache.v1.multiprocess.custom_types' (/venv/main/lib/python3.12/site-packages/lmcache/v1/multiprocess/custom_types.py)",
+        "/workspace/r14-run-vllm/vllm/__init__.py:7: RuntimeWarning: Failed to read commit hash:",
+        "!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!",
+        "1 warning, 1 error in 5.40s"
+      ],
+      "test_names": [
+        "test_no_double_release_after_alloc",
+        "test_prefetch_locks_released_on_abort"
+      ],
+      "test_paths": [
+        "tests/v1/kv_connector/unit/test_lmcache_mp_connector.py"
+      ],
+      "time_budget_seconds": 60
+    }
+  ],
+  "remote": {
+    "gpu_lanes": [
+      0,
+      1
+    ],
+    "host": "root@194.228.55.129",
+    "port": 30808
+  },
+  "schema_version": "0.1",
+  "selection_lock_sha256": "sha256:45361ae2bbb736e4e6126e32e4b6aa76dfff2bef2333a4f206869729a3549117",
+  "started_at": "2026-09-03T05:20:16.368425+00:00",
+  "static_evidence_sha256": "sha256:2a87a0fc460248e16bf34abef2a9a8ec5dedc0a67b8736d55c70687555623d5c",
+  "test_plan_sha256": "sha256:672bccbea5ae520d8adcbc9f9faba9b1ed1022de3ee0002aa312c0c3b9f9c148",
+  "test_timeout_seconds": 60,
+  "timeout_disposition": "abandon-case-neutral-and-continue"
+}

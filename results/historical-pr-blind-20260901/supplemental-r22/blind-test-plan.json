@@ -1,0 +1,3028 @@
+{
+  "cases": [
+    {
+      "base_sha": "e425c7b029ca90d5d01ff207913b070863d35a5b",
+      "benchmark_domain": "inference",
+      "case_id": "flashinfer-pr-4771",
+      "changed_paths": [
+        "flashinfer/attention/prims_ts/__init__.py",
+        "flashinfer/attention/prims_ts/decode.py",
+        "flashinfer/decode.py",
+        "tests/attention/test_prims_ts_decode_backend.py"
+      ],
+      "claim": "The production change titled 'feat(prims-ts): CUDA graph mode for the prims-ts decode backend' preserves all unchanged attention-numerics behavior while satisfying its named direction.",
+      "closure": "outputs and declared metadata match the reference across boundary shapes and supported numeric modes",
+      "created_at": "2026-08-27T04:40:25Z",
+      "head_sha": "bdb00a8af1e0d6b03bf9ab543347ba0dd007106e",
+      "matrix": [
+        "prefill/decode",
+        "short/boundary/long sequence",
+        "one/multiple heads",
+        "supported dtype/backend"
+      ],
+      "project": "flashinfer",
+      "pull_number": 4771,
+      "repository": "flashinfer-ai/flashinfer",
+      "risk_family": "attention-numerics",
+      "runtime": "candidate exact tests plus independent attention or sampling value oracle and target-kernel execution where available",
+      "temporal_band": "recent",
+      "title": "feat(prims-ts): CUDA graph mode for the prims-ts decode backend"
+    },
+    {
+      "base_sha": "e4dc66f0f7eb26bf4200ac44d464116838b3f605",
+      "benchmark_domain": "inference",
+      "case_id": "flashinfer-pr-2857",
+      "changed_paths": [
+        "flashinfer/decode.py",
+        "flashinfer/prefill.py",
+        "flashinfer/utils.py",
+        "tests/attention/test_batch_decode_kernels.py",
+        "tests/attention/test_batch_prefill_kernels.py"
+      ],
+      "claim": "The production change titled '[fix] bugfix 541: Make single_prefill/decode compatible with torch.compile CUDA graphs' preserves all unchanged scheduler-progress behavior while satisfying its named direction.",
+      "closure": "every request reaches exactly one legal terminal or continuation state without starvation, leak, or changed output",
+      "created_at": "2026-03-23T09:04:21Z",
+      "head_sha": "a7b6cd2abf37018fd2d1670a56a385ddf251f323",
+      "matrix": [
+        "empty/one/many requests",
+        "prefill/decode",
+        "normal/preempted/aborted",
+        "single/repeated batch"
+      ],
+      "project": "flashinfer",
+      "pull_number": 2857,
+      "repository": "flashinfer-ai/flashinfer",
+      "risk_family": "scheduler-progress",
+      "runtime": "candidate exact tests plus request-state transition, progress, output, and cleanup base/head oracle",
+      "temporal_band": "mature",
+      "title": "[fix] bugfix 541: Make single_prefill/decode compatible with torch.compile CUDA graphs"
+    },
+    {
+      "base_sha": "edcef4b06558f520cc3e9cc14ed81657567284b1",
+      "benchmark_domain": "inference",
+      "case_id": "flashinfer-pr-2954",
+      "changed_paths": [
+        "benchmarks/bench_trtllm_fmha.py",
+        "benchmarks/routines/attention.py",
+        "flashinfer/decode.py",
+        "flashinfer/prefill.py",
+        "flashinfer/quantization/fp4_quantization.py",
+        "tests/attention/test_trtllm_gen_attention.py"
+      ],
+      "claim": "The production change titled 'Only swizzle on v block scale; rename kv_block_scales to kv_cache_sf' preserves all unchanged cache-state-layout behavior while satisfying its named direction.",
+      "closure": "cache regions are complete, in bounds, non-overlapping, correctly owned, and reconstruct reference values",
+      "created_at": "2026-04-02T05:25:24Z",
+      "head_sha": "a4ba18908ac596d9032107d14ff3c8ae97445e03",
+      "matrix": [
+        "empty/partial/full cache",
+        "allocate/free/reuse",
+        "contiguous/paged layout",
+        "single/multiple owners"
+      ],
+      "project": "flashinfer",
+      "pull_number": 2954,
+      "repository": "flashinfer-ai/flashinfer",
+      "risk_family": "cache-state-layout",
+      "runtime": "candidate exact tests plus offset, ownership, eviction, reuse, and byte/value reconstruction oracle",
+      "temporal_band": "mature",
+      "title": "Only swizzle on v block scale; rename kv_block_scales to kv_cache_sf"
+    },
+    {
+      "base_sha": "c4cb6e0117a4201f130dd6c48bb57289aaae0046",
+      "benchmark_domain": "inference",
+      "case_id": "flashinfer-pr-2983",
+      "changed_paths": [
+        "csrc/trtllm_fused_moe_kernel_launcher.cu",
+        "flashinfer/quantization/fp4_quantization.py",
+        "tests/moe/test_trtllm_cutlass_fused_moe.py"
+      ],
+      "claim": "The production change titled '[Draft] \"fix: snap weight_scale_vec_size to handle block_scale_interleave padding for SM120\"' preserves all unchanged memory-performance behavior while satisfying its named direction.",
+      "closure": "reference values are preserved and the named resource metric improves without hidden lifetime or synchronization debt",
+      "created_at": "2026-04-05T12:21:19Z",
+      "head_sha": "07a811aefd3b9b7b8af62ce8fd84a51d234fb985",
+      "matrix": [
+        "small/large shape",
+        "cold/warm run",
+        "feature on/off",
+        "forward/repeated execution"
+      ],
+      "project": "flashinfer",
+      "pull_number": 2983,
+      "repository": "flashinfer-ai/flashinfer",
+      "risk_family": "memory-performance",
+      "runtime": "candidate exact tests plus value parity and measured allocator, workspace, latency, or throughput comparison matching the claim",
+      "temporal_band": "mature",
+      "title": "[Draft] \"fix: snap weight_scale_vec_size to handle block_scale_interleave padding for SM120\""
+    },
+    {
+      "base_sha": "31b63bc3d73597612419b4831218feabc57fd97d",
+      "benchmark_domain": "inference",
+      "case_id": "flashinfer-pr-2901",
+      "changed_paths": [
+        "flashinfer/mla/_core.py",
+        "flashinfer/mla/cute_dsl/mla_decode.py",
+        "flashinfer/mla/cute_dsl/mla_decode_fp16.py",
+        "flashinfer/mla/cute_dsl/mla_decode_fp8.py",
+        "tests/attention/test_cute_dsl_mla_decode.py"
+      ],
+      "claim": "The production change titled 'feat: add pdl support for cute dsl mla decode kernel support' preserves all unchanged attention-numerics behavior while satisfying its named direction.",
+      "closure": "outputs and declared metadata match the reference across boundary shapes and supported numeric modes",
+      "created_at": "2026-03-27T14:13:13Z",
+      "head_sha": "eaed46bb1bf5b711489f95d4e073d7b133e1dd6d",
+      "matrix": [
+        "prefill/decode",
+        "short/boundary/long sequence",
+        "one/multiple heads",
+        "supported dtype/backend"
+      ],
+      "project": "flashinfer",
+      "pull_number": 2901,
+      "repository": "flashinfer-ai/flashinfer",
+      "risk_family": "attention-numerics",
+      "runtime": "candidate exact tests plus independent attention or sampling value oracle and target-kernel execution where available",
+      "temporal_band": "mature",
+      "title": "feat: add pdl support for cute dsl mla decode kernel support"
+    },
+    {
+      "base_sha": "043bc43206a7e67eaae0f599f16a49c5d70b27e0",
+      "benchmark_domain": "inference",
+      "case_id": "flashinfer-pr-2810",
+      "changed_paths": [
+        "flashinfer/gdn_kernels/gdn_decode_bf16_state.py",
+        "tests/gdn/test_decode_delta_rule.py"
+      ],
+      "claim": "The production change titled 'feat(gdn): add padding index guard for bf16 decode kernel' preserves all unchanged attention-numerics behavior while satisfying its named direction.",
+      "closure": "outputs and declared metadata match the reference across boundary shapes and supported numeric modes",
+      "created_at": "2026-03-17T21:29:02Z",
+      "head_sha": "e756bf27be9d54d0945bf6bc9ab5e03ac22e4779",
+      "matrix": [
+        "prefill/decode",
+        "short/boundary/long sequence",
+        "one/multiple heads",
+        "supported dtype/backend"
+      ],
+      "project": "flashinfer",
+      "pull_number": 2810,
+      "repository": "flashinfer-ai/flashinfer",
+      "risk_family": "attention-numerics",
+      "runtime": "candidate exact tests plus independent attention or sampling value oracle and target-kernel execution where available",
+      "temporal_band": "mature",
+      "title": "feat(gdn): add padding index guard for bf16 decode kernel"
+    },
+    {
+      "base_sha": "1aa32d03ef93e5d75de221db965b3e07cfc4e1c5",
+      "benchmark_domain": "inference",
+      "case_id": "flashinfer-pr-2779",
+      "changed_paths": [
+        "csrc/cutlass_mla.cu",
+        "csrc/flashinfer_mla_binding.cu",
+        "flashinfer/mla/_core.py",
+        "include/flashinfer/attention/cutlass_mla.cuh",
+        "tests/attention/test_cutlass_mla_fp8_output.py"
+      ],
+      "claim": "The production change titled 'feat: FP8 output support for CUTLASS MLA paged attention' preserves all unchanged attention-numerics behavior while satisfying its named direction.",
+      "closure": "outputs and declared metadata match the reference across boundary shapes and supported numeric modes",
+      "created_at": "2026-03-13T06:24:37Z",
+      "head_sha": "5acd64de161f0569b9f6c65d47f91e2bbfeef3fb",
+      "matrix": [
+        "prefill/decode",
+        "short/boundary/long sequence",
+        "one/multiple heads",
+        "supported dtype/backend"
+      ],
+      "project": "flashinfer",
+      "pull_number": 2779,
+      "repository": "flashinfer-ai/flashinfer",
+      "risk_family": "attention-numerics",
+      "runtime": "candidate exact tests plus independent attention or sampling value oracle and target-kernel execution where available",
+      "temporal_band": "mature",
+      "title": "feat: FP8 output support for CUTLASS MLA paged attention"
+    },
+    {
+      "base_sha": "537a3b560dd2d5d9605ab27a9cf3276e8dc3b95b",
+      "benchmark_domain": "inference",
+      "case_id": "flashinfer-pr-3020",
+      "changed_paths": [
+        "benchmarks/routines/attention.py",
+        "csrc/trtllm_fmha_kernel_launcher.cu",
+        "flashinfer/prefill.py",
+        "tests/attention/test_trtllm_gen_attention.py"
+      ],
+      "claim": "The production change titled 'trtllm non causal support' preserves all unchanged attention-numerics behavior while satisfying its named direction.",
+      "closure": "outputs and declared metadata match the reference across boundary shapes and supported numeric modes",
+      "created_at": "2026-04-09T00:08:23Z",
+      "head_sha": "646dd0fa1508798f533ffdd13acd5f74f5696f6d",
+      "matrix": [
+        "prefill/decode",
+        "short/boundary/long sequence",
+        "one/multiple heads",
+        "supported dtype/backend"
+      ],
+      "project": "flashinfer",
+      "pull_number": 3020,
+      "repository": "flashinfer-ai/flashinfer",
+      "risk_family": "attention-numerics",
+      "runtime": "candidate exact tests plus independent attention or sampling value oracle and target-kernel execution where available",
+      "temporal_band": "mature",
+      "title": "trtllm non causal support"
+    },
+    {
+      "base_sha": "31b63bc3d73597612419b4831218feabc57fd97d",
+      "benchmark_domain": "inference",
+      "case_id": "flashinfer-pr-2903",
+      "changed_paths": [
+        "flashinfer/artifacts.py",
+        "flashinfer/deep_gemm.py",
+        "flashinfer/jit/attention/modules.py",
+        "flashinfer/jit/cubin_loader.py",
+        "flashinfer/jit/fused_moe.py",
+        "flashinfer/jit/gemm/core.py",
+        "flashinfer/jit/moe_utils.py",
+        "tests/utils/test_load_cubin_compile_race_condition.py"
+      ],
+      "claim": "The production change titled 'fix: avoid re-downloading BMM export headers when flashinfer-cubin is installed' preserves all unchanged attention-numerics behavior while satisfying its named direction.",
+      "closure": "outputs and declared metadata match the reference across boundary shapes and supported numeric modes",
+      "created_at": "2026-03-27T16:50:06Z",
+      "head_sha": "7aefc1f941f16636a38dd7c63ebf360e7efa663c",
+      "matrix": [
+        "prefill/decode",
+        "short/boundary/long sequence",
+        "one/multiple heads",
+        "supported dtype/backend"
+      ],
+      "project": "flashinfer",
+      "pull_number": 2903,
+      "repository": "flashinfer-ai/flashinfer",
+      "risk_family": "attention-numerics",
+      "runtime": "candidate exact tests plus independent attention or sampling value oracle and target-kernel execution where available",
+      "temporal_band": "mature",
+      "title": "fix: avoid re-downloading BMM export headers when flashinfer-cubin is installed"
+    },
+    {
+      "base_sha": "5e1318cb33eb71dc669464c73890e3515c3fa3ef",
+      "benchmark_domain": "inference",
+      "case_id": "flashinfer-pr-2841",
+      "changed_paths": [
+        "benchmarks/routines/attention.py",
+        "benchmarks/routines/flashinfer_benchmark_utils.py",
+        "csrc/fmha_v2/fmha/gmem_tile_qkv_packed.h",
+        "csrc/fmha_v2/fmha/paged_kv_cache.h",
+        "csrc/fmha_v2/fmha/warpspec/dma.h",
+        "csrc/fmha_v2/fmha/warpspec/epilogue.h",
+        "csrc/fmha_v2_jit_binding.cu",
+        "csrc/fmha_v2_run.cu",
+        "flashinfer/prefill.py",
+        "tests/attention/test_fmha_v2_prefill.py"
+      ],
+      "claim": "The production change titled '[Perf] Add FMHAv2 to flashinfer_benchmark.py and eliminate unnecessary H2D' preserves all unchanged cache-state-layout behavior while satisfying its named direction.",
+      "closure": "cache regions are complete, in bounds, non-overlapping, correctly owned, and reconstruct reference values",
+      "created_at": "2026-03-20T19:22:28Z",
+      "head_sha": "3019f97a6ecb28495a4c3fe574470f2ba50241f8",
+      "matrix": [
+        "empty/partial/full cache",
+        "allocate/free/reuse",
+        "contiguous/paged layout",
+        "single/multiple owners"
+      ],
+      "project": "flashinfer",
+      "pull_number": 2841,
+      "repository": "flashinfer-ai/flashinfer",
+      "risk_family": "cache-state-layout",
+      "runtime": "candidate exact tests plus offset, ownership, eviction, reuse, and byte/value reconstruction oracle",
+      "temporal_band": "mature",
+      "title": "[Perf] Add FMHAv2 to flashinfer_benchmark.py and eliminate unnecessary H2D"
+    },
+    {
+      "base_sha": "8a9970b45a1e5bddace1f9d26b1b7a07a77ba504",
+      "benchmark_domain": "inference",
+      "case_id": "flashinfer-pr-3129",
+      "changed_paths": [
+        "csrc/concat_mla.cu",
+        "csrc/tvm_ffi_utils.h",
+        "flashinfer/concat_ops.py",
+        "include/flashinfer/concat_mla.cuh",
+        "include/flashinfer/utils.cuh",
+        "tests/utils/test_concat_mla.py"
+      ],
+      "claim": "The production change titled 'feat: Enable FP8 (E4M3/E5M2) in concat_mla_k for optimize long-context prefill performance and refactor type dispatch for BF16/FP16' preserves all unchanged attention-numerics behavior while satisfying its named direction.",
+      "closure": "outputs and declared metadata match the reference across boundary shapes and supported numeric modes",
+      "created_at": "2026-04-21T03:41:03Z",
+      "head_sha": "896d3ac733b3b56e0931be324f1e26889a608cb0",
+      "matrix": [
+        "prefill/decode",
+        "short/boundary/long sequence",
+        "one/multiple heads",
+        "supported dtype/backend"
+      ],
+      "project": "flashinfer",
+      "pull_number": 3129,
+      "repository": "flashinfer-ai/flashinfer",
+      "risk_family": "attention-numerics",
+      "runtime": "candidate exact tests plus independent attention or sampling value oracle and target-kernel execution where available",
+      "temporal_band": "mature",
+      "title": "feat: Enable FP8 (E4M3/E5M2) in concat_mla_k for optimize long-context prefill performance and refactor type dispatch for BF16/FP16"
+    },
+    {
+      "base_sha": "e4dc66f0f7eb26bf4200ac44d464116838b3f605",
+      "benchmark_domain": "inference",
+      "case_id": "flashinfer-pr-2855",
+      "changed_paths": [
+        "flashinfer/decode.py",
+        "flashinfer/prefill.py",
+        "flashinfer/utils.py",
+        "tests/utils/test_jit_example.py"
+      ],
+      "claim": "The production change titled '[fix] bugfix 1044: Auto-inject well-known JIT additional tensor buffers in prefill and decode run() APIs' preserves all unchanged attention-numerics behavior while satisfying its named direction.",
+      "closure": "outputs and declared metadata match the reference across boundary shapes and supported numeric modes",
+      "created_at": "2026-03-23T03:24:14Z",
+      "head_sha": "005359229cda16c32da2d43453ead37a33b0fca1",
+      "matrix": [
+        "prefill/decode",
+        "short/boundary/long sequence",
+        "one/multiple heads",
+        "supported dtype/backend"
+      ],
+      "project": "flashinfer",
+      "pull_number": 2855,
+      "repository": "flashinfer-ai/flashinfer",
+      "risk_family": "attention-numerics",
+      "runtime": "candidate exact tests plus independent attention or sampling value oracle and target-kernel execution where available",
+      "temporal_band": "mature",
+      "title": "[fix] bugfix 1044: Auto-inject well-known JIT additional tensor buffers in prefill and decode run() APIs"
+    },
+    {
+      "base_sha": "855939764f69b4ad14d43b7440a939947f2f7330",
+      "benchmark_domain": "inference",
+      "case_id": "flashinfer-pr-3177",
+      "changed_paths": [
+        "csrc/fmha_cutlass_sm100.cu",
+        "flashinfer/prefill.py",
+        "include/flashinfer/attention/blackwell/fmha_cutlass_sm100.cuh",
+        "tests/attention/test_blackwell_fmha.py"
+      ],
+      "claim": "The production change titled 'feat: fmha fwd cutlass supports fp8 output' preserves all unchanged attention-numerics behavior while satisfying its named direction.",
+      "closure": "outputs and declared metadata match the reference across boundary shapes and supported numeric modes",
+      "created_at": "2026-04-25T19:52:25Z",
+      "head_sha": "39ba39a72b147feea26b8a13d95d888b5621270e",
+      "matrix": [
+        "prefill/decode",
+        "short/boundary/long sequence",
+        "one/multiple heads",
+        "supported dtype/backend"
+      ],
+      "project": "flashinfer",
+      "pull_number": 3177,
+      "repository": "flashinfer-ai/flashinfer",
+      "risk_family": "attention-numerics",
+      "runtime": "candidate exact tests plus independent attention or sampling value oracle and target-kernel execution where available",
+      "temporal_band": "mature",
+      "title": "feat: fmha fwd cutlass supports fp8 output"
+    },
+    {
+      "base_sha": "a11ce269d79647213d61fdd7099a7b57a3439cab",
+      "benchmark_domain": "inference",
+      "case_id": "flashinfer-pr-3136",
+      "changed_paths": [
+        "include/flashinfer/attention/mla.cuh",
+        "include/flashinfer/attention/mla_hopper.cuh",
+        "tests/attention/test_mla_decode_kernel.py"
+      ],
+      "claim": "The production change titled 'fix(mla): widen page index to int64_t to avoid 32-bit overflow' preserves all unchanged attention-numerics behavior while satisfying its named direction.",
+      "closure": "outputs and declared metadata match the reference across boundary shapes and supported numeric modes",
+      "created_at": "2026-04-21T09:16:09Z",
+      "head_sha": "f5873b19dfadef4fe8dcdcda6962d1c624000b18",
+      "matrix": [
+        "prefill/decode",
+        "short/boundary/long sequence",
+        "one/multiple heads",
+        "supported dtype/backend"
+      ],
+      "project": "flashinfer",
+      "pull_number": 3136,
+      "repository": "flashinfer-ai/flashinfer",
+      "risk_family": "attention-numerics",
+      "runtime": "candidate exact tests plus independent attention or sampling value oracle and target-kernel execution where available",
+      "temporal_band": "mature",
+      "title": "fix(mla): widen page index to int64_t to avoid 32-bit overflow"
+    },
+    {
+      "base_sha": "eb52e19ec83c3092c06f4c68fabc287a228a9728",
+      "benchmark_domain": "inference",
+      "case_id": "flashinfer-pr-2957",
+      "changed_paths": [
+        "csrc/fmha_v2/fmha/hopper/arrive_wait.h",
+        "csrc/fmha_v2/fmha/warpspec/circular_buffer.h",
+        "csrc/fmha_v2/fmha/warpspec/compute.h",
+        "csrc/fmha_v2/fmha/warpspec/dma.h",
+        "csrc/fmha_v2/fmha/warpspec/kernel_traits.h",
+        "flashinfer/jit/attention/fmha_v2/fmha_library.py",
+        "tests/attention/test_fmha_v2_prefill.py"
+      ],
+      "claim": "The production change titled '[fix] Fix barrier deadlock in fmha_v2 fp8+head_dim=256 transpose_v_tile' preserves all unchanged attention-numerics behavior while satisfying its named direction.",
+      "closure": "outputs and declared metadata match the reference across boundary shapes and supported numeric modes",
+      "created_at": "2026-04-02T09:34:09Z",
+      "head_sha": "050cbadba65e24256e9f6e189c3b467d0cc3a31f",
+      "matrix": [
+        "prefill/decode",
+        "short/boundary/long sequence",
+        "one/multiple heads",
+        "supported dtype/backend"
+      ],
+      "project": "flashinfer",
+      "pull_number": 2957,
+      "repository": "flashinfer-ai/flashinfer",
+      "risk_family": "attention-numerics",
+      "runtime": "candidate exact tests plus independent attention or sampling value oracle and target-kernel execution where available",
+      "temporal_band": "mature",
+      "title": "[fix] Fix barrier deadlock in fmha_v2 fp8+head_dim=256 transpose_v_tile"
+    },
+    {
+      "base_sha": "494160675461db3bceec302cfaef47f6b4a9e401",
+      "benchmark_domain": "inference",
+      "case_id": "flashinfer-pr-2898",
+      "changed_paths": [
+        "csrc/trtllm_fused_moe_kernel_launcher.cu",
+        "flashinfer/quantization/fp4_quantization.py",
+        "tests/moe/test_trtllm_cutlass_fused_moe.py"
+      ],
+      "claim": "The production change titled 'fix: snap weight_scale_vec_size to handle block_scale_interleave padding for SM120' preserves all unchanged memory-performance behavior while satisfying its named direction.",
+      "closure": "reference values are preserved and the named resource metric improves without hidden lifetime or synchronization debt",
+      "created_at": "2026-03-26T14:04:31Z",
+      "head_sha": "ebfd95b6af69139f35808e640df93e5047894e50",
+      "matrix": [
+        "small/large shape",
+        "cold/warm run",
+        "feature on/off",
+        "forward/repeated execution"
+      ],
+      "project": "flashinfer",
+      "pull_number": 2898,
+      "repository": "flashinfer-ai/flashinfer",
+      "risk_family": "memory-performance",
+      "runtime": "candidate exact tests plus value parity and measured allocator, workspace, latency, or throughput comparison matching the claim",
+      "temporal_band": "mature",
+      "title": "fix: snap weight_scale_vec_size to handle block_scale_interleave padding for SM120"
+    },
+    {
+      "base_sha": "124a2d32a4189ba8f16e6c9fb37b5a1fb5968113",
+      "benchmark_domain": "inference",
+      "case_id": "flashinfer-pr-2830",
+      "changed_paths": [
+        "csrc/batch_prefill.cu",
+        "csrc/batch_prefill_jit_binding.cu",
+        "flashinfer/decode.py",
+        "flashinfer/pod.py",
+        "flashinfer/prefill.py",
+        "flashinfer/sparse.py",
+        "flashinfer/utils.py",
+        "include/flashinfer/attention/scheduler.cuh",
+        "tests/attention/test_batch_invariant_fa2.py",
+        "tests/attention/test_batch_prefill.py",
+        "tests/attention/test_tensor_cores_decode.py"
+      ],
+      "claim": "The production change titled 'feat: Add Option For Fixed cta_tile_q' preserves all unchanged scheduler-progress behavior while satisfying its named direction.",
+      "closure": "every request reaches exactly one legal terminal or continuation state without starvation, leak, or changed output",
+      "created_at": "2026-03-19T21:29:59Z",
+      "head_sha": "b36e76a81f58d63e757b4ac2a91e8cb49cbab06f",
+      "matrix": [
+        "empty/one/many requests",
+        "prefill/decode",
+        "normal/preempted/aborted",
+        "single/repeated batch"
+      ],
+      "project": "flashinfer",
+      "pull_number": 2830,
+      "repository": "flashinfer-ai/flashinfer",
+      "risk_family": "scheduler-progress",
+      "runtime": "candidate exact tests plus request-state transition, progress, output, and cleanup base/head oracle",
+      "temporal_band": "mature",
+      "title": "feat: Add Option For Fixed cta_tile_q"
+    },
+    {
+      "base_sha": "a15c357e8c90d9c5ed162dfa7144297077c3e856",
+      "benchmark_domain": "inference",
+      "case_id": "flashinfer-pr-2752",
+      "changed_paths": [
+        "csrc/flashinfer_sampling_binding.cu",
+        "csrc/renorm.cu",
+        "flashinfer/logits_processor/operators.py",
+        "flashinfer/sampling.py",
+        "include/flashinfer/air_top_p.cuh",
+        "tests/utils/test_logits_processor.py",
+        "tests/utils/test_sampling.py"
+      ],
+      "claim": "The production change titled '[feat] Add air top-p algorithm' preserves all unchanged attention-numerics behavior while satisfying its named direction.",
+      "closure": "outputs and declared metadata match the reference across boundary shapes and supported numeric modes",
+      "created_at": "2026-03-11T02:54:26Z",
+      "head_sha": "412ad9480568075da4d8b1c1d70ae558ecd08a10",
+      "matrix": [
+        "prefill/decode",
+        "short/boundary/long sequence",
+        "one/multiple heads",
+        "supported dtype/backend"
+      ],
+      "project": "flashinfer",
+      "pull_number": 2752,
+      "repository": "flashinfer-ai/flashinfer",
+      "risk_family": "attention-numerics",
+      "runtime": "candidate exact tests plus independent attention or sampling value oracle and target-kernel execution where available",
+      "temporal_band": "mature",
+      "title": "[feat] Add air top-p algorithm"
+    },
+    {
+      "base_sha": "4e64219132b13aee43f9d516aba54160748a6feb",
+      "benchmark_domain": "inference",
+      "case_id": "flashinfer-pr-2799",
+      "changed_paths": [
+        "csrc/fmha_v2/fmha/gmem_tile_qkv_packed.h",
+        "csrc/fmha_v2/fmha/warpspec/dma.h",
+        "csrc/fmha_v2/fused_multihead_attention.h",
+        "csrc/fmha_v2/fused_multihead_attention_demo_bert_params.h",
+        "csrc/fmha_v2_run.cu",
+        "flashinfer/prefill.py"
+      ],
+      "claim": "The production change titled '[fmha-v2] Support HND and NHD paged KV cache layouts with conditional stride handling' preserves all unchanged cache-state-layout behavior while satisfying its named direction.",
+      "closure": "cache regions are complete, in bounds, non-overlapping, correctly owned, and reconstruct reference values",
+      "created_at": "2026-03-17T01:57:00Z",
+      "head_sha": "3175712ca11a1fd59fe7bbbe2aa2e14be5ffab69",
+      "matrix": [
+        "empty/partial/full cache",
+        "allocate/free/reuse",
+        "contiguous/paged layout",
+        "single/multiple owners"
+      ],
+      "project": "flashinfer",
+      "pull_number": 2799,
+      "repository": "flashinfer-ai/flashinfer",
+      "risk_family": "cache-state-layout",
+      "runtime": "candidate exact tests plus offset, ownership, eviction, reuse, and byte/value reconstruction oracle",
+      "temporal_band": "mature",
+      "title": "[fmha-v2] Support HND and NHD paged KV cache layouts with conditional stride handling"
+    },
+    {
+      "base_sha": "3516d2bca61f297579c7fb18019c0939c195c578",
+      "benchmark_domain": "inference",
+      "case_id": "flashinfer-pr-2794",
+      "changed_paths": [
+        "benchmarks/bench_moe_deepseek.py",
+        "csrc/trtllm_batched_gemm_runner.cu",
+        "csrc/trtllm_fused_moe_kernel_launcher.cu",
+        "csrc/trtllm_fused_moe_runner.cu",
+        "include/flashinfer/exception.h",
+        "include/flashinfer/trtllm/batched_gemm/KernelRunner.h",
+        "include/flashinfer/trtllm/fused_moe/runner.h"
+      ],
+      "claim": "The production change titled 'feat: preparing TRTLLM MoE backend to support more kernels' preserves all unchanged scheduler-progress behavior while satisfying its named direction.",
+      "closure": "every request reaches exactly one legal terminal or continuation state without starvation, leak, or changed output",
+      "created_at": "2026-03-16T06:34:24Z",
+      "head_sha": "b9845a7c362ed5fe0de45654f9c11c820356e364",
+      "matrix": [
+        "empty/one/many requests",
+        "prefill/decode",
+        "normal/preempted/aborted",
+        "single/repeated batch"
+      ],
+      "project": "flashinfer",
+      "pull_number": 2794,
+      "repository": "flashinfer-ai/flashinfer",
+      "risk_family": "scheduler-progress",
+      "runtime": "candidate exact tests plus request-state transition, progress, output, and cleanup base/head oracle",
+      "temporal_band": "mature",
+      "title": "feat: preparing TRTLLM MoE backend to support more kernels"
+    },
+    {
+      "base_sha": "6885e76a5e12a59220b9dc199d86a64fbe5f6d78",
+      "benchmark_domain": "inference",
+      "case_id": "flashinfer-pr-3293",
+      "changed_paths": [
+        "flashinfer/gdn_decode.py",
+        "flashinfer/gdn_kernels/gdn_decode_bf16_state.py"
+      ],
+      "claim": "The production change titled 'fix(gdn): allow importing gdn_decode without a CUDA device' preserves all unchanged attention-numerics behavior while satisfying its named direction.",
+      "closure": "outputs and declared metadata match the reference across boundary shapes and supported numeric modes",
+      "created_at": "2026-05-11T23:38:18Z",
+      "head_sha": "ab6aba10c780476f2cc3d4881e4a946047ab02fc",
+      "matrix": [
+        "prefill/decode",
+        "short/boundary/long sequence",
+        "one/multiple heads",
+        "supported dtype/backend"
+      ],
+      "project": "flashinfer",
+      "pull_number": 3293,
+      "repository": "flashinfer-ai/flashinfer",
+      "risk_family": "attention-numerics",
+      "runtime": "candidate exact tests plus independent attention or sampling value oracle and target-kernel execution where available",
+      "temporal_band": "mature",
+      "title": "fix(gdn): allow importing gdn_decode without a CUDA device"
+    },
+    {
+      "base_sha": "6885e76a5e12a59220b9dc199d86a64fbe5f6d78",
+      "benchmark_domain": "inference",
+      "case_id": "flashinfer-pr-3289",
+      "changed_paths": [
+        "csrc/nv_internal/cpp/kernels/quantization.cu",
+        "csrc/nv_internal/tensorrt_llm/kernels/quantization.cuh",
+        "csrc/nv_internal/tensorrt_llm/kernels/quantization_utils.cuh"
+      ],
+      "claim": "The production change titled 'Optimize mxfp8 quantization on sm100' preserves all unchanged memory-performance behavior while satisfying its named direction.",
+      "closure": "reference values are preserved and the named resource metric improves without hidden lifetime or synchronization debt",
+      "created_at": "2026-05-11T21:23:05Z",
+      "head_sha": "8c37ad1eaf600dda4dc41cb5df78aa4aa8c040ec",
+      "matrix": [
+        "small/large shape",
+        "cold/warm run",
+        "feature on/off",
+        "forward/repeated execution"
+      ],
+      "project": "flashinfer",
+      "pull_number": 3289,
+      "repository": "flashinfer-ai/flashinfer",
+      "risk_family": "memory-performance",
+      "runtime": "candidate exact tests plus value parity and measured allocator, workspace, latency, or throughput comparison matching the claim",
+      "temporal_band": "mature",
+      "title": "Optimize mxfp8 quantization on sm100"
+    },
+    {
+      "base_sha": "f7acd25973f56fd47d88aebb7696901da2ae3ec2",
+      "benchmark_domain": "inference",
+      "case_id": "flashinfer-pr-3193",
+      "changed_paths": [
+        "flashinfer/fused_moe/cute_dsl/blackwell_sm12x/moe_dispatch.py",
+        "flashinfer/fused_moe/cute_dsl/blackwell_sm12x/moe_micro_kernel.py"
+      ],
+      "claim": "The production change titled 'perf(moe): optimize SM120 b12x MoE short decode' preserves all unchanged attention-numerics behavior while satisfying its named direction.",
+      "closure": "outputs and declared metadata match the reference across boundary shapes and supported numeric modes",
+      "created_at": "2026-04-27T21:45:38Z",
+      "head_sha": "729e7e87c262478a914fb8a97fc15e6f7f91dd8a",
+      "matrix": [
+        "prefill/decode",
+        "short/boundary/long sequence",
+        "one/multiple heads",
+        "supported dtype/backend"
+      ],
+      "project": "flashinfer",
+      "pull_number": 3193,
+      "repository": "flashinfer-ai/flashinfer",
+      "risk_family": "attention-numerics",
+      "runtime": "candidate exact tests plus independent attention or sampling value oracle and target-kernel execution where available",
+      "temporal_band": "mature",
+      "title": "perf(moe): optimize SM120 b12x MoE short decode"
+    },
+    {
+      "base_sha": "9f7adfb8461d68ef5e18479f61cc6919b7f80c3d",
+      "benchmark_domain": "inference",
+      "case_id": "flashinfer-pr-3155",
+      "changed_paths": [
+        "flashinfer/gdn_kernels/blackwell/gdn_prefill.py"
+      ],
+      "claim": "The production change titled 'fix(gdn): use physical SM count for SM100 persistent prefill kernel' preserves all unchanged attention-numerics behavior while satisfying its named direction.",
+      "closure": "outputs and declared metadata match the reference across boundary shapes and supported numeric modes",
+      "created_at": "2026-04-23T14:32:21Z",
+      "head_sha": "92b4558fc643dae8f0e0a60c9af06a71f19ee9d9",
+      "matrix": [
+        "prefill/decode",
+        "short/boundary/long sequence",
+        "one/multiple heads",
+        "supported dtype/backend"
+      ],
+      "project": "flashinfer",
+      "pull_number": 3155,
+      "repository": "flashinfer-ai/flashinfer",
+      "risk_family": "attention-numerics",
+      "runtime": "candidate exact tests plus independent attention or sampling value oracle and target-kernel execution where available",
+      "temporal_band": "mature",
+      "title": "fix(gdn): use physical SM count for SM100 persistent prefill kernel"
+    },
+    {
+      "base_sha": "9e3d8b9d1d11af893f7e7389baa25192db34bd8e",
+      "benchmark_domain": "inference",
+      "case_id": "flashinfer-pr-3112",
+      "changed_paths": [
+        "flashinfer/cute_dsl/attention/compat.py",
+        "flashinfer/cute_dsl/attention/fusion/variant.py",
+        "flashinfer/cute_dsl/attention/prefill.py",
+        "flashinfer/cute_dsl/attention/roles/correction.py",
+        "flashinfer/cute_dsl/attention/roles/softmax.py",
+        "flashinfer/cute_dsl/attention/roles/softmax_math.py"
+      ],
+      "claim": "The production change titled 'Normalize modular attention to CUTLASS DSL APIs shipped on PyPI' preserves all unchanged attention-numerics behavior while satisfying its named direction.",
+      "closure": "outputs and declared metadata match the reference across boundary shapes and supported numeric modes",
+      "created_at": "2026-04-17T22:34:22Z",
+      "head_sha": "7e7078e6978253873b6975213d26ffd7a3ed30c8",
+      "matrix": [
+        "prefill/decode",
+        "short/boundary/long sequence",
+        "one/multiple heads",
+        "supported dtype/backend"
+      ],
+      "project": "flashinfer",
+      "pull_number": 3112,
+      "repository": "flashinfer-ai/flashinfer",
+      "risk_family": "attention-numerics",
+      "runtime": "candidate exact tests plus independent attention or sampling value oracle and target-kernel execution where available",
+      "temporal_band": "mature",
+      "title": "Normalize modular attention to CUTLASS DSL APIs shipped on PyPI"
+    },
+    {
+      "base_sha": "982aa8acfcfd0b6cb441f8d39d06c477ea4244f0",
+      "benchmark_domain": "inference",
+      "case_id": "sglang-pr-37669",
+      "changed_paths": [
+        "python/sglang/srt/distributed/communication_op.py",
+        "python/sglang/srt/managers/scheduler_components/request_receiver.py",
+        "python/sglang/srt/managers/scheduler_pp_mixin.py",
+        "test/registered/unit/managers/test_pp_cp_rank_offsets.py"
+      ],
+      "claim": "The production change titled '[Fix] Apply the attention-CP broadcast result in PP dynamic-chunk profiling' preserves all unchanged scheduler-progress behavior while satisfying its named direction.",
+      "closure": "every request reaches exactly one legal terminal or continuation state without starvation, leak, or changed output",
+      "created_at": "2026-09-02T22:39:08Z",
+      "head_sha": "cfb400f58b1588a5545fec731fcd79eefb7072fa",
+      "matrix": [
+        "empty/one/many requests",
+        "prefill/decode",
+        "normal/preempted/aborted",
+        "single/repeated batch"
+      ],
+      "project": "sglang",
+      "pull_number": 37669,
+      "repository": "sgl-project/sglang",
+      "risk_family": "scheduler-progress",
+      "runtime": "candidate exact tests plus request-state transition, progress, output, and cleanup base/head oracle",
+      "temporal_band": "recent",
+      "title": "[Fix] Apply the attention-CP broadcast result in PP dynamic-chunk profiling"
+    },
+    {
+      "base_sha": "505ac1420435af44604cbb3fb1fa137c0d3cea1c",
+      "benchmark_domain": "inference",
+      "case_id": "sglang-pr-27131",
+      "changed_paths": [
+        "python/sglang/srt/layers/quantization/kv_cache.py"
+      ],
+      "claim": "The production change titled 'fp8 kv cache: treat non-positive k/v_scale as uncalibrated (default 1.0)' preserves all unchanged cache-state-layout behavior while satisfying its named direction.",
+      "closure": "cache regions are complete, in bounds, non-overlapping, correctly owned, and reconstruct reference values",
+      "created_at": "2026-06-03T07:47:52Z",
+      "head_sha": "73f4bcc728a522f1e034e1d333e8c6181abb13b4",
+      "matrix": [
+        "empty/partial/full cache",
+        "allocate/free/reuse",
+        "contiguous/paged layout",
+        "single/multiple owners"
+      ],
+      "project": "sglang",
+      "pull_number": 27131,
+      "repository": "sgl-project/sglang",
+      "risk_family": "cache-state-layout",
+      "runtime": "candidate exact tests plus offset, ownership, eviction, reuse, and byte/value reconstruction oracle",
+      "temporal_band": "mature",
+      "title": "fp8 kv cache: treat non-positive k/v_scale as uncalibrated (default 1.0)"
+    },
+    {
+      "base_sha": "28f9c1ff24eb4c17e7bc8ed8da62c750fe82d8ee",
+      "benchmark_domain": "inference",
+      "case_id": "sglang-pr-27078",
+      "changed_paths": [
+        "docs_new/docs/hardware-platforms/amd_gpu.mdx",
+        "python/sglang/srt/layers/attention/aiter_backend.py",
+        "test/registered/amd/accuracy/mi35x/test_mimo_v2_flash_aiter_eval_mi35x.py",
+        "test/registered/amd/perf/mi35x/test_mimo_v2_flash_perf_mi35x.py"
+      ],
+      "claim": "The production change titled 'support aiter backend for mimo models' preserves all unchanged attention-numerics behavior while satisfying its named direction.",
+      "closure": "outputs and declared metadata match the reference across boundary shapes and supported numeric modes",
+      "created_at": "2026-06-02T16:28:59Z",
+      "head_sha": "13337784320a3db766939901908a2d4586beb83d",
+      "matrix": [
+        "prefill/decode",
+        "short/boundary/long sequence",
+        "one/multiple heads",
+        "supported dtype/backend"
+      ],
+      "project": "sglang",
+      "pull_number": 27078,
+      "repository": "sgl-project/sglang",
+      "risk_family": "attention-numerics",
+      "runtime": "candidate exact tests plus independent attention or sampling value oracle and target-kernel execution where available",
+      "temporal_band": "mature",
+      "title": "support aiter backend for mimo models"
+    },
+    {
+      "base_sha": "03c77dc33d0a051aa15c1235407440d9d107b98f",
+      "benchmark_domain": "inference",
+      "case_id": "sglang-pr-27165",
+      "changed_paths": [
+        "python/sglang/srt/speculative/dflash_info.py",
+        "python/sglang/srt/speculative/dflash_utils.py",
+        "python/sglang/srt/speculative/dflash_worker.py",
+        "test/registered/unit/spec/test_dflash_grammar_mask.py"
+      ],
+      "claim": "The production change titled 'Support greedy grammar-constrained decoding for DFlash verification' preserves all unchanged model-runtime-integration behavior while satisfying its named direction.",
+      "closure": "the production runtime reaches the new path, preserves the control path, and fails invalid configurations closed",
+      "created_at": "2026-06-03T14:24:26Z",
+      "head_sha": "1aeb131f75289384a12e7e9ab7a1f9f6468be1ab",
+      "matrix": [
+        "feature on/off",
+        "one/repeated request",
+        "supported model/config",
+        "success/invalid input"
+      ],
+      "project": "sglang",
+      "pull_number": 27165,
+      "repository": "sgl-project/sglang",
+      "risk_family": "model-runtime-integration",
+      "runtime": "candidate exact tests plus import/configuration, production reachability, state ownership, and output oracle",
+      "temporal_band": "mature",
+      "title": "Support greedy grammar-constrained decoding for DFlash verification"
+    },
+    {
+      "base_sha": "133254086bf1f5b887c8c99d311719102d58a7eb",
+      "benchmark_domain": "inference",
+      "case_id": "sglang-pr-27067",
+      "changed_paths": [
+        "python/sglang/srt/mem_cache/hicache_storage.py",
+        "python/sglang/srt/mem_cache/hiradix_cache.py",
+        "python/sglang/srt/mem_cache/hybrid_cache/hybrid_pool_assembler.py",
+        "python/sglang/srt/mem_cache/memory_pool_host.py",
+        "python/sglang/srt/mem_cache/storage/mooncake_store/mooncake_store.py",
+        "python/sglang/srt/server_args.py",
+        "test/registered/8-gpu-models/test_hicache_return_indexer_topk.py",
+        "test/registered/unit/mem_cache/test_hicache_indexer_topk_guard.py",
+        "test/registered/unit/mem_cache/test_hicache_indexer_topk_pool.py"
+      ],
+      "claim": "The production change titled 'fix(hicache): migrate captured indexer-topk on host-tier cache hits' preserves all unchanged memory-performance behavior while satisfying its named direction.",
+      "closure": "reference values are preserved and the named resource metric improves without hidden lifetime or synchronization debt",
+      "created_at": "2026-06-02T13:42:25Z",
+      "head_sha": "22797336522871d3e2cea2fb8e6534ac8b19cfaf",
+      "matrix": [
+        "small/large shape",
+        "cold/warm run",
+        "feature on/off",
+        "forward/repeated execution"
+      ],
+      "project": "sglang",
+      "pull_number": 27067,
+      "repository": "sgl-project/sglang",
+      "risk_family": "memory-performance",
+      "runtime": "candidate exact tests plus value parity and measured allocator, workspace, latency, or throughput comparison matching the claim",
+      "temporal_band": "mature",
+      "title": "fix(hicache): migrate captured indexer-topk on host-tier cache hits"
+    },
+    {
+      "base_sha": "d70726a31a5edbcf04b4d02446832e4d788704b1",
+      "benchmark_domain": "inference",
+      "case_id": "sglang-pr-27058",
+      "changed_paths": [
+        "python/sglang/srt/managers/scheduler.py",
+        "python/sglang/srt/mem_cache/base_prefix_cache.py",
+        "python/sglang/srt/mem_cache/radix_cache.py",
+        "python/sglang/srt/mem_cache/session_radix_cache.py",
+        "python/sglang/srt/server_args.py",
+        "test/manual/core/test_session_radix_cache.py",
+        "test/registered/unit/server_args/test_server_args.py"
+      ],
+      "claim": "The production change titled 'feat: session radix cache' preserves all unchanged scheduler-progress behavior while satisfying its named direction.",
+      "closure": "every request reaches exactly one legal terminal or continuation state without starvation, leak, or changed output",
+      "created_at": "2026-06-02T11:38:07Z",
+      "head_sha": "bf46ac3ef39415e3b6e818a20d9a17e7ae98fb20",
+      "matrix": [
+        "empty/one/many requests",
+        "prefill/decode",
+        "normal/preempted/aborted",
+        "single/repeated batch"
+      ],
+      "project": "sglang",
+      "pull_number": 27058,
+      "repository": "sgl-project/sglang",
+      "risk_family": "scheduler-progress",
+      "runtime": "candidate exact tests plus request-state transition, progress, output, and cleanup base/head oracle",
+      "temporal_band": "mature",
+      "title": "feat: session radix cache"
+    },
+    {
+      "base_sha": "d15a2dc72c81a0c2dd72074f3e208bfa38df831b",
+      "benchmark_domain": "inference",
+      "case_id": "sglang-pr-27018",
+      "changed_paths": [
+        "python/sglang/srt/layers/attention/tokenspeed_mla_backend.py",
+        "python/sglang/srt/layers/attention/tokenspeed_workspace.py",
+        "test/registered/unit/layers/test_tokenspeed_workspace.py"
+      ],
+      "claim": "The production change titled 'fix(mla): size TokenSpeed workspace by query length' preserves all unchanged attention-numerics behavior while satisfying its named direction.",
+      "closure": "outputs and declared metadata match the reference across boundary shapes and supported numeric modes",
+      "created_at": "2026-06-02T05:57:16Z",
+      "head_sha": "430e8231cdea1056043953af993d67b2c81f155a",
+      "matrix": [
+        "prefill/decode",
+        "short/boundary/long sequence",
+        "one/multiple heads",
+        "supported dtype/backend"
+      ],
+      "project": "sglang",
+      "pull_number": 27018,
+      "repository": "sgl-project/sglang",
+      "risk_family": "attention-numerics",
+      "runtime": "candidate exact tests plus independent attention or sampling value oracle and target-kernel execution where available",
+      "temporal_band": "mature",
+      "title": "fix(mla): size TokenSpeed workspace by query length"
+    },
+    {
+      "base_sha": "6dd7aebb36e5e610614c12b841a678ba33a0349d",
+      "benchmark_domain": "inference",
+      "case_id": "sglang-pr-26977",
+      "changed_paths": [
+        "docs_new/index.mdx",
+        "python/sglang/srt/managers/schedule_policy.py",
+        "python/sglang/srt/mem_cache/hiradix_cache.py",
+        "python/sglang/srt/server_args.py",
+        "test/registered/hicache/test_hicache_concurrent_requests_no_enable_prefix_caching.py",
+        "test/registered/hicache/test_hicache_no_enable_prefix_caching.py"
+      ],
+      "claim": "The production change titled '[HiCache] Add `--no-enable-prefix-caching` to disable L1 (GPU) prefix reuse while keeping L2 (CPU) load-back reuse' preserves all unchanged scheduler-progress behavior while satisfying its named direction.",
+      "closure": "every request reaches exactly one legal terminal or continuation state without starvation, leak, or changed output",
+      "created_at": "2026-06-01T23:28:26Z",
+      "head_sha": "a47bc210287cd98d30110861301a18b370f541f0",
+      "matrix": [
+        "empty/one/many requests",
+        "prefill/decode",
+        "normal/preempted/aborted",
+        "single/repeated batch"
+      ],
+      "project": "sglang",
+      "pull_number": 26977,
+      "repository": "sgl-project/sglang",
+      "risk_family": "scheduler-progress",
+      "runtime": "candidate exact tests plus request-state transition, progress, output, and cleanup base/head oracle",
+      "temporal_band": "mature",
+      "title": "[HiCache] Add `--no-enable-prefix-caching` to disable L1 (GPU) prefix reuse while keeping L2 (CPU) load-back reuse"
+    },
+    {
+      "base_sha": "ff642ed9369762f72057cc710c6ea8159d75f9a2",
+      "benchmark_domain": "inference",
+      "case_id": "sglang-pr-26929",
+      "changed_paths": [
+        "docs_new/cookbook/autoregressive/NVIDIA/Nemotron3-Ultra.mdx",
+        "docs_new/docs/advanced_features/server_arguments.mdx",
+        "docs_new/src/snippets/autoregressive/nemotron3-ultra-deployment.jsx",
+        "python/sglang/srt/layers/attention/mamba/ops/mamba_ssm.py",
+        "python/sglang/srt/layers/attention/mamba/ops/ssu_dispatch.py",
+        "python/sglang/srt/server_args.py",
+        "test/registered/layers/mamba/test_mamba_ssm.py",
+        "test/registered/unit/server_args/test_server_args.py"
+      ],
+      "claim": "The production change titled 'Add stochastic rounding for FP16 Mamba SSM cache' preserves all unchanged attention-numerics behavior while satisfying its named direction.",
+      "closure": "outputs and declared metadata match the reference across boundary shapes and supported numeric modes",
+      "created_at": "2026-06-01T10:25:21Z",
+      "head_sha": "e6c7dec4d12db74e6e2728e4ca705261084e9fb5",
+      "matrix": [
+        "prefill/decode",
+        "short/boundary/long sequence",
+        "one/multiple heads",
+        "supported dtype/backend"
+      ],
+      "project": "sglang",
+      "pull_number": 26929,
+      "repository": "sgl-project/sglang",
+      "risk_family": "attention-numerics",
+      "runtime": "candidate exact tests plus independent attention or sampling value oracle and target-kernel execution where available",
+      "temporal_band": "mature",
+      "title": "Add stochastic rounding for FP16 Mamba SSM cache"
+    },
+    {
+      "base_sha": "376635c1e3aa2abd2e4aa71281abf08c22b56bb6",
+      "benchmark_domain": "inference",
+      "case_id": "sglang-pr-26830",
+      "changed_paths": [
+        "python/sglang/jit_kernel/tests/test_gdn_flashinfer_mtp_verify.py",
+        "python/sglang/srt/layers/attention/hybrid_linear_attn_backend.py",
+        "python/sglang/srt/layers/attention/linear/kernels/gdn_flashinfer.py",
+        "python/sglang/srt/layers/attention/linear/kernels/kernel_backend.py",
+        "python/sglang/srt/layers/attention/mamba/mamba_state_scatter_triton.py"
+      ],
+      "claim": "The production change titled 'Support FlashInfer SM100 GDN MTP verify' preserves all unchanged attention-numerics behavior while satisfying its named direction.",
+      "closure": "outputs and declared metadata match the reference across boundary shapes and supported numeric modes",
+      "created_at": "2026-05-31T06:26:53Z",
+      "head_sha": "cf00421a95229f58aac44dfa994eb4d75a858db4",
+      "matrix": [
+        "prefill/decode",
+        "short/boundary/long sequence",
+        "one/multiple heads",
+        "supported dtype/backend"
+      ],
+      "project": "sglang",
+      "pull_number": 26830,
+      "repository": "sgl-project/sglang",
+      "risk_family": "attention-numerics",
+      "runtime": "candidate exact tests plus independent attention or sampling value oracle and target-kernel execution where available",
+      "temporal_band": "mature",
+      "title": "Support FlashInfer SM100 GDN MTP verify"
+    },
+    {
+      "base_sha": "9a8ab2d22b4f85f840701e8ed717f663e1c4662b",
+      "benchmark_domain": "inference",
+      "case_id": "sglang-pr-26971",
+      "changed_paths": [
+        "python/sglang/srt/managers/io_struct.py",
+        "test/registered/unit/managers/test_io_struct.py"
+      ],
+      "claim": "The production change titled 'fix(io_struct): index extra_key per sub-request in batched GenerateReqInput' preserves all unchanged scheduler-progress behavior while satisfying its named direction.",
+      "closure": "every request reaches exactly one legal terminal or continuation state without starvation, leak, or changed output",
+      "created_at": "2026-06-01T22:04:27Z",
+      "head_sha": "2e0dd543178821601b81cac45feb7eb53afc6286",
+      "matrix": [
+        "empty/one/many requests",
+        "prefill/decode",
+        "normal/preempted/aborted",
+        "single/repeated batch"
+      ],
+      "project": "sglang",
+      "pull_number": 26971,
+      "repository": "sgl-project/sglang",
+      "risk_family": "scheduler-progress",
+      "runtime": "candidate exact tests plus request-state transition, progress, output, and cleanup base/head oracle",
+      "temporal_band": "mature",
+      "title": "fix(io_struct): index extra_key per sub-request in batched GenerateReqInput"
+    },
+    {
+      "base_sha": "f4e7a98fe58347c3b82c8b0f985e30b9f458b321",
+      "benchmark_domain": "inference",
+      "case_id": "sglang-pr-26833",
+      "changed_paths": [
+        "python/sglang/srt/managers/io_struct.py",
+        "test/registered/unit/managers/test_io_struct.py"
+      ],
+      "claim": "The production change titled 'Index extra_key per sub-request in batched GenerateReqInput' preserves all unchanged scheduler-progress behavior while satisfying its named direction.",
+      "closure": "every request reaches exactly one legal terminal or continuation state without starvation, leak, or changed output",
+      "created_at": "2026-05-31T07:55:24Z",
+      "head_sha": "62c4f3cdc0650668bcd5d79e438c7cd3611a53e2",
+      "matrix": [
+        "empty/one/many requests",
+        "prefill/decode",
+        "normal/preempted/aborted",
+        "single/repeated batch"
+      ],
+      "project": "sglang",
+      "pull_number": 26833,
+      "repository": "sgl-project/sglang",
+      "risk_family": "scheduler-progress",
+      "runtime": "candidate exact tests plus request-state transition, progress, output, and cleanup base/head oracle",
+      "temporal_band": "mature",
+      "title": "Index extra_key per sub-request in batched GenerateReqInput"
+    },
+    {
+      "base_sha": "8e836e7dc9b8ff48987c21fdcf6bcd65b16a9837",
+      "benchmark_domain": "inference",
+      "case_id": "sglang-pr-27283",
+      "changed_paths": [
+        "python/sglang/multimodal_gen/runtime/layers/rotary_embedding/utils.py",
+        "python/sglang/multimodal_gen/test/server/ascend/testcase_configs_npu.py",
+        "python/sglang/multimodal_gen/test/test_utils.py"
+      ],
+      "claim": "The production change titled '[NPU] Enable consistency checking for diffusion tests' preserves all unchanged memory-performance behavior while satisfying its named direction.",
+      "closure": "reference values are preserved and the named resource metric improves without hidden lifetime or synchronization debt",
+      "created_at": "2026-06-04T15:48:54Z",
+      "head_sha": "8a61e60725309c82510c4731a6088149ac8a1afc",
+      "matrix": [
+        "small/large shape",
+        "cold/warm run",
+        "feature on/off",
+        "forward/repeated execution"
+      ],
+      "project": "sglang",
+      "pull_number": 27283,
+      "repository": "sgl-project/sglang",
+      "risk_family": "memory-performance",
+      "runtime": "candidate exact tests plus value parity and measured allocator, workspace, latency, or throughput comparison matching the claim",
+      "temporal_band": "mature",
+      "title": "[NPU] Enable consistency checking for diffusion tests"
+    },
+    {
+      "base_sha": "216ed270e5fd88fd5d663c363992d3f8a6c1bb17",
+      "benchmark_domain": "inference",
+      "case_id": "sglang-pr-27271",
+      "changed_paths": [
+        "python/sglang/srt/configs/__init__.py",
+        "python/sglang/srt/configs/gemma4_unified.py",
+        "python/sglang/srt/configs/model_config.py",
+        "python/sglang/srt/environ.py",
+        "python/sglang/srt/models/gemma4_unified_mm.py",
+        "python/sglang/srt/multimodal/processors/gemma4_unified.py",
+        "python/sglang/srt/server_args.py",
+        "python/sglang/srt/utils/hf_transformers/common.py",
+        "python/sglang/srt/utils/hf_transformers/config.py",
+        "test/registered/unit/configs/test_gemma4_unified_config.py"
+      ],
+      "claim": "The production change titled 'Add Gemma 4 Unified (12B) encoder-free multimodal model support' preserves all unchanged memory-performance behavior while satisfying its named direction.",
+      "closure": "reference values are preserved and the named resource metric improves without hidden lifetime or synchronization debt",
+      "created_at": "2026-06-04T10:37:35Z",
+      "head_sha": "598d61da8f982baf2e1b12497346c39f82c340df",
+      "matrix": [
+        "small/large shape",
+        "cold/warm run",
+        "feature on/off",
+        "forward/repeated execution"
+      ],
+      "project": "sglang",
+      "pull_number": 27271,
+      "repository": "sgl-project/sglang",
+      "risk_family": "memory-performance",
+      "runtime": "candidate exact tests plus value parity and measured allocator, workspace, latency, or throughput comparison matching the claim",
+      "temporal_band": "mature",
+      "title": "Add Gemma 4 Unified (12B) encoder-free multimodal model support"
+    },
+    {
+      "base_sha": "1dd9432889b756b46799274ae91559d59a47136e",
+      "benchmark_domain": "inference",
+      "case_id": "sglang-pr-27233",
+      "changed_paths": [
+        "python/sglang/srt/managers/overlap_utils.py",
+        "python/sglang/srt/speculative/triton_ops/gather_spec_extras.py",
+        "test/registered/kernels/test_gather_spec_extras.py"
+      ],
+      "claim": "The production change titled '[Spec] Fuse small kenrels under `gather_spec_extras` ' preserves all unchanged memory-performance behavior while satisfying its named direction.",
+      "closure": "reference values are preserved and the named resource metric improves without hidden lifetime or synchronization debt",
+      "created_at": "2026-06-04T06:23:04Z",
+      "head_sha": "38a0de6e5119a7373a7674f7ea300a49fea0ff8e",
+      "matrix": [
+        "small/large shape",
+        "cold/warm run",
+        "feature on/off",
+        "forward/repeated execution"
+      ],
+      "project": "sglang",
+      "pull_number": 27233,
+      "repository": "sgl-project/sglang",
+      "risk_family": "memory-performance",
+      "runtime": "candidate exact tests plus value parity and measured allocator, workspace, latency, or throughput comparison matching the claim",
+      "temporal_band": "mature",
+      "title": "[Spec] Fuse small kenrels under `gather_spec_extras` "
+    },
+    {
+      "base_sha": "f0bf96390bd259eefb5d147ae153619742742d9d",
+      "benchmark_domain": "inference",
+      "case_id": "sglang-pr-27204",
+      "changed_paths": [
+        "python/sglang/srt/layers/quantization/quark/quark.py",
+        "python/sglang/srt/layers/quantization/quark/schemes/__init__.py",
+        "python/sglang/srt/layers/quantization/quark/schemes/quark_w4a8_mxfp4_moe.py",
+        "python/sglang/srt/layers/quantization/quark/weights.py",
+        "python/sglang/srt/models/gpt_oss.py",
+        "test/registered/amd/accuracy/mi35x/test_gpt_oss_w4a8_mxfp4_eval_mi35x.py"
+      ],
+      "claim": "The production change titled '[AMD] Implement QuarkW4A8MXFp4MoE to support amd/gpt-oss-120b-w-mxfp4-a-fp8' preserves all unchanged memory-performance behavior while satisfying its named direction.",
+      "closure": "reference values are preserved and the named resource metric improves without hidden lifetime or synchronization debt",
+      "created_at": "2026-06-04T02:49:46Z",
+      "head_sha": "20158720d6368bad642a936aadc5aa5ada676fc0",
+      "matrix": [
+        "small/large shape",
+        "cold/warm run",
+        "feature on/off",
+        "forward/repeated execution"
+      ],
+      "project": "sglang",
+      "pull_number": 27204,
+      "repository": "sgl-project/sglang",
+      "risk_family": "memory-performance",
+      "runtime": "candidate exact tests plus value parity and measured allocator, workspace, latency, or throughput comparison matching the claim",
+      "temporal_band": "mature",
+      "title": "[AMD] Implement QuarkW4A8MXFp4MoE to support amd/gpt-oss-120b-w-mxfp4-a-fp8"
+    },
+    {
+      "base_sha": "b0f78bef97b31f197fb1e3af3303dbac9e544e6d",
+      "benchmark_domain": "inference",
+      "case_id": "sglang-pr-27173",
+      "changed_paths": [
+        "python/sglang/multimodal_gen/runtime/utils/trace_wrapper.py",
+        "python/sglang/srt/entrypoints/engine.py",
+        "python/sglang/srt/entrypoints/http_server.py",
+        "python/sglang/srt/managers/data_parallel_controller.py",
+        "python/sglang/srt/managers/scheduler.py",
+        "python/sglang/srt/observability/trace.py",
+        "test/registered/unit/observability/test_trace.py"
+      ],
+      "claim": "The production change titled 'Fix trace_modules gate disabling default trace contexts' preserves all unchanged scheduler-progress behavior while satisfying its named direction.",
+      "closure": "every request reaches exactly one legal terminal or continuation state without starvation, leak, or changed output",
+      "created_at": "2026-06-03T16:50:33Z",
+      "head_sha": "7d162029ad6d7e5499b289c709c55540658c7349",
+      "matrix": [
+        "empty/one/many requests",
+        "prefill/decode",
+        "normal/preempted/aborted",
+        "single/repeated batch"
+      ],
+      "project": "sglang",
+      "pull_number": 27173,
+      "repository": "sgl-project/sglang",
+      "risk_family": "scheduler-progress",
+      "runtime": "candidate exact tests plus request-state transition, progress, output, and cleanup base/head oracle",
+      "temporal_band": "mature",
+      "title": "Fix trace_modules gate disabling default trace contexts"
+    },
+    {
+      "base_sha": "f65aae849366cfab82cd027a722a67ec7193f454",
+      "benchmark_domain": "inference",
+      "case_id": "sglang-pr-27170",
+      "changed_paths": [
+        "python/sglang/srt/sampling/sampling_params.py",
+        "test/registered/unit/sampling/test_sampling_params.py"
+      ],
+      "claim": "The production change titled '[Bugfix] Handle negated literals in stop regex length' preserves all unchanged attention-numerics behavior while satisfying its named direction.",
+      "closure": "outputs and declared metadata match the reference across boundary shapes and supported numeric modes",
+      "created_at": "2026-06-03T15:27:47Z",
+      "head_sha": "b7c34a995d127a4aad78133b2d69e77936a44f2f",
+      "matrix": [
+        "prefill/decode",
+        "short/boundary/long sequence",
+        "one/multiple heads",
+        "supported dtype/backend"
+      ],
+      "project": "sglang",
+      "pull_number": 27170,
+      "repository": "sgl-project/sglang",
+      "risk_family": "attention-numerics",
+      "runtime": "candidate exact tests plus independent attention or sampling value oracle and target-kernel execution where available",
+      "temporal_band": "mature",
+      "title": "[Bugfix] Handle negated literals in stop regex length"
+    },
+    {
+      "base_sha": "03c77dc33d0a051aa15c1235407440d9d107b98f",
+      "benchmark_domain": "inference",
+      "case_id": "sglang-pr-27155",
+      "changed_paths": [
+        "python/sglang/multimodal_gen/runtime/entrypoints/diffusion_generator.py",
+        "python/sglang/multimodal_gen/runtime/launch_server.py",
+        "python/sglang/multimodal_gen/runtime/managers/gpu_worker.py",
+        "python/sglang/multimodal_gen/runtime/server_args.py",
+        "python/sglang/multimodal_gen/test/server/ascend/perf_baselines_npu.json",
+        "python/sglang/multimodal_gen/test/unit/test_disagg_trace.py"
+      ],
+      "claim": "The production change titled '[diffusion] Update NPU perf baselines' preserves all unchanged model-runtime-integration behavior while satisfying its named direction.",
+      "closure": "the production runtime reaches the new path, preserves the control path, and fails invalid configurations closed",
+      "created_at": "2026-06-03T11:13:53Z",
+      "head_sha": "414145105af140b7728d8c16b9f7bbfbe672735b",
+      "matrix": [
+        "feature on/off",
+        "one/repeated request",
+        "supported model/config",
+        "success/invalid input"
+      ],
+      "project": "sglang",
+      "pull_number": 27155,
+      "repository": "sgl-project/sglang",
+      "risk_family": "model-runtime-integration",
+      "runtime": "candidate exact tests plus import/configuration, production reachability, state ownership, and output oracle",
+      "temporal_band": "mature",
+      "title": "[diffusion] Update NPU perf baselines"
+    },
+    {
+      "base_sha": "f790674ad8a59ddff20c5547cbf004ece8c24445",
+      "benchmark_domain": "inference",
+      "case_id": "sglang-pr-27134",
+      "changed_paths": [
+        "docs/advanced_features/server_arguments.md",
+        "docs/platforms/ascend/ascend_npu_support_features.md",
+        "docs_new/docs/advanced_features/server_arguments.mdx",
+        "docs_new/docs/hardware-platforms/ascend-npus/ascend_npu_support_features.mdx",
+        "python/sglang/srt/mem_cache/evict_policy.py",
+        "python/sglang/srt/mem_cache/utils.py",
+        "python/sglang/srt/server_args.py",
+        "test/registered/unit/mem_cache/test_evict_policy.py"
+      ],
+      "claim": "The production change titled '[Fix] Expose FIFO/MRU/FILO radix eviction policies via CLI' preserves all unchanged memory-performance behavior while satisfying its named direction.",
+      "closure": "reference values are preserved and the named resource metric improves without hidden lifetime or synchronization debt",
+      "created_at": "2026-06-03T08:08:25Z",
+      "head_sha": "89ef024e4cc1b6cadb17eb972bb2b2ecb60ec422",
+      "matrix": [
+        "small/large shape",
+        "cold/warm run",
+        "feature on/off",
+        "forward/repeated execution"
+      ],
+      "project": "sglang",
+      "pull_number": 27134,
+      "repository": "sgl-project/sglang",
+      "risk_family": "memory-performance",
+      "runtime": "candidate exact tests plus value parity and measured allocator, workspace, latency, or throughput comparison matching the claim",
+      "temporal_band": "mature",
+      "title": "[Fix] Expose FIFO/MRU/FILO radix eviction policies via CLI"
+    },
+    {
+      "base_sha": "a711c57a32a5fbaf51e2822fbb6a1424e1f1d7ce",
+      "benchmark_domain": "inference",
+      "case_id": "sglang-pr-27085",
+      "changed_paths": [
+        "python/sglang/srt/disaggregation/prefill.py",
+        "python/sglang/srt/managers/scheduler_components/batch_result_processor.py",
+        "test/registered/disaggregation/test_disaggregation_basic.py"
+      ],
+      "claim": "The production change titled 'Deduplicate PD logprob normalization' preserves all unchanged scheduler-progress behavior while satisfying its named direction.",
+      "closure": "every request reaches exactly one legal terminal or continuation state without starvation, leak, or changed output",
+      "created_at": "2026-06-02T21:44:37Z",
+      "head_sha": "fb2e861cfde54203b5842f0f6167e7f5fd8b3dbc",
+      "matrix": [
+        "empty/one/many requests",
+        "prefill/decode",
+        "normal/preempted/aborted",
+        "single/repeated batch"
+      ],
+      "project": "sglang",
+      "pull_number": 27085,
+      "repository": "sgl-project/sglang",
+      "risk_family": "scheduler-progress",
+      "runtime": "candidate exact tests plus request-state transition, progress, output, and cleanup base/head oracle",
+      "temporal_band": "mature",
+      "title": "Deduplicate PD logprob normalization"
+    },
+    {
+      "base_sha": "1b63155efead7494843f6db8681851ba94611f73",
+      "benchmark_domain": "inference",
+      "case_id": "sglang-pr-27059",
+      "changed_paths": [
+        "python/sglang/srt/layers/attention/deepseek_v4_backend.py",
+        "python/sglang/srt/layers/attention/dsv4/metadata.py",
+        "python/sglang/srt/server_args.py",
+        "test/registered/kernels/benchmark/attention/bench_dsv4_fp4_indexer.py",
+        "test/registered/unit/layers/test_dsv4_nonpaged_indexer.py"
+      ],
+      "claim": "The production change titled 'Add FP4 Indexer for DeepSeek V4 on SM120' preserves all unchanged attention-numerics behavior while satisfying its named direction.",
+      "closure": "outputs and declared metadata match the reference across boundary shapes and supported numeric modes",
+      "created_at": "2026-06-02T12:04:38Z",
+      "head_sha": "921dc0f7d74ba478121083f1fd907a027b610c61",
+      "matrix": [
+        "prefill/decode",
+        "short/boundary/long sequence",
+        "one/multiple heads",
+        "supported dtype/backend"
+      ],
+      "project": "sglang",
+      "pull_number": 27059,
+      "repository": "sgl-project/sglang",
+      "risk_family": "attention-numerics",
+      "runtime": "candidate exact tests plus independent attention or sampling value oracle and target-kernel execution where available",
+      "temporal_band": "mature",
+      "title": "Add FP4 Indexer for DeepSeek V4 on SM120"
+    },
+    {
+      "base_sha": "3102015cad599f2b87b98d039f9cde052ef47a72",
+      "benchmark_domain": "inference",
+      "case_id": "sglang-pr-27042",
+      "changed_paths": [
+        "python/sglang/srt/layers/attention/nsa/nsa_indexer.py",
+        "python/sglang/srt/managers/detokenizer_manager.py",
+        "python/sglang/srt/managers/io_struct.py",
+        "python/sglang/srt/managers/multi_tokenizer_mixin.py",
+        "python/sglang/srt/managers/scheduler_output_processor_mixin.py",
+        "python/sglang/srt/managers/tokenizer_manager.py",
+        "python/sglang/srt/state_capturer/base.py",
+        "python/sglang/srt/state_capturer/indexer_topk.py",
+        "test/registered/8-gpu-models/test_return_indexer_topk.py",
+        "test/registered/unit/test_indexer_topk_capturer.py"
+      ],
+      "claim": "The production change titled 'Return indexer-topk layer count in metadata' preserves all unchanged scheduler-progress behavior while satisfying its named direction.",
+      "closure": "every request reaches exactly one legal terminal or continuation state without starvation, leak, or changed output",
+      "created_at": "2026-06-02T08:52:46Z",
+      "head_sha": "712de078e395412b1f0a9c532dc19eee843a64ef",
+      "matrix": [
+        "empty/one/many requests",
+        "prefill/decode",
+        "normal/preempted/aborted",
+        "single/repeated batch"
+      ],
+      "project": "sglang",
+      "pull_number": 27042,
+      "repository": "sgl-project/sglang",
+      "risk_family": "scheduler-progress",
+      "runtime": "candidate exact tests plus request-state transition, progress, output, and cleanup base/head oracle",
+      "temporal_band": "mature",
+      "title": "Return indexer-topk layer count in metadata"
+    },
+    {
+      "base_sha": "1033d835ff293fdb969073f1291da250c8070745",
+      "benchmark_domain": "inference",
+      "case_id": "sglang-pr-27026",
+      "changed_paths": [
+        "python/pyproject.toml",
+        "python/sglang/multimodal_gen/apps/realtime_webui/app.js",
+        "python/sglang/multimodal_gen/apps/realtime_webui/index.html",
+        "python/sglang/multimodal_gen/apps/realtime_webui/styles.css",
+        "python/sglang/multimodal_gen/runtime/postprocess/realesrgan_upscaler.py",
+        "python/sglang/multimodal_gen/test/unit/realtime/test_output_materialization.py",
+        "python/sglang/multimodal_gen/test/unit/realtime/test_realtime_webui.py"
+      ],
+      "claim": "The production change titled '[diffusion] Add realtime WebUI super resolution controls' preserves all unchanged memory-performance behavior while satisfying its named direction.",
+      "closure": "reference values are preserved and the named resource metric improves without hidden lifetime or synchronization debt",
+      "created_at": "2026-06-02T06:34:41Z",
+      "head_sha": "ae371e8420c1ce1c1cda412caa157ba613df95d6",
+      "matrix": [
+        "small/large shape",
+        "cold/warm run",
+        "feature on/off",
+        "forward/repeated execution"
+      ],
+      "project": "sglang",
+      "pull_number": 27026,
+      "repository": "sgl-project/sglang",
+      "risk_family": "memory-performance",
+      "runtime": "candidate exact tests plus value parity and measured allocator, workspace, latency, or throughput comparison matching the claim",
+      "temporal_band": "mature",
+      "title": "[diffusion] Add realtime WebUI super resolution controls"
+    },
+    {
+      "base_sha": "1988a2c9ea2135d3e8d00c1a034464e88d92739c",
+      "benchmark_domain": "inference",
+      "case_id": "sglang-pr-26950",
+      "changed_paths": [
+        "python/sglang/multimodal_gen/runtime/models/dits/cosmos3video.py",
+        "python/sglang/multimodal_gen/runtime/pipelines_core/stages/model_specific_stages/cosmos3.py",
+        "python/sglang/multimodal_gen/test/test_utils.py"
+      ],
+      "claim": "The production change titled '[diffusion] Align Cosmos3 text packing with official pipeline' preserves all unchanged memory-performance behavior while satisfying its named direction.",
+      "closure": "reference values are preserved and the named resource metric improves without hidden lifetime or synchronization debt",
+      "created_at": "2026-06-01T16:45:08Z",
+      "head_sha": "4481d9df7dd82ab11e087d12907cc0069219153a",
+      "matrix": [
+        "small/large shape",
+        "cold/warm run",
+        "feature on/off",
+        "forward/repeated execution"
+      ],
+      "project": "sglang",
+      "pull_number": 26950,
+      "repository": "sgl-project/sglang",
+      "risk_family": "memory-performance",
+      "runtime": "candidate exact tests plus value parity and measured allocator, workspace, latency, or throughput comparison matching the claim",
+      "temporal_band": "mature",
+      "title": "[diffusion] Align Cosmos3 text packing with official pipeline"
+    },
+    {
+      "base_sha": "8c0d0cbfef5c5d1b6e25f3ddad5b271d725a8959",
+      "benchmark_domain": "inference",
+      "case_id": "tensorrt_llm-pr-18527",
+      "changed_paths": [
+        "tensorrt_llm/_torch/models/modeling_qwen3_moe.py",
+        "tensorrt_llm/_torch/peft/lora/cuda_graph_lora_params.py",
+        "tests/integration/defs/llmapi/test_llm_api_pytorch_moe_lora.py",
+        "tests/integration/test_lists/waives.txt",
+        "tests/unittest/_torch/peft/test_moe_lora_cuda_graph_params.py"
+      ],
+      "claim": "The production change titled '[https://nvbugs/6683837][fix] Thread `lora_params` to `self.experts()`; cache a per-(layer,module) rank\u2026' preserves all unchanged model-runtime-integration behavior while satisfying its named direction.",
+      "closure": "the production runtime reaches the new path, preserves the control path, and fails invalid configurations closed",
+      "created_at": "2026-09-01T12:25:04Z",
+      "head_sha": "03441af14b6675ec38275167cfd514595defb505",
+      "matrix": [
+        "feature on/off",
+        "one/repeated request",
+        "supported model/config",
+        "success/invalid input"
+      ],
+      "project": "tensorrt-llm",
+      "pull_number": 18527,
+      "repository": "NVIDIA/TensorRT-LLM",
+      "risk_family": "model-runtime-integration",
+      "runtime": "candidate exact tests plus import/configuration, production reachability, state ownership, and output oracle",
+      "temporal_band": "recent",
+      "title": "[https://nvbugs/6683837][fix] Thread `lora_params` to `self.experts()`; cache a per-(layer,module) rank\u2026"
+    },
+    {
+      "base_sha": "2dd03e690725628490e5f2a05e8924e1114386ef",
+      "benchmark_domain": "inference",
+      "case_id": "tensorrt_llm-pr-14695",
+      "changed_paths": [
+        "tensorrt_llm/_torch/disaggregation/transceiver.py",
+        "tensorrt_llm/_torch/pyexecutor/resource_manager.py",
+        "tensorrt_llm/_torch/pyexecutor/scheduler/scheduler_v2.py",
+        "tests/unittest/_torch/attention/sparse/deepseek_v4/test_deepseek_v4_cache_manager.py",
+        "tests/unittest/_torch/executor/test_kv_cache_v2_scheduler.py",
+        "tests/unittest/_torch/modeling/test_modeling_deepseekv4.py",
+        "tests/unittest/disaggregated/test_cache_transceiver_single_process.py",
+        "tests/unittest/disaggregated/test_deepseek_v4_kv_transfer.py"
+      ],
+      "claim": "The production change titled '[TRTLLM-13017][fix] consolidate disagg gen init KV setup into prepare_disagg_gen_init' preserves all unchanged scheduler-progress behavior while satisfying its named direction.",
+      "closure": "every request reaches exactly one legal terminal or continuation state without starvation, leak, or changed output",
+      "created_at": "2026-05-28T14:22:29Z",
+      "head_sha": "c38ea48951a2a56300027140c3aae704c7c1a36f",
+      "matrix": [
+        "empty/one/many requests",
+        "prefill/decode",
+        "normal/preempted/aborted",
+        "single/repeated batch"
+      ],
+      "project": "tensorrt-llm",
+      "pull_number": 14695,
+      "repository": "NVIDIA/TensorRT-LLM",
+      "risk_family": "scheduler-progress",
+      "runtime": "candidate exact tests plus request-state transition, progress, output, and cleanup base/head oracle",
+      "temporal_band": "mature",
+      "title": "[TRTLLM-13017][fix] consolidate disagg gen init KV setup into prepare_disagg_gen_init"
+    },
+    {
+      "base_sha": "f8192e5f3dbbae2d4e3b26b910cabf3a1deb251c",
+      "benchmark_domain": "inference",
+      "case_id": "tensorrt_llm-pr-14564",
+      "changed_paths": [
+        "tensorrt_llm/_torch/attention_backend/sparse/deepseek_v4/cache_manager.py",
+        "tensorrt_llm/_torch/attention_backend/sparse/deepseek_v4/deepseek_v4.py",
+        "tests/unittest/_torch/attention/sparse/deepseek_v4/test_deepseek_v4_cache_manager.py"
+      ],
+      "claim": "The production change titled '[TRTLLM-12229][perf] Cache scratch memory optimization for DSv4' preserves all unchanged cache-state-layout behavior while satisfying its named direction.",
+      "closure": "cache regions are complete, in bounds, non-overlapping, correctly owned, and reconstruct reference values",
+      "created_at": "2026-05-26T09:00:19Z",
+      "head_sha": "15732aa74895813d6454f16c2bc6a2f0eb959dbd",
+      "matrix": [
+        "empty/partial/full cache",
+        "allocate/free/reuse",
+        "contiguous/paged layout",
+        "single/multiple owners"
+      ],
+      "project": "tensorrt-llm",
+      "pull_number": 14564,
+      "repository": "NVIDIA/TensorRT-LLM",
+      "risk_family": "cache-state-layout",
+      "runtime": "candidate exact tests plus offset, ownership, eviction, reuse, and byte/value reconstruction oracle",
+      "temporal_band": "mature",
+      "title": "[TRTLLM-12229][perf] Cache scratch memory optimization for DSv4"
+    },
+    {
+      "base_sha": "b1eb703635647db24f35b0a8239fd4e2b775d5fc",
+      "benchmark_domain": "inference",
+      "case_id": "tensorrt_llm-pr-14665",
+      "changed_paths": [
+        "tensorrt_llm/llmapi/__init__.py",
+        "tensorrt_llm/llmapi/llm.py",
+        "tensorrt_llm/llmapi/thinking_budget.py",
+        "tensorrt_llm/sampling_params.py",
+        "tensorrt_llm/serve/openai_protocol.py",
+        "tensorrt_llm/serve/openai_server.py",
+        "tensorrt_llm/serve/responses_utils.py",
+        "tests/unittest/api_stability/references/sampling_params.yaml",
+        "tests/unittest/llmapi/test_sampling_params.py"
+      ],
+      "claim": "The production change titled '[None][feature] Add thinking token budget control' preserves all unchanged attention-numerics behavior while satisfying its named direction.",
+      "closure": "outputs and declared metadata match the reference across boundary shapes and supported numeric modes",
+      "created_at": "2026-05-28T03:44:43Z",
+      "head_sha": "db7b36a0af91291f2d97e5c9124bd8f3db2c599e",
+      "matrix": [
+        "prefill/decode",
+        "short/boundary/long sequence",
+        "one/multiple heads",
+        "supported dtype/backend"
+      ],
+      "project": "tensorrt-llm",
+      "pull_number": 14665,
+      "repository": "NVIDIA/TensorRT-LLM",
+      "risk_family": "attention-numerics",
+      "runtime": "candidate exact tests plus independent attention or sampling value oracle and target-kernel execution where available",
+      "temporal_band": "mature",
+      "title": "[None][feature] Add thinking token budget control"
+    },
+    {
+      "base_sha": "ca0aad2c1e10efd940b843bf2c3df5bd1ba1b4a6",
+      "benchmark_domain": "inference",
+      "case_id": "tensorrt_llm-pr-14479",
+      "changed_paths": [
+        "cpp/tensorrt_llm/thop/CMakeLists.txt",
+        "cpp/tensorrt_llm/thop/inplaceSliceCopyOp.cpp",
+        "tensorrt_llm/_torch/compilation/utils.py",
+        "tensorrt_llm/_torch/custom_ops/__init__.py",
+        "tensorrt_llm/_torch/custom_ops/cpp_custom_ops.py",
+        "tensorrt_llm/_torch/speculative/eagle3.py",
+        "tests/unittest/_torch/thop/parallel_hw_agnostic/test_inplace_slice_copy.py"
+      ],
+      "claim": "The production change titled '[TRTLLM-10947][perf] eagle3: use cudaMemcpy2DAsync custom op for hidden-state capture' preserves all unchanged memory-performance behavior while satisfying its named direction.",
+      "closure": "reference values are preserved and the named resource metric improves without hidden lifetime or synchronization debt",
+      "created_at": "2026-05-23T02:56:47Z",
+      "head_sha": "b121850f5cfccdf481c513c4e275f2442c342e5d",
+      "matrix": [
+        "small/large shape",
+        "cold/warm run",
+        "feature on/off",
+        "forward/repeated execution"
+      ],
+      "project": "tensorrt-llm",
+      "pull_number": 14479,
+      "repository": "NVIDIA/TensorRT-LLM",
+      "risk_family": "memory-performance",
+      "runtime": "candidate exact tests plus value parity and measured allocator, workspace, latency, or throughput comparison matching the claim",
+      "temporal_band": "mature",
+      "title": "[TRTLLM-10947][perf] eagle3: use cudaMemcpy2DAsync custom op for hidden-state capture"
+    },
+    {
+      "base_sha": "f8192e5f3dbbae2d4e3b26b910cabf3a1deb251c",
+      "benchmark_domain": "inference",
+      "case_id": "tensorrt_llm-pr-14722",
+      "changed_paths": [
+        "tensorrt_llm/disaggregated_params.py",
+        "tensorrt_llm/serve/openai_protocol.py",
+        "tensorrt_llm/serve/router.py",
+        "tests/unittest/disaggregated/test_disaggregated_params.py",
+        "tests/unittest/disaggregated/test_router.py"
+      ],
+      "claim": "The production change titled '[None][feat] serve: expose is_first_turn from routers and propagate conversation_id to workers' preserves all unchanged model-runtime-integration behavior while satisfying its named direction.",
+      "closure": "the production runtime reaches the new path, preserves the control path, and fails invalid configurations closed",
+      "created_at": "2026-05-29T03:08:59Z",
+      "head_sha": "c4f5c85d537febeaf3fdbc7c6dacfa9ecc1636d5",
+      "matrix": [
+        "feature on/off",
+        "one/repeated request",
+        "supported model/config",
+        "success/invalid input"
+      ],
+      "project": "tensorrt-llm",
+      "pull_number": 14722,
+      "repository": "NVIDIA/TensorRT-LLM",
+      "risk_family": "model-runtime-integration",
+      "runtime": "candidate exact tests plus import/configuration, production reachability, state ownership, and output oracle",
+      "temporal_band": "mature",
+      "title": "[None][feat] serve: expose is_first_turn from routers and propagate conversation_id to workers"
+    },
+    {
+      "base_sha": "39155daccc31636dc130b2423a2fdea93435e73b",
+      "benchmark_domain": "inference",
+      "case_id": "tensorrt_llm-pr-14627",
+      "changed_paths": [
+        "tensorrt_llm/_torch/pyexecutor/scheduler/scheduler_v2.py",
+        "tests/unittest/_torch/executor/test_kv_cache_v2_scheduler.py"
+      ],
+      "claim": "The production change titled '[TRTLLM-13017][fix] disagg gen init: use prompt_len for SWA history_length' preserves all unchanged scheduler-progress behavior while satisfying its named direction.",
+      "closure": "every request reaches exactly one legal terminal or continuation state without starvation, leak, or changed output",
+      "created_at": "2026-05-27T09:30:12Z",
+      "head_sha": "0f2294e9952a8da82c5db5bd440707d8e4afe1ae",
+      "matrix": [
+        "empty/one/many requests",
+        "prefill/decode",
+        "normal/preempted/aborted",
+        "single/repeated batch"
+      ],
+      "project": "tensorrt-llm",
+      "pull_number": 14627,
+      "repository": "NVIDIA/TensorRT-LLM",
+      "risk_family": "scheduler-progress",
+      "runtime": "candidate exact tests plus request-state transition, progress, output, and cleanup base/head oracle",
+      "temporal_band": "mature",
+      "title": "[TRTLLM-13017][fix] disagg gen init: use prompt_len for SWA history_length"
+    },
+    {
+      "base_sha": "d264dc21cce111a6585b299d6c271ad69b1f10c6",
+      "benchmark_domain": "inference",
+      "case_id": "tensorrt_llm-pr-14562",
+      "changed_paths": [
+        "tensorrt_llm/_torch/pyexecutor/py_executor.py",
+        "tensorrt_llm/serve/openai_client.py",
+        "tests/unittest/disaggregated/test_disagg_openai_client.py"
+      ],
+      "claim": "The production change titled '[TRTLLM-12941][fix] Selective retry for transient TCP races in disagg HTTP client' preserves all unchanged model-runtime-integration behavior while satisfying its named direction.",
+      "closure": "the production runtime reaches the new path, preserves the control path, and fails invalid configurations closed",
+      "created_at": "2026-05-26T08:46:11Z",
+      "head_sha": "ff60fce73fada10b458efdf09545b534680ab981",
+      "matrix": [
+        "feature on/off",
+        "one/repeated request",
+        "supported model/config",
+        "success/invalid input"
+      ],
+      "project": "tensorrt-llm",
+      "pull_number": 14562,
+      "repository": "NVIDIA/TensorRT-LLM",
+      "risk_family": "model-runtime-integration",
+      "runtime": "candidate exact tests plus import/configuration, production reachability, state ownership, and output oracle",
+      "temporal_band": "mature",
+      "title": "[TRTLLM-12941][fix] Selective retry for transient TCP races in disagg HTTP client"
+    },
+    {
+      "base_sha": "857df2f9e64afdad5546f82d8ad1f9471cd4a44d",
+      "benchmark_domain": "inference",
+      "case_id": "tensorrt_llm-pr-14478",
+      "changed_paths": [
+        "tensorrt_llm/runtime/kv_cache_manager_v2/_core/_kv_cache.py",
+        "tests/unittest/kv_cache_manager_v2_tests/test_kv_cache_manager_v2.py"
+      ],
+      "claim": "The production change titled '[None][fix] Release stale-range holder after _commit_block in KVCache\u2026' preserves all unchanged cache-state-layout behavior while satisfying its named direction.",
+      "closure": "cache regions are complete, in bounds, non-overlapping, correctly owned, and reconstruct reference values",
+      "created_at": "2026-05-23T01:50:27Z",
+      "head_sha": "e0e3ce07c3e9df58a503aad6509d553acced8e65",
+      "matrix": [
+        "empty/partial/full cache",
+        "allocate/free/reuse",
+        "contiguous/paged layout",
+        "single/multiple owners"
+      ],
+      "project": "tensorrt-llm",
+      "pull_number": 14478,
+      "repository": "NVIDIA/TensorRT-LLM",
+      "risk_family": "cache-state-layout",
+      "runtime": "candidate exact tests plus offset, ownership, eviction, reuse, and byte/value reconstruction oracle",
+      "temporal_band": "mature",
+      "title": "[None][fix] Release stale-range holder after _commit_block in KVCache\u2026"
+    },
+    {
+      "base_sha": "a8cd4fffb319463695ce0160c26cc9963726852b",
+      "benchmark_domain": "inference",
+      "case_id": "tensorrt_llm-pr-14452",
+      "changed_paths": [
+        "tensorrt_llm/bench/utils/data.py",
+        "tensorrt_llm/serve/router.py",
+        "tests/unittest/disaggregated/test_router.py",
+        "tests/unittest/others/test_bench_data.py"
+      ],
+      "claim": "The production change titled '[None][fix] Route trtllm-bench and trtllm-serve tokenizer load through TransformersTokenizer' preserves all unchanged memory-performance behavior while satisfying its named direction.",
+      "closure": "reference values are preserved and the named resource metric improves without hidden lifetime or synchronization debt",
+      "created_at": "2026-05-22T08:33:07Z",
+      "head_sha": "a7066120d55f9c068c3b6e6e08bc1ffc37f7e3a6",
+      "matrix": [
+        "small/large shape",
+        "cold/warm run",
+        "feature on/off",
+        "forward/repeated execution"
+      ],
+      "project": "tensorrt-llm",
+      "pull_number": 14452,
+      "repository": "NVIDIA/TensorRT-LLM",
+      "risk_family": "memory-performance",
+      "runtime": "candidate exact tests plus value parity and measured allocator, workspace, latency, or throughput comparison matching the claim",
+      "temporal_band": "mature",
+      "title": "[None][fix] Route trtllm-bench and trtllm-serve tokenizer load through TransformersTokenizer"
+    },
+    {
+      "base_sha": "26ac48ba2ead8eb63a7f8e545cc96ef1f7a96999",
+      "benchmark_domain": "inference",
+      "case_id": "tensorrt_llm-pr-14451",
+      "changed_paths": [
+        "tensorrt_llm/serve/openai_server.py",
+        "tests/unittest/_torch/executor/test_py_executor.py"
+      ],
+      "claim": "The production change titled '[None][fix] fix chat hamony api token ids propagation' preserves all unchanged model-runtime-integration behavior while satisfying its named direction.",
+      "closure": "the production runtime reaches the new path, preserves the control path, and fails invalid configurations closed",
+      "created_at": "2026-05-22T08:23:53Z",
+      "head_sha": "6f8ceeb888a0e16aaec9ef3a81f1154a96576b31",
+      "matrix": [
+        "feature on/off",
+        "one/repeated request",
+        "supported model/config",
+        "success/invalid input"
+      ],
+      "project": "tensorrt-llm",
+      "pull_number": 14451,
+      "repository": "NVIDIA/TensorRT-LLM",
+      "risk_family": "model-runtime-integration",
+      "runtime": "candidate exact tests plus import/configuration, production reachability, state ownership, and output oracle",
+      "temporal_band": "mature",
+      "title": "[None][fix] fix chat hamony api token ids propagation"
+    },
+    {
+      "base_sha": "9bd240377c77d3e79cdae98c603edac5054205d5",
+      "benchmark_domain": "inference",
+      "case_id": "tensorrt_llm-pr-14420",
+      "changed_paths": [
+        "tensorrt_llm/serve/openai_server.py",
+        "tensorrt_llm/serve/postprocess_handlers.py",
+        "tests/unittest/disaggregated/test_openai_disagg_service.py"
+      ],
+      "claim": "The production change titled '[None][fix] propagate chat prompt token ids' preserves all unchanged memory-performance behavior while satisfying its named direction.",
+      "closure": "reference values are preserved and the named resource metric improves without hidden lifetime or synchronization debt",
+      "created_at": "2026-05-21T15:31:31Z",
+      "head_sha": "6ac95a9fa35cdf639049b43383271a08f9ee011a",
+      "matrix": [
+        "small/large shape",
+        "cold/warm run",
+        "feature on/off",
+        "forward/repeated execution"
+      ],
+      "project": "tensorrt-llm",
+      "pull_number": 14420,
+      "repository": "NVIDIA/TensorRT-LLM",
+      "risk_family": "memory-performance",
+      "runtime": "candidate exact tests plus value parity and measured allocator, workspace, latency, or throughput comparison matching the claim",
+      "temporal_band": "mature",
+      "title": "[None][fix] propagate chat prompt token ids"
+    },
+    {
+      "base_sha": "240e0bb6a06d7d1e87a0984d1f8947a94a5f0425",
+      "benchmark_domain": "inference",
+      "case_id": "tensorrt_llm-pr-14403",
+      "changed_paths": [
+        "tensorrt_llm/_torch/attention_backend/sparse/deepseek_v4/cache_manager.py",
+        "tensorrt_llm/_torch/pyexecutor/resource_manager.py",
+        "tensorrt_llm/runtime/kv_cache_manager_v2/__init__.py",
+        "tensorrt_llm/runtime/kv_cache_manager_v2/__init__.pyi",
+        "tensorrt_llm/runtime/kv_cache_manager_v2/_config.py",
+        "tensorrt_llm/runtime/kv_cache_manager_v2/_core/_kv_cache.py",
+        "tensorrt_llm/runtime/kv_cache_manager_v2/_core/_kv_cache_manager.py",
+        "tensorrt_llm/runtime/kv_cache_manager_v2/_life_cycle_registry.py",
+        "tensorrt_llm/runtime/kv_cache_manager_v2/_storage_manager.py",
+        "tests/unittest/_torch/attention/sparse/deepseek_v4/test_deepseek_v4_cache_manager.py",
+        "tests/unittest/kv_cache_manager_v2_tests/test_kv_cache_manager_v2.py"
+      ],
+      "claim": "The production change titled '[TRTLLM-12229][fix] Fix MTP by scratch reuse rewind' preserves all unchanged cache-state-layout behavior while satisfying its named direction.",
+      "closure": "cache regions are complete, in bounds, non-overlapping, correctly owned, and reconstruct reference values",
+      "created_at": "2026-05-21T09:56:05Z",
+      "head_sha": "b0209a404a1862d9b640b963d1ad3fb18efbdfaa",
+      "matrix": [
+        "empty/partial/full cache",
+        "allocate/free/reuse",
+        "contiguous/paged layout",
+        "single/multiple owners"
+      ],
+      "project": "tensorrt-llm",
+      "pull_number": 14403,
+      "repository": "NVIDIA/TensorRT-LLM",
+      "risk_family": "cache-state-layout",
+      "runtime": "candidate exact tests plus offset, ownership, eviction, reuse, and byte/value reconstruction oracle",
+      "temporal_band": "mature",
+      "title": "[TRTLLM-12229][fix] Fix MTP by scratch reuse rewind"
+    },
+    {
+      "base_sha": "b7c23030de761fbb228cc3a37c21ee0e769e0ef9",
+      "benchmark_domain": "inference",
+      "case_id": "tensorrt_llm-pr-14400",
+      "changed_paths": [
+        "tensorrt_llm/__init__.py",
+        "tensorrt_llm/_torch/modules/fused_moe/communication/communication_factory.py",
+        "tensorrt_llm/_torch/modules/fused_moe/moe_scheduler.py",
+        "tensorrt_llm/serve/__init__.py",
+        "tests/unittest/test_lazy_imports.py"
+      ],
+      "claim": "The production change titled '[None][fix] Avoid eager optional server and FlashInfer imports' preserves all unchanged scheduler-progress behavior while satisfying its named direction.",
+      "closure": "every request reaches exactly one legal terminal or continuation state without starvation, leak, or changed output",
+      "created_at": "2026-05-21T08:52:29Z",
+      "head_sha": "065004dda3df0caa907690141670830174a27136",
+      "matrix": [
+        "empty/one/many requests",
+        "prefill/decode",
+        "normal/preempted/aborted",
+        "single/repeated batch"
+      ],
+      "project": "tensorrt-llm",
+      "pull_number": 14400,
+      "repository": "NVIDIA/TensorRT-LLM",
+      "risk_family": "scheduler-progress",
+      "runtime": "candidate exact tests plus request-state transition, progress, output, and cleanup base/head oracle",
+      "temporal_band": "mature",
+      "title": "[None][fix] Avoid eager optional server and FlashInfer imports"
+    },
+    {
+      "base_sha": "bfb45378de058bef4396f952f4ce2358f45f65b7",
+      "benchmark_domain": "inference",
+      "case_id": "tensorrt_llm-pr-14355",
+      "changed_paths": [
+        "tensorrt_llm/commands/serve.py",
+        "tests/unittest/_torch/visual_gen/test_trtllm_serve_e2e.py"
+      ],
+      "claim": "The production change titled '[https://nvbugs/6143883][fix] Preserve ip:port for trtllm-serve visual-gen' preserves all unchanged memory-performance behavior while satisfying its named direction.",
+      "closure": "reference values are preserved and the named resource metric improves without hidden lifetime or synchronization debt",
+      "created_at": "2026-05-20T09:12:34Z",
+      "head_sha": "b97e8bd08d1c98db0fa23d256f4bc28f17e06ca4",
+      "matrix": [
+        "small/large shape",
+        "cold/warm run",
+        "feature on/off",
+        "forward/repeated execution"
+      ],
+      "project": "tensorrt-llm",
+      "pull_number": 14355,
+      "repository": "NVIDIA/TensorRT-LLM",
+      "risk_family": "memory-performance",
+      "runtime": "candidate exact tests plus value parity and measured allocator, workspace, latency, or throughput comparison matching the claim",
+      "temporal_band": "mature",
+      "title": "[https://nvbugs/6143883][fix] Preserve ip:port for trtllm-serve visual-gen"
+    },
+    {
+      "base_sha": "14c51a4f9d6dd334204acf487a1773daf337b091",
+      "benchmark_domain": "inference",
+      "case_id": "tensorrt_llm-pr-14351",
+      "changed_paths": [
+        "examples/llm-api/llm_kv_cache_connector.py",
+        "tensorrt_llm/_torch/pyexecutor/connectors/kv_cache_connector.py",
+        "tensorrt_llm/_torch/pyexecutor/resource_manager.py",
+        "tensorrt_llm/runtime/kv_cache_manager_v2/__init__.pyi",
+        "tensorrt_llm/runtime/kv_cache_manager_v2/_block_radix_tree.py",
+        "tensorrt_llm/runtime/kv_cache_manager_v2/_core/_kv_cache.py",
+        "tensorrt_llm/runtime/kv_cache_manager_v2/_core/_kv_cache_manager.py",
+        "tensorrt_llm/serve/router.py",
+        "tests/unittest/disaggregated/test_router.py",
+        "tests/unittest/kv_cache_manager_v2_tests/test_kv_cache_salting.py"
+      ],
+      "claim": "The production change titled \"[None][chore] Replace cache_salt_id impl with main's TreeTaskId (cp #13793)\" preserves all unchanged cache-state-layout behavior while satisfying its named direction.",
+      "closure": "cache regions are complete, in bounds, non-overlapping, correctly owned, and reconstruct reference values",
+      "created_at": "2026-05-20T09:00:04Z",
+      "head_sha": "70263cea3a7f85d6065391e93046684f039b6dfd",
+      "matrix": [
+        "empty/partial/full cache",
+        "allocate/free/reuse",
+        "contiguous/paged layout",
+        "single/multiple owners"
+      ],
+      "project": "tensorrt-llm",
+      "pull_number": 14351,
+      "repository": "NVIDIA/TensorRT-LLM",
+      "risk_family": "cache-state-layout",
+      "runtime": "candidate exact tests plus offset, ownership, eviction, reuse, and byte/value reconstruction oracle",
+      "temporal_band": "mature",
+      "title": "[None][chore] Replace cache_salt_id impl with main's TreeTaskId (cp #13793)"
+    },
+    {
+      "base_sha": "3959914c1d2619592661711595613245e6220fef",
+      "benchmark_domain": "inference",
+      "case_id": "tensorrt_llm-pr-14906",
+      "changed_paths": [
+        "tensorrt_llm/_torch/auto_deploy/transform/library/kvcache.py",
+        "tests/integration/test_lists/waives.txt"
+      ],
+      "claim": "The production change titled '[https://nvbugs/6248764][fix] Normalize non-sliding KV windows to full attention in AutoDeploy' preserves all unchanged attention-numerics behavior while satisfying its named direction.",
+      "closure": "outputs and declared metadata match the reference across boundary shapes and supported numeric modes",
+      "created_at": "2026-06-03T11:29:33Z",
+      "head_sha": "b3bf607ef85b756d295e471e633c6ec741649ce0",
+      "matrix": [
+        "prefill/decode",
+        "short/boundary/long sequence",
+        "one/multiple heads",
+        "supported dtype/backend"
+      ],
+      "project": "tensorrt-llm",
+      "pull_number": 14906,
+      "repository": "NVIDIA/TensorRT-LLM",
+      "risk_family": "attention-numerics",
+      "runtime": "candidate exact tests plus independent attention or sampling value oracle and target-kernel execution where available",
+      "temporal_band": "mature",
+      "title": "[https://nvbugs/6248764][fix] Normalize non-sliding KV windows to full attention in AutoDeploy"
+    },
+    {
+      "base_sha": "b7ca2a62d80a53189821aab240f3c1bcbc13bd66",
+      "benchmark_domain": "inference",
+      "case_id": "tensorrt_llm-pr-14937",
+      "changed_paths": [
+        "cpp/tensorrt_llm/batch_manager/evictionPolicy.cpp",
+        "cpp/tests/unit_tests/batch_manager/evictionPolicyTest.cpp"
+      ],
+      "claim": "The production change titled '[https://nvbugs/6217533][fix] Prevent eviction-queue heap corruption from duplicate releaseBlock' preserves all unchanged scheduler-progress behavior while satisfying its named direction.",
+      "closure": "every request reaches exactly one legal terminal or continuation state without starvation, leak, or changed output",
+      "created_at": "2026-06-04T04:54:09Z",
+      "head_sha": "e1ed2c820b2fb41ba595a549f23c79677a905f8e",
+      "matrix": [
+        "empty/one/many requests",
+        "prefill/decode",
+        "normal/preempted/aborted",
+        "single/repeated batch"
+      ],
+      "project": "tensorrt-llm",
+      "pull_number": 14937,
+      "repository": "NVIDIA/TensorRT-LLM",
+      "risk_family": "scheduler-progress",
+      "runtime": "candidate exact tests plus request-state transition, progress, output, and cleanup base/head oracle",
+      "temporal_band": "mature",
+      "title": "[https://nvbugs/6217533][fix] Prevent eviction-queue heap corruption from duplicate releaseBlock"
+    },
+    {
+      "base_sha": "09449d488171436c60e79fd71b29d35b64ac2516",
+      "benchmark_domain": "inference",
+      "case_id": "tensorrt_llm-pr-14908",
+      "changed_paths": [
+        "tensorrt_llm/serve/openai_disagg_service.py",
+        "tests/unittest/disaggregated/test_openai_disagg_service.py"
+      ],
+      "claim": "The production change titled '[https://nvbugs/6245861][fix] Gate the two ID None-checks on `finish_reason in _GEN_PENDING_FINISH_REASONS`\u2026' preserves all unchanged memory-performance behavior while satisfying its named direction.",
+      "closure": "reference values are preserved and the named resource metric improves without hidden lifetime or synchronization debt",
+      "created_at": "2026-06-03T13:30:10Z",
+      "head_sha": "c1ff26da78662b8b09fac999b2a6cfb299db50d2",
+      "matrix": [
+        "small/large shape",
+        "cold/warm run",
+        "feature on/off",
+        "forward/repeated execution"
+      ],
+      "project": "tensorrt-llm",
+      "pull_number": 14908,
+      "repository": "NVIDIA/TensorRT-LLM",
+      "risk_family": "memory-performance",
+      "runtime": "candidate exact tests plus value parity and measured allocator, workspace, latency, or throughput comparison matching the claim",
+      "temporal_band": "mature",
+      "title": "[https://nvbugs/6245861][fix] Gate the two ID None-checks on `finish_reason in _GEN_PENDING_FINISH_REASONS`\u2026"
+    },
+    {
+      "base_sha": "09c21b65df8e3c6446af99f0c8d1bb909726c10b",
+      "benchmark_domain": "inference",
+      "case_id": "tensorrt_llm-pr-14904",
+      "changed_paths": [
+        "tensorrt_llm/_torch/attention_backend/sparse/dsa.py",
+        "tests/integration/test_lists/waives.txt"
+      ],
+      "claim": "The production change titled '[https://nvbugs/6241845][fix] Guard both the FP4 and FP8 DSL atom-split branches with `next_n ==\u2026' preserves all unchanged attention-numerics behavior while satisfying its named direction.",
+      "closure": "outputs and declared metadata match the reference across boundary shapes and supported numeric modes",
+      "created_at": "2026-06-03T10:47:07Z",
+      "head_sha": "9be566bf50efc68246b8b98182018c3cb756b4ee",
+      "matrix": [
+        "prefill/decode",
+        "short/boundary/long sequence",
+        "one/multiple heads",
+        "supported dtype/backend"
+      ],
+      "project": "tensorrt-llm",
+      "pull_number": 14904,
+      "repository": "NVIDIA/TensorRT-LLM",
+      "risk_family": "attention-numerics",
+      "runtime": "candidate exact tests plus independent attention or sampling value oracle and target-kernel execution where available",
+      "temporal_band": "mature",
+      "title": "[https://nvbugs/6241845][fix] Guard both the FP4 and FP8 DSL atom-split branches with `next_n ==\u2026"
+    },
+    {
+      "base_sha": "24be596d7689cb6605714a8440662b408fd14456",
+      "benchmark_domain": "inference",
+      "case_id": "tensorrt_llm-pr-14815",
+      "changed_paths": [
+        "tensorrt_llm/_ray_utils.py",
+        "tensorrt_llm/_torch/pyexecutor/executor_request_queue.py",
+        "tensorrt_llm/_torch/pyexecutor/py_executor.py",
+        "tests/integration/test_lists/test-db/l0_dgx_h100.yml",
+        "tests/unittest/_torch/ray_orchestrator/multi_gpu/test_inflight_weight_update.py"
+      ],
+      "claim": "The production change titled '[None][feat] Support inflight weight update' preserves all unchanged scheduler-progress behavior while satisfying its named direction.",
+      "closure": "every request reaches exactly one legal terminal or continuation state without starvation, leak, or changed output",
+      "created_at": "2026-06-01T07:25:10Z",
+      "head_sha": "ff52f91e7f74a72393d9d8dc50d8d59007fe99a5",
+      "matrix": [
+        "empty/one/many requests",
+        "prefill/decode",
+        "normal/preempted/aborted",
+        "single/repeated batch"
+      ],
+      "project": "tensorrt-llm",
+      "pull_number": 14815,
+      "repository": "NVIDIA/TensorRT-LLM",
+      "risk_family": "scheduler-progress",
+      "runtime": "candidate exact tests plus request-state transition, progress, output, and cleanup base/head oracle",
+      "temporal_band": "mature",
+      "title": "[None][feat] Support inflight weight update"
+    },
+    {
+      "base_sha": "35cce747343d83c8a4f9f8fd048e29d40f14f2d7",
+      "benchmark_domain": "inference",
+      "case_id": "tensorrt_llm-pr-14812",
+      "changed_paths": [
+        "docs/source/commands/trtllm-serve/trtllm-serve.rst",
+        "docs/source/release-notes.md",
+        "tensorrt_llm/bench/benchmark/__init__.py",
+        "tensorrt_llm/bench/benchmark/low_latency.py",
+        "tensorrt_llm/bench/benchmark/throughput.py",
+        "tensorrt_llm/bench/dataclasses/configuration.py",
+        "tensorrt_llm/commands/eval.py",
+        "tensorrt_llm/commands/serve.py",
+        "tensorrt_llm/commands/utils.py",
+        "tensorrt_llm/llmapi/llm_args.py",
+        "tests/unittest/llmapi/apps/_test_trtllm_serve_duplicated_args.py",
+        "tests/unittest/llmapi/test_llm_args.py"
+      ],
+      "claim": "The production change titled '[#10710][feat] Make explicit CLI flags take precedence over --config / --extra_llm_api_options YAML' preserves all unchanged memory-performance behavior while satisfying its named direction.",
+      "closure": "reference values are preserved and the named resource metric improves without hidden lifetime or synchronization debt",
+      "created_at": "2026-06-01T06:57:33Z",
+      "head_sha": "749037d50af3958329ebdcd459f1f008a4330148",
+      "matrix": [
+        "small/large shape",
+        "cold/warm run",
+        "feature on/off",
+        "forward/repeated execution"
+      ],
+      "project": "tensorrt-llm",
+      "pull_number": 14812,
+      "repository": "NVIDIA/TensorRT-LLM",
+      "risk_family": "memory-performance",
+      "runtime": "candidate exact tests plus value parity and measured allocator, workspace, latency, or throughput comparison matching the claim",
+      "temporal_band": "mature",
+      "title": "[#10710][feat] Make explicit CLI flags take precedence over --config / --extra_llm_api_options YAML"
+    },
+    {
+      "base_sha": "7a9c1865de6fa3dcfb20ec7e0b33ed23a5ebfb3b",
+      "benchmark_domain": "inference",
+      "case_id": "tensorrt_llm-pr-14811",
+      "changed_paths": [
+        "examples/visual_gen/configs/wan2.2-t2v-bf16-skip-softmax-8gpu.yaml",
+        "tensorrt_llm/_torch/visual_gen/modules/attention.py",
+        "tensorrt_llm/_torch/visual_gen/pipeline.py",
+        "tensorrt_llm/visual_gen/sparse_attention.py",
+        "tests/unittest/_torch/visual_gen/test_attention_integration.py",
+        "tests/unittest/_torch/visual_gen/test_skip_softmax_config.py",
+        "tests/unittest/_torch/visual_gen/test_visual_gen_args.py"
+      ],
+      "claim": "The production change titled '[None][perf] Add WAN skip-softmax recipe config' preserves all unchanged attention-numerics behavior while satisfying its named direction.",
+      "closure": "outputs and declared metadata match the reference across boundary shapes and supported numeric modes",
+      "created_at": "2026-06-01T06:41:33Z",
+      "head_sha": "44824ca5f21f1a953925d926703fd919387918f4",
+      "matrix": [
+        "prefill/decode",
+        "short/boundary/long sequence",
+        "one/multiple heads",
+        "supported dtype/backend"
+      ],
+      "project": "tensorrt-llm",
+      "pull_number": 14811,
+      "repository": "NVIDIA/TensorRT-LLM",
+      "risk_family": "attention-numerics",
+      "runtime": "candidate exact tests plus independent attention or sampling value oracle and target-kernel execution where available",
+      "temporal_band": "mature",
+      "title": "[None][perf] Add WAN skip-softmax recipe config"
+    },
+    {
+      "base_sha": "26c099f52ddac75a00dcaa6f172eff334f14be5f",
+      "benchmark_domain": "inference",
+      "case_id": "tensorrt_llm-pr-14782",
+      "changed_paths": [
+        "tensorrt_llm/commands/serve.py",
+        "tensorrt_llm/executor/utils.py",
+        "tensorrt_llm/llmapi/trtllm-llmapi-launch",
+        "tests/unittest/executor/test_launcher_envs.py"
+      ],
+      "claim": "The production change titled '[https://nvbugs/6244695][fix] Revert Pass IPC HMAC key through file descriptor' preserves all unchanged model-runtime-integration behavior while satisfying its named direction.",
+      "closure": "the production runtime reaches the new path, preserves the control path, and fails invalid configurations closed",
+      "created_at": "2026-05-30T11:16:07Z",
+      "head_sha": "a003643e7a8832f90bc9c1a24df88de66290ad47",
+      "matrix": [
+        "feature on/off",
+        "one/repeated request",
+        "supported model/config",
+        "success/invalid input"
+      ],
+      "project": "tensorrt-llm",
+      "pull_number": 14782,
+      "repository": "NVIDIA/TensorRT-LLM",
+      "risk_family": "model-runtime-integration",
+      "runtime": "candidate exact tests plus import/configuration, production reachability, state ownership, and output oracle",
+      "temporal_band": "mature",
+      "title": "[https://nvbugs/6244695][fix] Revert Pass IPC HMAC key through file descriptor"
+    },
+    {
+      "base_sha": "a19410ebaa8103a68d2b621b51e0ae1c963a2f8a",
+      "benchmark_domain": "inference",
+      "case_id": "tensorrt_llm-pr-14777",
+      "changed_paths": [
+        "tensorrt_llm/serve/tool_parser/qwen3_tool_parser.py",
+        "tests/unittest/llmapi/apps/test_tool_parsers.py"
+      ],
+      "claim": "The production change titled '[https://nvbugs/6240584][fix] Attempt json.loads before early-return in tool parser' preserves all unchanged memory-performance behavior while satisfying its named direction.",
+      "closure": "reference values are preserved and the named resource metric improves without hidden lifetime or synchronization debt",
+      "created_at": "2026-05-30T09:07:55Z",
+      "head_sha": "c752d0c0f5031b3ec4da86c8193126b68386a6c1",
+      "matrix": [
+        "small/large shape",
+        "cold/warm run",
+        "feature on/off",
+        "forward/repeated execution"
+      ],
+      "project": "tensorrt-llm",
+      "pull_number": 14777,
+      "repository": "NVIDIA/TensorRT-LLM",
+      "risk_family": "memory-performance",
+      "runtime": "candidate exact tests plus value parity and measured allocator, workspace, latency, or throughput comparison matching the claim",
+      "temporal_band": "mature",
+      "title": "[https://nvbugs/6240584][fix] Attempt json.loads before early-return in tool parser"
+    },
+    {
+      "base_sha": "46c8a161f40cb8fbae0b9fd00552c9d2589fb8dc",
+      "benchmark_domain": "inference",
+      "case_id": "vllm-pr-54905",
+      "changed_paths": [
+        "tests/compile/fullgraph/test_multiple_graphs.py",
+        "vllm/compilation/backends.py",
+        "vllm/v1/spec_decode/ngram_proposer_gpu.py"
+      ],
+      "claim": "The production change titled '[Bugfix][Spec Decode] Isolate ngram_gpu compile cache' preserves all unchanged attention-numerics behavior while satisfying its named direction.",
+      "closure": "outputs and declared metadata match the reference across boundary shapes and supported numeric modes",
+      "created_at": "2026-09-02T06:05:15Z",
+      "head_sha": "f3c5c60dcc64173e2f97933268925785a98ce639",
+      "matrix": [
+        "prefill/decode",
+        "short/boundary/long sequence",
+        "one/multiple heads",
+        "supported dtype/backend"
+      ],
+      "project": "vllm",
+      "pull_number": 54905,
+      "repository": "vllm-project/vllm",
+      "risk_family": "attention-numerics",
+      "runtime": "candidate exact tests plus independent attention or sampling value oracle and target-kernel execution where available",
+      "temporal_band": "recent",
+      "title": "[Bugfix][Spec Decode] Isolate ngram_gpu compile cache"
+    },
+    {
+      "base_sha": "6bdabbad5bce747865fd3a249658518a4269cc22",
+      "benchmark_domain": "inference",
+      "case_id": "vllm-pr-44101",
+      "changed_paths": [
+        "tests/v1/kv_connector/unit/test_lmcache_mp_connector.py",
+        "vllm/distributed/kv_transfer/kv_connector/v1/lmcache_mp_connector.py"
+      ],
+      "claim": "The production change titled '[LMCache] fix lookup lock leak when request is aborted before alloc' preserves all unchanged scheduler-progress behavior while satisfying its named direction.",
+      "closure": "every request reaches exactly one legal terminal or continuation state without starvation, leak, or changed output",
+      "created_at": "2026-05-31T08:19:01Z",
+      "head_sha": "2bc3817741ec676fa71bac0a466a681e907fbb71",
+      "matrix": [
+        "empty/one/many requests",
+        "prefill/decode",
+        "normal/preempted/aborted",
+        "single/repeated batch"
+      ],
+      "project": "vllm",
+      "pull_number": 44101,
+      "repository": "vllm-project/vllm",
+      "risk_family": "scheduler-progress",
+      "runtime": "candidate exact tests plus request-state transition, progress, output, and cleanup base/head oracle",
+      "temporal_band": "mature",
+      "title": "[LMCache] fix lookup lock leak when request is aborted before alloc"
+    },
+    {
+      "base_sha": "7c37096620fa4e161c1d8c1db5c43c8514545d84",
+      "benchmark_domain": "inference",
+      "case_id": "vllm-pr-44082",
+      "changed_paths": [
+        "tests/v1/core/test_prefix_caching.py",
+        "tests/v1/core/test_single_type_kv_cache_manager.py",
+        "vllm/distributed/kv_transfer/kv_connector/v1/mooncake/store/coordinator.py",
+        "vllm/v1/core/kv_cache_coordinator.py",
+        "vllm/v1/core/single_type_kv_cache_manager.py"
+      ],
+      "claim": "The production change titled '[Bugfix] Cache the EAGLE/MTP lookahead block in the SWA prefix-cache mask' preserves all unchanged cache-state-layout behavior while satisfying its named direction.",
+      "closure": "cache regions are complete, in bounds, non-overlapping, correctly owned, and reconstruct reference values",
+      "created_at": "2026-05-30T22:48:58Z",
+      "head_sha": "70569628df2f994db7681d2a468db49d41fa621e",
+      "matrix": [
+        "empty/partial/full cache",
+        "allocate/free/reuse",
+        "contiguous/paged layout",
+        "single/multiple owners"
+      ],
+      "project": "vllm",
+      "pull_number": 44082,
+      "repository": "vllm-project/vllm",
+      "risk_family": "cache-state-layout",
+      "runtime": "candidate exact tests plus offset, ownership, eviction, reuse, and byte/value reconstruction oracle",
+      "temporal_band": "mature",
+      "title": "[Bugfix] Cache the EAGLE/MTP lookahead block in the SWA prefix-cache mask"
+    },
+    {
+      "base_sha": "d1bcb4b44cc3d7bc625d9a3b490c7766f79f400f",
+      "benchmark_domain": "inference",
+      "case_id": "vllm-pr-44424",
+      "changed_paths": [
+        "tests/v1/kv_connector/unit/test_nixl_connector.py",
+        "tests/v1/kv_connector/unit/test_nixl_connector_hma.py",
+        "vllm/distributed/kv_transfer/kv_connector/utils.py",
+        "vllm/distributed/kv_transfer/kv_connector/v1/nixl/worker.py"
+      ],
+      "claim": "The production change titled '[Bugfix] Fix CPU memory leak related to not cleaning up old remotes data' preserves all unchanged model-runtime-integration behavior while satisfying its named direction.",
+      "closure": "the production runtime reaches the new path, preserves the control path, and fails invalid configurations closed",
+      "created_at": "2026-06-03T13:36:56Z",
+      "head_sha": "df3df3d90699d393fd585434adc656487ebaf6b1",
+      "matrix": [
+        "feature on/off",
+        "one/repeated request",
+        "supported model/config",
+        "success/invalid input"
+      ],
+      "project": "vllm",
+      "pull_number": 44424,
+      "repository": "vllm-project/vllm",
+      "risk_family": "model-runtime-integration",
+      "runtime": "candidate exact tests plus import/configuration, production reachability, state ownership, and output oracle",
+      "temporal_band": "mature",
+      "title": "[Bugfix] Fix CPU memory leak related to not cleaning up old remotes data"
+    },
+    {
+      "base_sha": "586201ebdc5c8b180a3e2f90174f152f4f8d65a0",
+      "benchmark_domain": "inference",
+      "case_id": "vllm-pr-44330",
+      "changed_paths": [
+        "tests/entrypoints/openai/chat_completion/test_serving_chat.py",
+        "tests/entrypoints/openai/parser/test_harmony_render_parity.py",
+        "tests/entrypoints/openai/parser/test_harmony_utils.py",
+        "tests/entrypoints/openai/responses/test_response_input_to_harmony.py",
+        "tests/entrypoints/openai/utils.py",
+        "vllm/entrypoints/openai/parser/harmony_utils.py",
+        "vllm/entrypoints/openai/responses/harmony.py",
+        "vllm/entrypoints/openai/responses/serving.py",
+        "vllm/entrypoints/serve/render/serving.py"
+      ],
+      "claim": "The production change titled '[Bugfix] GPT-OSS instruction rendering' preserves all unchanged memory-performance behavior while satisfying its named direction.",
+      "closure": "reference values are preserved and the named resource metric improves without hidden lifetime or synchronization debt",
+      "created_at": "2026-06-02T15:08:29Z",
+      "head_sha": "bd5b0057a123bf1a7473247d624b77b69897211a",
+      "matrix": [
+        "small/large shape",
+        "cold/warm run",
+        "feature on/off",
+        "forward/repeated execution"
+      ],
+      "project": "vllm",
+      "pull_number": 44330,
+      "repository": "vllm-project/vllm",
+      "risk_family": "memory-performance",
+      "runtime": "candidate exact tests plus value parity and measured allocator, workspace, latency, or throughput comparison matching the claim",
+      "temporal_band": "mature",
+      "title": "[Bugfix] GPT-OSS instruction rendering"
+    },
+    {
+      "base_sha": "449be4f93484d2b8b9ae06bb2f86c6e42c6760d7",
+      "benchmark_domain": "inference",
+      "case_id": "vllm-pr-44398",
+      "changed_paths": [
+        "tests/reasoning/test_deepseekr1_reasoning_parser.py",
+        "vllm/entrypoints/openai/chat_completion/serving.py",
+        "vllm/entrypoints/openai/engine/protocol.py",
+        "vllm/reasoning/deepseek_r1_reasoning_parser.py"
+      ],
+      "claim": "The production change titled '[Frontend] Report reasoning_tokens usage for chat completions; fix count for prompt-injected <think>' preserves all unchanged model-runtime-integration behavior while satisfying its named direction.",
+      "closure": "the production runtime reaches the new path, preserves the control path, and fails invalid configurations closed",
+      "created_at": "2026-06-03T07:49:59Z",
+      "head_sha": "0422a94b0a238efe9e60a557aff49a464105e94d",
+      "matrix": [
+        "feature on/off",
+        "one/repeated request",
+        "supported model/config",
+        "success/invalid input"
+      ],
+      "project": "vllm",
+      "pull_number": 44398,
+      "repository": "vllm-project/vllm",
+      "risk_family": "model-runtime-integration",
+      "runtime": "candidate exact tests plus import/configuration, production reachability, state ownership, and output oracle",
+      "temporal_band": "mature",
+      "title": "[Frontend] Report reasoning_tokens usage for chat completions; fix count for prompt-injected <think>"
+    },
+    {
+      "base_sha": "87954eb50ec90caaae8fb75124138dd8819cc49b",
+      "benchmark_domain": "inference",
+      "case_id": "vllm-pr-44392",
+      "changed_paths": [
+        "tests/v1/core/test_async_scheduler.py",
+        "tests/v1/core/test_scheduler.py",
+        "tests/v1/structured_output/test_reasoning_structured_output.py",
+        "vllm/reasoning/abs_reasoning_parsers.py",
+        "vllm/reasoning/basic_parsers.py",
+        "vllm/v1/core/sched/scheduler.py",
+        "vllm/v1/structured_output/__init__.py"
+      ],
+      "claim": "The production change titled '[Bugfix][Core] Filter reasoning boundary tokens before structured-output FSM advance' preserves all unchanged scheduler-progress behavior while satisfying its named direction.",
+      "closure": "every request reaches exactly one legal terminal or continuation state without starvation, leak, or changed output",
+      "created_at": "2026-06-03T07:12:37Z",
+      "head_sha": "5d956156af8f71b0b13de1af9460f8f07fbcc76f",
+      "matrix": [
+        "empty/one/many requests",
+        "prefill/decode",
+        "normal/preempted/aborted",
+        "single/repeated batch"
+      ],
+      "project": "vllm",
+      "pull_number": 44392,
+      "repository": "vllm-project/vllm",
+      "risk_family": "scheduler-progress",
+      "runtime": "candidate exact tests plus request-state transition, progress, output, and cleanup base/head oracle",
+      "temporal_band": "mature",
+      "title": "[Bugfix][Core] Filter reasoning boundary tokens before structured-output FSM advance"
+    },
+    {
+      "base_sha": "f651a8a9a444e5ef7eb88003d45ab908b8d4dc25",
+      "benchmark_domain": "inference",
+      "case_id": "vllm-pr-44325",
+      "changed_paths": [
+        "tests/v1/tracing/test_tracing.py",
+        "vllm/tracing/utils.py",
+        "vllm/v1/engine/output_processor.py"
+      ],
+      "claim": "The production change titled '[Tracing] Add gen_ai.usage.cache_read.input_tokens span attribute' preserves all unchanged model-runtime-integration behavior while satisfying its named direction.",
+      "closure": "the production runtime reaches the new path, preserves the control path, and fails invalid configurations closed",
+      "created_at": "2026-06-02T13:52:52Z",
+      "head_sha": "718de16238a2e4339c96ede98f5f2c88dd552d43",
+      "matrix": [
+        "feature on/off",
+        "one/repeated request",
+        "supported model/config",
+        "success/invalid input"
+      ],
+      "project": "vllm",
+      "pull_number": 44325,
+      "repository": "vllm-project/vllm",
+      "risk_family": "model-runtime-integration",
+      "runtime": "candidate exact tests plus import/configuration, production reachability, state ownership, and output oracle",
+      "temporal_band": "mature",
+      "title": "[Tracing] Add gen_ai.usage.cache_read.input_tokens span attribute"
+    },
+    {
+      "base_sha": "8b8546da1c3ba65097357523bc24199e36eddf65",
+      "benchmark_domain": "inference",
+      "case_id": "vllm-pr-44172",
+      "changed_paths": [
+        "tests/engine/test_arg_utils.py",
+        "tests/entrypoints/openai/chat_completion/test_serving_chat.py",
+        "tests/entrypoints/openai/completion/test_completion_error.py",
+        "tests/entrypoints/openai/completion/test_lora_resolvers.py",
+        "tests/renderers/test_completions.py",
+        "vllm/config/model.py",
+        "vllm/engine/arg_utils.py",
+        "vllm/renderers/base.py"
+      ],
+      "claim": "The production change titled '[Frontend] Make tokenizer batch wait timeout configurable' preserves all unchanged scheduler-progress behavior while satisfying its named direction.",
+      "closure": "every request reaches exactly one legal terminal or continuation state without starvation, leak, or changed output",
+      "created_at": "2026-06-01T06:26:11Z",
+      "head_sha": "70431403846a22fd02d70b5e980deae3b5865837",
+      "matrix": [
+        "empty/one/many requests",
+        "prefill/decode",
+        "normal/preempted/aborted",
+        "single/repeated batch"
+      ],
+      "project": "vllm",
+      "pull_number": 44172,
+      "repository": "vllm-project/vllm",
+      "risk_family": "scheduler-progress",
+      "runtime": "candidate exact tests plus request-state transition, progress, output, and cleanup base/head oracle",
+      "temporal_band": "mature",
+      "title": "[Frontend] Make tokenizer batch wait timeout configurable"
+    },
+    {
+      "base_sha": "f472ab0a4c0987d2badc2f2aeecd38fee4180a4c",
+      "benchmark_domain": "inference",
+      "case_id": "vllm-pr-44127",
+      "changed_paths": [
+        "docs/features/cpu_kv_offload.md",
+        "docs/features/disagg_prefill.md",
+        "tests/v1/simple_kv_offload/test_async_register.py",
+        "vllm/distributed/kv_transfer/kv_connector/v1/simple_cpu_offload_connector.py",
+        "vllm/v1/simple_kv_offload/manager.py",
+        "vllm/v1/simple_kv_offload/metadata.py",
+        "vllm/v1/simple_kv_offload/worker.py"
+      ],
+      "claim": "The production change titled '[KV Offload] Async CPU memory pinning for SimpleCPUOffloadConnector' preserves all unchanged attention-numerics behavior while satisfying its named direction.",
+      "closure": "outputs and declared metadata match the reference across boundary shapes and supported numeric modes",
+      "created_at": "2026-05-31T18:30:30Z",
+      "head_sha": "6ebdc495f4f4019fd86cbac5a82574046254a950",
+      "matrix": [
+        "prefill/decode",
+        "short/boundary/long sequence",
+        "one/multiple heads",
+        "supported dtype/backend"
+      ],
+      "project": "vllm",
+      "pull_number": 44127,
+      "repository": "vllm-project/vllm",
+      "risk_family": "attention-numerics",
+      "runtime": "candidate exact tests plus independent attention or sampling value oracle and target-kernel execution where available",
+      "temporal_band": "mature",
+      "title": "[KV Offload] Async CPU memory pinning for SimpleCPUOffloadConnector"
+    },
+    {
+      "base_sha": "552eb819184c90fe37efa6394ef20864f869bea8",
+      "benchmark_domain": "inference",
+      "case_id": "vllm-pr-44117",
+      "changed_paths": [
+        "tests/kernels/moe/test_routed_experts_capture_monolithic.py",
+        "vllm/model_executor/layers/fused_moe/experts/trtllm_bf16_moe.py",
+        "vllm/model_executor/layers/fused_moe/experts/trtllm_fp8_moe.py",
+        "vllm/model_executor/layers/fused_moe/experts/trtllm_mxfp4_moe.py",
+        "vllm/model_executor/layers/fused_moe/experts/trtllm_nvfp4_moe.py",
+        "vllm/model_executor/layers/fused_moe/modular_kernel.py",
+        "vllm/v1/worker/gpu_model_runner.py"
+      ],
+      "claim": "The production change titled 'fix: routed experts capture for FlashInfer MoE' preserves all unchanged model-runtime-integration behavior while satisfying its named direction.",
+      "closure": "the production runtime reaches the new path, preserves the control path, and fails invalid configurations closed",
+      "created_at": "2026-05-31T15:04:29Z",
+      "head_sha": "787b33c233e98a2a7c530601c614182b36e2a9b8",
+      "matrix": [
+        "feature on/off",
+        "one/repeated request",
+        "supported model/config",
+        "success/invalid input"
+      ],
+      "project": "vllm",
+      "pull_number": 44117,
+      "repository": "vllm-project/vllm",
+      "risk_family": "model-runtime-integration",
+      "runtime": "candidate exact tests plus import/configuration, production reachability, state ownership, and output oracle",
+      "temporal_band": "mature",
+      "title": "fix: routed experts capture for FlashInfer MoE"
+    },
+    {
+      "base_sha": "a264e419751a9248865aefb1547e0109e246934a",
+      "benchmark_domain": "inference",
+      "case_id": "vllm-pr-44074",
+      "changed_paths": [
+        "tests/v1/worker/test_sleep_mode_backend.py",
+        "vllm/config/model.py",
+        "vllm/device_allocator/sleep_mode_backend.py",
+        "vllm/v1/worker/gpu_worker.py"
+      ],
+      "claim": "The production change titled '[Core] Pluggable sleep-mode backend abstraction (RFC #34303)' preserves all unchanged model-runtime-integration behavior while satisfying its named direction.",
+      "closure": "the production runtime reaches the new path, preserves the control path, and fails invalid configurations closed",
+      "created_at": "2026-05-30T18:52:53Z",
+      "head_sha": "a0a49d46c9299237434e3eeaf630cee2f8c9517f",
+      "matrix": [
+        "feature on/off",
+        "one/repeated request",
+        "supported model/config",
+        "success/invalid input"
+      ],
+      "project": "vllm",
+      "pull_number": 44074,
+      "repository": "vllm-project/vllm",
+      "risk_family": "model-runtime-integration",
+      "runtime": "candidate exact tests plus import/configuration, production reachability, state ownership, and output oracle",
+      "temporal_band": "mature",
+      "title": "[Core] Pluggable sleep-mode backend abstraction (RFC #34303)"
+    },
+    {
+      "base_sha": "1a096d82087bda7faaf4cad81d639419c4734869",
+      "benchmark_domain": "inference",
+      "case_id": "vllm-pr-44049",
+      "changed_paths": [
+        "tests/v1/core/test_ec_connector_cache_manager.py",
+        "tests/v1/ec_connector/unit/test_shared_memory_connector.py",
+        "vllm/config/ec_transfer.py",
+        "vllm/distributed/ec_transfer/ec_connector/base.py",
+        "vllm/distributed/ec_transfer/ec_connector/factory.py",
+        "vllm/distributed/ec_transfer/ec_connector/shared_memory_connector.py",
+        "vllm/v1/core/ec_connector_cache_manager.py",
+        "vllm/v1/core/sched/output.py",
+        "vllm/v1/core/sched/scheduler.py",
+        "vllm/v1/worker/ec_connector_model_runner_mixin.py",
+        "vllm/v1/worker/gpu_model_runner.py"
+      ],
+      "claim": "The production change titled '[Feature] [EPD] [EC Connector] Add ECSharedMemoryConnector for disagg\u2026' preserves all unchanged scheduler-progress behavior while satisfying its named direction.",
+      "closure": "every request reaches exactly one legal terminal or continuation state without starvation, leak, or changed output",
+      "created_at": "2026-05-30T04:08:12Z",
+      "head_sha": "cd6cafe9188b17eff2e4254896fc8aa8e58ab6a6",
+      "matrix": [
+        "empty/one/many requests",
+        "prefill/decode",
+        "normal/preempted/aborted",
+        "single/repeated batch"
+      ],
+      "project": "vllm",
+      "pull_number": 44049,
+      "repository": "vllm-project/vllm",
+      "risk_family": "scheduler-progress",
+      "runtime": "candidate exact tests plus request-state transition, progress, output, and cleanup base/head oracle",
+      "temporal_band": "mature",
+      "title": "[Feature] [EPD] [EC Connector] Add ECSharedMemoryConnector for disagg\u2026"
+    },
+    {
+      "base_sha": "a4ac746405f4ddbef553098507210c072b5ba39e",
+      "benchmark_domain": "inference",
+      "case_id": "vllm-pr-44560",
+      "changed_paths": [
+        "tests/v1/core/test_scheduler.py",
+        "tests/v1/e2e/general/test_mamba_prefix_cache.py",
+        "tests/v1/kv_connector/unit/test_remote_prefill_lifecycle.py",
+        "tests/v1/kv_connector/unit/utils.py",
+        "vllm/v1/core/kv_cache_manager.py",
+        "vllm/v1/core/sched/scheduler.py"
+      ],
+      "claim": "The production change titled '[BugFix] Resolve multiple async kv load deadlock' preserves all unchanged scheduler-progress behavior while satisfying its named direction.",
+      "closure": "every request reaches exactly one legal terminal or continuation state without starvation, leak, or changed output",
+      "created_at": "2026-06-04T17:19:23Z",
+      "head_sha": "e0776c00d147d1f1d4dee86f814f01721ff8caa3",
+      "matrix": [
+        "empty/one/many requests",
+        "prefill/decode",
+        "normal/preempted/aborted",
+        "single/repeated batch"
+      ],
+      "project": "vllm",
+      "pull_number": 44560,
+      "repository": "vllm-project/vllm",
+      "risk_family": "scheduler-progress",
+      "runtime": "candidate exact tests plus request-state transition, progress, output, and cleanup base/head oracle",
+      "temporal_band": "mature",
+      "title": "[BugFix] Resolve multiple async kv load deadlock"
+    },
+    {
+      "base_sha": "557781131a93ebec08c8d95a6b65f758bae9695d",
+      "benchmark_domain": "inference",
+      "case_id": "vllm-pr-44465",
+      "changed_paths": [
+        "requirements/cuda.txt",
+        "tests/multimodal/test_gpu_ipc_memory.py",
+        "tests/multimodal/test_video.py",
+        "tests/v1/worker/test_gpu_worker.py",
+        "vllm/config/model.py",
+        "vllm/config/multimodal.py",
+        "vllm/engine/arg_utils.py",
+        "vllm/multimodal/gpu_ipc_memory.py",
+        "vllm/multimodal/video.py",
+        "vllm/renderers/base.py",
+        "vllm/v1/worker/gpu_worker.py"
+      ],
+      "claim": "The production change titled 'Vram semaphore infra' preserves all unchanged model-runtime-integration behavior while satisfying its named direction.",
+      "closure": "the production runtime reaches the new path, preserves the control path, and fails invalid configurations closed",
+      "created_at": "2026-06-04T00:19:46Z",
+      "head_sha": "10456c5ebfde1f3db4b62add78289aa6bc2de668",
+      "matrix": [
+        "feature on/off",
+        "one/repeated request",
+        "supported model/config",
+        "success/invalid input"
+      ],
+      "project": "vllm",
+      "pull_number": 44465,
+      "repository": "vllm-project/vllm",
+      "risk_family": "model-runtime-integration",
+      "runtime": "candidate exact tests plus import/configuration, production reachability, state ownership, and output oracle",
+      "temporal_band": "mature",
+      "title": "Vram semaphore infra"
+    },
+    {
+      "base_sha": "a248b45d0548d2db110d45799340bf525cbce0e8",
+      "benchmark_domain": "inference",
+      "case_id": "vllm-pr-44443",
+      "changed_paths": [
+        ".buildkite/test_areas/model_runner_v2.yaml",
+        "tests/distributed/test_multiproc_executor.py",
+        "tests/distributed/test_ray_v2_executor.py",
+        "tests/test_config.py",
+        "tests/v1/kv_connector/unit/test_remote_prefill_lifecycle.py",
+        "vllm/config/vllm.py"
+      ],
+      "claim": "The production change titled '[ModelRunner V2] Enable by default for all dense models' preserves all unchanged attention-numerics behavior while satisfying its named direction.",
+      "closure": "outputs and declared metadata match the reference across boundary shapes and supported numeric modes",
+      "created_at": "2026-06-03T19:25:20Z",
+      "head_sha": "cd249be70c984d280885dc4543db0bbfc26e65c2",
+      "matrix": [
+        "prefill/decode",
+        "short/boundary/long sequence",
+        "one/multiple heads",
+        "supported dtype/backend"
+      ],
+      "project": "vllm",
+      "pull_number": 44443,
+      "repository": "vllm-project/vllm",
+      "risk_family": "attention-numerics",
+      "runtime": "candidate exact tests plus independent attention or sampling value oracle and target-kernel execution where available",
+      "temporal_band": "mature",
+      "title": "[ModelRunner V2] Enable by default for all dense models"
+    },
+    {
+      "base_sha": "8796838910a0c12149084c151a221ed384dea2dd",
+      "benchmark_domain": "inference",
+      "case_id": "vllm-pr-44414",
+      "changed_paths": [
+        "tests/v1/engine/test_zmq_buffer_race.py",
+        "vllm/v1/engine/core.py"
+      ],
+      "claim": "The production change titled '[BugFix] Fix Traceback due to malformed MessagePack (#24655)' preserves all unchanged model-runtime-integration behavior while satisfying its named direction.",
+      "closure": "the production runtime reaches the new path, preserves the control path, and fails invalid configurations closed",
+      "created_at": "2026-06-03T11:14:59Z",
+      "head_sha": "fd795a2043b1f78a9a1a68152c5277359b1bfc2c",
+      "matrix": [
+        "feature on/off",
+        "one/repeated request",
+        "supported model/config",
+        "success/invalid input"
+      ],
+      "project": "vllm",
+      "pull_number": 44414,
+      "repository": "vllm-project/vllm",
+      "risk_family": "model-runtime-integration",
+      "runtime": "candidate exact tests plus import/configuration, production reachability, state ownership, and output oracle",
+      "temporal_band": "mature",
+      "title": "[BugFix] Fix Traceback due to malformed MessagePack (#24655)"
+    },
+    {
+      "base_sha": "5b2a2beade03a029a9cae2dd11abe24bb41f39f7",
+      "benchmark_domain": "inference",
+      "case_id": "vllm-pr-44364",
+      "changed_paths": [
+        "tests/v1/engine/test_output_processor.py",
+        "vllm/entrypoints/speech_to_text/realtime/serving.py",
+        "vllm/model_executor/models/voxtral_realtime.py",
+        "vllm/v1/engine/output_processor.py"
+      ],
+      "claim": "The production change titled '[Perf] Optimize Voxtral realtime streaming overhead' preserves all unchanged model-runtime-integration behavior while satisfying its named direction.",
+      "closure": "the production runtime reaches the new path, preserves the control path, and fails invalid configurations closed",
+      "created_at": "2026-06-02T22:32:31Z",
+      "head_sha": "0fa2b081d04c9c0fc7cb5d7a9bc94895c8640f33",
+      "matrix": [
+        "feature on/off",
+        "one/repeated request",
+        "supported model/config",
+        "success/invalid input"
+      ],
+      "project": "vllm",
+      "pull_number": 44364,
+      "repository": "vllm-project/vllm",
+      "risk_family": "model-runtime-integration",
+      "runtime": "candidate exact tests plus import/configuration, production reachability, state ownership, and output oracle",
+      "temporal_band": "mature",
+      "title": "[Perf] Optimize Voxtral realtime streaming overhead"
+    },
+    {
+      "base_sha": "187457a952cbaf21e28944920e0b93a28f6cb1bd",
+      "benchmark_domain": "inference",
+      "case_id": "vllm-pr-44329",
+      "changed_paths": [
+        "tests/v1/kv_connector/unit/offloading_connector/test_scheduler.py",
+        "vllm/distributed/kv_transfer/kv_connector/v1/offloading/scheduler.py"
+      ],
+      "claim": "The production change titled '[Bugfix] Clamp offloading load path to hash-backed GPU blocks' preserves all unchanged scheduler-progress behavior while satisfying its named direction.",
+      "closure": "every request reaches exactly one legal terminal or continuation state without starvation, leak, or changed output",
+      "created_at": "2026-06-02T15:07:15Z",
+      "head_sha": "05cfec517333add48e3f9f089617979bd6a8ab95",
+      "matrix": [
+        "empty/one/many requests",
+        "prefill/decode",
+        "normal/preempted/aborted",
+        "single/repeated batch"
+      ],
+      "project": "vllm",
+      "pull_number": 44329,
+      "repository": "vllm-project/vllm",
+      "risk_family": "scheduler-progress",
+      "runtime": "candidate exact tests plus request-state transition, progress, output, and cleanup base/head oracle",
+      "temporal_band": "mature",
+      "title": "[Bugfix] Clamp offloading load path to hash-backed GPU blocks"
+    },
+    {
+      "base_sha": "c7aa3d263049ac9eefd0f59a10f5ecc6a78927df",
+      "benchmark_domain": "inference",
+      "case_id": "vllm-pr-44328",
+      "changed_paths": [
+        ".buildkite/test_areas/misc.yaml",
+        "tests/plugins/vllm_add_predictable_models/setup.py",
+        "tests/plugins/vllm_add_predictable_models/vllm_add_predictable_models/__init__.py",
+        "tests/plugins/vllm_add_predictable_models/vllm_add_predictable_models/predictable_hybrid.py",
+        "tests/plugins/vllm_add_predictable_models/vllm_add_predictable_models/predictable_llama.py",
+        "tests/v1/kv_connector/extract_hidden_states_integration/test_extraction.py",
+        "vllm/distributed/kv_transfer/kv_connector/v1/example_hidden_states_connector.py",
+        "vllm/model_executor/models/extract_hidden_states.py",
+        "vllm/v1/core/kv_cache_utils.py",
+        "vllm/v1/spec_decode/extract_hidden_states.py"
+      ],
+      "claim": "The production change titled '[Core] Support hidden-state extraction for hybrid models' preserves all unchanged cache-state-layout behavior while satisfying its named direction.",
+      "closure": "cache regions are complete, in bounds, non-overlapping, correctly owned, and reconstruct reference values",
+      "created_at": "2026-06-02T15:00:16Z",
+      "head_sha": "73d5c8447601e56c0d238a9934e6fefa29b1cc88",
+      "matrix": [
+        "empty/partial/full cache",
+        "allocate/free/reuse",
+        "contiguous/paged layout",
+        "single/multiple owners"
+      ],
+      "project": "vllm",
+      "pull_number": 44328,
+      "repository": "vllm-project/vllm",
+      "risk_family": "cache-state-layout",
+      "runtime": "candidate exact tests plus offset, ownership, eviction, reuse, and byte/value reconstruction oracle",
+      "temporal_band": "mature",
+      "title": "[Core] Support hidden-state extraction for hybrid models"
+    },
+    {
+      "base_sha": "816cc73a9be9567161586279330173544196fa46",
+      "benchmark_domain": "inference",
+      "case_id": "vllm-pr-44274",
+      "changed_paths": [
+        "tests/distributed/test_multiproc_executor.py",
+        "tests/distributed/test_ray_v2_executor.py",
+        "tests/model_executor/model_loader/tensorizer_loader/conftest.py",
+        "tests/v1/engine/test_engine_core.py",
+        "tests/v1/engine/test_engine_core_client.py",
+        "vllm/config/vllm.py",
+        "vllm/v1/engine/core.py",
+        "vllm/v1/executor/abstract.py",
+        "vllm/v1/executor/multiproc_executor.py",
+        "vllm/v1/executor/ray_executor.py",
+        "vllm/v1/executor/uniproc_executor.py"
+      ],
+      "claim": "The production change titled '[Core] Move `max_concurrent_batches` to `VllmConfig`' preserves all unchanged scheduler-progress behavior while satisfying its named direction.",
+      "closure": "every request reaches exactly one legal terminal or continuation state without starvation, leak, or changed output",
+      "created_at": "2026-06-02T02:40:30Z",
+      "head_sha": "a0e5a52243e0002f462640b60090eb2958bd0123",
+      "matrix": [
+        "empty/one/many requests",
+        "prefill/decode",
+        "normal/preempted/aborted",
+        "single/repeated batch"
+      ],
+      "project": "vllm",
+      "pull_number": 44274,
+      "repository": "vllm-project/vllm",
+      "risk_family": "scheduler-progress",
+      "runtime": "candidate exact tests plus request-state transition, progress, output, and cleanup base/head oracle",
+      "temporal_band": "mature",
+      "title": "[Core] Move `max_concurrent_batches` to `VllmConfig`"
+    },
+    {
+      "base_sha": "9affc17a05a49d42c19bb67336f1ea9c4f136af8",
+      "benchmark_domain": "inference",
+      "case_id": "vllm-pr-44267",
+      "changed_paths": [
+        "tests/entrypoints/openai/test_tool_choice_content_none.py",
+        "tests/parser/test_parse.py",
+        "vllm/entrypoints/openai/chat_completion/serving.py",
+        "vllm/entrypoints/openai/engine/serving.py",
+        "vllm/parser/abstract_parser.py"
+      ],
+      "claim": "The production change titled '[Refactor] Unify reasoning + tool-call parsing behind Parser.parse()' preserves all unchanged model-runtime-integration behavior while satisfying its named direction.",
+      "closure": "the production runtime reaches the new path, preserves the control path, and fails invalid configurations closed",
+      "created_at": "2026-06-02T00:46:43Z",
+      "head_sha": "414bfbaacd8b58fd59f2515e8ceb46b121b6fd69",
+      "matrix": [
+        "feature on/off",
+        "one/repeated request",
+        "supported model/config",
+        "success/invalid input"
+      ],
+      "project": "vllm",
+      "pull_number": 44267,
+      "repository": "vllm-project/vllm",
+      "risk_family": "model-runtime-integration",
+      "runtime": "candidate exact tests plus import/configuration, production reachability, state ownership, and output oracle",
+      "temporal_band": "mature",
+      "title": "[Refactor] Unify reasoning + tool-call parsing behind Parser.parse()"
+    },
+    {
+      "base_sha": "8b8546da1c3ba65097357523bc24199e36eddf65",
+      "benchmark_domain": "inference",
+      "case_id": "vllm-pr-44244",
+      "changed_paths": [
+        "tests/benchmarks/test_custom_dataset_chat_template_kwargs.py",
+        "vllm/benchmarks/datasets/datasets.py",
+        "vllm/benchmarks/serve.py"
+      ],
+      "claim": "The production change titled '[Benchmark] Enable reasoning-model (thinking) benchmarking via `--chat-template-kwargs` for client-rendered datasets' preserves all unchanged memory-performance behavior while satisfying its named direction.",
+      "closure": "reference values are preserved and the named resource metric improves without hidden lifetime or synchronization debt",
+      "created_at": "2026-06-01T18:08:37Z",
+      "head_sha": "972774fb108679bc9e15f5696789a5fdf7672a65",
+      "matrix": [
+        "small/large shape",
+        "cold/warm run",
+        "feature on/off",
+        "forward/repeated execution"
+      ],
+      "project": "vllm",
+      "pull_number": 44244,
+      "repository": "vllm-project/vllm",
+      "risk_family": "memory-performance",
+      "runtime": "candidate exact tests plus value parity and measured allocator, workspace, latency, or throughput comparison matching the claim",
+      "temporal_band": "mature",
+      "title": "[Benchmark] Enable reasoning-model (thinking) benchmarking via `--chat-template-kwargs` for client-rendered datasets"
+    },
+    {
+      "base_sha": "8796838910a0c12149084c151a221ed384dea2dd",
+      "benchmark_domain": "inference",
+      "case_id": "vllm-pr-44212",
+      "changed_paths": [
+        "tests/v1/core/test_encoder_cache_manager.py",
+        "vllm/multimodal/utils.py",
+        "vllm/transformers_utils/processors/voxtral.py",
+        "vllm/v1/core/encoder_cache_manager.py",
+        "vllm/v1/core/sched/scheduler.py",
+        "vllm/v1/worker/gpu_model_runner.py"
+      ],
+      "claim": "The production change titled '[Perf] Improve multimodal item handling from O(n) to O(log n) per step' preserves all unchanged scheduler-progress behavior while satisfying its named direction.",
+      "closure": "every request reaches exactly one legal terminal or continuation state without starvation, leak, or changed output",
+      "created_at": "2026-06-01T13:09:53Z",
+      "head_sha": "14ea10d94df5fb3951b15344cd2bcb8aaa7604ce",
+      "matrix": [
+        "empty/one/many requests",
+        "prefill/decode",
+        "normal/preempted/aborted",
+        "single/repeated batch"
+      ],
+      "project": "vllm",
+      "pull_number": 44212,
+      "repository": "vllm-project/vllm",
+      "risk_family": "scheduler-progress",
+      "runtime": "candidate exact tests plus request-state transition, progress, output, and cleanup base/head oracle",
+      "temporal_band": "mature",
+      "title": "[Perf] Improve multimodal item handling from O(n) to O(log n) per step"
+    },
+    {
+      "base_sha": "0910f7e0e1f5ee9f2e5a6f76d0d09e68fddadc01",
+      "benchmark_domain": "inference",
+      "case_id": "vllm-pr-44206",
+      "changed_paths": [
+        "tests/v1/kv_offload/test_tiering_offloading.py",
+        "vllm/distributed/kv_transfer/kv_connector/v1/offloading/scheduler.py",
+        "vllm/v1/kv_offload/base.py",
+        "vllm/v1/kv_offload/tiering/base.py",
+        "vllm/v1/kv_offload/tiering/manager.py"
+      ],
+      "claim": "The production change titled '[KV Offload] Add `on_schedule_end()` hook to separate step lifecycle from event draining' preserves all unchanged scheduler-progress behavior while satisfying its named direction.",
+      "closure": "every request reaches exactly one legal terminal or continuation state without starvation, leak, or changed output",
+      "created_at": "2026-06-01T11:40:39Z",
+      "head_sha": "1f1f230e81879c823548ca572d82a2ea169920d9",
+      "matrix": [
+        "empty/one/many requests",
+        "prefill/decode",
+        "normal/preempted/aborted",
+        "single/repeated batch"
+      ],
+      "project": "vllm",
+      "pull_number": 44206,
+      "repository": "vllm-project/vllm",
+      "risk_family": "scheduler-progress",
+      "runtime": "candidate exact tests plus request-state transition, progress, output, and cleanup base/head oracle",
+      "temporal_band": "mature",
+      "title": "[KV Offload] Add `on_schedule_end()` hook to separate step lifecycle from event draining"
+    }
+  ],
+  "ci_or_label_requested": false,
+  "cross_case_controls": [
+    "Syntax, conflict-marker, import, or candidate exact failure rejects first.",
+    "A resource claim requires the actual scheduler, allocator, or runtime unless it is exact algebraic data motion.",
+    "Structural migration and artifact-boundary exceptions remain narrow and require complete inventories.",
+    "Technical correctness and historical disposition are frozen separately.",
+    "No outcome, state, review/comment text, CI, or label evidence is visible before judgment lock; an explicitly authorized metadata-only activity projection may be used for the check gate."
+  ],
+  "disposition_policy": {
+    "accept": "title-scoped contract has candidate or evaluator exact closure and no reachable blocker",
+    "check": "<=7 days with qualifying named non-author final-head activity metadata, no exact candidate failure, and no source-integrity failure",
+    "forced_polarization_used": false,
+    "mature_created_at_cutoff": "2026-06-04T23:59:59Z",
+    "prospective_created_at_cutoff": "2026-08-27T00:00:00Z",
+    "reject": "exact failure, explicit not-ready body, mature algorithm without tests/exception, or unresolved runtime resource claim",
+    "resolution_gray_zone_excluded": true,
+    "unresolved": "required backend or topology is unavailable and neither a bounded structural nor artifact exception closes it",
+    "weighted_score_used": false
+  },
+  "domain_allocation": {
+    "inference": 100
+  },
+  "evaluation_layers": {
+    "disposition_prediction": [
+      "accept",
+      "check",
+      "reject",
+      "unresolved"
+    ],
+    "governance_gap_recorded_separately": true,
+    "technical_contract": [
+      "pass",
+      "bounded-gap",
+      "fail",
+      "unresolved"
+    ]
+  },
+  "frozen_at": "2026-09-03T03:35:35.198027+00:00",
+  "frozen_before_candidate_body_access": true,
+  "frozen_before_source_diff_content_access": true,
+  "machine_policy_id": "inference-contract-disposition-split-v0.1-r22",
+  "merge_outcome_or_state_requested": false,
+  "ordered_reachability_gate": [
+    "configuration is legal and title-scoped",
+    "a changed production call site reaches the behavior",
+    "shape/state/owner/lifetime invariant is explicit",
+    "an exact candidate test or independent oracle distinguishes base and head",
+    "the remaining remediation is bounded to the candidate direction"
+  ],
+  "previous_iteration_sha256": "sha256:1226b9024b51a15003ee3c6c11d935599c7ecbc9b136b662eb8285a7a9ab2939",
+  "prospective_rules": [
+    {
+      "evidence": [
+        "The R21 execution gate bounded tail latency without converting timeouts into exact failures."
+      ],
+      "id": "R22-TIME-BUDGET-GATE",
+      "rule": "Abandon an individual normal PR test after 60 seconds and a TensorRT-LLM PR test after 20 seconds. Record abandoned-time-budget as a neutral capability gap; timeout alone is never a candidate failure and does not trigger a retry loop."
+    },
+    {
+      "evidence": [
+        "R21 contained one check oracle, TensorRT-LLM #18614, distinguished by fresh final-head collaborator activity; the other recent cases were reject."
+      ],
+      "id": "R22-CHECK-REQUIRES-ACTIVE-REVIEW",
+      "rule": "Use check only for a <=7-day PR with outcome-free evidence of substantive named non-author activity after the frozen head. Review text, state, merge outcome, labels, and CI status remain hidden; absent qualifying activity, a recent PR predicts reject."
+    },
+    {
+      "evidence": [
+        "The two R21 bracketed-draft cases, FlashInfer #3015 and TensorRT-LLM #14605, were both oracle-reject; the narrow prefix rule avoids conflating speculative draft tokens."
+      ],
+      "id": "R22-BRACKETED-DRAFT-VETO",
+      "rule": "A title beginning with an explicit [Draft] marker predicts reject unless an exact evaluator-owned closure supersedes the declared readiness state. Incidental uses of draft for speculative decoding do not match this rule."
+    },
+    {
+      "evidence": [
+        "Leave-one-out application to R21 identified the three abandoned Qwen3.5Opt stack members and introduced no merged false reject."
+      ],
+      "id": "R22-NEGATIVE-PRECEDENT-CONSENSUS",
+      "rule": "For a mature otherwise-acceptable PR, reject on precedent only when at least two prior revealed cases from the same project and risk family pass a frozen close-neighbor gate and every such neighbor is reject. Any accepted close neighbor vetoes this negative inference."
+    },
+    {
+      "evidence": [
+        "The frozen thresholds improved R21 leave-one-out exact labels from 67 to 70 before the independent bracketed-draft rule, with 63/63 merged recall preserved."
+      ],
+      "id": "R22-PRECEDENT-NEIGHBOR-GATE",
+      "rule": "A close neighbor requires title-token Jaccard >=0.35, non-test source-path Jaccard >=0.40, or source-directory-prefix Jaccard >=0.75. Retrieval ranking is evidence selection, not a weighted disposition score."
+    },
+    {
+      "evidence": [
+        "R21 preserved all 63 merged cases while project and runtime-pass rates were too mixed for a safe universal threshold."
+      ],
+      "id": "R22-MERGED-RECALL-GUARD",
+      "rule": "Do not apply broad project, platform, test-count, or runtime-pass rejection heuristics. Exact candidate failure, explicit readiness veto, source-integrity failure, or unanimous negative precedent is required to overturn mature technical closure."
+    },
+    {
+      "evidence": [
+        "R21 runtime success was not itself disposition-predictive, while exact candidate failure remained a high-precision reject signal."
+      ],
+      "id": "R22-TECHNICAL-DISPOSITION-SPLIT",
+      "rule": "Keep technical_contract separate from disposition. Abandoned, dependency-blocked, and unavailable-capability runs remain bounded-gap unless an exact candidate-owned assertion fails."
+    }
+  ],
+  "protocol_id": "inference-iterative-contract-v0.1-r22-100",
+  "review_activity_metadata_projection_requested": true,
+  "review_activity_text_requested": false,
+  "review_or_comment_requested": false,
+  "schema_version": "0.1",
+  "selection_lock_sha256": "sha256:45361ae2bbb736e4e6126e32e4b6aa76dfff2bef2333a4f206869729a3549117",
+  "test_plan_sha256": "sha256:672bccbea5ae520d8adcbc9f9faba9b1ed1022de3ee0002aa312c0c3b9f9c148"
+}

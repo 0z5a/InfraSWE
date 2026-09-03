@@ -16,9 +16,10 @@ from infraswe.io import atomic_write_json
 
 PULL_IDENTITY_QUERY = """
 query($owner: String!, $name: String!, $number: Int!) {
-  repository(owner: $owner, name: $name) {
+    repository(owner: $owner, name: $name) {
     pullRequest(number: $number) {
       author { login __typename }
+      authorAssociation
       headRefOid
       commits(last: 1) {
         nodes { commit { oid committedDate } }
@@ -202,6 +203,9 @@ def main() -> int:
                 "locked_head_sha": case["head_sha"],
                 "head_committed_at": head_committed_at,
                 "pr_author": author,
+                "pr_author_association": str(
+                    pull.get("authorAssociation") or "UNKNOWN"
+                ),
                 "projected_events": events,
                 "explicit_human_non_author_activity_count": len(explicit),
                 "final_head_explicit_human_non_author_activity_count": len(final_head),

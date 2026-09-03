@@ -93,18 +93,31 @@ def main(*, round_label: str = "R11", selection_name: str = "selection-lock.json
         lock = locked[case_id]
         if item["judgment_lock_sha256"] != lock["lock_sha256"]:
             raise SystemExit(f"{case_id}: reveal/judgment lock mismatch")
-        observed_at = _time(item["observed_at"])
+        evaluation_at = _time(lock["material"]["frozen_at"])
         created_at = _time(source["created_at"])
-        age_days = (observed_at - created_at).total_seconds() / 86_400
-        feedback_times = [
-            _time(feedback["created_at"])
+        age_days = (evaluation_at - created_at).total_seconds() / 86_400
+        eligible_feedback = [
+            feedback
             for feedback in item["feedback"]
             if feedback["created_at"] is not None
+            and _time(feedback["created_at"]) <= evaluation_at
             and _is_substantive_feedback(feedback, author=item["pr_author"])
+            and (
+                feedback["source"] in {"review", "review-comment"}
+                or feedback["author_association"] in {"COLLABORATOR", "MEMBER", "OWNER"}
+            )
+        ]
+        feedback_times = [_time(feedback["created_at"]) for feedback in eligible_feedback]
+        head_committed_at = _time(item["head_committed_at"])
+        final_head_feedback = [
+            feedback
+            for feedback in eligible_feedback
+            if feedback["commit_id"] == source["head_sha"]
+            or _time(feedback["created_at"]) >= head_committed_at
         ]
         last_review_at = max(feedback_times, default=None)
         review_idle_days = (
-            (observed_at - last_review_at).total_seconds() / 86_400
+            (evaluation_at - last_review_at).total_seconds() / 86_400
             if last_review_at is not None
             else None
         )
@@ -118,7 +131,7 @@ def main(*, round_label: str = "R11", selection_name: str = "selection-lock.json
         else:
             active_review = (
                 age_days <= CHECK_NEW_PR_MAX_AGE_DAYS
-                and item["final_head_explicit_human_feedback_count"] > 0
+                and len(final_head_feedback) > 0
                 and review_idle_days is not None
                 and review_idle_days <= CHECK_ACTIVITY_MAX_IDLE_DAYS
             )
@@ -156,6 +169,15 @@ def main(*, round_label: str = "R11", selection_name: str = "selection-lock.json
                 "oracle_decision": oracle,
                 "oracle_binary_label": oracle_binary,
                 "oracle_reason": reason,
+                "oracle_evaluation_at": evaluation_at.isoformat(),
+                "oracle_final_head_explicit_human_feedback_count": len(
+                    final_head_feedback
+                ),
+                "post_lock_feedback_ignored": sum(
+                    feedback["created_at"] is not None
+                    and _time(feedback["created_at"]) > evaluation_at
+                    for feedback in item["feedback"]
+                ),
                 "exact_label_match": machine_exact == oracle,
                 "legacy_exact_label_match": legacy_exact == oracle,
                 "binary_direction_match": machine_binary == oracle_binary,
@@ -280,6 +302,7 @@ def main(*, round_label: str = "R11", selection_name: str = "selection-lock.json
             "partition_changed": False,
         },
         "slash_commands_are_substantive_feedback": False,
+        "oracle_review_activity_cutoff": "machine-lock-frozen-at",
         "thresholds": {
             "merge_accept_score_floor_100": MERGE_ACCEPT_SCORE_FLOOR_100,
             "check_new_pr_max_age_days": CHECK_NEW_PR_MAX_AGE_DAYS,

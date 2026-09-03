@@ -1,0 +1,297 @@
+{
+  "allowed_post_selection_projection": {
+    "ci_or_label": false,
+    "review_activity_metadata": true,
+    "review_or_comment_text": false,
+    "state_or_merge": false
+  },
+  "blindness": {
+    "allowed_selection_fields": [
+      "number",
+      "title",
+      "createdAt",
+      "baseRefName",
+      "baseRefOid",
+      "headRefOid",
+      "changedFiles",
+      "additions",
+      "deletions",
+      "files.path",
+      "commits.first.commit.oid",
+      "commits.first.commit.parents.first.oid"
+    ],
+    "candidate_body_visible": false,
+    "ci_or_label_visible": false,
+    "diff_content_visible": false,
+    "review_or_comment_visible": false,
+    "state_or_merge_visible": false
+  },
+  "case_count": 100,
+  "created_at_window": {
+    "excluded_resolution_gray_zone": [
+      "2026-06-05T00:00:00Z",
+      "2026-08-26T23:59:59Z"
+    ],
+    "mature_end": "2026-06-04T23:59:59Z",
+    "observation_cutoff": "2026-09-02T23:59:59Z",
+    "per_project_recent_target": 1,
+    "recent_shortfall_fallback": "fill from mature ranking",
+    "recent_start": "2026-08-27T00:00:00Z",
+    "start": "2025-01-01T00:00:00Z"
+  },
+  "domain_allocation": {
+    "inference": 100
+  },
+  "domain_anchor": {
+    "inference": {
+      "direct_terms": [
+        "inference",
+        "serving",
+        "serve",
+        "scheduler",
+        "kv cache",
+        "kv-cache",
+        "prefix cache",
+        "decode",
+        "prefill",
+        "speculative",
+        "draft",
+        "cuda graph",
+        "cudagraph",
+        "attention",
+        "quantization",
+        "lora",
+        "adapter",
+        "batching",
+        "request",
+        "engine",
+        "executor",
+        "model runner",
+        "model_runner",
+        "sampling"
+      ],
+      "source_path_terms": [
+        "/scheduler",
+        "/engine",
+        "/executor",
+        "/worker",
+        "model_runner",
+        "kv_cache",
+        "/attention",
+        "spec_decode",
+        "speculative",
+        "/sampling",
+        "/lora",
+        "/adapter",
+        "/quant",
+        "/serve",
+        "/runtime",
+        "/batch",
+        "cache_manager"
+      ]
+    },
+    "title_docs_prefix_is_excluded": true
+  },
+  "domain_signals": {
+    "inference": {
+      "path_terms": [
+        "scheduler",
+        "engine",
+        "executor",
+        "worker",
+        "model_runner",
+        "kv_cache",
+        "attention",
+        "spec_decode",
+        "speculative",
+        "sampling",
+        "lora",
+        "adapter",
+        "quant",
+        "serve",
+        "runtime",
+        "batch",
+        "kernel",
+        "cache_manager"
+      ],
+      "risk_families": [
+        "scheduler-progress",
+        "cache-state-layout",
+        "attention-numerics",
+        "model-runtime-integration",
+        "memory-performance"
+      ],
+      "secondary_title_terms": [
+        "latency",
+        "throughput",
+        "memory",
+        "cache",
+        "sampling",
+        "token",
+        "model runner",
+        "worker",
+        "backend",
+        "flashinfer",
+        "trtllm"
+      ],
+      "strong_title_terms": [
+        "inference",
+        "serving",
+        "scheduler",
+        "kv cache",
+        "kv-cache",
+        "prefix cache",
+        "decode",
+        "prefill",
+        "speculative",
+        "draft",
+        "cuda graph",
+        "cudagraph",
+        "attention",
+        "quantization",
+        "lora",
+        "adapter",
+        "batching",
+        "request",
+        "engine",
+        "executor",
+        "kernel"
+      ]
+    },
+    "weights": {
+      "candidate_test_path": 1,
+      "domain_path": 4,
+      "secondary_title": 3,
+      "strong_title": 5
+    }
+  },
+  "domains_in_order": [
+    "inference"
+  ],
+  "eligibility": {
+    "changed_files_max": 12,
+    "changed_files_min": 1,
+    "changed_lines_max": 1200,
+    "domain_score_min": 4,
+    "exclude_all_previously_scored_pr_identities": true,
+    "exclude_dependency_or_generated_only": true,
+    "exclude_docs_only": true,
+    "exclude_tests_only": true,
+    "require_complete_path_list": true,
+    "require_first_commit_parent": true,
+    "require_runtime_source_path": true
+  },
+  "frozen_at": "2026-09-03T03:32:41.530883+00:00",
+  "grouping_policy": {
+    "group_size": 100,
+    "groups": [
+      "R21",
+      "R22",
+      "R23",
+      "R24",
+      "R25"
+    ],
+    "iterate_only_after_reveal": true,
+    "per_group_project_allocation": {
+      "flashinfer": 25,
+      "sglang": 25,
+      "tensorrt_llm": 25,
+      "vllm": 25
+    },
+    "requested_new_cases": 500
+  },
+  "machine_policy": {
+    "candidate_cpp_and_integration_tests_are_first_class": true,
+    "candidate_exact_boundary_failure_rejects": true,
+    "check_observability_without_allowed_human_activity": "unavailable",
+    "check_requires_named_non_author_human_activity": true,
+    "forced_polarization_used": false,
+    "long_running_normal_pr_seconds": 60,
+    "long_running_tensorrt_llm_pr_seconds": 20,
+    "mature_accept_requires_route_or_independent_invariant": true,
+    "merged_accept_recall_audited_before_release": true,
+    "outcome_free_review_activity_projection_allowed": true,
+    "policy_id": "inference-contract-disposition-split-v0.1-r22",
+    "prior_revealed_precedent_consensus_allowed": true,
+    "recent_without_handoff_defaults_reject": true,
+    "review_text_visible": false,
+    "target_capability_gap_alone_does_not_reject": true,
+    "technical_contract_and_disposition_are_separate": true,
+    "timeout_disposition": "abandoned-time-budget-neutral",
+    "unrelated_fixture_or_import_failure_is_neutral": true,
+    "weighted_score_used": false
+  },
+  "policy_sha256": "sha256:5e990ecf15dcf265a3a48083a4d6afc48570815b18ddae7fb87eac0d7d1f7cab",
+  "previous_audit_sha256": "sha256:ec931542f586ba7434fa431618ecb22c338460bb19f4a9d6d1003b0fb1e79184",
+  "previous_iteration_sha256": "sha256:1226b9024b51a15003ee3c6c11d935599c7ecbc9b136b662eb8285a7a9ab2939",
+  "previous_policy_sha256": "sha256:3f5e1fba47d3ba8ae9608d012b1b20e780771b16c77db979ee33ac05d1deb432",
+  "previous_round": "R21",
+  "projects": {
+    "inference": {
+      "flashinfer": {
+        "count": 25,
+        "repository": "flashinfer-ai/flashinfer",
+        "source_prefixes": [
+          "flashinfer/",
+          "python/flashinfer/",
+          "include/",
+          "csrc/"
+        ]
+      },
+      "sglang": {
+        "count": 25,
+        "repository": "sgl-project/sglang",
+        "source_prefixes": [
+          "python/sglang/",
+          "sgl-kernel/"
+        ]
+      },
+      "tensorrt_llm": {
+        "count": 25,
+        "repository": "NVIDIA/TensorRT-LLM",
+        "source_prefixes": [
+          "tensorrt_llm/",
+          "cpp/"
+        ]
+      },
+      "vllm": {
+        "count": 25,
+        "repository": "vllm-project/vllm",
+        "source_prefixes": [
+          "vllm/",
+          "csrc/"
+        ]
+      }
+    }
+  },
+  "prospective_rule_ids": [
+    "R22-TIME-BUDGET-GATE",
+    "R22-CHECK-REQUIRES-ACTIVE-REVIEW",
+    "R22-BRACKETED-DRAFT-VETO",
+    "R22-NEGATIVE-PRECEDENT-CONSENSUS",
+    "R22-PRECEDENT-NEIGHBOR-GATE",
+    "R22-MERGED-RECALL-GUARD",
+    "R22-TECHNICAL-DISPOSITION-SPLIT"
+  ],
+  "protocol_id": "inference-iterative-contract-v0.1-r22-100",
+  "round": "R22",
+  "schema_version": "0.1",
+  "selection_algorithm": {
+    "family_diversity": "greedy family coverage within each project slice",
+    "fill": "deterministic rank among remaining mature eligible cases",
+    "rank_key": [
+      "candidate-owned-test-first",
+      "domain-score-descending",
+      "created-at-descending-within-band",
+      "changed-files-ascending",
+      "changed-lines-ascending",
+      "pull-number-ascending"
+    ],
+    "recent_first": "one best eligible <=7-day case per project when available",
+    "stacked_series_diversity": {
+      "max_per_overlap_cluster_per_project": 2,
+      "non_test_path_jaccard_min": 0.5,
+      "normalized_title_prefix_token_count": 3
+    }
+  }
+}

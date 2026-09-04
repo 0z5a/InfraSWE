@@ -85,7 +85,7 @@ def main() -> int:
     changes: list[dict[str, str]]
     updates: dict[str, Any]
     candidate_recall_target = MERGED_ACCEPT_RECALL_MINIMUM
-    if old_policy.get("domain") == "inference" or current_group >= 2:
+    if old_policy.get("domain") in {"inference", "communication"} or current_group >= 2:
         candidates: list[dict[str, Any]] = [{}]
         for key in (
             "small_compile_accept_enabled",
@@ -352,11 +352,8 @@ def main() -> int:
                 ),
             }
         ]
-    policy_prefix = (
-        "inference-bulk-disposition"
-        if old_policy.get("domain") == "inference"
-        else "training-bulk-disposition"
-    )
+    policy_domain = str(old_policy.get("domain", "training"))
+    policy_prefix = f"{policy_domain}-bulk-disposition"
     policy = {
         **old_policy,
         **updates,

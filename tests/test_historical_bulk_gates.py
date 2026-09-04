@@ -407,6 +407,12 @@ def test_hard_merged_recall_gate_can_override_an_exact_accuracy_loss(
         current_exact_matches=2508,
     )
 
+    source = (
+        project_root / "benchmarks" / "historical_prs" / "derive_training_bulk_policy_iteration.py"
+    ).read_text(encoding="utf-8")
+    assert '{"inference", "communication"}' in source
+    assert 'policy_prefix = f"{policy_domain}-bulk-disposition"' in source
+
 
 def test_merged_recall_guard_is_narrow_and_outcome_blind(project_root: Path, monkeypatch) -> None:
     monkeypatch.syspath_prepend(str(project_root / "benchmarks" / "historical_prs"))

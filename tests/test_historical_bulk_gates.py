@@ -456,7 +456,7 @@ def test_merged_recall_guard_is_narrow_and_outcome_blind(project_root: Path, mon
     }
     frozen_at = datetime(2026, 9, 4, tzinfo=UTC)
 
-    assert freeze._decision(case, "bounded-gap", policy, frozen_at)[0] == "accept_with_scope"
+    assert freeze._decision(case, "bounded-gap", policy, frozen_at)[0] == "accept"
     assert (
         freeze._decision({**case, "project": "vllm"}, "bounded-gap", policy, frozen_at)[0]
         == "reject"
@@ -537,7 +537,7 @@ def test_bulk_judgments_derive_labels_from_fixed_score_bands(
         freeze.DEFAULT_POLICY,
         frozen_at,
     )
-    assert accepted[0] == "accept_with_scope"
+    assert accepted[0] == "accept"
     assert accepted[1] > 65
 
     stronger_accept = freeze._assessment(
@@ -556,7 +556,7 @@ def test_bulk_judgments_derive_labels_from_fixed_score_bands(
         freeze.DEFAULT_POLICY,
         frozen_at,
     )
-    assert stronger_accept[0] == "accept_with_scope"
+    assert stronger_accept[0] == "accept"
     assert stronger_accept[1] > accepted[1] > 65
 
 
@@ -572,6 +572,9 @@ def test_bulk_wire_format_uses_one_explicitly_non_official_overall_score(
     assert '"formal_infraswe_result_issued": False' in script
     assert '"official_microscores_issued": False' in script
     assert '"overall_score_band_policy": {' in script
+    assert 'bulk-group-judgment-lock-v0.3' in script
+    assert '"acceptance_scope": "limited" if decision == "accept" else "not-applicable"' in script
+    assert 'for decision in ("accept", "check", "reject", "unresolved")' in script
 
 
 def test_unavailable_metadata_becomes_auditable_invalid_attempt(

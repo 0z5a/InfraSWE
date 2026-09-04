@@ -425,13 +425,21 @@ def main() -> int:
         outcome, response_digest = by_id[case_id]
         oracle, reason = _oracle(case, outcome, frozen_at)
         lock = locked[case_id]
+        machine_decision = lock["material"]["decision"]
+        if machine_decision == "accept_with_scope":
+            machine_decision = "accept"
+        machine_acceptance_scope = lock["material"].get(
+            "acceptance_scope",
+            "limited" if machine_decision == "accept" else "not-applicable",
+        )
         cases.append(
             {
                 "case_id": case_id,
                 "repository": case["repository"],
                 "pull_number": case["pull_number"],
                 "title": case["title"],
-                "machine_decision": lock["material"]["decision"],
+                "machine_decision": machine_decision,
+                "machine_acceptance_scope": machine_acceptance_scope,
                 "legacy_decision": lock["material"]["legacy_decision"],
                 "machine_rationale_codes": lock["material"]["rationale_codes"],
                 "technical_contract": lock["material"]["technical_contract"],
@@ -444,8 +452,8 @@ def main() -> int:
             }
         )
     material = {
-        "schema_version": "0.1",
-        "protocol_id": (f"{input_lock.get('profile', 'training')}-bulk-group-outcome-reveal-v0.1"),
+        "schema_version": "0.2",
+        "protocol_id": (f"{input_lock.get('profile', 'training')}-bulk-group-outcome-reveal-v0.2"),
         "group_index": input_lock["group_index"],
         "group_input_sha256": input_lock["group_input_sha256"],
         "judgment_lock_set_sha256": judgment["lock_set_sha256"],

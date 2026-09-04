@@ -73,7 +73,7 @@ RATIONALE_SCORE_100 = {
     "CANDIDATE_TEST_OR_COMPILE_CONTRACT_CLOSED": 82.0,
     "SMALL_COMPILE_CLOSED_SOURCE_CHANGE": 70.0,
     "UNRESOLVED_MATURE_OR_UNREVIEWED_GAP": {
-        "accept_with_scope": 66.0,
+        "accept": 66.0,
         "reject": 40.0,
     },
 }
@@ -209,6 +209,12 @@ def _merged_recall_guard_applies(
     )
 
 
+def _current_decision(value: str) -> str:
+    """Normalize legacy scoped-accept labels into the current three-class vocabulary."""
+
+    return "accept" if value == "accept_with_scope" else value
+
+
 def _rule_decision(
     case: dict[str, Any],
     technical: str,
@@ -251,31 +257,33 @@ def _rule_decision(
     ):
         return "check", ["ACTIVE_RECENT_FINAL_HEAD_REVIEW"]
     if policy.get("explicit_revert_accept_enabled", False) and REVERT_RE.search(title):
-        return "accept_with_scope", ["EXPLICIT_REVERT_WITHOUT_HARD_FAILURE"]
+        return "accept", ["EXPLICIT_REVERT_WITHOUT_HARD_FAILURE"]
     if all_counts["APPROVED"] > 0:
-        return "accept_with_scope", ["HUMAN_NON_AUTHOR_APPROVAL"]
+        return "accept", ["HUMAN_NON_AUTHOR_APPROVAL"]
     maintainer_authored = case["pr_author_association"] in policy["maintainer_associations"]
     maintainer_scope_closed = maintainer_authored and (
         runtime_source_paths or not policy.get("maintainer_requires_runtime_source", False)
     )
     if policy.get("maintainer_precedes_review_without_approval", False) and maintainer_scope_closed:
-        return "accept_with_scope", ["MAINTAINER_RUNTIME_SOURCE_CHANGE"]
+        return "accept", ["MAINTAINER_RUNTIME_SOURCE_CHANGE"]
     if _merged_recall_guard_applies(case, policy, changed_lines=changed_lines):
-        return "accept_with_scope", ["MERGED_RECALL_GUARD_PROJECT_SCOPE"]
+        return "accept", ["MERGED_RECALL_GUARD_PROJECT_SCOPE"]
     if case["human_non_author_reviews"]:
         return "reject", ["REVIEW_WITHOUT_APPROVAL"]
     if maintainer_scope_closed:
-        return "accept_with_scope", ["MAINTAINER_AUTHORED_NO_HARD_FAILURE"]
+        return "accept", ["MAINTAINER_AUTHORED_NO_HARD_FAILURE"]
     if technical in {"test-pass", "compile-pass"} and candidate_test_path:
-        return "accept_with_scope", ["CANDIDATE_TEST_OR_COMPILE_CONTRACT_CLOSED"]
+        return "accept", ["CANDIDATE_TEST_OR_COMPILE_CONTRACT_CLOSED"]
     if (
         policy.get("small_compile_accept_enabled", True)
         and technical == "compile-pass"
         and source_paths
         and changed_lines <= int(policy["small_change_max_lines"])
     ):
-        return "accept_with_scope", ["SMALL_COMPILE_CLOSED_SOURCE_CHANGE"]
-    return str(policy["uncertain_disposition"]), ["UNRESOLVED_MATURE_OR_UNREVIEWED_GAP"]
+        return "accept", ["SMALL_COMPILE_CLOSED_SOURCE_CHANGE"]
+    return _current_decision(str(policy["uncertain_disposition"])), [
+        "UNRESOLVED_MATURE_OR_UNREVIEWED_GAP"
+    ]
 
 
 def _assessment(
@@ -294,7 +302,7 @@ def _assessment(
         float(score_spec[expected_decision]) if isinstance(score_spec, dict) else float(score_spec)
     )
     band = overall_score_decision_band(score)
-    decision = "accept_with_scope" if band == "accept" else band
+    decision = band
     if decision != expected_decision:
         raise ValueError(
             f"score/disposition invariant failed for {rationale[0]}: "
@@ -347,11 +355,12 @@ def main() -> int:
                 else "check"
             )
         lock_material = {
-            "schema_version": "0.2",
+            "schema_version": "0.3",
             "case_id": case["case_id"],
             "group_input_sha256": input_lock["group_input_sha256"],
             "policy_id": policy["policy_id"],
             "decision": decision,
+            "acceptance_scope": "limited" if decision == "accept" else "not-applicable",
             "overall_score_100": overall_score_100,
             "overall_score_role": "historical-offline-evaluation-with-fixed-disposition-bands",
             "formal_infraswe_result_issued": False,
@@ -372,8 +381,8 @@ def main() -> int:
             }
         )
     output_material = {
-        "schema_version": "0.2",
-        "protocol_id": (f"{input_lock.get('profile', 'training')}-bulk-group-judgment-lock-v0.2"),
+        "schema_version": "0.3",
+        "protocol_id": (f"{input_lock.get('profile', 'training')}-bulk-group-judgment-lock-v0.3"),
         "group_index": input_lock["group_index"],
         "group_input_sha256": input_lock["group_input_sha256"],
         "evidence_file_sha256s": [
@@ -399,7 +408,7 @@ def main() -> int:
         "frozen_at": frozen_at.isoformat(),
         "decision_counts": {
             decision: sum(lock["material"]["decision"] == decision for lock in locks)
-            for decision in ("accept_with_scope", "check", "reject", "unresolved")
+            for decision in ("accept", "check", "reject", "unresolved")
         },
         "technical_contract_counts": {
             technical: sum(lock["material"]["technical_contract"] == technical for lock in locks)

@@ -72,6 +72,7 @@ def main() -> int:
     # transport digest.  A digest is never part of the material it authenticates;
     # carrying it forward would make the next policy self-inconsistent.
     old_policy = {key: value for key, value in judgment["policy"].items() if key != "policy_sha256"}
+    old_policy["uncertain_disposition"] = _label(str(old_policy["uncertain_disposition"]))
     current_group = int(judgment["group_index"])
     frozen_at = datetime.fromisoformat(judgment["frozen_at"].replace("Z", "+00:00"))
     input_by_id = {case["case_id"]: case for case in input_lock["cases"]}
@@ -105,7 +106,7 @@ def main() -> int:
             if value != int(old_policy["small_change_max_lines"]):
                 candidates.append({"small_change_max_lines": value})
         alternate_uncertain = (
-            "accept_with_scope" if old_policy["uncertain_disposition"] == "reject" else "reject"
+            "accept" if old_policy["uncertain_disposition"] == "reject" else "reject"
         )
         candidates.append({"uncertain_disposition": alternate_uncertain})
 

@@ -85,6 +85,10 @@ from infraswe.models.capability import (
     TopologyContract,
     TopologyGraph,
 )
+from infraswe.models.communication_phase import (
+    CommunicationPhaseRegressionPolicy,
+    CommunicationPhaseTraceSet,
+)
 from infraswe.models.draft import (
     DraftCandidate,
     HumanReviewRecord,
@@ -157,6 +161,7 @@ from infraswe.retrieval import (
 )
 from infraswe.runner import TrialRunner
 from infraswe.schema import schema_documents, stale_schema_names, write_schema_documents
+from infraswe.scoring.communication_phase import evaluate_communication_phase_regression
 from infraswe.scoring.report import write_reports
 from infraswe.scoring.training import build_training_result
 from infraswe.task_quality import (
@@ -175,6 +180,9 @@ schema_app = typer.Typer(no_args_is_help=True, help="Export protocol JSON Schema
 lease_app = typer.Typer(no_args_is_help=True, help="Inspect resource leases and hardware.")
 training_app = typer.Typer(
     no_args_is_help=True, help="Probe and verify cross-framework training evidence."
+)
+communication_app = typer.Typer(
+    no_args_is_help=True, help="Normalize and regress communication-phase evidence."
 )
 draft_app = typer.Typer(
     no_args_is_help=True,
@@ -212,6 +220,7 @@ app.add_typer(task_app, name="task")
 app.add_typer(schema_app, name="schema")
 app.add_typer(lease_app, name="lease")
 app.add_typer(training_app, name="training")
+app.add_typer(communication_app, name="communication")
 app.add_typer(draft_app, name="draft")
 app.add_typer(precedent_app, name="precedent")
 app.add_typer(judge_app, name="judge")
@@ -1736,6 +1745,46 @@ def training_score(
         f"output={output.resolve()}"
     )
     if certification.status != "pass" or deployability is None or deployability.score_100 is None:
+        raise typer.Exit(2)
+
+
+@communication_app.command("phase-regression")
+def communication_phase_regression(
+    baseline: Annotated[Path, typer.Option("--baseline", exists=True, readable=True)],
+    candidate: Annotated[Path, typer.Option("--candidate", exists=True, readable=True)],
+    policy: Annotated[Path | None, typer.Option("--policy", exists=True, readable=True)] = None,
+    regime: Annotated[str, typer.Option("--regime")] = "normal",
+    load_ratio: Annotated[float, typer.Option("--load-ratio", min=0.000001)] = 0.5,
+    output: Annotated[Path, typer.Option("--output")] = Path("communication-phase-regression.json"),
+) -> None:
+    """Compare two traces in one exact cell and emit a load-cell regression result."""
+
+    try:
+        baseline_trace = CommunicationPhaseTraceSet.model_validate(_read_mapping(baseline))
+        candidate_trace = CommunicationPhaseTraceSet.model_validate(_read_mapping(candidate))
+        regression_policy = (
+            CommunicationPhaseRegressionPolicy.model_validate(_read_mapping(policy))
+            if policy is not None
+            else CommunicationPhaseRegressionPolicy()
+        )
+        result = evaluate_communication_phase_regression(
+            baseline_trace,
+            candidate_trace,
+            regression_policy,
+            regime=regime,
+            load_ratio=load_ratio,
+        )
+    except (TypeError, ValueError, ValidationError) as error:
+        console.print(f"[red]INVALID[/red] {error}")
+        raise typer.Exit(2) from error
+    atomic_write_json(output, result.model_dump(mode="json"))
+    console.print(
+        f"status={result.status} world_size={result.world_size} "
+        f"cell={result.cell_identity_sha256} output={output.resolve()}"
+    )
+    if result.status == "fail":
+        raise typer.Exit(1)
+    if result.status == "unresolved":
         raise typer.Exit(2)
 
 

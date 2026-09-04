@@ -13,7 +13,11 @@ from infraswe.draft.lifecycle import canonical_sha256
 def test_non_improving_campaign_skips_publish_without_skipping_shutdown(
     project_root: Path,
 ) -> None:
-    for name in ("run_training_bulk_campaign.sh", "run_inference_bulk_campaign.sh"):
+    for name in (
+        "run_training_bulk_campaign.sh",
+        "run_inference_bulk_campaign.sh",
+        "run_communication_bulk_campaign.sh",
+    ):
         script = (project_root / "benchmarks" / "historical_prs" / name).read_text(encoding="utf-8")
         assert 'export PYTHONPATH="src:benchmarks/historical_prs' in script
         assert "git -c user.name=" in script
@@ -30,11 +34,18 @@ def test_last_bulk_campaign_owns_credential_cleanup_and_shutdown(project_root: P
     inference = (
         project_root / "benchmarks" / "historical_prs" / "run_inference_bulk_campaign.sh"
     ).read_text(encoding="utf-8")
+    communication = (
+        project_root / "benchmarks" / "historical_prs" / "run_communication_bulk_campaign.sh"
+    ).read_text(encoding="utf-8")
 
     assert "inference_pending=false" in training
     assert '"${inference_pending}" != true' in training
     assert "training_pending=false" in inference
     assert '"${training_pending}" != true' in inference
+    assert "communication_pending=false" in inference
+    assert '"${communication_pending}" != true' in inference
+    assert "inference_pending=false" in communication
+    assert '"${inference_pending}" != true' in communication
 
 
 def test_training_campaign_uses_large_groups_after_safe_boundary(project_root: Path) -> None:
@@ -68,6 +79,67 @@ def test_training_campaign_uses_large_groups_after_safe_boundary(project_root: P
     assert "lanes_per_project=16" in training_round
     assert '"${group_case_count}" -ge 1000' in inference_round
     assert "lanes_per_project=16" in inference_round
+
+    communication_round = (
+        project_root / "benchmarks" / "historical_prs" / "run_communication_bulk_round.sh"
+    ).read_text(encoding="utf-8")
+    communication_supervisor = (
+        project_root / "benchmarks" / "historical_prs" / "infraswe-communication-bulk-supervisor.sh"
+    ).read_text(encoding="utf-8")
+    assert '"${group_case_count}" -ge 1000' in communication_round
+    assert "INFRASWE_COMMUNICATION_LANES_PER_PROJECT=16" in communication_supervisor
+
+
+def test_communication_profile_covers_every_system_draft_repository(project_root: Path) -> None:
+    queue = _load(project_root, "prepare_training_bulk_queue")
+    expected = {
+        "nccl",
+        "rccl",
+        "nvshmem",
+        "uccl",
+        "ucx",
+        "ucc",
+        "pytorch",
+        "vllm",
+        "sglang",
+        "megatron-core",
+    }
+
+    assert set(queue.PROFILES["communication"]["repositories"]) == expected
+    assert queue.PROFILES["communication"]["seed"].startswith("infraswe-communication-bulk-v0.1-")
+
+    runner = _load(project_root, "run_training_bulk_group")
+    runner._activate_profile("communication")
+    assert set(runner.REMOTE_REPOSITORIES) == expected
+    assert all(
+        path.startswith("/workspace/communication-pr-corpus/repos/")
+        for path in runner.REMOTE_REPOSITORIES.values()
+    )
+    assert runner._repository_for_lane("nccl", 3) == (
+        "/workspace/communication-pr-corpus/worktrees/nccl-lane-3"
+    )
+
+
+def test_communication_campaign_waits_for_inference_quota_and_uses_95pct_queue(
+    project_root: Path,
+) -> None:
+    prepare = (
+        project_root
+        / "benchmarks"
+        / "historical_prs"
+        / "infraswe-communication-prepare-supervisor.sh"
+    ).read_text(encoding="utf-8")
+    campaign = (
+        project_root / "benchmarks" / "historical_prs" / "run_communication_bulk_campaign.sh"
+    ).read_text(encoding="utf-8")
+
+    assert "--profile communication" in prepare
+    assert "--identity-source git-refs" in prepare
+    assert "--target-fraction 0.95" in prepare
+    assert "--group-size 3000" in prepare
+    assert "communication-95pct-requested" in prepare
+    assert "waiting for inference campaign to release GitHub quota" in campaign
+    assert campaign.index("waiting for inference campaign") < campaign.index("for ((group_index")
 
 
 def test_95pct_queue_composition_preserves_executed_prefix(project_root: Path) -> None:

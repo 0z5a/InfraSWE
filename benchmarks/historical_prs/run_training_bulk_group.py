@@ -29,6 +29,18 @@ REMOTE_REPOSITORIES = {
     "tensorrt-llm": "/workspace/inference-pr-corpus/repos/tensorrt-llm",
     "vllm": "/workspace/inference-pr-corpus/repos/vllm",
 }
+COMMUNICATION_REPOSITORIES = {
+    "nccl": "/workspace/communication-pr-corpus/repos/nccl",
+    "rccl": "/workspace/communication-pr-corpus/repos/rccl",
+    "nvshmem": "/workspace/communication-pr-corpus/repos/nvshmem",
+    "uccl": "/workspace/communication-pr-corpus/repos/uccl",
+    "ucx": "/workspace/communication-pr-corpus/repos/ucx",
+    "ucc": "/workspace/communication-pr-corpus/repos/ucc",
+    "pytorch": "/workspace/communication-pr-corpus/repos/pytorch",
+    "vllm": "/workspace/communication-pr-corpus/repos/vllm",
+    "sglang": "/workspace/communication-pr-corpus/repos/sglang",
+    "megatron-core": "/workspace/communication-pr-corpus/repos/megatron-core",
+}
 REMOTE_PYTHONS = {
     project: (
         f"/workspace/inference-pr-corpus/venvs/{project}/bin/python"
@@ -47,6 +59,32 @@ GPU_BASE_LANES = {
     "tensorrt-llm": "0",
     "vllm": "1",
 }
+
+
+def _activate_profile(profile: str) -> None:
+    if profile != "communication":
+        return
+    REMOTE_REPOSITORIES.clear()
+    REMOTE_REPOSITORIES.update(COMMUNICATION_REPOSITORIES)
+    REMOTE_PYTHONS.clear()
+    REMOTE_PYTHONS.update(
+        {
+            "nccl": "/workspace/infraswe/.venv/bin/python",
+            "rccl": "/workspace/infraswe/.venv/bin/python",
+            "nvshmem": "/workspace/infraswe/.venv/bin/python",
+            "uccl": "/workspace/infraswe/.venv/bin/python",
+            "ucx": "/workspace/infraswe/.venv/bin/python",
+            "ucc": "/workspace/infraswe/.venv/bin/python",
+            "pytorch": "/usr/bin/python3",
+            "vllm": "/workspace/inference-pr-corpus/venvs/vllm/bin/python",
+            "sglang": "/workspace/inference-pr-corpus/venvs/sglang/bin/python",
+            "megatron-core": "/workspace/training-pr-corpus/venvs/megatron-core/bin/python",
+        }
+    )
+    GPU_BASE_LANES.clear()
+    GPU_BASE_LANES.update(
+        {project: str(index % 2) for index, project in enumerate(REMOTE_REPOSITORIES)}
+    )
 
 
 def _read(path: Path) -> dict[str, Any]:
@@ -123,18 +161,8 @@ def _ref(group_index: int, pull_number: int) -> str:
 def _repository_for_lane(project: str, lane: int) -> str:
     if lane == 0:
         return REMOTE_REPOSITORIES[project]
-    corpus = (
-        "inference-pr-corpus"
-        if project
-        in {
-            "flashinfer",
-            "sglang",
-            "tensorrt-llm",
-            "vllm",
-        }
-        else "training-pr-corpus"
-    )
-    return f"/workspace/{corpus}/worktrees/{project}-lane-{lane}"
+    corpus_root = Path(REMOTE_REPOSITORIES[project]).parent.parent
+    return str(corpus_root / "worktrees" / f"{project}-lane-{lane}")
 
 
 def _gpu_for_lane(project: str, lane: int) -> str:
@@ -368,6 +396,7 @@ def main() -> int:
     material = {key: value for key, value in input_lock.items() if key != "group_input_sha256"}
     if input_lock["group_input_sha256"] != canonical_sha256(material):
         raise SystemExit("group input digest mismatch")
+    _activate_profile(str(input_lock.get("profile", "training")))
     all_cases = input_lock["cases"]
     available_case_ids = {case["case_id"] for case in all_cases}
     requested_case_ids = set(args.only)

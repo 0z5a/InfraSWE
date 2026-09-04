@@ -37,6 +37,22 @@ PROFILES = {
         "seed": "infraswe-inference-bulk-v0.1-20260903",
         "protocol_id": "inference-bulk-outcome-blind-queue-v0.1",
     },
+    "communication": {
+        "repositories": {
+            "nccl": "NVIDIA/nccl",
+            "rccl": "ROCm/rccl",
+            "nvshmem": "NVIDIA/nvshmem",
+            "uccl": "uccl-project/uccl",
+            "ucx": "openucx/ucx",
+            "ucc": "openucx/ucc",
+            "pytorch": "pytorch/pytorch",
+            "vllm": "vllm-project/vllm",
+            "sglang": "sgl-project/sglang",
+            "megatron-core": "NVIDIA/Megatron-LM",
+        },
+        "seed": "infraswe-communication-bulk-v0.1-20260904",
+        "protocol_id": "communication-bulk-outcome-blind-queue-v0.1",
+    },
 }
 QUERY = """
 query($owner: String!, $name: String!, $cursor: String) {
@@ -106,9 +122,7 @@ def _run_graphql(repository: str, cursor: str | None) -> dict[str, Any]:
                     continue
         if attempt < 7:
             time.sleep(min(30, 2**attempt))
-    detail = "timed out" if process is None else (
-        process.stderr.strip() or process.stdout.strip()
-    )
+    detail = "timed out" if process is None else (process.stderr.strip() or process.stdout.strip())
     raise RuntimeError(f"{repository}: GraphQL failed after retries: {detail}")
 
 
@@ -206,8 +220,7 @@ def _acquire_repository_git_refs(
         "identity_source": "git-pull-head-refs",
         "queried_count": len(identities),
         "snapshot_count": len(identities),
-        "response_sha256": "sha256:"
-        + hashlib.sha256(process.stdout.encode()).hexdigest(),
+        "response_sha256": "sha256:" + hashlib.sha256(process.stdout.encode()).hexdigest(),
     }
     return project, repository, identities, acquisition
 
@@ -242,15 +255,11 @@ def _rank(seed: str, repository: str, number: int, purpose: str) -> str:
     return hashlib.sha256(value).hexdigest()
 
 
-def _largest_remainder_quotas(
-    counts: dict[str, int], target_count: int
-) -> dict[str, int]:
+def _largest_remainder_quotas(counts: dict[str, int], target_count: int) -> dict[str, int]:
     total = sum(counts.values())
     if target_count > total:
         raise ValueError(f"target {target_count} exceeds available count {total}")
-    exact = {
-        project: target_count * count / total for project, count in counts.items()
-    }
+    exact = {project: target_count * count / total for project, count in counts.items()}
     quotas = {project: int(value) for project, value in exact.items()}
     remaining = target_count - sum(quotas.values())
     order = sorted(
@@ -266,9 +275,7 @@ def _largest_remainder_quotas(
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--profile", choices=sorted(PROFILES), default="training")
-    parser.add_argument(
-        "--identity-source", choices=("graphql", "git-refs"), default="graphql"
-    )
+    parser.add_argument("--identity-source", choices=("graphql", "git-refs"), default="graphql")
     parser.add_argument("--target-count", type=int)
     parser.add_argument("--target-fraction", type=float)
     parser.add_argument("--group-size", type=int, default=30)
@@ -290,9 +297,7 @@ def main() -> int:
 
     prior, prior_digests = _prior_identities(args.prior_lock)
     acquire = (
-        _acquire_repository_git_refs
-        if args.identity_source == "git-refs"
-        else _acquire_repository
+        _acquire_repository_git_refs if args.identity_source == "git-refs" else _acquire_repository
     )
     with ThreadPoolExecutor(max_workers=len(repositories_config)) as executor:
         acquired = list(executor.map(acquire, repositories_config.items()))
@@ -303,9 +308,7 @@ def main() -> int:
     for project, repository, identities, acquisition in acquired:
         repositories[project] = repository
         pools[project] = [
-            item
-            for item in identities
-            if (repository.lower(), item["number"]) not in prior
+            item for item in identities if (repository.lower(), item["number"]) not in prior
         ]
         acquisitions[project] = {
             **acquisition,
@@ -347,11 +350,7 @@ def main() -> int:
                     ),
                 }
             )
-    selected.sort(
-        key=lambda item: _rank(
-            seed, item["repository"], item["pull_number"], "order"
-        )
-    )
+    selected.sort(key=lambda item: _rank(seed, item["repository"], item["pull_number"], "order"))
     for index, item in enumerate(selected):
         item["queue_index"] = index
         item["group_index"] = index // args.group_size

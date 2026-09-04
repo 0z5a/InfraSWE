@@ -170,6 +170,13 @@ def _runtime_source_paths(case: dict[str, Any]) -> list[str]:
         "sglang": ("python/sglang/", "sgl-kernel/"),
         "tensorrt-llm": ("tensorrt_llm/", "cpp/", "include/"),
         "vllm": ("vllm/", "csrc/"),
+        "nccl": ("src/", "include/", "device/"),
+        "rccl": ("src/", "include/", "tools/"),
+        "nvshmem": ("src/", "include/"),
+        "uccl": ("src/", "include/", "collectives/"),
+        "ucx": ("src/",),
+        "ucc": ("src/",),
+        "pytorch": ("torch/", "aten/", "c10/"),
     }[case["project"]]
     return [path for path in _source_paths(case) if path.startswith(prefixes)]
 

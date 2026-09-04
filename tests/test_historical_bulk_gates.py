@@ -2,10 +2,12 @@ from __future__ import annotations
 
 import importlib.util
 import json
+import subprocess
 import sys
+import threading
 from datetime import UTC, datetime
 from pathlib import Path
-from types import ModuleType
+from types import ModuleType, SimpleNamespace
 
 from infraswe.draft.lifecycle import canonical_sha256
 
@@ -812,6 +814,100 @@ def test_bulk_runner_blocks_model_downloads_and_uses_an_isolated_cache(
         "ProxyError",
         "MaxRetryError",
     } <= set(freeze.ENVIRONMENT_MARKERS)
+
+
+def test_bulk_runner_hydrates_checkout_before_blocking_test_network(
+    project_root: Path, monkeypatch
+) -> None:
+    runner = _load(project_root, "run_training_bulk_group")
+    commands: list[str] = []
+
+    def fake_ssh(_args, command: str, timeout: int):
+        commands.append(command)
+        assert timeout == 90
+        return subprocess.CompletedProcess(command, 0, "1 passed\n", "")
+
+    monkeypatch.setattr(runner, "_ssh", fake_ssh)
+    record = runner._run_case(
+        SimpleNamespace(test_timeout=45, output_tail_bytes=2000),
+        0,
+        {
+            "case_id": "megatron-core-pr-1",
+            "project": "megatron-core",
+            "pull_number": 1,
+            "head_sha": "a" * 40,
+            "files": [
+                {"path": "megatron/example.py", "change_type": "modified"},
+                {"path": "tests/test_example.py", "change_type": "modified"},
+            ],
+        },
+        None,
+        "/tmp/megatron-core",
+        0,
+        threading.Lock(),
+    )
+
+    assert len(commands) == 2
+    assert "git switch" in commands[0]
+    assert "127.0.0.1:9" not in commands[0]
+    assert "git switch" not in commands[1]
+    assert "HTTPS_PROXY=http://127.0.0.1:9" in commands[1]
+    assert record["status"] == "completed"
+    assert record["returncode"] == 0
+
+
+def test_bulk_runner_retries_legacy_promisor_checkout_failures(
+    project_root: Path, monkeypatch
+) -> None:
+    runner = _load(project_root, "run_training_bulk_group")
+    calls = 0
+
+    def failed_checkout(_args, command: str, timeout: int):
+        nonlocal calls
+        calls += 1
+        return subprocess.CompletedProcess(
+            command,
+            128,
+            "",
+            "could not fetch object from promisor remote",
+        )
+
+    monkeypatch.setattr(runner, "_ssh", failed_checkout)
+    record = runner._run_case(
+        SimpleNamespace(test_timeout=45, output_tail_bytes=2000),
+        0,
+        {
+            "case_id": "megatron-core-pr-2",
+            "project": "megatron-core",
+            "pull_number": 2,
+            "head_sha": "b" * 40,
+            "files": [],
+        },
+        None,
+        "/tmp/megatron-core",
+        0,
+        threading.Lock(),
+    )
+
+    assert calls == 1
+    assert record["status"] == "checkout_failed"
+    assert record["returncode"] is None
+    assert runner._retryable_checkpoint_record(
+        {
+            "status": "completed",
+            "returncode": 128,
+            "output_tail": (
+                "Failed to connect to 127.0.0.1 port 9; could not fetch object from promisor remote"
+            ),
+        }
+    )
+    assert not runner._retryable_checkpoint_record(
+        {"status": "completed", "returncode": 1, "output_tail": "AssertionError"}
+    )
+
+    for name in ("run_communication_bulk_round.sh", "run_inference_bulk_round.sh"):
+        script = (project_root / "benchmarks" / "historical_prs" / name).read_text(encoding="utf-8")
+        assert 'IN("transport_timeout", "checkout_failed", "checkout_timeout")' in script
 
 
 def test_unavailable_metadata_becomes_auditable_invalid_attempt(

@@ -106,6 +106,8 @@ def _usable(record: dict[str, Any]) -> bool:
     return record.get("returncode") not in {None, 255} and record.get("status") not in {
         "prewarm_failed",
         "transport_timeout",
+        "checkout_failed",
+        "checkout_timeout",
     }
 
 

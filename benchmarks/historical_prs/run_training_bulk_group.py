@@ -169,6 +169,23 @@ def _gpu_for_lane(project: str, lane: int) -> str:
     return str((int(GPU_BASE_LANES[project]) + lane) % 2)
 
 
+def _retryable_checkpoint_record(record: dict[str, Any]) -> bool:
+    """Retry transport failures and legacy offline partial-clone checkout failures."""
+
+    if record.get("returncode") == 255 or record.get("status") in {
+        "transport_timeout",
+        "checkout_failed",
+        "checkout_timeout",
+    }:
+        return True
+    output = str(record.get("output_tail") or "")
+    return (
+        record.get("returncode") == 128
+        and "promisor remote" in output
+        and "127.0.0.1 port 9" in output
+    )
+
+
 def _prepare_project(
     args: argparse.Namespace,
     group_index: int,
@@ -268,6 +285,7 @@ def _run_case(
     python = REMOTE_PYTHONS[project]
     reference = _ref(group_index, case["pull_number"])
     offline_cache = str(Path(repository).parent.parent / "hf-offline-cache")
+    test_budget = min(args.test_timeout, 20) if project == "tensorrt-llm" else args.test_timeout
     compile_paths = [
         item["path"]
         for item in case["files"]
@@ -279,16 +297,32 @@ def _run_case(
         "paths=[pathlib.Path(p) for p in sys.argv[1:]];"
         "[compile(tokenize.open(p).read(),str(p),'exec') for p in paths if p.is_file()]"
     )
-    steps = [
+    checkout_steps = [
         "set -o pipefail",
-        f"mkdir -p {shlex.quote(offline_cache)}",
         f"cd {shlex.quote(repository)}",
         "GIT_LFS_SKIP_SMUDGE=1 GIT_TERMINAL_PROMPT=0 "
         "git switch --discard-changes --detach "
         f"{shlex.quote(reference)} >/dev/null",
     ]
     if case.get("head_sha"):
-        steps.append(f'test "$(git rev-parse HEAD)" = {shlex.quote(case["head_sha"])}')
+        checkout_steps.append(f'test "$(git rev-parse HEAD)" = {shlex.quote(case["head_sha"])}')
+    checkout_body = " && ".join(checkout_steps)
+    checkout_command = shlex.join(
+        [
+            "timeout",
+            "--kill-after=5s",
+            f"{test_budget}s",
+            "bash",
+            "-lc",
+            checkout_body,
+        ]
+    )
+
+    steps = [
+        "set -o pipefail",
+        f"mkdir -p {shlex.quote(offline_cache)}",
+        f"cd {shlex.quote(repository)}",
+    ]
     if compile_paths:
         steps.append(shlex.join([python, "-c", compile_source, *compile_paths]))
     if test_paths:
@@ -309,7 +343,6 @@ def _run_case(
             )
         )
     body = " && ".join(steps)
-    test_budget = min(args.test_timeout, 20) if project == "tensorrt-llm" else args.test_timeout
     remote_command = shlex.join(
         [
             "timeout",
@@ -345,6 +378,29 @@ def _run_case(
     )
     try:
         with lock:
+            checkout = _ssh(args, checkout_command, timeout=test_budget + 45)
+            if checkout.returncode != 0:
+                checkout_output = checkout.stdout + checkout.stderr
+                checkout_status = (
+                    "checkout_timeout" if checkout.returncode == 124 else "checkout_failed"
+                )
+                return {
+                    "case_id": case["case_id"],
+                    "project": project,
+                    "pull_number": case["pull_number"],
+                    "head_sha": case.get("head_sha"),
+                    "repository_lane": lane,
+                    "ref": reference,
+                    "status": checkout_status,
+                    "returncode": None,
+                    "duration_seconds": time.monotonic() - started,
+                    "compile_paths": compile_paths,
+                    "test_paths": test_paths,
+                    "test_budget_seconds": test_budget,
+                    "output_sha256": "sha256:"
+                    + hashlib.sha256(checkout_output.encode()).hexdigest(),
+                    "output_tail": checkout_output[-args.output_tail_bytes :],
+                }
             process = _ssh(args, remote_command, timeout=test_budget + 45)
         output = process.stdout + process.stderr
         status = "timed_out" if process.returncode == 124 else "completed"
@@ -434,6 +490,7 @@ def main() -> int:
 
     partial_path = args.output.with_suffix(args.output.suffix + ".partial")
     checkpoint_records: dict[str, dict[str, Any]] = {}
+    checkpoint_retry_case_count = 0
     if partial_path.exists():
         checkpoint = _read(partial_path)
         if checkpoint.get("group_input_sha256") != input_lock[
@@ -441,7 +498,12 @@ def main() -> int:
         ] or checkpoint.get("case_filter") != sorted(requested_case_ids):
             raise SystemExit("exact-head checkpoint binding mismatch")
         started_at = str(checkpoint["started_at"])
-        checkpoint_records = {record["case_id"]: record for record in checkpoint.get("records", [])}
+        checkpoint_records = {
+            record["case_id"]: record
+            for record in checkpoint.get("records", [])
+            if not _retryable_checkpoint_record(record)
+        }
+        checkpoint_retry_case_count = len(checkpoint.get("records", [])) - len(checkpoint_records)
     pending_cases = [case for case in cases if case["case_id"] not in checkpoint_records]
 
     by_project: dict[str, list[dict[str, Any]]] = {}
@@ -567,6 +629,7 @@ def main() -> int:
         "test_timeout_seconds": args.test_timeout,
         "timeout_disposition": "neutral-abandon-no-retry",
         "case_filter": sorted(requested_case_ids),
+        "checkpoint_retry_case_count": checkpoint_retry_case_count,
         "prewarm_failure_count": sum(
             record["status"] == "prewarm_failed" for record in ordered_records
         ),

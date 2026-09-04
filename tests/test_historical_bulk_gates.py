@@ -577,6 +577,29 @@ def test_bulk_wire_format_uses_one_explicitly_non_official_overall_score(
     assert 'for decision in ("accept", "check", "reject", "unresolved")' in script
 
 
+def test_bulk_runner_blocks_model_downloads_and_uses_an_isolated_cache(
+    project_root: Path, monkeypatch
+) -> None:
+    monkeypatch.syspath_prepend(str(project_root / "benchmarks" / "historical_prs"))
+    freeze = _load(project_root, "freeze_training_bulk_group")
+    script = (
+        project_root / "benchmarks" / "historical_prs" / "run_training_bulk_group.py"
+    ).read_text(encoding="utf-8")
+
+    assert 'Path(repository).parent.parent / "hf-offline-cache"' in script
+    assert '"HF_HUB_OFFLINE=1"' in script
+    assert '"TRANSFORMERS_OFFLINE=1"' in script
+    assert '"HF_DATASETS_OFFLINE=1"' in script
+    assert '"HTTPS_PROXY=http://127.0.0.1:9"' in script
+    assert '"NO_PROXY=localhost,127.0.0.1,::1"' in script
+    assert {
+        "LocalEntryNotFoundError",
+        "OfflineModeIsEnabled",
+        "ProxyError",
+        "MaxRetryError",
+    } <= set(freeze.ENVIRONMENT_MARKERS)
+
+
 def test_unavailable_metadata_becomes_auditable_invalid_attempt(
     project_root: Path, monkeypatch
 ) -> None:

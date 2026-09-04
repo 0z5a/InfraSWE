@@ -267,6 +267,7 @@ def _run_case(
     project = case["project"]
     python = REMOTE_PYTHONS[project]
     reference = _ref(group_index, case["pull_number"])
+    offline_cache = str(Path(repository).parent.parent / "hf-offline-cache")
     compile_paths = [
         item["path"]
         for item in case["files"]
@@ -280,6 +281,7 @@ def _run_case(
     )
     steps = [
         "set -o pipefail",
+        f"mkdir -p {shlex.quote(offline_cache)}",
         f"cd {shlex.quote(repository)}",
         "GIT_LFS_SKIP_SMUDGE=1 GIT_TERMINAL_PROMPT=0 "
         "git switch --discard-changes --detach "
@@ -315,6 +317,25 @@ def _run_case(
             f"{test_budget}s",
             "env",
             "PYTHONDONTWRITEBYTECODE=1",
+            f"HF_HOME={offline_cache}",
+            f"HF_HUB_CACHE={offline_cache}/hub",
+            f"HUGGINGFACE_HUB_CACHE={offline_cache}/hub",
+            f"TRANSFORMERS_CACHE={offline_cache}/transformers",
+            f"TORCH_HOME={offline_cache}/torch",
+            f"XDG_CACHE_HOME={offline_cache}/xdg",
+            "HF_HUB_OFFLINE=1",
+            "HF_HUB_DISABLE_XET=1",
+            "HF_HUB_DISABLE_TELEMETRY=1",
+            "TRANSFORMERS_OFFLINE=1",
+            "HF_DATASETS_OFFLINE=1",
+            "HTTP_PROXY=http://127.0.0.1:9",
+            "HTTPS_PROXY=http://127.0.0.1:9",
+            "ALL_PROXY=http://127.0.0.1:9",
+            "NO_PROXY=localhost,127.0.0.1,::1",
+            "http_proxy=http://127.0.0.1:9",
+            "https_proxy=http://127.0.0.1:9",
+            "all_proxy=http://127.0.0.1:9",
+            "no_proxy=localhost,127.0.0.1,::1",
             f"CUDA_VISIBLE_DEVICES={_gpu_for_lane(project, lane)}",
             f"PYTHONPATH={repository}",
             "bash",

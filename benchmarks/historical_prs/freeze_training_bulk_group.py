@@ -57,6 +57,12 @@ ENVIRONMENT_MARKERS = (
     "world size (1) is not divisible",
     "ConnectionError",
     "Connection refused",
+    "LocalEntryNotFoundError",
+    "OfflineModeIsEnabled",
+    "ProxyError",
+    "MaxRetryError",
+    "outgoing traffic has been disabled",
+    "not found in the cached files",
     "CUDA out of memory",
 )
 SUMMARY_RE = re.compile(r"(?P<count>\d+) (?P<label>passed|failed|errors?)")

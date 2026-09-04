@@ -1,0 +1,563 @@
+{
+  "case_filter": [],
+  "evidence_sha256": "sha256:64252262c67a2b98050ad22041970c5869350b479ffee5fa8891bbe9ec4e9fae",
+  "finished_at": "2026-09-03T11:43:50.866455+00:00",
+  "gpu_lanes": {
+    "megatron-core": "0",
+    "slime": "0",
+    "verl": "1",
+    "verl-omni": "1"
+  },
+  "group_index": 3,
+  "group_input_sha256": "sha256:596bdb56ebe8df6d87bc50634b20aaeb9c7b6bfac8ac2cdbeab78c98d393ed5f",
+  "prewarm_failure_count": 1,
+  "protocol_id": "training-bulk-group-exact-head-gated-v0.1",
+  "python_paths": {
+    "megatron-core": "/workspace/training-pr-corpus/venvs/megatron-core/bin/python",
+    "slime": "/workspace/training-pr-corpus/venvs/slime/bin/python",
+    "verl": "/workspace/training-pr-corpus/venvs/verl/bin/python",
+    "verl-omni": "/workspace/training-pr-corpus/venvs/verl-omni/bin/python"
+  },
+  "records": [
+    {
+      "case_id": "megatron-core-pr-4801",
+      "compile_paths": [
+        "megatron/core/models/mimo/optimizer.py",
+        "tests/unit_tests/models/test_mimo_checkpoint.py"
+      ],
+      "duration_seconds": 30.267684584017843,
+      "head_sha": "42453c0bc7351a9b8b1b62d72fb4ae0caeabf699",
+      "output_sha256": "sha256:3e495fe17827491fe748486dce2c5db2001ef7291b946fb7df4b0c08e84d29d3",
+      "output_tail": "Test data already available at /opt/data\nInitializing torch.distributed with rank: 0, world_size: 1\nsss\n=============================== warnings summary ===============================\n../../../../usr/local/lib/python3.12/dist-packages/torch/jit/_script.py:365: 14 warnings\n  /usr/local/lib/python3.12/dist-packages/torch/jit/_script.py:365: DeprecationWarning: `torch.jit.script_method` is deprecated. Please switch to `torch.compile` or `torch.export`.\n    warnings.warn(\n\nmegatron/core/optimizer/__init__.py:25\n  /workspace/training-pr-corpus/repos/megatron-core/megatron/core/optimizer/__init__.py:25: UserWarning: Transformer Engine and Apex are not installed. Falling back to Torch optimizers.\n    warnings.warn(\n\nmegatron/core/distributed/fsdp/src/megatron_fsdp/mixed_precision.py:115\n  /workspace/training-pr-corpus/repos/megatron-core/megatron/core/distributed/fsdp/src/megatron_fsdp/mixed_precision.py:115: UserWarning: Transformer Engine and Apex are not installed. Falling back to local implementations of multi_tensor_applier and multi_tensor_scale\n    warnings.warn(\n\nmegatron/core/optimizer/optimizer.py:29\n  /workspace/training-pr-corpus/repos/megatron-core/megatron/core/optimizer/optimizer.py:29: UserWarning: Transformer Engine and Apex are not installed. Falling back to local implementations of multi_tensor_applier and multi_tensor_scale\n    warnings.warn(\n\nmegatron/core/optimizer/clip_grads.py:32\n  /workspace/training-pr-corpus/repos/megatron-core/megatron/core/optimizer/clip_grads.py:32: UserWarning: Transformer Engine and Apex are not installed. Falling back to local implementations of multi_tensor_applier, multi_tensor_l2norm, and multi_tensor_scale\n    warnings.warn(\n\nmegatron/core/hyper_comm_grid.py:26\n  /workspace/training-pr-corpus/repos/megatron-core/megatron/core/hyper_comm_grid.py:26: UserWarning: absl.logging is not installed. Using logging.getLogger(__name__) instead. Please install absl.logging with `pip install absl-py` to use absl.logging.\n    warnings.warn(\n\nmegatron/core/inference/contexts/__init__.py:9\n  /workspace/training-pr-corpus/repos/megatron-core/megatron/core/inference/contexts/__init__.py:9: DeprecationWarning: The following imports from `dynamic_context.py` will be removed in this file in `megatron-core` 0.14. The imports here result in a cyclic import issue that causes rotary embeddings to import from Apex rather than Transformer Engine.\n    warnings.warn(\n\nmegatron/core/models/backends.py:34\n  /workspace/training-pr-corpus/repos/megatron-core/megatron/core/models/backends.py:34: UserWarning: Apex is not installed. Falling back to Torch Norm\n    warnings.warn(\"Apex is not installed. Falling back to Torch Norm\")\n\nmegatron/core/models/gpt/gpt_layer_specs.py:70\n  /workspace/training-pr-corpus/repos/megatron-core/megatron/core/models/gpt/gpt_layer_specs.py:70: UserWarning: Apex is not installed. Falling back to Torch Norm\n    warnings.warn(\"Apex is not installed. Falling back to Torch Norm\")\n\nmegatron/training/utils.py:25\n  /workspace/training-pr-corpus/repos/megatron-core/megatron/training/utils.py:25: UserWarning: Transformer Engine and Apex are not installed. Falling back to local implementations of multi_tensor_applier and multi_tensor_l2norm\n    warnings.warn(\n\nmegatron/core/extensions/transformer_engine_spec_provider.py:88\n  /workspace/training-pr-corpus/repos/megatron-core/megatron/core/extensions/transformer_engine_spec_provider.py:88: UserWarning: Only transformer-engine>=1.7.0 supports MoE experts, but your version is 0.0.0. Use local linear implementation instead.\n    warnings.warn(\n\n../../../../usr/local/lib/python3.12/dist-packages/torch/jit/_script.py:1488\n  /usr/local/lib/python3.12/dist-packages/torch/jit/_script.py:1488: DeprecationWarning: `torch.jit.script` is deprecated. Please switch to `torch.compile` or `torch.export`.\n    warnings.warn(\n\nmegatron/core/models/mimo/config/base_configs.py:12\n  /workspace/training-pr-corpus/repos/megatron-core/megatron/core/models/mimo/config/base_configs.py:12: UserWarning: MimoModelConfig is experimental and still under active development. The API may change without notice in future releases.\n    class MimoModelConfig:\n\ntests/unit_tests/models/test_mimo_checkpoint.py::TestMimoCheckpoint::test_encoder_tp2_llm_tp2_pp3\ntests/unit_tests/models/test_mimo_checkpoint.py::TestMimoCheckpoint::test_encoder_tp2_pp2_llm_tp2_pp2\n  /usr/local/lib/python3.12/dist-packages/torch/distributed/c10d_logger.py:83: UserWarning: barrier(): using the device under current context. You can specify `device_id` in `init_process_group` to mute this warning.\n    return func(*args, **kwargs)\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n============================= slowest 15 durations =============================\n0.50s setup    tests/unit_tests/models/test_mimo_checkpoint.py::TestMimoCheckpoint::test_encoder_tp2_llm_tp2_pp3\n0.48s teardown tests/unit_tests/models/test_mimo_checkpoint.py::TestMimoCheckpoint::test_encoder_tp2_pp2_llm_tp2_pp2\n\n(7 durations < 0.005s hidden.  Use -vv to show these durations.)\n=========================== short test summary info ============================\nSKIPPED [1] tests/unit_tests/models/test_mimo_checkpoint.py:232: Requires 8 GPUs, got 1\nSKIPPED [1] tests/unit_tests/models/test_mimo_checkpoint.py:248: Requires 8 GPUs, got 1\nSKIPPED [1] tests/unit_tests/models/test_mimo_checkpoint.py:264: Requires 8 GPUs, got 1\n3 skipped, 28 warnings in 1.06s\nWelcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nPrevious HEAD position was 487b64dc7 test: drop unrelated dsv4 parity fallback\nHEAD is now at 42453c0bc Merge branch 'main' into kamran/mimo_optimizer_fixes\n[rank0]:[W903 11:40:55.546070840 ProcessGroupNCCL.cpp:5276] Guessing device ID based on global rank. This can cause a hang if rank to GPU mapping is heterogeneous. You can specify device_id in init_process_group()\n",
+      "project": "megatron-core",
+      "pull_number": 4801,
+      "ref": "refs/training-bulk/g0003/pr-4801",
+      "returncode": 0,
+      "status": "completed",
+      "test_budget_seconds": 45,
+      "test_paths": [
+        "tests/unit_tests/models/test_mimo_checkpoint.py"
+      ]
+    },
+    {
+      "case_id": "verl-omni-pr-344",
+      "compile_paths": [],
+      "duration_seconds": 4.557213666848838,
+      "head_sha": "01b6a0b7f87dd2916480a5dc742a0441501cf206",
+      "output_sha256": "sha256:2ab4eaaa045a0cc7b22b161f20237a00141083011a56c5d2e432bd3219ef5ceb",
+      "output_tail": "Welcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nHEAD is now at 01b6a0b update nighly workflow\n",
+      "project": "verl-omni",
+      "pull_number": 344,
+      "ref": "refs/training-bulk/g0003/pr-344",
+      "returncode": 0,
+      "status": "completed",
+      "test_budget_seconds": 45,
+      "test_paths": []
+    },
+    {
+      "case_id": "verl-pr-909",
+      "compile_paths": [
+        "verl/trainer/ppo/ray_trainer.py"
+      ],
+      "duration_seconds": 5.757002334110439,
+      "head_sha": "61f7b2793f4746aff5244b1f41c5d48fec6e3300",
+      "output_sha256": "sha256:20ef5c8a320f34e07c4d24c60fe6932d7bbf0b9b5e8c899949883b05245796ef",
+      "output_tail": "Welcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nwarning: unable to rmdir 'recipe': Directory not empty\nPrevious HEAD position was d923a369 update\nHEAD is now at 61f7b279 fix: gen_batch_size\n",
+      "project": "verl",
+      "pull_number": 909,
+      "ref": "refs/training-bulk/g0003/pr-909",
+      "returncode": 0,
+      "status": "completed",
+      "test_budget_seconds": 45,
+      "test_paths": []
+    },
+    {
+      "case_id": "megatron-core-pr-4195",
+      "compile_paths": [
+        "tools/trigger_internal_ci.py"
+      ],
+      "duration_seconds": 35.12463395879604,
+      "head_sha": "4d256a476bd3938c469a8b0d22e2cd2179f80ef3",
+      "output_sha256": "sha256:0552049bb17222af3af1d984a660dd619a9176223409fdc9e10ae4525c77d4dd",
+      "output_tail": "Welcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nPrevious HEAD position was 42453c0bc Merge branch 'main' into kamran/mimo_optimizer_fixes\nHEAD is now at 4d256a476 ci: add --cluster-a100/h100/gb200 args to trigger_internal_ci.py\n",
+      "project": "megatron-core",
+      "pull_number": 4195,
+      "ref": "refs/training-bulk/g0003/pr-4195",
+      "returncode": 0,
+      "status": "completed",
+      "test_budget_seconds": 45,
+      "test_paths": []
+    },
+    {
+      "case_id": "slime-pr-11",
+      "compile_paths": [
+        "slime/ray/ppo_actor.py",
+        "slime/ray/rollout.py"
+      ],
+      "duration_seconds": 5.126830000197515,
+      "head_sha": "bad825a201269b1f89577012d01c28349c0f6955",
+      "output_sha256": "sha256:402d14cdb38c3bb7d2c4626b9f6f75e06fd16f3c4e72d113237af3b01aa67c78",
+      "output_tail": "Welcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nPrevious HEAD position was 442bbb69 style: wrap eval-only train_iters assignment for black\nHEAD is now at bad825a2 [doc] Add doc for building conda environment\n",
+      "project": "slime",
+      "pull_number": 11,
+      "ref": "refs/training-bulk/g0003/pr-11",
+      "returncode": 0,
+      "status": "completed",
+      "test_budget_seconds": 45,
+      "test_paths": []
+    },
+    {
+      "case_id": "verl-pr-5842",
+      "compile_paths": [
+        "verl/trainer/ppo/metric_utils.py"
+      ],
+      "duration_seconds": 5.663972124923021,
+      "head_sha": "56f902fd1dc109502a098516c41035a824eac125",
+      "output_sha256": "sha256:9e58e4caa8b33bf055cd96f7eb1fc5c7c32feeedc489920213367b540c6aa45d",
+      "output_tail": "Welcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nPrevious HEAD position was 61f7b279 fix: gen_batch_size\nHEAD is now at 56f902fd fix: filter aborted samples and use sequence_reward in group_reward_std\n",
+      "project": "verl",
+      "pull_number": 5842,
+      "ref": "refs/training-bulk/g0003/pr-5842",
+      "returncode": 0,
+      "status": "completed",
+      "test_budget_seconds": 45,
+      "test_paths": []
+    },
+    {
+      "case_id": "slime-pr-1927",
+      "compile_paths": [],
+      "duration_seconds": 5.697027791989967,
+      "head_sha": "291ca6f032c12ab1ffac9854adcadc687668c960",
+      "output_sha256": "sha256:df874575d17d5f8d3f9c247fc59d48967e0ee8f0221ff624c56df79434370c74",
+      "output_tail": "Welcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nPrevious HEAD position was bad825a2 [doc] Add doc for building conda environment\nHEAD is now at 291ca6f0 fix: quote nvidia-modelopt requirement\n",
+      "project": "slime",
+      "pull_number": 1927,
+      "ref": "refs/training-bulk/g0003/pr-1927",
+      "returncode": 0,
+      "status": "completed",
+      "test_budget_seconds": 45,
+      "test_paths": []
+    },
+    {
+      "case_id": "megatron-core-pr-405",
+      "compile_paths": [
+        "megatron/core/pipeline_parallel/schedules.py"
+      ],
+      "duration_seconds": 28.216972124995664,
+      "head_sha": "ba6ea6bc6d1b218113cce275ca894368cf157521",
+      "output_sha256": "sha256:f399d764ffafd41c00dfbc2f85912da0ac5a97769f5e44a7ee708d11a60f0980",
+      "output_tail": "Welcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nPrevious HEAD position was 4d256a476 ci: add --cluster-a100/h100/gb200 args to trigger_internal_ci.py\nHEAD is now at ba6ea6bc6 Only regard decoder seq len when using an enc-dec\n",
+      "project": "megatron-core",
+      "pull_number": 405,
+      "ref": "refs/training-bulk/g0003/pr-405",
+      "returncode": 0,
+      "status": "completed",
+      "test_budget_seconds": 45,
+      "test_paths": []
+    },
+    {
+      "case_id": "verl-pr-7692",
+      "compile_paths": [],
+      "duration_seconds": 5.9848898749332875,
+      "head_sha": "3de2f8d54aedc2c9c0aa1647973329172f797dcc",
+      "output_sha256": "sha256:bc88f1fe3ec384810279308fbe3a30f4d6b5f1c148ac5dffbbd9c1368b49df78",
+      "output_tail": "Welcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nPrevious HEAD position was 56f902fd fix: filter aborted samples and use sequence_reward in group_reward_std\nHEAD is now at 3de2f8d5 build(deps): bump transformers from 5.9.0 to 5.16.1\n",
+      "project": "verl",
+      "pull_number": 7692,
+      "ref": "refs/training-bulk/g0003/pr-7692",
+      "returncode": 0,
+      "status": "completed",
+      "test_budget_seconds": 45,
+      "test_paths": []
+    },
+    {
+      "case_id": "verl-pr-7039",
+      "compile_paths": [],
+      "duration_seconds": 1.0041985660791397e-05,
+      "head_sha": "d253100657bc3957888ee62072957a6d1aebbd98",
+      "output_tail": "checkout-rc=255:Connection timed out during banner exchange\nConnection to 38.49.42.120 port 54274 timed out\n",
+      "project": "verl",
+      "pull_number": 7039,
+      "returncode": null,
+      "status": "prewarm_failed",
+      "test_paths": []
+    },
+    {
+      "case_id": "megatron-core-pr-1660",
+      "compile_paths": [],
+      "duration_seconds": 24.274283207952976,
+      "head_sha": "9b46166dfb36b4c8db68906ea39ac55b031919e1",
+      "output_sha256": "sha256:b0f7b4387ed8e9dc0c58762e9b0a5e1fa8243f148130d72789f623994f37297a",
+      "output_tail": "Welcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nPrevious HEAD position was ba6ea6bc6 Only regard decoder seq len when using an enc-dec\nHEAD is now at 9b46166df Update README.md\n",
+      "project": "megatron-core",
+      "pull_number": 1660,
+      "ref": "refs/training-bulk/g0003/pr-1660",
+      "returncode": 0,
+      "status": "completed",
+      "test_budget_seconds": 45,
+      "test_paths": []
+    },
+    {
+      "case_id": "verl-pr-3215",
+      "compile_paths": [
+        "verl/models/transformers/npu_patch.py"
+      ],
+      "duration_seconds": 5.420192624907941,
+      "head_sha": "3fec4c9fc6dfd12292dcf475e937a2f3c1ded377",
+      "output_sha256": "sha256:f8b065a33a71bbc43ba5a064c6b67c1e6fbbe5a9dd0770ae115a00810cedd233",
+      "output_tail": "Welcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nwarning: unable to rmdir 'recipe': Directory not empty\nPrevious HEAD position was 3de2f8d5 build(deps): bump transformers from 5.9.0 to 5.16.1\nHEAD is now at 3fec4c9f Merge branch 'volcengine:main' into main\n",
+      "project": "verl",
+      "pull_number": 3215,
+      "ref": "refs/training-bulk/g0003/pr-3215",
+      "returncode": 0,
+      "status": "completed",
+      "test_budget_seconds": 45,
+      "test_paths": []
+    },
+    {
+      "case_id": "verl-pr-6275",
+      "compile_paths": [],
+      "duration_seconds": 8.545405250042677,
+      "head_sha": "36ca73fcb7708a014a25803e402d855593e6c5c7",
+      "output_sha256": "sha256:86384216336843eb9079e6afbb5a084745009986fe9730876694c7f9075f9e30",
+      "output_tail": "Welcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nPrevious HEAD position was 3fec4c9f Merge branch 'volcengine:main' into main\nHEAD is now at 36ca73fc [ci] fix: split trtllm unit tests into two pytest calls\n",
+      "project": "verl",
+      "pull_number": 6275,
+      "ref": "refs/training-bulk/g0003/pr-6275",
+      "returncode": 0,
+      "status": "completed",
+      "test_budget_seconds": 45,
+      "test_paths": []
+    },
+    {
+      "case_id": "megatron-core-pr-2348",
+      "compile_paths": [
+        "megatron/core/utils.py",
+        "scripts/check_api_backwards_compatibility.py",
+        "tests/unit_tests/test_api_backwards_compat_setup.py"
+      ],
+      "duration_seconds": 24.571550082881004,
+      "head_sha": "c54cf99e01db9c863df48cccbd4dd092115ec836",
+      "output_sha256": "sha256:49e354318f77ef79521d258020a7026edd5141d91385beb226e5c50c9a4244dd",
+      "output_tail": "Welcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nPrevious HEAD position was 9b46166df Update README.md\nHEAD is now at c54cf99e0 Merge branch 'add_compat_check_dev' of https://github.com/pablo-garay/Megatron-LM into add_compat_check_dev\nImportError while loading conftest '/workspace/training-pr-corpus/repos/megatron-core/tests/unit_tests/conftest.py'.\ntests/unit_tests/conftest.py:11: in <module>\n    from tests.test_utils.python_scripts.download_unit_tests_dataset import (\ntests/test_utils/python_scripts/download_unit_tests_dataset.py:15: in <module>\n    from github import Github\nE   ModuleNotFoundError: No module named 'github'\n",
+      "project": "megatron-core",
+      "pull_number": 2348,
+      "ref": "refs/training-bulk/g0003/pr-2348",
+      "returncode": 4,
+      "status": "completed",
+      "test_budget_seconds": 45,
+      "test_paths": [
+        "tests/unit_tests/test_api_backwards_compat_setup.py"
+      ]
+    },
+    {
+      "case_id": "megatron-core-pr-6288",
+      "compile_paths": [],
+      "duration_seconds": 26.31190862483345,
+      "head_sha": "4a29c4cab0a3691c341be9c3459dfa8711e5c52f",
+      "output_sha256": "sha256:bab5c49f5cbbc91f20d8758f0916dd7ddd6d71cfcfaf45c097aae63b47594c00",
+      "output_tail": "Welcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nPrevious HEAD position was c54cf99e0 Merge branch 'add_compat_check_dev' of https://github.com/pablo-garay/Megatron-LM into add_compat_check_dev\nHEAD is now at 4a29c4cab revert: revert community-bot bump to v1.8.7 (5adbee2)\n",
+      "project": "megatron-core",
+      "pull_number": 6288,
+      "ref": "refs/training-bulk/g0003/pr-6288",
+      "returncode": 0,
+      "status": "completed",
+      "test_budget_seconds": 45,
+      "test_paths": []
+    },
+    {
+      "case_id": "slime-pr-343",
+      "compile_paths": [],
+      "duration_seconds": 4.802881375188008,
+      "head_sha": "933b1af6401693eba72610fc092404b6eed8100c",
+      "output_sha256": "sha256:db7814f864ca4af7e45ab0b3bdc7782e399a6b7d4f8af4d78be5d7b0feda5ed0",
+      "output_tail": "Welcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nPrevious HEAD position was 291ca6f0 fix: quote nvidia-modelopt requirement\nHEAD is now at 933b1af6 wrong expressions and typo\n",
+      "project": "slime",
+      "pull_number": 343,
+      "ref": "refs/training-bulk/g0003/pr-343",
+      "returncode": 0,
+      "status": "completed",
+      "test_budget_seconds": 45,
+      "test_paths": []
+    },
+    {
+      "case_id": "megatron-core-pr-5295",
+      "compile_paths": [],
+      "duration_seconds": 25.178679750068113,
+      "head_sha": "198e61fc428e3a31a96f432fd0b1d586cf5588ea",
+      "output_sha256": "sha256:be6d3ebbaefa2d31ff4b8da86f53beafc611b0c0ffc6bbced0cb5ea2e16588bc",
+      "output_tail": "Welcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nPrevious HEAD position was 4a29c4cab revert: revert community-bot bump to v1.8.7 (5adbee2)\nHEAD is now at 198e61fc4 Stabilize hybrid_nanov3_3b GB200 perf test against run-to-run noise\n",
+      "project": "megatron-core",
+      "pull_number": 5295,
+      "ref": "refs/training-bulk/g0003/pr-5295",
+      "returncode": 0,
+      "status": "completed",
+      "test_budget_seconds": 45,
+      "test_paths": []
+    },
+    {
+      "case_id": "verl-pr-2062",
+      "compile_paths": [
+        "verl/workers/rollout/sglang_rollout/async_sglang_server.py"
+      ],
+      "duration_seconds": 4.888515708968043,
+      "head_sha": "6f7cb74c34e5e517c5d691325280deca500e7529",
+      "output_sha256": "sha256:d72eb78bae0dc7b9e8daaacd8f14c0fad9648195aafff0974f4265965b65c01a",
+      "output_tail": "Welcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nwarning: unable to rmdir 'recipe': Directory not empty\nPrevious HEAD position was 36ca73fc [ci] fix: split trtllm unit tests into two pytest calls\nHEAD is now at 6f7cb74c [hotfix] AsyncSglangServer use async wake_up/sleep\n",
+      "project": "verl",
+      "pull_number": 2062,
+      "ref": "refs/training-bulk/g0003/pr-2062",
+      "returncode": 0,
+      "status": "completed",
+      "test_budget_seconds": 45,
+      "test_paths": []
+    },
+    {
+      "case_id": "megatron-core-pr-2822",
+      "compile_paths": [],
+      "duration_seconds": 23.2284810829442,
+      "head_sha": "c53185f78236ce0f7b779d1d893e64597f92ef99",
+      "output_sha256": "sha256:e4f2dd249fc57a1b6362f2017865cf4986368d57db0f7bd2b24b75a78506bc33",
+      "output_tail": "Welcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nPrevious HEAD position was 198e61fc4 Stabilize hybrid_nanov3_3b GB200 perf test against run-to-run noise\nHEAD is now at c53185f78 Update oncall doc\n",
+      "project": "megatron-core",
+      "pull_number": 2822,
+      "ref": "refs/training-bulk/g0003/pr-2822",
+      "returncode": 0,
+      "status": "completed",
+      "test_budget_seconds": 45,
+      "test_paths": []
+    },
+    {
+      "case_id": "megatron-core-pr-6684",
+      "compile_paths": [
+        "megatron/core/datasets/data_schedule.py",
+        "tests/unit_tests/test_sequence_packing.py"
+      ],
+      "duration_seconds": 31.3512007498648,
+      "head_sha": "e3923e783cee8ad5050b3b5a8e686fc3b6f27872",
+      "output_sha256": "sha256:6eaf5217f793124c0d4d86bfff953e502a80f4bacf69f4bc3678e2fbb33a59d5",
+      "output_tail": "Connection timed out during banner exchange\nConnection to 38.49.42.120 port 54274 timed out\n",
+      "project": "megatron-core",
+      "pull_number": 6684,
+      "ref": "refs/training-bulk/g0003/pr-6684",
+      "returncode": 255,
+      "status": "completed",
+      "test_budget_seconds": 45,
+      "test_paths": [
+        "tests/unit_tests/test_sequence_packing.py"
+      ]
+    },
+    {
+      "case_id": "verl-pr-5103",
+      "compile_paths": [],
+      "duration_seconds": 5.910152374999598,
+      "head_sha": "58552b333c8b8d7fc32f7e1150412aaad1039aae",
+      "output_sha256": "sha256:4e98b58a5ee1ffa51bcc1cb1c60be70690982d046cc6135959087219b580f63b",
+      "output_tail": "Welcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nPrevious HEAD position was 6f7cb74c [hotfix] AsyncSglangServer use async wake_up/sleep\nHEAD is now at 58552b33 update\n",
+      "project": "verl",
+      "pull_number": 5103,
+      "ref": "refs/training-bulk/g0003/pr-5103",
+      "returncode": 0,
+      "status": "completed",
+      "test_budget_seconds": 45,
+      "test_paths": []
+    },
+    {
+      "case_id": "slime-pr-1531",
+      "compile_paths": [],
+      "duration_seconds": 5.468854875070974,
+      "head_sha": "3e3746530a606af260a5dc202612b8cd12af0d9a",
+      "output_sha256": "sha256:644f53b1826017576fc5b63bd233a163a276b248cd751b63235575940acf9ecf",
+      "output_tail": "Welcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nPrevious HEAD position was 933b1af6 wrong expressions and typo\nHEAD is now at 3e374653 [docker] remove seq_len in _get_k_and_s_triton_kernel\n",
+      "project": "slime",
+      "pull_number": 1531,
+      "ref": "refs/training-bulk/g0003/pr-1531",
+      "returncode": 0,
+      "status": "completed",
+      "test_budget_seconds": 45,
+      "test_paths": []
+    },
+    {
+      "case_id": "megatron-core-pr-768",
+      "compile_paths": [
+        "megatron/core/tensor_parallel/layers.py"
+      ],
+      "duration_seconds": 24.720835000043735,
+      "head_sha": "cc9e48b5f4b10b53f51bf4f9fa6fd0abaff2efe6",
+      "output_sha256": "sha256:137bd9b89c4d9538f0bfc2a46269b7cb343adb2a4701d39caa00fe0581552c45",
+      "output_tail": "Welcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nPrevious HEAD position was c53185f78 Update oncall doc\nHEAD is now at cc9e48b5f renamed grad reduce parameter\n",
+      "project": "megatron-core",
+      "pull_number": 768,
+      "ref": "refs/training-bulk/g0003/pr-768",
+      "returncode": 0,
+      "status": "completed",
+      "test_budget_seconds": 45,
+      "test_paths": []
+    },
+    {
+      "case_id": "verl-pr-6634",
+      "compile_paths": [],
+      "duration_seconds": 5.276657165959477,
+      "head_sha": "dded791827c62da5a826e74e3014f63f79c0dcf2",
+      "output_sha256": "sha256:439c0f6fc1de0efbd0c3e982f79de918192072124c0dc4bb2c58a47ad0701ffe",
+      "output_tail": "Welcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nwarning: unable to rmdir 'recipe': Directory not empty\nPrevious HEAD position was 58552b33 update\nHEAD is now at dded7918 \u5220\u9664\u4e86\u8bb8\u591a\u65e0\u5173\u7684\u6587\u4ef6\uff0c\u8ba9\u6574\u4e2a\u9879\u76ee\u770b\u8d77\u6765\u66f4\u52a0\u7b80\u6d01\n",
+      "project": "verl",
+      "pull_number": 6634,
+      "ref": "refs/training-bulk/g0003/pr-6634",
+      "returncode": 0,
+      "status": "completed",
+      "test_budget_seconds": 45,
+      "test_paths": []
+    },
+    {
+      "case_id": "verl-pr-5018",
+      "compile_paths": [
+        "verl/workers/rollout/sglang_rollout/async_sglang_server.py",
+        "verl/workers/rollout/vllm_rollout/vllm_async_server.py"
+      ],
+      "duration_seconds": 10.379865875001997,
+      "head_sha": "d923a369a162c3fdbc19a12d3ae6f3e499966cb4",
+      "output_sha256": "sha256:88ffbb4710a79b7fe4b39e7db883ad172254acbff51d6fb695ced25df28e3b94",
+      "output_tail": "Welcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nPrevious HEAD position was dded7918 \u5220\u9664\u4e86\u8bb8\u591a\u65e0\u5173\u7684\u6587\u4ef6\uff0c\u8ba9\u6574\u4e2a\u9879\u76ee\u770b\u8d77\u6765\u66f4\u52a0\u7b80\u6d01\nHEAD is now at d923a369 update\n",
+      "project": "verl",
+      "pull_number": 5018,
+      "ref": "refs/training-bulk/g0003/pr-5018",
+      "returncode": 0,
+      "status": "completed",
+      "test_budget_seconds": 45,
+      "test_paths": []
+    },
+    {
+      "case_id": "megatron-core-pr-6894",
+      "compile_paths": [
+        "examples/mimo/model_providers/nemotron_moe_vlm.py",
+        "examples/mimo/pretrain_mimo.py",
+        "examples/mimo/training/args.py",
+        "examples/mimo/training/data.py",
+        "examples/mimo/training/encoder_prefetch.py",
+        "examples/mimo/training/runtime.py",
+        "megatron/training/training.py",
+        "tests/unit_tests/models/mimo/test_mimo_1f1b_schedule.py",
+        "tests/unit_tests/models/mimo/test_mimo_encoder_prefetch.py",
+        "tests/unit_tests/models/mimo/test_mimo_hetero_grid_args.py",
+        "tests/unit_tests/models/mimo/test_mimo_hetero_runtime.py",
+        "tests/unit_tests/models/mimo/test_mimo_mock_data.py",
+        "tests/unit_tests/models/mimo/test_nemotron_moe_vlm_provider.py"
+      ],
+      "duration_seconds": 50.069073875201866,
+      "head_sha": "67474dca91ae2c86e7f203915c6a5a48eac117bc",
+      "output_sha256": "sha256:cfa14ab4a879c9b41fc823fe73667fed87d40a598ed1387b00fe96ecdfed8371",
+      "output_tail": "31 warnings, 1 error in 2.05s\nWelcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nPrevious HEAD position was cc9e48b5f renamed grad reduce parameter\nHEAD is now at 67474dca9 Fix MIMO provider test shard configuration\n[rank0]:[W903 11:42:35.274907015 ProcessGroupNCCL.cpp:5276] Guessing device ID based on global rank. This can cause a hang if rank to GPU mapping is heterogeneous. You can specify device_id in init_process_group()\nINFO:examples.mimo.training.encoder_prefetch.debug:encoder-prefetch-debug consumer batch=0 ready_at_request=0/1 claimed_pending=1 pop_wait_ms=0.032\nINFO:examples.mimo.training.encoder_prefetch.debug:encoder-prefetch-debug consumer-wait batch=0 encoder_wait_ms=1.250\nINFO:examples.mimo.training.encoder_prefetch.debug:encoder-prefetch-debug consumer batch=0 ready_at_request=1/1 claimed_pending=0 pop_wait_ms=0.010\nINFO:examples.mimo.training.encoder_prefetch.debug:encoder-prefetch-debug producer batch=0 data_fetch_ms=0.017 encode_ms=1.250\nINFO:examples.mimo.training.encoder_prefetch.debug:encoder-prefetch-debug consumer batch=0 ready_at_request=1/1 claimed_pending=0 pop_wait_ms=0.023\nINFO:examples.mimo.training.encoder_prefetch.debug:encoder-prefetch-debug producer batch=1 data_fetch_ms=0.011 encode_ms=1.250\nINFO:examples.mimo.training.encoder_prefetch.debug:encoder-prefetch-debug projection batch=0 projection_ms=1.250\nINFO:examples.mimo.training.encoder_prefetch.debug:encoder-prefetch-debug consumer batch=1 ready_at_request=1/1 claimed_pending=0 pop_wait_ms=0.017\nINFO:examples.mimo.training.encoder_prefetch.debug:encoder-prefetch-debug projection batch=1 projection_ms=1.250\nWARNING:examples.mimo.training.encoder_prefetch:encoder prefetch worker did not stop within 0.01 seconds\nusage: __main__.py [-h] [--mimo-encoder-tp MIMO_ENCODER_TP]\n                   [--mimo-encoder-dp MIMO_ENCODER_DP]\n                   [--mimo-llm-offset MIMO_LLM_OFFSET]\n                   [--mimo-llm-tp MIMO_LLM_TP] [--mimo-llm-cp MIMO_LLM_CP]\n                   [--mimo-llm-pp MIMO_LLM_PP] [--mimo-llm-dp MIMO_LLM_DP]\n                   [--mimo-llm-ep MIMO_LLM_EP]\n                   [--mimo-llm-expt-tp MIMO_LLM_EXPT_TP] [--mimo-llm-only]\n                   [--mimo-encoder-ddp-overlap]\n__main__.py: error: unrecognized arguments: --encoder-tp\nusage: __main__.py [-h] [--mimo-encoder-tp MIMO_ENCODER_TP]\n                   [--mimo-encoder-dp MIMO_ENCODER_DP]\n                   [--mimo-llm-offset MIMO_LLM_OFFSET]\n                   [--mimo-llm-tp MIMO_LLM_TP] [--mimo-llm-cp MIMO_LLM_CP]\n                   [--mimo-llm-pp MIMO_LLM_PP] [--mimo-llm-dp MIMO_LLM_DP]\n                   [--mimo-llm-ep MIMO_LLM_EP]\n                   [--mimo-llm-expt-tp MIMO_LLM_EXPT_TP] [--mimo-llm-only]\n                   [--mimo-encoder-ddp-overlap]\n__main__.py: error: unrecognized arguments: --encoder-dp\nusage: __main__.py [-h] [--mimo-encoder-tp MIMO_ENCODER_TP]\n                   [--mimo-encoder-dp MIMO_ENCODER_DP]\n                   [--mimo-llm-offset MIMO_LLM_OFFSET]\n                   [--mimo-llm-tp MIMO_LLM_TP] [--mimo-llm-cp MIMO_LLM_CP]\n                   [--mimo-llm-pp MIMO_LLM_PP] [--mimo-llm-dp MIMO_LLM_DP]\n                   [--mimo-llm-ep MIMO_LLM_EP]\n                   [--mimo-llm-expt-tp MIMO_LLM_EXPT_TP] [--mimo-llm-only]\n                   [--mimo-encoder-ddp-overlap]\n__main__.py: error: unrecognized arguments: --encoder-ddp-overlap\nusage: __main__.py [-h] [--mimo-encoder-tp MIMO_ENCODER_TP]\n                   [--mimo-encoder-dp MIMO_ENCODER_DP]\n                   [--mimo-llm-offset MIMO_LLM_OFFSET]\n                   [--mimo-llm-tp MIMO_LLM_TP] [--mimo-llm-cp MIMO_LLM_CP]\n                   [--mimo-llm-pp MIMO_LLM_PP] [--mimo-llm-dp MIMO_LLM_DP]\n                   [--mimo-llm-ep MIMO_LLM_EP]\n                   [--mimo-llm-expt-tp MIMO_LLM_EXPT_TP] [--mimo-llm-only]\n                   [--mimo-encoder-ddp-overlap]\n__main__.py: error: unrecognized arguments: --llm-offset\nusage: __main__.py [-h] [--mimo-encoder-tp MIMO_ENCODER_TP]\n                   [--mimo-encoder-dp MIMO_ENCODER_DP]\n                   [--mimo-llm-offset MIMO_LLM_OFFSET]\n                   [--mimo-llm-tp MIMO_LLM_TP] [--mimo-llm-cp MIMO_LLM_CP]\n                   [--mimo-llm-pp MIMO_LLM_PP] [--mimo-llm-dp MIMO_LLM_DP]\n                   [--mimo-llm-ep MIMO_LLM_EP]\n                   [--mimo-llm-expt-tp MIMO_LLM_EXPT_TP] [--mimo-llm-only]\n                   [--mimo-encoder-ddp-overlap]\n__main__.py: error: unrecognized arguments: --llm-tp\nusage: __main__.py [-h] [--mimo-encoder-tp MIMO_ENCODER_TP]\n                   [--mimo-encoder-dp MIMO_ENCODER_DP]\n                   [--mimo-llm-offset MIMO_LLM_OFFSET]\n                   [--mimo-llm-tp MIMO_LLM_TP] [--mimo-llm-cp MIMO_LLM_CP]\n                   [--mimo-llm-pp MIMO_LLM_PP] [--mimo-llm-dp MIMO_LLM_DP]\n                   [--mimo-llm-ep MIMO_LLM_EP]\n                   [--mimo-llm-expt-tp MIMO_LLM_EXPT_TP] [--mimo-llm-only]\n                   [--mimo-encoder-ddp-overlap]\n__main__.py: error: unrecognized arguments: --llm-cp\nusage: __main__.py [-h] [--mimo-encoder-tp MIMO_ENCODER_TP]\n                   [--mimo-encoder-dp MIMO_ENCODER_DP]\n                   [--mimo-llm-offset MIMO_LLM_OFFSET]\n                   [--mimo-llm-tp MIMO_LLM_TP] [--mimo-llm-cp MIMO_LLM_CP]\n                   [--mimo-llm-pp MIMO_LLM_PP] [--mimo-llm-dp MIMO_LLM_DP]\n                   [--mimo-llm-ep MIMO_LLM_EP]\n                   [--mimo-llm-expt-tp MIMO_LLM_EXPT_TP] [--mimo-llm-only]\n                   [--mimo-encoder-ddp-overlap]\n__main__.py: error: unrecognized arguments: --llm-pp\nusage: __main__.py [-h] [--mimo-encoder-tp MIMO_ENCODER_TP]\n                   [--mimo-encoder-dp MIMO_ENCODER_DP]\n                   [--mimo-llm-offset MIMO_LLM_OFFSET]\n                   [--mimo-llm-tp MIMO_LLM_TP] [--mimo-llm-cp MIMO_LLM_CP]\n                   [--mimo-llm-pp MIMO_LLM_PP] [--mimo-llm-dp MIMO_LLM_DP]\n                   [--mimo-llm-ep MIMO_LLM_EP]\n                   [--mimo-llm-expt-tp MIMO_LLM_EXPT_TP] [--mimo-llm-only]\n                   [--mimo-encoder-ddp-overlap]\n__main__.py: error: unrecognized arguments: --llm-dp\nusage: __main__.py [-h] [--mimo-encoder-tp MIMO_ENCODER_TP]\n                   [--mimo-encoder-dp MIMO_ENCODER_DP]\n                   [--mimo-llm-offset MIMO_LLM_OFFSET]\n                   [--mimo-llm-tp MIMO_LLM_TP] [--mimo-llm-cp MIMO_LLM_CP]\n                   [--mimo-llm-pp MIMO_LLM_PP] [--mimo-llm-dp MIMO_LLM_DP]\n                   [--mimo-llm-ep MIMO_LLM_EP]\n                   [--mimo-llm-expt-tp MIMO_LLM_EXPT_TP] [--mimo-llm-only]\n                   [--mimo-encoder-ddp-overlap]\n__main__.py: error: unrecognized arguments: --llm-ep\nusage: __main__.py [-h] [--mimo-encoder-tp MIMO_ENCODER_TP]\n                   [--mimo-encoder-dp MIMO_ENCODER_DP]\n                   [--mimo-llm-offset MIMO_LLM_OFFSET]\n                   [--mimo-llm-tp MIMO_LLM_TP] [--mimo-llm-cp MIMO_LLM_CP]\n                   [--mimo-llm-pp MIMO_LLM_PP] [--mimo-llm-dp MIMO_LLM_DP]\n                   [--mimo-llm-ep MIMO_LLM_EP]\n                   [--mimo-llm-expt-tp MIMO_LLM_EXPT_TP] [--mimo-llm-only]\n                   [--mimo-encoder-ddp-overlap]\n__main__.py: error: unrecognized arguments: --llm-expt-tp\nusage: __main__.py [-h] [--mimo-encoder-tp MIMO_ENCODER_TP]\n                   [--mimo-encoder-dp MIMO_ENCODER_DP]\n                   [--mimo-llm-offset MIMO_LLM_OFFSET]\n                   [--mimo-llm-tp MIMO_LLM_TP] [--mimo-llm-cp MIMO_LLM_CP]\n                   [--mimo-llm-pp MIMO_LLM_PP] [--mimo-llm-dp MIMO_LLM_DP]\n                   [--mimo-llm-ep MIMO_LLM_EP]\n                   [--mimo-llm-expt-tp MIMO_LLM_EXPT_TP] [--mimo-llm-only]\n                   [--mimo-encoder-ddp-overlap]\n__main__.py: error: unrecognized arguments: --llm-only\n",
+      "project": "megatron-core",
+      "pull_number": 6894,
+      "ref": "refs/training-bulk/g0003/pr-6894",
+      "returncode": 1,
+      "status": "completed",
+      "test_budget_seconds": 45,
+      "test_paths": [
+        "tests/unit_tests/models/mimo/test_mimo_1f1b_schedule.py",
+        "tests/unit_tests/models/mimo/test_mimo_encoder_prefetch.py",
+        "tests/unit_tests/models/mimo/test_mimo_hetero_grid_args.py",
+        "tests/unit_tests/models/mimo/test_mimo_hetero_runtime.py",
+        "tests/unit_tests/models/mimo/test_mimo_mock_data.py",
+        "tests/unit_tests/models/mimo/test_nemotron_moe_vlm_provider.py"
+      ]
+    },
+    {
+      "case_id": "slime-pr-2109",
+      "compile_paths": [
+        "slime/backends/megatron_utils/model.py"
+      ],
+      "duration_seconds": 5.869447875069454,
+      "head_sha": "442bbb69cb9b2e4abee335c88626627c152d8a15",
+      "output_sha256": "sha256:0fc4b10bc0c00e7fd436e6bafabe0c585ebb704705feee3fa433d9e4e39cc59c",
+      "output_tail": "Welcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nPrevious HEAD position was 3e374653 [docker] remove seq_len in _get_k_and_s_triton_kernel\nHEAD is now at 442bbb69 style: wrap eval-only train_iters assignment for black\n",
+      "project": "slime",
+      "pull_number": 2109,
+      "ref": "refs/training-bulk/g0003/pr-2109",
+      "returncode": 0,
+      "status": "completed",
+      "test_budget_seconds": 45,
+      "test_paths": []
+    },
+    {
+      "case_id": "megatron-core-pr-3462",
+      "compile_paths": [],
+      "duration_seconds": 45.5022155828774,
+      "head_sha": "022512679b415a3a943c38c1a66017d85a70fc19",
+      "output_sha256": "sha256:f6642603ff20149c7801f59200c3777b560be2e383dad2b1fa71eca3538eb3fb",
+      "output_tail": "Welcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nPrevious HEAD position was 67474dca9 Fix MIMO provider test shard configuration\nHEAD is now at 022512679 use nemofw slack App\n",
+      "project": "megatron-core",
+      "pull_number": 3462,
+      "ref": "refs/training-bulk/g0003/pr-3462",
+      "returncode": 0,
+      "status": "completed",
+      "test_budget_seconds": 45,
+      "test_paths": []
+    },
+    {
+      "case_id": "megatron-core-pr-2127",
+      "compile_paths": [
+        "megatron/core/dist_checkpointing/mapping.py",
+        "megatron/core/dist_checkpointing/state_dict_utils.py",
+        "megatron/core/dist_checkpointing/strategies/pure_dcp.py",
+        "megatron/core/dist_checkpointing/strategies/torch.py",
+        "megatron/core/dist_checkpointing/utils.py",
+        "megatron/core/dist_checkpointing/validation.py",
+        "megatron/core/utils.py",
+        "tests/unit_tests/dist_checkpointing/models/common.py",
+        "tests/unit_tests/dist_checkpointing/models/test_gpt_model.py",
+        "tests/unit_tests/dist_checkpointing/test_dtensor.py"
+      ],
+      "duration_seconds": 76.77065300010145,
+      "head_sha": "f7ba97b2a625a66ef6f278849bd55a3245818b24",
+      "output_sha256": "sha256:af8da7c77b72ccc3b1f98e6f7ea2f8a8e5c37af5520998f8036368c29ff40c83",
+      "output_tail": "Welcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nPrevious HEAD position was 022512679 use nemofw slack App\nHEAD is now at f7ba97b2a Merge branch 'main' into mblaz/dtensor-ckpt-poc\nfused_indices_to_multihot has reached end of life. Please migrate to a non-experimental function.\nImportError while loading conftest '/workspace/training-pr-corpus/repos/megatron-core/tests/unit_tests/conftest.py'.\ntests/unit_tests/conftest.py:11: in <module>\n    from tests.test_utils.python_scripts.download_unit_tests_dataset import (\ntests/test_utils/python_scripts/download_unit_tests_dataset.py:15: in <module>\n    from github import Github\nE   ModuleNotFoundError: No module named 'github'\n",
+      "project": "megatron-core",
+      "pull_number": 2127,
+      "ref": "refs/training-bulk/g0003/pr-2127",
+      "returncode": 4,
+      "status": "completed",
+      "test_budget_seconds": 45,
+      "test_paths": [
+        "tests/unit_tests/dist_checkpointing/models/common.py",
+        "tests/unit_tests/dist_checkpointing/models/test_gpt_model.py",
+        "tests/unit_tests/dist_checkpointing/test_dtensor.py"
+      ]
+    },
+    {
+      "case_id": "megatron-core-pr-5080",
+      "compile_paths": [
+        "megatron/core/transformer/multi_token_prediction.py",
+        "megatron/core/transformer/transformer_config.py",
+        "tests/unit_tests/models/test_hybrid_moe_model.py",
+        "tests/unit_tests/transformer/test_multi_token_prediction.py"
+      ],
+      "duration_seconds": 100.90560241718777,
+      "head_sha": "487b64dc7b512f916eba80eba7d4ec2cc3c61c2c",
+      "output_sha256": "sha256:f34c7425f1640a8fbf9bd6f18a20ca6e0f61debd7eb6dfee918abd7b9bf8c708",
+      "output_tail": "Test data already available at /opt/data\nE\n==================================== ERRORS ====================================\n____________ ERROR at setup of TestHybridMoEModel.test_constructor _____________\ntests/unit_tests/models/test_hybrid_moe_model.py:540: in setup_method\n    args = self.create_test_args()\n           ^^^^^^^^^^^^^^^^^^^^^^^\ntests/unit_tests/models/test_hybrid_moe_model.py:532: in create_test_args\n    validate_args(args)\nmegatron/training/arguments.py:443: in validate_args\n    args.world_size % total_model_size == 0\nE   AssertionError: world size (1) is not divisible by total_model_size (total_model_size=2)\n=============================== warnings summary ===============================\n../../../../usr/local/lib/python3.12/dist-packages/torch/jit/_script.py:365: 14 warnings\n  /usr/local/lib/python3.12/dist-packages/torch/jit/_script.py:365: DeprecationWarning: `torch.jit.script_method` is deprecated. Please switch to `torch.compile` or `torch.export`.\n    warnings.warn(\n\nmegatron/core/optimizer/__init__.py:25\n  /workspace/training-pr-corpus/repos/megatron-core/megatron/core/optimizer/__init__.py:25: UserWarning: Transformer Engine and Apex are not installed. Falling back to Torch optimizers.\n    warnings.warn(\n\nmegatron/core/distributed/fsdp/src/megatron_fsdp/mixed_precision.py:114\n  /workspace/training-pr-corpus/repos/megatron-core/megatron/core/distributed/fsdp/src/megatron_fsdp/mixed_precision.py:114: UserWarning: Transformer Engine and Apex are not installed. Falling back to local implementations of multi_tensor_applier and multi_tensor_scale\n    warnings.warn(\n\nmegatron/core/optimizer/optimizer.py:29\n  /workspace/training-pr-corpus/repos/megatron-core/megatron/core/optimizer/optimizer.py:29: UserWarning: Transformer Engine and Apex are not installed. Falling back to local implementations of multi_tensor_applier and multi_tensor_scale\n    warnings.warn(\n\nmegatron/core/optimizer/clip_grads.py:32\n  /workspace/training-pr-corpus/repos/megatron-core/megatron/core/optimizer/clip_grads.py:32: UserWarning: Transformer Engine and Apex are not installed. Falling back to local implementations of multi_tensor_applier, multi_tensor_l2norm, and multi_tensor_scale\n    warnings.warn(\n\nmegatron/core/hyper_comm_grid.py:26\n  /workspace/training-pr-corpus/repos/megatron-core/megatron/core/hyper_comm_grid.py:26: UserWarning: absl.logging is not installed. Using logging.getLogger(__name__) instead. Please install absl.logging with `pip install absl-py` to use absl.logging.\n    warnings.warn(\n\nmegatron/core/inference/contexts/__init__.py:9\n  /workspace/training-pr-corpus/repos/megatron-core/megatron/core/inference/contexts/__init__.py:9: DeprecationWarning: The following imports from `dynamic_context.py` will be removed in this file in `megatron-core` 0.14. The imports here result in a cyclic import issue that causes rotary embeddings to import from Apex rather than Transformer Engine.\n    warnings.warn(\n\nmegatron/core/models/backends.py:34\n  /workspace/training-pr-corpus/repos/megatron-core/megatron/core/models/backends.py:34: UserWarning: Apex is not installed. Falling back to Torch Norm\n    warnings.warn(\"Apex is not installed. Falling back to Torch Norm\")\n\nmegatron/core/models/gpt/gpt_layer_specs.py:71\n  /workspace/training-pr-corpus/repos/megatron-core/megatron/core/models/gpt/gpt_layer_specs.py:71: UserWarning: Apex is not installed. Falling back to Torch Norm\n    warnings.warn(\"Apex is not installed. Falling back to Torch Norm\")\n\nmegatron/training/utils.py:25\n  /workspace/training-pr-corpus/repos/megatron-core/megatron/training/utils.py:25: UserWarning: Transformer Engine and Apex are not installed. Falling back to local implementations of multi_tensor_applier and multi_tensor_l2norm\n    warnings.warn(\n\n../../../../usr/local/lib/python3.12/dist-packages/torch/jit/_script.py:1488\n  /usr/local/lib/python3.12/dist-packages/torch/jit/_script.py:1488: DeprecationWarning: `torch.jit.script` is deprecated. Please switch to `torch.compile` or `torch.export`.\n    warnings.warn(\n\nmegatron/core/extensions/transformer_engine_spec_provider.py:95\n  /workspace/training-pr-corpus/repos/megatron-core/megatron/core/extensions/transformer_engine_spec_provider.py:95: UserWarning: Only transformer-engine>=1.7.0 supports MoE experts, but your version is 0.0.0. Use local linear implementation instead.\n    warnings.warn(\n\ntests/unit_tests/models/test_hybrid_moe_model.py::TestHybridMoEModel::test_constructor\ntests/unit_tests/models/test_hybrid_moe_model.py::TestHybridMoEModel::test_constructor\ntests/unit_tests/models/test_hybrid_moe_model.py::TestHybridMoEModel::test_constructor\ntests/unit_tests/models/test_hybrid_moe_model.py::TestHybridMoEModel::test_constructor\ntests/unit_tests/models/test_hybrid_moe_model.py::TestHybridMoEModel::test_constructor\n  /usr/lib/python3.12/argparse.py:1489: DeprecationWarning: 'type' is deprecated as of Python 3.12 and will be removed in Python 3.14.\n    action = action_class(**kwargs)\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n============================= slowest 15 durations =============================\n0.09s setup    tests/unit_tests/models/test_hybrid_moe_model.py::TestHybridMoEModel::test_constructor\n\n(1 durations < 0.005s hidden.  Use -vv to show these durations.)\n!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!\n30 warnings, 1 error in 0.37s\nWelcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nPrevious HEAD position was f7ba97b2a Merge branch 'main' into mblaz/dtensor-ckpt-poc\nHEAD is now at 487b64dc7 test: drop unrelated dsv4 parity fallback\n",
+      "project": "megatron-core",
+      "pull_number": 5080,
+      "ref": "refs/training-bulk/g0003/pr-5080",
+      "returncode": 1,
+      "status": "completed",
+      "test_budget_seconds": 45,
+      "test_paths": [
+        "tests/unit_tests/models/test_hybrid_moe_model.py",
+        "tests/unit_tests/transformer/test_multi_token_prediction.py"
+      ]
+    }
+  ],
+  "remote": "root@38.49.42.120",
+  "repository_paths": {
+    "megatron-core": "/workspace/training-pr-corpus/repos/megatron-core",
+    "slime": "/workspace/training-pr-corpus/repos/slime",
+    "verl": "/workspace/training-pr-corpus/repos/verl",
+    "verl-omni": "/workspace/training-pr-corpus/repos/verl-omni"
+  },
+  "schema_version": "0.1",
+  "started_at": "2026-09-03T11:38:47.410499+00:00",
+  "test_timeout_seconds": 45,
+  "timeout_disposition": "neutral-abandon-no-retry"
+}

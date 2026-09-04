@@ -1,0 +1,56 @@
+{
+  "case_filter": [
+    "megatron-core-pr-6684"
+  ],
+  "evidence_sha256": "sha256:08fcbab67b7454d4e664eb60c0b90df9b0f2ff229ad24a74e15acc756555450e",
+  "finished_at": "2026-09-03T11:44:47.613617+00:00",
+  "gpu_lanes": {
+    "megatron-core": "0",
+    "slime": "0",
+    "verl": "1",
+    "verl-omni": "1"
+  },
+  "group_index": 3,
+  "group_input_sha256": "sha256:596bdb56ebe8df6d87bc50634b20aaeb9c7b6bfac8ac2cdbeab78c98d393ed5f",
+  "prewarm_failure_count": 0,
+  "protocol_id": "training-bulk-group-exact-head-gated-v0.1",
+  "python_paths": {
+    "megatron-core": "/workspace/training-pr-corpus/venvs/megatron-core/bin/python",
+    "slime": "/workspace/training-pr-corpus/venvs/slime/bin/python",
+    "verl": "/workspace/training-pr-corpus/venvs/verl/bin/python",
+    "verl-omni": "/workspace/training-pr-corpus/venvs/verl-omni/bin/python"
+  },
+  "records": [
+    {
+      "case_id": "megatron-core-pr-6684",
+      "compile_paths": [
+        "megatron/core/datasets/data_schedule.py",
+        "tests/unit_tests/test_sequence_packing.py"
+      ],
+      "duration_seconds": 33.60643595806323,
+      "head_sha": "e3923e783cee8ad5050b3b5a8e686fc3b6f27872",
+      "output_sha256": "sha256:87c0cd9781b7ccad021c6d0e449d3fa03916435aeb48fb5714d8be00d2a50aaf",
+      "output_tail": "Test data already available at /opt/data\n..Initializing torch.distributed with rank: 0, world_size: 1\n.F\n=================================== FAILURES ===================================\n___________ test_get_batch_on_this_rank_for_sequence_packing[2-1-1] ____________\ntests/unit_tests/test_sequence_packing.py:200: in test_get_batch_on_this_rank_for_sequence_packing\n    Utils.initialize_model_parallel(tp, pp, None, context_parallel_size=cp)\ntests/unit_tests/test_utilities.py:136: in initialize_model_parallel\n    ps.initialize_model_parallel(\nmegatron/core/parallel_state.py:823: in initialize_model_parallel\n    raise RuntimeError(f\"world_size ({world_size}) is not divisible by {model_size}\")\nE   RuntimeError: world_size (1) is not divisible by 2\n=============================== warnings summary ===============================\n../../../../usr/local/lib/python3.12/dist-packages/torch/jit/_script.py:365: 14 warnings\n  /usr/local/lib/python3.12/dist-packages/torch/jit/_script.py:365: DeprecationWarning: `torch.jit.script_method` is deprecated. Please switch to `torch.compile` or `torch.export`.\n    warnings.warn(\n\nmegatron/core/optimizer/__init__.py:25\n  /workspace/training-pr-corpus/repos/megatron-core/megatron/core/optimizer/__init__.py:25: UserWarning: Transformer Engine and Apex are not installed. Falling back to Torch optimizers.\n    warnings.warn(\n\nmegatron/core/inference/contexts/__init__.py:9\n  /workspace/training-pr-corpus/repos/megatron-core/megatron/core/inference/contexts/__init__.py:9: DeprecationWarning: The following imports from `dynamic_context.py` will be removed in this file in `megatron-core` 0.14. The imports here result in a cyclic import issue that causes rotary embeddings to import from Apex rather than Transformer Engine.\n    warnings.warn(\n\nmegatron/core/distributed/fsdp/src/megatron_fsdp/mixed_precision.py:115\n  /workspace/training-pr-corpus/repos/megatron-core/megatron/core/distributed/fsdp/src/megatron_fsdp/mixed_precision.py:115: UserWarning: Transformer Engine and Apex are not installed. Falling back to local implementations of multi_tensor_applier and multi_tensor_scale\n    warnings.warn(\n\nmegatron/core/optimizer/optimizer.py:29\n  /workspace/training-pr-corpus/repos/megatron-core/megatron/core/optimizer/optimizer.py:29: UserWarning: Transformer Engine and Apex are not installed. Falling back to local implementations of multi_tensor_applier and multi_tensor_scale\n    warnings.warn(\n\nmegatron/core/optimizer/clip_grads.py:32\n  /workspace/training-pr-corpus/repos/megatron-core/megatron/core/optimizer/clip_grads.py:32: UserWarning: Transformer Engine and Apex are not installed. Falling back to local implementations of multi_tensor_applier, multi_tensor_l2norm, and multi_tensor_scale\n    warnings.warn(\n\nmegatron/core/hyper_comm_grid.py:20\n  /workspace/training-pr-corpus/repos/megatron-core/megatron/core/hyper_comm_grid.py:20: UserWarning: absl.logging is not installed. Using logging.getLogger(__name__) instead. Please install absl.logging with `pip install absl-py` to use absl.logging.\n    warnings.warn(\n\nmegatron/core/models/backends.py:34\n  /workspace/training-pr-corpus/repos/megatron-core/megatron/core/models/backends.py:34: UserWarning: Apex is not installed. Falling back to Torch Norm\n    warnings.warn(\"Apex is not installed. Falling back to Torch Norm\")\n\nmegatron/core/models/gpt/gpt_layer_specs.py:74\n  /workspace/training-pr-corpus/repos/megatron-core/megatron/core/models/gpt/gpt_layer_specs.py:74: UserWarning: Apex is not installed. Falling back to Torch Norm\n    warnings.warn(\"Apex is not installed. Falling back to Torch Norm\")\n\nmegatron/training/utils/common_utils.py:27\n  /workspace/training-pr-corpus/repos/megatron-core/megatron/training/utils/common_utils.py:27: UserWarning: Transformer Engine and Apex are not installed. Falling back to local implementations of multi_tensor_applier and multi_tensor_l2norm\n    warnings.warn(\n\nmegatron/core/extensions/transformer_engine_spec_provider.py:88\n  /workspace/training-pr-corpus/repos/megatron-core/megatron/core/extensions/transformer_engine_spec_provider.py:88: UserWarning: Only transformer-engine>=1.7.0 supports MoE experts, but your version is 0.0.0. Use local linear implementation instead.\n    warnings.warn(\n\nmegatron/core/models/gpt/heterogeneous/heterogeneous_layer_specs.py:68\n  /workspace/training-pr-corpus/repos/megatron-core/megatron/core/models/gpt/heterogeneous/heterogeneous_layer_specs.py:68: UserWarning: Apex is not installed. Falling back to Torch Norm\n    warnings.warn(\"Apex is not installed. Falling back to Torch Norm\")\n\n../../../../usr/local/lib/python3.12/dist-packages/torch/jit/_script.py:1488\n  /usr/local/lib/python3.12/dist-packages/torch/jit/_script.py:1488: DeprecationWarning: `torch.jit.script` is deprecated. Please switch to `torch.compile` or `torch.export`.\n    warnings.warn(\n\ntests/unit_tests/test_sequence_packing.py::test_get_batch_on_this_rank_for_sequence_packing[1-1-1]\n  /usr/local/lib/python3.12/dist-packages/torch/distributed/c10d_logger.py:83: UserWarning: barrier(): using the device under current context. You can specify `device_id` in `init_process_group` to mute this warning.\n    return func(*args, **kwargs)\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n============================= slowest 15 durations =============================\n0.72s call     tests/unit_tests/test_sequence_packing.py::test_get_batch_on_this_rank_for_sequence_packing[1-1-1]\n0.70s teardown tests/unit_tests/test_sequence_packing.py::test_get_batch_on_this_rank_for_sequence_packing[2-1-1]\n0.01s call     tests/unit_tests/test_sequence_packing.py::test_scheduler_thd_padding_mask_from_cu_seqlens\n\n(9 durations < 0.005s hidden.  Use -vv to show these durations.)\n!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!\n1 failed, 3 passed, 27 warnings in 1.57s\nWelcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nHEAD is now at e3923e783 Add DP-balanced sequence-packing scheduler and wrap_data_iterator entry point\n[rank0]:[W903 11:44:38.051845655 ProcessGroupNCCL.cpp:5276] Guessing device ID based on global rank. This can cause a hang if rank to GPU mapping is heterogeneous. You can specify device_id in init_process_group()\n",
+      "project": "megatron-core",
+      "pull_number": 6684,
+      "ref": "refs/training-bulk/g0003/pr-6684",
+      "returncode": 1,
+      "status": "completed",
+      "test_budget_seconds": 45,
+      "test_paths": [
+        "tests/unit_tests/test_sequence_packing.py"
+      ]
+    }
+  ],
+  "remote": "root@38.49.42.120",
+  "repository_paths": {
+    "megatron-core": "/workspace/training-pr-corpus/repos/megatron-core",
+    "slime": "/workspace/training-pr-corpus/repos/slime",
+    "verl": "/workspace/training-pr-corpus/repos/verl",
+    "verl-omni": "/workspace/training-pr-corpus/repos/verl-omni"
+  },
+  "schema_version": "0.1",
+  "started_at": "2026-09-03T11:44:02.335404+00:00",
+  "test_timeout_seconds": 45,
+  "timeout_disposition": "neutral-abandon-no-retry"
+}

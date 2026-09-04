@@ -1,0 +1,163 @@
+{
+  "case_filter": [
+    "megatron-core-pr-2291",
+    "megatron-core-pr-4063",
+    "megatron-core-pr-4932",
+    "megatron-core-pr-4984",
+    "megatron-core-pr-6370",
+    "slime-pr-184"
+  ],
+  "evidence_sha256": "sha256:24873d92b0a502bcd6b69e1c08b847c9c9079fab641e046729e9bfad31b2c6a7",
+  "finished_at": "2026-09-03T11:08:53.286779+00:00",
+  "gpu_lanes": {
+    "megatron-core": "0",
+    "slime": "0",
+    "verl": "1",
+    "verl-omni": "1"
+  },
+  "group_index": 0,
+  "group_input_sha256": "sha256:e2a838a6c2ca2060fdfc5e4581ad331bd27f24f7c3b4bb7832126886bb4ca81a",
+  "prewarm_failure_count": 1,
+  "protocol_id": "training-bulk-group-exact-head-gated-v0.1",
+  "python_paths": {
+    "megatron-core": "/workspace/training-pr-corpus/venvs/megatron-core/bin/python",
+    "slime": "/workspace/training-pr-corpus/venvs/slime/bin/python",
+    "verl": "/workspace/training-pr-corpus/venvs/verl/bin/python",
+    "verl-omni": "/workspace/training-pr-corpus/venvs/verl-omni/bin/python"
+  },
+  "records": [
+    {
+      "case_id": "megatron-core-pr-4063",
+      "compile_paths": [
+        "megatron/core/inference/text_generation_controllers/text_generation_controller.py",
+        "megatron/core/inference/text_generation_server/dynamic_text_gen_server/endpoints/chat_completions.py",
+        "megatron/core/inference/text_generation_server/run_mcore_engine.py",
+        "megatron/core/tokenizers/text/parsers/qwen3_coder_tool_parser.py",
+        "megatron/core/tokenizers/text/text_tokenizer.py",
+        "megatron/core/utils.py",
+        "tests/unit_tests/tokenizers/test_tokenizer.py"
+      ],
+      "duration_seconds": 47.32523479196243,
+      "head_sha": "9df444b8447856789516040e2f9d53611da810e9",
+      "output_sha256": "sha256:33e78da1106daf34fc1defce9d4ce8c122c618107b160f5c7d18edd53c122cfc",
+      "output_tail": "-pr-corpus/repos/megatron-core/megatron/core/optimizer/optimizer.py:29: UserWarning: Transformer Engine and Apex are not installed. Falling back to local implementations of multi_tensor_applier and multi_tensor_scale\n    warnings.warn(\n\nmegatron/core/optimizer/clip_grads.py:29\n  /workspace/training-pr-corpus/repos/megatron-core/megatron/core/optimizer/clip_grads.py:29: UserWarning: Transformer Engine and Apex are not installed. Falling back to local implementations of multi_tensor_applier, multi_tensor_l2norm, and multi_tensor_scale\n    warnings.warn(\n\nmegatron/core/models/backends.py:34\n  /workspace/training-pr-corpus/repos/megatron-core/megatron/core/models/backends.py:34: UserWarning: Apex is not installed. Falling back to Torch Norm\n    warnings.warn(\"Apex is not installed. Falling back to Torch Norm\")\n\nmegatron/core/models/gpt/gpt_layer_specs.py:68\n  /workspace/training-pr-corpus/repos/megatron-core/megatron/core/models/gpt/gpt_layer_specs.py:68: UserWarning: Apex is not installed. Falling back to Torch Norm\n    warnings.warn(\"Apex is not installed. Falling back to Torch Norm\")\n\nmegatron/training/utils.py:24\n  /workspace/training-pr-corpus/repos/megatron-core/megatron/training/utils.py:24: UserWarning: Transformer Engine and Apex are not installed. Falling back to local implementations of multi_tensor_applier and multi_tensor_l2norm\n    warnings.warn(\n\n../../../../usr/local/lib/python3.12/dist-packages/torch/jit/_script.py:1488\n  /usr/local/lib/python3.12/dist-packages/torch/jit/_script.py:1488: DeprecationWarning: `torch.jit.script` is deprecated. Please switch to `torch.compile` or `torch.export`.\n    warnings.warn(\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n============================= slowest 15 durations =============================\n6.81s call     tests/unit_tests/tokenizers/test_tokenizer.py::test_megatron_tokenizer\n3.26s call     tests/unit_tests/tokenizers/test_tokenizer.py::test_hf_tokenizer\n1.28s call     tests/unit_tests/tokenizers/test_tokenizer.py::test_hf_detokenize_skip_special_tokens[False]\n1.27s call     tests/unit_tests/tokenizers/test_tokenizer.py::test_hf_ids_to_text_eos_with_include_and_remove_special_tokens[True-True]\n1.26s call     tests/unit_tests/tokenizers/test_tokenizer.py::test_hf_ids_to_text_eos_with_include_and_remove_special_tokens[True-False]\n1.22s call     tests/unit_tests/tokenizers/test_tokenizer.py::test_hf_detokenize_skip_special_tokens[True]\n1.21s call     tests/unit_tests/tokenizers/test_tokenizer.py::test_hf_ids_to_text_eos_with_include_and_remove_special_tokens[False-False]\n1.21s call     tests/unit_tests/tokenizers/test_tokenizer.py::test_hf_ids_to_text_eos_with_include_and_remove_special_tokens[False-True]\n0.63s call     tests/unit_tests/tokenizers/test_tokenizer.py::test_tiktoken_tokenizer\n0.51s call     tests/unit_tests/tokenizers/test_tokenizer.py::test_detokenize_skip_special_tokens_unsupported_backend[sft-True]\n0.50s call     tests/unit_tests/tokenizers/test_tokenizer.py::test_multimodal_tokenizer\n0.49s call     tests/unit_tests/tokenizers/test_tokenizer.py::test_detokenize_skip_special_tokens_unsupported_backend[sft-False]\n0.03s call     tests/unit_tests/tokenizers/test_tokenizer.py::test_sp_tokenizer\n0.01s call     tests/unit_tests/tokenizers/test_tokenizer.py::test_detokenize_skip_special_tokens_unsupported_backend[sentencepiece-True]\n0.01s call     tests/unit_tests/tokenizers/test_tokenizer.py::test_detokenize_skip_special_tokens_unsupported_backend[sentencepiece-False]\n!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!\n1 failed, 21 passed, 24 warnings in 19.93s\nWelcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nPrevious HEAD position was f61554482 Merge branch 'main' into ko3n1g/test/release-golden-values\nHEAD is now at 9df444b84 Merge branch 'main' into chat_completions_fixes\nWARNING:megatron.core.tokenizers.text.libraries.huggingface_tokenizer:['<TEST_BOS>', '<TEST_EOS>'] \n will be added to the vocabulary.\nPlease resize your model accordingly.\nINFO:megatron.core.tokenizers.text.libraries.huggingface_tokenizer:2 special tokens added, resize your model accordingly.\nINFO:httpx:HTTP Request: HEAD https://huggingface.co/gpt2/resolve/main/config.json \"HTTP/1.1 200 OK\"\nINFO:httpx:HTTP Request: HEAD https://huggingface.co/gpt2/resolve/main/tokenizer_config.json \"HTTP/1.1 200 OK\"\nINFO:httpx:HTTP Request: GET https://huggingface.co/api/models/gpt2/tree/main/additional_chat_templates?recursive=false&expand=false \"HTTP/1.1 307 Temporary Redirect\"\nINFO:httpx:HTTP Request: GET https://huggingface.co/api/models/openai-community/gpt2/tree/main/additional_chat_templates?recursive=false&expand=false \"HTTP/1.1 404 Not Found\"\nINFO:httpx:HTTP Request: GET https://huggingface.co/api/models/gpt2/tree/main?recursive=true&expand=false \"HTTP/1.1 307 Temporary Redirect\"\nINFO:httpx:HTTP Request: GET https://huggingface.co/api/models/openai-community/gpt2/tree/main?recursive=true&expand=false \"HTTP/1.1 200 OK\"\nWARNING:megatron.core.tokenizers.text.libraries.huggingface_tokenizer:['<extra_id_0>', '<extra_id_1>', '<extra_id_2>', '<extra_id_3>', '<extra_id_4>', '<extra_id_5>', '<extra_id_6>', '<extra_id_7>', '<extra_id_8>', '<extra_id_9>', '<extra_id_10>', '<extra_id_11>', '<extra_id_12>', '<extra_id_13>', '<extra_id_14>', '<extra_id_15>', '<extra_id_16>', '<extra_id_17>', '<extra_id_18>', '<extra_id_19>', '<extra_id_20>', '<extra_id_21>', '<extra_id_22>', '<extra_id_23>', '<extra_id_24>', '<extra_id_25>', '<extra_id_26>', '<extra_id_27>', '<extra_id_28>', '<extra_id_29>', '<extra_id_30>', '<extra_id_31>', '<extra_id_32>', '<extra_id_33>', '<extra_id_34>', '<extra_id_35>', '<extra_id_36>', '<extra_id_37>', '<extra_id_38>', '<extra_id_39>', '<extra_id_40>', '<extra_id_41>', '<extra_id_42>', '<extra_id_43>', '<extra_id_44>', '<extra_id_45>', '<extra_id_46>', '<extra_id_47>', '<extra_id_48>', '<extra_id_49>', '<extra_id_50>', '<extra_id_51>', '<extra_id_52>', '<extra_id_53>', '<extra_id_54>', '<extra_id_55>', '<extra_id_56>', '<extra_id_57>', '<extra_id_58>', '<extra_id_59>', '<extra_id_60>', '<extra_id_61>', '<extra_id_62>', '<extra_id_63>', '<extra_id_64>', '<extra_id_65>', '<extra_id_66>', '<extra_id_67>', '<extra_id_68>', '<extra_id_69>', '<extra_id_70>', '<extra_id_71>', '<extra_id_72>', '<extra_id_73>', '<extra_id_74>', '<extra_id_75>', '<extra_id_76>', '<extra_id_77>', '<extra_id_78>', '<extra_id_79>', '<extra_id_80>', '<extra_id_81>', '<extra_id_82>', '<extra_id_83>', '<extra_id_84>', '<extra_id_85>', '<extra_id_86>', '<extra_id_87>', '<extra_id_88>', '<extra_id_89>', '<extra_id_90>', '<extra_id_91>', '<extra_id_92>', '<extra_id_93>', '<extra_id_94>', '<extra_id_95>', '<extra_id_96>', '<extra_id_97>', '<extra_id_98>', '<extra_id_99>'] \n will be added to the vocabulary.\nPlease resize your model accordingly.\nINFO:megatron.core.tokenizers.text.libraries.huggingface_tokenizer:101 special tokens added, resize your model accordingly.\nINFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Adding special tokens: <unk>, <s>, </s>, <mask>, <pad>, <cls>, <sep>, <SPECIAL_7>, ..., <SPECIAL_999>\nINFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Vocab size: 150000\nINFO:megatron.core.tokenizers.text.libraries.tiktoken_tokenizer:Cutting vocab to first 130072 tokens\nINFO:megatron.core.tokenizers.megatron_tokenizer:Metadata file was sucessfully saved: /opt/data/tokenizers/huggingface/tokenizer_metadata.json.\nINFO:megatron.core.tokenizers.megatron_tokenizer:Metadata file was sucessfully saved: /opt/data/tokenizers/huggingface/tokenizer_metadata.json.\nINFO:megatron.core.tokenizers.megatron_tokenizer:Metadata file was sucessfully saved: /opt/data/tokenizers/huggingface/test_metadata.json.\n",
+      "project": "megatron-core",
+      "pull_number": 4063,
+      "ref": "refs/training-bulk/g0000/pr-4063",
+      "returncode": 1,
+      "status": "completed",
+      "test_budget_seconds": 45,
+      "test_paths": [
+        "tests/unit_tests/tokenizers/test_tokenizer.py"
+      ]
+    },
+    {
+      "case_id": "megatron-core-pr-6370",
+      "compile_paths": [
+        "megatron/core/fusions/fused_pre_gated_delta_rule.py",
+        "megatron/core/models/gpt/experimental_attention_variant_module_specs.py",
+        "megatron/core/models/hybrid/hybrid_block.py",
+        "megatron/core/ssm/gated_delta_net/__init__.py",
+        "megatron/core/ssm/gated_delta_net/common.py",
+        "megatron/core/ssm/gated_delta_net/gdn.py",
+        "megatron/core/ssm/gated_delta_net/gdn2.py",
+        "megatron/core/transformer/transformer_config.py",
+        "megatron/training/training.py",
+        "tests/unit_tests/models/test_hybrid_moe_model.py",
+        "tests/unit_tests/ssm/test_gated_delta_net.py"
+      ],
+      "duration_seconds": 77.24163362500258,
+      "head_sha": "323c5bdf72ac62e6249308fe5adfd22e9a1e243a",
+      "output_sha256": "sha256:81675502852bf9e59e12a71dd7aed7996e4785128c08a4e35f3d4447feff2917",
+      "output_tail": "y:537: in create_test_args\n    validate_args(args)\nmegatron/training/arguments.py:430: in validate_args\n    assert args.world_size % total_model_size == 0, (\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nE   AssertionError: world size (1) is not divisible by total_model_size (total_model_size=2)\n=============================== warnings summary ===============================\n../../../../usr/local/lib/python3.12/dist-packages/torch/jit/_script.py:365: 14 warnings\n  /usr/local/lib/python3.12/dist-packages/torch/jit/_script.py:365: DeprecationWarning: `torch.jit.script_method` is deprecated. Please switch to `torch.compile` or `torch.export`.\n    warnings.warn(\n\nmegatron/core/optimizer/__init__.py:25\n  /workspace/training-pr-corpus/repos/megatron-core/megatron/core/optimizer/__init__.py:25: UserWarning: Transformer Engine and Apex are not installed. Falling back to Torch optimizers.\n    warnings.warn(\n\nmegatron/core/inference/contexts/__init__.py:9\n  /workspace/training-pr-corpus/repos/megatron-core/megatron/core/inference/contexts/__init__.py:9: DeprecationWarning: The following imports from `dynamic_context.py` will be removed in this file in `megatron-core` 0.14. The imports here result in a cyclic import issue that causes rotary embeddings to import from Apex rather than Transformer Engine.\n    warnings.warn(\n\nmegatron/core/distributed/fsdp/src/megatron_fsdp/mixed_precision.py:115\n  /workspace/training-pr-corpus/repos/megatron-core/megatron/core/distributed/fsdp/src/megatron_fsdp/mixed_precision.py:115: UserWarning: Transformer Engine and Apex are not installed. Falling back to local implementations of multi_tensor_applier and multi_tensor_scale\n    warnings.warn(\n\nmegatron/core/optimizer/optimizer.py:29\n  /workspace/training-pr-corpus/repos/megatron-core/megatron/core/optimizer/optimizer.py:29: UserWarning: Transformer Engine and Apex are not installed. Falling back to local implementations of multi_tensor_applier and multi_tensor_scale\n    warnings.warn(\n\nmegatron/core/optimizer/clip_grads.py:32\n  /workspace/training-pr-corpus/repos/megatron-core/megatron/core/optimizer/clip_grads.py:32: UserWarning: Transformer Engine and Apex are not installed. Falling back to local implementations of multi_tensor_applier, multi_tensor_l2norm, and multi_tensor_scale\n    warnings.warn(\n\nmegatron/core/hyper_comm_grid.py:20\n  /workspace/training-pr-corpus/repos/megatron-core/megatron/core/hyper_comm_grid.py:20: UserWarning: absl.logging is not installed. Using logging.getLogger(__name__) instead. Please install absl.logging with `pip install absl-py` to use absl.logging.\n    warnings.warn(\n\nmegatron/core/models/backends.py:34\n  /workspace/training-pr-corpus/repos/megatron-core/megatron/core/models/backends.py:34: UserWarning: Apex is not installed. Falling back to Torch Norm\n    warnings.warn(\"Apex is not installed. Falling back to Torch Norm\")\n\nmegatron/core/models/gpt/gpt_layer_specs.py:74\n  /workspace/training-pr-corpus/repos/megatron-core/megatron/core/models/gpt/gpt_layer_specs.py:74: UserWarning: Apex is not installed. Falling back to Torch Norm\n    warnings.warn(\"Apex is not installed. Falling back to Torch Norm\")\n\nmegatron/training/utils/common_utils.py:27\n  /workspace/training-pr-corpus/repos/megatron-core/megatron/training/utils/common_utils.py:27: UserWarning: Transformer Engine and Apex are not installed. Falling back to local implementations of multi_tensor_applier and multi_tensor_l2norm\n    warnings.warn(\n\nmegatron/core/extensions/transformer_engine_spec_provider.py:88\n  /workspace/training-pr-corpus/repos/megatron-core/megatron/core/extensions/transformer_engine_spec_provider.py:88: UserWarning: Only transformer-engine>=1.7.0 supports MoE experts, but your version is 0.0.0. Use local linear implementation instead.\n    warnings.warn(\n\nmegatron/core/models/gpt/heterogeneous/heterogeneous_layer_specs.py:68\n  /workspace/training-pr-corpus/repos/megatron-core/megatron/core/models/gpt/heterogeneous/heterogeneous_layer_specs.py:68: UserWarning: Apex is not installed. Falling back to Torch Norm\n    warnings.warn(\"Apex is not installed. Falling back to Torch Norm\")\n\n../../../../usr/local/lib/python3.12/dist-packages/torch/jit/_script.py:1488\n  /usr/local/lib/python3.12/dist-packages/torch/jit/_script.py:1488: DeprecationWarning: `torch.jit.script` is deprecated. Please switch to `torch.compile` or `torch.export`.\n    warnings.warn(\n\ntests/unit_tests/transformer/test_multi_latent_attention.py:254\n  /workspace/training-pr-corpus/repos/megatron-core/tests/unit_tests/transformer/test_multi_latent_attention.py:254: PytestUnknownMarkWarning: Unknown pytest.mark.experimental - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html\n    @pytest.mark.experimental\n\ntests/unit_tests/transformer/test_multi_latent_attention.py:638\n  /workspace/training-pr-corpus/repos/megatron-core/tests/unit_tests/transformer/test_multi_latent_attention.py:638: PytestUnknownMarkWarning: Unknown pytest.mark.experimental - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html\n    @pytest.mark.experimental\n\ntests/unit_tests/transformer/test_multi_latent_attention.py:891\n  /workspace/training-pr-corpus/repos/megatron-core/tests/unit_tests/transformer/test_multi_latent_attention.py:891: PytestUnknownMarkWarning: Unknown pytest.mark.experimental - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html\n    @pytest.mark.experimental\n\ntests/unit_tests/transformer/test_multi_latent_attention.py:1054\n  /workspace/training-pr-corpus/repos/megatron-core/tests/unit_tests/transformer/test_multi_latent_attention.py:1054: PytestUnknownMarkWarning: Unknown pytest.mark.experimental - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html\n    @pytest.mark.experimental\n\ntests/unit_tests/transformer/test_multi_latent_attention.py:1431\n  /workspace/training-pr-corpus/repos/megatron-core/tests/unit_tests/transformer/test_multi_latent_attention.py:1431: PytestUnknownMarkWarning: Unknown pytest.mark.experimental - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html\n    @pytest.mark.experimental\n\ntests/unit_tests/models/test_hybrid_moe_model.py::TestHybridMoEModel::test_constructor\ntests/unit_tests/models/test_hybrid_moe_model.py::TestHybridMoEModel::test_constructor\ntests/unit_tests/models/test_hybrid_moe_model.py::TestHybridMoEModel::test_constructor\ntests/unit_tests/models/test_hybrid_moe_model.py::TestHybridMoEModel::test_constructor\ntests/unit_tests/models/test_hybrid_moe_model.py::TestHybridMoEModel::test_constructor\n  /usr/lib/python3.12/argparse.py:1489: DeprecationWarning: 'type' is deprecated as of Python 3.12 and will be removed in Python 3.14.\n    action = action_class(**kwargs)\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n============================= slowest 15 durations =============================\n0.09s setup    tests/unit_tests/models/test_hybrid_moe_model.py::TestHybridMoEModel::test_constructor\n\n(1 durations < 0.005s hidden.  Use -vv to show these durations.)\n!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!\n36 warnings, 1 error in 0.45s\nWelcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nPrevious HEAD position was 9df444b84 Merge branch 'main' into chat_completions_fixes\nHEAD is now at 323c5bdf7 test(gdn): select torch backend in functional configs\n",
+      "project": "megatron-core",
+      "pull_number": 6370,
+      "ref": "refs/training-bulk/g0000/pr-6370",
+      "returncode": 1,
+      "status": "completed",
+      "test_budget_seconds": 45,
+      "test_paths": [
+        "tests/unit_tests/models/test_hybrid_moe_model.py",
+        "tests/unit_tests/ssm/test_gated_delta_net.py"
+      ]
+    },
+    {
+      "case_id": "megatron-core-pr-4984",
+      "compile_paths": [],
+      "duration_seconds": 1.62515789270401e-06,
+      "head_sha": "7ae7b350d9b90594d80b23fec5d2790d60aa7b19",
+      "output_tail": "checkout-rc=255:ssh: connect to host 38.49.42.120 port 54274: Operation timed out\n",
+      "project": "megatron-core",
+      "pull_number": 4984,
+      "returncode": null,
+      "status": "prewarm_failed",
+      "test_paths": []
+    },
+    {
+      "case_id": "megatron-core-pr-2291",
+      "compile_paths": [
+        "megatron/core/tokenizers/text/libraries/null_tokenizer.py",
+        "megatron/training/arguments.py",
+        "megatron/training/datasets/fim_dataset.py",
+        "pretrain_gpt.py",
+        "tests/unit_tests/data/test_fim_dataset.py"
+      ],
+      "duration_seconds": 45.40626358380541,
+      "head_sha": "430881dfcc57b3d63a9b2b8a24b72bd0b7b7a244",
+      "output_sha256": "sha256:6f9ace85e659925dafeeb1ee1bbd372a15fe52c90cffb0305e3542cf4436d552",
+      "output_tail": "Welcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nPrevious HEAD position was 323c5bdf7 test(gdn): select torch backend in functional configs\nHEAD is now at 430881dfc Merge branch 'main' into fim_dataset_support\nfused_indices_to_multihot has reached end of life. Please migrate to a non-experimental function.\nImportError while loading conftest '/workspace/training-pr-corpus/repos/megatron-core/tests/unit_tests/conftest.py'.\ntests/unit_tests/conftest.py:11: in <module>\n    from tests.test_utils.python_scripts.download_unit_tests_dataset import (\ntests/test_utils/python_scripts/download_unit_tests_dataset.py:15: in <module>\n    from github import Github\nE   ModuleNotFoundError: No module named 'github'\n",
+      "project": "megatron-core",
+      "pull_number": 2291,
+      "ref": "refs/training-bulk/g0000/pr-2291",
+      "returncode": 4,
+      "status": "completed",
+      "test_budget_seconds": 45,
+      "test_paths": [
+        "tests/unit_tests/data/test_fim_dataset.py"
+      ]
+    },
+    {
+      "case_id": "slime-pr-184",
+      "compile_paths": [
+        "slime/rollout/sglang_rollout.py"
+      ],
+      "duration_seconds": 15.015255790902302,
+      "head_sha": "21c539cb4b941644abcd83075a7cd63a0bb8711b",
+      "output_sha256": "sha256:6eaf5217f793124c0d4d86bfff953e502a80f4bacf69f4bc3678e2fbb33a59d5",
+      "output_tail": "Connection timed out during banner exchange\nConnection to 38.49.42.120 port 54274 timed out\n",
+      "project": "slime",
+      "pull_number": 184,
+      "ref": "refs/training-bulk/g0000/pr-184",
+      "returncode": 255,
+      "status": "completed",
+      "test_budget_seconds": 45,
+      "test_paths": []
+    },
+    {
+      "case_id": "megatron-core-pr-4932",
+      "compile_paths": [],
+      "duration_seconds": 5.605957624968141,
+      "head_sha": "f615544825319a91662ce4ae9238473d56a4aca1",
+      "output_sha256": "sha256:4425a76ecdea7fd08b5438111f6e81dd7bc6e2c64c0c18a33aa74ac1b80d7ad4",
+      "output_tail": "Welcome to vast.ai. If authentication fails, try again after a few seconds, and double check your ssh key.\nHave fun!\nAI agents: READ /etc/vast-agents-guide.md (also linked as ./AGENTS.md) before acting on or describing this instance: it is the operating guide. ('vast-capabilities' shows live state only, not the guide.)\nPrevious HEAD position was 430881dfc Merge branch 'main' into fim_dataset_support\nHEAD is now at f61554482 Merge branch 'main' into ko3n1g/test/release-golden-values\n",
+      "project": "megatron-core",
+      "pull_number": 4932,
+      "ref": "refs/training-bulk/g0000/pr-4932",
+      "returncode": 0,
+      "status": "completed",
+      "test_budget_seconds": 45,
+      "test_paths": []
+    }
+  ],
+  "remote": "root@38.49.42.120",
+  "repository_paths": {
+    "megatron-core": "/workspace/training-pr-corpus/repos/megatron-core",
+    "slime": "/workspace/training-pr-corpus/repos/slime",
+    "verl": "/workspace/training-pr-corpus/repos/verl",
+    "verl-omni": "/workspace/training-pr-corpus/repos/verl-omni"
+  },
+  "schema_version": "0.1",
+  "started_at": "2026-09-03T11:06:34.243131+00:00",
+  "test_timeout_seconds": 45,
+  "timeout_disposition": "neutral-abandon-no-retry"
+}

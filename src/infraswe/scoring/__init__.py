@@ -1,4 +1,8 @@
 from .ada_sm89 import architecture_overlay_score, score_cross_sku_reuse
+from .communication_phase import (
+    evaluate_communication_phase_regression,
+    summarize_communication_phase,
+)
 from .project_fit import (
     audit_pure_triton,
     build_infraswe_result,
@@ -28,6 +32,7 @@ __all__ = [
     "compile_infraswe_assessment",
     "compile_legacy_mergeability_decision",
     "compile_mergeability_decision",
+    "evaluate_communication_phase_regression",
     "render_html_report",
     "render_markdown_report",
     "score_benchmark_trust",
@@ -38,5 +43,6 @@ __all__ = [
     "score_project_contract_fit",
     "score_pure_triton_portability",
     "score_trial",
+    "summarize_communication_phase",
     "training_profiler_to_v04",
 ]

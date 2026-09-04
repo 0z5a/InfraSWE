@@ -85,6 +85,12 @@ from infraswe.models.capability import (
     TopologyContract,
     TopologyGraph,
 )
+from infraswe.models.communication_phase import (
+    CommunicationPhaseRegressionPolicy,
+    CommunicationPhaseRegressionResult,
+    CommunicationPhaseTraceRecord,
+    CommunicationPhaseTraceSet,
+)
 from infraswe.models.draft import (
     AffectedCasePlan,
     DefaultDraftCatalog,
@@ -160,6 +166,18 @@ def schema_documents() -> dict[str, dict[str, Any]]:
     return {
         "task.schema.json": TaskPackage.model_json_schema(),
         "artifact.schema.json": ArtifactManifest.model_json_schema(),
+        "communication-phase-trace-record-v0.1.schema.json": (
+            CommunicationPhaseTraceRecord.model_json_schema()
+        ),
+        "communication-phase-trace-set-v0.1.schema.json": (
+            CommunicationPhaseTraceSet.model_json_schema()
+        ),
+        "communication-phase-regression-policy-v0.1.schema.json": (
+            CommunicationPhaseRegressionPolicy.model_json_schema()
+        ),
+        "communication-phase-regression-result-v0.1.schema.json": (
+            CommunicationPhaseRegressionResult.model_json_schema()
+        ),
         "agentic-draft-v0.6.schema.json": AgenticDraftSpec.model_json_schema(),
         "policy-snapshot-v0.6.schema.json": PolicySnapshot.model_json_schema(),
         "external-policy-state-v0.6.schema.json": ExternalPolicyState.model_json_schema(),

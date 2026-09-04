@@ -1,0 +1,94 @@
+{
+  "additionalProperties": false,
+  "description": "Frozen within-cell regression tolerances; none depend on a particular rank count.",
+  "properties": {
+    "consumer_wait_p95_allowance_us": {
+      "default": 0.0,
+      "minimum": 0,
+      "title": "Consumer Wait P95 Allowance Us",
+      "type": "number"
+    },
+    "formula_version": {
+      "const": "communication-phase-regression-v0.1",
+      "default": "communication-phase-regression-v0.1",
+      "title": "Formula Version",
+      "type": "string"
+    },
+    "max_clock_sync_error_us": {
+      "default": 50.0,
+      "minimum": 0,
+      "title": "Max Clock Sync Error Us",
+      "type": "number"
+    },
+    "max_contention_stretch_p95_regression_fraction": {
+      "default": 0.05,
+      "minimum": 0,
+      "title": "Max Contention Stretch P95 Regression Fraction",
+      "type": "number"
+    },
+    "max_outstanding_bytes": {
+      "anyOf": [
+        {
+          "exclusiveMinimum": 0,
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Max Outstanding Bytes"
+    },
+    "max_outstanding_collectives": {
+      "anyOf": [
+        {
+          "minimum": 1,
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Max Outstanding Collectives"
+    },
+    "max_pair_completion_p95_regression_fraction": {
+      "default": 0.02,
+      "minimum": 0,
+      "title": "Max Pair Completion P95 Regression Fraction",
+      "type": "number"
+    },
+    "max_rank_skew_regression_fraction": {
+      "default": 0.1,
+      "minimum": 0,
+      "title": "Max Rank Skew Regression Fraction",
+      "type": "number"
+    },
+    "max_realized_offset_error_p95_us": {
+      "default": 250.0,
+      "exclusiveMinimum": 0,
+      "title": "Max Realized Offset Error P95 Us",
+      "type": "number"
+    },
+    "max_step_time_p95_regression_fraction": {
+      "default": 0.02,
+      "minimum": 0,
+      "title": "Max Step Time P95 Regression Fraction",
+      "type": "number"
+    },
+    "rank_skew_absolute_allowance_us": {
+      "default": 50.0,
+      "minimum": 0,
+      "title": "Rank Skew Absolute Allowance Us",
+      "type": "number"
+    },
+    "schema_version": {
+      "const": "0.1",
+      "default": "0.1",
+      "title": "Schema Version",
+      "type": "string"
+    }
+  },
+  "title": "CommunicationPhaseRegressionPolicy",
+  "type": "object"
+}

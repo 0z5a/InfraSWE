@@ -71,6 +71,14 @@ from .capability import (
     TopologyContract,
     TopologyGraph,
 )
+from .communication_phase import (
+    CommunicationPhaseRegressionMetrics,
+    CommunicationPhaseRegressionPolicy,
+    CommunicationPhaseRegressionResult,
+    CommunicationPhaseRunMetrics,
+    CommunicationPhaseTraceRecord,
+    CommunicationPhaseTraceSet,
+)
 from .draft import (
     AffectedCase,
     AffectedCasePlan,
@@ -187,6 +195,12 @@ __all__ = [
     "CapabilityResolution",
     "CellArtifactScore",
     "CellEfficiencyScore",
+    "CommunicationPhaseRegressionMetrics",
+    "CommunicationPhaseRegressionPolicy",
+    "CommunicationPhaseRegressionResult",
+    "CommunicationPhaseRunMetrics",
+    "CommunicationPhaseTraceRecord",
+    "CommunicationPhaseTraceSet",
     "CreditAssignmentMap",
     "DefaultCandidateRegistry",
     "DefaultCandidateResolution",

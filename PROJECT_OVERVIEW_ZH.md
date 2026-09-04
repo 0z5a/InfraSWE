@@ -29,12 +29,17 @@ flowchart LR
     B --> C["收集 Patch 与构建制品"]
     C --> D["销毁 Agent 环境"]
     D --> E["Fresh Verifier 重放"]
-    E --> F{"InfraCert 硬门"}
-    F -->|"fail"| G["Reject / Revise"]
-    F -->|"unresolved"| H["补充证据"]
-    F -->|"pass"| I["Deployability / CellArtifact"]
-    I --> J["ProjectFit"]
-    J --> K["Accept / Accept with scope / Revise / Reject"]
+    E --> F{"可维护性硬门"}
+    F -->|"fail"| G["Reject"]
+    F -->|"unresolved"| H["Check"]
+    F -->|"pass"| I{"可部署性硬门"}
+    I -->|"fail"| G
+    I -->|"unresolved"| H
+    I -->|"pass"| J{"原始性能证据硬门"}
+    J -->|"fail"| G
+    J -->|"unresolved"| H
+    J -->|"pass"| K["InfraSWE Overall-100"]
+    K --> L["Accept / Check / Reject"]
 ```
 
 一个典型任务会经历以下阶段：
@@ -109,7 +114,9 @@ local > remote Git > built-in default
 
 ## 评分体系
 
-InfraSWE 将“能不能评分”“分数是多少”“能不能合并”分开处理。
+InfraSWE 将“能不能评分”“分数是多少”“能不能合并”分开处理。当前正式结果只对外发出
+一个顶层综合分 `overall_score_100`；ProjectFit 与 BenchmarkTrust 作为其下并列的
+解释性 microscore，不再与综合分处于同一层级。
 
 ### 1. InfraCert：硬门
 
@@ -184,25 +191,44 @@ ProjectFit 只能在完全相同的 ProjectComparisonCell 内比较，禁止拿�
 - evidence manifest 验证通过；
 - 所有必需维度都有正式数值并通过下限。
 
-### 5. BenchmarkTrust 与 BenchmarkCost
+### 5. BenchmarkTrust、BenchmarkCost 与唯一综合分
 
 BenchmarkTrust 独立记录复现性、证据、统计方法和环境可信度；BenchmarkCost 记录墙钟时间、加速器时间、编译/预编译、冷启动、稳态、profiler 和 cache 成本。
 
-二者不会被偷偷混入 ProjectFit。这样可以分别回答“候选是否适合项目”“结果是否可信”“得到结论花了多少成本”。
+ProjectFit 与 BenchmarkTrust 是 `microscores` 下的同级子分，分别回答“候选是否适合
+项目”和“结果是否可信”；BenchmarkCost 只是成本卡，不是分数。前三道流程硬门全部
+通过后，唯一综合分按冻结公式计算：
+
+$$
+\text{InfraSWE Overall-100}
+=100\times (\text{ProjectFit}/100)^{0.85}
+\times (\text{BenchmarkTrust}/100)^{0.15}
+$$
+
+综合分不会与 ProjectFit、BenchmarkTrust 并列输出；两项子分只嵌套在
+`microscores` 中，用于解释和审计。
 
 ## 决策语义
 
-最终决策不是一个简单的 `pass/fail`：
+默认使用 InfraSWE 完整评估并开启 Seal；显式诊断/外部评估仍可选择其他模式，但不能冒充
+official sealed 结果。三分类严格按以下顺序执行：
+
+1. 检查演进可维护性；
+2. 检查 InfraCert、项目合同与运行适配构成的可部署性；
+3. 检查原始性能/复用/利用率证据及适用的 release gate；
+4. 只有前三道硬门全部通过，才计算并使用 `overall_score_100`。
+
+任一道硬门 `fail` 都直接归入 `reject`，其后步骤标记为 `not-run`；证据未决则归入
+`check`，不能由后续高分补偿。全门通过后的总分映射固定为：
 
 | 决策 | 含义 |
 |---|---|
-| `accept` | 正式证据与所有门禁通过，ProjectFit ≥ 85 |
-| `accept_with_scope` | 仅在声明范围内接受，通常为 75–<85 分或排除了失败 scope |
-| `revise` | 方向可保留，但存在明确、可修复的问题；通常为 60–<75 分、单项 floor 失败、只有 provisional 分或非根本性硬门失败 |
-| `reject` | 根本性合同/正确性失败、无法隔离的 release gate 失败，或正式 ProjectFit < 60 |
-| `unresolved` | 证据不足，当前不能可靠判断接受或拒绝 |
+| `accept` | 全部硬门通过且综合分 > 65 |
+| `check` | 硬门证据未决，或综合分位于 50–65（含两个边界） |
+| `reject` | 任一硬门失败，或综合分 < 50 |
 
-优先级高于分数段的条件包括 InfraCert、release gate、单项 floor、证据等级和 Draft Seal。因此，一个 90 分的诊断分仍可能是 `revise`；某个 runtime probe 显示 `pass`，整体也可能因缺少 E2 或 Seal 而是 `unresolved`。
+`accept_with_scope` 只是 `accept` 三分类下的范围限定符，不构成第四类。Draft Seal、证据
+等级和身份绑定仍是正式结果的前提；综合分不能绕过硬失败或把缺证据改写成 accept。
 
 历史 PR 校准与正式 sealed ProjectFit 必须分开。R8 已证明 coarse static 特征配合强制极化会把不同候选压成相同高分；因此通用历史评测默认恢复 R4 ordered case-contract，不产生伪造的 0–100 分。R5 polarized 只作为既有锁的显式兼容/负对照模式。R9 五项补测采用逐案例 base/head probe，并在机器锁之后才读取 outcome。
 

@@ -55,6 +55,7 @@ def test_training_campaign_uses_large_groups_after_safe_boundary(project_root: P
     inference_supervisor = (
         project_root / "benchmarks" / "historical_prs" / "infraswe-inference-bulk-supervisor.sh"
     ).read_text(encoding="utf-8")
+    assert "INFRASWE_INFERENCE_WORKERS=16" in inference_supervisor
     assert "INFRASWE_TRAINING_LANES_PER_PROJECT=16" in supervisor
     assert "INFRASWE_INFERENCE_LANES_PER_PROJECT=16" in inference_supervisor
     training_round = (
@@ -312,8 +313,8 @@ def test_hard_merged_recall_gate_can_override_an_exact_accuracy_loss(
     monkeypatch.syspath_prepend(str(project_root / "benchmarks" / "historical_prs"))
     derive = _load(project_root, "derive_training_bulk_policy_iteration")
 
-    assert derive.MERGED_ACCEPT_RECALL_MINIMUM == 0.95
-    assert derive.MERGED_ACCEPT_RECALL_REPAIR_MARGIN == 0.015
+    assert derive.MERGED_ACCEPT_RECALL_MINIMUM == 0.99
+    assert derive.MERGED_ACCEPT_RECALL_REPAIR_MARGIN == 0.005
 
     assert derive._should_promote_candidate(
         candidate_available=True,
@@ -394,6 +395,105 @@ def test_merged_recall_guard_is_narrow_and_outcome_blind(project_root: Path, mon
         )[0]
         == "reject"
     )
+
+
+def test_bulk_judgments_derive_labels_from_fixed_score_bands(
+    project_root: Path, monkeypatch
+) -> None:
+    monkeypatch.syspath_prepend(str(project_root / "benchmarks" / "historical_prs"))
+    freeze = _load(project_root, "freeze_training_bulk_group")
+    frozen_at = datetime(2026, 9, 4, tzinfo=UTC)
+    case = {
+        "acquisition_status": "acquired",
+        "title": "Improve bounded runtime path",
+        "created_at": "2026-09-01T00:00:00Z",
+        "human_non_author_reviews": [],
+        "human_non_author_review_state_counts": {
+            "APPROVED": 0,
+            "CHANGES_REQUESTED": 0,
+            "COMMENTED": 0,
+            "DISMISSED": 0,
+            "PENDING": 0,
+        },
+        "final_head_human_non_author_review_state_counts": {
+            "APPROVED": 0,
+            "CHANGES_REQUESTED": 0,
+            "COMMENTED": 0,
+            "DISMISSED": 0,
+            "PENDING": 0,
+        },
+        "files": [{"path": "vllm/runtime.py", "change_type": "modified"}],
+        "additions": 60,
+        "deletions": 20,
+        "project": "vllm",
+        "pr_author_association": "CONTRIBUTOR",
+    }
+
+    rejected = freeze._assessment(case, "bounded-gap", freeze.DEFAULT_POLICY, frozen_at)
+    assert rejected[0] == "reject"
+    assert rejected[1] < 50
+
+    review = {
+        "submitted_at": "2026-09-03T00:00:00Z",
+        "is_final_head": True,
+    }
+    checked_case = {
+        **case,
+        "human_non_author_reviews": [review],
+        "human_non_author_review_state_counts": {
+            **case["human_non_author_review_state_counts"],
+            "COMMENTED": 1,
+        },
+        "final_head_human_non_author_review_state_counts": {
+            **case["final_head_human_non_author_review_state_counts"],
+            "COMMENTED": 1,
+        },
+    }
+    checked = freeze._assessment(checked_case, "bounded-gap", freeze.DEFAULT_POLICY, frozen_at)
+    assert checked[0] == "check"
+    assert 50 <= checked[1] <= 65
+
+    accepted = freeze._assessment(
+        {**case, "pr_author_association": "MEMBER"},
+        "bounded-gap",
+        freeze.DEFAULT_POLICY,
+        frozen_at,
+    )
+    assert accepted[0] == "accept_with_scope"
+    assert accepted[1] > 65
+
+    stronger_accept = freeze._assessment(
+        {
+            **checked_case,
+            "human_non_author_review_state_counts": {
+                **checked_case["human_non_author_review_state_counts"],
+                "APPROVED": 1,
+            },
+            "final_head_human_non_author_review_state_counts": {
+                **checked_case["final_head_human_non_author_review_state_counts"],
+                "APPROVED": 1,
+            },
+        },
+        "bounded-gap",
+        freeze.DEFAULT_POLICY,
+        frozen_at,
+    )
+    assert stronger_accept[0] == "accept_with_scope"
+    assert stronger_accept[1] > accepted[1] > 65
+
+
+def test_bulk_wire_format_uses_one_explicitly_non_official_overall_score(
+    project_root: Path,
+) -> None:
+    script = (
+        project_root / "benchmarks" / "historical_prs" / "freeze_training_bulk_group.py"
+    ).read_text(encoding="utf-8")
+
+    assert '"overall_score_100": overall_score_100' in script
+    assert '"score_100":' not in script
+    assert '"formal_infraswe_result_issued": False' in script
+    assert '"official_microscores_issued": False' in script
+    assert '"overall_score_band_policy": {' in script
 
 
 def test_unavailable_metadata_becomes_auditable_invalid_attempt(

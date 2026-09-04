@@ -124,7 +124,7 @@ from infraswe.models.judge import (
     JudgeTrustCard,
     JudgeVerifierAuditResult,
 )
-from infraswe.models.project_score import TritonPurityAudit, V05ScoreResult
+from infraswe.models.project_score import InfraSWEOverallResult, TritonPurityAudit, V05ScoreResult
 from infraswe.models.retrieval import FootprintExtractionRequest, RetrievalBundle
 from infraswe.models.score import ScoreResult
 from infraswe.models.system_paths import (
@@ -249,6 +249,7 @@ def schema_documents() -> dict[str, dict[str, Any]]:
         "draft-source-resolution-v0.5.schema.json": DraftSourceResolution.model_json_schema(),
         "triton-purity-audit-v0.5.schema.json": TritonPurityAudit.model_json_schema(),
         "project-score-v0.5.schema.json": V05ScoreResult.model_json_schema(),
+        "infraswe-overall-result-v0.1.schema.json": InfraSWEOverallResult.model_json_schema(),
         "historical-pr-candidate-v0.5.schema.json": HistoricalPRCandidate.model_json_schema(),
         "historical-pr-evidence-v0.5.schema.json": BlindEvaluationEvidence.model_json_schema(),
         "historical-pr-prediction-lock-v0.5.schema.json": (

@@ -7,6 +7,7 @@ from typing import Any, Literal
 from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
 
 from infraswe.models.draft import Digest, DraftState, ProjectComparisonCell
+from infraswe.policy import MERGE_ACCEPT_SCORE_FLOOR_100, overall_score_decision_band
 
 ProjectComponentStatus = Literal[
     "scored", "not_applicable", "unresolved", "diagnostic", "not_run_due_to_gate"
@@ -254,6 +255,19 @@ class CellEfficiencyReference(ProjectScoreModel):
     cross_cell_ranking_allowed: Literal[False] = False
 
 
+class InfraSWEMicroscores(ProjectScoreModel):
+    """Explanatory child scores nested under the sole overall score."""
+
+    project_fit: ProjectFitScore
+    benchmark_trust: BenchmarkTrustCard
+
+
+class OrderedEvaluationGate(ProjectScoreModel):
+    name: Literal["maintainability", "deployability", "performance", "overall-score"]
+    status: Literal["pass", "fail", "unresolved", "not-run"]
+    rationale_codes: list[str] = Field(min_length=1)
+
+
 class MergeabilityDecision(ProjectScoreModel):
     verdict: Literal[
         "accept",
@@ -273,6 +287,27 @@ class MergeabilityDecision(ProjectScoreModel):
         """Read the v0.1 legacy wire label while emitting only ``check``."""
 
         return "check" if value == "revise" else value
+
+
+class InfraSWEDecision(ProjectScoreModel):
+    """Current three-class disposition with scope represented as a qualifier."""
+
+    classification: Literal["accept", "check", "reject"]
+    acceptance_scope: Literal["full", "limited", "not-applicable"]
+    supported_scope: list[str] = Field(default_factory=list)
+    excluded_scope: list[str] = Field(default_factory=list)
+    required_actions: list[str] = Field(default_factory=list)
+    rationale_codes: list[str] = Field(default_factory=list)
+
+    @model_validator(mode="after")
+    def scope_qualifier_matches_classification(self) -> InfraSWEDecision:
+        if self.classification != "accept" and self.acceptance_scope != "not-applicable":
+            raise ValueError("only accept classifications can carry an acceptance scope")
+        if self.classification == "accept":
+            expected_scope = "limited" if self.excluded_scope else "full"
+            if self.acceptance_scope != expected_scope:
+                raise ValueError("acceptance scope must reflect the declared excluded scope")
+        return self
 
 
 class V05ScoreResult(ProjectScoreModel):
@@ -303,7 +338,8 @@ class V05ScoreResult(ProjectScoreModel):
     @model_validator(mode="after")
     def result_layers_are_coherent(self) -> V05ScoreResult:
         if self.decision.verdict in {"accept", "accept_with_scope"} and (
-            self.project_fit.score_100 is None or self.project_fit.score_100 < 85
+            self.project_fit.score_100 is None
+            or self.project_fit.score_100 < MERGE_ACCEPT_SCORE_FLOOR_100
         ):
             raise ValueError("accepted mergeability decisions require ProjectFit >= 85")
         if self.decision.verdict == "check" and not (
@@ -349,4 +385,90 @@ class V05ScoreResult(ProjectScoreModel):
             self.draft_state != "D8-decided" or self.sealed_draft_sha256 is None
         ):
             raise ValueError("not acceptable ProjectFit requires a decided sealed Draft")
+        return self
+
+
+class InfraSWEOverallResult(ProjectScoreModel):
+    """Current result envelope with one composite and nested explanatory microscores."""
+
+    schema_version: Literal["0.1"] = "0.1"
+    draft_id: str
+    draft_revision: int = Field(ge=1)
+    draft_state: DraftState
+    sealed_draft_sha256: Digest | None = None
+    target_project_profile_sha256: Digest
+    target_repository_sha256: Digest
+    candidate_sha256: Digest
+    acceptance_contract_sha256: Digest
+    infra_cert: Literal["pass", "fail", "unresolved"]
+    overall_score_100: float | None = Field(default=None, ge=0, le=100)
+    overall_score_formula_id: Literal["infraswe-overall-v0.1"] = "infraswe-overall-v0.1"
+    microscores: InfraSWEMicroscores
+    ordered_gates: list[OrderedEvaluationGate] = Field(min_length=4, max_length=4)
+    benchmark_cost: BenchmarkCostCard
+    evidence_grade: Literal[
+        "E0-runtime", "E1-framework", "E2-system-trace", "E3-kernel-counter", "E4-sealed"
+    ]
+    project_objectives: dict[str, ProjectObjectiveResult]
+    cell_efficiency: CellEfficiencyReference
+    decision: InfraSWEDecision
+    evaluation_engine: Literal["infraswe", "external"] = "infraswe"
+    evaluation_scope: Literal["full", "staged"] = "full"
+    seal_enabled: bool = True
+    raw_metrics: dict[str, Any] = Field(default_factory=dict)
+    failure_codes: list[str] = Field(default_factory=list)
+    audit_flags: list[str] = Field(default_factory=list)
+
+    @model_validator(mode="after")
+    def hierarchy_and_decision_are_coherent(self) -> InfraSWEOverallResult:
+        expected_order = ["maintainability", "deployability", "performance", "overall-score"]
+        if [gate.name for gate in self.ordered_gates] != expected_order:
+            raise ValueError(
+                "evaluation gates must use maintainability/deployability/performance/overall order"
+            )
+        first_non_pass = next(
+            (index for index, gate in enumerate(self.ordered_gates[:3]) if gate.status != "pass"),
+            None,
+        )
+        if first_non_pass is not None and any(
+            gate.status != "not-run" for gate in self.ordered_gates[first_non_pass + 1 :]
+        ):
+            raise ValueError("a blocking hard gate requires every later gate to be not-run")
+        hard_gates_passed = first_non_pass is None
+        score_gate = self.ordered_gates[3]
+        if hard_gates_passed:
+            if self.overall_score_100 is None and score_gate.status != "unresolved":
+                raise ValueError("missing overall score requires an unresolved overall-score gate")
+            if self.overall_score_100 is not None and score_gate.status != "pass":
+                raise ValueError("issued overall score requires a passed overall-score gate")
+        elif self.overall_score_100 is not None:
+            raise ValueError("overall score cannot be issued before every hard gate passes")
+        if self.overall_score_100 is not None:
+            project_fit_score = self.microscores.project_fit.score_100
+            benchmark_trust_score = self.microscores.benchmark_trust.score_100
+            if project_fit_score is None or benchmark_trust_score is None:
+                raise ValueError("overall score requires both explanatory microscores")
+            expected_score = 100 * (
+                (project_fit_score / 100) ** 0.85 * (benchmark_trust_score / 100) ** 0.15
+            )
+            if not math.isclose(self.overall_score_100, expected_score, rel_tol=1e-9):
+                raise ValueError("overall score disagrees with its frozen microscore formula")
+        hard_gates = self.ordered_gates[:3]
+        if any(gate.status == "fail" for gate in hard_gates):
+            expected_decision = "reject"
+        elif (
+            any(gate.status in {"unresolved", "not-run"} for gate in hard_gates)
+            or self.overall_score_100 is None
+        ):
+            expected_decision = "check"
+        else:
+            expected_decision = overall_score_decision_band(self.overall_score_100)
+        if self.decision.classification != expected_decision:
+            raise ValueError("decision disagrees with ordered hard gates and overall score")
+        if self.decision.classification == "accept" and (
+            not self.seal_enabled
+            or self.sealed_draft_sha256 is None
+            or self.draft_state != "D8-decided"
+        ):
+            raise ValueError("accept requires the enabled Draft seal path and D8 state")
         return self

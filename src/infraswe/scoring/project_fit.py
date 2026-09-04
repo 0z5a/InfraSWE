@@ -9,7 +9,11 @@ from infraswe.models.project_score import (
     BenchmarkCostCard,
     BenchmarkTrustCard,
     CellEfficiencyReference,
+    InfraSWEDecision,
+    InfraSWEMicroscores,
+    InfraSWEOverallResult,
     MergeabilityDecision,
+    OrderedEvaluationGate,
     ProjectFitScore,
     ProjectObjectiveResult,
     ProjectScoreComponent,
@@ -23,6 +27,7 @@ from infraswe.policy import (
     CHECK_NEW_PR_MAX_AGE_DAYS,
     MERGE_ACCEPT_SCORE_FLOOR_100,
     STALE_REVIEWED_OPEN_MIN_AGE_DAYS,
+    overall_score_decision_band,
 )
 from infraswe.scoring.deployability import weighted_geometric
 
@@ -68,6 +73,7 @@ PROJECT_FIT_FLOORS = {
         "operational_fit": 0.60,
     },
 }
+INFRASWE_OVERALL_WEIGHTS = {"project_fit": 0.85, "benchmark_trust": 0.15}
 PROJECT_SUBCOMPONENT_WEIGHTS = {
     "project-contract-fit-v0.5": {
         "integration": 0.30,
@@ -524,7 +530,7 @@ def _review_limited_failure_decision(
     )
 
 
-def compile_mergeability_decision(
+def compile_legacy_mergeability_decision(
     *,
     infra_cert: Literal["pass", "fail", "unresolved"],
     project_fit: ProjectFitScore,
@@ -633,6 +639,251 @@ def compile_mergeability_decision(
     )
 
 
+def _dimension_gate(
+    project_fit: ProjectFitScore,
+    *component_names: str,
+) -> tuple[Literal["pass", "fail", "unresolved"], list[str]]:
+    failures: list[str] = []
+    unresolved: list[str] = []
+    for name in component_names:
+        component = project_fit.components[name]
+        if component.status != "scored" or component.value is None:
+            unresolved.append(f"MICROSCORE_COMPONENT_UNRESOLVED:{name}")
+        elif component.value < project_fit.component_floors[name]:
+            failures.append(f"MICROSCORE_COMPONENT_FLOOR_FAILED:{name}")
+    if failures:
+        return "fail", failures
+    if unresolved:
+        return "unresolved", unresolved
+    return "pass", ["ORDERED_GATE_PASSED"]
+
+
+def _ordered_gates(
+    *,
+    infra_cert: Literal["pass", "fail", "unresolved"],
+    project_fit: ProjectFitScore,
+    benchmark_trust: BenchmarkTrustCard,
+    project_objectives: Mapping[str, ProjectObjectiveResult],
+    excluded_scope: Sequence[str],
+) -> tuple[list[OrderedEvaluationGate], float | None]:
+    maintainability_status, maintainability_codes = _dimension_gate(
+        project_fit, "evolutionary_maintainability"
+    )
+    gates = [
+        OrderedEvaluationGate(
+            name="maintainability",
+            status=maintainability_status,
+            rationale_codes=maintainability_codes,
+        )
+    ]
+    if maintainability_status != "pass":
+        gates.extend(
+            [
+                OrderedEvaluationGate(
+                    name="deployability",
+                    status="not-run",
+                    rationale_codes=["BLOCKED_BY_MAINTAINABILITY_GATE"],
+                ),
+                OrderedEvaluationGate(
+                    name="performance",
+                    status="not-run",
+                    rationale_codes=["BLOCKED_BY_MAINTAINABILITY_GATE"],
+                ),
+                OrderedEvaluationGate(
+                    name="overall-score",
+                    status="not-run",
+                    rationale_codes=["BLOCKED_BY_MAINTAINABILITY_GATE"],
+                ),
+            ]
+        )
+        return gates, None
+
+    if infra_cert == "fail":
+        deployability_status: Literal["pass", "fail", "unresolved"] = "fail"
+        deployability_codes = ["INFRACERT_FAILED"]
+    elif infra_cert == "unresolved" or project_fit.status in {
+        "provisional",
+        "unresolved",
+        "not_issued",
+    }:
+        deployability_status = "unresolved"
+        deployability_codes = ["DEPLOYABILITY_EVIDENCE_UNRESOLVED"]
+    else:
+        deployability_status, deployability_codes = _dimension_gate(
+            project_fit, "project_contract_fit", "operational_fit"
+        )
+    gates.append(
+        OrderedEvaluationGate(
+            name="deployability",
+            status=deployability_status,
+            rationale_codes=deployability_codes,
+        )
+    )
+    if deployability_status != "pass":
+        gates.extend(
+            [
+                OrderedEvaluationGate(
+                    name="performance",
+                    status="not-run",
+                    rationale_codes=["BLOCKED_BY_DEPLOYABILITY_GATE"],
+                ),
+                OrderedEvaluationGate(
+                    name="overall-score",
+                    status="not-run",
+                    rationale_codes=["BLOCKED_BY_DEPLOYABILITY_GATE"],
+                ),
+            ]
+        )
+        return gates, None
+
+    performance_names = ["performance_reuse_utilization"]
+    if project_fit.formula_template_id == "project-fit-triton-pure-v0.5":
+        performance_names.append("pure_triton_portability")
+    performance_status, performance_codes = _dimension_gate(project_fit, *performance_names)
+    release_gate_failures = [
+        name
+        for name, objective in project_objectives.items()
+        if objective.policy == "release-gate" and objective.release_gate_passed is False
+    ]
+    if release_gate_failures and not excluded_scope:
+        performance_status = "fail"
+        performance_codes = [
+            *performance_codes,
+            *["PROJECT_RELEASE_GATE_FAILED:" + name for name in release_gate_failures],
+        ]
+    elif release_gate_failures:
+        performance_codes = [
+            *performance_codes,
+            *[
+                "PROJECT_RELEASE_GATE_ISOLATED_TO_EXCLUDED_SCOPE:" + name
+                for name in release_gate_failures
+            ],
+        ]
+    gates.append(
+        OrderedEvaluationGate(
+            name="performance",
+            status=performance_status,
+            rationale_codes=performance_codes,
+        )
+    )
+    if performance_status != "pass":
+        gates.append(
+            OrderedEvaluationGate(
+                name="overall-score",
+                status="not-run",
+                rationale_codes=["BLOCKED_BY_PERFORMANCE_GATE"],
+            )
+        )
+        return gates, None
+
+    if project_fit.score_100 is None or benchmark_trust.score_100 is None:
+        gates.append(
+            OrderedEvaluationGate(
+                name="overall-score",
+                status="unresolved",
+                rationale_codes=["OVERALL_MICROSCORE_UNRESOLVED"],
+            )
+        )
+        return gates, None
+    overall_score_100 = 100 * weighted_geometric(
+        {
+            "project_fit": project_fit.score_100 / 100,
+            "benchmark_trust": benchmark_trust.score_100 / 100,
+        },
+        INFRASWE_OVERALL_WEIGHTS,
+    )
+    band = overall_score_decision_band(overall_score_100)
+    gates.append(
+        OrderedEvaluationGate(
+            name="overall-score",
+            status="pass",
+            rationale_codes=[f"OVERALL_SCORE_BAND:{band}"],
+        )
+    )
+    return gates, overall_score_100
+
+
+def compile_infraswe_assessment(
+    *,
+    infra_cert: Literal["pass", "fail", "unresolved"],
+    project_fit: ProjectFitScore,
+    benchmark_trust: BenchmarkTrustCard,
+    project_objectives: Mapping[str, ProjectObjectiveResult],
+    supported_scope: Sequence[str] = (),
+    excluded_scope: Sequence[str] = (),
+    required_actions: Sequence[str] = (),
+) -> tuple[float | None, list[OrderedEvaluationGate], InfraSWEDecision]:
+    gates, overall_score_100 = _ordered_gates(
+        infra_cert=infra_cert,
+        project_fit=project_fit,
+        benchmark_trust=benchmark_trust,
+        project_objectives=project_objectives,
+        excluded_scope=excluded_scope,
+    )
+    first_blocking = next(
+        (gate for gate in gates[:3] if gate.status in {"fail", "unresolved"}),
+        None,
+    )
+    if first_blocking is not None:
+        classification = "reject" if first_blocking.status == "fail" else "check"
+        rationale = [
+            f"ORDERED_HARD_GATE:{first_blocking.name}:{first_blocking.status}",
+            *first_blocking.rationale_codes,
+        ]
+    elif overall_score_100 is None:
+        classification = "check"
+        rationale = ["OVERALL_SCORE_UNRESOLVED_AFTER_HARD_GATES"]
+    else:
+        classification = overall_score_decision_band(overall_score_100)
+        rationale = [
+            f"OVERALL_SCORE_CLASSIFICATION:{classification}",
+            "ABOVE_65_SCORE_IS_EVALUATION_ONLY"
+            if classification == "accept"
+            else "FIXED_OVERALL_SCORE_BANDS",
+        ]
+    return (
+        overall_score_100,
+        gates,
+        InfraSWEDecision(
+            classification=classification,
+            acceptance_scope=(
+                "limited"
+                if classification == "accept" and excluded_scope
+                else "full"
+                if classification == "accept"
+                else "not-applicable"
+            ),
+            supported_scope=list(supported_scope),
+            excluded_scope=list(excluded_scope),
+            required_actions=list(required_actions),
+            rationale_codes=rationale,
+        ),
+    )
+
+
+def compile_mergeability_decision(
+    *,
+    infra_cert: Literal["pass", "fail", "unresolved"],
+    project_fit: ProjectFitScore,
+    benchmark_trust: BenchmarkTrustCard,
+    project_objectives: Mapping[str, ProjectObjectiveResult],
+    supported_scope: Sequence[str] = (),
+    excluded_scope: Sequence[str] = (),
+    required_actions: Sequence[str] = (),
+) -> InfraSWEDecision:
+    """Return the three-class result after ordered gates and the sole overall score."""
+
+    return compile_infraswe_assessment(
+        infra_cert=infra_cert,
+        project_fit=project_fit,
+        benchmark_trust=benchmark_trust,
+        project_objectives=project_objectives,
+        supported_scope=supported_scope,
+        excluded_scope=excluded_scope,
+        required_actions=required_actions,
+    )[2]
+
+
 def build_v05_result(
     *,
     draft_id: str,
@@ -681,6 +932,76 @@ def build_v05_result(
         project_objectives=dict(project_objectives),
         cell_efficiency=cell_efficiency,
         decision=decision,
+        raw_metrics=dict(raw_metrics or {}),
+        failure_codes=list(failure_codes),
+        audit_flags=list(audit_flags),
+    )
+
+
+def build_infraswe_result(
+    *,
+    draft_id: str,
+    draft_revision: int,
+    draft_state: DraftState,
+    sealed_draft_sha256: str | None,
+    target_project_profile_sha256: str,
+    target_repository_sha256: str,
+    candidate_sha256: str,
+    acceptance_contract_sha256: str,
+    infra_cert: Literal["pass", "fail", "unresolved"],
+    project_fit: ProjectFitScore,
+    benchmark_trust: BenchmarkTrustCard,
+    benchmark_cost: BenchmarkCostCard,
+    evidence_grade: Literal[
+        "E0-runtime", "E1-framework", "E2-system-trace", "E3-kernel-counter", "E4-sealed"
+    ],
+    project_objectives: Mapping[str, ProjectObjectiveResult],
+    cell_efficiency: CellEfficiencyReference,
+    supported_scope: Sequence[str] = (),
+    excluded_scope: Sequence[str] = (),
+    required_actions: Sequence[str] = (),
+    evaluation_engine: Literal["infraswe", "external"] = "infraswe",
+    evaluation_scope: Literal["full", "staged"] = "full",
+    seal_enabled: bool = True,
+    raw_metrics: Mapping[str, object] | None = None,
+    failure_codes: Sequence[str] = (),
+    audit_flags: Sequence[str] = (),
+) -> InfraSWEOverallResult:
+    """Build the default single-composite result with nested microscores."""
+
+    overall_score_100, ordered_gates, decision = compile_infraswe_assessment(
+        infra_cert=infra_cert,
+        project_fit=project_fit,
+        benchmark_trust=benchmark_trust,
+        project_objectives=project_objectives,
+        supported_scope=supported_scope,
+        excluded_scope=excluded_scope,
+        required_actions=required_actions,
+    )
+    return InfraSWEOverallResult(
+        draft_id=draft_id,
+        draft_revision=draft_revision,
+        draft_state=draft_state,
+        sealed_draft_sha256=sealed_draft_sha256,
+        target_project_profile_sha256=target_project_profile_sha256,
+        target_repository_sha256=target_repository_sha256,
+        candidate_sha256=candidate_sha256,
+        acceptance_contract_sha256=acceptance_contract_sha256,
+        infra_cert=infra_cert,
+        overall_score_100=overall_score_100,
+        microscores=InfraSWEMicroscores(
+            project_fit=project_fit,
+            benchmark_trust=benchmark_trust,
+        ),
+        ordered_gates=ordered_gates,
+        benchmark_cost=benchmark_cost,
+        evidence_grade=evidence_grade,
+        project_objectives=dict(project_objectives),
+        cell_efficiency=cell_efficiency,
+        decision=decision,
+        evaluation_engine=evaluation_engine,
+        evaluation_scope=evaluation_scope,
+        seal_enabled=seal_enabled,
         raw_metrics=dict(raw_metrics or {}),
         failure_codes=list(failure_codes),
         audit_flags=list(audit_flags),

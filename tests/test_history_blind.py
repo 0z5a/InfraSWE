@@ -26,6 +26,11 @@ from infraswe.models.history import (
     HistoricalReviewEvidence,
     HistoricalReviewFeedbackItem,
 )
+from infraswe.policy import (
+    HISTORICAL_SCORE_BAND_PREDICTION_POLICY_ID,
+    LEGACY_HISTORICAL_POLARIZED_ORACLE_POLICY_ID,
+    LEGACY_HISTORICAL_POLARIZED_PREDICTION_POLICY_ID,
+)
 
 NOW = datetime(2026, 9, 1, tzinfo=UTC)
 
@@ -128,21 +133,38 @@ def test_candidate_failure_predicts_not_merged() -> None:
     assert material.mergeability_decision == "revise"
 
 
-def test_polarized_prediction_requires_85_and_legacy_r1_remains_replayable() -> None:
+def test_polarized_prediction_uses_score_bands_and_legacy_r1_remains_replayable() -> None:
     item = candidate()
-    below = compile_prediction(
+    rejected = compile_prediction(
         item,
-        evidence(score_100=84.99),
+        evidence(score_100=49.99),
         frozen_at=NOW,
-        policy_id="historical-merge-prediction-v0.5-r2-polarized",
+        policy_id=HISTORICAL_SCORE_BAND_PREDICTION_POLICY_ID,
     )
-    assert below.predicted_outcome == "not-merged"
-    assert below.mergeability_decision == "reject"
+    assert rejected.predicted_outcome == "not-merged"
+    assert rejected.mergeability_decision == "reject"
+    for score in (50, 65):
+        checked = compile_prediction(
+            item,
+            evidence(score_100=score),
+            frozen_at=NOW,
+            policy_id=HISTORICAL_SCORE_BAND_PREDICTION_POLICY_ID,
+        )
+        assert checked.predicted_outcome == "not-merged"
+        assert checked.mergeability_decision == "check"
+    accepted = compile_prediction(
+        item,
+        evidence(score_100=65.01),
+        frozen_at=NOW,
+        policy_id=HISTORICAL_SCORE_BAND_PREDICTION_POLICY_ID,
+    )
+    assert accepted.predicted_outcome == "merged"
+    assert accepted.mergeability_decision == "accept_with_scope"
     missing = compile_prediction(
         item,
         evidence(score_100=None),
         frozen_at=NOW,
-        policy_id="historical-merge-prediction-v0.5-r2-polarized",
+        policy_id=HISTORICAL_SCORE_BAND_PREDICTION_POLICY_ID,
     )
     assert missing.predicted_outcome == "abstain"
     legacy = compile_prediction(
@@ -152,6 +174,24 @@ def test_polarized_prediction_requires_85_and_legacy_r1_remains_replayable() -> 
         policy_id="historical-merge-prediction-v0.5-r1",
     )
     assert legacy.predicted_outcome == "merged"
+
+
+def test_legacy_polarized_prediction_keeps_85_floor() -> None:
+    item = candidate()
+    below = compile_prediction(
+        item,
+        evidence(score_100=84.99),
+        frozen_at=NOW,
+        policy_id=LEGACY_HISTORICAL_POLARIZED_PREDICTION_POLICY_ID,
+    )
+    at_floor = compile_prediction(
+        item,
+        evidence(score_100=85),
+        frozen_at=NOW,
+        policy_id=LEGACY_HISTORICAL_POLARIZED_PREDICTION_POLICY_ID,
+    )
+    assert below.mergeability_decision == "reject"
+    assert at_floor.mergeability_decision == "accept_with_scope"
 
 
 def test_infrastructure_failure_abstains() -> None:
@@ -266,8 +306,8 @@ def test_polarized_oracle_treats_stale_reviewed_open_as_reject() -> None:
     assert oracle.rationale_codes == ["STALE_REVIEWED_OPEN_REJECT_ORACLE"]
 
 
-@pytest.mark.parametrize(("score", "expected"), [(84.99, False), (85.0, True)])
-def test_merged_oracle_requires_machine_score_at_least_85(score: float, expected: bool) -> None:
+@pytest.mark.parametrize(("score", "expected"), [(65.0, False), (65.01, True)])
+def test_merged_oracle_requires_machine_score_above_65(score: float, expected: bool) -> None:
     item = candidate()
     merged_truth = truth("sha256:" + "a" * 64, merged=True)
     review = HistoricalReviewActivitySnapshot(
@@ -284,3 +324,30 @@ def test_merged_oracle_requires_machine_score_at_least_85(score: float, expected
     assert oracle.decision == "accept"
     assert oracle.merged_score_floor_satisfied is expected
     assert polarized_oracle_matches_machine(oracle, "accept") is expected
+
+
+def test_legacy_polarized_oracle_keeps_85_floor() -> None:
+    item = candidate()
+    merged_truth = truth("sha256:" + "a" * 64, merged=True)
+    review = HistoricalReviewActivitySnapshot(
+        case_id=item.case_id,
+        observed_at=merged_truth.observed_at,
+        last_activity_at=NOW + timedelta(seconds=3),
+    )
+    below = compile_polarized_oracle(
+        item,
+        merged_truth,
+        review,
+        machine_score_100=84.99,
+        policy_id=LEGACY_HISTORICAL_POLARIZED_ORACLE_POLICY_ID,
+    )
+    at_floor = compile_polarized_oracle(
+        item,
+        merged_truth,
+        review,
+        machine_score_100=85,
+        policy_id=LEGACY_HISTORICAL_POLARIZED_ORACLE_POLICY_ID,
+    )
+    assert below.merged_score_floor_100 == 85
+    assert below.merged_score_floor_satisfied is False
+    assert at_floor.merged_score_floor_satisfied is True

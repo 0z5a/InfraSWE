@@ -11,6 +11,11 @@ from infraswe.models.candidates import (
     DefaultCandidateResolution,
     OperatorFamily,
 )
+from infraswe.policy import (
+    DEFAULT_EVALUATION_ENGINE,
+    DEFAULT_EVALUATION_SCOPE,
+    DEFAULT_SEAL_ENABLED,
+)
 
 Digest = Annotated[str, Field(pattern=r"^sha256:[0-9a-f]{64}$")]
 DraftState = Literal[
@@ -283,9 +288,10 @@ class DraftPrecompilePolicy(DraftModel):
 
 class DraftBenchmarkLoop(DraftModel):
     fast_stage_max_official_fraction: float = Field(default=0.05, gt=0, le=1)
-    affected_stage_max_official_fraction: float = Field(default=0.20, gt=0, le=1)
+    affected_stage_max_official_fraction: float = Field(default=1.0, gt=0, le=1)
     official_replays: int = Field(default=7, ge=5, le=10)
-    early_exit_on_hard_gate: bool = True
+    evaluation_scope: Literal["full", "staged"] = DEFAULT_EVALUATION_SCOPE
+    early_exit_on_hard_gate: bool = False
     affected_case_selection: Literal["required"] = "required"
     benchmark_budget_policy_id: str
     evidence_policy_id: str
@@ -295,12 +301,20 @@ class DraftBenchmarkLoop(DraftModel):
     def fast_budget_does_not_exceed_affected_budget(self) -> DraftBenchmarkLoop:
         if self.fast_stage_max_official_fraction > self.affected_stage_max_official_fraction:
             raise ValueError("fast-stage budget cannot exceed affected-stage budget")
+        if self.evaluation_scope == "full" and (
+            self.affected_stage_max_official_fraction != 1.0 or self.early_exit_on_hard_gate
+        ):
+            raise ValueError(
+                "full evaluation requires all official cases and disables early exit"
+            )
         return self
 
 
 class DraftScoringPolicy(DraftModel):
     formula_template_id: Literal["project-fit-kernel-v0.5", "project-fit-triton-pure-v0.5"]
     provisional_scoring_allowed: bool = True
+    evaluation_engine: Literal["infraswe", "external"] = DEFAULT_EVALUATION_ENGINE
+    seal_by_default: bool = DEFAULT_SEAL_ENABLED
     official_scoring_requires_seal: Literal[True] = True
     project_season: str
 

@@ -1,8 +1,11 @@
 from .ada_sm89 import architecture_overlay_score, score_cross_sku_reuse
 from .project_fit import (
     audit_pure_triton,
+    build_infraswe_result,
     build_project_fit,
     build_v05_result,
+    compile_infraswe_assessment,
+    compile_legacy_mergeability_decision,
     compile_mergeability_decision,
     score_benchmark_trust,
     score_evolutionary_maintainability,
@@ -18,9 +21,12 @@ from .training import build_training_result, training_profiler_to_v04
 __all__ = [
     "architecture_overlay_score",
     "audit_pure_triton",
+    "build_infraswe_result",
     "build_project_fit",
     "build_training_result",
     "build_v05_result",
+    "compile_infraswe_assessment",
+    "compile_legacy_mergeability_decision",
     "compile_mergeability_decision",
     "render_html_report",
     "render_markdown_report",

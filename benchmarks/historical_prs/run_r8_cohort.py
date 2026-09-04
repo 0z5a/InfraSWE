@@ -33,6 +33,7 @@ from infraswe.models.history import (
     HistoricalPredictionMaterial,
     HistoricalReviewActivitySnapshot,
 )
+from infraswe.policy import LEGACY_HISTORICAL_POLARIZED_ORACLE_POLICY_ID
 
 QUERY = """
 query($queryString: String!, $cursor: String) {
@@ -617,6 +618,7 @@ def reveal(selection_path: Path, lock_path: Path, output: Path) -> None:
             truth,
             review,
             machine_score_100=lock.material.score_100,
+            policy_id=LEGACY_HISTORICAL_POLARIZED_ORACLE_POLICY_ID,
         )
         matches = polarized_oracle_matches_machine(oracle, lock.material.mergeability_decision)
         revealed_cases.append(

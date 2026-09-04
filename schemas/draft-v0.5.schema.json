@@ -321,7 +321,7 @@
           "type": "string"
         },
         "affected_stage_max_official_fraction": {
-          "default": 0.2,
+          "default": 1.0,
           "exclusiveMinimum": 0,
           "maximum": 1,
           "title": "Affected Stage Max Official Fraction",
@@ -332,9 +332,18 @@
           "type": "string"
         },
         "early_exit_on_hard_gate": {
-          "default": true,
+          "default": false,
           "title": "Early Exit On Hard Gate",
           "type": "boolean"
+        },
+        "evaluation_scope": {
+          "default": "full",
+          "enum": [
+            "full",
+            "staged"
+          ],
+          "title": "Evaluation Scope",
+          "type": "string"
         },
         "evidence_policy_id": {
           "title": "Evidence Policy Id",
@@ -688,6 +697,15 @@
     "DraftScoringPolicy": {
       "additionalProperties": false,
       "properties": {
+        "evaluation_engine": {
+          "default": "infraswe",
+          "enum": [
+            "infraswe",
+            "external"
+          ],
+          "title": "Evaluation Engine",
+          "type": "string"
+        },
         "formula_template_id": {
           "enum": [
             "project-fit-kernel-v0.5",
@@ -709,6 +727,11 @@
         "provisional_scoring_allowed": {
           "default": true,
           "title": "Provisional Scoring Allowed",
+          "type": "boolean"
+        },
+        "seal_by_default": {
+          "default": true,
+          "title": "Seal By Default",
           "type": "boolean"
         }
       },

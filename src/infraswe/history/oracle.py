@@ -12,7 +12,10 @@ from infraswe.models.history import (
 from infraswe.policy import (
     CHECK_ACTIVITY_MAX_IDLE_DAYS,
     CHECK_NEW_PR_MAX_AGE_DAYS,
+    HISTORICAL_POLARIZED_ORACLE_POLICY_ID,
+    LEGACY_HISTORICAL_POLARIZED_ORACLE_POLICY_ID,
     MERGE_ACCEPT_SCORE_FLOOR_100,
+    PROJECT_FIT_ACCEPT_ABOVE_100,
     STALE_REVIEWED_OPEN_MIN_AGE_DAYS,
 )
 
@@ -23,6 +26,10 @@ def compile_polarized_oracle(
     review: HistoricalReviewActivitySnapshot,
     *,
     machine_score_100: float | None,
+    policy_id: Literal[
+        "historical-polarized-oracle-v0.5.1",
+        "historical-score-band-oracle-v0.1",
+    ] = HISTORICAL_POLARIZED_ORACLE_POLICY_ID,
 ) -> HistoricalPolarizedDecisionOracle:
     """Compile a post-lock oracle without feeding outcome data back into the judge."""
 
@@ -45,6 +52,7 @@ def compile_polarized_oracle(
         else None
     )
     common = {
+        "policy_id": policy_id,
         "case_id": candidate.case_id,
         "machine_score_100": machine_score_100,
         "pr_age_days": age_days,
@@ -56,18 +64,25 @@ def compile_polarized_oracle(
     if truth.merged:
         if truth.state != "closed":
             raise ValueError("merged pull requests must be closed")
-        floor_satisfied = (
-            machine_score_100 is not None and machine_score_100 >= MERGE_ACCEPT_SCORE_FLOOR_100
+        legacy = policy_id == LEGACY_HISTORICAL_POLARIZED_ORACLE_POLICY_ID
+        threshold = MERGE_ACCEPT_SCORE_FLOOR_100 if legacy else PROJECT_FIT_ACCEPT_ABOVE_100
+        floor_satisfied = machine_score_100 is not None and (
+            machine_score_100 >= threshold if legacy else machine_score_100 > threshold
         )
         return HistoricalPolarizedDecisionOracle(
             **common,
             decision="accept",
+            merged_score_floor_100=threshold,
             merged_score_floor_satisfied=floor_satisfied,
             rationale_codes=[
                 (
                     "MERGED_PR_SCORE_AT_LEAST_85"
-                    if floor_satisfied
+                    if legacy and floor_satisfied
                     else "MERGED_PR_SCORE_BELOW_85_OR_MISSING"
+                    if legacy
+                    else "MERGED_PR_SCORE_ABOVE_65"
+                    if floor_satisfied
+                    else "MERGED_PR_SCORE_AT_MOST_65_OR_MISSING"
                 )
             ],
         )

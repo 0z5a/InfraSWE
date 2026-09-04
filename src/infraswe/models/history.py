@@ -6,6 +6,13 @@ from typing import Literal
 from pydantic import BaseModel, ConfigDict, Field, model_validator
 
 from infraswe.models.draft import DefaultDraftProject, Digest
+from infraswe.policy import (
+    HISTORICAL_SCORE_BAND_PREDICTION_POLICY_ID,
+    LEGACY_HISTORICAL_POLARIZED_ORACLE_POLICY_ID,
+    LEGACY_HISTORICAL_POLARIZED_PREDICTION_POLICY_ID,
+    MERGE_ACCEPT_SCORE_FLOOR_100,
+    PROJECT_FIT_ACCEPT_ABOVE_100,
+)
 
 
 class HistoryModel(BaseModel):
@@ -130,9 +137,12 @@ class HistoricalPredictionMaterial(HistoryModel):
     prediction_policy_id: Literal[
         "historical-merge-prediction-v0.5-r1",
         "historical-merge-prediction-v0.5-r2-polarized",
+        "historical-merge-prediction-v0.1-score-bands",
     ] = "historical-merge-prediction-v0.5-r1"
     predicted_outcome: Literal["merged", "not-merged", "abstain"]
-    mergeability_decision: Literal["accept", "accept_with_scope", "revise", "reject", "unresolved"]
+    mergeability_decision: Literal[
+        "accept", "accept_with_scope", "check", "revise", "reject", "unresolved"
+    ]
     score_100: float | None = Field(default=None, ge=0, le=100)
     confidence: Literal["low", "medium", "high", "not-applicable"]
     rationale_codes: list[str] = Field(default_factory=list)
@@ -142,20 +152,33 @@ class HistoricalPredictionMaterial(HistoryModel):
     def prediction_matches_decision(self) -> HistoricalPredictionMaterial:
         allowed = {
             "merged": {"accept", "accept_with_scope"},
-            "not-merged": {"revise", "reject"},
+            "not-merged": {"check", "revise", "reject"},
             "abstain": {"unresolved"},
         }
         if self.mergeability_decision not in allowed[self.predicted_outcome]:
             raise ValueError("historical prediction and mergeability decision disagree")
         if self.predicted_outcome == "abstain" and self.confidence != "not-applicable":
             raise ValueError("abstentions require not-applicable confidence")
-        if self.prediction_policy_id == "historical-merge-prediction-v0.5-r2-polarized":
+        if self.prediction_policy_id in {
+            LEGACY_HISTORICAL_POLARIZED_PREDICTION_POLICY_ID,
+            HISTORICAL_SCORE_BAND_PREDICTION_POLICY_ID,
+        }:
             if self.mergeability_decision == "revise":
                 raise ValueError("blind polarized predictions cannot claim active-review REVISE")
-            if self.predicted_outcome == "merged" and (
-                self.score_100 is None or self.score_100 < 85
-            ):
-                raise ValueError("polarized merged predictions require score_100 >= 85")
+            if self.predicted_outcome == "merged":
+                if self.prediction_policy_id == LEGACY_HISTORICAL_POLARIZED_PREDICTION_POLICY_ID:
+                    eligible = (
+                        self.score_100 is not None
+                        and self.score_100 >= MERGE_ACCEPT_SCORE_FLOOR_100
+                    )
+                    message = "legacy polarized merged predictions require score_100 >= 85"
+                else:
+                    eligible = (
+                        self.score_100 is not None and self.score_100 > PROJECT_FIT_ACCEPT_ABOVE_100
+                    )
+                    message = "score-band merged predictions require score_100 > 65"
+                if not eligible:
+                    raise ValueError(message)
         return self
 
 
@@ -308,11 +331,14 @@ class HistoricalPolarizedDecisionOracle(HistoryModel):
     """Post-reveal decision label and merged-score calibration invariant."""
 
     schema_version: Literal["0.5.1"] = "0.5.1"
-    policy_id: Literal["historical-polarized-oracle-v0.5.1"] = "historical-polarized-oracle-v0.5.1"
+    policy_id: Literal[
+        "historical-polarized-oracle-v0.5.1",
+        "historical-score-band-oracle-v0.1",
+    ] = "historical-score-band-oracle-v0.1"
     case_id: str
     decision: Literal["accept", "check", "reject", "revise"]
     machine_score_100: float | None = Field(default=None, ge=0, le=100)
-    merged_score_floor_100: float = Field(default=85, ge=85, le=85)
+    merged_score_floor_100: float = Field(default=65, ge=65, le=85)
     merged_score_floor_satisfied: bool | None = None
     pr_age_days: float = Field(ge=0)
     review_idle_days: float | None = Field(default=None, ge=0)
@@ -326,9 +352,16 @@ class HistoricalPolarizedDecisionOracle(HistoryModel):
             raise ValueError("accepted merge oracle requires a score-floor result")
         if self.decision != "accept" and self.merged_score_floor_satisfied is not None:
             raise ValueError("non-merge oracle cannot carry a merged score-floor result")
-        expected_floor = (
-            self.machine_score_100 is not None
-            and self.machine_score_100 >= self.merged_score_floor_100
+        legacy = self.policy_id == LEGACY_HISTORICAL_POLARIZED_ORACLE_POLICY_ID
+        expected_threshold = (
+            MERGE_ACCEPT_SCORE_FLOOR_100 if legacy else PROJECT_FIT_ACCEPT_ABOVE_100
+        )
+        if self.merged_score_floor_100 != expected_threshold:
+            raise ValueError("merged score threshold disagrees with oracle policy")
+        expected_floor = self.machine_score_100 is not None and (
+            self.machine_score_100 >= self.merged_score_floor_100
+            if legacy
+            else self.machine_score_100 > self.merged_score_floor_100
         )
         if self.decision == "accept" and self.merged_score_floor_satisfied != expected_floor:
             raise ValueError("merged score-floor flag disagrees with machine score")

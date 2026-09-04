@@ -15,8 +15,8 @@ from freeze_training_bulk_group import _decision
 from infraswe.history.blind import canonical_sha256
 from infraswe.io import atomic_write_json
 
-MERGED_ACCEPT_RECALL_MINIMUM = 0.95
-MERGED_ACCEPT_RECALL_REPAIR_MARGIN = 0.015
+MERGED_ACCEPT_RECALL_MINIMUM = 0.99
+MERGED_ACCEPT_RECALL_REPAIR_MARGIN = 0.005
 
 
 def _read(path: Path) -> dict[str, Any]:
@@ -175,7 +175,7 @@ def main() -> int:
             )
         elif old_policy.get("merged_recall_guard_projects"):
             # A guard that missed prospectively needs headroom rather than another
-            # knife-edge retrospective fit.  The hard release floor remains 95%.
+            # knife-edge retrospective fit.  The hard release floor remains 99%.
             candidate_recall_target = min(
                 1.0,
                 MERGED_ACCEPT_RECALL_MINIMUM + MERGED_ACCEPT_RECALL_REPAIR_MARGIN,
@@ -234,13 +234,15 @@ def main() -> int:
                 evidence = (
                     f"Group {current_group} retrospective exact matches improve "
                     f"from {summary['exact_label_matches']} to {best[0]} while "
-                    f"preserving at least 95% merged-PR accept recall: {updates}."
+                    f"preserving at least {MERGED_ACCEPT_RECALL_MINIMUM:.0%} "
+                    f"merged-PR accept recall: {updates}."
                 )
                 rule = "promote-bounded-policy-rule"
             else:
                 evidence = (
                     f"Group {current_group} merged-PR accept coverage is below the hard "
-                    f"95% gate ({current_merged_accepts}/{merged_cases}); select the "
+                    f"{MERGED_ACCEPT_RECALL_MINIMUM:.0%} gate "
+                    f"({current_merged_accepts}/{merged_cases}); select the "
                     f"highest-exact bounded repair at {best[4]}/{merged_cases} "
                     f"merged accepts and {best[0]} exact matches using a "
                     f"{candidate_recall_target:.1%} selection target: {updates}."
@@ -260,13 +262,15 @@ def main() -> int:
                         "rule": "retain-current-policy-after-search",
                         "evidence": (
                             "No bounded candidate improved exact accuracy while "
-                            "preserving >=95% merged-PR accept coverage."
+                            f"preserving >={MERGED_ACCEPT_RECALL_MINIMUM:.0%} "
+                            "merged-PR accept coverage."
                         ),
                     }
                 ]
             else:
                 raise SystemExit(
-                    "hard 95% merged-PR accept-recall gate is unresolved: "
+                    f"hard {MERGED_ACCEPT_RECALL_MINIMUM:.0%} merged-PR "
+                    "accept-recall gate is unresolved: "
                     f"current={current_merged_accepts}/{merged_cases}; no bounded "
                     "outcome-blind candidate satisfies the gate"
                 )

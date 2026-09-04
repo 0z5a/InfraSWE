@@ -14,6 +14,12 @@ from infraswe.models.history import (
     HistoricalPredictionLock,
     HistoricalPredictionMaterial,
 )
+from infraswe.policy import (
+    HISTORICAL_SCORE_BAND_PREDICTION_POLICY_ID,
+    LEGACY_HISTORICAL_POLARIZED_PREDICTION_POLICY_ID,
+    MERGE_ACCEPT_SCORE_FLOOR_100,
+    project_fit_decision_band,
+)
 
 OUTCOME_KEYS = {
     "actual_outcome",
@@ -57,6 +63,7 @@ def compile_prediction(
     policy_id: Literal[
         "historical-merge-prediction-v0.5-r1",
         "historical-merge-prediction-v0.5-r2-polarized",
+        "historical-merge-prediction-v0.1-score-bands",
     ] = "historical-merge-prediction-v0.5-r1",
 ) -> HistoricalPredictionMaterial:
     if evidence.case_id != candidate.case_id:
@@ -74,7 +81,10 @@ def compile_prediction(
         hard_failure = any(
             code.startswith("HARD_POLICY_") for code in evidence.candidate_failure_codes
         )
-        polarized = policy_id == "historical-merge-prediction-v0.5-r2-polarized"
+        polarized = policy_id in {
+            LEGACY_HISTORICAL_POLARIZED_PREDICTION_POLICY_ID,
+            HISTORICAL_SCORE_BAND_PREDICTION_POLICY_ID,
+        }
         decision = "reject" if hard_failure or polarized else "revise"
         confidence = "high" if hard_failure or polarized else "medium"
         rationale = sorted(set(evidence.candidate_failure_codes))
@@ -94,16 +104,28 @@ def compile_prediction(
                 decision = "unresolved"
                 confidence = "not-applicable"
                 rationale = ["HISTORICAL_PROJECT_FIT_SCORE_MISSING"]
-            elif evidence.project_fit_score_100 >= 85:
-                predicted = "merged"
-                decision = "accept_with_scope"
+            elif policy_id == LEGACY_HISTORICAL_POLARIZED_PREDICTION_POLICY_ID:
+                accepted = evidence.project_fit_score_100 >= MERGE_ACCEPT_SCORE_FLOOR_100
+                predicted = "merged" if accepted else "not-merged"
+                decision = "accept_with_scope" if accepted else "reject"
                 confidence = "medium" if evidence.stage in {"F0-contract", "F1-smoke"} else "high"
-                rationale = ["BLIND_MACHINE_CHECKS_PASSED", "MERGE_SCORE_AT_LEAST_85"]
+                rationale = [
+                    "BLIND_MACHINE_CHECKS_PASSED",
+                    "MERGE_SCORE_AT_LEAST_85" if accepted else "PROJECT_FIT_BELOW_MERGE_FLOOR_85",
+                ]
             else:
-                predicted = "not-merged"
-                decision = "reject"
-                confidence = "high"
-                rationale = ["PROJECT_FIT_BELOW_MERGE_FLOOR_85"]
+                score_band = project_fit_decision_band(evidence.project_fit_score_100)
+                predicted = "merged" if score_band == "accept" else "not-merged"
+                decision = "accept_with_scope" if score_band == "accept" else score_band
+                confidence = "medium" if evidence.stage in {"F0-contract", "F1-smoke"} else "high"
+                rationale = [
+                    "BLIND_MACHINE_CHECKS_PASSED",
+                    {
+                        "accept": "PROJECT_FIT_ACCEPT_BAND_ABOVE_65",
+                        "check": "PROJECT_FIT_CHECK_BAND_50_TO_65",
+                        "reject": "PROJECT_FIT_REJECT_BAND_BELOW_50",
+                    }[score_band],
+                ]
         else:
             predicted = "abstain"
             decision = "unresolved"

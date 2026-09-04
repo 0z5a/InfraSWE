@@ -13,6 +13,11 @@ from typing import Any
 
 from infraswe.history.blind import canonical_sha256
 from infraswe.io import atomic_write_json
+from infraswe.policy import (
+    OVERALL_SCORE_ACCEPT_ABOVE_100,
+    OVERALL_SCORE_REJECT_BELOW_100,
+    overall_score_decision_band,
+)
 
 DEFAULT_POLICY = {
     "policy_id": "training-bulk-disposition-v0.1-g0000",
@@ -55,6 +60,23 @@ ENVIRONMENT_MARKERS = (
     "CUDA out of memory",
 )
 SUMMARY_RE = re.compile(r"(?P<count>\d+) (?P<label>passed|failed|errors?)")
+RATIONALE_SCORE_100 = {
+    "SELF_DECLARED_NOT_READY": 10.0,
+    "EXACT_CANDIDATE_CONTRACT_FAILED": 5.0,
+    "ACTIVE_RECENT_FINAL_HEAD_REVIEW": 57.5,
+    "EXPLICIT_REVERT_WITHOUT_HARD_FAILURE": 74.0,
+    "HUMAN_NON_AUTHOR_APPROVAL": 92.0,
+    "MAINTAINER_RUNTIME_SOURCE_CHANGE": 84.0,
+    "MERGED_RECALL_GUARD_PROJECT_SCOPE": 66.0,
+    "REVIEW_WITHOUT_APPROVAL": 45.0,
+    "MAINTAINER_AUTHORED_NO_HARD_FAILURE": 78.0,
+    "CANDIDATE_TEST_OR_COMPILE_CONTRACT_CLOSED": 82.0,
+    "SMALL_COMPILE_CLOSED_SOURCE_CHANGE": 70.0,
+    "UNRESOLVED_MATURE_OR_UNREVIEWED_GAP": {
+        "accept_with_scope": 66.0,
+        "reject": 40.0,
+    },
+}
 
 
 def _read(path: Path) -> dict[str, Any]:
@@ -180,7 +202,7 @@ def _merged_recall_guard_applies(
     )
 
 
-def _decision(
+def _rule_decision(
     case: dict[str, Any],
     technical: str,
     policy: dict[str, Any],
@@ -249,6 +271,41 @@ def _decision(
     return str(policy["uncertain_disposition"]), ["UNRESOLVED_MATURE_OR_UNREVIEWED_GAP"]
 
 
+def _assessment(
+    case: dict[str, Any],
+    technical: str,
+    policy: dict[str, Any],
+    frozen_at: datetime,
+) -> tuple[str, float | None, list[str]]:
+    """Score outcome-free evidence, then derive the disposition from fixed bands."""
+
+    expected_decision, rationale = _rule_decision(case, technical, policy, frozen_at)
+    if expected_decision == "unresolved":
+        return expected_decision, None, rationale
+    score_spec = RATIONALE_SCORE_100[rationale[0]]
+    score = (
+        float(score_spec[expected_decision]) if isinstance(score_spec, dict) else float(score_spec)
+    )
+    band = overall_score_decision_band(score)
+    decision = "accept_with_scope" if band == "accept" else band
+    if decision != expected_decision:
+        raise ValueError(
+            f"score/disposition invariant failed for {rationale[0]}: "
+            f"score={score} expected={expected_decision} derived={decision}"
+        )
+    return decision, score, rationale
+
+
+def _decision(
+    case: dict[str, Any],
+    technical: str,
+    policy: dict[str, Any],
+    frozen_at: datetime,
+) -> tuple[str, list[str]]:
+    decision, _, rationale = _assessment(case, technical, policy, frozen_at)
+    return decision, rationale
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--input-lock", type=Path, required=True)
@@ -271,7 +328,7 @@ def main() -> int:
     for case in input_lock["cases"]:
         record = evidence[case["case_id"]]
         technical, technical_reasons = _technical(record)
-        decision, rationale = _decision(case, technical, policy, frozen_at)
+        decision, overall_score_100, rationale = _assessment(case, technical, policy, frozen_at)
         if case.get("acquisition_status", "acquired") != "acquired":
             legacy = "unresolved"
         else:
@@ -283,11 +340,15 @@ def main() -> int:
                 else "check"
             )
         lock_material = {
-            "schema_version": "0.1",
+            "schema_version": "0.2",
             "case_id": case["case_id"],
             "group_input_sha256": input_lock["group_input_sha256"],
             "policy_id": policy["policy_id"],
             "decision": decision,
+            "overall_score_100": overall_score_100,
+            "overall_score_role": "historical-offline-evaluation-with-fixed-disposition-bands",
+            "formal_infraswe_result_issued": False,
+            "official_microscores_issued": False,
             "legacy_decision": legacy,
             "technical_contract": technical,
             "technical_reasons": technical_reasons,
@@ -304,8 +365,8 @@ def main() -> int:
             }
         )
     output_material = {
-        "schema_version": "0.1",
-        "protocol_id": (f"{input_lock.get('profile', 'training')}-bulk-group-judgment-lock-v0.1"),
+        "schema_version": "0.2",
+        "protocol_id": (f"{input_lock.get('profile', 'training')}-bulk-group-judgment-lock-v0.2"),
         "group_index": input_lock["group_index"],
         "group_input_sha256": input_lock["group_input_sha256"],
         "evidence_file_sha256s": [
@@ -316,6 +377,18 @@ def main() -> int:
         "review_text_visible_during_machine_judgment": False,
         "ci_or_label_visible_during_machine_judgment": False,
         "forced_polarization_used": False,
+        "formal_infraswe_result_issued": False,
+        "historical_score_limitation": (
+            "coarse outcome-blind historical evidence cannot issue official ProjectFit or "
+            "BenchmarkTrust microscores"
+        ),
+        "overall_score_band_policy": {
+            "reject_below_100": OVERALL_SCORE_REJECT_BELOW_100,
+            "check_minimum_100": OVERALL_SCORE_REJECT_BELOW_100,
+            "check_maximum_100": OVERALL_SCORE_ACCEPT_ABOVE_100,
+            "accept_above_100": OVERALL_SCORE_ACCEPT_ABOVE_100,
+            "accept_band_score_role": "evaluation-only",
+        },
         "frozen_at": frozen_at.isoformat(),
         "decision_counts": {
             decision: sum(lock["material"]["decision"] == decision for lock in locks)

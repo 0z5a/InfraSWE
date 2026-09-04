@@ -1,0 +1,982 @@
+{
+  "$defs": {
+    "BenchmarkCostCard": {
+      "additionalProperties": false,
+      "properties": {
+        "accelerator_seconds": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Accelerator Seconds"
+        },
+        "cache_hit_ratio": {
+          "anyOf": [
+            {
+              "maximum": 1,
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Cache Hit Ratio"
+        },
+        "cold_start_seconds": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Cold Start Seconds"
+        },
+        "compilation_path": {
+          "anyOf": [
+            {
+              "enum": [
+                "not-required",
+                "precompile",
+                "cache-reuse",
+                "inline"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Compilation Path"
+        },
+        "compile_seconds": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Compile Seconds"
+        },
+        "executed_cases": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Executed Cases"
+        },
+        "failure_codes": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Failure Codes",
+          "type": "array"
+        },
+        "fast_stage_resolution_rate": {
+          "anyOf": [
+            {
+              "maximum": 1,
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Fast Stage Resolution Rate"
+        },
+        "precompile_seconds": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Precompile Seconds"
+        },
+        "profiler_seconds": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Profiler Seconds"
+        },
+        "serialization_config_compatibility": {
+          "enum": [
+            "pass",
+            "fail",
+            "unresolved"
+          ],
+          "title": "Serialization Config Compatibility",
+          "type": "string"
+        },
+        "skipped_cases": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Skipped Cases"
+        },
+        "status": {
+          "default": "complete",
+          "enum": [
+            "complete",
+            "partial",
+            "unresolved"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "steady_state_compile_seconds": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Steady State Compile Seconds"
+        },
+        "steady_state_seconds": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Steady State Seconds"
+        },
+        "time_to_actionable_decision_seconds": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Time To Actionable Decision Seconds"
+        },
+        "time_to_first_diagnostic_seconds": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Time To First Diagnostic Seconds"
+        },
+        "wall_time_seconds": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Wall Time Seconds"
+        }
+      },
+      "required": [
+        "serialization_config_compatibility"
+      ],
+      "title": "BenchmarkCostCard",
+      "type": "object"
+    },
+    "BenchmarkTrustCard": {
+      "additionalProperties": false,
+      "properties": {
+        "components": {
+          "additionalProperties": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "title": "Components",
+          "type": "object"
+        },
+        "evidence_digests": {
+          "items": {
+            "pattern": "^sha256:[0-9a-f]{64}$",
+            "type": "string"
+          },
+          "title": "Evidence Digests",
+          "type": "array"
+        },
+        "failure_codes": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Failure Codes",
+          "type": "array"
+        },
+        "formula_version": {
+          "const": "benchmark-trust-v0.5",
+          "default": "benchmark-trust-v0.5",
+          "title": "Formula Version",
+          "type": "string"
+        },
+        "score_100": {
+          "anyOf": [
+            {
+              "maximum": 100,
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Score 100"
+        },
+        "status": {
+          "enum": [
+            "scored",
+            "unresolved"
+          ],
+          "title": "Status",
+          "type": "string"
+        }
+      },
+      "required": [
+        "status",
+        "components"
+      ],
+      "title": "BenchmarkTrustCard",
+      "type": "object"
+    },
+    "CellEfficiencyReference": {
+      "additionalProperties": false,
+      "properties": {
+        "cross_cell_ranking_allowed": {
+          "const": false,
+          "default": false,
+          "title": "Cross Cell Ranking Allowed",
+          "type": "boolean"
+        },
+        "details_path": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Details Path"
+        },
+        "status": {
+          "enum": [
+            "available",
+            "unresolved",
+            "not_applicable"
+          ],
+          "title": "Status",
+          "type": "string"
+        }
+      },
+      "required": [
+        "status"
+      ],
+      "title": "CellEfficiencyReference",
+      "type": "object"
+    },
+    "InfraSWEDecision": {
+      "additionalProperties": false,
+      "description": "Current three-class disposition with scope represented as a qualifier.",
+      "properties": {
+        "acceptance_scope": {
+          "enum": [
+            "full",
+            "limited",
+            "not-applicable"
+          ],
+          "title": "Acceptance Scope",
+          "type": "string"
+        },
+        "classification": {
+          "enum": [
+            "accept",
+            "check",
+            "reject"
+          ],
+          "title": "Classification",
+          "type": "string"
+        },
+        "excluded_scope": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Excluded Scope",
+          "type": "array"
+        },
+        "rationale_codes": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Rationale Codes",
+          "type": "array"
+        },
+        "required_actions": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Required Actions",
+          "type": "array"
+        },
+        "supported_scope": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Supported Scope",
+          "type": "array"
+        }
+      },
+      "required": [
+        "classification",
+        "acceptance_scope"
+      ],
+      "title": "InfraSWEDecision",
+      "type": "object"
+    },
+    "InfraSWEMicroscores": {
+      "additionalProperties": false,
+      "description": "Explanatory child scores nested under the sole overall score.",
+      "properties": {
+        "benchmark_trust": {
+          "$ref": "#/$defs/BenchmarkTrustCard"
+        },
+        "project_fit": {
+          "$ref": "#/$defs/ProjectFitScore"
+        }
+      },
+      "required": [
+        "project_fit",
+        "benchmark_trust"
+      ],
+      "title": "InfraSWEMicroscores",
+      "type": "object"
+    },
+    "OrderedEvaluationGate": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "enum": [
+            "maintainability",
+            "deployability",
+            "performance",
+            "overall-score"
+          ],
+          "title": "Name",
+          "type": "string"
+        },
+        "rationale_codes": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Rationale Codes",
+          "type": "array"
+        },
+        "status": {
+          "enum": [
+            "pass",
+            "fail",
+            "unresolved",
+            "not-run"
+          ],
+          "title": "Status",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "status",
+        "rationale_codes"
+      ],
+      "title": "OrderedEvaluationGate",
+      "type": "object"
+    },
+    "ProjectComparisonCell": {
+      "additionalProperties": false,
+      "properties": {
+        "acceptance_contract_sha256": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Acceptance Contract Sha256",
+          "type": "string"
+        },
+        "change_intent": {
+          "title": "Change Intent",
+          "type": "string"
+        },
+        "cross_project_ranking_allowed": {
+          "const": false,
+          "default": false,
+          "title": "Cross Project Ranking Allowed",
+          "type": "boolean"
+        },
+        "evidence_policy_id": {
+          "title": "Evidence Policy Id",
+          "type": "string"
+        },
+        "formula_template_id": {
+          "title": "Formula Template Id",
+          "type": "string"
+        },
+        "performance_target_sha256": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Performance Target Sha256",
+          "type": "string"
+        },
+        "probe_set_sha256": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Probe Set Sha256",
+          "type": "string"
+        },
+        "project_season": {
+          "title": "Project Season",
+          "type": "string"
+        },
+        "required_deployment_cell_set_sha256": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Required Deployment Cell Set Sha256",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "0.5",
+          "default": "0.5",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "semantic_contract_sha256": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Semantic Contract Sha256",
+          "type": "string"
+        },
+        "target_project_profile_sha256": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Target Project Profile Sha256",
+          "type": "string"
+        },
+        "target_repository_or_baseline_sha256": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Target Repository Or Baseline Sha256",
+          "type": "string"
+        },
+        "workload_portfolio_sha256": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Workload Portfolio Sha256",
+          "type": "string"
+        }
+      },
+      "required": [
+        "target_project_profile_sha256",
+        "target_repository_or_baseline_sha256",
+        "change_intent",
+        "semantic_contract_sha256",
+        "acceptance_contract_sha256",
+        "probe_set_sha256",
+        "workload_portfolio_sha256",
+        "performance_target_sha256",
+        "required_deployment_cell_set_sha256",
+        "formula_template_id",
+        "evidence_policy_id",
+        "project_season"
+      ],
+      "title": "ProjectComparisonCell",
+      "type": "object"
+    },
+    "ProjectFitScore": {
+      "additionalProperties": false,
+      "properties": {
+        "audit_flags": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Audit Flags",
+          "type": "array"
+        },
+        "comparison_cell": {
+          "$ref": "#/$defs/ProjectComparisonCell"
+        },
+        "component_floors": {
+          "additionalProperties": {
+            "type": "number"
+          },
+          "title": "Component Floors",
+          "type": "object"
+        },
+        "components": {
+          "additionalProperties": {
+            "$ref": "#/$defs/ProjectScoreComponent"
+          },
+          "title": "Components",
+          "type": "object"
+        },
+        "confidence": {
+          "enum": [
+            "low",
+            "medium",
+            "high",
+            "not_applicable"
+          ],
+          "title": "Confidence",
+          "type": "string"
+        },
+        "cross_project_ranking_allowed": {
+          "const": false,
+          "default": false,
+          "title": "Cross Project Ranking Allowed",
+          "type": "boolean"
+        },
+        "failure_codes": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Failure Codes",
+          "type": "array"
+        },
+        "formula_template_id": {
+          "enum": [
+            "project-fit-kernel-v0.5",
+            "project-fit-triton-pure-v0.5",
+            "project-fit-system-path-v0.5.1"
+          ],
+          "title": "Formula Template Id",
+          "type": "string"
+        },
+        "score_100": {
+          "anyOf": [
+            {
+              "maximum": 100,
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Score 100"
+        },
+        "status": {
+          "enum": [
+            "provisional",
+            "official",
+            "not_acceptable",
+            "unresolved",
+            "not_issued"
+          ],
+          "title": "Status",
+          "type": "string"
+        }
+      },
+      "required": [
+        "status",
+        "formula_template_id",
+        "components",
+        "component_floors",
+        "confidence",
+        "comparison_cell"
+      ],
+      "title": "ProjectFitScore",
+      "type": "object"
+    },
+    "ProjectObjectiveResult": {
+      "additionalProperties": false,
+      "properties": {
+        "evidence_digests": {
+          "items": {
+            "pattern": "^sha256:[0-9a-f]{64}$",
+            "type": "string"
+          },
+          "title": "Evidence Digests",
+          "type": "array"
+        },
+        "policy": {
+          "enum": [
+            "roadmap",
+            "release-gate",
+            "maintenance-only",
+            "experimental",
+            "out-of-scope"
+          ],
+          "title": "Policy",
+          "type": "string"
+        },
+        "release_gate_passed": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Release Gate Passed"
+        },
+        "status": {
+          "enum": [
+            "verified",
+            "degraded",
+            "explicit-unsupported",
+            "not-tested",
+            "blocked-by-infra",
+            "out-of-scope"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "weighted_score": {
+          "default": null,
+          "title": "Weighted Score",
+          "type": "null"
+        }
+      },
+      "required": [
+        "policy",
+        "status"
+      ],
+      "title": "ProjectObjectiveResult",
+      "type": "object"
+    },
+    "ProjectScoreComponent": {
+      "additionalProperties": false,
+      "properties": {
+        "confidence": {
+          "enum": [
+            "low",
+            "medium",
+            "high",
+            "not_applicable"
+          ],
+          "title": "Confidence",
+          "type": "string"
+        },
+        "failure_codes": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Failure Codes",
+          "type": "array"
+        },
+        "formula_version": {
+          "title": "Formula Version",
+          "type": "string"
+        },
+        "input_evidence_digests": {
+          "items": {
+            "pattern": "^sha256:[0-9a-f]{64}$",
+            "type": "string"
+          },
+          "title": "Input Evidence Digests",
+          "type": "array"
+        },
+        "reason": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Reason"
+        },
+        "status": {
+          "enum": [
+            "scored",
+            "not_applicable",
+            "unresolved",
+            "diagnostic",
+            "not_run_due_to_gate"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "value": {
+          "anyOf": [
+            {
+              "maximum": 1,
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Value"
+        }
+      },
+      "required": [
+        "status",
+        "formula_version",
+        "confidence"
+      ],
+      "title": "ProjectScoreComponent",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "description": "Current result envelope with one composite and nested explanatory microscores.",
+  "properties": {
+    "acceptance_contract_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Acceptance Contract Sha256",
+      "type": "string"
+    },
+    "audit_flags": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Audit Flags",
+      "type": "array"
+    },
+    "benchmark_cost": {
+      "$ref": "#/$defs/BenchmarkCostCard"
+    },
+    "candidate_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Candidate Sha256",
+      "type": "string"
+    },
+    "cell_efficiency": {
+      "$ref": "#/$defs/CellEfficiencyReference"
+    },
+    "decision": {
+      "$ref": "#/$defs/InfraSWEDecision"
+    },
+    "draft_id": {
+      "title": "Draft Id",
+      "type": "string"
+    },
+    "draft_revision": {
+      "minimum": 1,
+      "title": "Draft Revision",
+      "type": "integer"
+    },
+    "draft_state": {
+      "enum": [
+        "D0-created",
+        "D1-target-bound",
+        "D2-precedents-retrieved",
+        "D3-contract-proposed",
+        "D4-human-reviewed",
+        "D5-fast-loop",
+        "D6-sealed",
+        "D7-official-evaluation",
+        "D8-decided",
+        "D9-archived"
+      ],
+      "title": "Draft State",
+      "type": "string"
+    },
+    "evaluation_engine": {
+      "default": "infraswe",
+      "enum": [
+        "infraswe",
+        "external"
+      ],
+      "title": "Evaluation Engine",
+      "type": "string"
+    },
+    "evaluation_scope": {
+      "default": "full",
+      "enum": [
+        "full",
+        "staged"
+      ],
+      "title": "Evaluation Scope",
+      "type": "string"
+    },
+    "evidence_grade": {
+      "enum": [
+        "E0-runtime",
+        "E1-framework",
+        "E2-system-trace",
+        "E3-kernel-counter",
+        "E4-sealed"
+      ],
+      "title": "Evidence Grade",
+      "type": "string"
+    },
+    "failure_codes": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Failure Codes",
+      "type": "array"
+    },
+    "infra_cert": {
+      "enum": [
+        "pass",
+        "fail",
+        "unresolved"
+      ],
+      "title": "Infra Cert",
+      "type": "string"
+    },
+    "microscores": {
+      "$ref": "#/$defs/InfraSWEMicroscores"
+    },
+    "ordered_gates": {
+      "items": {
+        "$ref": "#/$defs/OrderedEvaluationGate"
+      },
+      "maxItems": 4,
+      "minItems": 4,
+      "title": "Ordered Gates",
+      "type": "array"
+    },
+    "overall_score_100": {
+      "anyOf": [
+        {
+          "maximum": 100,
+          "minimum": 0,
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Overall Score 100"
+    },
+    "overall_score_formula_id": {
+      "const": "infraswe-overall-v0.1",
+      "default": "infraswe-overall-v0.1",
+      "title": "Overall Score Formula Id",
+      "type": "string"
+    },
+    "project_objectives": {
+      "additionalProperties": {
+        "$ref": "#/$defs/ProjectObjectiveResult"
+      },
+      "title": "Project Objectives",
+      "type": "object"
+    },
+    "raw_metrics": {
+      "additionalProperties": true,
+      "title": "Raw Metrics",
+      "type": "object"
+    },
+    "schema_version": {
+      "const": "0.1",
+      "default": "0.1",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "seal_enabled": {
+      "default": true,
+      "title": "Seal Enabled",
+      "type": "boolean"
+    },
+    "sealed_draft_sha256": {
+      "anyOf": [
+        {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Sealed Draft Sha256"
+    },
+    "target_project_profile_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Target Project Profile Sha256",
+      "type": "string"
+    },
+    "target_repository_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Target Repository Sha256",
+      "type": "string"
+    }
+  },
+  "required": [
+    "draft_id",
+    "draft_revision",
+    "draft_state",
+    "target_project_profile_sha256",
+    "target_repository_sha256",
+    "candidate_sha256",
+    "acceptance_contract_sha256",
+    "infra_cert",
+    "microscores",
+    "ordered_gates",
+    "benchmark_cost",
+    "evidence_grade",
+    "project_objectives",
+    "cell_efficiency",
+    "decision"
+  ],
+  "title": "InfraSWEOverallResult",
+  "type": "object"
+}

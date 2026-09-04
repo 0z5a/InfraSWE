@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import json
 import math
-from datetime import UTC, datetime, timedelta
+from datetime import UTC, datetime
 from pathlib import Path
 
 import pytest
@@ -36,15 +36,17 @@ from infraswe.models.project_score import (
     CellEfficiencyReference,
     MergeabilityDecision,
     ProjectObjectiveResult,
-    PullRequestReviewContext,
     PureTritonEligibilityEvidence,
 )
+from infraswe.policy import overall_score_decision_band
 from infraswe.scoring.deployability import weighted_geometric
 from infraswe.scoring.project_fit import (
     PROJECT_FIT_WEIGHTS,
     audit_pure_triton,
+    build_infraswe_result,
     build_project_fit,
     build_v05_result,
+    compile_legacy_mergeability_decision,
     compile_mergeability_decision,
     score_benchmark_trust,
     score_evolutionary_maintainability,
@@ -152,6 +154,34 @@ def _ordinary_fit(*, mode: str = "official", value: float = 0.9, **overrides):
     return build_project_fit(**arguments)
 
 
+def _trust(value: float = 0.9):
+    return score_benchmark_trust(
+        reproducibility=value,
+        evidence=value,
+        statistics=value,
+        environment=value,
+    )
+
+
+def _benchmark_cost() -> BenchmarkCostCard:
+    return BenchmarkCostCard(
+        wall_time_seconds=1,
+        accelerator_seconds=1,
+        compile_seconds=0.2,
+        precompile_seconds=0.2,
+        cold_start_seconds=0.2,
+        steady_state_seconds=0.5,
+        steady_state_compile_seconds=0,
+        compilation_path="precompile",
+        profiler_seconds=0,
+        executed_cases=4,
+        skipped_cases=1,
+        cache_hit_ratio=0.5,
+        fast_stage_resolution_rate=0.8,
+        serialization_config_compatibility="pass",
+    )
+
+
 def _review_for(draft) -> HumanReviewRecord:
     assert draft.target and draft.acceptance_contract and draft.deployment and draft.scoring
     return HumanReviewRecord(
@@ -187,6 +217,24 @@ def test_default_catalog_is_pinned_complete_and_machine_proposed() -> None:
             "maintainability-probes",
         }
         assert project in entry.aliases[0]
+
+
+def test_default_draft_seals_and_runs_full_infraswe_evaluation() -> None:
+    draft = build_default_draft(project="vllm", candidate=_candidate(), created_by="test")[0]
+
+    assert draft.benchmark_loop is not None
+    assert draft.benchmark_loop.evaluation_scope == "full"
+    assert draft.benchmark_loop.affected_stage_max_official_fraction == 1.0
+    assert draft.benchmark_loop.early_exit_on_hard_gate is False
+    assert draft.scoring is not None
+    assert draft.scoring.evaluation_engine == "infraswe"
+    assert draft.scoring.seal_by_default is True
+    assert draft.scoring.official_scoring_requires_seal is True
+
+    payload = draft.benchmark_loop.model_dump(mode="json")
+    payload["affected_stage_max_official_fraction"] = 0.2
+    with pytest.raises(ValidationError, match="full evaluation requires all official cases"):
+        type(draft.benchmark_loop).model_validate(payload)
 
 
 def test_materialized_default_catalog_matches_builtin(project_root: Path) -> None:
@@ -493,10 +541,14 @@ def test_component_floor_cannot_be_compensated_by_other_high_scores() -> None:
     )
     assert fit.status == "not_acceptable"
     decision = compile_mergeability_decision(
-        infra_cert="pass", project_fit=fit, project_objectives={}
+        infra_cert="pass",
+        project_fit=fit,
+        benchmark_trust=_trust(),
+        project_objectives={},
     )
-    assert decision.verdict == "reject"
-    assert "PROJECT_COMPONENT_FLOOR_FAILED" in decision.rationale_codes
+    assert decision.classification == "reject"
+    assert "ORDERED_HARD_GATE:deployability:fail" in decision.rationale_codes
+    assert "MICROSCORE_COMPONENT_FLOOR_FAILED:operational_fit" in decision.rationale_codes
 
 
 def test_pure_triton_audit_rejects_hidden_native_paths_and_missing_profiles() -> None:
@@ -601,7 +653,7 @@ def test_v05_result_never_places_provisional_score_on_leaderboard() -> None:
         policy="roadmap",
         status="not-tested",
     )
-    decision = compile_mergeability_decision(
+    decision = compile_legacy_mergeability_decision(
         infra_cert="pass",
         project_fit=fit,
         project_objectives={"edge": objective},
@@ -618,22 +670,7 @@ def test_v05_result_never_places_provisional_score_on_leaderboard() -> None:
         infra_cert="pass",
         project_fit=fit,
         benchmark_trust=trust,
-        benchmark_cost=BenchmarkCostCard(
-            wall_time_seconds=1,
-            accelerator_seconds=1,
-            compile_seconds=0.2,
-            precompile_seconds=0.2,
-            cold_start_seconds=0.2,
-            steady_state_seconds=0.5,
-            steady_state_compile_seconds=0,
-            compilation_path="precompile",
-            profiler_seconds=0,
-            executed_cases=4,
-            skipped_cases=1,
-            cache_hit_ratio=0.5,
-            fast_stage_resolution_rate=0.8,
-            serialization_config_compatibility="pass",
-        ),
+        benchmark_cost=_benchmark_cost(),
         evidence_grade="E1-framework",
         project_objectives={"edge": objective},
         cell_efficiency=CellEfficiencyReference(status="unresolved"),
@@ -650,39 +687,59 @@ def test_v05_result_never_places_provisional_score_on_leaderboard() -> None:
         type(result).model_validate(payload)
 
 
-def test_polarized_mergeability_requires_85_and_limits_check_to_active_review() -> None:
-    below = _ordinary_fit(value=0.8499)
-    at_floor = _ordinary_fit(value=0.85)
+def test_overall_score_bands_use_50_and_exclusive_65_boundaries() -> None:
+    assert overall_score_decision_band(0) == "reject"
+    assert overall_score_decision_band(49.999) == "reject"
+    assert overall_score_decision_band(50) == "check"
+    assert overall_score_decision_band(65) == "check"
+    assert overall_score_decision_band(65.001) == "accept"
+    assert overall_score_decision_band(100) == "accept"
+
+    check_fit = _ordinary_fit(value=0.65)
+    accept_fit = _ordinary_fit(value=0.6501)
     assert (
         compile_mergeability_decision(
-            infra_cert="pass", project_fit=below, project_objectives={}
-        ).verdict
-        == "reject"
+            infra_cert="pass",
+            project_fit=check_fit,
+            benchmark_trust=_trust(0.65),
+            project_objectives={},
+        ).classification
+        == "check"
     )
     assert (
         compile_mergeability_decision(
-            infra_cert="pass", project_fit=at_floor, project_objectives={}
-        ).verdict
+            infra_cert="pass",
+            project_fit=accept_fit,
+            benchmark_trust=_trust(0.6501),
+            project_objectives={},
+        ).classification
         == "accept"
     )
 
-    observed = datetime(2026, 9, 2, tzinfo=UTC)
-    active = PullRequestReviewContext(
-        created_at=observed - timedelta(days=10),
-        observed_at=observed,
-        last_activity_at=observed - timedelta(days=1),
-        last_human_review_at=observed - timedelta(days=1),
-        current_head_human_non_author_review_count=1,
-        total_human_non_author_review_count=1,
-    )
-    active_decision = compile_mergeability_decision(
-        infra_cert="pass",
-        project_fit=below,
+
+def test_non_score_hard_gates_still_override_score_bands() -> None:
+    high = _ordinary_fit(value=0.9)
+    infra_failure = compile_mergeability_decision(
+        infra_cert="fail",
+        project_fit=high,
+        benchmark_trust=_trust(),
         project_objectives={},
-        review_context=active,
     )
-    assert active_decision.verdict == "check"
-    assert "ACTIVE_NEW_PR_REVIEW_CHECK_ELIGIBLE" in active_decision.rationale_codes
+    assert infra_failure.classification == "reject"
+
+    release_failure = compile_mergeability_decision(
+        infra_cert="pass",
+        project_fit=high,
+        benchmark_trust=_trust(),
+        project_objectives={
+            "cuda": ProjectObjectiveResult(
+                policy="release-gate",
+                status="degraded",
+                release_gate_passed=False,
+            )
+        },
+    )
+    assert release_failure.classification == "reject"
 
     legacy = MergeabilityDecision.model_validate(
         {
@@ -693,18 +750,109 @@ def test_polarized_mergeability_requires_85_and_limits_check_to_active_review() 
     assert legacy.verdict == "check"
     assert legacy.model_dump(mode="json")["verdict"] == "check"
 
-    stale = PullRequestReviewContext(
-        created_at=observed - timedelta(days=180),
-        observed_at=observed,
-        last_activity_at=observed - timedelta(days=60),
-        last_human_review_at=observed - timedelta(days=60),
-        total_human_non_author_review_count=2,
-    )
-    stale_decision = compile_mergeability_decision(
+
+def test_current_result_has_one_top_level_score_and_nested_sibling_microscores() -> None:
+    result = build_infraswe_result(
+        draft_id="draft-v01",
+        draft_revision=1,
+        draft_state="D8-decided",
+        sealed_draft_sha256=_digest("9"),
+        target_project_profile_sha256=_digest("1"),
+        target_repository_sha256=_digest("2"),
+        candidate_sha256=_digest("3"),
+        acceptance_contract_sha256=_digest("4"),
         infra_cert="pass",
-        project_fit=below,
+        project_fit=_ordinary_fit(),
+        benchmark_trust=_trust(),
+        benchmark_cost=_benchmark_cost(),
+        evidence_grade="E3-kernel-counter",
         project_objectives={},
-        review_context=stale,
+        cell_efficiency=CellEfficiencyReference(status="unresolved"),
     )
-    assert stale_decision.verdict == "reject"
-    assert "STALE_REVIEWED_OPEN_REJECT" in stale_decision.rationale_codes
+
+    payload = result.model_dump(mode="json")
+    assert payload["overall_score_100"] == pytest.approx(90)
+    assert [key for key in payload if key.endswith("_score_100")] == ["overall_score_100"]
+    assert "project_fit" not in payload
+    assert "benchmark_trust" not in payload
+    assert set(payload["microscores"]) == {"project_fit", "benchmark_trust"}
+    assert [gate["name"] for gate in payload["ordered_gates"]] == [
+        "maintainability",
+        "deployability",
+        "performance",
+        "overall-score",
+    ]
+    assert all(gate["status"] == "pass" for gate in payload["ordered_gates"])
+    assert result.decision.classification == "accept"
+    assert result.decision.acceptance_scope == "full"
+    decision_schema = type(result).model_json_schema()["$defs"]["InfraSWEDecision"]
+    assert decision_schema["properties"]["classification"]["enum"] == [
+        "accept",
+        "check",
+        "reject",
+    ]
+    assert "verdict" not in decision_schema["properties"]
+
+    limited = compile_mergeability_decision(
+        infra_cert="pass",
+        project_fit=_ordinary_fit(),
+        benchmark_trust=_trust(),
+        project_objectives={},
+        excluded_scope=["unsupported-architecture"],
+    )
+    assert limited.classification == "accept"
+    assert limited.acceptance_scope == "limited"
+
+
+def test_current_result_does_not_issue_overall_score_before_ordered_gates_pass() -> None:
+    maintainability, contract, reuse, operational = _dimensions(0.9)
+    maintainability = score_evolutionary_maintainability(
+        {
+            "evolution": 0.4,
+            "locality": 0.4,
+            "tests": 0.4,
+            "failure": 0.4,
+            "contract": 0.4,
+        }
+    )
+    fit = build_project_fit(
+        mode="official",
+        infra_cert="pass",
+        formula_template_id="project-fit-kernel-v0.5",
+        comparison_cell=_comparison_cell(),
+        evolutionary_maintainability=maintainability,
+        project_contract_fit=contract,
+        performance_reuse_utilization=reuse,
+        operational_fit=operational,
+        fresh_process_replays=7,
+        evidence_grade="E3-kernel-counter",
+        hidden_probes_complete=True,
+        manifest_verified=True,
+        sealed_draft_sha256=_digest("9"),
+    )
+    result = build_infraswe_result(
+        draft_id="draft-v01-gated",
+        draft_revision=1,
+        draft_state="D8-decided",
+        sealed_draft_sha256=_digest("9"),
+        target_project_profile_sha256=_digest("1"),
+        target_repository_sha256=_digest("2"),
+        candidate_sha256=_digest("3"),
+        acceptance_contract_sha256=_digest("4"),
+        infra_cert="pass",
+        project_fit=fit,
+        benchmark_trust=_trust(),
+        benchmark_cost=_benchmark_cost(),
+        evidence_grade="E3-kernel-counter",
+        project_objectives={},
+        cell_efficiency=CellEfficiencyReference(status="unresolved"),
+    )
+
+    assert result.overall_score_100 is None
+    assert [gate.status for gate in result.ordered_gates] == [
+        "fail",
+        "not-run",
+        "not-run",
+        "not-run",
+    ]
+    assert result.decision.classification == "reject"

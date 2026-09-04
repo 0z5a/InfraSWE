@@ -134,8 +134,14 @@ transcript-only, reward-unqualified, and never policy-gradient eligible. The rep
 yet ship a production sandbox, model gateway, trainer adapter, or distributed scheduler. See
 [`AGENTIC_RL_V06_IMPLEMENTATION_STATUS_20260903_ZH.md`](AGENTIC_RL_V06_IMPLEMENTATION_STATUS_20260903_ZH.md).
 
-Formal mergeability still requires an official, sealed ProjectFit before an `>=85` acceptance
-claim. Historical PR calibration does not synthesize that score from coarse static features: the
+Formal mergeability defaults to a sealed, full InfraSWE evaluation. Current results expose one
+top-level `overall_score_100`; ProjectFit and BenchmarkTrust are sibling explanatory microscores
+nested below it. Classification follows ordered hard gates—maintainability, deployability, then
+the original performance evidence—before consulting the overall score. A failed gate rejects, an
+unresolved gate checks, and only an all-pass path uses `<50 = reject`, `50..65 = check`, and
+`>65 = accept`. Variation inside the accept band is evaluation/ranking information and does not
+create additional decision classes.
+Historical PR calibration does not synthesize that score from coarse static features: the
 R8 polarized 30-PR cohort is retained as a negative control after producing the same score for all
 30 cases and matching only 13 outcomes. Generic historical evaluation now defaults to the R4
 ordered, case-specific contract route without a numeric score; R5 remains an explicit replay mode

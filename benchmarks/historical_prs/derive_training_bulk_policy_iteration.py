@@ -17,6 +17,7 @@ from infraswe.io import atomic_write_json
 
 MERGED_ACCEPT_RECALL_MINIMUM = 0.99
 MERGED_ACCEPT_RECALL_REPAIR_MARGIN = 0.005
+CUMULATIVE_STRUCTURAL_MINIMUM_GROUPS = 6
 
 
 def _read(path: Path) -> dict[str, Any]:
@@ -50,12 +51,255 @@ def _should_promote_candidate(
     )
 
 
+def _cohort(
+    *,
+    input_lock: dict[str, Any],
+    judgment: dict[str, Any],
+    reveal: dict[str, Any],
+    audit: dict[str, Any],
+) -> dict[str, Any]:
+    input_by_id = {case["case_id"]: case for case in input_lock["cases"]}
+    rows = []
+    for revealed in reveal["cases"]:
+        if revealed.get("outcome", {}).get("availability", "available") != "available" or revealed[
+            "oracle_decision"
+        ] not in {"accept", "check", "reject"}:
+            continue
+        rows.append(
+            {
+                "case": input_by_id[revealed["case_id"]],
+                "technical_contract": revealed["technical_contract"],
+                "oracle_decision": revealed["oracle_decision"],
+            }
+        )
+    return {
+        "group_index": int(judgment["group_index"]),
+        "frozen_at": datetime.fromisoformat(judgment["frozen_at"].replace("Z", "+00:00")),
+        "audit_sha256": audit["audit_sha256"],
+        "rows": rows,
+    }
+
+
+def _evaluate_cohort(policy: dict[str, Any], cohort: dict[str, Any]) -> dict[str, int]:
+    metrics = {
+        "eligible_cases": 0,
+        "exact_matches": 0,
+        "merged_cases": 0,
+        "merged_accepts": 0,
+    }
+    for row in cohort["rows"]:
+        decision, _ = _decision(
+            row["case"],
+            row["technical_contract"],
+            policy,
+            cohort["frozen_at"],
+        )
+        decision = _label(decision)
+        oracle = row["oracle_decision"]
+        metrics["eligible_cases"] += 1
+        metrics["exact_matches"] += decision == oracle
+        metrics["merged_cases"] += oracle == "accept"
+        metrics["merged_accepts"] += oracle == "accept" and decision == "accept"
+    return metrics
+
+
+def _merged_recall_gate_satisfied(metrics: dict[str, int]) -> bool:
+    return metrics["merged_accepts"] >= math.ceil(
+        metrics["merged_cases"] * MERGED_ACCEPT_RECALL_MINIMUM
+    )
+
+
+def _load_prior_cohorts(history_root: Path | None, current_group: int) -> list[dict[str, Any]]:
+    if history_root is None or not history_root.is_dir():
+        return []
+    cohorts = []
+    for group_dir in sorted(history_root.glob("group-[0-9][0-9][0-9][0-9]")):
+        group_index = int(group_dir.name.removeprefix("group-"))
+        if group_index >= current_group:
+            continue
+        required = {
+            "input": group_dir / "input-lock.json",
+            "judgment": group_dir / "judgment-locks.json",
+            "reveal": group_dir / "outcome-reveal.json",
+            "audit": group_dir / "oracle-audit.json",
+        }
+        if not all(path.is_file() for path in required.values()):
+            continue
+        input_lock = _checked(required["input"], "group_input_sha256")
+        judgment = _checked(required["judgment"], "lock_set_sha256")
+        reveal = _checked(required["reveal"], "reveal_sha256")
+        audit = _checked(required["audit"], "audit_sha256")
+        if any(
+            int(payload["group_index"]) != group_index
+            for payload in (input_lock, judgment, reveal, audit)
+        ):
+            raise SystemExit(f"{group_dir}: cumulative experience group-index mismatch")
+        if judgment["group_input_sha256"] != input_lock["group_input_sha256"]:
+            raise SystemExit(f"{group_dir}: cumulative judgment/input binding mismatch")
+        if reveal["judgment_lock_set_sha256"] != judgment["lock_set_sha256"]:
+            raise SystemExit(f"{group_dir}: cumulative reveal/judgment binding mismatch")
+        if audit["reveal_sha256"] != reveal["reveal_sha256"]:
+            raise SystemExit(f"{group_dir}: cumulative audit/reveal binding mismatch")
+        cohorts.append(
+            _cohort(
+                input_lock=input_lock,
+                judgment=judgment,
+                reveal=reveal,
+                audit=audit,
+            )
+        )
+    return cohorts
+
+
+def _existing_structural_pairs(policy: dict[str, Any]) -> set[tuple[str, str]]:
+    pairs = set()
+    for rule in policy.get("structural_reject_rules") or []:
+        for project in rule.get("projects") or []:
+            for association in rule.get("author_associations") or []:
+                pairs.add((str(project), str(association)))
+    return pairs
+
+
+def _select_cumulative_structural_update(
+    *,
+    old_policy: dict[str, Any],
+    prior_cohorts: list[dict[str, Any]],
+    current_cohort: dict[str, Any],
+) -> tuple[dict[str, Any], list[dict[str, str]]] | None:
+    """Select on prior sealed groups, then require a fresh current-group confirmation."""
+
+    if len(prior_cohorts) < CUMULATIVE_STRUCTURAL_MINIMUM_GROUPS:
+        return None
+    pairs = set()
+    for cohort in prior_cohorts:
+        for row in cohort["rows"]:
+            decision, rationale = _decision(
+                row["case"],
+                row["technical_contract"],
+                old_policy,
+                cohort["frozen_at"],
+            )
+            if _label(decision) == "accept" and rationale[0] == "MERGED_RECALL_GUARD_PROJECT_SCOPE":
+                pairs.add(
+                    (
+                        str(row["case"]["project"]),
+                        str(row["case"]["pr_author_association"]),
+                    )
+                )
+    pairs -= _existing_structural_pairs(old_policy)
+    baselines = [_evaluate_cohort(old_policy, cohort) for cohort in prior_cohorts]
+    ranked = []
+    existing_rules = list(old_policy.get("structural_reject_rules") or [])
+    for project, association in sorted(pairs):
+        learned_rule = {
+            "projects": [project],
+            "author_associations": [association],
+        }
+        candidate_policy = {
+            **old_policy,
+            "structural_reject_rules": [*existing_rules, learned_rule],
+        }
+        candidate_metrics = [_evaluate_cohort(candidate_policy, cohort) for cohort in prior_cohorts]
+        gains = [
+            candidate["exact_matches"] - baseline["exact_matches"]
+            for baseline, candidate in zip(baselines, candidate_metrics, strict=True)
+        ]
+        if (
+            sum(gains) <= 0
+            or min(gains) < 0
+            or not all(_merged_recall_gate_satisfied(item) for item in candidate_metrics)
+        ):
+            continue
+        ranked.append(
+            (
+                sum(gains),
+                sum(gain > 0 for gain in gains),
+                min(gains),
+                project,
+                association,
+                learned_rule,
+                candidate_policy,
+                candidate_metrics,
+            )
+        )
+    if not ranked:
+        return None
+
+    selected = max(ranked, key=lambda item: item[:5])
+    (
+        history_gain,
+        improved_group_count,
+        minimum_group_gain,
+        project,
+        association,
+        learned_rule,
+        candidate_policy,
+        candidate_metrics,
+    ) = selected
+    current_baseline = _evaluate_cohort(old_policy, current_cohort)
+    current_candidate = _evaluate_cohort(candidate_policy, current_cohort)
+    current_gain = current_candidate["exact_matches"] - current_baseline["exact_matches"]
+    if current_gain <= 0 or not _merged_recall_gate_satisfied(current_candidate):
+        return None
+
+    source_audits = [cohort["audit_sha256"] for cohort in prior_cohorts]
+    history_eligible = sum(item["eligible_cases"] for item in baselines)
+    history_before = sum(item["exact_matches"] for item in baselines)
+    history_after = sum(item["exact_matches"] for item in candidate_metrics)
+    experience_material = {
+        "schema_version": "0.1",
+        "provenance_tier": "reconstructed",
+        "trajectory_status": "transcript-only",
+        "policy_gradient_eligible": False,
+        "allowed_uses": ["external-policy", "curriculum", "offline-retrieval", "audit"],
+        "source_group_indices": [cohort["group_index"] for cohort in prior_cohorts],
+        "source_audit_sha256s": source_audits,
+        "selected_rule": learned_rule,
+        "history_eligible_cases": history_eligible,
+        "history_exact_matches_before": history_before,
+        "history_exact_matches_after": history_after,
+        "history_exact_match_gain": history_gain,
+        "history_improved_group_count": improved_group_count,
+        "history_minimum_group_gain": minimum_group_gain,
+        "prospective_confirmation_group_index": current_cohort["group_index"],
+        "prospective_exact_matches_before": current_baseline["exact_matches"],
+        "prospective_exact_matches_after": current_candidate["exact_matches"],
+        "prospective_exact_match_gain": current_gain,
+        "prospective_merged_cases": current_candidate["merged_cases"],
+        "prospective_merged_accepts": current_candidate["merged_accepts"],
+        "merged_accept_recall_minimum": MERGED_ACCEPT_RECALL_MINIMUM,
+    }
+    experience = {
+        **experience_material,
+        "experience_sha256": canonical_sha256(experience_material),
+    }
+    updates = {
+        "structural_reject_rules": [*existing_rules, learned_rule],
+        "cumulative_experience": experience,
+    }
+    changes = [
+        {
+            "rule": "promote-cumulative-project-author-reject-rule",
+            "evidence": (
+                f"Prior sealed groups gained {history_gain} exact matches across "
+                f"{history_eligible} eligible cases without regressing any group or "
+                f"crossing the {MERGED_ACCEPT_RECALL_MINIMUM:.0%} merged-PR recall floor; "
+                f"fresh group {current_cohort['group_index']} added {current_gain} exact "
+                f"matches under the same floor for project={project}, "
+                f"author_association={association}."
+            ),
+        }
+    ]
+    return updates, changes
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--input-lock", type=Path, required=True)
     parser.add_argument("--judgment-locks", type=Path, required=True)
     parser.add_argument("--reveal", type=Path, required=True)
     parser.add_argument("--audit", type=Path, required=True)
+    parser.add_argument("--history-root", type=Path)
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
 
@@ -67,6 +311,10 @@ def main() -> int:
     target_metric_improved = bool(summary["target_metric_improved"])
     if reveal["judgment_lock_set_sha256"] != judgment["lock_set_sha256"]:
         raise SystemExit("reveal/judgment binding mismatch")
+    if audit["judgment_lock_set_sha256"] != judgment["lock_set_sha256"]:
+        raise SystemExit("audit/judgment binding mismatch")
+    if audit["reveal_sha256"] != reveal["reveal_sha256"]:
+        raise SystemExit("audit/reveal binding mismatch")
 
     # The frozen judgment embeds the previously verified policy, including its
     # transport digest.  A digest is never part of the material it authenticates;
@@ -83,10 +331,33 @@ def main() -> int:
         and case["oracle_decision"] in {"accept", "check", "reject"}
     ]
     eligible_case_ids = {case["case_id"] for case in eligible_reveals}
+    history_root = args.history_root
+    if (
+        history_root is None
+        and args.input_lock.parent.name.startswith("group-")
+        and args.input_lock.parent.parent.name == "groups"
+    ):
+        history_root = args.input_lock.parent.parent
+    prior_cohorts = _load_prior_cohorts(history_root, current_group)
+    current_cohort = _cohort(
+        input_lock=input_lock,
+        judgment=judgment,
+        reveal=reveal,
+        audit=audit,
+    )
     changes: list[dict[str, str]]
     updates: dict[str, Any]
     candidate_recall_target = MERGED_ACCEPT_RECALL_MINIMUM
+    cumulative_update = None
     if old_policy.get("domain") in {"inference", "communication"} or current_group >= 2:
+        cumulative_update = _select_cumulative_structural_update(
+            old_policy=old_policy,
+            prior_cohorts=prior_cohorts,
+            current_cohort=current_cohort,
+        )
+    if cumulative_update is not None:
+        updates, changes = cumulative_update
+    elif old_policy.get("domain") in {"inference", "communication"} or current_group >= 2:
         candidates: list[dict[str, Any]] = [{}]
         for key in (
             "small_compile_accept_enabled",

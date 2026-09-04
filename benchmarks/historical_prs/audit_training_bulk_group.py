@@ -51,10 +51,9 @@ def main() -> int:
         machine = _label(case["machine_decision"])
         legacy = _label(case["legacy_decision"])
         oracle = case["oracle_decision"]
-        oracle_eligible = (
-            case.get("outcome", {}).get("availability", "available") == "available"
-            and oracle in {"accept", "check", "reject"}
-        )
+        oracle_eligible = case.get("outcome", {}).get(
+            "availability", "available"
+        ) == "available" and oracle in {"accept", "check", "reject"}
         machine_binary = "accept" if machine == "accept" else "reject"
         legacy_binary = "accept" if legacy == "accept" else "reject"
         oracle_binary = "accept" if oracle == "accept" else "reject"
@@ -81,21 +80,16 @@ def main() -> int:
     binary = sum(row["binary_match"] for row in rows)
     legacy_binary = sum(row["legacy_binary_match"] for row in rows)
     machine_rejects = [
-        row
-        for row in rows
-        if row["oracle_eligible"] and row["machine_decision"] == "reject"
+        row for row in rows if row["oracle_eligible"] and row["machine_decision"] == "reject"
     ]
     machine_checks = [
-        row
-        for row in rows
-        if row["oracle_eligible"] and row["machine_decision"] == "check"
+        row for row in rows if row["oracle_eligible"] and row["machine_decision"] == "check"
     ]
     merged = [case for case in reveal["cases"] if case["outcome"]["merged"]]
     material = {
         "schema_version": "0.1",
         "protocol_id": (
-            f"{judgment.get('policy', {}).get('domain', 'training')}-bulk-group-"
-            "oracle-audit-v0.1"
+            f"{judgment.get('policy', {}).get('domain', 'training')}-bulk-group-oracle-audit-v0.1"
         ),
         "group_index": judgment["group_index"],
         "judgment_lock_set_sha256": judgment["lock_set_sha256"],
@@ -112,9 +106,7 @@ def main() -> int:
             "legacy_exact_accuracy": _ratio(legacy_exact, eligible_count),
             "legacy_binary_direction_matches": legacy_binary,
             "legacy_binary_accuracy": _ratio(legacy_binary, eligible_count),
-            "same_cohort_exact_accuracy_gain": _ratio(
-                exact - legacy_exact, eligible_count
-            ),
+            "same_cohort_exact_accuracy_gain": _ratio(exact - legacy_exact, eligible_count),
             "machine_reject_predictions": len(machine_rejects),
             "machine_reject_correct": sum(
                 row["oracle_decision"] == "reject" for row in machine_rejects
@@ -137,9 +129,7 @@ def main() -> int:
             ),
             "target_metric_improved": exact > legacy_exact,
         },
-        "errors": [
-            row for row in rows if row["oracle_eligible"] and not row["exact_match"]
-        ],
+        "errors": [row for row in rows if row["oracle_eligible"] and not row["exact_match"]],
         "invalid_cases": [row for row in rows if not row["oracle_eligible"]],
         "cases": rows,
     }

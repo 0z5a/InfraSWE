@@ -304,9 +304,7 @@ class DraftBenchmarkLoop(DraftModel):
         if self.evaluation_scope == "full" and (
             self.affected_stage_max_official_fraction != 1.0 or self.early_exit_on_hard_gate
         ):
-            raise ValueError(
-                "full evaluation requires all official cases and disables early exit"
-            )
+            raise ValueError("full evaluation requires all official cases and disables early exit")
         return self
 
 

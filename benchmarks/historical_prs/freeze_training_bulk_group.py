@@ -37,6 +37,7 @@ DEFAULT_POLICY = {
     "merged_recall_guard_max_changed_lines": None,
     "merged_recall_guard_author_associations": [],
     "merged_recall_guard_review_modes": [],
+    "structural_reject_rules": [],
 }
 READINESS_RE = re.compile(
     r"(?:^\s*\[draft\]|^\s*draft\s*[-:]|\bwip\b|work in progress|do not merge)",
@@ -73,6 +74,7 @@ RATIONALE_SCORE_100 = {
     "EXPLICIT_REVERT_WITHOUT_HARD_FAILURE": 74.0,
     "HUMAN_NON_AUTHOR_APPROVAL": 92.0,
     "MAINTAINER_RUNTIME_SOURCE_CHANGE": 84.0,
+    "CUMULATIVE_PROJECT_AUTHOR_REJECT_GUARD": 35.0,
     "MERGED_RECALL_GUARD_PROJECT_SCOPE": 66.0,
     "REVIEW_WITHOUT_APPROVAL": 45.0,
     "MAINTAINER_AUTHORED_NO_HARD_FAILURE": 78.0,
@@ -215,6 +217,25 @@ def _merged_recall_guard_applies(
     )
 
 
+def _structural_reject_guard_applies(
+    case: dict[str, Any],
+    policy: dict[str, Any],
+) -> bool:
+    """Apply an outcome-blind project/author rule learned on prior sealed groups."""
+
+    for rule in policy.get("structural_reject_rules") or []:
+        projects = set(rule.get("projects") or [])
+        associations = set(rule.get("author_associations") or [])
+        if (
+            projects
+            and associations
+            and case["project"] in projects
+            and case["pr_author_association"] in associations
+        ):
+            return True
+    return False
+
+
 def _current_decision(value: str) -> str:
     """Normalize legacy scoped-accept labels into the current three-class vocabulary."""
 
@@ -272,6 +293,8 @@ def _rule_decision(
     )
     if policy.get("maintainer_precedes_review_without_approval", False) and maintainer_scope_closed:
         return "accept", ["MAINTAINER_RUNTIME_SOURCE_CHANGE"]
+    if _structural_reject_guard_applies(case, policy):
+        return "reject", ["CUMULATIVE_PROJECT_AUTHOR_REJECT_GUARD"]
     if _merged_recall_guard_applies(case, policy, changed_lines=changed_lines):
         return "accept", ["MERGED_RECALL_GUARD_PROJECT_SCOPE"]
     if case["human_non_author_reviews"]:

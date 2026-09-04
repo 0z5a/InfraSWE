@@ -475,6 +475,157 @@ def test_merged_recall_guard_is_narrow_and_outcome_blind(project_root: Path, mon
     )
 
 
+def test_cumulative_structural_reject_rule_precedes_the_recall_guard(
+    project_root: Path, monkeypatch
+) -> None:
+    monkeypatch.syspath_prepend(str(project_root / "benchmarks" / "historical_prs"))
+    freeze = _load(project_root, "freeze_training_bulk_group")
+    policy = {
+        **freeze.DEFAULT_POLICY,
+        "merged_recall_guard_projects": ["vllm"],
+        "merged_recall_guard_author_associations": ["CONTRIBUTOR"],
+        "merged_recall_guard_review_modes": ["unreviewed"],
+        "structural_reject_rules": [
+            {
+                "projects": ["vllm"],
+                "author_associations": ["CONTRIBUTOR"],
+            }
+        ],
+    }
+    case = {
+        "acquisition_status": "acquired",
+        "title": "Improve runtime scheduling",
+        "created_at": "2025-01-01T00:00:00Z",
+        "human_non_author_reviews": [],
+        "human_non_author_review_state_counts": {
+            "APPROVED": 0,
+            "CHANGES_REQUESTED": 0,
+            "COMMENTED": 0,
+            "DISMISSED": 0,
+            "PENDING": 0,
+        },
+        "final_head_human_non_author_review_state_counts": {
+            "APPROVED": 0,
+            "CHANGES_REQUESTED": 0,
+            "COMMENTED": 0,
+            "DISMISSED": 0,
+            "PENDING": 0,
+        },
+        "files": [{"path": "vllm/runtime.py", "change_type": "modified"}],
+        "additions": 20,
+        "deletions": 10,
+        "project": "vllm",
+        "pr_author_association": "CONTRIBUTOR",
+    }
+    frozen_at = datetime(2026, 9, 4, tzinfo=UTC)
+
+    decision, score, rationale = freeze._assessment(case, "bounded-gap", policy, frozen_at)
+
+    assert decision == "reject"
+    assert score < 50
+    assert rationale == ["CUMULATIVE_PROJECT_AUTHOR_REJECT_GUARD"]
+
+
+def test_cumulative_rule_is_selected_on_history_then_confirmed_on_current_group(
+    project_root: Path, monkeypatch
+) -> None:
+    monkeypatch.syspath_prepend(str(project_root / "benchmarks" / "historical_prs"))
+    freeze = _load(project_root, "freeze_training_bulk_group")
+    derive = _load(project_root, "derive_training_bulk_policy_iteration")
+    policy = {
+        **freeze.DEFAULT_POLICY,
+        "domain": "inference",
+        "merged_recall_guard_projects": ["vllm"],
+        "merged_recall_guard_author_associations": ["CONTRIBUTOR"],
+        "merged_recall_guard_review_modes": ["unreviewed"],
+    }
+    base_counts = {
+        "APPROVED": 0,
+        "CHANGES_REQUESTED": 0,
+        "COMMENTED": 0,
+        "DISMISSED": 0,
+        "PENDING": 0,
+    }
+    guard_case = {
+        "acquisition_status": "acquired",
+        "title": "Improve runtime scheduling",
+        "created_at": "2025-01-01T00:00:00Z",
+        "human_non_author_reviews": [],
+        "human_non_author_review_state_counts": base_counts,
+        "final_head_human_non_author_review_state_counts": base_counts,
+        "files": [{"path": "vllm/runtime.py", "change_type": "modified"}],
+        "additions": 20,
+        "deletions": 10,
+        "project": "vllm",
+        "pr_author_association": "CONTRIBUTOR",
+    }
+    approved_case = {
+        **guard_case,
+        "human_non_author_review_state_counts": {**base_counts, "APPROVED": 1},
+    }
+
+    def cohort(group_index: int, guard_accepts: int = 1) -> dict[str, object]:
+        rows = [
+            {
+                "case": approved_case,
+                "technical_contract": "bounded-gap",
+                "oracle_decision": "accept",
+            }
+            for _ in range(100)
+        ]
+        rows.extend(
+            {
+                "case": guard_case,
+                "technical_contract": "bounded-gap",
+                "oracle_decision": "accept",
+            }
+            for _ in range(guard_accepts)
+        )
+        rows.extend(
+            {
+                "case": guard_case,
+                "technical_contract": "bounded-gap",
+                "oracle_decision": "reject",
+            }
+            for _ in range(20 - guard_accepts)
+        )
+        return {
+            "group_index": group_index,
+            "frozen_at": datetime(2026, 9, 4, tzinfo=UTC),
+            "audit_sha256": "sha256:" + f"{group_index + 1:064x}",
+            "rows": rows,
+        }
+
+    prior = [cohort(index) for index in range(6)]
+    selected = derive._select_cumulative_structural_update(
+        old_policy=policy,
+        prior_cohorts=prior,
+        current_cohort=cohort(6),
+    )
+
+    assert selected is not None
+    updates, changes = selected
+    assert updates["structural_reject_rules"] == [
+        {
+            "projects": ["vllm"],
+            "author_associations": ["CONTRIBUTOR"],
+        }
+    ]
+    experience = updates["cumulative_experience"]
+    material = {key: value for key, value in experience.items() if key != "experience_sha256"}
+    assert experience["experience_sha256"] == canonical_sha256(material)
+    assert experience["policy_gradient_eligible"] is False
+    assert experience["history_improved_group_count"] == 6
+    assert changes[0]["rule"] == "promote-cumulative-project-author-reject-rule"
+
+    rejected_by_fresh_gate = derive._select_cumulative_structural_update(
+        old_policy=policy,
+        prior_cohorts=prior,
+        current_cohort=cohort(6, guard_accepts=2),
+    )
+    assert rejected_by_fresh_gate is None
+
+
 def test_bulk_judgments_derive_labels_from_fixed_score_bands(
     project_root: Path, monkeypatch
 ) -> None:
@@ -572,7 +723,7 @@ def test_bulk_wire_format_uses_one_explicitly_non_official_overall_score(
     assert '"formal_infraswe_result_issued": False' in script
     assert '"official_microscores_issued": False' in script
     assert '"overall_score_band_policy": {' in script
-    assert 'bulk-group-judgment-lock-v0.3' in script
+    assert "bulk-group-judgment-lock-v0.3" in script
     assert '"acceptance_scope": "limited" if decision == "accept" else "not-applicable"' in script
     assert 'for decision in ("accept", "check", "reject", "unresolved")' in script
 

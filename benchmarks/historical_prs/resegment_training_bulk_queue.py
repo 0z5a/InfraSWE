@@ -15,9 +15,7 @@ from infraswe.io import atomic_write_json
 
 def _read_checked(path: Path) -> dict[str, Any]:
     payload = json.loads(path.read_text(encoding="utf-8"))
-    material = {
-        key: value for key, value in payload.items() if key != "queue_lock_sha256"
-    }
+    material = {key: value for key, value in payload.items() if key != "queue_lock_sha256"}
     if payload.get("queue_lock_sha256") != canonical_sha256(material):
         raise SystemExit(f"{path}: queue digest mismatch")
     return payload
@@ -50,9 +48,7 @@ def main() -> int:
         "protocol_id": "training-bulk-outcome-blind-resegmented-queue-v0.1",
         "created_at": datetime.now(UTC).isoformat(),
         "source_queue_lock_sha256": source["queue_lock_sha256"],
-        "source_processed_prefix_sha256": canonical_sha256(
-            source_cases[: args.processed_count]
-        ),
+        "source_processed_prefix_sha256": canonical_sha256(source_cases[: args.processed_count]),
         "source_target_count": len(source_cases),
         "processed_count": args.processed_count,
         "target_count": len(remaining),

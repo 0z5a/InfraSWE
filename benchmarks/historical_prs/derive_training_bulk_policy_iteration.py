@@ -11,11 +11,18 @@ from pathlib import Path
 from typing import Any
 
 from freeze_training_bulk_group import _decision
+from historical_bulk_quality_gates import (
+    EXACT_ACCURACY_MINIMUM,
+    MERGED_ACCEPT_RECALL_MINIMUM,
+    exact_accuracy_gate_satisfied,
+    merged_accept_recall_gate_satisfied,
+    minimum_successes,
+    release_quality_gate_satisfied,
+)
 
 from infraswe.history.blind import canonical_sha256
 from infraswe.io import atomic_write_json
 
-MERGED_ACCEPT_RECALL_MINIMUM = 0.99
 MERGED_ACCEPT_RECALL_REPAIR_MARGIN = 0.005
 CUMULATIVE_STRUCTURAL_MINIMUM_GROUPS = 6
 
@@ -104,8 +111,12 @@ def _evaluate_cohort(policy: dict[str, Any], cohort: dict[str, Any]) -> dict[str
 
 
 def _merged_recall_gate_satisfied(metrics: dict[str, int]) -> bool:
-    return metrics["merged_accepts"] >= math.ceil(
-        metrics["merged_cases"] * MERGED_ACCEPT_RECALL_MINIMUM
+    # A cohort without an Accept oracle cannot disprove a candidate during
+    # incremental search. Final release qualification remains fail-closed and
+    # requires positive support for both gates.
+    return metrics["merged_cases"] == 0 or merged_accept_recall_gate_satisfied(
+        merged_accepts=metrics["merged_accepts"],
+        merged_cases=metrics["merged_cases"],
     )
 
 
@@ -682,6 +693,20 @@ def main() -> int:
         item["oracle_decision"] == "reject" and item["projected_decision"] == "reject"
         for item in eligible_projected
     )
+    exact_gate_satisfied = exact_accuracy_gate_satisfied(
+        exact_matches=projection_matches,
+        eligible_cases=len(eligible_projected),
+    )
+    merged_recall_gate_satisfied = merged_accept_recall_gate_satisfied(
+        merged_accepts=projected_merged_accepts,
+        merged_cases=projected_merged_cases,
+    )
+    release_gate_satisfied = release_quality_gate_satisfied(
+        exact_matches=projection_matches,
+        eligible_cases=len(eligible_projected),
+        merged_accepts=projected_merged_accepts,
+        merged_cases=projected_merged_cases,
+    )
     material = {
         **policy,
         "retrospective_projection": {
@@ -691,6 +716,11 @@ def main() -> int:
             "exact_accuracy": (
                 projection_matches / len(eligible_projected) if eligible_projected else None
             ),
+            "exact_accuracy_minimum": EXACT_ACCURACY_MINIMUM,
+            "exact_accuracy_required_matches": minimum_successes(
+                len(eligible_projected), EXACT_ACCURACY_MINIMUM
+            ),
+            "exact_accuracy_gate_satisfied": exact_gate_satisfied,
             "changed_case_count": sum(
                 item["previous_decision"] != item["projected_decision"] for item in projected
             ),
@@ -702,11 +732,12 @@ def main() -> int:
                 else None
             ),
             "merged_accept_recall_minimum": MERGED_ACCEPT_RECALL_MINIMUM,
-            "merged_accept_recall_selection_target": candidate_recall_target,
-            "merged_accept_recall_gate_satisfied": (
-                projected_merged_cases == 0
-                or projected_merged_accepts / projected_merged_cases >= MERGED_ACCEPT_RECALL_MINIMUM
+            "merged_accept_recall_required_accepts": minimum_successes(
+                projected_merged_cases, MERGED_ACCEPT_RECALL_MINIMUM
             ),
+            "merged_accept_recall_selection_target": candidate_recall_target,
+            "merged_accept_recall_gate_satisfied": merged_recall_gate_satisfied,
+            "release_quality_gate_satisfied": release_gate_satisfied,
             "check_case_count": projected_check_cases,
             "check_correct_count": projected_check_correct,
             "reject_case_count": projected_reject_cases,

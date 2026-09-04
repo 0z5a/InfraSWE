@@ -91,16 +91,22 @@ done
 target_metric_improved="$(
   jq -r '.target_metric_improved' "$result_root/campaign-summary.json"
 )"
+release_quality_gate_satisfied="$(
+  jq -r '.release_quality_gate_satisfied' "$result_root/campaign-summary.json"
+)"
 
 jq -n \
   --arg status complete \
   --argjson target_metric_improved "$target_metric_improved" \
+  --argjson release_quality_gate_satisfied "$release_quality_gate_satisfied" \
   --arg completed_at "$(date -u +%Y-%m-%dT%H:%M:%SZ)" \
-  '{status:$status,target_metric_improved:$target_metric_improved,completed_at:$completed_at}' \
+  '{status:$status,target_metric_improved:$target_metric_improved,release_quality_gate_satisfied:$release_quality_gate_satisfied,completed_at:$completed_at}' \
   > "$progress_file.tmp"
 mv "$progress_file.tmp" "$progress_file"
 
-if [[ "${INFRASWE_PUBLISH_ON_COMPLETE:-0}" == 1 && "$target_metric_improved" == true ]]; then
+if [[ "${INFRASWE_PUBLISH_ON_COMPLETE:-0}" == 1 && \
+      "$target_metric_improved" == true && \
+      "$release_quality_gate_satisfied" == true ]]; then
   if [[ "$(git branch --show-current)" != main ]]; then
     echo "completion publish requires the main branch" >&2
     exit 1
@@ -111,6 +117,7 @@ if [[ "${INFRASWE_PUBLISH_ON_COMPLETE:-0}" == 1 && "$target_metric_improved" == 
     benchmarks/historical_prs/compose_training_95pct_queue.py \
     benchmarks/historical_prs/derive_training_bulk_policy_iteration.py \
     benchmarks/historical_prs/freeze_training_bulk_group.py \
+    benchmarks/historical_prs/historical_bulk_quality_gates.py \
     benchmarks/historical_prs/infraswe-training-bulk-supervisor.conf \
     benchmarks/historical_prs/infraswe-training-bulk-supervisor.sh \
     benchmarks/historical_prs/infraswe-communication-prepare-supervisor.conf \
@@ -135,6 +142,9 @@ if [[ "${INFRASWE_PUBLISH_ON_COMPLETE:-0}" == 1 && "$target_metric_improved" == 
   git fetch origin main
   git rebase origin/main
   git push origin HEAD:main
+elif [[ "${INFRASWE_PUBLISH_ON_COMPLETE:-0}" == 1 && \
+        "$release_quality_gate_satisfied" != true ]]; then
+  echo "hard release quality gate not satisfied; skipping commit and push"
 elif [[ "${INFRASWE_PUBLISH_ON_COMPLETE:-0}" == 1 ]]; then
   echo "aggregate target metric did not improve; skipping commit and push"
 fi

@@ -23,8 +23,68 @@ def test_non_improving_campaign_skips_publish_without_skipping_shutdown(
         assert "git -c user.name=" in script
         assert 'git_commit_email="${INFRASWE_GIT_USER_EMAIL:' in script
         assert "aggregate target metric did not improve; skipping commit and push" in script
+        assert "hard release quality gate not satisfied; skipping commit and push" in script
+        assert ".release_quality_gate_satisfied" in script
+        assert "release_quality_gate_satisfied" in script
         assert "refusing publish and shutdown" not in script
         assert script.index("skipping commit and push") < script.index("vastai stop instance")
+
+
+def test_release_requires_95_exact_accuracy_and_99_accept_recall(
+    project_root: Path,
+) -> None:
+    gates = _load(project_root, "historical_bulk_quality_gates")
+
+    assert gates.EXACT_ACCURACY_MINIMUM == 0.95
+    assert gates.MERGED_ACCEPT_RECALL_MINIMUM == 0.99
+    assert gates.minimum_successes(101, 0.95) == 96
+    assert gates.minimum_successes(101, 0.99) == 100
+    assert gates.exact_accuracy_gate_satisfied(exact_matches=95, eligible_cases=100)
+    assert not gates.exact_accuracy_gate_satisfied(exact_matches=94, eligible_cases=100)
+    assert gates.merged_accept_recall_gate_satisfied(
+        merged_accepts=99,
+        merged_cases=100,
+    )
+    assert not gates.merged_accept_recall_gate_satisfied(
+        merged_accepts=98,
+        merged_cases=100,
+    )
+    assert gates.release_quality_gate_satisfied(
+        exact_matches=950,
+        eligible_cases=1000,
+        merged_accepts=198,
+        merged_cases=200,
+    )
+    assert not gates.release_quality_gate_satisfied(
+        exact_matches=949,
+        eligible_cases=1000,
+        merged_accepts=200,
+        merged_cases=200,
+    )
+    assert not gates.release_quality_gate_satisfied(
+        exact_matches=1000,
+        eligible_cases=1000,
+        merged_accepts=197,
+        merged_cases=200,
+    )
+    assert not gates.release_quality_gate_satisfied(
+        exact_matches=0,
+        eligible_cases=0,
+        merged_accepts=0,
+        merged_cases=0,
+    )
+
+    summary_source = (
+        project_root / "benchmarks" / "historical_prs" / "summarize_training_bulk_campaign.py"
+    ).read_text(encoding="utf-8")
+    for field in (
+        '"exact_accuracy_minimum"',
+        '"exact_accuracy_gate_satisfied"',
+        '"merged_accept_recall_minimum"',
+        '"merged_accept_recall_gate_satisfied"',
+        '"release_quality_gate_satisfied"',
+    ):
+        assert field in summary_source
 
 
 def test_last_bulk_campaign_owns_credential_cleanup_and_shutdown(project_root: Path) -> None:
@@ -385,6 +445,7 @@ def test_hard_merged_recall_gate_can_override_an_exact_accuracy_loss(
     monkeypatch.syspath_prepend(str(project_root / "benchmarks" / "historical_prs"))
     derive = _load(project_root, "derive_training_bulk_policy_iteration")
 
+    assert derive.EXACT_ACCURACY_MINIMUM == 0.95
     assert derive.MERGED_ACCEPT_RECALL_MINIMUM == 0.99
     assert derive.MERGED_ACCEPT_RECALL_REPAIR_MARGIN == 0.005
 
@@ -412,6 +473,8 @@ def test_hard_merged_recall_gate_can_override_an_exact_accuracy_loss(
     ).read_text(encoding="utf-8")
     assert '{"inference", "communication"}' in source
     assert 'policy_prefix = f"{policy_domain}-bulk-disposition"' in source
+    assert '"exact_accuracy_gate_satisfied"' in source
+    assert '"release_quality_gate_satisfied"' in source
 
 
 def test_merged_recall_guard_is_narrow_and_outcome_blind(project_root: Path, monkeypatch) -> None:

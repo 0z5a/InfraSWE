@@ -11,6 +11,15 @@ from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
 
+from historical_bulk_quality_gates import (
+    EXACT_ACCURACY_MINIMUM,
+    MERGED_ACCEPT_RECALL_MINIMUM,
+    exact_accuracy_gate_satisfied,
+    merged_accept_recall_gate_satisfied,
+    minimum_successes,
+    release_quality_gate_satisfied,
+)
+
 from infraswe.history.blind import canonical_sha256
 from infraswe.io import atomic_write_json
 
@@ -232,6 +241,20 @@ def main() -> int:
         int(audit["summary"]["machine_reject_predictions"]) for audit in audits
     )
     reject_correct = sum(int(audit["summary"]["machine_reject_correct"]) for audit in audits)
+    exact_gate_satisfied = exact_accuracy_gate_satisfied(
+        exact_matches=exact,
+        eligible_cases=eligible,
+    )
+    merged_recall_gate_satisfied = merged_accept_recall_gate_satisfied(
+        merged_accepts=merged_accepts,
+        merged_cases=merged,
+    )
+    release_gate_satisfied = release_quality_gate_satisfied(
+        exact_matches=exact,
+        eligible_cases=eligible,
+        merged_accepts=merged_accepts,
+        merged_cases=merged,
+    )
     material = {
         "schema_version": "0.1",
         "protocol_id": (
@@ -246,6 +269,11 @@ def main() -> int:
         "invalid_case_count": invalid,
         "exact_matches": exact,
         "exact_accuracy": exact / eligible if eligible else None,
+        "exact_accuracy_minimum": EXACT_ACCURACY_MINIMUM,
+        "exact_accuracy_required_matches": minimum_successes(
+            eligible, EXACT_ACCURACY_MINIMUM
+        ),
+        "exact_accuracy_gate_satisfied": exact_gate_satisfied,
         "legacy_exact_matches": legacy_exact,
         "legacy_exact_accuracy": legacy_exact / eligible if eligible else None,
         "exact_accuracy_gain": (exact - legacy_exact) / eligible if eligible else None,
@@ -256,6 +284,12 @@ def main() -> int:
         "merged_cases": merged,
         "merged_machine_accepts": merged_accepts,
         "merged_accept_recall": merged_accepts / merged if merged else None,
+        "merged_accept_recall_minimum": MERGED_ACCEPT_RECALL_MINIMUM,
+        "merged_accept_recall_required_accepts": minimum_successes(
+            merged, MERGED_ACCEPT_RECALL_MINIMUM
+        ),
+        "merged_accept_recall_gate_satisfied": merged_recall_gate_satisfied,
+        "release_quality_gate_satisfied": release_gate_satisfied,
         "machine_reject_predictions": reject_predictions,
         "machine_reject_correct": reject_correct,
         "machine_reject_precision": (

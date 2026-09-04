@@ -1,0 +1,206 @@
+{
+  "$defs": {
+    "DecisionMicroscores": {
+      "additionalProperties": false,
+      "description": "Optional nested diagnostics; never peers of overall_score_100.",
+      "properties": {
+        "benchmark_trust_100": {
+          "anyOf": [
+            {
+              "maximum": 100,
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Benchmark Trust 100"
+        },
+        "project_fit_100": {
+          "anyOf": [
+            {
+              "maximum": 100,
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Project Fit 100"
+        }
+      },
+      "title": "DecisionMicroscores",
+      "type": "object"
+    },
+    "DecisionPrediction": {
+      "additionalProperties": false,
+      "properties": {
+        "blocking_obligations": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Blocking Obligations",
+          "type": "array"
+        },
+        "decision_basis": {
+          "default": "overall-score-band",
+          "enum": [
+            "blocking-obligation",
+            "unresolved-obligation",
+            "overall-score-band"
+          ],
+          "title": "Decision Basis",
+          "type": "string"
+        },
+        "evidence_refs": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Evidence Refs",
+          "type": "array"
+        },
+        "label": {
+          "enum": [
+            "accept",
+            "check",
+            "reject"
+          ],
+          "title": "Label",
+          "type": "string"
+        },
+        "microscores": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/DecisionMicroscores"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "missing_obligations": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Missing Obligations",
+          "type": "array"
+        },
+        "overall_score_100": {
+          "maximum": 100,
+          "minimum": 0,
+          "title": "Overall Score 100",
+          "type": "number"
+        },
+        "p_accept_calibrated": {
+          "anyOf": [
+            {
+              "maximum": 1,
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "P Accept Calibrated"
+        }
+      },
+      "required": [
+        "label",
+        "overall_score_100"
+      ],
+      "title": "DecisionPrediction",
+      "type": "object"
+    },
+    "EvidenceRequest": {
+      "additionalProperties": false,
+      "properties": {
+        "obligation_id": {
+          "title": "Obligation Id",
+          "type": "string"
+        },
+        "reason": {
+          "minLength": 1,
+          "title": "Reason",
+          "type": "string"
+        },
+        "requested_sources": {
+          "items": {
+            "enum": [
+              "untrusted-text",
+              "source-code",
+              "build-or-test",
+              "executable-verifier",
+              "trusted-meter",
+              "human-review"
+            ],
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Requested Sources",
+          "type": "array"
+        },
+        "state": {
+          "enum": [
+            "NEEDS_SOURCE_CONTEXT",
+            "NEEDS_BUILD_OR_TEST",
+            "NEEDS_REVIEW_EVIDENCE",
+            "NEEDS_LABEL_AUDIT"
+          ],
+          "title": "State",
+          "type": "string"
+        }
+      },
+      "required": [
+        "state",
+        "obligation_id",
+        "requested_sources",
+        "reason"
+      ],
+      "title": "EvidenceRequest",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "applied_proposal_ids": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Applied Proposal Ids",
+      "type": "array"
+    },
+    "blocked_proposal_ids": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Blocked Proposal Ids",
+      "type": "array"
+    },
+    "evidence_requests": {
+      "items": {
+        "$ref": "#/$defs/EvidenceRequest"
+      },
+      "title": "Evidence Requests",
+      "type": "array"
+    },
+    "final_prediction": {
+      "$ref": "#/$defs/DecisionPrediction"
+    },
+    "initial_prediction": {
+      "$ref": "#/$defs/DecisionPrediction"
+    }
+  },
+  "required": [
+    "initial_prediction",
+    "final_prediction"
+  ],
+  "title": "CascadeResult",
+  "type": "object"
+}

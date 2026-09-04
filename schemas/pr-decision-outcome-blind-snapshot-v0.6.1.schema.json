@@ -1,0 +1,247 @@
+{
+  "$defs": {
+    "EvidenceClaim": {
+      "additionalProperties": false,
+      "properties": {
+        "authority": {
+          "enum": [
+            "untrusted-text",
+            "source-code",
+            "build-or-test",
+            "executable-verifier",
+            "trusted-meter",
+            "human-review"
+          ],
+          "title": "Authority",
+          "type": "string"
+        },
+        "claim": {
+          "minLength": 1,
+          "title": "Claim",
+          "type": "string"
+        },
+        "claim_id": {
+          "pattern": "^[a-z0-9][a-z0-9_.-]{2,127}$",
+          "title": "Claim Id",
+          "type": "string"
+        },
+        "counterevidence_refs": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Counterevidence Refs",
+          "type": "array"
+        },
+        "details": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Details"
+        },
+        "disposition": {
+          "enum": [
+            "supports",
+            "refutes",
+            "unknown"
+          ],
+          "title": "Disposition",
+          "type": "string"
+        },
+        "head_sha": {
+          "pattern": "^[0-9a-f]{40}$",
+          "title": "Head Sha",
+          "type": "string"
+        },
+        "observed_at": {
+          "format": "date-time",
+          "title": "Observed At",
+          "type": "string"
+        },
+        "source_ref": {
+          "minLength": 1,
+          "title": "Source Ref",
+          "type": "string"
+        }
+      },
+      "required": [
+        "claim_id",
+        "claim",
+        "source_ref",
+        "authority",
+        "observed_at",
+        "head_sha",
+        "disposition"
+      ],
+      "title": "EvidenceClaim",
+      "type": "object"
+    },
+    "OutcomeBlindSnapshotMaterial": {
+      "additionalProperties": false,
+      "properties": {
+        "case_identity": {
+          "$ref": "#/$defs/PRCaseIdentity"
+        },
+        "claims": {
+          "items": {
+            "$ref": "#/$defs/EvidenceClaim"
+          },
+          "title": "Claims",
+          "type": "array"
+        },
+        "observations": {
+          "additionalProperties": true,
+          "title": "Observations",
+          "type": "object"
+        },
+        "policy_identity": {
+          "$ref": "#/$defs/PolicyIdentity"
+        },
+        "retrieval_memory_refs": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Retrieval Memory Refs",
+          "type": "array"
+        },
+        "schema_version": {
+          "const": "0.6.1",
+          "default": "0.6.1",
+          "title": "Schema Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "case_identity",
+        "policy_identity"
+      ],
+      "title": "OutcomeBlindSnapshotMaterial",
+      "type": "object"
+    },
+    "PRCaseIdentity": {
+      "additionalProperties": false,
+      "properties": {
+        "base_sha": {
+          "pattern": "^[0-9a-f]{40}$",
+          "title": "Base Sha",
+          "type": "string"
+        },
+        "head_sha": {
+          "pattern": "^[0-9a-f]{40}$",
+          "title": "Head Sha",
+          "type": "string"
+        },
+        "issue_or_patch_family": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Issue Or Patch Family"
+        },
+        "label_schema_version": {
+          "minLength": 1,
+          "title": "Label Schema Version",
+          "type": "string"
+        },
+        "pr_number": {
+          "minimum": 1,
+          "title": "Pr Number",
+          "type": "integer"
+        },
+        "prediction_at": {
+          "format": "date-time",
+          "title": "Prediction At",
+          "type": "string"
+        },
+        "repository": {
+          "pattern": "^[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+$",
+          "title": "Repository",
+          "type": "string"
+        }
+      },
+      "required": [
+        "repository",
+        "pr_number",
+        "base_sha",
+        "head_sha",
+        "prediction_at",
+        "label_schema_version"
+      ],
+      "title": "PRCaseIdentity",
+      "type": "object"
+    },
+    "PolicyIdentity": {
+      "additionalProperties": false,
+      "properties": {
+        "calibration_profile_digest": {
+          "anyOf": [
+            {
+              "pattern": "^sha256:[0-9a-f]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Calibration Profile Digest"
+        },
+        "decision_profile_digest": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Decision Profile Digest",
+          "type": "string"
+        },
+        "policy_digest": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Policy Digest",
+          "type": "string"
+        },
+        "project_profile_digest": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Project Profile Digest",
+          "type": "string"
+        },
+        "retrieval_index_digest": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Retrieval Index Digest",
+          "type": "string"
+        }
+      },
+      "required": [
+        "policy_digest",
+        "retrieval_index_digest",
+        "project_profile_digest",
+        "decision_profile_digest"
+      ],
+      "title": "PolicyIdentity",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "material": {
+      "$ref": "#/$defs/OutcomeBlindSnapshotMaterial"
+    },
+    "snapshot_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Snapshot Sha256",
+      "type": "string"
+    }
+  },
+  "required": [
+    "material",
+    "snapshot_sha256"
+  ],
+  "title": "OutcomeBlindSnapshot",
+  "type": "object"
+}

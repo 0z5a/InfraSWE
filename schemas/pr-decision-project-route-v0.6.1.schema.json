@@ -1,0 +1,34 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "project": {
+      "title": "Project",
+      "type": "string"
+    },
+    "reason": {
+      "title": "Reason",
+      "type": "string"
+    },
+    "route_kind": {
+      "enum": [
+        "project-conditioned",
+        "shared-fallback"
+      ],
+      "title": "Route Kind",
+      "type": "string"
+    },
+    "selected_profile_digest": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Selected Profile Digest",
+      "type": "string"
+    }
+  },
+  "required": [
+    "project",
+    "route_kind",
+    "selected_profile_digest",
+    "reason"
+  ],
+  "title": "ProjectRoute",
+  "type": "object"
+}

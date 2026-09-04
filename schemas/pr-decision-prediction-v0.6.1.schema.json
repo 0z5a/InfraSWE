@@ -1,0 +1,120 @@
+{
+  "$defs": {
+    "DecisionMicroscores": {
+      "additionalProperties": false,
+      "description": "Optional nested diagnostics; never peers of overall_score_100.",
+      "properties": {
+        "benchmark_trust_100": {
+          "anyOf": [
+            {
+              "maximum": 100,
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Benchmark Trust 100"
+        },
+        "project_fit_100": {
+          "anyOf": [
+            {
+              "maximum": 100,
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Project Fit 100"
+        }
+      },
+      "title": "DecisionMicroscores",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "blocking_obligations": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Blocking Obligations",
+      "type": "array"
+    },
+    "decision_basis": {
+      "default": "overall-score-band",
+      "enum": [
+        "blocking-obligation",
+        "unresolved-obligation",
+        "overall-score-band"
+      ],
+      "title": "Decision Basis",
+      "type": "string"
+    },
+    "evidence_refs": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Evidence Refs",
+      "type": "array"
+    },
+    "label": {
+      "enum": [
+        "accept",
+        "check",
+        "reject"
+      ],
+      "title": "Label",
+      "type": "string"
+    },
+    "microscores": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/DecisionMicroscores"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "missing_obligations": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Missing Obligations",
+      "type": "array"
+    },
+    "overall_score_100": {
+      "maximum": 100,
+      "minimum": 0,
+      "title": "Overall Score 100",
+      "type": "number"
+    },
+    "p_accept_calibrated": {
+      "anyOf": [
+        {
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "P Accept Calibrated"
+    }
+  },
+  "required": [
+    "label",
+    "overall_score_100"
+  ],
+  "title": "DecisionPrediction",
+  "type": "object"
+}

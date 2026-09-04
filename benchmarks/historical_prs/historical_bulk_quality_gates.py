@@ -26,9 +26,7 @@ def exact_accuracy_gate_satisfied(*, exact_matches: int, eligible_cases: int) ->
     )
 
 
-def merged_accept_recall_gate_satisfied(
-    *, merged_accepts: int, merged_cases: int
-) -> bool:
+def merged_accept_recall_gate_satisfied(*, merged_accepts: int, merged_cases: int) -> bool:
     """Require Accept examples and at least 99% recall on them."""
 
     return merged_cases > 0 and merged_accepts >= minimum_successes(

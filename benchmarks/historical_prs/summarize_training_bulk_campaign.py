@@ -270,9 +270,7 @@ def main() -> int:
         "exact_matches": exact,
         "exact_accuracy": exact / eligible if eligible else None,
         "exact_accuracy_minimum": EXACT_ACCURACY_MINIMUM,
-        "exact_accuracy_required_matches": minimum_successes(
-            eligible, EXACT_ACCURACY_MINIMUM
-        ),
+        "exact_accuracy_required_matches": minimum_successes(eligible, EXACT_ACCURACY_MINIMUM),
         "exact_accuracy_gate_satisfied": exact_gate_satisfied,
         "legacy_exact_matches": legacy_exact,
         "legacy_exact_accuracy": legacy_exact / eligible if eligible else None,

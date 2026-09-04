@@ -1,0 +1,268 @@
+{
+  "$defs": {
+    "CalibrationPoint": {
+      "additionalProperties": false,
+      "properties": {
+        "accept_true_positives": {
+          "minimum": 0,
+          "title": "Accept True Positives",
+          "type": "integer"
+        },
+        "accuracy3": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Accuracy3",
+          "type": "number"
+        },
+        "eligible_cases": {
+          "minimum": 1,
+          "title": "Eligible Cases",
+          "type": "integer"
+        },
+        "exact_matches": {
+          "minimum": 0,
+          "title": "Exact Matches",
+          "type": "integer"
+        },
+        "oracle_accept_cases": {
+          "minimum": 0,
+          "title": "Oracle Accept Cases",
+          "type": "integer"
+        },
+        "precision_accept": {
+          "anyOf": [
+            {
+              "maximum": 1,
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Precision Accept"
+        },
+        "predicted_accept_cases": {
+          "minimum": 0,
+          "title": "Predicted Accept Cases",
+          "type": "integer"
+        },
+        "recall_accept": {
+          "anyOf": [
+            {
+              "maximum": 1,
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Recall Accept"
+        },
+        "threshold": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Threshold",
+          "type": "number"
+        }
+      },
+      "required": [
+        "threshold",
+        "eligible_cases",
+        "exact_matches",
+        "predicted_accept_cases",
+        "oracle_accept_cases",
+        "accept_true_positives",
+        "accuracy3"
+      ],
+      "title": "CalibrationPoint",
+      "type": "object"
+    },
+    "CalibrationProfileMaterial": {
+      "additionalProperties": false,
+      "properties": {
+        "accuracy_target": {
+          "anyOf": [
+            {
+              "maximum": 1,
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Accuracy Target"
+        },
+        "generated_at": {
+          "format": "date-time",
+          "title": "Generated At",
+          "type": "string"
+        },
+        "max_accuracy_at_recall_floor": {
+          "anyOf": [
+            {
+              "maximum": 1,
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Max Accuracy At Recall Floor"
+        },
+        "max_accuracy_threshold": {
+          "anyOf": [
+            {
+              "maximum": 1,
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Max Accuracy Threshold"
+        },
+        "max_precision_at_recall_floor": {
+          "anyOf": [
+            {
+              "maximum": 1,
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Max Precision At Recall Floor"
+        },
+        "max_precision_threshold": {
+          "anyOf": [
+            {
+              "maximum": 1,
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Max Precision Threshold"
+        },
+        "points": {
+          "items": {
+            "$ref": "#/$defs/CalibrationPoint"
+          },
+          "minItems": 1,
+          "title": "Points",
+          "type": "array"
+        },
+        "policy_digest": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Policy Digest",
+          "type": "string"
+        },
+        "population_digest": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Population Digest",
+          "type": "string"
+        },
+        "precision_target": {
+          "anyOf": [
+            {
+              "maximum": 1,
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Precision Target"
+        },
+        "profile_id": {
+          "title": "Profile Id",
+          "type": "string"
+        },
+        "purpose": {
+          "enum": [
+            "confidence-reporting",
+            "evidence-routing"
+          ],
+          "title": "Purpose",
+          "type": "string"
+        },
+        "recall_floor": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Recall Floor",
+          "type": "number"
+        },
+        "schema_version": {
+          "const": "0.6.1",
+          "default": "0.6.1",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "selected_threshold": {
+          "anyOf": [
+            {
+              "maximum": 1,
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Selected Threshold"
+        },
+        "target_reachable": {
+          "title": "Target Reachable",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "profile_id",
+        "policy_digest",
+        "population_digest",
+        "purpose",
+        "recall_floor",
+        "points",
+        "target_reachable",
+        "generated_at"
+      ],
+      "title": "CalibrationProfileMaterial",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "material": {
+      "$ref": "#/$defs/CalibrationProfileMaterial"
+    },
+    "profile_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Profile Sha256",
+      "type": "string"
+    }
+  },
+  "required": [
+    "material",
+    "profile_sha256"
+  ],
+  "title": "CalibrationProfile",
+  "type": "object"
+}

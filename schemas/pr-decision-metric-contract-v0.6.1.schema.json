@@ -1,0 +1,86 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "accuracy3_minimum": {
+      "maximum": 1,
+      "minimum": 0,
+      "title": "Accuracy3 Minimum",
+      "type": "number"
+    },
+    "confidence_alpha": {
+      "anyOf": [
+        {
+          "exclusiveMaximum": 1,
+          "exclusiveMinimum": 0,
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Confidence Alpha"
+    },
+    "confidence_method": {
+      "default": "point-estimate",
+      "enum": [
+        "point-estimate",
+        "wilson-one-sided"
+      ],
+      "title": "Confidence Method",
+      "type": "string"
+    },
+    "contract_id": {
+      "title": "Contract Id",
+      "type": "string"
+    },
+    "evaluation_track": {
+      "enum": [
+        "prequential_campaign_result",
+        "frozen_policy_holdout_result",
+        "historical_diagnostic_replay_result"
+      ],
+      "title": "Evaluation Track",
+      "type": "string"
+    },
+    "precision_accept_minimum": {
+      "anyOf": [
+        {
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Precision Accept Minimum"
+    },
+    "recall_accept_minimum": {
+      "maximum": 1,
+      "minimum": 0,
+      "title": "Recall Accept Minimum",
+      "type": "number"
+    },
+    "require_nonzero_support": {
+      "default": true,
+      "title": "Require Nonzero Support",
+      "type": "boolean"
+    },
+    "schema_version": {
+      "const": "0.6.1",
+      "default": "0.6.1",
+      "title": "Schema Version",
+      "type": "string"
+    }
+  },
+  "required": [
+    "contract_id",
+    "accuracy3_minimum",
+    "recall_accept_minimum",
+    "evaluation_track"
+  ],
+  "title": "MetricContract",
+  "type": "object"
+}

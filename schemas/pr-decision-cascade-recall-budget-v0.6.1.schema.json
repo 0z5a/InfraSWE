@@ -1,0 +1,48 @@
+{
+  "$defs": {
+    "CascadeStageBudget": {
+      "additionalProperties": false,
+      "properties": {
+        "minimum_conditional_accept_recall": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Minimum Conditional Accept Recall",
+          "type": "number"
+        },
+        "stage_id": {
+          "title": "Stage Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "stage_id",
+        "minimum_conditional_accept_recall"
+      ],
+      "title": "CascadeStageBudget",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "minimum_total_accept_recall": {
+      "maximum": 1,
+      "minimum": 0,
+      "title": "Minimum Total Accept Recall",
+      "type": "number"
+    },
+    "stages": {
+      "items": {
+        "$ref": "#/$defs/CascadeStageBudget"
+      },
+      "minItems": 1,
+      "title": "Stages",
+      "type": "array"
+    }
+  },
+  "required": [
+    "stages",
+    "minimum_total_accept_recall"
+  ],
+  "title": "CascadeRecallBudget",
+  "type": "object"
+}

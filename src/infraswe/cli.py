@@ -139,6 +139,16 @@ from infraswe.models.training import (
     TrainingScoreInput,
 )
 from infraswe.models.trial import TrialRecord
+from infraswe.pr_decision.contracts import (
+    BASELINE_95_99_CONTRACT,
+    PRECISION_95_99_95_CONTRACT,
+    MetricContract,
+)
+from infraswe.pr_decision.release_gate import (
+    DecisionEvaluationCase,
+    evaluate_release_gate,
+)
+from infraswe.pr_decision.snapshot import OutcomeBlindSnapshot, audit_snapshot
 from infraswe.retrieval import (
     PrecedentStore,
     apply_human_rule_decisions,
@@ -208,6 +218,10 @@ rl_batch_app = typer.Typer(no_args_is_help=True, help="Validate trainer-neutral 
 rl_legacy_app = typer.Typer(no_args_is_help=True, help="Migrate legacy offline experience.")
 rl_fabric_app = typer.Typer(no_args_is_help=True, help="Audit rollout fabric capabilities.")
 rl_train_app = typer.Typer(no_args_is_help=True, help="Audit immutable training run seals.")
+pr_decision_app = typer.Typer(
+    no_args_is_help=True,
+    help="Audit v0.6.1 outcome-blind PR decisions and hard metric gates.",
+)
 app.add_typer(task_app, name="task")
 app.add_typer(schema_app, name="schema")
 app.add_typer(lease_app, name="lease")
@@ -220,6 +234,7 @@ app.add_typer(evidence_app, name="evidence")
 app.add_typer(capability_app, name="capability")
 app.add_typer(cell_app, name="cell")
 app.add_typer(rl_app, name="rl")
+app.add_typer(pr_decision_app, name="pr-decision")
 judge_app.add_typer(judge_profile_app, name="profile")
 judge_app.add_typer(judge_cell_app, name="cell")
 judge_app.add_typer(judge_pack_app, name="pack")
@@ -252,6 +267,70 @@ def _read_sequence(path: Path) -> list[Any]:
     if not isinstance(payload, list):
         raise typer.BadParameter(f"{path} must contain an array")
     return payload
+
+
+@pr_decision_app.command("snapshot-audit")
+def audit_pr_decision_snapshot(
+    snapshot_path: Annotated[Path, typer.Argument(exists=True, readable=True)],
+) -> None:
+    """Verify the outcome-blind snapshot digest and label-vault separation."""
+
+    snapshot = OutcomeBlindSnapshot.model_validate(_read_mapping(snapshot_path))
+    failures = audit_snapshot(snapshot)
+    if failures:
+        for failure in failures:
+            console.print(f"[red]FAIL[/red] {failure}")
+        raise typer.Exit(2)
+    console.print(
+        f"[green]valid-snapshot[/green] "
+        f"case={snapshot.material.case_identity.repository}#"
+        f"{snapshot.material.case_identity.pr_number} digest={snapshot.snapshot_sha256}"
+    )
+
+
+@pr_decision_app.command("gate")
+def evaluate_pr_decision_gate(
+    cases_path: Annotated[Path, typer.Argument(exists=True, readable=True)],
+    output: Annotated[Path, typer.Option("--output")] = Path("pr-decision-gate.json"),
+    preset: Annotated[
+        str,
+        typer.Option(
+            "--preset",
+            help="baseline-95-99 or precision-95-99-95",
+        ),
+    ] = "precision-95-99-95",
+    contract_path: Annotated[
+        Path | None,
+        typer.Option("--contract", exists=True, readable=True),
+    ] = None,
+) -> None:
+    """Evaluate frozen three-class accuracy and Accept recall/precision contracts."""
+
+    presets = {
+        "baseline-95-99": BASELINE_95_99_CONTRACT,
+        "precision-95-99-95": PRECISION_95_99_95_CONTRACT,
+    }
+    if contract_path is not None:
+        contract = MetricContract.model_validate(_read_mapping(contract_path))
+    else:
+        if preset not in presets:
+            raise typer.BadParameter(
+                f"unknown preset {preset!r}; choose one of {sorted(presets)}",
+                param_hint="--preset",
+            )
+        contract = presets[preset]
+    cases = [DecisionEvaluationCase.model_validate(item) for item in _read_sequence(cases_path)]
+    result = evaluate_release_gate(cases, contract)
+    atomic_write_json(output, result.model_dump(mode="json"))
+    console.print(
+        f"contract={contract.contract_id} passed={result.passed} "
+        f"Accuracy3={result.metrics.accuracy3} "
+        f"AcceptRecall={result.metrics.recall_accept} "
+        f"AcceptPrecision={result.metrics.precision_accept} "
+        f"output={output.resolve()}"
+    )
+    if not result.passed:
+        raise typer.Exit(2)
 
 
 def _read_sealed[ModelT: BaseModel](

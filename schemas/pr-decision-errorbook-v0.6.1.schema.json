@@ -1,0 +1,378 @@
+{
+  "$defs": {
+    "DecisionMicroscores": {
+      "additionalProperties": false,
+      "description": "Optional nested diagnostics; never peers of overall_score_100.",
+      "properties": {
+        "benchmark_trust_100": {
+          "anyOf": [
+            {
+              "maximum": 100,
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Benchmark Trust 100"
+        },
+        "project_fit_100": {
+          "anyOf": [
+            {
+              "maximum": 100,
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Project Fit 100"
+        }
+      },
+      "title": "DecisionMicroscores",
+      "type": "object"
+    },
+    "DecisionPrediction": {
+      "additionalProperties": false,
+      "properties": {
+        "blocking_obligations": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Blocking Obligations",
+          "type": "array"
+        },
+        "decision_basis": {
+          "default": "overall-score-band",
+          "enum": [
+            "blocking-obligation",
+            "unresolved-obligation",
+            "overall-score-band"
+          ],
+          "title": "Decision Basis",
+          "type": "string"
+        },
+        "evidence_refs": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Evidence Refs",
+          "type": "array"
+        },
+        "label": {
+          "enum": [
+            "accept",
+            "check",
+            "reject"
+          ],
+          "title": "Label",
+          "type": "string"
+        },
+        "microscores": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/DecisionMicroscores"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "missing_obligations": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Missing Obligations",
+          "type": "array"
+        },
+        "overall_score_100": {
+          "maximum": 100,
+          "minimum": 0,
+          "title": "Overall Score 100",
+          "type": "number"
+        },
+        "p_accept_calibrated": {
+          "anyOf": [
+            {
+              "maximum": 1,
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "P Accept Calibrated"
+        }
+      },
+      "required": [
+        "label",
+        "overall_score_100"
+      ],
+      "title": "DecisionPrediction",
+      "type": "object"
+    },
+    "ErrorAuditOnly": {
+      "additionalProperties": false,
+      "properties": {
+        "adjudication_status": {
+          "enum": [
+            "unreviewed",
+            "reviewed",
+            "disputed",
+            "superseded"
+          ],
+          "title": "Adjudication Status",
+          "type": "string"
+        },
+        "decisive_evidence_ref": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Decisive Evidence Ref"
+        },
+        "failure_owner": {
+          "enum": [
+            "acquisition",
+            "reasoning",
+            "label-contract",
+            "oracle",
+            "project-profile",
+            "decision-policy"
+          ],
+          "title": "Failure Owner",
+          "type": "string"
+        },
+        "label_kind": {
+          "enum": [
+            "upstream_outcome",
+            "contract_acceptability",
+            "executable_verifier_outcome"
+          ],
+          "title": "Label Kind",
+          "type": "string"
+        },
+        "oracle_label": {
+          "enum": [
+            "accept",
+            "check",
+            "reject"
+          ],
+          "title": "Oracle Label",
+          "type": "string"
+        },
+        "oracle_source": {
+          "minLength": 1,
+          "title": "Oracle Source",
+          "type": "string"
+        },
+        "reason_code": {
+          "enum": [
+            "evidence_missing",
+            "evidence_present_reasoning_miss",
+            "label_revision_mismatch",
+            "oracle_disagreement",
+            "scope_contract_mismatch",
+            "policy_tradeoff_error"
+          ],
+          "title": "Reason Code",
+          "type": "string"
+        }
+      },
+      "required": [
+        "oracle_label",
+        "label_kind",
+        "oracle_source",
+        "adjudication_status",
+        "failure_owner",
+        "reason_code"
+      ],
+      "title": "ErrorAuditOnly",
+      "type": "object"
+    },
+    "ErrorRecord": {
+      "additionalProperties": false,
+      "properties": {
+        "audit_only": {
+          "$ref": "#/$defs/ErrorAuditOnly"
+        },
+        "case_identity": {
+          "$ref": "#/$defs/PRCaseIdentity"
+        },
+        "policy_identity": {
+          "$ref": "#/$defs/PolicyIdentity"
+        },
+        "prediction": {
+          "$ref": "#/$defs/DecisionPrediction"
+        },
+        "schema_version": {
+          "const": "0.6.1",
+          "default": "0.6.1",
+          "title": "Schema Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "case_identity",
+        "policy_identity",
+        "prediction",
+        "audit_only"
+      ],
+      "title": "ErrorRecord",
+      "type": "object"
+    },
+    "PRCaseIdentity": {
+      "additionalProperties": false,
+      "properties": {
+        "base_sha": {
+          "pattern": "^[0-9a-f]{40}$",
+          "title": "Base Sha",
+          "type": "string"
+        },
+        "head_sha": {
+          "pattern": "^[0-9a-f]{40}$",
+          "title": "Head Sha",
+          "type": "string"
+        },
+        "issue_or_patch_family": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Issue Or Patch Family"
+        },
+        "label_schema_version": {
+          "minLength": 1,
+          "title": "Label Schema Version",
+          "type": "string"
+        },
+        "pr_number": {
+          "minimum": 1,
+          "title": "Pr Number",
+          "type": "integer"
+        },
+        "prediction_at": {
+          "format": "date-time",
+          "title": "Prediction At",
+          "type": "string"
+        },
+        "repository": {
+          "pattern": "^[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+$",
+          "title": "Repository",
+          "type": "string"
+        }
+      },
+      "required": [
+        "repository",
+        "pr_number",
+        "base_sha",
+        "head_sha",
+        "prediction_at",
+        "label_schema_version"
+      ],
+      "title": "PRCaseIdentity",
+      "type": "object"
+    },
+    "PolicyIdentity": {
+      "additionalProperties": false,
+      "properties": {
+        "calibration_profile_digest": {
+          "anyOf": [
+            {
+              "pattern": "^sha256:[0-9a-f]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Calibration Profile Digest"
+        },
+        "decision_profile_digest": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Decision Profile Digest",
+          "type": "string"
+        },
+        "policy_digest": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Policy Digest",
+          "type": "string"
+        },
+        "project_profile_digest": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Project Profile Digest",
+          "type": "string"
+        },
+        "retrieval_index_digest": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Retrieval Index Digest",
+          "type": "string"
+        }
+      },
+      "required": [
+        "policy_digest",
+        "retrieval_index_digest",
+        "project_profile_digest",
+        "decision_profile_digest"
+      ],
+      "title": "PolicyIdentity",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "errorbook_id": {
+      "title": "Errorbook Id",
+      "type": "string"
+    },
+    "errorbook_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Errorbook Sha256",
+      "type": "string"
+    },
+    "policy_digest": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Policy Digest",
+      "type": "string"
+    },
+    "records": {
+      "items": {
+        "$ref": "#/$defs/ErrorRecord"
+      },
+      "title": "Records",
+      "type": "array"
+    },
+    "schema_version": {
+      "const": "0.6.1",
+      "default": "0.6.1",
+      "title": "Schema Version",
+      "type": "string"
+    }
+  },
+  "required": [
+    "errorbook_id",
+    "policy_digest",
+    "records",
+    "errorbook_sha256"
+  ],
+  "title": "ErrorBook",
+  "type": "object"
+}

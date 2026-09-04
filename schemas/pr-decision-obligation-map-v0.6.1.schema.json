@@ -1,0 +1,94 @@
+{
+  "$defs": {
+    "Obligation": {
+      "additionalProperties": false,
+      "properties": {
+        "blocking": {
+          "title": "Blocking",
+          "type": "boolean"
+        },
+        "dimension": {
+          "enum": [
+            "maintainability",
+            "deployability",
+            "correctness-safety",
+            "performance"
+          ],
+          "title": "Dimension",
+          "type": "string"
+        },
+        "evidence_refs": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Evidence Refs",
+          "type": "array"
+        },
+        "missing_evidence": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Missing Evidence",
+          "type": "array"
+        },
+        "obligation_id": {
+          "pattern": "^[a-z0-9][a-z0-9_.-]{2,127}$",
+          "title": "Obligation Id",
+          "type": "string"
+        },
+        "question": {
+          "minLength": 1,
+          "title": "Question",
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "satisfied",
+            "violated",
+            "unknown",
+            "not-applicable"
+          ],
+          "title": "Status",
+          "type": "string"
+        }
+      },
+      "required": [
+        "obligation_id",
+        "dimension",
+        "question",
+        "status",
+        "blocking"
+      ],
+      "title": "Obligation",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "case_identity_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Case Identity Sha256",
+      "type": "string"
+    },
+    "obligations": {
+      "items": {
+        "$ref": "#/$defs/Obligation"
+      },
+      "minItems": 1,
+      "title": "Obligations",
+      "type": "array"
+    },
+    "schema_version": {
+      "const": "0.6.1",
+      "default": "0.6.1",
+      "title": "Schema Version",
+      "type": "string"
+    }
+  },
+  "required": [
+    "case_identity_sha256",
+    "obligations"
+  ],
+  "title": "ObligationMap",
+  "type": "object"
+}

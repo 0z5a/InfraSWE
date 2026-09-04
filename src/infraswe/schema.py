@@ -154,6 +154,17 @@ from infraswe.models.training import (
     TrainingResult,
     TrainingScoreInput,
 )
+from infraswe.pr_decision.calibration import CalibrationProfile
+from infraswe.pr_decision.cascade import CascadeRecallBudget, CascadeResult
+from infraswe.pr_decision.contracts import DecisionPrediction, MetricContract
+from infraswe.pr_decision.errorbook import ErrorBook
+from infraswe.pr_decision.label_vault import LabelVault
+from infraswe.pr_decision.obligations import ObligationMap
+from infraswe.pr_decision.precedent import ContrastivePrecedentBundle
+from infraswe.pr_decision.project_router import ProjectRoute
+from infraswe.pr_decision.release_gate import MetricGateResult
+from infraswe.pr_decision.report.decision_card import DecisionReliabilityCard
+from infraswe.pr_decision.snapshot import OutcomeBlindSnapshot
 
 
 def schema_documents() -> dict[str, dict[str, Any]]:
@@ -273,6 +284,29 @@ def schema_documents() -> dict[str, dict[str, Any]]:
         ),
         "historical-polarized-decision-oracle-v0.5.1.schema.json": (
             HistoricalPolarizedDecisionOracle.model_json_schema()
+        ),
+        "pr-decision-metric-contract-v0.6.1.schema.json": MetricContract.model_json_schema(),
+        "pr-decision-prediction-v0.6.1.schema.json": DecisionPrediction.model_json_schema(),
+        "pr-decision-outcome-blind-snapshot-v0.6.1.schema.json": (
+            OutcomeBlindSnapshot.model_json_schema()
+        ),
+        "pr-decision-label-vault-v0.6.1.schema.json": LabelVault.model_json_schema(),
+        "pr-decision-errorbook-v0.6.1.schema.json": ErrorBook.model_json_schema(),
+        "pr-decision-obligation-map-v0.6.1.schema.json": ObligationMap.model_json_schema(),
+        "pr-decision-precedent-bundle-v0.6.1.schema.json": (
+            ContrastivePrecedentBundle.model_json_schema()
+        ),
+        "pr-decision-project-route-v0.6.1.schema.json": ProjectRoute.model_json_schema(),
+        "pr-decision-cascade-result-v0.6.1.schema.json": CascadeResult.model_json_schema(),
+        "pr-decision-cascade-recall-budget-v0.6.1.schema.json": (
+            CascadeRecallBudget.model_json_schema()
+        ),
+        "pr-decision-calibration-profile-v0.6.1.schema.json": (
+            CalibrationProfile.model_json_schema()
+        ),
+        "pr-decision-metric-gate-result-v0.6.1.schema.json": (MetricGateResult.model_json_schema()),
+        "pr-decision-reliability-card-v0.6.1.schema.json": (
+            DecisionReliabilityCard.model_json_schema()
         ),
         "judge-profile-v0.5.3.schema.json": JudgeProfile.model_json_schema(),
         "judge-rubric-v0.5.3.schema.json": JudgeRubric.model_json_schema(),

@@ -1,0 +1,646 @@
+{
+  "$defs": {
+    "CommunicationPhaseRegressionMetrics": {
+      "additionalProperties": false,
+      "properties": {
+        "consumer_slack_utilization_p50": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Consumer Slack Utilization P50"
+        },
+        "contention_stretch_change_fraction": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Contention Stretch Change Fraction"
+        },
+        "pair_completion_gain_fraction": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Pair Completion Gain Fraction"
+        },
+        "rank_finish_skew_change_fraction": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Rank Finish Skew Change Fraction"
+        },
+        "rank_start_skew_change_fraction": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Rank Start Skew Change Fraction"
+        },
+        "step_time_gain_fraction": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Step Time Gain Fraction"
+        }
+      },
+      "title": "CommunicationPhaseRegressionMetrics",
+      "type": "object"
+    },
+    "CommunicationPhaseRunMetrics": {
+      "additionalProperties": false,
+      "properties": {
+        "actual_overlap_p50_ms": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Actual Overlap P50 Ms"
+        },
+        "api_launch_offset_p50_us": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Api Launch Offset P50 Us"
+        },
+        "artifact_coverage_complete": {
+          "title": "Artifact Coverage Complete",
+          "type": "boolean"
+        },
+        "clock_sync_error_bound_us": {
+          "minimum": 0,
+          "title": "Clock Sync Error Bound Us",
+          "type": "number"
+        },
+        "collective_order_safe": {
+          "title": "Collective Order Safe",
+          "type": "boolean"
+        },
+        "completed_pair_count": {
+          "minimum": 0,
+          "title": "Completed Pair Count",
+          "type": "integer"
+        },
+        "consumer_deadline_miss_count": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Consumer Deadline Miss Count",
+          "type": "integer"
+        },
+        "consumer_slack_p50_us": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Consumer Slack P50 Us"
+        },
+        "consumer_wait_p95_us": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Consumer Wait P95 Us"
+        },
+        "contention_stretch_p95": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Contention Stretch P95"
+        },
+        "gpu_timestamp_semantics": {
+          "enum": [
+            "kernel-observed",
+            "event-bracket"
+          ],
+          "title": "Gpu Timestamp Semantics",
+          "type": "string"
+        },
+        "max_inflight_bytes": {
+          "minimum": 0,
+          "title": "Max Inflight Bytes",
+          "type": "integer"
+        },
+        "max_inflight_collectives": {
+          "minimum": 0,
+          "title": "Max Inflight Collectives",
+          "type": "integer"
+        },
+        "order_violations": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Order Violations",
+          "type": "array"
+        },
+        "pair_completion_p50_ms": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Pair Completion P50 Ms"
+        },
+        "pair_completion_p95_ms": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Pair Completion P95 Ms"
+        },
+        "pair_completion_p99_ms": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Pair Completion P99 Ms"
+        },
+        "pair_count": {
+          "minimum": 0,
+          "title": "Pair Count",
+          "type": "integer"
+        },
+        "rank_finish_skew_p95_us": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Rank Finish Skew P95 Us"
+        },
+        "rank_start_skew_p95_us": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Rank Start Skew P95 Us"
+        },
+        "realized_offset_error_p95_us": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Realized Offset Error P95 Us"
+        },
+        "realized_offset_p50_us": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Realized Offset P50 Us"
+        },
+        "realized_offset_p95_us": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Realized Offset P95 Us"
+        },
+        "resource_lifecycle_safe": {
+          "title": "Resource Lifecycle Safe",
+          "type": "boolean"
+        },
+        "resource_lifecycle_violations": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Resource Lifecycle Violations",
+          "type": "array"
+        },
+        "step_time_p50_ms": {
+          "anyOf": [
+            {
+              "exclusiveMinimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Step Time P50 Ms"
+        },
+        "step_time_p95_ms": {
+          "anyOf": [
+            {
+              "exclusiveMinimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Step Time P95 Ms"
+        },
+        "timestamp_domain": {
+          "title": "Timestamp Domain",
+          "type": "string"
+        },
+        "topology_class": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Topology Class"
+        },
+        "transport": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Transport"
+        }
+      },
+      "required": [
+        "timestamp_domain",
+        "gpu_timestamp_semantics",
+        "clock_sync_error_bound_us",
+        "pair_count",
+        "completed_pair_count",
+        "max_inflight_bytes",
+        "max_inflight_collectives",
+        "collective_order_safe",
+        "resource_lifecycle_safe",
+        "artifact_coverage_complete"
+      ],
+      "title": "CommunicationPhaseRunMetrics",
+      "type": "object"
+    },
+    "SystemPathLoadCell": {
+      "additionalProperties": false,
+      "properties": {
+        "completed_work": {
+          "minimum": 0,
+          "title": "Completed Work",
+          "type": "integer"
+        },
+        "domain": {
+          "enum": [
+            "distributed-communication",
+            "memory-tiering"
+          ],
+          "title": "Domain",
+          "type": "string"
+        },
+        "evidence_digests": {
+          "items": {
+            "pattern": "^sha256:[0-9a-f]{64}$",
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Evidence Digests",
+          "type": "array"
+        },
+        "fairness_score": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Fairness Score",
+          "type": "number"
+        },
+        "goodput_score": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Goodput Score",
+          "type": "number"
+        },
+        "hard_gate_failure_codes": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Hard Gate Failure Codes",
+          "type": "array"
+        },
+        "jitter_score": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Jitter Score",
+          "type": "number"
+        },
+        "load_ratio": {
+          "exclusiveMinimum": 0,
+          "title": "Load Ratio",
+          "type": "number"
+        },
+        "offered_work": {
+          "minimum": 1,
+          "title": "Offered Work",
+          "type": "integer"
+        },
+        "overlap_progress_score": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Overlap Progress Score",
+          "type": "number"
+        },
+        "p99_status": {
+          "enum": [
+            "official",
+            "exploratory"
+          ],
+          "title": "P99 Status",
+          "type": "string"
+        },
+        "protocol_id": {
+          "title": "Protocol Id",
+          "type": "string"
+        },
+        "regime": {
+          "enum": [
+            "light",
+            "normal",
+            "knee",
+            "saturation",
+            "overload",
+            "soak"
+          ],
+          "title": "Regime",
+          "type": "string"
+        },
+        "resource_stability_score": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Resource Stability Score",
+          "type": "number"
+        },
+        "schema_version": {
+          "const": "0.5.2",
+          "default": "0.5.2",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "tail_score": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Tail Score",
+          "type": "number"
+        }
+      },
+      "required": [
+        "domain",
+        "protocol_id",
+        "regime",
+        "load_ratio",
+        "offered_work",
+        "completed_work",
+        "goodput_score",
+        "tail_score",
+        "jitter_score",
+        "overlap_progress_score",
+        "resource_stability_score",
+        "fairness_score",
+        "p99_status",
+        "evidence_digests"
+      ],
+      "title": "SystemPathLoadCell",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "description": "A within-cell verdict and inputs for the existing concurrent-stability score.",
+  "properties": {
+    "baseline": {
+      "$ref": "#/$defs/CommunicationPhaseRunMetrics"
+    },
+    "baseline_framework": {
+      "title": "Baseline Framework",
+      "type": "string"
+    },
+    "baseline_run_id": {
+      "title": "Baseline Run Id",
+      "type": "string"
+    },
+    "candidate": {
+      "$ref": "#/$defs/CommunicationPhaseRunMetrics"
+    },
+    "candidate_framework": {
+      "title": "Candidate Framework",
+      "type": "string"
+    },
+    "candidate_run_id": {
+      "title": "Candidate Run Id",
+      "type": "string"
+    },
+    "cell_identity_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Cell Identity Sha256",
+      "type": "string"
+    },
+    "comparison": {
+      "$ref": "#/$defs/CommunicationPhaseRegressionMetrics"
+    },
+    "components": {
+      "additionalProperties": {
+        "anyOf": [
+          {
+            "type": "number"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "title": "Components",
+      "type": "object"
+    },
+    "cross_cell_ranking_allowed": {
+      "const": false,
+      "default": false,
+      "title": "Cross Cell Ranking Allowed",
+      "type": "boolean"
+    },
+    "failure_codes": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Failure Codes",
+      "type": "array"
+    },
+    "formula_version": {
+      "const": "communication-phase-regression-v0.1",
+      "default": "communication-phase-regression-v0.1",
+      "title": "Formula Version",
+      "type": "string"
+    },
+    "load_cell": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/SystemPathLoadCell"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "schema_version": {
+      "const": "0.1",
+      "default": "0.1",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "score_status": {
+      "const": "within-cell-regression-only",
+      "default": "within-cell-regression-only",
+      "title": "Score Status",
+      "type": "string"
+    },
+    "status": {
+      "enum": [
+        "pass",
+        "fail",
+        "unresolved"
+      ],
+      "title": "Status",
+      "type": "string"
+    },
+    "unresolved_reasons": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Unresolved Reasons",
+      "type": "array"
+    },
+    "workload_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Workload Sha256",
+      "type": "string"
+    },
+    "world_size": {
+      "minimum": 2,
+      "title": "World Size",
+      "type": "integer"
+    }
+  },
+  "required": [
+    "status",
+    "cell_identity_sha256",
+    "workload_sha256",
+    "baseline_framework",
+    "candidate_framework",
+    "baseline_run_id",
+    "candidate_run_id",
+    "world_size",
+    "components",
+    "baseline",
+    "candidate",
+    "comparison"
+  ],
+  "title": "CommunicationPhaseRegressionResult",
+  "type": "object"
+}

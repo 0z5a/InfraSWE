@@ -107,6 +107,12 @@ stability component; Operational Fit is an identity projection of that evidence.
 and transfer metrics remain cell-local cards. The catalog includes ten concrete communication
 profiles, five concrete memory-object profiles, and one deliberately unsealable memory-tier parent.
 
+Communication-phase regression additionally accepts a framework-neutral, arbitrary-world-size
+trace set, checks per-communicator rank order, and normalizes pair completion, contention stretch,
+GPU-realized offset, rank skew, in-flight windows, and consumer slack into one system-path load
+cell. Comparisons require exact cell and workload digests and never create a cross-cell score. See
+[`benchmarks/communication_phase/README.md`](benchmarks/communication_phase/README.md).
+
 The v0.5.3 Judge layer implements a fail-closed offline trust core for LLM-as-a-Judge. It seals
 exact model identities, human-reviewed criterion ownership, calibration and drift evidence, a
 multi-family panel policy, and a content-addressed input pack with identity/score blindness,
@@ -177,6 +183,7 @@ uv run infraswe task certify tasks/gpu-service-rollout-regression --executor doc
 uv run infraswe report runs/<run-id>
 uv run infraswe training probe --output training-capabilities.json
 uv run python benchmarks/training_cross_framework/run_minimum_suite.py
+uv run infraswe communication phase-regression --help
 uv run infraswe draft defaults --output catalog/default-drafts-v0.5
 uv run infraswe draft system-profiles --output catalog/system-drafts-v0.5.2
 uv run infraswe draft resolve --candidate candidate.json --output draft-resolution.json

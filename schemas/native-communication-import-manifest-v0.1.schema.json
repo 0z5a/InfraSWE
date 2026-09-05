@@ -1,0 +1,51 @@
+{
+  "additionalProperties": false,
+  "description": "Content-bound study annotations, never a source of replacement GPU times.",
+  "properties": {
+    "companion_artifacts": {
+      "items": {
+        "pattern": "^sha256:[0-9a-f]{64}$",
+        "type": "string"
+      },
+      "minItems": 1,
+      "title": "Companion Artifacts",
+      "type": "array"
+    },
+    "record_bindings": {
+      "additionalProperties": {
+        "additionalProperties": true,
+        "type": "object"
+      },
+      "title": "Record Bindings",
+      "type": "object"
+    },
+    "schema_version": {
+      "const": "0.1",
+      "default": "0.1",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "source_artifacts": {
+      "items": {
+        "pattern": "^sha256:[0-9a-f]{64}$",
+        "type": "string"
+      },
+      "minItems": 1,
+      "title": "Source Artifacts",
+      "type": "array"
+    },
+    "trace_set_metadata": {
+      "additionalProperties": true,
+      "title": "Trace Set Metadata",
+      "type": "object"
+    }
+  },
+  "required": [
+    "source_artifacts",
+    "companion_artifacts",
+    "trace_set_metadata",
+    "record_bindings"
+  ],
+  "title": "NativeTraceImportManifest",
+  "type": "object"
+}

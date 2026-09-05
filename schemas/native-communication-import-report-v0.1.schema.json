@@ -1,0 +1,714 @@
+{
+  "$defs": {
+    "CommunicationArtifactCoverage": {
+      "additionalProperties": false,
+      "description": "Coverage claim for the evidence artifact supplied to the scorer.",
+      "properties": {
+        "claim_scope": {
+          "enum": [
+            "full-run",
+            "partial-shard"
+          ],
+          "title": "Claim Scope",
+          "type": "string"
+        },
+        "exact_order_verified": {
+          "title": "Exact Order Verified",
+          "type": "boolean"
+        },
+        "expected_units": {
+          "minimum": 1,
+          "title": "Expected Units",
+          "type": "integer"
+        },
+        "manifest_sha256": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Manifest Sha256",
+          "type": "string"
+        },
+        "reconstructed_units": {
+          "minimum": 0,
+          "title": "Reconstructed Units",
+          "type": "integer"
+        },
+        "verified_units": {
+          "minimum": 0,
+          "title": "Verified Units",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "claim_scope",
+        "manifest_sha256",
+        "expected_units",
+        "verified_units",
+        "reconstructed_units",
+        "exact_order_verified"
+      ],
+      "title": "CommunicationArtifactCoverage",
+      "type": "object"
+    },
+    "CommunicationExecutionIdentity": {
+      "additionalProperties": false,
+      "description": "Controlled model/policy/checkpoint/topology identity for an A/B comparison.",
+      "properties": {
+        "checkpoint_sha256": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Checkpoint Sha256",
+          "type": "string"
+        },
+        "model_revision_sha256": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Model Revision Sha256",
+          "type": "string"
+        },
+        "policy_state_sha256": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Policy State Sha256",
+          "type": "string"
+        },
+        "topology_sha256": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Topology Sha256",
+          "type": "string"
+        }
+      },
+      "required": [
+        "model_revision_sha256",
+        "checkpoint_sha256",
+        "policy_state_sha256",
+        "topology_sha256"
+      ],
+      "title": "CommunicationExecutionIdentity",
+      "type": "object"
+    },
+    "CommunicationExperimentProvenance": {
+      "additionalProperties": false,
+      "description": "Separates candidate selection from independent confirmation evidence.",
+      "properties": {
+        "independent_process_artifact_sha256": {
+          "items": {
+            "pattern": "^sha256:[0-9a-f]{64}$",
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Independent Process Artifact Sha256",
+          "type": "array"
+        },
+        "independent_process_run_ids": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Independent Process Run Ids",
+          "type": "array"
+        },
+        "phase": {
+          "enum": [
+            "candidate-selection",
+            "confirmation"
+          ],
+          "title": "Phase",
+          "type": "string"
+        }
+      },
+      "required": [
+        "phase",
+        "independent_process_run_ids",
+        "independent_process_artifact_sha256"
+      ],
+      "title": "CommunicationExperimentProvenance",
+      "type": "object"
+    },
+    "CommunicationGpuTimingProvenance": {
+      "additionalProperties": false,
+      "description": "Content-addressed source of the declared GPU timestamp semantics.",
+      "properties": {
+        "adapter": {
+          "minLength": 1,
+          "title": "Adapter",
+          "type": "string"
+        },
+        "artifact_sha256": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Artifact Sha256",
+          "type": "string"
+        },
+        "capture_kind": {
+          "enum": [
+            "profiler-kernel",
+            "cuda-event-bracket"
+          ],
+          "title": "Capture Kind",
+          "type": "string"
+        },
+        "observed_kernel_names": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Observed Kernel Names",
+          "type": "array"
+        }
+      },
+      "required": [
+        "capture_kind",
+        "adapter",
+        "artifact_sha256"
+      ],
+      "title": "CommunicationGpuTimingProvenance",
+      "type": "object"
+    },
+    "CommunicationPhaseTraceRecord": {
+      "additionalProperties": false,
+      "description": "One framework-neutral collective observation from one rank.",
+      "properties": {
+        "api_launch_timestamp_ns": {
+          "minimum": 0,
+          "title": "Api Launch Timestamp Ns",
+          "type": "integer"
+        },
+        "api_return_timestamp_ns": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Api Return Timestamp Ns"
+        },
+        "attributes": {
+          "additionalProperties": true,
+          "title": "Attributes",
+          "type": "object"
+        },
+        "communicator_sequence_id": {
+          "minimum": 0,
+          "title": "Communicator Sequence Id",
+          "type": "integer"
+        },
+        "completion_timestamp_ns": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Completion Timestamp Ns"
+        },
+        "consumer_timestamp_ns": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Consumer Timestamp Ns"
+        },
+        "direction": {
+          "minLength": 1,
+          "title": "Direction",
+          "type": "string"
+        },
+        "framework": {
+          "minLength": 1,
+          "title": "Framework",
+          "type": "string"
+        },
+        "gpu_end_timestamp_ns": {
+          "minimum": 0,
+          "title": "Gpu End Timestamp Ns",
+          "type": "integer"
+        },
+        "gpu_start_timestamp_ns": {
+          "minimum": 0,
+          "title": "Gpu Start Timestamp Ns",
+          "type": "integer"
+        },
+        "layer": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Layer"
+        },
+        "local_rank": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Local Rank"
+        },
+        "logical_operation_id": {
+          "minLength": 1,
+          "title": "Logical Operation Id",
+          "type": "string"
+        },
+        "message_bytes": {
+          "exclusiveMinimum": 0,
+          "title": "Message Bytes",
+          "type": "integer"
+        },
+        "microbatch": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Microbatch"
+        },
+        "node": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Node"
+        },
+        "operation": {
+          "minLength": 1,
+          "title": "Operation",
+          "type": "string"
+        },
+        "pair_id": {
+          "minLength": 1,
+          "title": "Pair Id",
+          "type": "string"
+        },
+        "pair_role": {
+          "enum": [
+            "a",
+            "b"
+          ],
+          "title": "Pair Role",
+          "type": "string"
+        },
+        "process_group_id": {
+          "minLength": 1,
+          "title": "Process Group Id",
+          "type": "string"
+        },
+        "process_group_ranks": {
+          "items": {
+            "type": "integer"
+          },
+          "minItems": 2,
+          "title": "Process Group Ranks",
+          "type": "array"
+        },
+        "rank": {
+          "minimum": 0,
+          "title": "Rank",
+          "type": "integer"
+        },
+        "requested_offset_us": {
+          "default": 0.0,
+          "title": "Requested Offset Us",
+          "type": "number"
+        },
+        "run_id": {
+          "minLength": 1,
+          "title": "Run Id",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "0.1",
+          "default": "0.1",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "step": {
+          "minimum": 0,
+          "title": "Step",
+          "type": "integer"
+        },
+        "stream_id": {
+          "minLength": 1,
+          "title": "Stream Id",
+          "type": "string"
+        },
+        "topology_class": {
+          "minLength": 1,
+          "title": "Topology Class",
+          "type": "string"
+        },
+        "transport": {
+          "minLength": 1,
+          "title": "Transport",
+          "type": "string"
+        },
+        "world_size": {
+          "minimum": 2,
+          "title": "World Size",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "framework",
+        "run_id",
+        "rank",
+        "world_size",
+        "step",
+        "direction",
+        "operation",
+        "logical_operation_id",
+        "pair_id",
+        "pair_role",
+        "process_group_id",
+        "process_group_ranks",
+        "communicator_sequence_id",
+        "stream_id",
+        "message_bytes",
+        "api_launch_timestamp_ns",
+        "gpu_start_timestamp_ns",
+        "gpu_end_timestamp_ns",
+        "transport",
+        "topology_class"
+      ],
+      "title": "CommunicationPhaseTraceRecord",
+      "type": "object"
+    },
+    "CommunicationPhaseTraceSet": {
+      "additionalProperties": false,
+      "description": "A complete trace for one policy run inside one sealed comparison cell.",
+      "properties": {
+        "artifact_coverage": {
+          "$ref": "#/$defs/CommunicationArtifactCoverage"
+        },
+        "cell_identity_sha256": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Cell Identity Sha256",
+          "type": "string"
+        },
+        "clock_sync_error_bound_us": {
+          "minimum": 0,
+          "title": "Clock Sync Error Bound Us",
+          "type": "number"
+        },
+        "evidence_digests": {
+          "items": {
+            "pattern": "^sha256:[0-9a-f]{64}$",
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Evidence Digests",
+          "type": "array"
+        },
+        "execution_identity": {
+          "$ref": "#/$defs/CommunicationExecutionIdentity"
+        },
+        "experiment_provenance": {
+          "$ref": "#/$defs/CommunicationExperimentProvenance"
+        },
+        "framework": {
+          "minLength": 1,
+          "title": "Framework",
+          "type": "string"
+        },
+        "gpu_timestamp_semantics": {
+          "enum": [
+            "kernel-observed",
+            "event-bracket"
+          ],
+          "title": "Gpu Timestamp Semantics",
+          "type": "string"
+        },
+        "gpu_timing_provenance": {
+          "$ref": "#/$defs/CommunicationGpuTimingProvenance"
+        },
+        "isolated_latency_ms_by_operation": {
+          "additionalProperties": {
+            "exclusiveMinimum": 0,
+            "type": "number"
+          },
+          "title": "Isolated Latency Ms By Operation",
+          "type": "object"
+        },
+        "policy": {
+          "minLength": 1,
+          "title": "Policy",
+          "type": "string"
+        },
+        "records": {
+          "items": {
+            "$ref": "#/$defs/CommunicationPhaseTraceRecord"
+          },
+          "minItems": 1,
+          "title": "Records",
+          "type": "array"
+        },
+        "resource_lifecycle_events": {
+          "items": {
+            "$ref": "#/$defs/CommunicationResourceLifecycleEvent"
+          },
+          "minItems": 1,
+          "title": "Resource Lifecycle Events",
+          "type": "array"
+        },
+        "run_id": {
+          "minLength": 1,
+          "title": "Run Id",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "0.1",
+          "default": "0.1",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "step_time_ms": {
+          "items": {
+            "exclusiveMinimum": 0,
+            "type": "number"
+          },
+          "title": "Step Time Ms",
+          "type": "array"
+        },
+        "timestamp_domain": {
+          "minLength": 1,
+          "title": "Timestamp Domain",
+          "type": "string"
+        },
+        "workload_sha256": {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Workload Sha256",
+          "type": "string"
+        },
+        "world_size": {
+          "minimum": 2,
+          "title": "World Size",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "framework",
+        "run_id",
+        "policy",
+        "world_size",
+        "cell_identity_sha256",
+        "workload_sha256",
+        "execution_identity",
+        "artifact_coverage",
+        "experiment_provenance",
+        "timestamp_domain",
+        "gpu_timestamp_semantics",
+        "gpu_timing_provenance",
+        "clock_sync_error_bound_us",
+        "records",
+        "resource_lifecycle_events",
+        "evidence_digests"
+      ],
+      "title": "CommunicationPhaseTraceSet",
+      "type": "object"
+    },
+    "CommunicationResourceLifecycleEvent": {
+      "additionalProperties": false,
+      "description": "One acquisition or final-release observation for a rank-local resource.",
+      "properties": {
+        "event": {
+          "enum": [
+            "acquire",
+            "release"
+          ],
+          "title": "Event",
+          "type": "string"
+        },
+        "logical_operation_id": {
+          "minLength": 1,
+          "title": "Logical Operation Id",
+          "type": "string"
+        },
+        "message_bytes": {
+          "exclusiveMinimum": 0,
+          "title": "Message Bytes",
+          "type": "integer"
+        },
+        "process_group_id": {
+          "minLength": 1,
+          "title": "Process Group Id",
+          "type": "string"
+        },
+        "rank": {
+          "minimum": 0,
+          "title": "Rank",
+          "type": "integer"
+        },
+        "timestamp_ns": {
+          "minimum": 0,
+          "title": "Timestamp Ns",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "process_group_id",
+        "logical_operation_id",
+        "rank",
+        "event",
+        "timestamp_ns",
+        "message_bytes"
+      ],
+      "title": "CommunicationResourceLifecycleEvent",
+      "type": "object"
+    },
+    "NativeTraceImportIssue": {
+      "additionalProperties": false,
+      "properties": {
+        "code": {
+          "title": "Code",
+          "type": "string"
+        },
+        "detail": {
+          "title": "Detail",
+          "type": "string"
+        },
+        "source_ref": {
+          "title": "Source Ref",
+          "type": "string"
+        }
+      },
+      "required": [
+        "source_ref",
+        "code",
+        "detail"
+      ],
+      "title": "NativeTraceImportIssue",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "description": "An unresolved import is useful diagnostics, not a scorable trace set.",
+  "properties": {
+    "auxiliary_operations": {
+      "additionalProperties": {
+        "type": "integer"
+      },
+      "title": "Auxiliary Operations",
+      "type": "object"
+    },
+    "companion_artifacts": {
+      "items": {
+        "pattern": "^sha256:[0-9a-f]{64}$",
+        "type": "string"
+      },
+      "title": "Companion Artifacts",
+      "type": "array"
+    },
+    "framework": {
+      "enum": [
+        "megatron",
+        "slime",
+        "verl"
+      ],
+      "title": "Framework",
+      "type": "string"
+    },
+    "issues": {
+      "items": {
+        "$ref": "#/$defs/NativeTraceImportIssue"
+      },
+      "title": "Issues",
+      "type": "array"
+    },
+    "manifest_sha256": {
+      "anyOf": [
+        {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Manifest Sha256"
+    },
+    "observed_record_count": {
+      "default": 0,
+      "title": "Observed Record Count",
+      "type": "integer"
+    },
+    "partial_records": {
+      "items": {
+        "additionalProperties": true,
+        "type": "object"
+      },
+      "title": "Partial Records",
+      "type": "array"
+    },
+    "schema_version": {
+      "const": "0.1",
+      "default": "0.1",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "source_artifacts": {
+      "items": {
+        "pattern": "^sha256:[0-9a-f]{64}$",
+        "type": "string"
+      },
+      "title": "Source Artifacts",
+      "type": "array"
+    },
+    "status": {
+      "default": "unresolved",
+      "enum": [
+        "ready",
+        "unresolved"
+      ],
+      "title": "Status",
+      "type": "string"
+    },
+    "trace_set": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/CommunicationPhaseTraceSet"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    }
+  },
+  "required": [
+    "framework",
+    "source_artifacts",
+    "companion_artifacts"
+  ],
+  "title": "NativeTraceImportReport",
+  "type": "object"
+}

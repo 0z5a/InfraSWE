@@ -7,6 +7,10 @@ if [[ $# -ne 1 ]]; then
 fi
 
 group_index="$1"
+if [[ ! "${group_index}" =~ ^[0-9]+$ ]]; then
+  echo "GROUP_INDEX must be a nonnegative integer" >&2
+  exit 2
+fi
 printf -v group_name 'group-%04d' "${group_index}"
 printf -v previous_group_name 'group-%04d' "$((group_index - 1))"
 
@@ -28,6 +32,14 @@ github_reveal_batch_size="${INFRASWE_GITHUB_REVEAL_BATCH_SIZE:-${github_batch_si
 test_timeout="${INFRASWE_TEST_TIMEOUT:-45}"
 execution_mode="${INFRASWE_EXECUTION_MODE:-local}"
 
+# A deployer may pause between groups without interrupting an in-flight PR.
+# This control directory is outside campaign artifacts and is never published.
+control_dir="${INFRASWE_CAMPAIGN_CONTROL_DIR:-/workspace/infraswe-control}"
+while [[ -f "${control_dir}/communication.deployment-pause" ]]; do
+  printf '%s\n' "${group_index}" > "${control_dir}/communication.boundary-waiting"
+  sleep 5
+done
+
 runner_transport_args=()
 if [[ "${execution_mode}" == local ]]; then
   runner_transport_args+=(--local)
@@ -40,6 +52,11 @@ else
 fi
 
 export PYTHONPATH="src:benchmarks/historical_prs${PYTHONPATH:+:$PYTHONPATH}"
+shadow_dir="${result_root}/decision-v061-shadow/groups/${group_name}"
+if [[ "${INFRASWE_DECISION_V061_SHADOW:-0}" == 1 ]]; then
+  "${python}" benchmarks/historical_prs/decision_v061_shadow.py activate \
+    --group-dir "${group_dir}" --queue-lock "${queue_lock}" --output-dir "${shadow_dir}"
+fi
 mkdir -p "${group_dir}"
 
 if [[ ! -f "${group_dir}/input-lock.json" ]]; then
@@ -100,6 +117,11 @@ if [[ ! -f "${group_dir}/judgment-locks.json" ]]; then
     --output "${group_dir}/judgment-locks.json"
 fi
 
+if [[ "${INFRASWE_DECISION_V061_SHADOW:-0}" == 1 ]]; then
+  "${python}" benchmarks/historical_prs/decision_v061_shadow.py freeze \
+    --group-dir "${group_dir}" --queue-lock "${queue_lock}" --output-dir "${shadow_dir}"
+fi
+
 if [[ ! -f "${group_dir}/outcome-reveal.json" ]]; then
   "${python}" benchmarks/historical_prs/reveal_training_bulk_group.py \
     --input-lock "${group_dir}/input-lock.json" \
@@ -123,6 +145,11 @@ if [[ ! -f "${group_dir}/next-policy.json" ]]; then
     --reveal "${group_dir}/outcome-reveal.json" \
     --audit "${group_dir}/oracle-audit.json" \
     --output "${group_dir}/next-policy.json"
+fi
+
+if [[ "${INFRASWE_DECISION_V061_SHADOW:-0}" == 1 ]]; then
+  "${python}" benchmarks/historical_prs/decision_v061_shadow.py audit \
+    --group-dir "${group_dir}" --queue-lock "${queue_lock}" --output-dir "${shadow_dir}"
 fi
 
 jq '{group_index,summary}' "${group_dir}/oracle-audit.json"

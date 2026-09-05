@@ -16,7 +16,7 @@ from infraswe.pr_decision.contracts import (
 
 
 class DecisionEvaluationCase(DecisionPlaneModel):
-    case_id: str
+    case_id: str = Field(min_length=1)
     predicted_label: DecisionLabel
     oracle_label: DecisionLabel
     valid: bool = True
@@ -58,6 +58,8 @@ class ReliabilityMetrics(DecisionPlaneModel):
 
 class MetricGateResult(DecisionPlaneModel):
     schema_version: Literal["0.6.1"] = "0.6.1"
+    evaluation_scope: Literal["numerical-diagnostic-only"] = "numerical-diagnostic-only"
+    release_authorized: Literal[False] = False
     contract: MetricContract
     metrics: ReliabilityMetrics
     integer_budget: IntegerErrorBudget
@@ -105,6 +107,16 @@ def _confusion(cases: list[DecisionEvaluationCase]) -> ConfusionMatrix3:
 def evaluate_release_gate(
     cases: list[DecisionEvaluationCase], contract: MetricContract
 ) -> MetricGateResult:
+    """Compute numerical gates, not holdout provenance or permission to publish.
+
+    Caller-declared invalid rows remain visible in the diagnostic denominators,
+    but cannot produce a passing result without independent eligibility review.
+    No attestor is implicit in a contract's requested evaluation_track.
+    """
+    cases = [DecisionEvaluationCase.model_validate(case.model_dump()) for case in cases]
+    case_ids = [case.case_id for case in cases]
+    if len(case_ids) != len(set(case_ids)):
+        raise ValueError("duplicate evaluation case ids")
     eligible = [case for case in cases if case.valid]
     exact = sum(case.predicted_label == case.oracle_label for case in eligible)
     predicted_accept = sum(case.predicted_label == "accept" for case in eligible)
@@ -146,6 +158,8 @@ def evaluate_release_gate(
         )
 
     failures: list[str] = []
+    if len(eligible) != len(cases):
+        failures.append("unverified eligibility exclusions: independent ledger required")
     if not support_passed:
         failures.append("nonzero eligible and oracle-Accept support is required")
     if not accuracy_passed:
@@ -154,7 +168,7 @@ def evaluate_release_gate(
         failures.append("Accept recall gate failed")
     if precision_passed is False:
         failures.append("Accept precision gate failed")
-    passed = support_passed and accuracy_passed and recall_passed and precision_passed is not False
+    passed = not failures
     return MetricGateResult(
         contract=contract,
         metrics=metrics,

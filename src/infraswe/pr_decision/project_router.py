@@ -32,6 +32,12 @@ class ProjectDecisionProfile(DecisionPlaneModel):
         leaked = FORBIDDEN_PROJECT_FEATURES.intersection(self.routing_features)
         if leaked:
             raise ValueError(f"project profile contains forbidden features: {sorted(leaked)}")
+        if set(self.routing_features) - {"project", "module", "mechanism"} or any(
+            not isinstance(value, str) for value in self.routing_features.values()
+        ):
+            raise ValueError("project routing requires flat allowlisted structural features")
+        if self.routing_features.get("project", self.project) != self.project:
+            raise ValueError("routing feature project mismatch")
         return self
 
 
@@ -49,7 +55,11 @@ def route_project_profile(
     profiles: dict[str, ProjectDecisionProfile],
     minimum_project_support: int,
 ) -> ProjectRoute:
+    if minimum_project_support < 1:
+        raise ValueError("minimum project support must be positive")
     profile = profiles.get(project)
+    if profile is not None and profile.project != project:
+        raise ValueError("profile/project binding mismatch")
     if profile is None or profile.training_support < minimum_project_support:
         return ProjectRoute(
             project=project,

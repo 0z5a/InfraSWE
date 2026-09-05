@@ -61,6 +61,14 @@ class DecisionReliabilityCardMaterial(DecisionPlaneModel):
             raise ValueError("generated_at must be timezone-aware")
         if self.evaluation_track != self.gate_result.contract.evaluation_track:
             raise ValueError("reliability card track must match its MetricContract")
+        if sum(self.coverage.model_dump().values()) != self.gate_result.metrics.total_cases:
+            raise ValueError("coverage categories must partition the total population")
+        if self.policy_digest not in self.attempted_policy_digests:
+            raise ValueError("selected policy must be in the attempted policy ledger")
+        if self.calibration_profile_digest is not None and (
+            self.calibration_profile_digest not in self.attempted_calibration_profile_digests
+        ):
+            raise ValueError("selected calibration must be in the attempted calibration ledger")
         return self
 
 
@@ -76,6 +84,10 @@ def seal_reliability_card(
 
 
 def audit_reliability_card(card: DecisionReliabilityCard) -> list[str]:
+    try:
+        DecisionReliabilityCardMaterial.model_validate(card.material.model_dump())
+    except ValueError as error:
+        return [str(error)]
     if card.card_sha256 != canonical_sha256(card.material):
         return ["decision reliability card digest mismatch"]
     return []

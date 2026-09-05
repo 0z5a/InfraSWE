@@ -28,6 +28,7 @@ class EvidenceClaim(DecisionPlaneModel):
     disposition: ClaimDisposition
     counterevidence_refs: list[str] = Field(default_factory=list)
     details: str | None = None
+    case_identity_sha256: str | None = Field(default=None, pattern=r"^sha256:[0-9a-f]{64}$")
 
     @model_validator(mode="after")
     def claim_is_provenanced(self) -> EvidenceClaim:

@@ -142,6 +142,7 @@ from infraswe.models.trial import TrialRecord
 from infraswe.pr_decision.contracts import (
     BASELINE_95_99_CONTRACT,
     PRECISION_95_99_95_CONTRACT,
+    STRICT_95_99_99_CONTRACT,
     MetricContract,
 )
 from infraswe.pr_decision.release_gate import (
@@ -296,19 +297,20 @@ def evaluate_pr_decision_gate(
         str,
         typer.Option(
             "--preset",
-            help="baseline-95-99 or precision-95-99-95",
+            help="strict-95-99-99 (default), baseline-95-99, or precision-95-99-95",
         ),
-    ] = "precision-95-99-95",
+    ] = "strict-95-99-99",
     contract_path: Annotated[
         Path | None,
         typer.Option("--contract", exists=True, readable=True),
     ] = None,
 ) -> None:
-    """Evaluate frozen three-class accuracy and Accept recall/precision contracts."""
+    """Compute numerical gates; a pass is not a release/holdout attestation."""
 
     presets = {
         "baseline-95-99": BASELINE_95_99_CONTRACT,
         "precision-95-99-95": PRECISION_95_99_95_CONTRACT,
+        "strict-95-99-99": STRICT_95_99_99_CONTRACT,
     }
     if contract_path is not None:
         contract = MetricContract.model_validate(_read_mapping(contract_path))
@@ -323,7 +325,7 @@ def evaluate_pr_decision_gate(
     result = evaluate_release_gate(cases, contract)
     atomic_write_json(output, result.model_dump(mode="json"))
     console.print(
-        f"contract={contract.contract_id} passed={result.passed} "
+        f"contract={contract.contract_id} passed={result.passed} release_authorized=False "
         f"Accuracy3={result.metrics.accuracy3} "
         f"AcceptRecall={result.metrics.recall_accept} "
         f"AcceptPrecision={result.metrics.precision_accept} "

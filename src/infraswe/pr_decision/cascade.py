@@ -9,12 +9,15 @@ from infraswe.pr_decision.contracts import (
     DecisionLabel,
     DecisionPlaneModel,
     DecisionPrediction,
+    PRCaseIdentity,
+    canonical_sha256,
 )
 from infraswe.pr_decision.evidence import (
     EvidenceClaim,
     EvidenceRequest,
     decisive_refutation,
 )
+from infraswe.pr_decision.obligations import ObligationMap
 
 CorrectionDirection = Literal["accept-challenger", "reject-rescuer"]
 
@@ -99,22 +102,56 @@ def apply_bidirectional_cascade(
     proposals: list[CorrectionProposal],
     claims: list[EvidenceClaim],
     evidence_requests: list[EvidenceRequest] | None = None,
+    case_identity: PRCaseIdentity | None = None,
+    expected_claim_digests: dict[str, str] | None = None,
+    resolved_obligations: ObligationMap | None = None,
 ) -> CascadeResult:
-    """Apply only evidence-backed corrections; unsupported doubt remains an internal request."""
+    """Check case-bound corrections against controller-pinned claim material.
+
+    This is an integrity check, not collector authentication: callers must obtain
+    expected digests independently of the proposing agent. Missing bindings block
+    every correction. The bulk shadow adapter does not invoke this API until a
+    trusted collector is available.
+    """
 
     current = initial
     applied: list[str] = []
     blocked: list[str] = []
     requests = list(evidence_requests or [])
     claim_ids = {claim.claim_id for claim in claims}
+    if len(claim_ids) != len(claims) or len({p.proposal_id for p in proposals}) != len(proposals):
+        raise ValueError("duplicate claim or proposal ids")
+    pinned = expected_claim_digests or {}
+    bound = case_identity is not None and all(
+        claim.case_identity_sha256 == canonical_sha256(case_identity)
+        and claim.head_sha == case_identity.head_sha
+        and claim.observed_at <= case_identity.prediction_at
+        and pinned.get(claim.claim_id) == canonical_sha256(claim)
+        for claim in claims
+    )
 
     for proposal in proposals:
         refs = set(proposal.evidence_refs)
-        if proposal.from_label != current.label or not refs.issubset(claim_ids):
+        if not bound or proposal.from_label != current.label or not refs.issubset(claim_ids):
             blocked.append(proposal.proposal_id)
             continue
         if proposal.direction == "reject-rescuer":
-            decisive = _decisive_support(claims, refs)
+            required = set(current.blocking_obligations + current.missing_obligations)
+            resolved = {
+                obligation.obligation_id
+                for obligation in (resolved_obligations.obligations if resolved_obligations else [])
+                if obligation.status == "satisfied"
+                and set(obligation.evidence_refs).issubset(refs)
+                and _decisive_support(claims, set(obligation.evidence_refs))
+            }
+            decisive = bool(
+                resolved_obligations is not None
+                and resolved_obligations.case_identity_sha256 == canonical_sha256(case_identity)
+                and not resolved_obligations.blocking_violations
+                and not resolved_obligations.blocking_unknowns
+                and required.issubset(resolved)
+                and _decisive_support(claims, refs)
+            )
         elif proposal.revised_prediction.label == "check":
             decisive = _decisive_uncertainty(claims, refs)
         else:

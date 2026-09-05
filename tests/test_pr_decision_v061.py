@@ -113,6 +113,7 @@ def claim(
         observed_at=NOW,
         head_sha=HEAD_SHA,
         disposition=disposition,
+        case_identity_sha256=canonical_sha256(case_identity()),
     )
 
 
@@ -385,6 +386,10 @@ def test_bidirectional_cascade_only_applies_decisive_corrections() -> None:
         initial=initial,
         proposals=[challenger],
         claims=[claim("verifier.fail", "refutes")],
+        case_identity=case_identity(),
+        expected_claim_digests={
+            "verifier.fail": canonical_sha256(claim("verifier.fail", "refutes"))
+        },
     )
     assert applied.final_prediction.label == "reject"
     assert applied.applied_proposal_ids == ["challenge-1"]
@@ -407,6 +412,12 @@ def test_bidirectional_cascade_only_applies_decisive_corrections() -> None:
         initial=initial,
         proposals=[check_proposal],
         claims=[claim("matrix.unknown", "unknown", authority="build-or-test")],
+        case_identity=case_identity(),
+        expected_claim_digests={
+            "matrix.unknown": canonical_sha256(
+                claim("matrix.unknown", "unknown", authority="build-or-test")
+            )
+        },
     )
     assert check_result.final_prediction.label == "check"
 
@@ -529,7 +540,7 @@ def test_checked_in_metric_contracts_match_code_presets() -> None:
     assert strict == PRECISION_95_99_95_CONTRACT.model_dump(mode="json")
 
 
-def test_zero_support_fails_closed_and_invalid_timeout_is_excluded() -> None:
+def test_zero_support_and_unverified_invalid_exclusions_fail_closed() -> None:
     no_accepts = [
         DecisionEvaluationCase(case_id="r", predicted_label="reject", oracle_label="reject")
     ]
@@ -545,7 +556,8 @@ def test_zero_support_fails_closed_and_invalid_timeout_is_excluded() -> None:
         ),
     ]
     result = evaluate_release_gate(cases, PRECISION_95_99_95_CONTRACT)
-    assert result.passed is True
+    assert result.passed is False
+    assert "unverified eligibility" in result.failure_reasons[0]
     assert result.metrics.eligible_cases == 1
     assert result.metrics.invalid_cases == 1
 

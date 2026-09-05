@@ -52,6 +52,19 @@ class OutcomeBlindSnapshotMaterial(DecisionPlaneModel):
     @model_validator(mode="after")
     def snapshot_is_time_and_label_safe(self) -> OutcomeBlindSnapshotMaterial:
         assert_label_free(self.observations)
+        # Only structural observations are accepted by this adapter. Free-form
+        # notes need a separately reviewed collector, not another key blacklist.
+        if set(self.observations) - {"changed_files"}:
+            raise ValueError("unsupported blind observation fields")
+        paths = self.observations.get("changed_files", [])
+        if not isinstance(paths, list) or any(
+            not isinstance(path, str) or not path or path.startswith("/") or ".." in path.split("/")
+            for path in paths
+        ):
+            raise ValueError("changed_files must contain repository-relative paths")
+        ids = [claim.claim_id for claim in self.claims]
+        if len(ids) != len(set(ids)):
+            raise ValueError("blind claim ids must be unique")
         for claim in self.claims:
             if claim.observed_at > self.case_identity.prediction_at:
                 raise ValueError("blind claims cannot be observed after prediction_at")
@@ -59,12 +72,18 @@ class OutcomeBlindSnapshotMaterial(DecisionPlaneModel):
                 raise ValueError("blind claim head_sha must match the case identity")
         if len(self.retrieval_memory_refs) != len(set(self.retrieval_memory_refs)):
             raise ValueError("retrieval memory references must be unique")
+        if self.retrieval_memory_refs:
+            raise ValueError(
+                "retrieval references require a verified memory resolver (not enabled)"
+            )
         return self
 
 
 class OutcomeBlindSnapshot(DecisionPlaneModel):
     material: OutcomeBlindSnapshotMaterial
     snapshot_sha256: Digest
+    # Hash/time checks do not authenticate a collector or establish data isolation.
+    provenance_authenticated: Literal[False] = False
 
 
 def seal_snapshot(material: OutcomeBlindSnapshotMaterial) -> OutcomeBlindSnapshot:
@@ -76,7 +95,7 @@ def audit_snapshot(snapshot: OutcomeBlindSnapshot) -> list[str]:
     if snapshot.snapshot_sha256 != canonical_sha256(snapshot.material):
         failures.append("snapshot digest mismatch")
     try:
-        assert_label_free(snapshot.material.observations)
+        OutcomeBlindSnapshotMaterial.model_validate(snapshot.material.model_dump())
     except ValueError as error:
         failures.append(str(error))
     return failures

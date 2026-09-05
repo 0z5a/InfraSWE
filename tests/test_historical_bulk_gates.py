@@ -12,7 +12,7 @@ from types import ModuleType, SimpleNamespace
 from infraswe.draft.lifecycle import canonical_sha256
 
 
-def test_non_improving_campaign_skips_publish_without_skipping_shutdown(
+def test_campaign_completion_defers_publication_and_shutdown_to_independent_verification(
     project_root: Path,
 ) -> None:
     for name in (
@@ -22,14 +22,11 @@ def test_non_improving_campaign_skips_publish_without_skipping_shutdown(
     ):
         script = (project_root / "benchmarks" / "historical_prs" / name).read_text(encoding="utf-8")
         assert 'export PYTHONPATH="src:benchmarks/historical_prs' in script
-        assert "git -c user.name=" in script
-        assert 'git_commit_email="${INFRASWE_GIT_USER_EMAIL:' in script
-        assert "aggregate target metric did not improve; skipping commit and push" in script
-        assert "hard release quality gate not satisfied; skipping commit and push" in script
         assert ".release_quality_gate_satisfied" in script
         assert "release_quality_gate_satisfied" in script
-        assert "refusing publish and shutdown" not in script
-        assert script.index("skipping commit and push") < script.index("vastai stop instance")
+        assert "finalization pending independent verification" in script
+        assert "git push" not in script
+        assert "vastai stop instance" not in script
 
 
 def test_release_requires_95_exact_accuracy_and_99_accept_recall(
@@ -89,7 +86,7 @@ def test_release_requires_95_exact_accuracy_and_99_accept_recall(
         assert field in summary_source
 
 
-def test_last_bulk_campaign_owns_credential_cleanup_and_shutdown(project_root: Path) -> None:
+def test_no_campaign_can_self_authorize_credential_cleanup(project_root: Path) -> None:
     training = (
         project_root / "benchmarks" / "historical_prs" / "run_training_bulk_campaign.sh"
     ).read_text(encoding="utf-8")
@@ -100,14 +97,9 @@ def test_last_bulk_campaign_owns_credential_cleanup_and_shutdown(project_root: P
         project_root / "benchmarks" / "historical_prs" / "run_communication_bulk_campaign.sh"
     ).read_text(encoding="utf-8")
 
-    assert "inference_pending=false" in training
-    assert '"${inference_pending}" != true' in training
-    assert "training_pending=false" in inference
-    assert '"${training_pending}" != true' in inference
-    assert "communication_pending=false" in inference
-    assert '"${communication_pending}" != true' in inference
-    assert "inference_pending=false" in communication
-    assert '"${inference_pending}" != true' in communication
+    for script in (training, inference, communication):
+        assert "rm -f" not in script
+        assert "credential deletion and instance stop are disabled" in script
 
 
 def test_training_campaign_uses_large_groups_after_safe_boundary(project_root: Path) -> None:

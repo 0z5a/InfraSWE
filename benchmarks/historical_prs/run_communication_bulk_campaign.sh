@@ -62,6 +62,13 @@ group_is_complete() {
 for ((group_index = 0; group_index < group_count; group_index++)); do
   group_dir="${result_root}/groups/$(printf 'group-%04d' "${group_index}")"
   if group_is_complete "${group_dir}"; then
+    shadow_dir="${result_root}/decision-v061-shadow/groups/$(printf 'group-%04d' "${group_index}")"
+    if [[ "${INFRASWE_DECISION_V061_SHADOW:-0}" == 1 && -f "${shadow_dir}/activation.json" ]]; then
+      # A crash after sealing the primary chain must not silently skip shadow audit.
+      "${INFRASWE_LOCAL_PYTHON:-/venv/main/bin/python}" \
+        benchmarks/historical_prs/decision_v061_shadow.py audit \
+        --group-dir "${group_dir}" --queue-lock "${queue_lock}" --output-dir "${shadow_dir}"
+    fi
     echo "campaign group=${group_index} already complete"
     continue
   fi
@@ -104,66 +111,9 @@ jq -n \
   > "${progress_file}.tmp"
 mv "${progress_file}.tmp" "${progress_file}"
 
-if [[ "${INFRASWE_PUBLISH_ON_COMPLETE:-0}" == 1 && \
-      "${target_metric_improved}" == true && \
-      "${release_quality_gate_satisfied}" == true ]]; then
-  if [[ "$(git branch --show-current)" != main ]]; then
-    echo "completion publish requires the main branch" >&2
-    exit 1
-  fi
-  git add \
-    benchmarks/historical_prs/acquire_training_bulk_group.py \
-    benchmarks/historical_prs/audit_training_bulk_group.py \
-    benchmarks/historical_prs/derive_training_bulk_policy_iteration.py \
-    benchmarks/historical_prs/freeze_inference_bulk_seed_policy.py \
-    benchmarks/historical_prs/freeze_training_bulk_group.py \
-    benchmarks/historical_prs/historical_bulk_quality_gates.py \
-    benchmarks/historical_prs/infraswe-communication-bulk-supervisor.conf \
-    benchmarks/historical_prs/infraswe-communication-bulk-supervisor.sh \
-    benchmarks/historical_prs/infraswe-communication-prepare-supervisor.conf \
-    benchmarks/historical_prs/infraswe-communication-prepare-supervisor.sh \
-    benchmarks/historical_prs/prepare_communication_repositories.sh \
-    benchmarks/historical_prs/prepare_training_bulk_queue.py \
-    benchmarks/historical_prs/reveal_training_bulk_group.py \
-    benchmarks/historical_prs/run_communication_bulk_campaign.sh \
-    benchmarks/historical_prs/run_communication_bulk_round.sh \
-    benchmarks/historical_prs/run_inference_bulk_campaign.sh \
-    benchmarks/historical_prs/run_training_bulk_group.py \
-    benchmarks/historical_prs/summarize_training_bulk_campaign.py \
-    tests/test_historical_bulk_gates.py \
-    "${result_root}"
-  if ! git diff --cached --quiet; then
-    git_commit_name="${INFRASWE_GIT_USER_NAME:-$(git log -1 --format=%an)}"
-    git_commit_email="${INFRASWE_GIT_USER_EMAIL:-$(git log -1 --format=%ae)}"
-    git -c user.name="${git_commit_name}" -c user.email="${git_commit_email}" \
-      commit -m "bench: complete 95 percent communication PR campaign"
-  fi
-  git fetch origin main
-  git rebase origin/main
-  git push origin HEAD:main
-elif [[ "${INFRASWE_PUBLISH_ON_COMPLETE:-0}" == 1 && \
-        "${release_quality_gate_satisfied}" != true ]]; then
-  echo "hard release quality gate not satisfied; skipping commit and push"
-elif [[ "${INFRASWE_PUBLISH_ON_COMPLETE:-0}" == 1 ]]; then
-  echo "aggregate target metric did not improve; skipping commit and push"
-fi
-
-training_progress=results/historical-pr-blind-20260901/training-bulk-8000/campaign-progress.json
-inference_queue=results/historical-pr-blind-20260901/inference-bulk-95pct/queue-lock-groups3000.json
-training_pending=false
-inference_pending=false
-if [[ "$(jq -r '.status // "pending"' "${training_progress}" 2>/dev/null || echo pending)" != complete ]]; then
-  training_pending=true
-fi
-if [[ -f "${inference_queue}" ]] && \
-   [[ "$(jq -r '.status // "pending"' "${inference_progress}" 2>/dev/null || echo pending)" != complete ]]; then
-  inference_pending=true
-fi
-
-if [[ -n "${INFRASWE_GITHUB_CREDENTIAL_COPY:-}" && "${training_pending}" != true && "${inference_pending}" != true ]]; then
-  rm -f -- "${INFRASWE_GITHUB_CREDENTIAL_COPY}"
-fi
-
-if [[ "${INFRASWE_STOP_INSTANCE_ON_COMPLETE:-0}" == 1 && "${training_pending}" != true && "${inference_pending}" != true ]]; then
-  vastai stop instance "${CONTAINER_ID}" --api-key "${CONTAINER_API_KEY}"
-fi
+# Campaign completion is not release qualification or evidence synchronization.
+# Deliberately fail closed: this worker has no independent publication attestor.
+# A separately verified operator workflow must check all three campaigns, the
+# 95/99/99 contract, full SHA-256 synchronization, tests and the exact release.
+echo "campaign complete; finalization pending independent verification"
+echo "automatic commit/push, credential deletion and instance stop are disabled"

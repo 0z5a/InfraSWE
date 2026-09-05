@@ -4,6 +4,7 @@ import hashlib
 import json
 import math
 from datetime import datetime
+from fractions import Fraction
 from typing import Any, Literal
 
 from pydantic import BaseModel, ConfigDict, Field, model_validator
@@ -69,6 +70,13 @@ class DecisionMicroscores(DecisionPlaneModel):
 
     project_fit_100: float | None = Field(default=None, ge=0, le=100)
     benchmark_trust_100: float | None = Field(default=None, ge=0, le=100)
+    status: Literal["non-official"] = "non-official"
+
+    @model_validator(mode="after")
+    def official_adapter_is_required(self) -> DecisionMicroscores:
+        if self.project_fit_100 is not None or self.benchmark_trust_100 is not None:
+            raise ValueError("formal microscores require a qualified EvidencePack adapter")
+        return self
 
 
 class DecisionPrediction(DecisionPlaneModel):
@@ -166,6 +174,15 @@ PRECISION_95_99_95_CONTRACT = MetricContract(
     evaluation_track="frozen_policy_holdout_result",
 )
 
+# Separately versioned: historical two-gate/precision-95 contracts remain unchanged.
+STRICT_95_99_99_CONTRACT = MetricContract(
+    contract_id="pr-decision-accuracy95-recall99-precision99-v0.6.1",
+    accuracy3_minimum=0.95,
+    recall_accept_minimum=0.99,
+    precision_accept_minimum=0.99,
+    evaluation_track="frozen_policy_holdout_result",
+)
+
 
 class DecisionCountDelta(DecisionPlaneModel):
     recovered_old_fn: int = Field(ge=0)
@@ -193,7 +210,9 @@ class IntegerErrorBudget(DecisionPlaneModel):
 def minimum_successes(total: int, minimum: float) -> int:
     if total < 0:
         raise ValueError("total cannot be negative")
-    return math.ceil(total * minimum)
+    if not 0 <= minimum <= 1:
+        raise ValueError("minimum must be between zero and one")
+    return math.ceil(total * Fraction(str(minimum)))
 
 
 def integer_error_budget(
@@ -202,14 +221,13 @@ def integer_error_budget(
     eligible_cases: int,
     oracle_accept_cases: int,
 ) -> IntegerErrorBudget:
+    if not 0 <= oracle_accept_cases <= eligible_cases:
+        raise ValueError("oracle Accept count must be within the eligible population")
     required_tp = minimum_successes(oracle_accept_cases, contract.recall_accept_minimum)
     maximum_fp = None
-    if contract.precision_accept_minimum is not None:
-        maximum_fp = math.floor(
-            required_tp
-            * (1 - contract.precision_accept_minimum)
-            / contract.precision_accept_minimum
-        )
+    if contract.precision_accept_minimum:
+        precision = Fraction(str(contract.precision_accept_minimum))
+        maximum_fp = math.floor(required_tp * (1 - precision) / precision)
     return IntegerErrorBudget(
         eligible_cases=eligible_cases,
         oracle_accept_cases=oracle_accept_cases,

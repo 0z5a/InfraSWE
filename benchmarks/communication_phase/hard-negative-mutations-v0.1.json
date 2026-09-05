@@ -1,0 +1,78 @@
+{
+  "schema_version": "0.1",
+  "suite_id": "reviewer-followup-communication-evidence-hard-negatives-v0.1",
+  "source": {
+    "document": "reviewer_followup_single_node_2026-09-05_zh.md",
+    "section": "10. InfraSWE：把这些补证做成回归任务",
+    "snapshot_date": "2026-09-05"
+  },
+  "claim_limit": "These fixtures cover named checker invariants only; they do not establish agent precision, recall, production reliability, or performance.",
+  "allowed_logical_world_sizes": [2, 4],
+  "cases": [
+    {
+      "id": "requested-offset-as-realized-offset",
+      "invariant": "Realized offset is derived from GPU timestamps and never copied from the requested coordinate.",
+      "expected": "REALIZED_OFFSET_UNSTABLE"
+    },
+    {
+      "id": "event-bracket-as-kernel-observed",
+      "invariant": "The declared timing semantics must agree with content-addressed capture provenance.",
+      "expected": "GPU_TIMING_PROVENANCE_MISMATCH"
+    },
+    {
+      "id": "a-faster-pair-and-consumer-worse",
+      "invariant": "A local operation improvement cannot override pair completion or consumer deadline regressions.",
+      "expected": "PAIR_COMPLETION_P95_REGRESSION+CONSUMER_DEADLINE_REGRESSION"
+    },
+    {
+      "id": "missing-rank",
+      "invariant": "Every declared collective and world must retain complete rank coverage.",
+      "expected": "TRACE_INTEGRITY_VIOLATION"
+    },
+    {
+      "id": "missing-or-divergent-sequence",
+      "invariant": "Every communicator rank must expose one complete, identical logical sequence.",
+      "expected": "COLLECTIVE_ORDER_VIOLATION"
+    },
+    {
+      "id": "cross-topology-identity",
+      "invariant": "Controlled A/B evidence cannot cross topology identity.",
+      "expected": "rejected-before-scoring"
+    },
+    {
+      "id": "cross-policy-state-identity",
+      "invariant": "Controlled A/B evidence cannot cross behavior-policy state identity.",
+      "expected": "rejected-before-scoring"
+    },
+    {
+      "id": "cross-checkpoint-identity",
+      "invariant": "Controlled A/B evidence cannot cross checkpoint identity.",
+      "expected": "rejected-before-scoring"
+    },
+    {
+      "id": "count-compliant-byte-budget-exceeded",
+      "invariant": "Collective count and byte credits are independent gates.",
+      "expected": "OUTSTANDING_BYTE_BUDGET_EXCEEDED"
+    },
+    {
+      "id": "duplicate-resource-release",
+      "invariant": "Every acquired resource has exactly one final release.",
+      "expected": "RESOURCE_LIFECYCLE_VIOLATION"
+    },
+    {
+      "id": "missing-resource-release",
+      "invariant": "Every acquired resource has exactly one final release.",
+      "expected": "RESOURCE_LIFECYCLE_VIOLATION"
+    },
+    {
+      "id": "partial-shard-as-full-reconstruction",
+      "invariant": "Partial verification cannot satisfy a full ordered reconstruction claim.",
+      "expected": "ARTIFACT_COVERAGE_INCOMPLETE"
+    },
+    {
+      "id": "selection-best-as-generalized-confirmation",
+      "invariant": "Candidate-selection samples are not independent confirmation evidence.",
+      "expected": "CANDIDATE_CONFIRMATION_EVIDENCE_INSUFFICIENT"
+    }
+  ]
+}

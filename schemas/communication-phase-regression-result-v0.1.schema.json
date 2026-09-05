@@ -107,6 +107,10 @@
           "default": null,
           "title": "Api Launch Offset P50 Us"
         },
+        "artifact_coverage_complete": {
+          "title": "Artifact Coverage Complete",
+          "type": "boolean"
+        },
         "clock_sync_error_bound_us": {
           "minimum": 0,
           "title": "Clock Sync Error Bound Us",
@@ -297,6 +301,17 @@
           "default": null,
           "title": "Realized Offset P95 Us"
         },
+        "resource_lifecycle_safe": {
+          "title": "Resource Lifecycle Safe",
+          "type": "boolean"
+        },
+        "resource_lifecycle_violations": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Resource Lifecycle Violations",
+          "type": "array"
+        },
         "step_time_p50_ms": {
           "anyOf": [
             {
@@ -360,7 +375,9 @@
         "completed_pair_count",
         "max_inflight_bytes",
         "max_inflight_collectives",
-        "collective_order_safe"
+        "collective_order_safe",
+        "resource_lifecycle_safe",
+        "artifact_coverage_complete"
       ],
       "title": "CommunicationPhaseRunMetrics",
       "type": "object"

@@ -160,6 +160,10 @@ from infraswe.models.training import (
     TrainingResult,
     TrainingScoreInput,
 )
+from infraswe.telemetry.communication_native import (
+    NativeTraceImportManifest,
+    NativeTraceImportReport,
+)
 
 
 def schema_documents() -> dict[str, dict[str, Any]]:
@@ -177,6 +181,12 @@ def schema_documents() -> dict[str, dict[str, Any]]:
         ),
         "communication-phase-regression-result-v0.1.schema.json": (
             CommunicationPhaseRegressionResult.model_json_schema()
+        ),
+        "native-communication-import-manifest-v0.1.schema.json": (
+            NativeTraceImportManifest.model_json_schema()
+        ),
+        "native-communication-import-report-v0.1.schema.json": (
+            NativeTraceImportReport.model_json_schema()
         ),
         "agentic-draft-v0.6.schema.json": AgenticDraftSpec.model_json_schema(),
         "policy-snapshot-v0.6.schema.json": PolicySnapshot.model_json_schema(),

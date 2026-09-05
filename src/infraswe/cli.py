@@ -1748,6 +1748,51 @@ def training_score(
         raise typer.Exit(2)
 
 
+@communication_app.command("import-native")
+def communication_import_native(
+    framework: Annotated[str, typer.Option("--framework")],
+    source: Annotated[list[Path], typer.Option("--source", exists=True, readable=True)],
+    manifest: Annotated[Path | None, typer.Option("--manifest", exists=True, readable=True)] = None,
+    companion: Annotated[
+        list[Path] | None, typer.Option("--companion", exists=True, readable=True)
+    ] = None,
+    output: Annotated[Path, typer.Option("--output")] = Path("native-communication-import.json"),
+    trace_output: Annotated[Path | None, typer.Option("--trace-output")] = None,
+    policy_id: Annotated[str | None, typer.Option("--policy-id")] = None,
+) -> None:
+    """Import native traces without upgrading incomplete timing evidence."""
+    from infraswe.telemetry.communication_native import import_native_communication_trace
+
+    try:
+        inputs = {
+            path.resolve()
+            for path in [*source, *(companion or []), *([manifest] if manifest else [])]
+        }
+        outputs = [output.resolve(), *([trace_output.resolve()] if trace_output else [])]
+        if inputs.intersection(outputs) or len(set(outputs)) != len(outputs):
+            raise ValueError(
+                "import outputs must be distinct from each other and every evidence input"
+            )
+        result = import_native_communication_trace(
+            framework,
+            source,
+            manifest_path=manifest,
+            companion_paths=companion,
+            policy_id=policy_id,
+        )
+    except (OSError, TypeError, ValueError) as error:
+        console.print(f"[red]INVALID[/red] {error}")
+        raise typer.Exit(2) from error
+    atomic_write_json(output, result.model_dump(mode="json"))
+    if result.trace_set is not None and trace_output is not None:
+        atomic_write_json(trace_output, result.trace_set.model_dump(mode="json"))
+    console.print(
+        f"status={result.status} records={result.observed_record_count} output={output.resolve()}"
+    )
+    if result.status != "ready":
+        raise typer.Exit(2)
+
+
 @communication_app.command("phase-regression")
 def communication_phase_regression(
     baseline: Annotated[Path, typer.Option("--baseline", exists=True, readable=True)],

@@ -477,6 +477,32 @@ def test_hard_merged_recall_gate_can_override_an_exact_accuracy_loss(
     assert 'policy_prefix = f"{policy_domain}-bulk-disposition"' in source
     assert '"exact_accuracy_gate_satisfied"' in source
     assert '"release_quality_gate_satisfied"' in source
+    assert '"retain-current-policy-to-collect-more-blind-evidence"' in source
+    assert "this policy is not release-qualified" in source
+
+
+def test_bulk_campaign_only_skips_groups_with_the_full_six_artifact_chain(
+    project_root: Path,
+) -> None:
+    campaign_scripts = (
+        "run_inference_bulk_campaign.sh",
+        "run_communication_bulk_campaign.sh",
+    )
+
+    for script_name in campaign_scripts:
+        source = (project_root / "benchmarks" / "historical_prs" / script_name).read_text(
+            encoding="utf-8"
+        )
+        assert "group_is_complete" in source
+        for artifact in (
+            "input-lock.json",
+            "exact-head-evidence.json",
+            "judgment-locks.json",
+            "outcome-reveal.json",
+            "oracle-audit.json",
+            "next-policy.json",
+        ):
+            assert artifact in source
 
 
 def test_merged_recall_guard_is_narrow_and_outcome_blind(project_root: Path, monkeypatch) -> None:

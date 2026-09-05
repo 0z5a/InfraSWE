@@ -551,12 +551,20 @@ def main() -> int:
                     }
                 ]
             else:
-                raise SystemExit(
-                    f"hard {MERGED_ACCEPT_RECALL_MINIMUM:.0%} merged-PR "
-                    "accept-recall gate is unresolved: "
-                    f"current={current_merged_accepts}/{merged_cases}; no bounded "
-                    "outcome-blind candidate satisfies the gate"
-                )
+                changes = [
+                    {
+                        "rule": "retain-current-policy-to-collect-more-blind-evidence",
+                        "evidence": (
+                            f"The hard {MERGED_ACCEPT_RECALL_MINIMUM:.0%} merged-PR "
+                            "accept-recall release gate remains unresolved at "
+                            f"{current_merged_accepts}/{merged_cases}; no bounded "
+                            "outcome-blind candidate satisfies the gate. Carry the "
+                            "policy forward unchanged only to collect another sealed "
+                            "blind cohort; retrospective_projection remains fail-closed "
+                            "and this policy is not release-qualified."
+                        ),
+                    }
+                ]
     elif current_group == 0:
         updates = {
             "small_compile_accept_enabled": False,

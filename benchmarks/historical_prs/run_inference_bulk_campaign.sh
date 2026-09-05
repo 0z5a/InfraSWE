@@ -42,8 +42,23 @@ wait_for_rate_budget() {
   done
 }
 
+group_is_complete() {
+  local group_dir="$1"
+  local artifact
+  for artifact in \
+    input-lock.json \
+    exact-head-evidence.json \
+    judgment-locks.json \
+    outcome-reveal.json \
+    oracle-audit.json \
+    next-policy.json; do
+    [[ -f "${group_dir}/${artifact}" ]] || return 1
+  done
+}
+
 for ((group_index = 0; group_index < group_count; group_index++)); do
-  if [[ -f "${result_root}/groups/$(printf 'group-%04d' "${group_index}")/oracle-audit.json" ]]; then
+  group_dir="${result_root}/groups/$(printf 'group-%04d' "${group_index}")"
+  if group_is_complete "${group_dir}"; then
     echo "campaign group=${group_index} already complete"
     continue
   fi

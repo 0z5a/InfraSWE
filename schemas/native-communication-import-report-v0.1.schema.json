@@ -675,12 +675,31 @@
       "title": "Schema Version",
       "type": "string"
     },
+    "selected_policy_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Selected Policy Id"
+    },
     "source_artifacts": {
       "items": {
         "pattern": "^sha256:[0-9a-f]{64}$",
         "type": "string"
       },
       "title": "Source Artifacts",
+      "type": "array"
+    },
+    "source_resource_lifecycle_events": {
+      "items": {
+        "$ref": "#/$defs/CommunicationResourceLifecycleEvent"
+      },
+      "title": "Source Resource Lifecycle Events",
       "type": "array"
     },
     "status": {

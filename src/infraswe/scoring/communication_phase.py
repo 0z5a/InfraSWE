@@ -12,6 +12,7 @@ from infraswe.models.communication_phase import (
     CommunicationPhaseRunMetrics,
     CommunicationPhaseTraceRecord,
     CommunicationPhaseTraceSet,
+    CommunicationResourceLifecycleEvent,
 )
 from infraswe.models.system_paths import SystemPathLoadCell
 
@@ -23,6 +24,7 @@ class _RunSummary:
     completed_pair_ids: frozenset[str]
     missing_isolation_operations: frozenset[str]
     consumer_timestamps_complete: bool
+    artifact_coverage_complete: bool
 
 
 _ORDER_VIOLATION_PREFIXES = (
@@ -69,32 +71,101 @@ def _allowed_retention(candidate: float, allowed: float) -> float:
     return allowed / candidate
 
 
-def _max_inflight(records: Iterable[CommunicationPhaseTraceRecord]) -> tuple[int, int]:
-    by_rank: dict[int, list[CommunicationPhaseTraceRecord]] = defaultdict(list)
-    for record in records:
-        by_rank[record.rank].append(record)
+def _resource_key(
+    value: CommunicationPhaseTraceRecord | CommunicationResourceLifecycleEvent,
+) -> tuple[str, str, int]:
+    return value.process_group_id, value.logical_operation_id, value.rank
+
+
+def _resource_lifecycle_violations(trace: CommunicationPhaseTraceSet) -> list[str]:
+    violations: set[str] = set()
+    records_by_key: dict[tuple[str, str, int], list[CommunicationPhaseTraceRecord]] = defaultdict(
+        list
+    )
+    events_by_key: dict[tuple[str, str, int], list[CommunicationResourceLifecycleEvent]] = (
+        defaultdict(list)
+    )
+    for record in trace.records:
+        records_by_key[_resource_key(record)].append(record)
+    for event in trace.resource_lifecycle_events:
+        events_by_key[_resource_key(event)].append(event)
+
+    for key in sorted(set(events_by_key) - set(records_by_key)):
+        violations.add("orphan-resource-event:" + ":".join(map(str, key)))
+    for key, records in sorted(records_by_key.items()):
+        label = ":".join(map(str, key))
+        if len(records) != 1:
+            violations.add(f"resource-record-count:{label}:{len(records)}")
+            continue
+        record = records[0]
+        events = events_by_key.get(key, [])
+        acquires = [event for event in events if event.event == "acquire"]
+        releases = [event for event in events if event.event == "release"]
+        if len(acquires) != 1:
+            violations.add(f"resource-acquire-count:{label}:{len(acquires)}")
+        if len(releases) != 1:
+            violations.add(f"resource-release-count:{label}:{len(releases)}")
+        for event in events:
+            if event.message_bytes != record.message_bytes:
+                violations.add(f"resource-byte-mismatch:{label}")
+        if len(acquires) == 1 and acquires[0].timestamp_ns > record.gpu_start_timestamp_ns:
+            violations.add(f"resource-acquired-after-gpu-start:{label}")
+        if len(acquires) == 1 and len(releases) == 1:
+            terminal_timestamp = max(
+                record.gpu_end_timestamp_ns,
+                record.completion_timestamp_ns or record.gpu_end_timestamp_ns,
+            )
+            if releases[0].timestamp_ns < acquires[0].timestamp_ns:
+                violations.add(f"resource-release-before-acquire:{label}")
+            if releases[0].timestamp_ns < terminal_timestamp:
+                violations.add(f"resource-release-before-completion:{label}")
+    return sorted(violations)
+
+
+def _max_inflight(events: Iterable[CommunicationResourceLifecycleEvent]) -> tuple[int, int]:
+    by_rank: dict[int, list[CommunicationResourceLifecycleEvent]] = defaultdict(list)
+    for event in events:
+        by_rank[event.rank].append(event)
     maximum_bytes = 0
     maximum_collectives = 0
-    for rank_records in by_rank.values():
-        starts: dict[int, list[CommunicationPhaseTraceRecord]] = defaultdict(list)
-        ends: dict[int, list[CommunicationPhaseTraceRecord]] = defaultdict(list)
-        for record in rank_records:
-            if record.gpu_end_timestamp_ns <= record.gpu_start_timestamp_ns:
-                continue
-            starts[record.gpu_start_timestamp_ns].append(record)
-            ends[record.gpu_end_timestamp_ns].append(record)
+    for rank_events in by_rank.values():
+        acquires: dict[int, list[CommunicationResourceLifecycleEvent]] = defaultdict(list)
+        releases: dict[int, list[CommunicationResourceLifecycleEvent]] = defaultdict(list)
+        for event in rank_events:
+            target = acquires if event.event == "acquire" else releases
+            target[event.timestamp_ns].append(event)
         inflight_bytes = 0
         inflight_collectives = 0
-        for timestamp in sorted(set(starts) | set(ends)):
-            for record in ends[timestamp]:
-                inflight_bytes -= record.message_bytes
+        for timestamp in sorted(set(acquires) | set(releases)):
+            for event in releases[timestamp]:
+                inflight_bytes -= event.message_bytes
                 inflight_collectives -= 1
-            for record in starts[timestamp]:
-                inflight_bytes += record.message_bytes
+            for event in acquires[timestamp]:
+                inflight_bytes += event.message_bytes
                 inflight_collectives += 1
             maximum_bytes = max(maximum_bytes, inflight_bytes)
             maximum_collectives = max(maximum_collectives, inflight_collectives)
     return maximum_bytes, maximum_collectives
+
+
+def _artifact_coverage_complete(trace: CommunicationPhaseTraceSet) -> bool:
+    coverage = trace.artifact_coverage
+    return (
+        coverage.claim_scope == "full-run"
+        and coverage.expected_units == len(trace.records)
+        and coverage.verified_units == coverage.expected_units
+        and coverage.reconstructed_units == coverage.expected_units
+        and coverage.exact_order_verified
+    )
+
+
+def _timing_provenance_matches(trace: CommunicationPhaseTraceSet) -> bool:
+    expected = (
+        "kernel-observed"
+        if trace.gpu_timing_provenance.capture_kind == "profiler-kernel"
+        else "event-bracket"
+    )
+    return trace.gpu_timestamp_semantics == expected
 
 
 def _collective_violations(trace: CommunicationPhaseTraceSet) -> list[str]:
@@ -281,7 +352,9 @@ def _summarize(
             consumer_slacks_us.append(slack_us)
             consumer_waits_us.append(max(0.0, -slack_us))
 
-    max_inflight_bytes, max_inflight_collectives = _max_inflight(trace.records)
+    resource_violations = _resource_lifecycle_violations(trace)
+    max_inflight_bytes, max_inflight_collectives = _max_inflight(trace.resource_lifecycle_events)
+    artifact_coverage_complete = _artifact_coverage_complete(trace)
     metrics = CommunicationPhaseRunMetrics(
         timestamp_domain=trace.timestamp_domain,
         gpu_timestamp_semantics=trace.gpu_timestamp_semantics,
@@ -318,6 +391,9 @@ def _summarize(
         max_inflight_collectives=max_inflight_collectives,
         collective_order_safe=not violations,
         order_violations=sorted(set(violations)),
+        resource_lifecycle_safe=not resource_violations,
+        resource_lifecycle_violations=resource_violations,
+        artifact_coverage_complete=artifact_coverage_complete,
     )
     return _RunSummary(
         metrics=metrics,
@@ -325,6 +401,7 @@ def _summarize(
         completed_pair_ids=frozenset(completed_pair_ids),
         missing_isolation_operations=frozenset(missing_isolation_operations),
         consumer_timestamps_complete=consumer_timestamps_complete,
+        artifact_coverage_complete=artifact_coverage_complete,
     )
 
 
@@ -370,6 +447,14 @@ def evaluate_communication_phase_regression(
         raise ValueError("communication phase regression requires identical GPU timing semantics")
     if baseline.run_id == candidate.run_id:
         raise ValueError("baseline and candidate must be distinct runs")
+    if baseline.execution_identity != candidate.execution_identity:
+        raise ValueError("communication phase regression requires one execution identity")
+    if set(baseline.experiment_provenance.independent_process_run_ids) & set(
+        candidate.experiment_provenance.independent_process_run_ids
+    ) or set(baseline.experiment_provenance.independent_process_artifact_sha256) & set(
+        candidate.experiment_provenance.independent_process_artifact_sha256
+    ):
+        raise ValueError("baseline and candidate require independent process runs")
 
     baseline_summary = _summarize(baseline, baseline.isolated_latency_ms_by_operation)
     candidate_summary = _summarize(candidate, candidate.isolated_latency_ms_by_operation)
@@ -397,6 +482,30 @@ def evaluate_communication_phase_regression(
             for violation in candidate_metrics.order_violations
         ):
             failures.add("PROCESS_GROUPS_DO_NOT_OVERLAP")
+    if baseline_metrics.resource_lifecycle_violations:
+        unresolved.add("BASELINE_RESOURCE_LIFECYCLE_INVALID")
+    if candidate_metrics.resource_lifecycle_violations:
+        failures.add("RESOURCE_LIFECYCLE_VIOLATION")
+    if not baseline_summary.artifact_coverage_complete:
+        unresolved.add("BASELINE_ARTIFACT_COVERAGE_INCOMPLETE")
+    if not candidate_summary.artifact_coverage_complete:
+        failures.add("ARTIFACT_COVERAGE_INCOMPLETE")
+    if not _timing_provenance_matches(baseline):
+        unresolved.add("BASELINE_GPU_TIMING_PROVENANCE_MISMATCH")
+    if not _timing_provenance_matches(candidate):
+        failures.add("GPU_TIMING_PROVENANCE_MISMATCH")
+    if (
+        baseline.experiment_provenance.phase != "confirmation"
+        or len(baseline.experiment_provenance.independent_process_run_ids)
+        < policy.min_confirmation_process_runs
+    ):
+        unresolved.add("BASELINE_CONFIRMATION_EVIDENCE_INSUFFICIENT")
+    if (
+        candidate.experiment_provenance.phase != "confirmation"
+        or len(candidate.experiment_provenance.independent_process_run_ids)
+        < policy.min_confirmation_process_runs
+    ):
+        unresolved.add("CANDIDATE_CONFIRMATION_EVIDENCE_INSUFFICIENT")
     if baseline_summary.pair_ids != candidate_summary.pair_ids:
         failures.add("PAIR_COVERAGE_MISMATCH")
     if baseline_summary.completed_pair_ids != baseline_summary.pair_ids:

@@ -14,6 +14,81 @@ class CommunicationPhaseModel(BaseModel):
     model_config = ConfigDict(extra="forbid", validate_assignment=True, allow_inf_nan=False)
 
 
+class CommunicationGpuTimingProvenance(CommunicationPhaseModel):
+    """Content-addressed source of the declared GPU timestamp semantics."""
+
+    capture_kind: Literal["profiler-kernel", "cuda-event-bracket"]
+    adapter: str = Field(min_length=1)
+    artifact_sha256: Digest
+    observed_kernel_names: tuple[str, ...] = ()
+
+    @model_validator(mode="after")
+    def kernel_capture_names_observed_kernels(self) -> CommunicationGpuTimingProvenance:
+        if self.capture_kind == "profiler-kernel" and not self.observed_kernel_names:
+            raise ValueError("profiler-kernel timing requires observed kernel names")
+        if any(not name for name in self.observed_kernel_names):
+            raise ValueError("observed kernel names cannot be empty")
+        return self
+
+
+class CommunicationExecutionIdentity(CommunicationPhaseModel):
+    """Controlled model/policy/checkpoint/topology identity for an A/B comparison."""
+
+    model_revision_sha256: Digest
+    checkpoint_sha256: Digest
+    policy_state_sha256: Digest
+    topology_sha256: Digest
+
+
+class CommunicationArtifactCoverage(CommunicationPhaseModel):
+    """Coverage claim for the evidence artifact supplied to the scorer."""
+
+    claim_scope: Literal["full-run", "partial-shard"]
+    manifest_sha256: Digest
+    expected_units: int = Field(ge=1)
+    verified_units: int = Field(ge=0)
+    reconstructed_units: int = Field(ge=0)
+    exact_order_verified: bool
+
+
+class CommunicationExperimentProvenance(CommunicationPhaseModel):
+    """Separates candidate selection from independent confirmation evidence."""
+
+    phase: Literal["candidate-selection", "confirmation"]
+    independent_process_run_ids: tuple[str, ...] = Field(min_length=1)
+    independent_process_artifact_sha256: tuple[Digest, ...] = Field(min_length=1)
+
+    @field_validator("independent_process_run_ids")
+    @classmethod
+    def process_run_ids_are_unique_and_nonempty(cls, value: tuple[str, ...]) -> tuple[str, ...]:
+        if any(not run_id for run_id in value):
+            raise ValueError("independent process run IDs cannot be empty")
+        if len(value) != len(set(value)):
+            raise ValueError("independent process run IDs must be unique")
+        return value
+
+    @model_validator(mode="after")
+    def every_process_run_has_one_unique_artifact(self) -> CommunicationExperimentProvenance:
+        if len(self.independent_process_run_ids) != len(self.independent_process_artifact_sha256):
+            raise ValueError("every independent process run requires one artifact digest")
+        if len(self.independent_process_artifact_sha256) != len(
+            set(self.independent_process_artifact_sha256)
+        ):
+            raise ValueError("independent process artifact digests must be unique")
+        return self
+
+
+class CommunicationResourceLifecycleEvent(CommunicationPhaseModel):
+    """One acquisition or final-release observation for a rank-local resource."""
+
+    process_group_id: str = Field(min_length=1)
+    logical_operation_id: str = Field(min_length=1)
+    rank: int = Field(ge=0)
+    event: Literal["acquire", "release"]
+    timestamp_ns: int = Field(ge=0)
+    message_bytes: int = Field(gt=0)
+
+
 class CommunicationPhaseTraceRecord(CommunicationPhaseModel):
     """One framework-neutral collective observation from one rank."""
 
@@ -98,16 +173,32 @@ class CommunicationPhaseTraceSet(CommunicationPhaseModel):
     world_size: int = Field(ge=2)
     cell_identity_sha256: Digest
     workload_sha256: Digest
+    execution_identity: CommunicationExecutionIdentity
+    artifact_coverage: CommunicationArtifactCoverage
+    experiment_provenance: CommunicationExperimentProvenance
     timestamp_domain: str = Field(min_length=1)
     gpu_timestamp_semantics: Literal["kernel-observed", "event-bracket"]
+    gpu_timing_provenance: CommunicationGpuTimingProvenance
     clock_sync_error_bound_us: float = Field(ge=0)
     records: list[CommunicationPhaseTraceRecord] = Field(min_length=1)
+    resource_lifecycle_events: list[CommunicationResourceLifecycleEvent] = Field(min_length=1)
     step_time_ms: list[PositiveMilliseconds] = Field(default_factory=list)
     isolated_latency_ms_by_operation: dict[str, PositiveMilliseconds] = Field(default_factory=dict)
     evidence_digests: list[Digest] = Field(min_length=1)
 
     @model_validator(mode="after")
     def record_identity_matches_trace_set(self) -> CommunicationPhaseTraceSet:
+        expected_timing = (
+            "kernel-observed"
+            if self.gpu_timing_provenance.capture_kind == "profiler-kernel"
+            else "event-bracket"
+        )
+        if self.gpu_timestamp_semantics != expected_timing:
+            raise ValueError("GPU timestamp semantics do not match timing provenance")
+        if not set(self.experiment_provenance.independent_process_artifact_sha256).issubset(
+            self.evidence_digests
+        ):
+            raise ValueError("independent process artifacts must be bound as evidence digests")
         for record in self.records:
             if record.framework != self.framework:
                 raise ValueError("record framework does not match trace-set framework")
@@ -135,6 +226,7 @@ class CommunicationPhaseRegressionPolicy(CommunicationPhaseModel):
     max_clock_sync_error_us: float = Field(default=50.0, ge=0)
     max_outstanding_bytes: int | None = Field(default=None, gt=0)
     max_outstanding_collectives: int | None = Field(default=None, ge=1)
+    min_confirmation_process_runs: int = Field(default=1, ge=1)
 
 
 class CommunicationPhaseRunMetrics(CommunicationPhaseModel):
@@ -165,6 +257,9 @@ class CommunicationPhaseRunMetrics(CommunicationPhaseModel):
     max_inflight_collectives: int = Field(ge=0)
     collective_order_safe: bool
     order_violations: list[str] = Field(default_factory=list)
+    resource_lifecycle_safe: bool
+    resource_lifecycle_violations: list[str] = Field(default_factory=list)
+    artifact_coverage_complete: bool
 
 
 class CommunicationPhaseRegressionMetrics(CommunicationPhaseModel):

@@ -20,6 +20,7 @@ from infraswe.models.communication_phase import (
     CommunicationPhaseModel,
     CommunicationPhaseTraceRecord,
     CommunicationPhaseTraceSet,
+    CommunicationResourceLifecycleEvent,
 )
 from infraswe.models.draft import Digest
 
@@ -49,10 +50,14 @@ class NativeTraceImportReport(CommunicationPhaseModel):
     source_artifacts: list[Digest]
     companion_artifacts: list[Digest]
     manifest_sha256: Digest | None = None
+    selected_policy_id: str | None = None
     observed_record_count: int = 0
     auxiliary_operations: dict[str, int] = Field(default_factory=dict)
     issues: list[NativeTraceImportIssue] = Field(default_factory=list)
     partial_records: list[dict[str, Any]] = Field(default_factory=list)
+    source_resource_lifecycle_events: list[CommunicationResourceLifecycleEvent] = Field(
+        default_factory=list
+    )
     trace_set: CommunicationPhaseTraceSet | None = None
 
 
@@ -66,6 +71,8 @@ _BINDING_FIELDS = {
     "topology_class",
 }
 _NATIVE_FIELDS = {
+    "pair_id",
+    "pair_role",
     "run_id",
     "rank",
     "world_size",
@@ -111,6 +118,7 @@ def import_native_communication_trace(
     *,
     manifest_path: Path | None = None,
     companion_paths: list[Path] | None = None,
+    policy_id: str | None = None,
 ) -> NativeTraceImportReport:
     """Normalize source fields and explain every missing certification boundary.
 
@@ -121,6 +129,8 @@ def import_native_communication_trace(
     """
     if framework not in {"megatron", "slime", "verl"} or not sources:
         raise ValueError("a supported framework and at least one source are required")
+    if policy_id is not None and (framework != "verl" or not policy_id):
+        raise ValueError("policy selection requires a nonempty verl policy ID")
     artifacts = _read_artifacts(sources)
     companions = _read_artifacts(companion_paths or [])
     if set(artifacts) & set(companions):
@@ -129,6 +139,7 @@ def import_native_communication_trace(
         framework=framework,
         source_artifacts=sorted(artifacts),
         companion_artifacts=sorted(companions),
+        selected_policy_id=policy_id,
     )
 
     def issue(ref: str, code: str, detail: str) -> None:
@@ -154,23 +165,24 @@ def import_native_communication_trace(
     consumed_bindings = set()
     normalized = []
     native_domains = set()
+    native_policies = set()
+    native_launches = set()
     for digest, payload in artifacts.items():
         if framework == "verl":
-            summary = json.loads(payload)
-            if (
-                not isinstance(summary, dict)
-                or summary.get("framework") != "verl"
-                or summary.get("schema_version") != 2
-            ):
-                raise ValueError("unsupported verl phase-sweep summary schema")
-            report.observed_record_count += 1
-            issue(
-                digest,
-                "aggregate_only",
-                "Phase-sweep percentiles cannot reconstruct rank-level timestamps, "
-                "consumers or lifecycle events",
-            )
-            continue
+            try:
+                summary = json.loads(payload)
+            except json.JSONDecodeError:
+                summary = None  # Multiple native JSONL records are parsed below.
+            if isinstance(summary, dict) and summary.get("schema_version") == 2:
+                if summary.get("framework") != "verl":
+                    raise ValueError("unsupported verl phase-sweep summary identity")
+                report.observed_record_count += 1
+                issue(
+                    digest,
+                    "aggregate_only",
+                    "Phase-sweep summaries cannot reconstruct per-rank evidence",
+                )
+                continue
         for line_number, line in enumerate(payload.decode("utf-8").splitlines(), 1):
             if not line.strip():
                 continue
@@ -180,7 +192,8 @@ def import_native_communication_trace(
             if (
                 not isinstance(raw, dict)
                 or raw.get("framework") != framework
-                or raw.get("schema_version") not in {1, 2}
+                or type(raw.get("schema_version")) is not int
+                or raw.get("schema_version") not in ({3} if framework == "verl" else {1, 2})
             ):
                 raise ValueError(f"unsupported native trace identity/schema at {ref}")
             operation = raw.get("operation")
@@ -188,9 +201,33 @@ def import_native_communication_trace(
                 raise ValueError(f"missing native operation at {ref}")
             if raw.get("status", "ok") != "ok":
                 issue(ref, "failed_native_span", str(raw.get("status")))
-            collective = (
+            if framework == "verl":
+                if raw.get("record_type") != "collective" or raw.get("sample_phase") not in {
+                    "warmup",
+                    "measurement",
+                }:
+                    raise ValueError(f"unsupported verl raw record type or sample phase at {ref}")
+                if not isinstance(raw.get("policy_id"), str) or not raw["policy_id"]:
+                    raise ValueError(f"missing verl policy ID at {ref}")
+                if raw["sample_phase"] == "warmup":
+                    auxiliary[f"warmup/{raw['policy_id']}/{operation}"] += 1
+                    continue
+                if policy_id is not None and raw["policy_id"] != policy_id:
+                    auxiliary[f"unselected/{raw['policy_id']}/{operation}"] += 1
+                    continue
+                native_policies.add(raw["policy_id"])
+                launch_id = raw.get("process_launch_id")
+                if not isinstance(launch_id, str) or not launch_id:
+                    issue(
+                        ref,
+                        "missing_process_launch_id",
+                        "Native process launch identity is required",
+                    )
+                else:
+                    native_launches.add(launch_id)
+            collective = framework == "verl" or (
                 raw.get("process_group_id") is not None
-                if framework == "megatron"
+                if framework in {"megatron", "verl"}
                 else operation == "weight_bucket_send" and raw.get("transport") == "nccl"
             )
             if not collective:
@@ -206,7 +243,9 @@ def import_native_communication_trace(
             record = {name: raw[name] for name in _NATIVE_FIELDS if raw.get(name) is not None}
             record.update(
                 framework=framework,
-                step=raw.get("iteration" if framework == "megatron" else "global_step"),
+                step=raw.get(
+                    {"megatron": "iteration", "slime": "global_step", "verl": "step"}[framework]
+                ),
             )
             if raw.get("stream_id") is not None:
                 record["stream_id"] = str(raw["stream_id"])
@@ -226,8 +265,44 @@ def import_native_communication_trace(
                 "native_timestamp_domain": raw.get("timestamp_domain"),
                 "native_metadata": raw.get("metadata", {}),
                 "native_observer_role": raw.get("role"),
+                "native_policy_id": raw.get("policy_id"),
+                "native_resource_scope": raw.get("resource_scope"),
+                "native_process_launch_id": raw.get("process_launch_id"),
+                "native_hostname": raw.get("hostname"),
             }
             report.partial_records.append(record)
+            if framework == "verl":
+                try:
+                    if raw.get("resource_scope") != "persistent-buffer-transfer-lease":
+                        raise ValueError("missing native buffer-reuse lease scope")
+                    acquire = raw["buffer_reuse_acquire_timestamp_ns"]
+                    release = raw["buffer_reuse_release_timestamp_ns"]
+                    if type(acquire) is not int or type(release) is not int:
+                        raise ValueError("native lease timestamps must be integer observations")
+                    if (
+                        acquire > raw["api_launch_timestamp_ns"]
+                        or release < raw["completion_timestamp_ns"]
+                    ):
+                        raise ValueError("native buffer lease does not enclose the transfer")
+                    if (
+                        raw.get("consumer_timestamp_ns") is not None
+                        and release < raw["consumer_timestamp_ns"]
+                    ):
+                        raise ValueError("native buffer lease released before consumer")
+                    lifecycle = [
+                        CommunicationResourceLifecycleEvent(
+                            process_group_id=record["process_group_id"],
+                            logical_operation_id=record["logical_operation_id"],
+                            rank=record["rank"],
+                            event=event,
+                            timestamp_ns=timestamp,
+                            message_bytes=record["message_bytes"],
+                        )
+                        for event, timestamp in (("acquire", acquire), ("release", release))
+                    ]
+                    report.source_resource_lifecycle_events.extend(lifecycle)
+                except (KeyError, ValueError, TypeError) as exc:
+                    issue(ref, "invalid_native_lifecycle", str(exc))
             try:
                 normalized.append(CommunicationPhaseTraceRecord.model_validate(record))
             except ValidationError as exc:
@@ -238,6 +313,18 @@ def import_native_communication_trace(
                         f"{'.'.join(map(str, error['loc']))}: {error['msg']}",
                     )
     report.auxiliary_operations = dict(sorted(auxiliary.items()))
+    if len(native_policies) > 1:
+        issue(
+            "run",
+            "mixed_policy_cells",
+            "Select one --policy-id; different candidates cannot form one trace set",
+        )
+    if len(native_launches) > 1:
+        issue(
+            "run",
+            "mixed_process_launches",
+            "One native trace set must retain one process invocation",
+        )
     if manifest:
         extra = set(manifest.record_bindings) - consumed_bindings
         if extra:
@@ -250,6 +337,25 @@ def import_native_communication_trace(
         )
     if manifest and not report.issues:
         metadata = dict(manifest.trace_set_metadata)
+        if framework == "verl":
+            if native_policies != {metadata.get("policy")}:
+                raise ValueError("manifest policy differs from the selected native policy cell")
+            claimed_launches = metadata.get("experiment_provenance", {}).get(
+                "independent_process_run_ids", []
+            )
+            if set(claimed_launches) != native_launches:
+                raise ValueError(
+                    "manifest independent process identities differ from native launch IDs"
+                )
+            observed_lifecycle = [
+                event.model_dump(mode="json") for event in report.source_resource_lifecycle_events
+            ]
+            if (
+                "resource_lifecycle_events" in metadata
+                and metadata["resource_lifecycle_events"] != observed_lifecycle
+            ):
+                raise ValueError("manifest cannot replace observed native lifecycle events")
+            metadata["resource_lifecycle_events"] = observed_lifecycle
         if {"records", "framework", "gpu_timestamp_semantics"} & metadata.keys():
             raise ValueError(
                 "trace-set metadata cannot replace native records, framework or timing semantics"

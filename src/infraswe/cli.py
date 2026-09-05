@@ -1758,13 +1758,27 @@ def communication_import_native(
     ] = None,
     output: Annotated[Path, typer.Option("--output")] = Path("native-communication-import.json"),
     trace_output: Annotated[Path | None, typer.Option("--trace-output")] = None,
+    policy_id: Annotated[str | None, typer.Option("--policy-id")] = None,
 ) -> None:
     """Import native traces without upgrading incomplete timing evidence."""
     from infraswe.telemetry.communication_native import import_native_communication_trace
 
     try:
+        inputs = {
+            path.resolve()
+            for path in [*source, *(companion or []), *([manifest] if manifest else [])]
+        }
+        outputs = [output.resolve(), *([trace_output.resolve()] if trace_output else [])]
+        if inputs.intersection(outputs) or len(set(outputs)) != len(outputs):
+            raise ValueError(
+                "import outputs must be distinct from each other and every evidence input"
+            )
         result = import_native_communication_trace(
-            framework, source, manifest_path=manifest, companion_paths=companion
+            framework,
+            source,
+            manifest_path=manifest,
+            companion_paths=companion,
+            policy_id=policy_id,
         )
     except (OSError, TypeError, ValueError) as error:
         console.print(f"[red]INVALID[/red] {error}")

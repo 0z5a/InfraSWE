@@ -1,0 +1,243 @@
+{
+  "additionalProperties": false,
+  "description": "One framework-neutral collective observation from one rank.",
+  "properties": {
+    "api_launch_timestamp_ns": {
+      "minimum": 0,
+      "title": "Api Launch Timestamp Ns",
+      "type": "integer"
+    },
+    "api_return_timestamp_ns": {
+      "anyOf": [
+        {
+          "minimum": 0,
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Api Return Timestamp Ns"
+    },
+    "attributes": {
+      "additionalProperties": true,
+      "title": "Attributes",
+      "type": "object"
+    },
+    "communicator_sequence_id": {
+      "minimum": 0,
+      "title": "Communicator Sequence Id",
+      "type": "integer"
+    },
+    "completion_timestamp_ns": {
+      "anyOf": [
+        {
+          "minimum": 0,
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Completion Timestamp Ns"
+    },
+    "consumer_timestamp_ns": {
+      "anyOf": [
+        {
+          "minimum": 0,
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Consumer Timestamp Ns"
+    },
+    "direction": {
+      "minLength": 1,
+      "title": "Direction",
+      "type": "string"
+    },
+    "framework": {
+      "minLength": 1,
+      "title": "Framework",
+      "type": "string"
+    },
+    "gpu_end_timestamp_ns": {
+      "minimum": 0,
+      "title": "Gpu End Timestamp Ns",
+      "type": "integer"
+    },
+    "gpu_start_timestamp_ns": {
+      "minimum": 0,
+      "title": "Gpu Start Timestamp Ns",
+      "type": "integer"
+    },
+    "layer": {
+      "anyOf": [
+        {
+          "minimum": 0,
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Layer"
+    },
+    "local_rank": {
+      "anyOf": [
+        {
+          "minimum": 0,
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Local Rank"
+    },
+    "logical_operation_id": {
+      "minLength": 1,
+      "title": "Logical Operation Id",
+      "type": "string"
+    },
+    "message_bytes": {
+      "exclusiveMinimum": 0,
+      "title": "Message Bytes",
+      "type": "integer"
+    },
+    "microbatch": {
+      "anyOf": [
+        {
+          "minimum": 0,
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Microbatch"
+    },
+    "node": {
+      "anyOf": [
+        {
+          "minimum": 0,
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Node"
+    },
+    "operation": {
+      "minLength": 1,
+      "title": "Operation",
+      "type": "string"
+    },
+    "pair_id": {
+      "minLength": 1,
+      "title": "Pair Id",
+      "type": "string"
+    },
+    "pair_role": {
+      "enum": [
+        "a",
+        "b"
+      ],
+      "title": "Pair Role",
+      "type": "string"
+    },
+    "process_group_id": {
+      "minLength": 1,
+      "title": "Process Group Id",
+      "type": "string"
+    },
+    "process_group_ranks": {
+      "items": {
+        "type": "integer"
+      },
+      "minItems": 2,
+      "title": "Process Group Ranks",
+      "type": "array"
+    },
+    "rank": {
+      "minimum": 0,
+      "title": "Rank",
+      "type": "integer"
+    },
+    "requested_offset_us": {
+      "default": 0.0,
+      "title": "Requested Offset Us",
+      "type": "number"
+    },
+    "run_id": {
+      "minLength": 1,
+      "title": "Run Id",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "0.1",
+      "default": "0.1",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "step": {
+      "minimum": 0,
+      "title": "Step",
+      "type": "integer"
+    },
+    "stream_id": {
+      "minLength": 1,
+      "title": "Stream Id",
+      "type": "string"
+    },
+    "topology_class": {
+      "minLength": 1,
+      "title": "Topology Class",
+      "type": "string"
+    },
+    "transport": {
+      "minLength": 1,
+      "title": "Transport",
+      "type": "string"
+    },
+    "world_size": {
+      "minimum": 2,
+      "title": "World Size",
+      "type": "integer"
+    }
+  },
+  "required": [
+    "framework",
+    "run_id",
+    "rank",
+    "world_size",
+    "step",
+    "direction",
+    "operation",
+    "logical_operation_id",
+    "pair_id",
+    "pair_role",
+    "process_group_id",
+    "process_group_ranks",
+    "communicator_sequence_id",
+    "stream_id",
+    "message_bytes",
+    "api_launch_timestamp_ns",
+    "gpu_start_timestamp_ns",
+    "gpu_end_timestamp_ns",
+    "transport",
+    "topology_class"
+  ],
+  "title": "CommunicationPhaseTraceRecord",
+  "type": "object"
+}

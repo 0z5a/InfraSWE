@@ -2,15 +2,17 @@ from __future__ import annotations
 
 import importlib.util
 import json
+import subprocess
 import sys
+import threading
 from datetime import UTC, datetime
 from pathlib import Path
-from types import ModuleType
+from types import ModuleType, SimpleNamespace
 
 from infraswe.draft.lifecycle import canonical_sha256
 
 
-def test_non_improving_campaign_skips_publish_without_skipping_shutdown(
+def test_campaign_completion_defers_publication_and_shutdown_to_independent_verification(
     project_root: Path,
 ) -> None:
     for name in (
@@ -20,14 +22,71 @@ def test_non_improving_campaign_skips_publish_without_skipping_shutdown(
     ):
         script = (project_root / "benchmarks" / "historical_prs" / name).read_text(encoding="utf-8")
         assert 'export PYTHONPATH="src:benchmarks/historical_prs' in script
-        assert "git -c user.name=" in script
-        assert 'git_commit_email="${INFRASWE_GIT_USER_EMAIL:' in script
-        assert "aggregate target metric did not improve; skipping commit and push" in script
-        assert "refusing publish and shutdown" not in script
-        assert script.index("skipping commit and push") < script.index("vastai stop instance")
+        assert ".release_quality_gate_satisfied" in script
+        assert "release_quality_gate_satisfied" in script
+        assert "finalization pending independent verification" in script
+        assert "git push" not in script
+        assert "vastai stop instance" not in script
 
 
-def test_last_bulk_campaign_owns_credential_cleanup_and_shutdown(project_root: Path) -> None:
+def test_release_requires_95_exact_accuracy_and_99_accept_recall(
+    project_root: Path,
+) -> None:
+    gates = _load(project_root, "historical_bulk_quality_gates")
+
+    assert gates.EXACT_ACCURACY_MINIMUM == 0.95
+    assert gates.MERGED_ACCEPT_RECALL_MINIMUM == 0.99
+    assert gates.minimum_successes(101, 0.95) == 96
+    assert gates.minimum_successes(101, 0.99) == 100
+    assert gates.exact_accuracy_gate_satisfied(exact_matches=95, eligible_cases=100)
+    assert not gates.exact_accuracy_gate_satisfied(exact_matches=94, eligible_cases=100)
+    assert gates.merged_accept_recall_gate_satisfied(
+        merged_accepts=99,
+        merged_cases=100,
+    )
+    assert not gates.merged_accept_recall_gate_satisfied(
+        merged_accepts=98,
+        merged_cases=100,
+    )
+    assert gates.release_quality_gate_satisfied(
+        exact_matches=950,
+        eligible_cases=1000,
+        merged_accepts=198,
+        merged_cases=200,
+    )
+    assert not gates.release_quality_gate_satisfied(
+        exact_matches=949,
+        eligible_cases=1000,
+        merged_accepts=200,
+        merged_cases=200,
+    )
+    assert not gates.release_quality_gate_satisfied(
+        exact_matches=1000,
+        eligible_cases=1000,
+        merged_accepts=197,
+        merged_cases=200,
+    )
+    assert not gates.release_quality_gate_satisfied(
+        exact_matches=0,
+        eligible_cases=0,
+        merged_accepts=0,
+        merged_cases=0,
+    )
+
+    summary_source = (
+        project_root / "benchmarks" / "historical_prs" / "summarize_training_bulk_campaign.py"
+    ).read_text(encoding="utf-8")
+    for field in (
+        '"exact_accuracy_minimum"',
+        '"exact_accuracy_gate_satisfied"',
+        '"merged_accept_recall_minimum"',
+        '"merged_accept_recall_gate_satisfied"',
+        '"release_quality_gate_satisfied"',
+    ):
+        assert field in summary_source
+
+
+def test_no_campaign_can_self_authorize_credential_cleanup(project_root: Path) -> None:
     training = (
         project_root / "benchmarks" / "historical_prs" / "run_training_bulk_campaign.sh"
     ).read_text(encoding="utf-8")
@@ -38,14 +97,9 @@ def test_last_bulk_campaign_owns_credential_cleanup_and_shutdown(project_root: P
         project_root / "benchmarks" / "historical_prs" / "run_communication_bulk_campaign.sh"
     ).read_text(encoding="utf-8")
 
-    assert "inference_pending=false" in training
-    assert '"${inference_pending}" != true' in training
-    assert "training_pending=false" in inference
-    assert '"${training_pending}" != true' in inference
-    assert "communication_pending=false" in inference
-    assert '"${communication_pending}" != true' in inference
-    assert "inference_pending=false" in communication
-    assert '"${inference_pending}" != true' in communication
+    for script in (training, inference, communication):
+        assert "rm -f" not in script
+        assert "credential deletion and instance stop are disabled" in script
 
 
 def test_training_campaign_uses_large_groups_after_safe_boundary(project_root: Path) -> None:
@@ -385,6 +439,7 @@ def test_hard_merged_recall_gate_can_override_an_exact_accuracy_loss(
     monkeypatch.syspath_prepend(str(project_root / "benchmarks" / "historical_prs"))
     derive = _load(project_root, "derive_training_bulk_policy_iteration")
 
+    assert derive.EXACT_ACCURACY_MINIMUM == 0.95
     assert derive.MERGED_ACCEPT_RECALL_MINIMUM == 0.99
     assert derive.MERGED_ACCEPT_RECALL_REPAIR_MARGIN == 0.005
 
@@ -412,6 +467,34 @@ def test_hard_merged_recall_gate_can_override_an_exact_accuracy_loss(
     ).read_text(encoding="utf-8")
     assert '{"inference", "communication"}' in source
     assert 'policy_prefix = f"{policy_domain}-bulk-disposition"' in source
+    assert '"exact_accuracy_gate_satisfied"' in source
+    assert '"release_quality_gate_satisfied"' in source
+    assert '"retain-current-policy-to-collect-more-blind-evidence"' in source
+    assert "this policy is not release-qualified" in source
+
+
+def test_bulk_campaign_only_skips_groups_with_the_full_six_artifact_chain(
+    project_root: Path,
+) -> None:
+    campaign_scripts = (
+        "run_inference_bulk_campaign.sh",
+        "run_communication_bulk_campaign.sh",
+    )
+
+    for script_name in campaign_scripts:
+        source = (project_root / "benchmarks" / "historical_prs" / script_name).read_text(
+            encoding="utf-8"
+        )
+        assert "group_is_complete" in source
+        for artifact in (
+            "input-lock.json",
+            "exact-head-evidence.json",
+            "judgment-locks.json",
+            "outcome-reveal.json",
+            "oracle-audit.json",
+            "next-policy.json",
+        ):
+            assert artifact in source
 
 
 def test_merged_recall_guard_is_narrow_and_outcome_blind(project_root: Path, monkeypatch) -> None:
@@ -749,6 +832,100 @@ def test_bulk_runner_blocks_model_downloads_and_uses_an_isolated_cache(
         "ProxyError",
         "MaxRetryError",
     } <= set(freeze.ENVIRONMENT_MARKERS)
+
+
+def test_bulk_runner_hydrates_checkout_before_blocking_test_network(
+    project_root: Path, monkeypatch
+) -> None:
+    runner = _load(project_root, "run_training_bulk_group")
+    commands: list[str] = []
+
+    def fake_ssh(_args, command: str, timeout: int):
+        commands.append(command)
+        assert timeout == 90
+        return subprocess.CompletedProcess(command, 0, "1 passed\n", "")
+
+    monkeypatch.setattr(runner, "_ssh", fake_ssh)
+    record = runner._run_case(
+        SimpleNamespace(test_timeout=45, output_tail_bytes=2000),
+        0,
+        {
+            "case_id": "megatron-core-pr-1",
+            "project": "megatron-core",
+            "pull_number": 1,
+            "head_sha": "a" * 40,
+            "files": [
+                {"path": "megatron/example.py", "change_type": "modified"},
+                {"path": "tests/test_example.py", "change_type": "modified"},
+            ],
+        },
+        None,
+        "/tmp/megatron-core",
+        0,
+        threading.Lock(),
+    )
+
+    assert len(commands) == 2
+    assert "git switch" in commands[0]
+    assert "127.0.0.1:9" not in commands[0]
+    assert "git switch" not in commands[1]
+    assert "HTTPS_PROXY=http://127.0.0.1:9" in commands[1]
+    assert record["status"] == "completed"
+    assert record["returncode"] == 0
+
+
+def test_bulk_runner_retries_legacy_promisor_checkout_failures(
+    project_root: Path, monkeypatch
+) -> None:
+    runner = _load(project_root, "run_training_bulk_group")
+    calls = 0
+
+    def failed_checkout(_args, command: str, timeout: int):
+        nonlocal calls
+        calls += 1
+        return subprocess.CompletedProcess(
+            command,
+            128,
+            "",
+            "could not fetch object from promisor remote",
+        )
+
+    monkeypatch.setattr(runner, "_ssh", failed_checkout)
+    record = runner._run_case(
+        SimpleNamespace(test_timeout=45, output_tail_bytes=2000),
+        0,
+        {
+            "case_id": "megatron-core-pr-2",
+            "project": "megatron-core",
+            "pull_number": 2,
+            "head_sha": "b" * 40,
+            "files": [],
+        },
+        None,
+        "/tmp/megatron-core",
+        0,
+        threading.Lock(),
+    )
+
+    assert calls == 1
+    assert record["status"] == "checkout_failed"
+    assert record["returncode"] is None
+    assert runner._retryable_checkpoint_record(
+        {
+            "status": "completed",
+            "returncode": 128,
+            "output_tail": (
+                "Failed to connect to 127.0.0.1 port 9; could not fetch object from promisor remote"
+            ),
+        }
+    )
+    assert not runner._retryable_checkpoint_record(
+        {"status": "completed", "returncode": 1, "output_tail": "AssertionError"}
+    )
+
+    for name in ("run_communication_bulk_round.sh", "run_inference_bulk_round.sh"):
+        script = (project_root / "benchmarks" / "historical_prs" / name).read_text(encoding="utf-8")
+        assert 'IN("transport_timeout", "checkout_failed", "checkout_timeout")' in script
 
 
 def test_unavailable_metadata_becomes_auditable_invalid_attempt(

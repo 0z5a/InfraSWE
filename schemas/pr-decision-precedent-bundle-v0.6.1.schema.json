@@ -1,0 +1,215 @@
+{
+  "$defs": {
+    "DecisionPrecedent": {
+      "additionalProperties": false,
+      "properties": {
+        "decision": {
+          "enum": [
+            "accept",
+            "check",
+            "reject"
+          ],
+          "title": "Decision",
+          "type": "string"
+        },
+        "decisive_evidence_refs": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Decisive Evidence Refs",
+          "type": "array"
+        },
+        "head_sha": {
+          "pattern": "^[0-9a-f]{40}$",
+          "title": "Head Sha",
+          "type": "string"
+        },
+        "issue_or_patch_family": {
+          "title": "Issue Or Patch Family",
+          "type": "string"
+        },
+        "mechanism": {
+          "title": "Mechanism",
+          "type": "string"
+        },
+        "module": {
+          "title": "Module",
+          "type": "string"
+        },
+        "observed_at": {
+          "format": "date-time",
+          "title": "Observed At",
+          "type": "string"
+        },
+        "precedent_id": {
+          "title": "Precedent Id",
+          "type": "string"
+        },
+        "project": {
+          "title": "Project",
+          "type": "string"
+        },
+        "repository": {
+          "title": "Repository",
+          "type": "string"
+        },
+        "role": {
+          "enum": [
+            "historical-accept",
+            "historical-reject",
+            "legitimate-exception"
+          ],
+          "title": "Role",
+          "type": "string"
+        },
+        "split": {
+          "enum": [
+            "train",
+            "dev",
+            "calibration",
+            "heldout"
+          ],
+          "title": "Split",
+          "type": "string"
+        }
+      },
+      "required": [
+        "precedent_id",
+        "repository",
+        "project",
+        "module",
+        "mechanism",
+        "issue_or_patch_family",
+        "decision",
+        "role",
+        "decisive_evidence_refs",
+        "observed_at",
+        "head_sha",
+        "split"
+      ],
+      "title": "DecisionPrecedent",
+      "type": "object"
+    },
+    "PrecedentQuery": {
+      "additionalProperties": false,
+      "properties": {
+        "allowed_precedent_splits": {
+          "items": {
+            "enum": [
+              "train",
+              "dev",
+              "calibration",
+              "heldout"
+            ],
+            "type": "string"
+          },
+          "title": "Allowed Precedent Splits",
+          "type": "array"
+        },
+        "excluded_families": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Excluded Families",
+          "type": "array"
+        },
+        "limit_per_role": {
+          "default": 3,
+          "maximum": 100,
+          "minimum": 1,
+          "title": "Limit Per Role",
+          "type": "integer"
+        },
+        "mechanism": {
+          "title": "Mechanism",
+          "type": "string"
+        },
+        "module": {
+          "title": "Module",
+          "type": "string"
+        },
+        "prediction_at": {
+          "format": "date-time",
+          "title": "Prediction At",
+          "type": "string"
+        },
+        "project": {
+          "title": "Project",
+          "type": "string"
+        },
+        "repository": {
+          "title": "Repository",
+          "type": "string"
+        },
+        "split": {
+          "enum": [
+            "train",
+            "dev",
+            "calibration",
+            "heldout"
+          ],
+          "title": "Split",
+          "type": "string"
+        }
+      },
+      "required": [
+        "repository",
+        "project",
+        "module",
+        "mechanism",
+        "prediction_at",
+        "split"
+      ],
+      "title": "PrecedentQuery",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "accepts": {
+      "items": {
+        "$ref": "#/$defs/DecisionPrecedent"
+      },
+      "title": "Accepts",
+      "type": "array"
+    },
+    "index_digest": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Index Digest",
+      "type": "string"
+    },
+    "legitimate_exceptions": {
+      "items": {
+        "$ref": "#/$defs/DecisionPrecedent"
+      },
+      "title": "Legitimate Exceptions",
+      "type": "array"
+    },
+    "query": {
+      "$ref": "#/$defs/PrecedentQuery"
+    },
+    "rejects": {
+      "items": {
+        "$ref": "#/$defs/DecisionPrecedent"
+      },
+      "title": "Rejects",
+      "type": "array"
+    },
+    "schema_version": {
+      "const": "0.6.1",
+      "default": "0.6.1",
+      "title": "Schema Version",
+      "type": "string"
+    }
+  },
+  "required": [
+    "query",
+    "accepts",
+    "rejects",
+    "legitimate_exceptions",
+    "index_digest"
+  ],
+  "title": "ContrastivePrecedentBundle",
+  "type": "object"
+}

@@ -1245,7 +1245,7 @@ def test_legacy_migration_never_fabricates_tokens_or_reward(tmp_path: Path) -> N
 
 def test_v06_schemas_are_strict_and_registered() -> None:
     schemas = schema_documents()
-    assert sum("v0.6" in name for name in schemas) == 29
+    assert sum(name.endswith("-v0.6.schema.json") for name in schemas) == 29
     assert "policy-snapshot-v0.6.schema.json" in schemas
     assert "legacy-experience-manifest-v0.6.schema.json" in schemas
     assert schemas["policy-snapshot-v0.6.schema.json"]["additionalProperties"] is False

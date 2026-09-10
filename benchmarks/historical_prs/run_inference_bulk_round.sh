@@ -71,7 +71,7 @@ rerun_args=()
 while IFS= read -r case_id; do
   [[ -n "${case_id}" ]] && rerun_args+=(--only "${case_id}")
 done < <(
-  jq -r '.records[] | select(.returncode == 255 or .status == "transport_timeout") | .case_id' \
+  jq -r '.records[] | select(.returncode == 255 or (.status | IN("transport_timeout", "checkout_failed", "checkout_timeout"))) | .case_id' \
     "${group_dir}/exact-head-evidence.json"
 )
 

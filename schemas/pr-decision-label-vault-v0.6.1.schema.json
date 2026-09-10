@@ -1,0 +1,163 @@
+{
+  "$defs": {
+    "LabelVaultRecord": {
+      "additionalProperties": false,
+      "properties": {
+        "adjudication_status": {
+          "enum": [
+            "unreviewed",
+            "reviewed",
+            "disputed",
+            "superseded"
+          ],
+          "title": "Adjudication Status",
+          "type": "string"
+        },
+        "case_identity": {
+          "$ref": "#/$defs/PRCaseIdentity"
+        },
+        "decisive_evidence_refs": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Decisive Evidence Refs",
+          "type": "array"
+        },
+        "label_kind": {
+          "enum": [
+            "upstream_outcome",
+            "contract_acceptability",
+            "executable_verifier_outcome"
+          ],
+          "title": "Label Kind",
+          "type": "string"
+        },
+        "observed_at": {
+          "format": "date-time",
+          "title": "Observed At",
+          "type": "string"
+        },
+        "oracle_label": {
+          "enum": [
+            "accept",
+            "check",
+            "reject"
+          ],
+          "title": "Oracle Label",
+          "type": "string"
+        },
+        "oracle_source": {
+          "minLength": 1,
+          "title": "Oracle Source",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "0.6.1",
+          "default": "0.6.1",
+          "title": "Schema Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "case_identity",
+        "oracle_label",
+        "label_kind",
+        "oracle_source",
+        "observed_at",
+        "adjudication_status"
+      ],
+      "title": "LabelVaultRecord",
+      "type": "object"
+    },
+    "PRCaseIdentity": {
+      "additionalProperties": false,
+      "properties": {
+        "base_sha": {
+          "pattern": "^[0-9a-f]{40}$",
+          "title": "Base Sha",
+          "type": "string"
+        },
+        "head_sha": {
+          "pattern": "^[0-9a-f]{40}$",
+          "title": "Head Sha",
+          "type": "string"
+        },
+        "issue_or_patch_family": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Issue Or Patch Family"
+        },
+        "label_schema_version": {
+          "minLength": 1,
+          "title": "Label Schema Version",
+          "type": "string"
+        },
+        "pr_number": {
+          "minimum": 1,
+          "title": "Pr Number",
+          "type": "integer"
+        },
+        "prediction_at": {
+          "format": "date-time",
+          "title": "Prediction At",
+          "type": "string"
+        },
+        "repository": {
+          "pattern": "^[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+$",
+          "title": "Repository",
+          "type": "string"
+        }
+      },
+      "required": [
+        "repository",
+        "pr_number",
+        "base_sha",
+        "head_sha",
+        "prediction_at",
+        "label_schema_version"
+      ],
+      "title": "PRCaseIdentity",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "records": {
+      "items": {
+        "$ref": "#/$defs/LabelVaultRecord"
+      },
+      "minItems": 1,
+      "title": "Records",
+      "type": "array"
+    },
+    "schema_version": {
+      "const": "0.6.1",
+      "default": "0.6.1",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "vault_id": {
+      "title": "Vault Id",
+      "type": "string"
+    },
+    "vault_sha256": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Vault Sha256",
+      "type": "string"
+    }
+  },
+  "required": [
+    "vault_id",
+    "records",
+    "vault_sha256"
+  ],
+  "title": "LabelVault",
+  "type": "object"
+}
